@@ -1,0 +1,39 @@
+@import './_variables';
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+.ve-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin: -$grid-gutter / 2;
+
+  & + .row {
+    margin-top: $grid-gutter / 2;
+
+    &--dense {
+      margin-top: $grid-gutter-dense / 2;
+    }
+  }
+
+  &--dense {
+    margin: -$grid-gutter-dense / 2;
+
+    > .ve-col,
+    > [class*="ve-col-"] {
+      padding: $grid-gutter-dense / 2;
+    }
+  }
+
+  // Remove the negative margin from default .v-row, then the horizontal padding
+  // from all immediate children columns (to prevent runaway style inheritance).
+  &--no-gutters {
+    margin: 0;
+
+    > .ve-col,
+    > [class*="ve-col-"] {
+      padding: 0;
+    }
+  }
+}

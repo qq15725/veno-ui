@@ -1,0 +1,26 @@
+@import '../../../styles/theme-mixins';
+
+$device-app-bar-header: 40px !default;
+
+// color
+$device-background: rgb(var(--v-theme-surface)) !default;
+$device-color: rgb(var(--v-theme-on-surface)) !default;
+
+// border
+$device-border-color: $border-color !default;
+$device-border-style: $border-style !default;
+$device-border-width: 0 !default;
+$device-border-thin-width: thin !default;
+$device-border-radius: $border-radius !default;
+$device-border: (
+  $device-border-color,
+  $device-border-style,
+  $device-border-width,
+  $device-border-thin-width
+) !default;
+
+// variant
+$device-variant: (
+  $device-background,
+  $device-color
+) !default;

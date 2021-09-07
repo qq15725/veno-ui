@@ -1,0 +1,33 @@
+@import '../mixins/_functions';
+
+// 网格间距
+$grid-gutter: $spacer * 6 !default;
+// 密集的网格间距
+$grid-gutter-dense: $spacer * 2 !default;
+
+// 各个屏幕宽度的网格间距
+$grid-gutters: () !default;
+$grid-gutters: map-deep-merge(
+    (
+      'xs': $grid-gutter / 12,
+      'sm': $grid-gutter / 6,
+      'md': $grid-gutter / 3,
+      'lg': $grid-gutter * 2/3,
+      'xl': $grid-gutter,
+    ),
+    $grid-gutters
+);
+
+// 各个屏幕宽度的断点
+$grid-breakpoints: () !default;
+$grid-breakpoints: map-deep-merge(
+    (
+      'xs': 0,
+      'sm': 600px,
+      'md': 960px,
+      'lg': 1280px,
+      'xl': 1920px,
+      'xxl': 2560px,
+    ),
+    $grid-breakpoints
+);

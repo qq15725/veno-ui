@@ -1,0 +1,15 @@
+@import '../../../styles/theme-mixins';
+
+$app-sider-background: rgb(var(--v-theme-surface)) !default;
+
+$app-sider-border-color: $border-color !default;
+$app-sider-border-style: $border-style !default;
+$app-sider-border-width: 0 !default;
+$app-sider-border-thin-width: thin !default;
+$app-sider-border-radius: map-get($rounded, '0') !default;
+$app-sider-border: (
+  $app-sider-border-color,
+  $app-sider-border-style,
+  $app-sider-border-width,
+  $app-sider-border-thin-width
+) !default;

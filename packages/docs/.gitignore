@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+.env
+package-lock.json
+
+# IDE user config
+.vscode/
+.idea/
+.vs/
+
+# Logs
+yarn-error.log
+npm-debug.log
+lerna-debug.log

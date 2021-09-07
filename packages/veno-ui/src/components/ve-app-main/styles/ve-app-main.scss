@@ -1,0 +1,18 @@
+@import './_variables';
+
+.ve-app-main {
+  display: flex;
+  flex: 1 0 auto;
+  max-width: 100%;
+  transition: $main-transition;
+
+  &__wrap {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+  }
+}
+
+
+
+

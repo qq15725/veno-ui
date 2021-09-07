@@ -1,0 +1,30 @@
+@import './_variables';
+
+.ve-app-bar {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 100%;
+  overflow: hidden;
+  padding-left: $app-bar-padding-start;
+  padding-right: calc(#{$app-bar-padding-end} + var(--v-scrollbar-offset));
+  position: fixed;
+  transition: .2s $standard-easing;
+  transition-property: height, transform;
+  color: $app-bar-color;
+  background: $app-bar-background;
+  @include border($app-bar-border...);
+
+  &__content {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    transition: inherit;
+    width: 100%;
+  }
+}
+
+
+
+

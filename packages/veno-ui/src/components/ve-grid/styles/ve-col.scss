@@ -1,0 +1,6 @@
+@import './_variables';
+
+// Columns
+//
+// Common styles for small and large grid columns
+@include make-cols(ve-col, $grid-columns, $grid-gutter, $grid-breakpoints);

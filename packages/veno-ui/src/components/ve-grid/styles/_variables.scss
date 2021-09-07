@@ -1,0 +1,19 @@
+@import '../../../styles/theme-mixins';
+@import './mixins';
+
+// 网格列数
+$grid-columns: 12 !default;
+// xs sm md lg xl xxl
+
+// 容器
+$container-padding-x: $grid-gutter / 2 !default;
+$container-max-widths: () !default;
+$container-max-widths: map-deep-merge(
+    (
+      'md': map-get($grid-breakpoints, 'md') * 0.9375,
+      'lg': map-get($grid-breakpoints, 'lg') * 0.9375,
+      'xl': map-get($grid-breakpoints, 'xl') * 0.9375,
+      'xxl': map-get($grid-breakpoints, 'xxl') * 0.9375,
+    ),
+    $container-max-widths
+);

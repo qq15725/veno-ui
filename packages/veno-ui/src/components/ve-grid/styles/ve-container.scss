@@ -1,0 +1,14 @@
+@import './_variables';
+
+.ve-container {
+  width: 100%;
+  padding: $container-padding-x;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include make-container-max-widths($container-max-widths, $grid-breakpoints);
+
+  &--fluid {
+    max-width: 100%
+  }
+}

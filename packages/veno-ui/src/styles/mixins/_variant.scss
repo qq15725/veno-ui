@@ -1,0 +1,21 @@
+
+@mixin variant($contained-background, $contained-color) {
+  &--variant-outlined,
+  &--variant-text {
+    background: transparent;
+    color: inherit;
+  }
+
+  &--variant-contained {
+    background: $contained-background;
+    color: $contained-color;
+
+    &-border {
+      border-width: thin;
+    }
+  }
+
+  &--variant-outlined {
+    border: thin solid currentColor;
+  }
+}

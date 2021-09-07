@@ -1,0 +1,53 @@
+@import './_variables';
+
+.ve-divider {
+  display: flex;
+  align-items: center;
+  font-variant: tabular-nums;
+  font-feature-settings: 'tnum';
+  width: 100%;
+  @include border($divider-border-color, $divider-border-style, 0);
+
+  @at-root {
+    hr#{&} {
+      border-top-width: 1px;
+    }
+  }
+
+  &--dashed {
+    border-style: dashed;
+  }
+
+  &--vertical {
+    display: inline-block;
+    height: 1em;
+    width: 0;
+    border-top-width: 0;
+    border-left-width: thin;
+    margin: 0 8px;
+    vertical-align: middle;
+  }
+
+  &__line {
+    position: relative;
+    content: '';
+    height: 0;
+    flex: 1;
+    border-top-width: thin;
+    border-top-style: inherit;
+    border-top-color: inherit;
+
+    &--inset {
+      max-width: 5%;
+    }
+  }
+
+  &__content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    white-space: nowrap;
+    color: inherit;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}

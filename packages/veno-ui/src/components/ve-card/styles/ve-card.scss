@@ -1,0 +1,49 @@
+@import './_variables';
+
+.ve-card {
+  position: relative;
+  overflow: hidden;
+  color: $card-color;
+  border-radius: $card-border-radius;
+
+  @include border($card-border...);
+  @include variant($card-variant...);
+  @include position($card-positions);
+
+  &-title {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    hyphens: auto;
+    letter-spacing: .0125rem;
+    overflow-wrap: normal;
+    text-transform: none;
+    word-break: normal;
+    word-wrap: break-word;
+  }
+
+  &-subtitle {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &-text {
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: .0892857143rem;
+    padding: 1rem;
+    text-transform: uppercase;
+    transition: inherit;
+    transition-property: color, opacity;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+    padding: 0.5rem 1rem;
+  }
+}

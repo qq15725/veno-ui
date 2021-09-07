@@ -1,0 +1,26 @@
+@import '../../../styles/theme-mixins';
+
+$input-padding: 8px !default;
+
+// color
+$input-background: rgb(var(--v-theme-surface)) !default;
+$input-color: rgb(var(--v-theme-on-surface)) !default;
+
+// border
+$input-border-color: $border-color !default;
+$input-border-style: $border-style !default;
+$input-border-width: 0 !default;
+$input-border-thin-width: thin !default;
+$input-border-radius: $border-radius !default;
+$input-border: (
+  $input-border-color,
+  $input-border-style,
+  $input-border-width,
+  $input-border-thin-width
+) !default;
+
+// variant
+$input-variant: (
+  $input-background,
+  $input-color
+) !default;

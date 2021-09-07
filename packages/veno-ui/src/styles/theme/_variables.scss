@@ -1,0 +1,42 @@
+@import '../mixins/_functions';
+
+$color-pack: true !default;
+
+$body-font-family: 'Roboto', sans-serif !default;
+$font-size-root: 1rem !default;
+$line-height-root: 1.5 !default;
+
+$states: () !default;
+$states: map-deep-merge(
+    (
+      'hover': 0.04,
+      'focus': 0.12,
+      'selected': 0.08,
+      'activated': 0.12,
+      'pressed': 0.16,
+      'dragged': 0.08
+    ),
+    $states
+);
+
+$size-scales: (
+  'x-small': -2,
+  'small': -1,
+  'default': 0,
+  'large': 1,
+  'x-large': 2
+) !default;
+
+$spacer: 0.25rem !default;
+
+// Mapping from transition to easings:
+// fast-out-slow-in -> standard
+// linear-out-slow-in -> decelerated
+// fast-out-linear-in -> accelerated
+// ease-in-out -> standard or accelerated depending on usage
+// fast-in-fast-out -> accelerated
+// swing -> standard
+
+$standard-easing: cubic-bezier(0.4, 0, 0.2, 1);
+$decelerated-easing: cubic-bezier(0.0, 0, 0.2, 1); // Entering
+$accelerated-easing: cubic-bezier(0.4, 0, 1, 1); // Leaving

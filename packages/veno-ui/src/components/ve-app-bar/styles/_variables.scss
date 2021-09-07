@@ -1,0 +1,24 @@
+@import '../../../styles/theme-mixins';
+
+$app-bar-background: rgb(var(--v-theme-surface)) !default;
+$app-bar-color: rgb(var(--v-theme-on-surface)) !default;
+
+$app-bar-padding-end: 4px !default;
+$app-bar-padding-start: 4px !default;
+
+// border
+$app-bar-border-color: $border-color !default;
+$app-bar-border-radius: map-get($rounded, '0') !default;
+$app-bar-border-style: $border-style !default;
+$app-bar-border-width: 0 !default;
+$app-bar-border-thin-width: 0 0 thin !default;
+$app-bar-border: (
+  $app-bar-border-color,
+  $app-bar-border-style,
+  $app-bar-border-width,
+  $app-bar-border-thin-width
+) !default;
+
+// title
+$app-bar-title-font-size: 1.3rem !default;
+$app-bar-title-padding: 6px 20px !default;

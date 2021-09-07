@@ -1,0 +1,9 @@
+@import './_variables';
+
+.ve-input {
+  display: inline-flex;
+  outline: none;
+  padding: $input-padding;
+  @include border($input-border...);
+  @include variant($input-variant...);
+}

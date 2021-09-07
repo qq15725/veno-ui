@@ -1,0 +1,38 @@
+@import './_variables';
+
+.ve-app-sider {
+  -webkit-overflow-scrolling: touch;
+  background: $app-sider-background;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 100%;
+  pointer-events: auto;
+  top: 0;
+  transition-duration: 0.2s;
+  transition-property: box-shadow, transform, visibility, width;
+  transition-timing-function: $standard-easing;
+  will-change: transform;
+  position: fixed;
+  @include border($app-sider-border...);
+
+  &--start {
+    border-inline-end-width: $app-sider-border-thin-width;
+  }
+
+  &--end {
+    border-inline-start-width: $app-sider-border-thin-width;
+  }
+
+  &__content {
+    flex: 0 1 auto;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+
+
+

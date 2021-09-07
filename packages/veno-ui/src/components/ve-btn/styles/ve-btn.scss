@@ -1,0 +1,79 @@
+@import './_variables';
+
+.ve-btn {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border-radius: $button-border-radius;
+  transition-property: border-color, transform, opacity, color;
+  transition-duration: 0.28s;
+  transition-timing-function: $standard-easing;
+  user-select: none;
+  text-decoration: none;
+  cursor: pointer;
+
+  @include button-sizes($button-sizes);
+  @include border($button-border...);
+  @include variant($button-variant...);
+
+  &:not(&--loading):not(&--disabled) {
+    @include states('.ve-btn__overlay', false);
+  }
+
+  &--variant-contained-border:not(&--loading):not(&--disabled):hover {
+    border-color: rgba(var(--v-theme-primary), 1);
+    color: rgba(var(--v-theme-primary), 1);
+  }
+
+  &__overlay {
+    @include absolute(false);
+    background-color: currentColor;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+  }
+
+  &--tile {
+    border-radius: 0;
+  }
+
+  &--rounded {
+    border-radius: 1.5rem;
+  }
+
+  &--block {
+    min-width: 100%;
+  }
+
+  &--disabled,
+  &--loading {
+    color: rgba(var(--v-theme-on-surface), $button-disabled-opacity);
+
+    .ve-btn__overlay {
+      opacity: $button-disabled-overlay / $button-disabled-opacity;
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
+  &--loading {
+    cursor: wait;
+
+    //&::after {
+    //  @apply absolute;
+    //  content: ' ';
+    //  border-radius: inherit;
+    //  @apply w-full h-full;
+    //  @apply bg-black;
+    //  @apply top-0 left-0;
+    //  @apply transform;
+    //  @apply opacity-10;
+    //  animation: animate-width 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    //}
+  }
+}

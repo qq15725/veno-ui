@@ -1,0 +1,27 @@
+@import '../../../styles/theme-mixins';
+
+// positions
+$card-positions: absolute fixed !default;
+
+// color
+$card-background: rgb(var(--v-theme-surface)) !default;
+$card-color: rgb(var(--v-theme-on-surface)) !default;
+
+// border
+$card-border-color: $border-color !default;
+$card-border-style: $border-style !default;
+$card-border-width: 0 !default;
+$card-border-thin-width: thin !default;
+$card-border-radius: $border-radius !default;
+$card-border: (
+  $card-border-color,
+  $card-border-style,
+  $card-border-width,
+  $card-border-thin-width
+) !default;
+
+// variant
+$card-variant: (
+  $card-background,
+  $card-color
+) !default;

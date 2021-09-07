@@ -1,0 +1,19 @@
+@mixin background-color($color-value) {
+  background-color: $color-value !important;
+  border-color: $color-value !important;
+}
+
+@mixin text-color($color-value) {
+  color: $color-value !important;
+  caret-color: $color-value !important;
+}
+
+@mixin color($color-name, $color-value) {
+  .bg-#{$color-name} {
+    @include background-color($color-value);
+  }
+
+  .text-#{$color-name} {
+    @include text-color($color-value);
+  }
+}

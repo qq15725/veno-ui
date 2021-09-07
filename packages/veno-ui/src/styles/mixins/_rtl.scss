@@ -1,0 +1,13 @@
+@mixin rtl() {
+  &.ve-locale--is-rtl,
+  .ve-locale--is-rtl & {
+    @content;
+  }
+}
+
+@mixin ltr() {
+  &.ve-locale--is-ltr,
+  .ve-locale--is-ltr & {
+    @content;
+  }
+}

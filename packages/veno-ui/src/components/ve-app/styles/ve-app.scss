@@ -1,0 +1,25 @@
+@import './_variables';
+
+.ve-app {
+  display: flex;
+  background: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-background));
+
+  a {
+    cursor: pointer;
+  }
+
+  &__wrap {
+    flex: 1 1 auto;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 100%;
+    position: relative;
+  }
+}
+
+
+
+
