@@ -9,6 +9,7 @@ import { convertToUnit } from '../../utils'
 
 export default defineComponent({
   props: {
+    appMainColor: String,
     ...makeTagProps(),
     ...makeVariantProps(),
     ...makeDeviceProps(),
@@ -48,7 +49,12 @@ export default defineComponent({
             </div>
           ) }
 
-          <div class="ve-device__app-main">{ slots.default?.() }</div>
+          <div
+            class="ve-device__app-main"
+            style={ { background: props.appMainColor } }
+          >
+            { slots.default?.() }
+          </div>
 
           {
             props.autoHeight
