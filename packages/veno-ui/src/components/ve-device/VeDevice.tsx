@@ -31,7 +31,7 @@ export default defineComponent({
             colorStyles.value,
           ] }
         >
-          { deviceModel.value.statusBarHeight && (
+          { deviceModel.value.statusBarHeight > 0 && (
             <div
               class="ve-device__status-bar"
               style={ {

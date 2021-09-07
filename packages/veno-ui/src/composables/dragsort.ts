@@ -5,6 +5,7 @@ import {
   toRef,
   provide,
   inject,
+  watch,
   getCurrentInstance,
   onBeforeUnmount,
 } from 'vue'
@@ -60,7 +61,11 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
   const selected = ref<number | null>(null)
   const put = toRef(props, 'put')
   const group = toRef(props, 'group')
-  let items = ref([...toRaw(props.modelValue)])
+  const items = ref([...toRaw(props.modelValue)])
+
+  watch(() => props.modelValue, value => {
+    items.value = [...toRaw(value)]
+  })
 
   const provide = inject(injectKey, null)
 

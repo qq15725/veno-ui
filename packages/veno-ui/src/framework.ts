@@ -17,9 +17,7 @@ export const createVeno = (options: VenoOptions = {}) => {
     } = options
 
     for (const key in components) {
-      const component = components[key]
-
-      app.component(key, component)
+      app.component(key, components[key])
     }
 
     app.provide(ThemeSymbol, createTheme(options.theme))
