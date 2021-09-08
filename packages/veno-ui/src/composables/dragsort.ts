@@ -108,16 +108,28 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
     function mousedown (e: MouseEvent) {
       selected.value = index
       if (provide) provide.select(id)
-      const el = e.target as HTMLElement
+      if (!vm?.vnode.el) {
+        return
+      }
+      const vnodeEl = vm.vnode.el.nodeType === 1
+        ? vm.vnode.el
+        : vm.vnode.el.parentElement
+      const el = vnodeEl.children[index] as HTMLElement
+      el.setAttribute('draggable', 'true')
       el.addEventListener('dragstart', dragstart)
       el.addEventListener('dragend', dragend)
-      el.setAttribute('draggable', 'true')
+      window.addEventListener('mouseup', mouseup)
+      function mouseup () {
+        window.removeEventListener('mouseup', mouseup)
+        el.removeAttribute('draggable')
+      }
     }
 
     function dragstart (e: DragEvent) {
       if (!e.dataTransfer) return
 
       const el = e.target as HTMLElement
+
       e.dataTransfer.setData('Text', el.textContent || '')
       e.dataTransfer.effectAllowed = 'move'
     }

@@ -7,9 +7,17 @@ import { makeVariantProps, useVariant } from '../../composables/variant'
 import { makeDeviceProps, useDevice } from '../../composables/device'
 import { convertToUnit } from '../../utils'
 
+import VeDeviceStatusBar from './VeDeviceStatusBar'
+
 export default defineComponent({
+  name: 'VeDevice',
+
   props: {
     appMainColor: String,
+    batteryPercentage: {
+      type: Number,
+      default: 100,
+    },
     ...makeTagProps(),
     ...makeVariantProps(),
     ...makeDeviceProps(),
@@ -33,14 +41,10 @@ export default defineComponent({
           ] }
         >
           { deviceModel.value.statusBarHeight > 0 && (
-            <div
-              class="ve-device__status-bar"
-              style={ {
-                height: convertToUnit(deviceModel.value.statusBarHeight),
-              } }
-            >
-              上午10:00
-            </div>
+            <VeDeviceStatusBar
+              height={ deviceModel.value.statusBarHeight }
+              batteryPercentage={ props.batteryPercentage }
+            />
           ) }
 
           { slots.header && (

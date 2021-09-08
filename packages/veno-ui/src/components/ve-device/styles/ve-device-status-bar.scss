@@ -1,0 +1,74 @@
+@import './_variables';
+
+.ve-device-status-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  color: #000102;
+  font-weight: bold;
+
+  &__wifi {
+    position: relative;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(-45deg);
+    transform-origin: 0.3rem 0.3rem;
+
+    &-signal {
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-color: currentColor;
+      border-style: solid;
+      border-width: 0.2rem 0.2rem 0 0;
+      border-radius: 0 100% 0 0;
+
+      &:nth-child(2) {
+        width: 0.66rem;
+        height: 0.66rem;
+      }
+
+      &:nth-child(3) {
+        width: 0.4rem;
+        height: 0.4rem;
+      }
+    }
+  }
+
+  &__spacer {
+    flex: 1 1 auto;
+  }
+
+  &__clock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__battery {
+    border: thin solid currentColor;
+    width: 2rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.125rem;
+
+    &-text {
+      margin-right: 0.125rem;
+      font-size: 0.875rem;
+    }
+
+    &-percentage {
+      background-color: currentColor;
+      height: 100%;
+    }
+  }
+}

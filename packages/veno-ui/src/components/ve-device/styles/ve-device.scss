@@ -9,14 +9,6 @@
   @include border($device-border...);
   @include variant($device-variant...);
 
-  &__status-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    font-weight: bold;
-  }
-
   &__app-bar {
     height: $device-app-bar-header;
     display: flex;
