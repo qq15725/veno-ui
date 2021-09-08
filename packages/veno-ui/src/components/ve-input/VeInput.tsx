@@ -12,7 +12,7 @@ export default defineComponent({
     ...makeVariantProps(),
   },
 
-  setup (props, { slots, emit }) {
+  setup (props, { emit }) {
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-input')
 
     return () => {

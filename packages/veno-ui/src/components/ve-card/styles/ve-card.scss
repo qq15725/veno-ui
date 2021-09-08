@@ -3,8 +3,10 @@
 .ve-card {
   position: relative;
   overflow: hidden;
+  display: block;
   color: $card-color;
   border-radius: $card-border-radius;
+  text-decoration: none;
 
   @include border($card-border...);
   @include variant($card-variant...);
