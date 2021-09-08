@@ -6,17 +6,54 @@
   align-items: center;
   padding: 0.25rem;
   color: #000102;
-  font-weight: bold;
+  font-weight: normal;
 
-  &__wifi {
+  &__mobile-signal {
+    display: flex;
+    align-items: flex-end;
+    height: 1rem;
+    margin-right: 0.125rem;
+
+    div {
+      width: 0.2rem;
+      background-color: currentColor;
+
+      + div {
+        margin-left: 0.125rem;
+      }
+
+      &:nth-child(1) {
+        height: 25%;
+      }
+
+      &:nth-child(2) {
+        height: 50%;
+      }
+
+      &:nth-child(3) {
+        height: 75%;
+      }
+
+      &:nth-child(4) {
+        height: 100%;
+      }
+    }
+  }
+
+  &__mobile-operator {
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+  }
+
+  &__wifi-signal {
     position: relative;
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    transform: rotate(-45deg);
-    transform-origin: 0.33rem 0.33rem;
+    transform: translateX(0.6rem) rotate(-45deg);
+    transform-origin: 0 1rem;
 
-    &-signal {
+    div {
       display: block;
       position: absolute;
       left: 0;
@@ -28,14 +65,20 @@
       border-width: 0.2rem 0.2rem 0 0;
       border-radius: 0 100% 0 0;
 
+      &:nth-child(1) {
+        border-width: 0.33rem 0.33rem 0 0;
+        width: 33.3%;
+        height: 33.3%;
+      }
+
       &:nth-child(2) {
-        width: 0.66rem;
-        height: 0.66rem;
+        width: 66.6%;
+        height: 66.6%;
       }
 
       &:nth-child(3) {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 99.9%;
+        height: 99.9%;
       }
     }
   }
@@ -63,12 +106,12 @@
     border-radius: 0.25rem;
     padding: 0.125rem;
 
-    &-text {
+    &-percentage {
       margin-right: 0.125rem;
       font-size: 0.875rem;
     }
 
-    &-percentage {
+    div {
       background-color: currentColor;
       height: 100%;
     }

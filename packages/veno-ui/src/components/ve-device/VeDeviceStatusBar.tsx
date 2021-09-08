@@ -17,10 +17,14 @@ export default defineComponent({
       type: Number,
       default: 100,
     },
+    mobileOperator: {
+      type: String,
+      default: '中国移动',
+    },
     ...makeTagProps(),
   },
 
-  setup (props ) {
+  setup (props) {
     function getClockValue () {
       const now = new Date()
       const hour = now.getHours()
@@ -35,7 +39,7 @@ export default defineComponent({
 
     const clockTimer = setInterval(() => {
       clock.value = getClockValue()
-    }, 20000)
+    }, 1000)
 
     onBeforeUnmount(() => {
       clearInterval(clockTimer)
@@ -49,22 +53,21 @@ export default defineComponent({
             height: convertToUnit(props.height),
           } }
         >
-          <div class="ve-device-status-bar__wifi">
-            <div class="ve-device-status-bar__wifi-signal" />
-            <div class="ve-device-status-bar__wifi-signal" />
-            <div class="ve-device-status-bar__wifi-signal" />
+          <div class="ve-device-status-bar__clock">{ clock.value }</div>
+          <div class="ve-device-status-bar__mobile-signal">
+            { [...Array(4)].map(_ => <div />) }
+          </div>
+          <div class="ve-device-status-bar__mobile-operator">{ props.mobileOperator }</div>
+          <div class="ve-device-status-bar__wifi-signal">
+            { [...Array(3)].map(_ => <div />) }
           </div>
           <div class="ve-device-status-bar__spacer" />
-          <div class="ve-device-status-bar__battery-text">
+          <div class="ve-device-status-bar__battery-percentage">
             { props.batteryPercentage }%
           </div>
           <div class="ve-device-status-bar__battery">
-            <div
-              class="ve-device-status-bar__battery-percentage"
-              style={ { width: `${ props.batteryPercentage }%` } }
-            />
+            <div style={ { width: `${ props.batteryPercentage }%` } } />
           </div>
-          <div class="ve-device-status-bar__clock">{ clock.value }</div>
         </props.tag>
       )
     }

@@ -18,6 +18,10 @@ export default defineComponent({
       type: Number,
       default: 100,
     },
+    mobileOperator: {
+      type: String,
+      default: '中国移动',
+    },
     ...makeTagProps(),
     ...makeVariantProps(),
     ...makeDeviceProps(),
@@ -44,6 +48,7 @@ export default defineComponent({
             <VeDeviceStatusBar
               height={ deviceModel.value.statusBarHeight }
               batteryPercentage={ props.batteryPercentage }
+              mobileOperator={ props.mobileOperator }
             />
           ) }
 
