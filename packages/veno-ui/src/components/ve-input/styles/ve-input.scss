@@ -2,8 +2,25 @@
 
 .ve-input {
   display: inline-flex;
-  outline: none;
   padding: $input-padding;
   @include border($input-border...);
   @include variant($input-variant...);
+
+  &__prepend,
+  &__append {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    white-space: nowrap;
+  }
+
+  &__prepend {
+    margin-inline-end: 16px;
+    grid-area: prepend;
+  }
+
+  input {
+    flex: 1;
+    outline: none;
+  }
 }
