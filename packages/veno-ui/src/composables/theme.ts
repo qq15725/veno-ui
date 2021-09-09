@@ -141,7 +141,7 @@ const defaultThemeOptions: ThemeOptions = {
       dark: true,
       colors: {
         background: '#121212',
-        surface: '#212121',
+        surface: '#2c2c2c',
         primary: '#1890ff',
         success: '#52c41a',
         warning: '#faad14',

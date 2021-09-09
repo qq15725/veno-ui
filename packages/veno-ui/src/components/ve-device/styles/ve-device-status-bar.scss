@@ -4,7 +4,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.25rem;
+  padding: 1rem 0.5rem;
   color: #000102;
   font-weight: normal;
 
@@ -12,11 +12,12 @@
     display: flex;
     align-items: flex-end;
     height: 1rem;
-    margin-right: 0.125rem;
+    margin-right: 0.25rem;
 
     div {
       width: 0.2rem;
       background-color: currentColor;
+      border-radius: 0.2rem;
 
       + div {
         margin-left: 0.125rem;
@@ -42,7 +43,7 @@
 
   &__mobile-operator {
     font-size: 0.875rem;
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   &__wifi-signal {
@@ -104,15 +105,16 @@
     width: 2rem;
     height: 1rem;
     border-radius: 0.25rem;
-    padding: 0.125rem;
+    padding: 0.0625rem;
 
     &-percentage {
-      margin-right: 0.125rem;
+      margin-right: 0.25rem;
       font-size: 0.875rem;
     }
 
     div {
       background-color: currentColor;
+      border-radius: 0.125rem;
       height: 100%;
     }
   }

@@ -6,6 +6,7 @@ import { defineComponent, toRef } from 'vue'
 
 import { convertToUnit } from '../../utils'
 import { makeTagProps } from '../../composables/tag'
+import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 
@@ -29,12 +30,14 @@ export default defineComponent({
       validator: (value: any) => ['top', 'bottom'].includes(value),
     },
     ...makeTagProps({ tag: 'header' }),
+    ...makeThemeProps(),
     ...makeBorderProps(),
     ...makeLayoutItemProps({ name: 'app-bar' }),
   },
 
   setup (props, { slots }) {
     const { borderClasses } = useBorder(props, 've-app-bar')
+    const { themeClasses } = useTheme(props)
 
     const layoutStyles = useLayoutItem(
       props.name,
@@ -49,6 +52,7 @@ export default defineComponent({
       <props.tag
         class={ [
           've-app-bar',
+          themeClasses.value,
           borderClasses.value,
         ] }
         style={ [
