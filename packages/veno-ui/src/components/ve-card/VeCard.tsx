@@ -3,6 +3,7 @@ import './styles/ve-card.scss'
 import { defineComponent } from 'vue'
 
 import { makeTagProps } from '../../composables/tag'
+import { makeThemeProps, useTheme } from '../../composables/theme';
 import { makeLoadingProps, useLoading } from '../../composables/loading';
 import { makeDisabledProps, useDisabled } from '../../composables/disabled';
 import { makeRouterProps, useLink } from '../../composables/router'
@@ -17,6 +18,7 @@ export default defineComponent({
 
   props: {
     ...makeTagProps(),
+    ...makeThemeProps(),
     ...makeLoadingProps(),
     ...makeDisabledProps(),
     ...makeRouterProps(),
@@ -30,6 +32,7 @@ export default defineComponent({
   setup (props, { attrs, slots }) {
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-card')
+    const { themeClasses } = useTheme(props)
     const { disabledClasses } = useDisabled(props, 've-card')
     const { positionClasses, positionStyles } = usePosition(props, 've-card')
     const { dimensionStyles } = useDimension(props)
@@ -44,6 +47,7 @@ export default defineComponent({
         <Tag
           class={ [
             've-card',
+            themeClasses.value,
             loadingClasses.value,
             disabledClasses.value,
             positionClasses.value,
