@@ -7,10 +7,13 @@
   color: $card-color;
   border-radius: $card-border-radius;
   text-decoration: none;
-
   @include border($card-border...);
   @include variant($card-variant...);
   @include position($card-positions);
+
+  &--link {
+    cursor: pointer;
+  }
 
   &-title {
     display: flex;

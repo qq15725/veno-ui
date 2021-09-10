@@ -17,6 +17,7 @@ export default defineComponent({
   name: 'VeCard',
 
   props: {
+    link: Boolean,
     ...makeTagProps(),
     ...makeThemeProps(),
     ...makeLoadingProps(),
@@ -39,6 +40,7 @@ export default defineComponent({
     const { borderClasses } = useBorder(props, 've-card')
     const { roundedClasses } = useRounded(props, 've-card')
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-card')
+    const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
@@ -47,6 +49,9 @@ export default defineComponent({
         <Tag
           class={ [
             've-card',
+            {
+              've-card--link': isClickable,
+            },
             themeClasses.value,
             loadingClasses.value,
             disabledClasses.value,
