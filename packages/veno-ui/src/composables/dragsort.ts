@@ -10,7 +10,7 @@ import {
   onBeforeUnmount,
 } from 'vue'
 
-import { propsFactory, getUid } from '../utils'
+import { propsFactory, getUid, mergeDeep } from '../utils'
 
 import type { InjectionKey, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
@@ -93,7 +93,9 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
   const vm = getCurrentInstance()
 
   function updateModelValue () {
-    vm?.emit('update:modelValue', items.value)
+    vm?.emit('update:modelValue', [
+      ...toRaw(items.value).map(v => mergeDeep({}, v))
+    ])
   }
 
   function swap (index: number) {
