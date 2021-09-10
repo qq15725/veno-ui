@@ -61,11 +61,17 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
   const selected = ref<number | null>(null)
   const put = toRef(props, 'put')
   const group = toRef(props, 'group')
-  const items = ref([...toRaw(props.modelValue)])
+  const items = ref<Record<string, any>[]>([])
 
-  watch(() => props.modelValue, value => {
-    items.value = [...toRaw(value)]
-  })
+  watch(
+    () => props.modelValue,
+    value => {
+      if (items.value !== value) {
+        items.value = [...toRaw(value)]
+      }
+    },
+    { immediate: true, deep: true }
+  )
 
   const provide = inject(injectKey, null)
 
@@ -87,7 +93,7 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
   const vm = getCurrentInstance()
 
   function updateModelValue () {
-    vm?.emit('update:modelValue', [...toRaw(items.value)])
+    vm?.emit('update:modelValue', items.value)
   }
 
   function swap (index: number) {
