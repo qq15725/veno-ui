@@ -32,6 +32,7 @@ interface DragsortItem
   put: Ref<boolean>
   group: Ref<string | undefined>
   items: Ref<any[]>
+  clone: Ref<(v: any) => any>
   updateModelValue: () => void
 }
 
@@ -40,6 +41,7 @@ interface DragsortProps
   modelValue: any[]
   put: boolean
   group?: string
+  clone: (v: any) => any
 }
 
 export const makeDragsortProps = propsFactory({
@@ -52,15 +54,23 @@ export const makeDragsortProps = propsFactory({
     default: true,
   },
   group: String,
+  clone: {
+    type: Function,
+    default: (val: any) => val,
+  },
 }, 'dragsort')
 
 export const DragSortGroupSymbol: InjectionKey<DragsortGroupProvide> = Symbol.for('veno-ui:drag-sort-group')
 
-export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymbol) {
+export function useDragsort (
+  props: DragsortProps,
+  injectKey = DragSortGroupSymbol
+) {
   const id = getUid()
   const selected = ref<number | null>(null)
   const put = toRef(props, 'put')
   const group = toRef(props, 'group')
+  const clone = toRef(props, 'clone')
   const items = ref<Record<string, any>[]>([])
 
   watch(
@@ -82,6 +92,7 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
       put,
       group,
       items,
+      clone,
       updateModelValue,
     })
 
@@ -240,7 +251,7 @@ export function createDragsortGroup (injectKey = DragSortGroupSymbol) {
       || selectedItem.selected === null
     ) return
 
-    const value = selectedItem.items[selectedItem.selected]
+    const value = selectedItem.clone(selectedItem.items[selectedItem.selected])
 
     if (selectedItem.put && item.put) {
       selectedItem.items.splice(selectedItem.selected, 1)
