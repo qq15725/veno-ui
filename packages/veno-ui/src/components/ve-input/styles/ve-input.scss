@@ -2,25 +2,41 @@
 
 .ve-input {
   display: inline-flex;
+  position: relative;
+  align-items: center;
+  max-width: 100%;
   padding: $input-padding;
   @include border($input-border...);
   @include variant($input-variant...);
 
-  &__prepend,
-  &__append {
+  &--disabled,
+  &--disabled .ve-input__input-el {
+    cursor: not-allowed;
+    background-color: $input-disabled-background;
+    color: $input-disabled-color;
+  }
+
+  &__prefix,
+  &__suffix {
     display: flex;
     align-items: center;
     align-self: center;
     white-space: nowrap;
   }
 
-  &__prepend {
-    margin-inline-end: 16px;
-    grid-area: prepend;
+  &__prefix {
+    margin-inline-end: 0.5rem;
   }
 
-  input {
-    flex: 1;
-    outline: none;
+  &__input {
+    position: relative;
+    flex: 1 1 auto;
+    overflow: hidden;
+
+    &-el {
+      display: block;
+      outline: none;
+      width: 100%;
+    }
   }
 }
