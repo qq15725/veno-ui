@@ -22,7 +22,7 @@ interface DragsortGroupProvide
   items: UnwrapNestedRefs<DragsortItem[]>
   selected: Ref<number | null>
   select: (id: number) => void
-  moveTo: (id: number, index: number) => void
+  moveTo: (target: { id: number, index?: number }) => void
 }
 
 interface DragsortItem
@@ -45,7 +45,7 @@ interface DragsortProps
 export const makeDragsortProps = propsFactory({
   modelValue: {
     type: Array,
-    default: () => [],
+    default: () => ([]),
   },
   put: {
     type: Boolean,
@@ -104,7 +104,30 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
     ]
   }
 
-  function makeOn (index: number) {
+  function makeDragAreaOn (index?: number) {
+    function dragenter (e: DragEvent) {
+      if (selected.value === index) return
+
+      if (selected.value !== null && index !== undefined) {
+        if (put.value) {
+          swap(index)
+        }
+      } else if (provide) {
+        provide.moveTo({ id, index })
+      }
+    }
+
+    function dragover (e: DragEvent) {
+      e.preventDefault()
+    }
+
+    return {
+      dragenter,
+      dragover,
+    }
+  }
+
+  function makeDragOn (index: number) {
     function mousedown (e: MouseEvent) {
       selected.value = index
       if (provide) provide.select(id)
@@ -119,6 +142,7 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
       el.addEventListener('dragstart', dragstart)
       el.addEventListener('dragend', dragend)
       window.addEventListener('mouseup', mouseup)
+
       function mouseup () {
         window.removeEventListener('mouseup', mouseup)
         el.removeAttribute('draggable')
@@ -146,31 +170,22 @@ export function useDragsort (props: DragsortProps, injectKey = DragSortGroupSymb
       el.removeEventListener('dragend', dragend)
     }
 
-    function dragenter (e: DragEvent) {
-      if (selected.value === index) return
-
-      if (selected.value !== null) {
-        if (put.value) {
-          swap(index)
-        }
-      } else if (provide) {
-        provide.moveTo(id, index)
-      }
-    }
-
-    function dragover (e: DragEvent) {
-      e.preventDefault()
-    }
-
     return {
-      mousedown,
-      dragenter,
-      dragover,
+      mousedown
+    }
+  }
+
+  function makeOn (index: number) {
+    return {
+      ...makeDragOn(index),
+      ...makeDragAreaOn(index),
     }
   }
 
   return {
     items,
+    makeDragOn,
+    makeDragAreaOn,
     makeOn,
   }
 }
@@ -201,10 +216,10 @@ export function createDragsortGroup (injectKey = DragSortGroupSymbol) {
     return items.find(v => v.id === id)
   }
 
-  function moveTo (id: number, index: number) {
+  function moveTo (target: { id: number, index?: number }) {
     if (selected.value === null) return
 
-    const item = find(id)
+    const item = find(target.id)
 
     if (!item || item.group === undefined) return
 
@@ -225,8 +240,13 @@ export function createDragsortGroup (injectKey = DragSortGroupSymbol) {
     }
 
     if (item.put) {
-      item.items.splice(index, 0, value)
-      item.selected = index
+      if (target.index !== undefined) {
+        item.items.splice(target.index, 0, value)
+        item.selected = target.index
+      } else {
+        item.items.push(value)
+        item.selected = 0
+      }
       select(item.id)
       item.updateModelValue()
     }

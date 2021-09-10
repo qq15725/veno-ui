@@ -8,7 +8,7 @@ export default defineComponent({
     createDragsortGroup()
 
     return () => {
-      return slots.default?.({})
+      return slots.default?.()
     }
   }
 })
