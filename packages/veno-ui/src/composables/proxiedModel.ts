@@ -32,7 +32,6 @@ export function useProxiedModel<Props extends object, Prop extends Extract<keyof
       else return internal.value
     },
     set (newValue) {
-      console.log(newValue)
       internal.value = newValue
       vm?.emit(`update:${ prop }`, transformOut(newValue))
     },
