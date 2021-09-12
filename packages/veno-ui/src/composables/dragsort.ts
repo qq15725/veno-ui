@@ -30,9 +30,10 @@ interface DragsortItem
   selected: Ref<number | null>
   put: Ref<boolean>
   group: Ref<string | undefined>
-  items: Ref<any[]>
-  clone: Ref<(v: any) => any>
-  updateModelValue: () => void
+  find: (index: number) => void
+  add: (newIndex: number, item: any) => void
+  remove: (oldIndex: number) => void
+  emit: () => void
 }
 
 interface DragsortProps
@@ -69,8 +70,8 @@ export function useDragsort (
   const selected = ref<number | null>(null)
   const put = toRef(props, 'put')
   const group = toRef(props, 'group')
-  const clone = toRef(props, 'clone')
-  const items = ref<Record<string, any>[]>([])
+  const items = ref<any[]>([])
+  const state = ref<Record<string, any> | null>(null)
 
   watchEffect(() => items.value = [...props.modelValue])
 
@@ -82,9 +83,10 @@ export function useDragsort (
       selected,
       put,
       group,
-      items,
-      clone,
-      updateModelValue,
+      find,
+      add,
+      remove,
+      emit,
     })
 
     onBeforeUnmount(() => {
@@ -94,22 +96,43 @@ export function useDragsort (
 
   const vm = getCurrentInstance()
 
-  function updateModelValue () {
-    vm?.emit('update:modelValue', items.value)
+  function find (index: number) {
+    return props.clone(items.value[index])
   }
 
-  function swap (index: number) {
-    if (selected.value === null) return
+  function add (newIndex: number, item: any) {
+    items.value.splice(newIndex, 0, item)
+    state.value = {
+      added: { item, newIndex }
+    }
+  }
 
-    [
-      items.value[selected.value],
-      items.value[index],
-      selected.value,
-    ] = [
-      items.value[index],
-      items.value[selected.value],
-      index,
-    ]
+  function remove (oldIndex: number) {
+    const item = items.value[oldIndex]
+    items.value.splice(oldIndex, 1)
+    state.value = {
+      removed: { item, oldIndex }
+    }
+  }
+
+  function move (oldIndex: number, newIndex: number) {
+    const item = items.value[oldIndex]
+    items.value.splice(
+      newIndex,
+      0,
+      items.value.splice(oldIndex, 1)[0]
+    )
+    state.value = {
+      moved: { item, oldIndex, newIndex }
+    }
+  }
+
+  function emit () {
+    vm?.emit('update:modelValue', items.value)
+
+    if (state.value) {
+      vm?.emit('change', state.value)
+    }
   }
 
   function makeDragAreaOn (index?: number) {
@@ -117,9 +140,11 @@ export function useDragsort (
       if (selected.value === index) return
 
       if (selected.value !== null && index !== undefined) {
-        if (put.value) {
-          swap(index)
-        }
+        if (!put.value) return
+
+        move(selected.value, index)
+
+        selected.value = index
       } else if (provide) {
         provide.moveTo({ id, index })
       }
@@ -139,9 +164,7 @@ export function useDragsort (
     function mousedown (e: MouseEvent) {
       selected.value = index
       if (provide) provide.select(id)
-      if (!vm?.vnode.el) {
-        return
-      }
+      if (!vm?.vnode.el) return
       const vnodeEl = vm.vnode.el.nodeType === 1
         ? vm.vnode.el
         : vm.vnode.el.parentElement
@@ -149,19 +172,15 @@ export function useDragsort (
       el.setAttribute('draggable', 'true')
       el.addEventListener('dragstart', dragstart)
       el.addEventListener('dragend', dragend)
-      window.addEventListener('mouseup', mouseup)
-
-      function mouseup () {
+      window.addEventListener('mouseup', function mouseup () {
         window.removeEventListener('mouseup', mouseup)
         el.removeAttribute('draggable')
-      }
+      })
     }
 
     function dragstart (e: DragEvent) {
       if (!e.dataTransfer) return
-
       const el = e.target as HTMLElement
-
       e.dataTransfer.setData('Text', el.textContent || '')
       e.dataTransfer.effectAllowed = 'move'
     }
@@ -169,7 +188,7 @@ export function useDragsort (
     function dragend (e: DragEvent) {
       if (selected.value !== null) {
         selected.value = null
-        updateModelValue()
+        emit()
       }
 
       const el = e.target as HTMLElement
@@ -240,23 +259,19 @@ export function createDragsortGroup (injectKey = DragSortGroupKey) {
       || selectedItem.selected === null
     ) return
 
-    const value = selectedItem.clone(selectedItem.items[selectedItem.selected])
+    const value = selectedItem.find(selectedItem.selected)
 
     if (selectedItem.put && item.put) {
-      selectedItem.items.splice(selectedItem.selected, 1)
-      selectedItem.updateModelValue()
+      selectedItem.remove(selectedItem.selected)
+      selectedItem.emit()
     }
 
     if (item.put) {
-      if (target.index !== undefined) {
-        item.items.splice(target.index, 0, value)
-        item.selected = target.index
-      } else {
-        item.items.push(value)
-        item.selected = 0
-      }
+      const index = target.index || 0
+      item.add(index, value)
+      item.emit()
+      item.selected = index
       select(item.id)
-      item.updateModelValue()
     }
   }
 
