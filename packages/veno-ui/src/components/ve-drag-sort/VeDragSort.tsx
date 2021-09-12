@@ -1,5 +1,3 @@
-import './styles/ve-drag-sort.scss'
-
 import { defineComponent } from 'vue'
 
 import { makeDragsortProps, useDragsort } from '../../composables/dragsort'
@@ -7,8 +5,10 @@ import { makeDragsortProps, useDragsort } from '../../composables/dragsort'
 export default defineComponent({
   name: 'VeDragSort',
   props: {
-    full: Boolean,
-    absolute: Boolean,
+    itemKey: {
+      type: [String, Function],
+      required: true,
+    },
     ...makeDragsortProps(),
   },
   setup (props, { slots }) {
@@ -17,29 +17,26 @@ export default defineComponent({
     const dragAreaOn = makeDragAreaOn()
 
     return () => {
-      return (
-        items.value.length > 0 ? (
-          items.value.map((item, index) => {
-            return slots.item?.({
+      return [
+        slots.prepend?.({ on: dragAreaOn }),
+
+        items.value.flatMap((item, index) => {
+          return slots
+            .item?.({
               item,
               index,
               on: makeOn(index),
             })
-          })
-        ) : (
-          <div
-            class={ [
-              've-drag-sort',
-              {
-                've-drag-sort--full': props.full,
-                've-drag-sort--absolute': props.absolute,
-              }
-            ] }
-            onDragenter={ dragAreaOn.dragenter }
-            onDragover={ dragAreaOn.dragover }
-          />
-        )
-      )
+            .map(node => {
+              node.key = typeof props.itemKey === 'function'
+                ? props.itemKey(item)
+                : item[props.itemKey]
+              return node
+            })
+        }),
+
+        slots.append?.({ on: dragAreaOn }),
+      ]
     }
   }
 })

@@ -1,18 +1,17 @@
 import {
   reactive,
   ref,
-  toRaw,
   toRef,
   provide,
   inject,
-  watch,
+  watchEffect,
   getCurrentInstance,
   onBeforeUnmount,
 } from 'vue'
 
-import { propsFactory, getUid, mergeDeep } from '../utils'
+import { propsFactory, getUid } from '../utils'
 
-import type { InjectionKey, Ref, UnwrapRef } from 'vue'
+import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
 
 interface DragsortGroupProvide
@@ -55,16 +54,16 @@ export const makeDragsortProps = propsFactory({
   },
   group: String,
   clone: {
-    type: Function,
-    default: (val: any) => val,
+    type: Function as PropType<(v: any) => any>,
+    default: (v: any) => v,
   },
 }, 'dragsort')
 
-export const DragSortGroupSymbol: InjectionKey<DragsortGroupProvide> = Symbol.for('veno-ui:drag-sort-group')
+export const DragSortGroupKey: InjectionKey<DragsortGroupProvide> = Symbol.for('veno-ui:drag-sort-group')
 
 export function useDragsort (
   props: DragsortProps,
-  injectKey = DragSortGroupSymbol
+  injectKey = DragSortGroupKey
 ) {
   const id = getUid()
   const selected = ref<number | null>(null)
@@ -73,15 +72,7 @@ export function useDragsort (
   const clone = toRef(props, 'clone')
   const items = ref<Record<string, any>[]>([])
 
-  watch(
-    () => props.modelValue,
-    value => {
-      if (items.value !== value) {
-        items.value = [...toRaw(value)]
-      }
-    },
-    { immediate: true, deep: true }
-  )
+  watchEffect(() => items.value = [...props.modelValue])
 
   const provide = inject(injectKey, null)
 
@@ -104,9 +95,7 @@ export function useDragsort (
   const vm = getCurrentInstance()
 
   function updateModelValue () {
-    vm?.emit('update:modelValue', [
-      ...toRaw(items.value).map(v => mergeDeep({}, v))
-    ])
+    vm?.emit('update:modelValue', items.value)
   }
 
   function swap (index: number) {
@@ -209,7 +198,7 @@ export function useDragsort (
   }
 }
 
-export function createDragsortGroup (injectKey = DragSortGroupSymbol) {
+export function createDragsortGroup (injectKey = DragSortGroupKey) {
   const items = reactive<DragsortItem[]>([])
   const selected = ref<number | null>(null)
 
