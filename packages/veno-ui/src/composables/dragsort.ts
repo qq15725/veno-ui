@@ -21,7 +21,8 @@ interface DragsortGroupProvide
   items: UnwrapNestedRefs<DragsortItem[]>
   selected: Ref<number | null>
   select: (id: number) => void
-  moveTo: (target: { id: number, index?: number }) => void
+  dragenter: (id: number, index?: number) => void
+  dragleave: (id: number, index?: number) => void
 }
 
 interface DragsortItem
@@ -139,15 +140,20 @@ export function useDragsort (
     function dragenter (e: DragEvent) {
       if (selected.value === index) return
 
-      if (selected.value !== null && index !== undefined) {
-        if (!put.value) return
-
+      if (selected.value !== null
+        && index !== undefined
+        && put.value) {
         move(selected.value, index)
-
         selected.value = index
-      } else if (provide) {
-        provide.moveTo({ id, index })
       }
+
+      if (provide) provide.dragenter(id, index)
+    }
+
+    function dragleave (e: DragEvent) {
+      if (selected.value === index) return
+
+      if (provide) provide.dragleave(id, index)
     }
 
     function dragover (e: DragEvent) {
@@ -156,14 +162,13 @@ export function useDragsort (
 
     return {
       dragenter,
+      dragleave,
       dragover,
     }
   }
 
   function makeDragOn (index: number) {
     function mousedown (e: MouseEvent) {
-      selected.value = index
-      if (provide) provide.select(id)
       if (!vm?.vnode.el) return
       const vnodeEl = vm.vnode.el.nodeType === 1
         ? vm.vnode.el
@@ -176,6 +181,8 @@ export function useDragsort (
         window.removeEventListener('mouseup', mouseup)
         el.removeAttribute('draggable')
       })
+      selected.value = index
+      if (provide) provide.select(id)
     }
 
     function dragstart (e: DragEvent) {
@@ -186,15 +193,12 @@ export function useDragsort (
     }
 
     function dragend (e: DragEvent) {
-      if (selected.value !== null) {
-        selected.value = null
-        emit()
-      }
-
       const el = e.target as HTMLElement
       el.removeAttribute('draggable')
       el.removeEventListener('dragstart', dragstart)
       el.removeEventListener('dragend', dragend)
+      selected.value = null
+      emit()
     }
 
     return {
@@ -243,10 +247,10 @@ export function createDragsortGroup (injectKey = DragSortGroupKey) {
     return items.find(v => v.id === id)
   }
 
-  function moveTo (target: { id: number, index?: number }) {
-    if (selected.value === null) return
+  function dragenter (id: number, index?: number) {
+    if (selected.value === null || selected.value === id) return
 
-    const item = find(target.id)
+    const item = find(id)
 
     if (!item || item.group === undefined) return
 
@@ -267,12 +271,16 @@ export function createDragsortGroup (injectKey = DragSortGroupKey) {
     }
 
     if (item.put) {
-      const index = target.index || 0
+      index = index || 0
       item.add(index, value)
-      item.emit()
       item.selected = index
+      item.emit()
       select(item.id)
     }
+  }
+
+  function dragleave (id: number, index?: number) {
+    // TODO
   }
 
   const state = {
@@ -281,7 +289,8 @@ export function createDragsortGroup (injectKey = DragSortGroupKey) {
     items,
     selected,
     select,
-    moveTo,
+    dragenter,
+    dragleave,
   }
 
   provide(injectKey, state)
