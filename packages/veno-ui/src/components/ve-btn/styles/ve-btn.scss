@@ -63,17 +63,5 @@
 
   &--loading {
     cursor: wait;
-
-    //&::after {
-    //  @apply absolute;
-    //  content: ' ';
-    //  border-radius: inherit;
-    //  @apply w-full h-full;
-    //  @apply bg-black;
-    //  @apply top-0 left-0;
-    //  @apply transform;
-    //  @apply opacity-10;
-    //  animation: animate-width 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    //}
   }
 }

@@ -15,6 +15,12 @@
     cursor: pointer;
   }
 
+  &--disabled {
+    cursor: not-allowed;
+    background-color: $card-disabled-background;
+    color: $card-disabled-color;
+  }
+
   &-title {
     display: flex;
     align-items: center;

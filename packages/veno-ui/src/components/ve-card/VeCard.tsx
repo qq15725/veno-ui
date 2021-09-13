@@ -40,10 +40,10 @@ export default defineComponent({
     const { borderClasses } = useBorder(props, 've-card')
     const { roundedClasses } = useRounded(props, 've-card')
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-card')
-    const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
+      const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
       return (
         <Tag
@@ -66,9 +66,8 @@ export default defineComponent({
             dimensionStyles.value,
             colorStyles.value,
           ] }
-          disabled={ props.disabled || undefined }
           href={ link.href.value }
-          onClick={ props.disabled || link.navigate }
+          onClick={ isClickable && link.navigate }
         >
           { slots.default?.() }
         </Tag>
