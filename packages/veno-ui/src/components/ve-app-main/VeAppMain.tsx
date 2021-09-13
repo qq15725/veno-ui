@@ -37,7 +37,7 @@ export default defineComponent({
           colorStyles.value,
         ] }
       >
-        <div class="ve-app-main__wrap">
+        <div class="ve-app-main__wrapper">
           { slots.default?.() }
         </div>
       </props.tag>

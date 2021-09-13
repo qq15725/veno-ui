@@ -10,11 +10,13 @@ export default defineComponent({
   name: 'VeInput',
 
   props: {
+    modelValue: [String, Number],
+    textarea: Boolean,
+    autosize: Boolean,
     type: {
       type: String,
       default: 'text',
     },
-    modelValue: [String, Number],
     ...makeDisabledProps(),
     ...makeBorderProps(),
     ...makeVariantProps(),
@@ -26,10 +28,16 @@ export default defineComponent({
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-input')
 
     return () => {
+      const Tag = props.textarea ? 'textarea' : 'input'
+
       return (
         <div
           class={ [
             've-input',
+            {
+              've-input--textarea': props.textarea,
+              've-input--autosize': props.textarea && props.autosize,
+            },
             colorClasses.value,
             disabledClasses.value,
             borderClasses.value,
@@ -47,14 +55,24 @@ export default defineComponent({
             )
           }
 
-          <div class="ve-input__input">
-            <input
-              class="ve-input__input-el"
+          <div class="ve-input__wrapper">
+            <Tag
+              class="ve-input__el"
               value={ props.modelValue }
-              type={ props.type }
+              type={ props.textarea ? undefined : props.type }
+              rows={ props.textarea ? 3 : undefined }
               onInput={ e => emit('update:modelValue', (e.target as HTMLInputElement).value) }
               disabled={ props.disabled }
             />
+
+            {
+              props.textarea && props.autosize && (
+                <div
+                  class="ve-input__mirror"
+                  v-text={ props.modelValue }
+                />
+              )
+            }
           </div>
 
           {

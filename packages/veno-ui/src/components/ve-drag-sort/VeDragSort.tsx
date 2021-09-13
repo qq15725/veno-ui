@@ -21,10 +21,10 @@ export default defineComponent({
     const dragAreaOn = makeDragAreaOn()
 
     return () => {
-      return [
-        slots.prepend?.({ on: dragAreaOn }),
+      return <>
+        { slots.prepend?.({ on: dragAreaOn }) }
 
-        items.value.flatMap((item, index) => {
+        { items.value.flatMap((item, index) => {
           return slots
             .item?.({
               item,
@@ -39,10 +39,10 @@ export default defineComponent({
               }
               return node
             })
-        }),
+        }) }
 
-        slots.append?.({ on: dragAreaOn }),
-      ]
+        { slots.append?.({ on: dragAreaOn }) }
+      </>
     }
   }
 })
