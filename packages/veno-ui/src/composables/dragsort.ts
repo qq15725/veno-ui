@@ -168,18 +168,20 @@ export function useDragsort (
   }
 
   function makeDragOn (index: number) {
+    const el = ref<HTMLElement | null>(null)
+
     function mousedown (e: MouseEvent) {
       if (!vm?.vnode.el) return
       const vnodeEl = vm.vnode.el.nodeType === 1
         ? vm.vnode.el
         : vm.vnode.el.parentElement
-      const el = vnodeEl.children[index] as HTMLElement
-      el.setAttribute('draggable', 'true')
-      el.addEventListener('dragstart', dragstart)
-      el.addEventListener('dragend', dragend)
+      el.value = vnodeEl.children[index] as HTMLElement
+      el.value.setAttribute('draggable', 'true')
+      window.addEventListener('dragstart', dragstart)
+      window.addEventListener('dragend', dragend)
       window.addEventListener('mouseup', function mouseup () {
         window.removeEventListener('mouseup', mouseup)
-        el.removeAttribute('draggable')
+        el.value?.removeAttribute('draggable')
       })
       selected.value = index
       if (provide) provide.select(id)
@@ -187,16 +189,14 @@ export function useDragsort (
 
     function dragstart (e: DragEvent) {
       if (!e.dataTransfer) return
-      const el = e.target as HTMLElement
-      e.dataTransfer.setData('Text', el.textContent || '')
+      e.dataTransfer.setData('Text', el.value?.textContent || '')
       e.dataTransfer.effectAllowed = 'move'
     }
 
     function dragend (e: DragEvent) {
-      const el = e.target as HTMLElement
-      el.removeAttribute('draggable')
-      el.removeEventListener('dragstart', dragstart)
-      el.removeEventListener('dragend', dragend)
+      el.value?.removeAttribute('draggable')
+      window.removeEventListener('dragstart', dragstart)
+      window.removeEventListener('dragend', dragend)
       selected.value = null
       emit()
     }

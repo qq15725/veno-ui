@@ -6,12 +6,7 @@ export default defineComponent({
   name: 'VeDragSort',
 
   props: {
-    itemKey: {
-      type: [String, Function],
-      default: (v: any, i: number) => typeof v === 'object'
-        ? JSON.stringify(v)
-        : v,
-    },
+    itemKey: [String, Function],
     ...makeDragsortProps(),
   },
 
@@ -37,9 +32,11 @@ export default defineComponent({
               on: makeOn(index),
             })
             .map(node => {
-              node.key = typeof props.itemKey === 'function'
-                ? props.itemKey(item, index)
-                : item[props.itemKey]
+              if (props.itemKey) {
+                node.key = typeof props.itemKey === 'function'
+                  ? props.itemKey(item, index)
+                  : item[props.itemKey]
+              }
               return node
             })
         }),
