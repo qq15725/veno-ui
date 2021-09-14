@@ -1,3 +1,5 @@
+@use '../theme/variables' as *;
+
 html {
   font-family: $body-font-family;
   line-height: $line-height-root;

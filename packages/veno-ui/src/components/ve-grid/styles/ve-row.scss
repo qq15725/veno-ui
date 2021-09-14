@@ -1,4 +1,7 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/theme/grid' as *;
+@use 'mixins' as *;
 
 // Row
 //

@@ -1,3 +1,5 @@
+@use '../../../styles/tools' as *;
+
 // For each breakpoint, define the maximum width of the container in a media query
 @mixin make-container-max-widths($max-widths, $breakpoints) {
   @each $breakpoint, $container-max-width in $max-widths {

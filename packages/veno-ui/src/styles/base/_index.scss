@@ -1,5 +1,5 @@
-@import './_global';
-@import './_reset';
-@import './_colors';
-@import './_utilities';
-@import './_layout';
+@forward 'global';
+@forward 'reset';
+@forward 'colors';
+@forward 'utilities';
+@forward 'layout';

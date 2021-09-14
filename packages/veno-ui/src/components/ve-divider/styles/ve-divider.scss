@@ -1,4 +1,6 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools' as *;
 
 .ve-divider {
   display: flex;

@@ -1,4 +1,4 @@
-@import '../../../styles/theme-mixins';
+@use '../../../styles/theme/border' as *;
 
 $device-app-bar-header: 40px !default;
 

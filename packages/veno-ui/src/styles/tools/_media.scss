@@ -1,3 +1,6 @@
+@use '../theme/grid' as *;
+@use 'functions' as *;
+
 @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
 
@@ -9,4 +12,3 @@
     @content
   }
 }
-

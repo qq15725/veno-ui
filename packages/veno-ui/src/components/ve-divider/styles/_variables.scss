@@ -1,4 +1,4 @@
-@import '../../../styles/theme-mixins';
+@use '../../../styles/theme/border' as *;
 
 // border
 $divider-border-color: $border-color !default;

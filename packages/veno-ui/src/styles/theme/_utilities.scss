@@ -1,4 +1,6 @@
-@import '../mixins/_functions';
+@use '../tools/functions' as *;
+@use 'variables' as *;
+@use 'border' as *;
 
 $spacers: () !default;
 @if (type-of($spacers) == list) {

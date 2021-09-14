@@ -1,5 +1,6 @@
+@use '../theme/border' as *;
 
-@mixin variant($contained-background, $contained-color) {
+@mixin use-variant($contained-background, $contained-color) {
   &--variant-outlined,
   &--variant-text {
     background: transparent;
@@ -9,13 +10,13 @@
   &--variant-contained {
     background: $contained-background;
     color: $contained-color;
-
-    &-border {
-      border-width: thin;
-    }
   }
 
   &--variant-outlined {
-    border: thin solid currentColor;
+    border: thin solid $border-color;
+  }
+
+  &--variant-custom-color {
+    border-color: currentColor;
   }
 }

@@ -1,3 +1,5 @@
+@use '../tools/functions' as *;
+
 $border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !default;
 $border-style: solid !default;
 $border-width: thin !default;

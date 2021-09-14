@@ -1,10 +1,12 @@
 @use 'sass:string';
+@use '../theme' as *;
+@use '../tools';
 
 // Utilities
 @each $breakpoint in map-keys($grid-breakpoints) {
   // Generate media query if needed
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+  @include tools.media-breakpoint-up($breakpoint) {
+    $infix: tools.breakpoint-infix($breakpoint, $grid-breakpoints);
     // Loop over each utility property
     @each $key, $utility in $utilities {
       // The utility can be disabled with `false`, thus check if the utility is a map first
@@ -12,15 +14,15 @@
 
       @if string.slice($key, -4) == ':ltr' {
         @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
-          @include generate-utility($utility, $infix, 'ltr');
+          @include tools.generate-utility($utility, $infix, 'ltr');
         }
       } @else if string.slice($key, -4) == ':rtl' {
         @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
-          @include generate-utility($utility, $infix, 'rtl')
+          @include tools.generate-utility($utility, $infix, 'rtl')
         }
       } @else {
         @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
-          @include generate-utility($utility, $infix, 'bidi');
+          @include tools.generate-utility($utility, $infix, 'bidi');
         }
       }
     }
@@ -34,15 +36,15 @@
     // Then check if the utility needs print styles
     @if string.slice($key, -4) == ':ltr' {
       @if type-of($utility) == "map" and map-get($utility, print) == true {
-        @include generate-utility($utility, "-print", 'ltr');
+        @include tools.generate-utility($utility, "-print", 'ltr');
       }
     } @else if string.slice($key, -4) == ':rtl' {
       @if type-of($utility) == "map" and map-get($utility, print) == true {
-        @include generate-utility($utility, "-print", 'rtl');
+        @include tools.generate-utility($utility, "-print", 'rtl');
       }
     } @else {
       @if type-of($utility) == "map" and map-get($utility, print) == true {
-        @include generate-utility($utility, "-print", 'bidi');
+        @include tools.generate-utility($utility, "-print", 'bidi');
       }
     }
   }

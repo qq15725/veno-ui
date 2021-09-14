@@ -1,4 +1,5 @@
-@import '../mixins/_functions';
+@use '../tools/functions' as *;
+@use 'variables' as *;
 
 // 网格间距
 $grid-gutter: $spacer * 6 !default;

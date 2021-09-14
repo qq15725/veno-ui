@@ -1,4 +1,4 @@
-@import '../mixins/_functions';
+@use '../tools/functions' as *;
 
 $color-pack: true !default;
 

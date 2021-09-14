@@ -1,4 +1,4 @@
-@import '../../../styles/theme-mixins';
+@use '../../../styles/theme/border' as *;
 
 $app-sider-background: rgb(var(--v-theme-surface)) !default;
 

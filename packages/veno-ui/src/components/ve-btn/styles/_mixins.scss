@@ -1,3 +1,5 @@
+@use '../../../styles/theme/variables' as *;
+
 @mixin button-sizes($map) {
   @each $sizeName, $multiplier in $size-scales {
     $size: map-get($map, 'font-size') + 2 * $multiplier / 16;

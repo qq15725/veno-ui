@@ -1,4 +1,4 @@
-@import '../mixins/_functions';
+@use '../tools/functions' as *;
 
 $black: () !default;
 $black: map-deep-merge(('base': '#000000'), $black);

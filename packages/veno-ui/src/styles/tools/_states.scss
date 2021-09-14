@@ -1,3 +1,5 @@
+@use '../theme/variables' as *;
+
 @mixin states($selector: '&::before', $active: true) {
   &:hover {
     #{$selector} {

@@ -1,4 +1,8 @@
-@import './_variables';
+@forward 'variables';
+@use 'mixins' as *;
+@use 'variables' as *;
+@use '../../../styles/tools' as *;
+@use '../../../styles/theme/variables' as *;
 
 .ve-btn {
   position: relative;
@@ -16,15 +20,20 @@
 
   @include button-sizes($button-sizes);
   @include border($button-border...);
-  @include variant($button-variant...);
+  @include use-variant($button-variant...);
+  @include use-rounded();
 
-  &:not(&--loading):not(&--disabled) {
+  &:not(&--loading):not(&--disabled):not(&--variant-text) {
     @include states('.ve-btn__overlay', false);
   }
 
-  &--variant-contained-border:not(&--loading):not(&--disabled):hover {
-    border-color: rgba(var(--v-theme-primary), 1);
-    color: rgba(var(--v-theme-primary), 1);
+  //&--variant-contained-border:not(&--loading):not(&--disabled):hover {
+  //  border-color: rgba(var(--v-theme-primary), 1);
+  //  color: rgba(var(--v-theme-primary), 1);
+  //}
+
+  &--variant-text {
+    padding: 0;
   }
 
   &__overlay {
@@ -34,14 +43,6 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity .2s ease-in-out;
-  }
-
-  &--tile {
-    border-radius: 0;
-  }
-
-  &--rounded {
-    border-radius: 1.5rem;
   }
 
   &--block {

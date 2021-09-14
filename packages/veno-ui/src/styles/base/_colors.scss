@@ -1,3 +1,6 @@
+@use '../theme/variables' as *;
+@use '../theme/colors' as *;
+@use '../tools/color' as *;
 
 // 需要颜色包则生成颜色帮助类
 @if ($color-pack) {

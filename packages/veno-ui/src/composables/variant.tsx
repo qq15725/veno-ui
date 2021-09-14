@@ -10,8 +10,8 @@ import type { PropType } from 'vue'
 import type { MaybeRef } from '../utils'
 
 export const allowedVariants = [
-  'contained',
   'outlined',
+  'contained',
   'text',
 ] as const
 
@@ -29,7 +29,7 @@ export const makeVariantProps = propsFactory({
   textColor: String,
   variant: {
     type: String as PropType<Variant>,
-    default: 'contained',
+    default: 'outlined',
     validator: (v: any) => allowedVariants.includes(v),
   },
   dashed: Boolean,
@@ -39,17 +39,10 @@ export function useVariant (props: MaybeRef<VariantProps>, name: string) {
   const variantClasses = computed(() => {
     const { variant, color } = unref(props)
 
-    const classes = [
-      `${ name }--variant-${ variant }`
-    ]
-
-    if (variant === 'contained' && !color) {
-      classes.push(
-        `${ classes[0] }-border`
-      )
+    return {
+      [`${ name }--variant-${ variant }`]: true,
+      [`${ name }--variant-custom-color`]: !!color,
     }
-
-    return classes
   })
 
   const { colorClasses, colorStyles } = useColor(computed(() => {

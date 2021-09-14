@@ -1,4 +1,5 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
 
 .ve-app {
   display: flex;

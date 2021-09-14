@@ -1,9 +1,8 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
 
 .ve-list {
   overflow: auto;
   position: relative;
   padding: 8px 0;
-
-
 }

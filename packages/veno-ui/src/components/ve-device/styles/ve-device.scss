@@ -1,4 +1,6 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools' as *;
 
 .ve-device {
   display: flex;
@@ -7,7 +9,7 @@
   color: $device-color;
   border-radius: $device-border-radius;
   @include border($device-border...);
-  @include variant($device-variant...);
+  @include use-variant($device-variant...);
 
   &__app-bar {
     height: $device-app-bar-header;

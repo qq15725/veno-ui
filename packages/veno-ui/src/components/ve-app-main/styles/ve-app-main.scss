@@ -1,10 +1,11 @@
-@import './_variables';
+@forward 'variables';
+@use 'variables' as *;
 
 .ve-app-main {
   display: flex;
   flex: 1 0 auto;
   max-width: 100%;
-  transition: $main-transition;
+  transition: $app-main-transition;
 
   &__wrapper {
     flex: 1 1 auto;
