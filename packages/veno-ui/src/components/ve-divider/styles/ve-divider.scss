@@ -8,7 +8,7 @@
   font-variant: tabular-nums;
   font-feature-settings: 'tnum';
   width: 100%;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 500;
   @include border($divider-border-color, $divider-border-style, 0);
 
@@ -49,7 +49,6 @@
   &__content {
     display: flex;
     align-items: center;
-    height: 0;
     margin-left: 1rem;
     margin-right: 1rem;
     white-space: nowrap;

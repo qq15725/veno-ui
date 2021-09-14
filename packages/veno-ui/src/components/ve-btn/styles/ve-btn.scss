@@ -27,11 +27,6 @@
     @include states('.ve-btn__overlay', false);
   }
 
-  //&--variant-contained-border:not(&--loading):not(&--disabled):hover {
-  //  border-color: rgba(var(--v-theme-primary), 1);
-  //  color: rgba(var(--v-theme-primary), 1);
-  //}
-
   &--variant-text {
     padding: 0;
   }
