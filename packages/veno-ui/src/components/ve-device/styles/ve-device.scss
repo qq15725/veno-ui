@@ -11,6 +11,10 @@
   @include border($device-border...);
   @include use-variant($device-variant...);
 
+  &__app-header {
+    display: block;
+  }
+
   &__app-bar {
     height: $device-app-bar-header;
     display: flex;

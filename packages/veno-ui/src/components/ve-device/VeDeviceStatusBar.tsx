@@ -1,9 +1,10 @@
 import './styles/ve-device-status-bar.scss'
 
-import { defineComponent, ref, onBeforeUnmount } from 'vue'
+import { defineComponent, ref, onBeforeUnmount, computed, unref } from 'vue'
 
-import { makeTagProps } from '../../composables/tag'
 import { convertToUnit } from '../../utils'
+import { makeTagProps } from '../../composables/tag'
+import { makeColorProps, useColor } from '../../composables/color'
 
 export default defineComponent({
   name: 'VeDeviceStatusBar',
@@ -22,6 +23,7 @@ export default defineComponent({
       default: '中国移动',
     },
     ...makeTagProps(),
+    ...makeColorProps(),
   },
 
   setup (props) {
@@ -45,13 +47,27 @@ export default defineComponent({
       clearInterval(clockTimer)
     })
 
+    const { colorClasses, colorStyles } = useColor(computed(() => {
+      const { textColor, color } = unref(props)
+      return {
+        background: color,
+        text: textColor,
+      }
+    }))
+
     return () => {
       return (
         <props.tag
-          class="ve-device-status-bar"
-          style={ {
-            height: convertToUnit(props.height),
-          } }
+          class={ [
+            've-device-status-bar',
+            colorClasses.value,
+          ] }
+          style={ [
+            {
+              height: convertToUnit(props.height),
+            },
+            colorStyles.value,
+          ] }
         >
           <div class="ve-device-status-bar__clock">{ clock.value }</div>
           <div class="ve-device-status-bar__mobile-signal">
