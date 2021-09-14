@@ -78,7 +78,7 @@ export default defineComponent({
           href={ link.href.value }
           onClick={ props.disabled || link.navigate }
         >
-          <div class="ve-btn__overlay"/>
+          { props.variant !== 'text' && <div class="ve-btn__overlay" /> }
 
           <span>{ slots.default?.() }</span>
         </Tag>

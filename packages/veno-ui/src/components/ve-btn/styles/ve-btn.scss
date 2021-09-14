@@ -23,10 +23,6 @@
   @include use-variant($button-variant...);
   @include use-rounded();
 
-  &:not(&--loading):not(&--disabled):not(&--variant-text) {
-    @include states('.ve-btn__overlay', false);
-  }
-
   &--variant-text {
     padding: 0;
   }
@@ -38,6 +34,10 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity .2s ease-in-out;
+  }
+
+  &:not(&--loading):not(&--disabled) {
+    @include states('.ve-btn__overlay', false);
   }
 
   &--block {
