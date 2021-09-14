@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../../styles/theme/border' as *;
 
 // color
@@ -8,13 +9,23 @@ $button-color: rgb(var(--v-theme-on-surface)) !default;
 $button-disabled-opacity: 0.26 !default;
 $button-disabled-overlay: 0.12 !default;
 
-// size
-$button-height: 36px !default;
-$button-font-size: .875rem !default;
-
 // ratio
 $button-width-ratio: 16/9 !default;
-$button-padding-ratio: 2.25 !default;
+$button-padding-ratio: 4 !default;
+
+// size
+$button-height: 2rem !default;
+$button-font-size: .875rem !default;
+$button-sizes: () !default;
+$button-sizes: map-merge(
+    (
+      'height': $button-height,
+      'font-size': $button-font-size,
+      'width-ratio': $button-width-ratio,
+      'padding-ratio': $button-padding-ratio
+    ),
+    $button-sizes
+);
 
 // border
 $button-border-color: $border-color !default;
@@ -29,19 +40,12 @@ $button-border: (
   $button-border-thin-width
 ) !default;
 
+// icon
+$button-icon-border-radius: map.get($rounded, 'circle') !default;
+$button-icon-font-size: 1rem !default;
+
 // variant
 $button-variant: (
   $button-background,
   $button-color
 ) !default;
-
-$button-sizes: () !default;
-$button-sizes: map-merge(
-    (
-      'height': $button-height,
-      'font-size': $button-font-size,
-      'width-ratio': $button-width-ratio,
-      'padding-ratio': $button-padding-ratio
-    ),
-    $button-sizes
-);

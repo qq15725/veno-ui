@@ -1,7 +1,7 @@
 @forward 'variables';
 @use 'mixins' as *;
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
+@use '../../../styles/tools';
 @use '../../../styles/theme/variables' as *;
 
 .ve-btn {
@@ -19,16 +19,23 @@
   cursor: pointer;
 
   @include button-sizes($button-sizes);
-  @include border($button-border...);
-  @include use-variant($button-variant...);
-  @include use-rounded();
+  @include tools.border($button-border...);
+  @include tools.use-variant($button-variant...);
+  @include tools.use-rounded();
 
   &--variant-text {
     padding: 0;
   }
 
+  &--icon {
+    border-radius: $button-icon-border-radius;
+    min-width: 0;
+    padding: 0;
+    font-size: $button-icon-font-size;
+  }
+
   &__overlay {
-    @include absolute(false);
+    @include tools.absolute(false);
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;
@@ -37,7 +44,7 @@
   }
 
   &:not(&--loading):not(&--disabled) {
-    @include states('.ve-btn__overlay', false);
+    @include tools.states('.ve-btn__overlay', false);
   }
 
   &--block {
