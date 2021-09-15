@@ -1,0 +1,12 @@
+@use '../../../styles/theme/variables' as *;
+@use '../../../styles/tools';
+
+.ve-image {
+  --v-theme-overlay-multiplier: 3;
+  z-index: 0;
+
+  &__img {
+    z-index: -1;
+    @include tools.absolute(false);
+  }
+}
