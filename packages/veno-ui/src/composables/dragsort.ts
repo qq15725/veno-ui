@@ -11,7 +11,7 @@ import {
 
 import { propsFactory, getUid } from '../utils'
 
-import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
+import type { VNode, InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
 
 interface DragsortGroupProvide
@@ -136,7 +136,7 @@ export function useDragsort (
     }
   }
 
-  function makeDragAreaOn (index?: number) {
+  function makeDragArea (index?: number) {
     function dragenter (e: DragEvent) {
       if (selected.value === index) return
 
@@ -161,27 +161,25 @@ export function useDragsort (
     }
 
     return {
-      dragenter,
-      dragleave,
-      dragover,
+      dragAreaOn: {
+        dragenter,
+        dragleave,
+        dragover,
+      },
     }
   }
 
-  function makeDragOn (index: number) {
-    const el = ref<HTMLElement | null>(null)
+  function makeDrag (index: number) {
+    const dragNode = ref<VNode | null>(null)
 
     function mousedown (e: MouseEvent) {
-      if (!vm?.vnode.el) return
-      const vnodeEl = vm.vnode.el.nodeType === 1
-        ? vm.vnode.el
-        : vm.vnode.el.parentElement
-      el.value = vnodeEl.children[index] as HTMLElement
-      el.value.setAttribute('draggable', 'true')
+      if (!dragNode.value || !dragNode.value.el) return
+      dragNode.value.el.setAttribute('draggable', 'true')
       window.addEventListener('dragstart', dragstart)
       window.addEventListener('dragend', dragend)
       window.addEventListener('mouseup', function mouseup () {
         window.removeEventListener('mouseup', mouseup)
-        el.value?.removeAttribute('draggable')
+        dragNode.value?.el?.removeAttribute('draggable')
       })
       selected.value = index
       if (provide) provide.select(id)
@@ -189,12 +187,12 @@ export function useDragsort (
 
     function dragstart (e: DragEvent) {
       if (!e.dataTransfer) return
-      e.dataTransfer.setData('Text', el.value?.textContent || '')
+      e.dataTransfer.setData('Text', dragNode.value?.el?.textContent || '')
       e.dataTransfer.effectAllowed = 'move'
     }
 
     function dragend (e: DragEvent) {
-      el.value?.removeAttribute('draggable')
+      dragNode.value?.el?.removeAttribute('draggable')
       window.removeEventListener('dragstart', dragstart)
       window.removeEventListener('dragend', dragend)
       selected.value = null
@@ -202,22 +200,17 @@ export function useDragsort (
     }
 
     return {
-      mousedown
-    }
-  }
-
-  function makeOn (index: number) {
-    return {
-      ...makeDragOn(index),
-      ...makeDragAreaOn(index),
+      dragNode,
+      dragOn: {
+        mousedown,
+      },
     }
   }
 
   return {
     items,
-    makeDragOn,
-    makeDragAreaOn,
-    makeOn,
+    makeDrag,
+    makeDragArea,
   }
 }
 

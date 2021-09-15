@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 import { makeDragsortProps, useDragsort } from '../../composables/dragsort'
 
@@ -16,32 +16,47 @@ export default defineComponent({
   },
 
   setup (props, { slots }) {
-    const { items, makeOn, makeDragAreaOn } = useDragsort(props)
+    const { items, makeDrag, makeDragArea } = useDragsort(props)
 
-    const dragAreaOn = makeDragAreaOn()
+    const computedItems = computed(() => {
+      return items.value.map((item, index) => {
+        return {
+          ...makeDrag(index),
+          ...makeDragArea(index),
+          item,
+        }
+      })
+    })
+
+    const { dragAreaOn } = makeDragArea()
 
     return () => {
       return <>
-        { slots.prepend?.({ on: dragAreaOn }) }
+        { slots.prepend?.({ dragAreaOn, on: dragAreaOn }) }
 
-        { items.value.flatMap((item, index) => {
+        { computedItems.value.flatMap(({ item, dragOn, dragNode, dragAreaOn }, index) => {
           return slots
             .item?.({
               item,
               index,
-              on: makeOn(index),
+              dragOn,
+              dragAreaOn,
+              on: { ...dragOn, ...dragAreaOn },
             })
             .map(node => {
+              if (!dragNode.value) dragNode.value = node
+
               if (props.itemKey) {
                 node.key = typeof props.itemKey === 'function'
                   ? props.itemKey(item, index)
                   : item[props.itemKey]
               }
+
               return node
             })
         }) }
 
-        { slots.append?.({ on: dragAreaOn }) }
+        { slots.append?.({ dragAreaOn, on: dragAreaOn }) }
       </>
     }
   }
