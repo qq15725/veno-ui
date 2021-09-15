@@ -5,3 +5,7 @@
     }
   }
 }
+
+@mixin use-position($positions: absolute fixed, $important: false) {
+  @include position($positions, $important)
+}

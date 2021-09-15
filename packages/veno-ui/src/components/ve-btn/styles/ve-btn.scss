@@ -23,6 +23,7 @@
   @include tools.border($button-border...);
   @include tools.use-variant($button-variant...);
   @include tools.use-rounded();
+  @include tools.use-position();
 
   &--variant-text {
     padding: 0;
