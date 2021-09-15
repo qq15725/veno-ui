@@ -9,7 +9,7 @@
     $padding-y: math.div($height, map.get($map, 'padding-ratio'));
 
     &--size-#{$sizeName} {
-      font-size: map-get($map, 'font-size') + 2 * $multiplier / 16;
+      font-size: map-get($map, 'font-size') + 2 * math.div($multiplier, 16);
       padding: math.div($padding-y, 2) $padding-y;
     }
   }

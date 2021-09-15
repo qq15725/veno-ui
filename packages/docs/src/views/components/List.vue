@@ -13,7 +13,7 @@
         <ve-card>
           <ve-card-title>基础</ve-card-title>
           <ve-list>
-            <ve-list-item>
+            <ve-list-item @click="">
               <ve-list-item-title>asdasd</ve-list-item-title>
             </ve-list-item>
           </ve-list>

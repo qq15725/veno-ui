@@ -39,21 +39,22 @@ const items = [
   <ve-app>
     <ve-app-bar border>
       <ve-app-bar-title>Veno UI</ve-app-bar-title>
-      <ve-btn style="margin-left: 140px;" :to="{ name: 'Guide' }" variant="text">首页</ve-btn>
-      <ve-btn :to="{ name: 'Decorate' }" variant="text">排练场</ve-btn>
+
+      <ve-app-bar-items style="margin-left: 140px;" >
+        <ve-btn :to="{ name: 'Guide' }">首页</ve-btn>
+        <ve-btn :to="{ name: 'Decorate' }">排练场</ve-btn>
+      </ve-app-bar-items>
     </ve-app-bar>
 
     <ve-app-sider>
       <ve-list>
-        <ve-btn
+        <ve-list-item
             v-for="item in items"
-            block
-            variant="text"
-            tile
             :to="{ name: `Components${item.name}` }"
         >
-          {{ item.label }} {{ item.name }}
-        </ve-btn>
+          <span style="font-size: 14px;" class="mr-2">{{ item.label }}</span>
+          <span style="font-size: 13px; color: rgb(158, 164, 170);">{{ item.name }}</span>
+        </ve-list-item>
       </ve-list>
     </ve-app-sider>
 

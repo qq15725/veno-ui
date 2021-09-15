@@ -14,13 +14,13 @@ export default defineComponent({
       type: Number,
       default: 20,
     },
-    batteryPercentage: {
+    battery: {
       type: Number,
       default: 100,
     },
-    mobileOperator: {
+    operator: {
       type: String,
-      default: '中国移动',
+      default: 'Z+',
     },
     ...makeTagProps(),
     ...makeColorProps(),
@@ -73,16 +73,16 @@ export default defineComponent({
           <div class="ve-device-status-bar__mobile-signal">
             { [...Array(4)].map(_ => <div />) }
           </div>
-          <div class="ve-device-status-bar__mobile-operator">{ props.mobileOperator }</div>
+          <div class="ve-device-status-bar__mobile-operator">{ props.operator }</div>
           <div class="ve-device-status-bar__wifi-signal">
             { [...Array(3)].map(_ => <div />) }
           </div>
           <div class="ve-device-status-bar__spacer" />
           <div class="ve-device-status-bar__battery-percentage">
-            { props.batteryPercentage }%
+            { props.battery }%
           </div>
           <div class="ve-device-status-bar__battery">
-            <div style={ { width: `${ props.batteryPercentage }%` } } />
+            <div style={ { width: `${ props.battery }%` } } />
           </div>
         </props.tag>
       )

@@ -1,5 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-list-item {
   align-items: center;
@@ -8,15 +9,9 @@
   position: relative;
   outline: none;
   text-decoration: none;
-}
 
-.v-list-item-title {
-  hyphens: auto;
-  overflow-wrap: normal;
-  overflow: hidden;
-  padding: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  word-break: normal;
-  word-wrap: break-word;
+  @include tools.border($list-item-border...);
+  @include tools.states('.ve-list-item__overlay');
+  @include tools.rounded($list-item-border-radius);
+  @include tools.use-variant($list-item-variants...);
 }

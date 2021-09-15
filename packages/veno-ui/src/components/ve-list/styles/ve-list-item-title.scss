@@ -1,0 +1,13 @@
+@forward 'variables';
+@use 'variables' as *;
+
+.v-list-item-title {
+  hyphens: auto;
+  overflow-wrap: normal;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: normal;
+  word-wrap: break-word;
+}

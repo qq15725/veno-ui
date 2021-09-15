@@ -13,25 +13,24 @@ export default defineComponent({
   name: 'VeDevice',
 
   props: {
-    appHeaderColor: {
-      type: String,
-      default: '#FFF',
-    },
-    appMainColor: {
-      type: String,
-      default: '#F5F5F5',
-    },
-    batteryPercentage: {
+    battery: {
       type: Number,
       default: 100,
     },
-    mobileOperator: {
+    operator: {
       type: String,
-      default: '中国移动',
+      default: 'Z+',
     },
-    ...makeTagProps(),
-    ...makeVariantProps(),
+    headerColor: {
+      type: String,
+      default: '#FFF',
+    },
     ...makeDeviceProps(),
+    ...makeTagProps(),
+    ...makeVariantProps({
+      color: '#F5F5F5',
+      variant: 'contained',
+    } as const),
   },
 
   setup (props, { slots }) {
@@ -54,14 +53,14 @@ export default defineComponent({
           <div
             class="ve-device__app-header"
             style={ {
-              backgroundColor: props.appHeaderColor,
+              backgroundColor: props.headerColor,
             } }
           >
             { deviceModel.value.statusBarHeight > 0 && (
               <VeDeviceStatusBar
                 height={ deviceModel.value.statusBarHeight }
-                batteryPercentage={ props.batteryPercentage }
-                mobileOperator={ props.mobileOperator }
+                battery={ props.battery }
+                operator={ props.operator }
               />
             ) }
 
@@ -72,10 +71,7 @@ export default defineComponent({
             ) }
           </div>
 
-          <div
-            class="ve-device__app-main"
-            style={ { backgroundColor: props.appMainColor } }
-          >
+          <div class="ve-device__app-main">
             { slots.default?.() }
           </div>
 

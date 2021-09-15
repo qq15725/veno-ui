@@ -1,37 +1,55 @@
 import './styles/ve-list.scss'
 
-import { defineComponent } from 'vue'
+import { defineComponent, toRef } from 'vue'
 
+// Composables
+import { makeBorderProps, useBorder } from '../../composables/border'
+import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeRoundedProps, useRounded } from '../../composables/rounded'
+import { useBackgroundColor } from '../../composables/color'
+import { makeDisabledProps, useDisabled } from '../../composables/disabled'
+import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, useTheme } from '../../composables/theme'
-import { makeVariantProps, useVariant } from '../../composables/variant'
 
 export default defineComponent({
   name: 'VeList',
 
   props: {
+    color: String,
+    ...makeBorderProps(),
+    ...makeDimensionProps(),
+    ...makeRoundedProps(),
+    ...makeDisabledProps(),
+    ...makeTagProps(),
     ...makeThemeProps(),
-    ...makeVariantProps(),
   },
 
   setup (props, { slots }) {
     const { themeClasses } = useTheme(props)
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-list')
+    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
+    const { borderClasses } = useBorder(props, 've-list')
+    const { dimensionStyles } = useDimension(props)
+    const { roundedClasses } = useRounded(props, 've-list')
+    const { disabledClasses } = useDisabled(props, 've-list')
 
     return () => {
       return (
-        <div
+        <props.tag
           class={ [
             've-list',
             themeClasses.value,
-            colorClasses.value,
-            variantClasses.value,
+            backgroundColorClasses.value,
+            borderClasses.value,
+            roundedClasses.value,
+            disabledClasses.value,
           ] }
-          style={ [
-            colorStyles.value,
-          ] }
+          style={[
+            backgroundColorStyles.value,
+            dimensionStyles.value,
+          ]}
         >
           { slots.default?.() }
-        </div>
+        </props.tag>
       )
     }
   },

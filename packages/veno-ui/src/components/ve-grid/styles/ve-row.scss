@@ -1,3 +1,4 @@
+@use 'sass:math';
 @forward 'variables';
 @use 'variables' as *;
 @use '../../../styles/theme/grid' as *;
@@ -10,22 +11,22 @@
   display: flex;
   flex-wrap: wrap;
   flex: 1 1 auto;
-  margin: -$grid-gutter / 2;
+  margin: -($grid-gutter) * .5;
 
   & + .row {
-    margin-top: $grid-gutter / 2;
+    margin-top: $grid-gutter * .5;
 
     &--dense {
-      margin-top: $grid-gutter-dense / 2;
+      margin-top: $grid-gutter-dense * .5;
     }
   }
 
   &--dense {
-    margin: -$grid-gutter-dense / 2;
+    margin: -($grid-gutter-dense) * .5;
 
     > .ve-col,
     > [class*="ve-col-"] {
-      padding: $grid-gutter-dense / 2;
+      padding: $grid-gutter-dense * .5;
     }
   }
 

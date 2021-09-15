@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:math';
 @use '../../../styles/theme/border' as *;
 
 // color
@@ -10,7 +11,7 @@ $button-disabled-opacity: 0.26 !default;
 $button-disabled-overlay: 0.12 !default;
 
 // ratio
-$button-width-ratio: 16/9 !default;
+$button-width-ratio: math.div(16, 9) !default;
 $button-padding-ratio: 4 !default;
 
 // size

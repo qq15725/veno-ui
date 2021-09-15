@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../../../styles/theme/grid' as *;
 @use '../../../styles/tools' as *;
 @use 'mixins' as *;
@@ -7,7 +8,7 @@ $grid-columns: 12 !default;
 // xs sm md lg xl xxl
 
 // 容器
-$container-padding-x: ($grid-gutter) / 2 !default;
+$container-padding-x: math.div($grid-gutter, 2) !default;
 
 $container-max-widths: () !default;
 $container-max-widths: map-deep-merge(

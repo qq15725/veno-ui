@@ -1,0 +1,16 @@
+@forward 'variables';
+@use 'variables' as *;
+
+.ve-app-bar-items {
+  display: flex;
+  height: inherit;
+  > .ve-btn {
+    border-radius: 0;
+    height: 100% !important;
+    border-width: 0;
+  }
+}
+
+
+
+
