@@ -13,6 +13,7 @@ export default defineComponent({
     modelValue: [String, Number],
     textarea: Boolean,
     autosize: Boolean,
+    placeholder: String,
     type: {
       type: String,
       default: 'text',
@@ -61,6 +62,7 @@ export default defineComponent({
               value={ props.modelValue }
               type={ props.textarea ? undefined : props.type }
               rows={ props.textarea ? 3 : undefined }
+              placeholder={ props.placeholder }
               onInput={ e => emit('update:modelValue', (e.target as HTMLInputElement).value) }
               disabled={ props.disabled }
             />
