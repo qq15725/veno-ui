@@ -1,5 +1,5 @@
-@forward 'global';
-@forward 'reset';
-@forward 'colors';
-@forward 'utilities';
-@forward 'layout';
+@use 'global';
+@use 'reset';
+@use 'colors';
+@use 'utilities';
+@use 'layout';

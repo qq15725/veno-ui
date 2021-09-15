@@ -1,13 +1,13 @@
 @use '../tools/functions' as *;
 
 $black: () !default;
-$black: map-deep-merge(('base': '#000000'), $black);
+$black: map-deep-merge(('base': #000000), $black);
 
 $white: () !default;
-$white: map-deep-merge(('base': '#FFFFFF'), $white);
+$white: map-deep-merge(('base': #FFFFFF), $white);
 
 $transparent: () !default;
-$transparent: map-deep-merge(('base': 'transparent'), $transparent);
+$transparent: map-deep-merge(('base': transparent), $transparent);
 
 $red: () !default;
 $red: map-deep-merge(
