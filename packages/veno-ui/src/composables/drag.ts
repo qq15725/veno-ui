@@ -1,7 +1,6 @@
 import {
   ref,
-  computed,
-  getCurrentInstance,
+  computed
 } from 'vue'
 
 import { propsFactory, convertToUnit } from '../utils'
@@ -10,7 +9,7 @@ interface DragProps
 {
   left: number
   top: number
-  draggable: boolean
+  draggable?: boolean
 }
 
 export const makeDragProps = propsFactory({
@@ -25,12 +24,11 @@ export const makeDragProps = propsFactory({
   draggable: Boolean,
 }, 'drag')
 
-export function useDrag (props: DragProps) {
+export function useDrag (props: DragProps = { top: 0, left: 0, draggable: false }) {
   const el = ref<HTMLElement | null>(null)
 
-  const vm = getCurrentInstance()
-
   const state = ref({
+    type: '',
     startX: 0,
     startY: 0,
     moveX: 0,
@@ -44,11 +42,13 @@ export function useDrag (props: DragProps) {
     state.value.startY = y
     state.value.moveX = x
     state.value.moveY = y
+    state.value.type = 'start'
   }
 
   function move (x: number, y: number) {
     state.value.moveX = x
     state.value.moveY = y
+    state.value.type = 'move'
   }
 
   function end () {
@@ -58,13 +58,12 @@ export function useDrag (props: DragProps) {
     state.value.startY = 0
     state.value.moveX = 0
     state.value.moveY = 0
-    vm?.emit('update:left', state.value.x)
-    vm?.emit('update:top', state.value.y)
+    state.value.type = 'end'
   }
 
   function mousedown (e: MouseEvent) {
     el.value = e.target as HTMLElement
-    if (props.draggable) {
+    if (props?.draggable) {
       el.value?.setAttribute('draggable', 'true')
       el.value?.addEventListener('dragstart', dragstart)
       el.value?.addEventListener('drag', drag)
@@ -74,6 +73,7 @@ export function useDrag (props: DragProps) {
     }
     window.addEventListener('mouseup', mouseup)
     start(e.clientX, e.clientY)
+    e.stopPropagation()
   }
 
   function mousemove (e: MouseEvent) {
@@ -81,7 +81,7 @@ export function useDrag (props: DragProps) {
   }
 
   function mouseup (e: MouseEvent) {
-    if (props.draggable) {
+    if (props?.draggable) {
       el.value?.removeAttribute('draggable')
     } else {
       window.removeEventListener('mousemove', mousemove)
@@ -92,7 +92,7 @@ export function useDrag (props: DragProps) {
 
   function touchstart (e: TouchEvent) {
     el.value = e.target as HTMLElement
-    if (props.draggable) {
+    if (props?.draggable) {
       el.value?.setAttribute('draggable', 'true')
       el.value?.addEventListener('dragstart', dragstart)
       el.value?.addEventListener('drag', drag)
@@ -102,6 +102,7 @@ export function useDrag (props: DragProps) {
       window.addEventListener('touchend', touchend)
     }
     start(e.touches[0].clientX, e.touches[0].clientY)
+    e.stopPropagation()
   }
 
   function touchmove (e: TouchEvent) {
@@ -144,10 +145,11 @@ export function useDrag (props: DragProps) {
 
   return {
     dragStyles,
+    state,
     el,
     on: {
       touchstart,
       mousedown,
-    }
+    },
   }
 }
