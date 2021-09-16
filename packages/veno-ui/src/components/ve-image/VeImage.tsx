@@ -21,20 +21,29 @@ export default defineComponent({
     srcset: String,
   },
 
-  setup (props, { slots }) {
+  emits: {
+    'load': (value: Event) => true,
+  },
+
+  setup (props, { emit, slots }) {
     const __image = computed(() => {
       return h('img', {
         class: ['ve-image__img'],
         src: props.src,
         srcset: props.srcset,
         sizes: props.sizes,
+        onLoad,
       })
     })
+
+    function onLoad (e: Event) {
+      emit('load', e)
+    }
 
     return () => (
       <VeResponsive
         class="ve-image"
-        aspectRatio={ Number(props.aspectRatio || 0) }
+        aspect-ratio={ Number(props.aspectRatio || 0) }
         aria-label={ props.alt }
         role={ props.alt ? 'img' : undefined }
         v-slots={ {

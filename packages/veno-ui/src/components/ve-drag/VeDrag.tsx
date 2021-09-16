@@ -14,8 +14,6 @@ export default defineComponent({
     'update:left': (value: boolean) => true,
   },
 
-// export const defaultHandles = ['t', 'tl', 'l', 'b', 'bl', 'tr', 'r', 'br']
-
   setup (props, { slots }) {
     const { dragStyles, on } = useDrag(props)
 
