@@ -7,7 +7,8 @@
   display: inline-flex;
   box-sizing: border-box;
   touch-action: none;
-  @include tools.absolute(false);
+
+  @include tools.use-position();
 
   &__wrapper {
     position: relative;
