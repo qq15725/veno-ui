@@ -14,18 +14,18 @@ import { propsFactory, getUid } from '../utils'
 import type { VNode, InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
 
-interface DragsortGroupProvide
+interface DragSortProvide
 {
-  register: (item: DragsortItem) => void
+  register: (item: DragSortItem) => void
   unregister: (id: number) => void
-  items: UnwrapNestedRefs<DragsortItem[]>
+  items: UnwrapNestedRefs<DragSortItem[]>
   selected: Ref<number | null>
   select: (id: number) => void
   dragenter: (id: number, index?: number) => void
   dragleave: (id: number, index?: number) => void
 }
 
-interface DragsortItem
+interface DragSortItem
 {
   id: number
   selected: Ref<number | null>
@@ -37,7 +37,7 @@ interface DragsortItem
   emit: () => void
 }
 
-interface DragsortProps
+interface DragSortProps
 {
   modelValue: any[]
   put: boolean
@@ -45,7 +45,7 @@ interface DragsortProps
   clone: (v: any) => any
 }
 
-export const makeDragsortProps = propsFactory({
+export const makeDragSortProps = propsFactory({
   modelValue: {
     type: Array,
     default: () => ([]),
@@ -59,13 +59,13 @@ export const makeDragsortProps = propsFactory({
     type: Function as PropType<(v: any) => any>,
     default: (v: any) => v,
   },
-}, 'dragsort')
+}, 'drag-sort')
 
-export const DragSortGroupKey: InjectionKey<DragsortGroupProvide> = Symbol.for('veno-ui:drag-sort-group')
+export const DragSortProviderKey: InjectionKey<DragSortProvide> = Symbol.for('veno-ui:drag-sort-provide')
 
-export function useDragsort (
-  props: DragsortProps,
-  injectKey = DragSortGroupKey
+export function useDragSort (
+  props: DragSortProps,
+  injectKey = DragSortProviderKey
 ) {
   const id = getUid()
   const selected = ref<number | null>(null)
@@ -214,12 +214,12 @@ export function useDragsort (
   }
 }
 
-export function createDragsortGroup (injectKey = DragSortGroupKey) {
-  const items = reactive<DragsortItem[]>([])
+export function createDragSortProvider (injectKey = DragSortProviderKey) {
+  const items = reactive<DragSortItem[]>([])
   const selected = ref<number | null>(null)
 
-  function register (item: DragsortItem) {
-    items.push(item as unknown as UnwrapRef<DragsortItem>)
+  function register (item: DragSortItem) {
+    items.push(item as unknown as UnwrapRef<DragSortItem>)
   }
 
   function unregister (id: number) {

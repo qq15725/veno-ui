@@ -23,10 +23,18 @@
     margin-inline-end: 0.5rem;
   }
 
+  &__suffix {
+    margin-inline-start: 0.5rem;
+  }
+
   &--textarea {
     width: 100%;
 
     .ve-input__prefix {
+      align-self: start;
+    }
+
+    .ve-input__suffix {
       align-self: start;
     }
   }

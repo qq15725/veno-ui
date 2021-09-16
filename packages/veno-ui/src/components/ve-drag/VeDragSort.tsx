@@ -1,13 +1,13 @@
 import { defineComponent, computed } from 'vue'
 
-import { makeDragsortProps, useDragsort } from '../../composables/dragsort'
+import { makeDragSortProps, useDragSort } from '../../composables/drag-sort'
 
 export default defineComponent({
   name: 'VeDragSort',
 
   props: {
     itemKey: [String, Function],
-    ...makeDragsortProps(),
+    ...makeDragSortProps(),
   },
 
   emits: {
@@ -16,7 +16,7 @@ export default defineComponent({
   },
 
   setup (props, { slots }) {
-    const { items, makeDrag, makeDragArea } = useDragsort(props)
+    const { items, makeDrag, makeDragArea } = useDragSort(props)
 
     const computedItems = computed(() => {
       return items.value.map((item, index) => {

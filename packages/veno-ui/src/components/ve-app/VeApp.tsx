@@ -6,7 +6,7 @@ import { defineComponent } from 'vue'
 
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeLayoutProps, createLayout } from '../../composables/layout'
-import { createDragsortGroup } from '../../composables/dragsort'
+import { createDragSortProvider } from '../../composables/drag-sort'
 
 export default defineComponent({
   name: 'VeApp',
@@ -19,7 +19,7 @@ export default defineComponent({
   setup (props, { slots }) {
     const { themeClasses } = useTheme(props)
     const { layoutClasses } = createLayout(props)
-    createDragsortGroup()
+    createDragSortProvider()
 
     return () => (
       <div
