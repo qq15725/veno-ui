@@ -1,73 +1,55 @@
 // Utils
-import { defineComponent, watch, computed } from 'vue'
+import { defineComponent } from 'vue'
+import { makeResizeProps } from '../../composables/resize'
 import { makeDragProps, useDrag } from '../../composables/drag'
 
 // Components
-import VeDragResize from './VeDragResize'
+import VeResize from './VeResize'
+
+// Types
+import type { PropType } from 'vue'
+import type { DragModelValue } from '../../composables/drag'
+import type { ResizeModelValue } from '../../composables/resize'
 
 export default defineComponent({
   name: 'VeDrag',
 
   props: {
-    resize: Boolean,
+    resizable: Boolean,
+    ...makeResizeProps(),
     ...makeDragProps(),
-    ...VeDragResize.props,
+    modelValue: Object as PropType<DragModelValue & ResizeModelValue>,
   },
 
   emits: {
-    'update:top': (value: number) => true,
-    'update:left': (value: number) => true,
-    'update:width': (value: number) => true,
-    'update:height': (value: number) => true,
+    'update:modelValue': (value: any) => true,
   },
 
-  setup (props, { emit, slots }) {
-    const { dragStyles, on, state } = useDrag(props)
-
-    watch(() => state.value.type, type => {
-      if (type === 'end') {
-        emit('update:top', state.value.y)
-        emit('update:left', state.value.x)
-      }
-    })
-
-    const resizeProps = computed(() => {
-      const filterProps: Record<string, any> = {}
-      for (let key in props) {
-        if (['top', 'left', 'resize', 'draggable'].indexOf(key) > -1) {
-          continue
-        }
-        filterProps[key] = props[key]
-      }
-      return filterProps
-    })
+  setup (props, { slots, emit }) {
+    const { dragOn, dragStyles } = useDrag(props)
 
     return () => {
+      if (!props.resizable) {
+        return slots.default?.({
+          on: dragOn,
+          style: dragStyles.value
+        })
+      }
+
       return (
-        <>
-          {
-            props.resize
-              ? (
-                <VeDragResize
-                  { ...resizeProps.value }
-                  onMousedown={ on.mousedown }
-                  onTouchstart={ on.touchstart }
-                  onUpdate:width={ (val: number) => {
-                    emit('update:width', val)
-                  } }
-                  onUpdate:height={ (val: number) => {
-                    emit('update:height', val)
-                  } }
-                  style={ [
-                    dragStyles.value
-                  ] }
-                >
-                  { slots.default?.() }
-                </VeDragResize>
-              )
-              : slots.default?.({ on, style: dragStyles.value })
+        <VeResize
+          { ...props }
+          onMousedown={ dragOn.mousedown }
+          onTouchstart={ dragOn.touchstart }
+          style={ [
+            dragStyles.value
+          ] }
+          onUpdate:modelValue={
+            val => emit('update:modelValue', { ...props.modelValue, ...val })
           }
-        </>
+        >
+          { slots.default?.() }
+        </VeResize>
       )
     }
   }

@@ -1,155 +1,167 @@
-import {
-  ref,
-  computed
-} from 'vue'
-
+// Utils
+import { ref, computed } from 'vue'
 import { propsFactory, convertToUnit } from '../utils'
 
-interface DragProps
+// Composables
+import { useProxiedModel } from './proxied-model'
+
+// Types
+import type { PropType, Ref } from 'vue'
+
+export const allowedDragStates = ['dragged', 'dragging'] as const
+
+export type DragState = typeof allowedDragStates[number]
+
+export interface DragModelValue
 {
   left: number
   top: number
+}
+
+interface DragProps
+{
+  modelValue?: DragModelValue
   draggable?: boolean
 }
 
 export const makeDragProps = propsFactory({
-  top: {
-    type: Number,
-    default: 0,
-  },
-  left: {
-    type: Number,
-    default: 0,
-  },
+  modelValue: Object as PropType<DragModelValue>,
   draggable: Boolean,
 }, 'drag')
 
-export function useDrag (props: DragProps = { top: 0, left: 0, draggable: false }) {
-  const el = ref<HTMLElement | null>(null)
+const emptyPosition = { left: 0, top: 0 }
 
-  const state = ref({
-    type: '',
-    startX: 0,
-    startY: 0,
-    moveX: 0,
-    moveY: 0,
-    x: props.left,
-    y: props.top,
+export function useDrag (props: DragProps = {}) {
+  const rawPosition = useProxiedModel(
+    props,
+    'modelValue',
+    { ...emptyPosition },
+    val => ({
+      ...val,
+      left: val?.left ?? 0,
+      top: val?.top ?? 0,
+    }),
+    val => ({
+      ...props.modelValue,
+      ...val,
+    })
+  ) as Ref<NonNullable<DragModelValue>>
+  const dragElement = ref<HTMLElement | null>(null)
+  const dragState = ref<DragState>('dragged')
+  const startedPosition = ref({ ...emptyPosition })
+  const movedPosition = ref({ ...emptyPosition })
+
+  const draggedOffsetPosition = computed(() => ({
+    left: movedPosition.value.left - startedPosition.value.left,
+    top: movedPosition.value.top - startedPosition.value.top,
+  }))
+
+  const draggedPosition = computed(() => {
+    if (dragState.value === 'dragged') {
+      return {
+        left: rawPosition.value.left,
+        top: rawPosition.value.top,
+      }
+    } else {
+      return {
+        left: rawPosition.value.left + draggedOffsetPosition.value.left,
+        top: rawPosition.value.top + draggedOffsetPosition.value.top,
+      }
+    }
   })
 
-  function start (x: number, y: number) {
-    state.value.startX = x
-    state.value.startY = y
-    state.value.moveX = x
-    state.value.moveY = y
-    state.value.type = 'start'
-  }
-
-  function move (x: number, y: number) {
-    state.value.moveX = x
-    state.value.moveY = y
-    state.value.type = 'move'
-  }
-
-  function end () {
-    state.value.x += state.value.moveX - state.value.startX
-    state.value.y += state.value.moveY - state.value.startY
-    state.value.startX = 0
-    state.value.startY = 0
-    state.value.moveX = 0
-    state.value.moveY = 0
-    state.value.type = 'end'
-  }
-
-  function mousedown (e: MouseEvent) {
-    el.value = e.target as HTMLElement
-    if (props?.draggable) {
-      el.value?.setAttribute('draggable', 'true')
-      el.value?.addEventListener('dragstart', dragstart)
-      el.value?.addEventListener('drag', drag)
-      el.value?.addEventListener('dragend', dragend)
+  function getEventClientPosition (event: DragEvent | MouseEvent | TouchEvent) {
+    if (event instanceof DragEvent || event instanceof MouseEvent) {
+      return {
+        left: event.clientX,
+        top: event.clientY,
+      }
+    } else if (event instanceof TouchEvent) {
+      return {
+        left: event.touches[0].clientX,
+        top: event.touches[0].clientY,
+      }
     } else {
-      window.addEventListener('mousemove', mousemove)
-    }
-    window.addEventListener('mouseup', mouseup)
-    start(e.clientX, e.clientY)
-    e.stopPropagation()
-  }
-
-  function mousemove (e: MouseEvent) {
-    move(e.clientX, e.clientY)
-  }
-
-  function mouseup (e: MouseEvent) {
-    if (props?.draggable) {
-      el.value?.removeAttribute('draggable')
-    } else {
-      window.removeEventListener('mousemove', mousemove)
-      window.removeEventListener('mouseup', mouseup)
-      end()
+      return {
+        left: 0,
+        top: 0,
+      }
     }
   }
 
-  function touchstart (e: TouchEvent) {
-    el.value = e.target as HTMLElement
-    if (props?.draggable) {
-      el.value?.setAttribute('draggable', 'true')
-      el.value?.addEventListener('dragstart', dragstart)
-      el.value?.addEventListener('drag', drag)
-      el.value?.addEventListener('dragend', dragend)
-    } else {
-      window.addEventListener('touchmove', touchmove)
-      window.addEventListener('touchend', touchend)
+  function start (event: MouseEvent | TouchEvent) {
+    event.stopPropagation()
+    dragElement.value = event.target as HTMLElement
+    startedPosition.value = getEventClientPosition(event)
+    movedPosition.value = getEventClientPosition(event)
+    if (props.draggable) {
+      dragElement.value?.setAttribute('draggable', 'true')
+      dragElement.value?.addEventListener('dragstart', dragstart)
+      dragElement.value?.addEventListener('drag', move)
+      dragElement.value?.addEventListener('dragend', end)
+    } else if (event instanceof MouseEvent) {
+      window.addEventListener('mousemove', move)
+      window.addEventListener('mouseup', end)
+    } else if (event instanceof TouchEvent) {
+      window.addEventListener('touchmove', move)
+      window.addEventListener('touchend', end)
     }
-    start(e.touches[0].clientX, e.touches[0].clientY)
-    e.stopPropagation()
+    dragState.value = 'dragging'
   }
 
-  function touchmove (e: TouchEvent) {
-    move(e.touches[0].clientX, e.touches[0].clientY)
+  function move (event: DragEvent | MouseEvent | TouchEvent) {
+    movedPosition.value = getEventClientPosition(event)
+    dragState.value = 'dragging'
   }
 
-  function touchend (e: TouchEvent) {
-    window.removeEventListener('touchmove', touchmove)
-    window.removeEventListener('touchend', touchend)
-    end()
-  }
-
-  function dragstart (e: DragEvent) {
-    if (e.dataTransfer) {
-      e.dataTransfer.setData('Text', el.value?.textContent || '')
-      e.dataTransfer.effectAllowed = 'move'
+  function end (event: DragEvent | MouseEvent | TouchEvent) {
+    rawPosition.value = {
+      left: rawPosition.value.left + draggedOffsetPosition.value.left,
+      top: rawPosition.value.top + draggedOffsetPosition.value.top,
     }
+
+    if (event instanceof DragEvent) {
+      dragElement.value?.removeAttribute('draggable')
+      dragElement.value?.removeEventListener('dragstart', dragstart)
+      dragElement.value?.removeEventListener('drag', move)
+      dragElement.value?.removeEventListener('dragend', end)
+    } else if (event instanceof MouseEvent) {
+      window.removeEventListener('mousemove', move)
+      window.removeEventListener('mouseup', end)
+    } else if (event instanceof TouchEvent) {
+      window.removeEventListener('touchmove', move)
+      window.removeEventListener('touchend', end)
+    }
+
+    dragElement.value = null
+    dragState.value = 'dragged'
+    startedPosition.value = { ...emptyPosition }
+    movedPosition.value = { ...emptyPosition }
   }
 
-  function drag (e: DragEvent) {
-    move(e.clientX, e.clientY)
-  }
-
-  function dragend (e: DragEvent) {
-    el.value?.removeAttribute('draggable')
-    el.value?.removeEventListener('dragstart', dragstart)
-    el.value?.removeEventListener('drag', drag)
-    el.value?.removeEventListener('dragend', dragend)
-    el.value = null
-    end()
+  function dragstart (event: DragEvent) {
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('Text', dragElement.value?.textContent || '')
+      event.dataTransfer.effectAllowed = 'move'
+    }
   }
 
   const dragStyles = computed(() => {
-    const x = convertToUnit(state.value.x + state.value.moveX - state.value.startX)
-    const y = convertToUnit(state.value.y + state.value.moveY - state.value.startY)
     return {
-      transform: `translate3d(${ x }, ${ y }, 0)`,
+      transform: `translate3d(${ convertToUnit(draggedPosition.value.left) }, ${ convertToUnit(draggedPosition.value.top) }, 0)`,
     }
   })
 
   return {
-    dragStyles,
-    state,
-    el,
-    on: {
-      touchstart,
-      mousedown,
+    dragState,
+    rawPosition,
+    draggedOffsetPosition,
+    draggedPosition,
+    dragElement,
+    dragOn: {
+      touchstart: start,
+      mousedown: start,
     },
+    dragStyles,
   }
 }
