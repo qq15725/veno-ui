@@ -7,6 +7,7 @@ import { convertToUnit } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
+import { makePositionProps, usePosition } from '../../composables/position'
 import { makeMoveProps, useMove } from '../../composables/move'
 import { makeResizeProps, useResize } from '../../composables/resize'
 
@@ -33,6 +34,7 @@ export default defineComponent({
     },
     resizable: Boolean,
     // rotatable: Boolean,
+    ...makePositionProps(),
     ...makeMoveProps(),
     ...makeResizeProps(),
     modelValue: Object as PropType<DragModel>,
@@ -56,6 +58,7 @@ export default defineComponent({
       height: model.value.height ?? defaultModel.height,
     })
 
+    const { positionClasses, positionStyles } = usePosition(props, 've-drag')
     const { moveOn, moveState, movingOffsetPosition } = useMove(props)
     const { resizeHandles, resizeState, resizingOffsetPositionDimension } = useResize(props, 've-drag')
 
@@ -95,12 +98,14 @@ export default defineComponent({
       <div
         class={ [
           've-drag',
+          positionClasses.value,
           {
             've-drag--moveable': props.moveable,
             've-drag--resizable': props.resizable,
           },
         ] }
         style={ [
+          positionStyles.value,
           styles.value,
         ] }
         onMousedown={ moveOn.mousedown }
