@@ -2,12 +2,11 @@
 @use 'variables' as *;
 @use '../../../styles/tools';
 
-.ve-resize {
+.ve-drag {
   position: relative;
   display: inline-flex;
   box-sizing: border-box;
   touch-action: none;
-
   @include tools.use-position();
 
   &__wrapper {
@@ -16,7 +15,7 @@
     height: 100%;
   }
 
-  &--outlined:not(.ve-resize--disabled):before {
+  &--outlined:not(#{&}--disabled):before {
     content: "";
     box-sizing: initial;
     border: 2px solid #6CCFFF;
@@ -28,7 +27,7 @@
     margin: -2px 0 0 -2px;
   }
 
-  &--activated:not(.ve-resize--disabled):before {
+  &--activated:not(#{&}--disabled):before {
     border-width: 1px;
     border-color: rgba(108, 207, 255, .3);
     margin: -1px 0 0 -1px;
@@ -47,24 +46,20 @@
       opacity: 0;
     }
 
-    &--point {
-      box-sizing: border-box;
-      display: block;
-      background: #FFF;
-      border: 1px solid #C0C5CF;
-      box-shadow: 0 0 2px 0 rgba(86, 90, 98, .2);
-      border-radius: 6px;
-    }
-
-    &--top, &--bottom {
+    &--top,
+    &--bottom {
       transform: translate(0, -50%);
     }
 
-    &--top-left, &--top-right, &--bottom-left, &--bottom-right {
+    &--top-left,
+    &--top-right,
+    &--bottom-left,
+    &--bottom-right {
       transform: translate(-50%, -50%);
     }
 
-    &--left, &--right {
+    &--left,
+    &--right {
       transform: translate(-50%, 0);
     }
 
@@ -120,46 +115,58 @@
       cursor: nwse-resize;
     }
 
-    &--right,
-    &--left {
-      .ve-resize__handle--point {
-        height: 16px;
-        width: 7px;
-      }
-
-      .ve-resize__handle--line {
-        width: 4px;
-        height: 100%;
-      }
+    &:before {
+      content: '';
     }
 
-    &--top,
-    &--bottom {
-      .ve-resize__handle--point {
-        width: 16px;
-        height: 7px;
-      }
-
-      .ve-resize__handle--line {
-        width: 100%;
-        height: 4px;
-      }
+    &--right:before,
+    &--left:before {
+      width: 4px;
+      height: 100%;
     }
 
-    &--bottom-left,
-    &--top-left,
-    &--top-right,
-    &--bottom-right {
-      .ve-resize__handle--point {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
+    &--top:before,
+    &--bottom:before {
+      width: 100%;
+      height: 4px;
+    }
 
-      .ve-resize__handle--line {
-        width: 8px;
-        height: 8px;
-      }
+    &--bottom-left:before,
+    &--top-left:before,
+    &--top-right:before,
+    &--bottom-right:before {
+      width: 8px;
+      height: 8px;
+    }
+
+    &--point:before {
+      box-sizing: border-box;
+      display: block;
+      background: #FFF;
+      border: 1px solid #C0C5CF;
+      box-shadow: 0 0 2px 0 rgba(86, 90, 98, .2);
+      border-radius: 6px;
+    }
+
+    &--right#{&}--point:before,
+    &--left#{&}--point:before {
+      height: 16px;
+      width: 7px;
+    }
+
+    &--top#{&}--point:before,
+    &--bottom#{&}--point:before {
+      width: 16px;
+      height: 7px;
+    }
+
+    &--bottom-left#{&}--point:before,
+    &--top-left#{&}--point:before,
+    &--top-right#{&}--point:before,
+    &--bottom-right#{&}--point:before {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
     }
   }
 }

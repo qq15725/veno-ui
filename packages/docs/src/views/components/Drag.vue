@@ -21,7 +21,12 @@ const position = ref({
           <ve-card-title>拖拽</ve-card-title>
 
           <ve-card-text>
-            <ve-drag resizable point>
+            <ve-drag
+                v-model="position"
+                moveable
+                resizable
+                resize-handle-point
+            >
               <ve-btn width="100%" height="100%">拖动</ve-btn>
             </ve-drag>
           </ve-card-text>
