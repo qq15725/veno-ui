@@ -32,22 +32,27 @@ export function useMove (props: MoveProps = {}) {
   }))
 
   function start (event: MouseEvent | TouchEvent) {
-    event.stopPropagation()
     movingElement.value = event.target as HTMLElement
     startingPosition.value = getEventClientPosition(event)
     movingPosition.value = getEventClientPosition(event)
+
     if (props.draggable) {
       movingElement.value?.setAttribute('draggable', 'true')
       movingElement.value?.addEventListener('dragstart', dragstart)
       movingElement.value?.addEventListener('drag', move)
       movingElement.value?.addEventListener('dragend', end)
-    } else if (event instanceof MouseEvent) {
-      window.addEventListener('mousemove', move)
+    } else {
+      event.preventDefault()
+    }
+
+    if (event instanceof MouseEvent) {
+      if (!props.draggable) window.addEventListener('mousemove', move)
       window.addEventListener('mouseup', end)
     } else if (event instanceof TouchEvent) {
-      window.addEventListener('touchmove', move)
+      if (!props.draggable) window.addEventListener('touchmove', move)
       window.addEventListener('touchend', end)
     }
+
     moveState.value = 'moving'
   }
 
@@ -57,18 +62,22 @@ export function useMove (props: MoveProps = {}) {
   }
 
   function end (event: DragEvent | MouseEvent | TouchEvent) {
+    if (props.draggable) movingElement.value?.removeAttribute('draggable')
+
     if (event instanceof DragEvent) {
-      movingElement.value?.removeAttribute('draggable')
       movingElement.value?.removeEventListener('dragstart', dragstart)
       movingElement.value?.removeEventListener('drag', move)
       movingElement.value?.removeEventListener('dragend', end)
-    } else if (event instanceof MouseEvent) {
+    }
+
+    if (event instanceof MouseEvent) {
       window.removeEventListener('mousemove', move)
       window.removeEventListener('mouseup', end)
     } else if (event instanceof TouchEvent) {
       window.removeEventListener('touchmove', move)
       window.removeEventListener('touchend', end)
     }
+
     moveState.value = 'moved'
   }
 

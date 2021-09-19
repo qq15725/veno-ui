@@ -111,7 +111,7 @@ export default defineComponent({
         onMousedown={ moveOn.mousedown }
         onTouchstart={ moveOn.touchstart }
       >
-        { resizeHandles.value.map(({ classes, on }) => (
+        { props.resizable && resizeHandles.value.map(({ classes, on }) => (
           <div
             class={ [
               classes.value,

@@ -18,11 +18,22 @@ const position = ref({
     <ve-row>
       <ve-col :cols="6">
         <ve-card>
-          <ve-card-title>拖拽</ve-card-title>
+          <ve-card-title>拖拽移动</ve-card-title>
+
+          <ve-card-text>
+            <ve-drag moveable>
+              <ve-btn width="100%" height="100%">拖动</ve-btn>
+            </ve-drag>
+          </ve-card-text>
+        </ve-card>
+      </ve-col>
+
+      <ve-col :cols="6">
+        <ve-card>
+          <ve-card-title>拖拽移动和调整大小</ve-card-title>
 
           <ve-card-text>
             <ve-drag
-                v-model="position"
                 moveable
                 resizable
                 resize-handle-point
@@ -35,35 +46,27 @@ const position = ref({
 
       <ve-col :cols="6">
         <ve-card>
-          <ve-card-title>基础</ve-card-title>
+          <ve-card-title>拖拽排序</ve-card-title>
 
-          <ve-drag-sort v-model="items1">
-            <template #item="{ item, on }">
-              <ve-btn
-                  v-on="on"
-                  :border="0"
-                  block
-              >
-                {{ item }}
-              </ve-btn>
-            </template>
-          </ve-drag-sort>
+          <ve-list>
+            <ve-drag-sort v-model="items1">
+              <template #item="{ item, on }">
+                <ve-list-item v-on="on" @click="">{{ item }}</ve-list-item>
+              </template>
+            </ve-drag-sort>
+          </ve-list>
         </ve-card>
       </ve-col>
 
       <ve-col :cols="6">
         <ve-card>
-          <ve-drag-sort v-model="items2">
-            <template #item="{ item, on }">
-              <ve-btn
-                  v-on="on"
-                  :border="0"
-                  block
-              >
-                {{ item }}
-              </ve-btn>
-            </template>
-          </ve-drag-sort>
+          <ve-list>
+            <ve-drag-sort v-model="items2">
+              <template #item="{ item, on }">
+                <ve-list-item v-on="on">{{ item }}</ve-list-item>
+              </template>
+            </ve-drag-sort>
+          </ve-list>
         </ve-card>
       </ve-col>
     </ve-row>

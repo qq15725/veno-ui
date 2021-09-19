@@ -35,7 +35,7 @@
 
   &__handle {
     position: absolute;
-    z-index: 5;
+    z-index: 1;
     transition: opacity .3s;
     display: flex;
     align-items: center;
@@ -55,6 +55,7 @@
     &--top-right,
     &--bottom-left,
     &--bottom-right {
+      z-index: 2;
       transform: translate(-50%, -50%);
     }
 

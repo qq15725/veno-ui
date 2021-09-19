@@ -7,11 +7,14 @@ import {
   watchEffect,
   getCurrentInstance,
   onBeforeUnmount,
+  watch,
 } from 'vue'
 
+import { useMove } from './move'
+import { useDragArea } from './drag-area'
 import { propsFactory, getUid } from '../utils'
 
-import type { VNode, InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
+import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
 
 interface DragSortProvide
@@ -136,74 +139,59 @@ export function useDragSort (
     }
   }
 
+  // drop
   function makeDragArea (index?: number) {
-    function dragenter (e: DragEvent) {
-      if (selected.value === index) return
+    const { dragAreaState, dragAreaOn } = useDragArea()
 
-      if (selected.value !== null
-        && index !== undefined
-        && put.value) {
-        move(selected.value, index)
-        selected.value = index
+    watch(dragAreaState, state => {
+      switch (state) {
+        case 'entered':
+          if (selected.value === index) return
+
+          if (selected.value !== null
+            && index !== undefined
+            && put.value) {
+            move(selected.value, index)
+            selected.value = index
+          }
+
+          if (provide) provide.dragenter(id, index)
+          break
+        case 'left':
+          if (selected.value === index) return
+
+          if (provide) provide.dragleave(id, index)
+          break
+        case 'dropped':
+          //
+          break
       }
-
-      if (provide) provide.dragenter(id, index)
-    }
-
-    function dragleave (e: DragEvent) {
-      if (selected.value === index) return
-
-      if (provide) provide.dragleave(id, index)
-    }
-
-    function dragover (e: DragEvent) {
-      e.preventDefault()
-    }
+    })
 
     return {
-      dragAreaOn: {
-        dragenter,
-        dragleave,
-        dragover,
-      },
+      dragAreaOn,
     }
   }
 
   function makeDrag (index: number) {
-    const dragNode = ref<VNode | null>(null)
+    const { moveOn, moveState, movingElement } = useMove({ draggable: true })
 
-    function mousedown (e: MouseEvent) {
-      if (!dragNode.value || !dragNode.value.el) return
-      dragNode.value.el.setAttribute('draggable', 'true')
-      window.addEventListener('dragstart', dragstart)
-      window.addEventListener('dragend', dragend)
-      window.addEventListener('mouseup', function mouseup () {
-        window.removeEventListener('mouseup', mouseup)
-        dragNode.value?.el?.removeAttribute('draggable')
-      })
-      selected.value = index
-      if (provide) provide.select(id)
-    }
-
-    function dragstart (e: DragEvent) {
-      if (!e.dataTransfer) return
-      e.dataTransfer.setData('Text', dragNode.value?.el?.textContent || '')
-      e.dataTransfer.effectAllowed = 'move'
-    }
-
-    function dragend (e: DragEvent) {
-      dragNode.value?.el?.removeAttribute('draggable')
-      window.removeEventListener('dragstart', dragstart)
-      window.removeEventListener('dragend', dragend)
-      selected.value = null
-      emit()
-    }
+    watch(moveState, state => {
+      switch (state) {
+        case 'moving':
+          selected.value = index
+          if (provide) provide.select(id)
+          break
+        case 'moved':
+          selected.value = null
+          emit()
+          break
+      }
+    })
 
     return {
-      dragNode,
-      dragOn: {
-        mousedown,
-      },
+      dragNode: movingElement,
+      dragOn: moveOn,
     }
   }
 

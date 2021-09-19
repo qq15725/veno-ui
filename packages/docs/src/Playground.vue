@@ -1,10 +1,3 @@
-<script>
-export default {
-  name: 'Decorate'
-}
-</script>
-
-
 <script setup>
 import { ref } from 'vue'
 
@@ -40,35 +33,41 @@ const items1 = ref([
     <ve-app-bar border>
       <ve-spacer />
 
-      <ve-btn>保存</ve-btn>
-      <ve-btn>退出</ve-btn>
+      <ve-app-bar-items>
+        <ve-btn>保存</ve-btn>
+        <ve-btn>退出</ve-btn>
+      </ve-app-bar-items>
     </ve-app-bar>
 
     <ve-app-sider class="p-3">
-      <ve-drag-sort
-          class="ve-row"
-          group="components"
-          v-model="items"
-          :put="false"
-      >
-        <template #item="{ item, on }">
-          <ve-col :cols="6">
-            <ve-card
-                v-on="on"
-                class="p-3"
-            >
-              {{ item.label }}
-            </ve-card>
-          </ve-col>
-        </template>
-      </ve-drag-sort>
+      <ve-row>
+        <ve-drag-sort
+            group="components"
+            v-model="items"
+            :put="false"
+        >
+          <template #item="{ item, on }">
+            <ve-col :cols="6">
+              <ve-card
+                  v-on="on"
+                  class="p-3"
+                  style="cursor: move;"
+              >
+                {{ item.label }}
+              </ve-card>
+            </ve-col>
+          </template>
+        </ve-drag-sort>
+      </ve-row>
     </ve-app-sider>
 
     <ve-app-sider position="right" class="p-3">
       <ve-input />
     </ve-app-sider>
 
-    <ve-app-main>
+    <ve-app-main
+        color="#e5e5e5"
+    >
       <ve-container>
         <ve-device
             model="iphone8"
@@ -77,11 +76,12 @@ const items1 = ref([
         >
           <ve-drag-sort v-model="items1" group="components">
             <template #item="{ item, on }">
-              <div>
-                <component v-on="on" :is="item.is">
-                  {{ item.label }}
-                </component>
-              </div>
+              <component
+                  v-on="on"
+                  :is="item.is"
+              >
+                {{ item.label }}
+              </component>
             </template>
           </ve-drag-sort>
         </ve-device>

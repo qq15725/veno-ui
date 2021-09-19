@@ -1,13 +1,13 @@
-import LayoutsDocs from '../../layouts/Docs.vue'
 import viewRoutes from './view-routes'
-import Decorate from '../../Decorate.vue'
+import Docs from '../../Docs.vue'
+import Playground from '../../Playground.vue'
 
 export default [
   {
     path: '',
-    component: LayoutsDocs,
+    component: Docs,
     children: viewRoutes,
   },
-  { name: 'Decorate', path: '/decorate', component: Decorate },
+  { name: 'Playground', path: '/playground', component: Playground },
   { path: '/', redirect: '/guide' }
 ]

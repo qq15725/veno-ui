@@ -44,8 +44,6 @@ export default defineComponent({
               on: { ...dragOn, ...dragAreaOn },
             })
             .map(node => {
-              if (!dragNode.value) dragNode.value = node
-
               if (props.itemKey) {
                 node.key = typeof props.itemKey === 'function'
                   ? props.itemKey(item, index)

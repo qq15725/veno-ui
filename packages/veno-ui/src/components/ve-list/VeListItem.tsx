@@ -58,8 +58,8 @@ export default defineComponent({
           class={ [
             've-list-item',
             {
-              'v-list-item--active': isActive.value,
-              'v-list-item--link': isClickable,
+              've-list-item--active': isActive.value,
+              've-list-item--link': isClickable,
               [`${ props.activeClass }`]: isActive.value && props.activeClass,
             },
             disabledClasses.value,
@@ -77,6 +77,8 @@ export default defineComponent({
           tabindex={ isClickable ? 0 : undefined }
           onClick={ isClickable && link.navigate }
         >
+          <div class="ve-list-item__overlay" />
+
           { slots.default?.() }
         </Tag>
       )

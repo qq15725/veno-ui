@@ -1,7 +1,3 @@
-<script>
-export default { name: 'LayoutsDocs' }
-</script>
-
 <script setup>
 const items = [
   {
@@ -22,7 +18,11 @@ const items = [
   },
   {
     name: 'Drag',
-    label: '拖拽排序'
+    label: '拖拽'
+  },
+  {
+    name: 'Image',
+    label: '图片'
   },
   {
     name: 'Input',
@@ -42,7 +42,7 @@ const items = [
 
       <ve-app-bar-items style="margin-left: 140px;" >
         <ve-btn :to="{ name: 'Guide' }">首页</ve-btn>
-        <ve-btn :to="{ name: 'Decorate' }">排练场</ve-btn>
+        <ve-btn :to="{ name: 'Playground' }">排练场</ve-btn>
       </ve-app-bar-items>
     </ve-app-bar>
 

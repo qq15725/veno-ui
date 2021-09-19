@@ -4,7 +4,7 @@
 
 <template>
   <ve-container>
-    <h2 class="mb-5">列表 List</h2>
+    <h2 class="mb-5">图片</h2>
 
     <h3 class="mb-5">演示</h3>
 
@@ -12,11 +12,10 @@
       <ve-col :cols="6">
         <ve-card>
           <ve-card-title>基础</ve-card-title>
-          <ve-list>
-            <ve-list-item v-for="i in 5" @click="">
-              <ve-list-item-title>这是一行</ve-list-item-title>
-            </ve-list-item>
-          </ve-list>
+
+          <ve-card-text>
+
+          </ve-card-text>
         </ve-card>
       </ve-col>
     </ve-row>

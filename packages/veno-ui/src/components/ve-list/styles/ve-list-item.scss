@@ -14,4 +14,17 @@
   @include tools.states('.ve-list-item__overlay');
   @include tools.rounded($list-item-border-radius);
   @include tools.use-variant($list-item-variants...);
+
+  &__overlay {
+    @include tools.absolute(false);
+    background-color: currentColor;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+  }
+
+  &--link {
+    cursor: pointer;
+  }
 }
