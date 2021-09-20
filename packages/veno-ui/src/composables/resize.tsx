@@ -7,10 +7,7 @@ import { useMove } from '../composables/move'
 // Types
 import type { PropType } from 'vue'
 
-export const allowedResizeStates = [
-  'resized',
-  'resizing'
-] as const
+export const allowedResizeStates = ['resized', 'resizing'] as const
 
 export type ResizeStates = typeof allowedResizeStates[number]
 
@@ -41,14 +38,12 @@ export const makeResizeProps = propsFactory({
   resizeHandlePoint: Boolean,
 }, 'resize')
 
-const defaultResizeModel = { left: 0, top: 0, width: 0, height: 0 }
-
 export function useResize (props: ResizeProps, name: string) {
   const resizeState = ref<ResizeStates>('resized')
   const selectedResizeHandle = ref<ResizeHandle | null>(null)
 
-  const startingPositionDimension = ref({ ...defaultResizeModel })
-  const resizingPositionDimension = ref({ ...defaultResizeModel })
+  const startingPositionDimension = ref({ left: 0, top: 0, width: 0, height: 0 })
+  const resizingPositionDimension = ref({ left: 0, top: 0, width: 0, height: 0 })
   const resizingOffsetPositionDimension = computed(() => ({
     left: resizingPositionDimension.value.left - startingPositionDimension.value.left,
     top: resizingPositionDimension.value.top - startingPositionDimension.value.top,
@@ -61,20 +56,21 @@ export function useResize (props: ResizeProps, name: string) {
       const { moveState, moveOn, movingOffsetPosition } = useMove()
 
       watch(moveState, state => {
-        if (state === 'moving') {
-          resizeState.value = 'resizing'
-          selectedResizeHandle.value = resizeHandle
-        } else {
-          resizeState.value = 'resized'
-          selectedResizeHandle.value = null
-          startingPositionDimension.value = { ...resizingPositionDimension.value }
+        switch (state) {
+          case 'moving':
+            resizeState.value = 'resizing'
+            selectedResizeHandle.value = resizeHandle
+            break
+          case 'moved':
+            resizeState.value = 'resized'
+            selectedResizeHandle.value = null
+            startingPositionDimension.value = { ...resizingPositionDimension.value }
+            break
         }
       })
 
       watch(movingOffsetPosition, offsetPosition => {
-        if (resizeHandle !== selectedResizeHandle.value) {
-          return
-        }
+        if (resizeHandle !== selectedResizeHandle.value) return
 
         const temp = { ...resizingPositionDimension.value }
 

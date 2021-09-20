@@ -1,12 +1,10 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 
-const items1 = reactive([1, 2, 3, 4])
-const items2 = reactive([5, 6, 7])
+const items1 = ref([1, 2, 3, 4])
+const items2 = ref([5, 6, 7])
 
-const position = ref({
-
-})
+const position = ref({})
 </script>
 
 <template>
@@ -46,32 +44,45 @@ const position = ref({
 
       <ve-col :cols="6">
         <ve-card>
-          <ve-card-title>拖拽排序</ve-card-title>
+          <ve-card-title>拖拽排序组</ve-card-title>
 
           <ve-list>
-            <ve-drag-sort v-model="items1">
+            <ve-drag-sort
+                v-model="items1"
+                group="group"
+            >
               <template #item="{ item, on }">
                 <ve-list-item v-on="on" @click="">{{ item }}</ve-list-item>
               </template>
             </ve-drag-sort>
           </ve-list>
+
+          <ve-card-actions>
+            {{ items1 }}
+          </ve-card-actions>
         </ve-card>
       </ve-col>
 
       <ve-col :cols="6">
         <ve-card>
+          <ve-card-title>拖拽排序组</ve-card-title>
+
           <ve-list>
-            <ve-drag-sort v-model="items2">
+            <ve-drag-sort
+                v-model="items2"
+                group="group"
+            >
               <template #item="{ item, on }">
                 <ve-list-item v-on="on">{{ item }}</ve-list-item>
               </template>
             </ve-drag-sort>
           </ve-list>
+
+          <ve-card-actions>
+            {{ items2 }}
+          </ve-card-actions>
         </ve-card>
       </ve-col>
     </ve-row>
-
-    {{ items1 }}
-    {{ items2 }}
   </ve-container>
 </template>

@@ -2,10 +2,8 @@
 import { ref, computed } from 'vue'
 import { propsFactory } from '../utils'
 
-export const allowedMoveStates = [
-  'moved',
-  'moving'
-] as const
+// Types
+export const allowedMoveStates = ['moved', 'moving'] as const
 
 export type MoveState = typeof allowedMoveStates[number]
 
@@ -18,21 +16,19 @@ export const makeMoveProps = propsFactory({
   draggable: Boolean,
 }, 'move')
 
-const emptyPosition = { left: 0, top: 0 }
-
 export function useMove (props: MoveProps = {}) {
   const moveState = ref<MoveState>('moved')
   const movingElement = ref<HTMLElement | null>(null)
 
-  const startingPosition = ref({ ...emptyPosition })
-  const movingPosition = ref({ ...emptyPosition })
+  const startingPosition = ref({ left: 0, top: 0 })
+  const movingPosition = ref({ left: 0, top: 0 })
   const movingOffsetPosition = computed(() => ({
     left: movingPosition.value.left - startingPosition.value.left,
     top: movingPosition.value.top - startingPosition.value.top,
   }))
 
   function start (event: MouseEvent | TouchEvent) {
-    movingElement.value = event.target as HTMLElement
+    if (!movingElement.value) movingElement.value = event.target as HTMLElement
     startingPosition.value = getEventClientPosition(event)
     movingPosition.value = getEventClientPosition(event)
 
@@ -79,6 +75,7 @@ export function useMove (props: MoveProps = {}) {
     }
 
     moveState.value = 'moved'
+    movingElement.value = null
   }
 
   function getEventClientPosition (event: DragEvent | MouseEvent | TouchEvent) {
@@ -101,10 +98,9 @@ export function useMove (props: MoveProps = {}) {
   }
 
   function dragstart (event: DragEvent) {
-    if (event.dataTransfer) {
-      event.dataTransfer.setData('Text', movingElement.value?.textContent || '')
-      event.dataTransfer.effectAllowed = 'move'
-    }
+    if (!event.dataTransfer) return
+    event.dataTransfer.setData('text/plain', movingElement.value?.textContent || '')
+    event.dataTransfer.effectAllowed = 'move'
   }
 
   return {
