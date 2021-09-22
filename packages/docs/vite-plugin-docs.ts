@@ -20,7 +20,15 @@ interface CodegenOption
 const renderer = new marked.Renderer()
 
 renderer.heading = (text: string, level: number) => {
-  return `<h${ level } id="${ text.replace(/ /g, '-') }" class="my-${ 6 - level }">${ text }</h${ level }>`
+  const id = text.replace(/ /g, '-')
+
+  const classes = level === 1 ? 'mb-5' : `my-${ 6 - level }`
+
+  return `<h${ level } id="${ id }" class="${ classes }">${ text }</h${ level }>`
+}
+
+renderer.paragraph = (text: string) => {
+  return `<p class="mb-4">${ text }</p>`
 }
 
 function parserMarked (tokens: Record<string, any>) {

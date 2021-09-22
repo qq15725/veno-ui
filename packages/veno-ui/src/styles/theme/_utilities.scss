@@ -4,14 +4,14 @@
 
 $spacers: () !default;
 @if (type-of($spacers) == list) {
-  @for $i from 0 through 5 {
+  @for $i from 0 through 10 {
     $spacers: map-merge($spacers, ($i: $spacer * $i))
   }
 }
 
 $negative-spacers: () !default;
 @if (type-of($negative-spacers) == list) {
-  @for $i from 1 through 5 {
+  @for $i from 1 through 10 {
     $negative-spacers: map-merge($negative-spacers, ("n" + $i: -$spacer * $i))
   }
 }

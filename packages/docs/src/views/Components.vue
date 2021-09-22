@@ -28,7 +28,7 @@ const props = defineProps<{
     </ve-app-sider>
 
     <ve-app-main>
-      <ve-container>
+      <ve-container class="px-10 py-8">
         <router-view />
       </ve-container>
     </ve-app-main>
