@@ -39,6 +39,7 @@ export function useMove (props: MoveProps = {}) {
       movingElement.value?.addEventListener('dragend', end)
     } else {
       event.preventDefault()
+      event.stopPropagation()
     }
 
     if (event instanceof MouseEvent) {

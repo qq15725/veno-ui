@@ -1,5 +1,7 @@
+// Styles
 import './styles/ve-list.scss'
 
+// Utils
 import { defineComponent, toRef } from 'vue'
 
 // Composables

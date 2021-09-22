@@ -1,5 +1,7 @@
+// Styles
 import './styles/ve-list-item.scss'
 
+// Utils
 import { defineComponent, computed } from 'vue'
 
 // Composables
@@ -77,7 +79,7 @@ export default defineComponent({
           tabindex={ isClickable ? 0 : undefined }
           onClick={ isClickable && link.navigate }
         >
-          <div class="ve-list-item__overlay" />
+          { isClickable && <div class="ve-list-item__overlay" /> }
 
           { slots.default?.() }
         </Tag>

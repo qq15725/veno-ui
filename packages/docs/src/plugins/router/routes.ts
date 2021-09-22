@@ -1,13 +1,24 @@
-import viewRoutes from './view-routes'
-import Docs from '../../Docs.vue'
-import Playground from '../../Playground.vue'
+import type { RouteRecordRaw } from 'vue-router'
 
-export default [
+import Playground from '@/Playground.vue'
+import Components from '@/views/Components.vue'
+import Guide from '@/views/Guide.vue'
+import componentRoutes from './component-routes'
+
+const routes: RouteRecordRaw[] = [
   {
     path: '',
-    component: Docs,
-    children: viewRoutes,
+    props: {
+      items: componentRoutes,
+    },
+    component: Components,
+    children: [
+      ...componentRoutes,
+      { name: 'Guide', path: '/guide', component: Guide },
+    ],
   },
   { name: 'Playground', path: '/playground', component: Playground },
   { path: '/', redirect: '/guide' }
 ]
+
+export default routes
