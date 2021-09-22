@@ -9,6 +9,7 @@ import type { PluginOption } from 'vite'
 
 interface CodegenOption
 {
+  title?: string
   // script
   imports: Record<string, string>
   components: Record<string, string>
@@ -49,6 +50,10 @@ function codegen (option: CodegenOption) {
     componentsCode += `${ k }: ${ option.components[k] },\n`
   }
 
+  const exportTitle = option.title
+    ? `export const title = "${ option.title }"`
+    : ''
+
   const template = parserMarked(option.tokens)
 
   let code = `<template>${ template }</template>`
@@ -58,6 +63,8 @@ function codegen (option: CodegenOption) {
     code += `<script>
 ${ importsCode }
 
+${ exportTitle }
+
 export default {
   components: {
     ${ componentsCode }
@@ -65,6 +72,7 @@ export default {
 }
 </script>`
   }
+
   return code
 }
 
@@ -97,6 +105,9 @@ function getOptionByTokens (
 `
       })
       return option
+    } else if (type === 'heading' && token.depth === 1) {
+      [option.title] = token.text.split(' ')
+      option.tokens.push(token)
     } else if (type === 'code' && token.lang === 'docs') {
       let html = ''
       text.split('\n').forEach((item: string) => {

@@ -21,7 +21,7 @@ const props = defineProps<{
             v-for="item in props.items"
             :to="{ name: item.name }"
         >
-          <span style="font-size: 14px;" class="mr-2">{{ item.name }}</span>
+          <span style="font-size: 14px;" class="mr-2">{{ item.meta.title }}</span>
           <span style="font-size: 13px; color: rgb(158, 164, 170);">{{ item.name }}</span>
         </ve-list-item>
       </ve-list>
