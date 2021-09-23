@@ -29,9 +29,16 @@ const props = defineProps<{
         <ve-list-item
             v-for="item in props.items"
             :to="{ name: item.name }"
+            class="pl-10"
+            active-color="primary"
         >
-          <span style="font-size: 14px;" class="mr-2">{{ item.meta.title }}</span>
-          <span style="font-size: 13px; color: rgb(158, 164, 170);">{{ item.meta.name }}</span>
+          <span style="font-size: 14px;" class="mr-2">
+            {{ item.meta.title }}
+          </span>
+
+          <span style="font-size: 13px; color: rgb(158, 164, 170);">
+            {{ item.meta.name }}
+          </span>
         </ve-list-item>
       </ve-list>
     </ve-app-sider>

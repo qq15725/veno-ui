@@ -113,24 +113,26 @@ function getOptionByTokens (
       [option.title] = token.text.split(' ')
       option.tokens.push(token)
     } else if (type === 'code' && token.lang === 'docs') {
-      let html = ''
+      const cols: string[] = []
       text.split('\n').forEach((item: string) => {
         const name = capitalize(camelize(item.replace('.', '-')))
         option.imports[name] = `./${ item }`
         option.components[name] = name
-        html += `
-<ve-col :cols="6">
-  <ve-card>
-    <${ name } />
-  </ve-card>
-</ve-col>
-`
+        cols.push(`<ve-col :cols="12"><ve-card><${ name } /></ve-card></ve-col>`)
       })
-
       option.tokens.push({
         type: 'html',
         pre: false,
-        text: `<ve-row>${ html }</ve-row>`
+        text: `
+<ve-row>
+  <ve-col :cols="6">
+    <ve-row>${ cols.filter((_, i) => i % 2 === 0).join('\n') }</ve-row>
+  </ve-col>      
+  <ve-col :cols="6">
+    <ve-row>${ cols.filter((_, i) => i % 2 !== 0).join('\n') }</ve-row>
+  </ve-col>      
+</ve-row>
+`
       })
     } else if (type === 'code' && token.lang === 'html') {
       option.tokens.push({

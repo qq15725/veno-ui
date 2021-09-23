@@ -1,7 +1,9 @@
 # 默认插槽
 
 ```html
-文本
-<ve-divider>内嵌文本</ve-divider>
-文本
+<ve-divider placement="left">左侧</ve-divider>
+
+<ve-divider>和</ve-divider>
+
+<ve-divider placement="right">右侧文本</ve-divider>
 ```
