@@ -1,5 +1,17 @@
 @use '../../../styles/theme' as *;
 
+$list-border-color: $border-color !default;
+$list-border-style: $border-style !default;
+$list-border-width: 0 !default;
+$list-border-thin-width: thin !default;
+$list-border-radius: $border-radius !default;
+$list-border: (
+  $list-border-color,
+  $list-border-style,
+  $list-border-width,
+  $list-border-thin-width
+) !default;
+
 $list-item-border-color: $border-color !default;
 $list-item-border-radius: $border-radius !default;
 $list-item-border-style: $border-style !default;
@@ -11,7 +23,6 @@ $list-item-border: (
   $list-item-border-width,
   $list-item-border-thin-width
 ) !default;
-
 
 $list-background: rgba(var(--v-theme-surface)) !default;
 $list-color: rgba(var(--v-theme-on-surface)) !default;

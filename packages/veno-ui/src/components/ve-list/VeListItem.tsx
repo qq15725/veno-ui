@@ -14,6 +14,11 @@ import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 
+//
+import VeListItemHeader from './VeListItemHeader'
+import VeListItemTitle from './VeListItemTitle'
+import VeListItemSubtitle from './VeListItemSubtitle'
+
 export default defineComponent({
   name: 'VeListItem',
 
@@ -22,6 +27,8 @@ export default defineComponent({
     activeColor: String,
     activeClass: String,
     link: Boolean,
+    subtitle: String,
+    title: String,
     ...makeDisabledProps(),
     ...makeBorderProps(),
     ...makeDimensionProps(),
@@ -53,6 +60,9 @@ export default defineComponent({
 
     return () => {
       const Tag = (link.isLink.value) ? 'a' : props.tag
+      const hasTitle = (slots.title || props.title)
+      const hasSubtitle = (slots.subtitle || props.subtitle)
+      const hasHeader = !!(hasTitle || hasSubtitle)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
       return (
@@ -80,6 +90,28 @@ export default defineComponent({
           onClick={ isClickable && link.navigate }
         >
           { isClickable && <div class="ve-list-item__overlay" /> }
+
+          { hasHeader && (
+            <VeListItemHeader>
+              { hasTitle && (
+                <VeListItemTitle>
+                  { slots.title
+                    ? slots.title()
+                    : props.title
+                  }
+                </VeListItemTitle>
+              ) }
+
+              { hasSubtitle && (
+                <VeListItemSubtitle>
+                  { slots.subtitle
+                    ? slots.subtitle()
+                    : props.subtitle
+                  }
+                </VeListItemSubtitle>
+              ) }
+            </VeListItemHeader>
+          ) }
 
           { slots.default?.() }
         </Tag>

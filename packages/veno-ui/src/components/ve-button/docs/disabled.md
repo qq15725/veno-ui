@@ -1,14 +1,14 @@
-# 圆的
+# 不可用状态
 
 ```html
-<ve-btn
+<ve-button
   v-for="(variant, index) in ['outlined', 'contained', 'text']"
   :key="index"
   :variant="variant"
+  disabled
   color="error"
-  rounded
-  class="mr-3"
+  style="margin-right: 10px;"
 >
   {{ variant }}
-</ve-btn>
+</ve-button>
 ```

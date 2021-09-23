@@ -1,13 +1,14 @@
-# Block
+# 圆的
 
 ```html
-<ve-btn
+<ve-button
   v-for="(variant, index) in ['outlined', 'contained', 'text']"
   :key="index"
   :variant="variant"
-  block
-  style="margin-bottom: 10px;"
+  color="error"
+  rounded
+  class="mr-3"
 >
   {{ variant }}
-</ve-btn>
+</ve-button>
 ```

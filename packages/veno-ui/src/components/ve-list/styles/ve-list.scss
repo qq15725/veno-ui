@@ -1,8 +1,10 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-list {
   overflow: auto;
   position: relative;
   padding: 8px 0;
+  @include tools.border($list-border...);
 }

@@ -2,11 +2,11 @@
 
 ```html
 <ve-drag>
-  <ve-btn
+  <ve-button
     width="100%"
     height="100%"
   >
     拖动
-  </ve-btn>
+  </ve-button>
 </ve-drag>
 ```

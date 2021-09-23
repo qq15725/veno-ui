@@ -28,8 +28,12 @@ renderer.heading = (text: string, level: number) => {
   return `<h${ level } id="${ id }" class="${ classes }">${ text }</h${ level }>`
 }
 
+renderer.codespan = (text: string) => {
+  return `<code style="background-color: rgb(244, 244, 248); padding: .05em .35em 0 .35em;">${ text }</code>`
+}
+
 renderer.paragraph = (text: string) => {
-  return `<p class="mb-4">${ text }</p>`
+  return `<p class="mb-4" style="font-size: .875rem;">${ text }</p>`
 }
 
 function parserMarked (tokens: Record<string, any>) {

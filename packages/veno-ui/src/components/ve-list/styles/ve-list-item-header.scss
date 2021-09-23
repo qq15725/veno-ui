@@ -1,0 +1,7 @@
+@forward 'variables';
+@use 'variables' as *;
+
+.ve-list-item-header {
+  flex: 1 1 auto;
+  min-width: 0;
+}

@@ -5,7 +5,7 @@
 @use '../../../styles/tools';
 @use '../../../styles/theme/variables' as *;
 
-.ve-btn {
+.ve-button {
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -46,7 +46,7 @@
   }
 
   &:not(&--loading):not(&--disabled) {
-    @include tools.states('.ve-btn__overlay', false);
+    @include tools.states('.ve-button__overlay', false);
   }
 
   &--block {
@@ -57,7 +57,7 @@
   &--loading {
     color: rgba(var(--v-theme-on-surface), $button-disabled-opacity);
 
-    .ve-btn__overlay {
+    .ve-button__overlay {
       opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
     }
   }
@@ -68,5 +68,12 @@
 
   &--loading {
     cursor: wait;
+  }
+
+  // VeAppBarItems
+  .ve-app-bar-items & {
+    border-radius: 0;
+    height: 100% !important;
+    border-width: 0;
   }
 }

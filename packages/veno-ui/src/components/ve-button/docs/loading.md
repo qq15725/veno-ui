@@ -1,14 +1,14 @@
-# 不可用状态
+# 加载中
 
 ```html
-<ve-btn
+<ve-button
   v-for="(variant, index) in ['outlined', 'contained', 'text']"
   :key="index"
   :variant="variant"
-  disabled
+  loading
   color="error"
   style="margin-right: 10px;"
 >
   {{ variant }}
-</ve-btn>
+</ve-button>
 ```

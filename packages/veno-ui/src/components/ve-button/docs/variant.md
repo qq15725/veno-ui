@@ -3,7 +3,7 @@
 按钮的 variant 分别为 `outlined`、`contained`、`text`。
 
 ```html
-<ve-btn
+<ve-button
   v-for="(variant, index) in ['outlined', 'contained', 'text']"
   :key="index"
   :variant="variant"
@@ -11,5 +11,5 @@
   class="mr-3"
 >
   {{ variant }}
-</ve-btn>
+</ve-button>
 ```

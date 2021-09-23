@@ -6,13 +6,13 @@
 >
   <template #item="{ item, on }">
     <ve-list-item>
-      <ve-btn
+      <ve-button
         v-on="on"
         class="mr-3"
         size="x-small"
       >
         拖我
-      </ve-btn>
+      </ve-button>
       <div>{{ item }}</div>
     </ve-list-item>
   </template>

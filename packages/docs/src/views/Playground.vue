@@ -34,8 +34,8 @@ const items1 = ref([
       <ve-spacer />
 
       <ve-app-bar-items>
-        <ve-btn>保存</ve-btn>
-        <ve-btn>退出</ve-btn>
+        <ve-button>保存</ve-button>
+        <ve-button>退出</ve-button>
       </ve-app-bar-items>
     </ve-app-bar>
 

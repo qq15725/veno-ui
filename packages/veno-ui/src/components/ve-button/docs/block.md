@@ -1,14 +1,13 @@
-# 加载中
+# Block
 
 ```html
-<ve-btn
+<ve-button
   v-for="(variant, index) in ['outlined', 'contained', 'text']"
   :key="index"
   :variant="variant"
-  loading
-  color="error"
-  style="margin-right: 10px;"
+  block
+  style="margin-bottom: 10px;"
 >
   {{ variant }}
-</ve-btn>
+</ve-button>
 ```
