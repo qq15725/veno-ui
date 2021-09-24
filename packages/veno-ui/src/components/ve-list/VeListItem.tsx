@@ -14,7 +14,7 @@ import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 
-//
+// Components
 import VeListItemHeader from './VeListItemHeader'
 import VeListItemTitle from './VeListItemTitle'
 import VeListItemSubtitle from './VeListItemSubtitle'
