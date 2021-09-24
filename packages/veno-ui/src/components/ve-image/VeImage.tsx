@@ -65,12 +65,12 @@ export default defineComponent({
 
     function onLoad () {
       state.value = 'loaded'
-      emit('load', image.value?.currentSrc)
+      emit('load', image.value)
     }
 
     function onError () {
       state.value = 'error'
-      emit('error', image.value?.currentSrc)
+      emit('error', image.value)
     }
 
     function pollForSize (img: HTMLImageElement, timeout: number | null = 100) {
