@@ -4,7 +4,7 @@
 
 ## 演示
 
-```docs
+```demo
 basic.md
 aspect-ratio.md
 ```

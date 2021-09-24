@@ -4,6 +4,6 @@
 
 ## 演示
 
-```docs
+```demo
 basic.md
 ```

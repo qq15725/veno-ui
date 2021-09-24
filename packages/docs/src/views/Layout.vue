@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { version } from 'veno-ui/package.json'
+
 const props = defineProps<{
   items?: any[]
 }>()
@@ -22,6 +24,7 @@ const props = defineProps<{
         <ve-button :width="60" :to="{ name: 'Playground' }">排练场</ve-button>
         <ve-button :width="60">深色</ve-button>
         <ve-button :width="60" href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
+        <ve-button :width="60">{{ version }}</ve-button>
       </ve-app-bar-items>
     </ve-app-bar>
 

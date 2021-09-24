@@ -93,31 +93,54 @@ function getOptionByTokens (
 
     if (!isIndex && type === 'heading' && token.depth === 1) {
       const newTokens = [...tokens]
+
       newTokens.splice(0, index + 1)
+
       const newOption = getOptionByTokens(newTokens, isIndex)
+
+      let code = ''
+      let template = newTokens
+        .find(v => v.type === 'code' && v.lang === 'html')
+
+      if (template) {
+        code += '<template>\n'
+        code += template.text
+          .split('\n')
+          .map((line: string) => (line.length > 0 ? '  ' + line : line))
+          .join('\n')
+        code += '\n</template>'
+      }
+
+      let script = newTokens
+        .find(v => v.type === 'code' && v.lang === 'js')
+
+      if (script) {
+        code += `\n\n<script>\n${ script.text }\n</script>`
+      }
+
       option.tokens.push({
         type: 'html',
         pre: false,
-        text: `
-<ve-card-title>${ text }</ve-card-title>
-<ve-card-text>
-  ${ parserMarked(newOption.tokens) }
-</ve-card-text>
-`
+        text: `<ve-demo-card title="${ text }" code="${ encodeURIComponent(code) }">${ parserMarked(newOption.tokens) }</ve-demo-card>`
       })
+
       option.script = newOption.script
+
       return option
     } else if (type === 'heading' && token.depth === 1) {
       [option.title] = token.text.split(' ')
+
       option.tokens.push(token)
-    } else if (type === 'code' && token.lang === 'docs') {
+    } else if (type === 'code' && token.lang === 'demo') {
       const cols: string[] = []
+
       text.split('\n').forEach((item: string) => {
         const name = capitalize(camelize(item.replace('.', '-')))
         option.imports[name] = `./${ item }`
         option.components[name] = name
-        cols.push(`<ve-col :cols="12"><ve-card><${ name } /></ve-card></ve-col>`)
+        cols.push(`<ve-col :cols="12"><${ name } /></ve-col>`)
       })
+
       option.tokens.push({
         type: 'html',
         pre: false,

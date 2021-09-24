@@ -4,7 +4,7 @@
 
 ## 演示
 
-```docs
+```demo
 variant.md
 shape.md
 disabled.md

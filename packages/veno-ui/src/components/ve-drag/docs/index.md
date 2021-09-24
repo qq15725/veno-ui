@@ -4,7 +4,7 @@
 
 ## 演示
 
-```docs
+```demo
 moveable.md
 moveable-resizable.md
 sort.md
