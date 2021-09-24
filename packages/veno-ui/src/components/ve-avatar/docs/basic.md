@@ -2,6 +2,6 @@
 
 ```html
 <ve-avatar
-  src="https://picsum.photos/id/11/500/300"
+  image="https://picsum.photos/id/11/500/300"
 />
 ```
