@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "docs:build": "npm run build -w venoui.com",
-    "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist"
+    "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
+    "docs:upgrade": "npm run docs:build && npm run docs:publish"
   },
   "workspaces": [
     "packages/*"
