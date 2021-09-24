@@ -82,7 +82,8 @@ export default defineComponent({
           naturalHeight.value = imgHeight
         } else if (!img.complete && state.value === 'loading' && timeout != null) {
           setTimeout(poll, timeout)
-        } else if (img.currentSrc.endsWith('.svg') || img.currentSrc.startsWith('data:image/svg+xml')) {
+        } else if (img.currentSrc.endsWith('.svg')
+          || img.currentSrc.startsWith('data:image/svg+xml')) {
           naturalWidth.value = 1
           naturalHeight.value = 1
         }

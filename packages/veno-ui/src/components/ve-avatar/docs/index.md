@@ -6,4 +6,6 @@
 
 ```docs
 basic.md
+shape.md
+color.md
 ```

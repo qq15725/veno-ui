@@ -1,5 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-avatar {
   align-items: center;
@@ -9,7 +10,14 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
-
   width: 40px;
   height: 40px;
+  @include tools.rounded($avatar-border-radius);
+  @include tools.use-rounded();
+
+  > * {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+  }
 }

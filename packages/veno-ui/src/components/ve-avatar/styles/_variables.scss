@@ -1,0 +1,4 @@
+@use "sass:map";
+@use "../../../styles/theme" as *;
+
+$avatar-border-radius: $border-radius !default;

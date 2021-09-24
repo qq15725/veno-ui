@@ -10,15 +10,16 @@ const props = defineProps<{
       <ve-app-bar-title>Veno UI</ve-app-bar-title>
 
       <ve-app-bar-items style="margin-left: 140px;">
-        <ve-button :width="60" :to="{ name: 'Guide' }">首页</ve-button>
-        <ve-button :width="60">文档</ve-button>
+        <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
         <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
-        <ve-button :width="60" :to="{ name: 'Playground' }">排练场</ve-button>
+        <ve-button :width="60">指令</ve-button>
+        <ve-button :width="60">组合</ve-button>
       </ve-app-bar-items>
 
       <ve-spacer />
 
       <ve-app-bar-items>
+        <ve-button :width="60" :to="{ name: 'Playground' }">排练场</ve-button>
         <ve-button :width="60">深色</ve-button>
         <ve-button :width="60">GitHub</ve-button>
       </ve-app-bar-items>
@@ -32,13 +33,9 @@ const props = defineProps<{
             class="pl-10"
             active-color="primary"
         >
-          <span style="font-size: 14px;" class="mr-2">
-            {{ item.meta.title }}
-          </span>
+          <span style="font-size: 14px;" class="mr-2">{{ item.meta.title }}</span>
 
-          <span style="font-size: 13px; color: rgb(158, 164, 170);">
-            {{ item.meta.name }}
-          </span>
+          <span style="font-size: 13px; color: rgb(158, 164, 170);">{{ item.meta.name }}</span>
         </ve-list-item>
       </ve-list>
     </ve-app-sider>

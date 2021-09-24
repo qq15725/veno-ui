@@ -4,7 +4,7 @@
 $border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !default;
 $border-style: solid !default;
 $border-width: thin !default;
-$border-radius: 0.125rem !default;
+$border-radius: 0.25rem !default;
 
 $borders: () !default;
 $borders: map-deep-merge(
