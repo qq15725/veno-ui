@@ -54,10 +54,6 @@ function codegen (option: CodegenOption) {
     componentsCode += `${ k }: ${ option.components[k] },\n`
   }
 
-  const exportTitle = option.title
-    ? `export const title = "${ option.title }"`
-    : ''
-
   const template = parserMarked(option.tokens)
 
   let code = `<template>${ template }</template>`
@@ -67,7 +63,7 @@ function codegen (option: CodegenOption) {
     code += `<script>
 ${ importsCode }
 
-${ exportTitle }
+${ option.title ? `export const title = "${ option.title }"` : '' }
 
 export default {
   components: {
@@ -98,16 +94,18 @@ function getOptionByTokens (
     if (!isIndex && type === 'heading' && token.depth === 1) {
       const newTokens = [...tokens]
       newTokens.splice(0, index + 1)
+      const newOption = getOptionByTokens(newTokens, isIndex)
       option.tokens.push({
         type: 'html',
         pre: false,
         text: `
 <ve-card-title>${ text }</ve-card-title>
 <ve-card-text>
-  ${ parserMarked(getOptionByTokens(newTokens, isIndex).tokens) }
+  ${ parserMarked(newOption.tokens) }
 </ve-card-text>
 `
       })
+      option.script = newOption.script
       return option
     } else if (type === 'heading' && token.depth === 1) {
       [option.title] = token.text.split(' ')
