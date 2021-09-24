@@ -5,6 +5,7 @@ const modules = import.meta.globEager('../../../../veno-ui/src/components/**/doc
 
 export default Object.keys(modules).map(path => {
   const name = path.match(/components\/ve-(.+)\/docs\/index\.md/)[1]
+
   const cameName = capitalize(camelize(name))
 
   return {

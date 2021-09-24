@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
 
   return {
+    base: '/veno-ui/',
     resolve: {
       alias: [
         {
