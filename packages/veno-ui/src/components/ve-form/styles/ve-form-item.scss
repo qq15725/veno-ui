@@ -1,0 +1,38 @@
+@use '../../../styles/theme/variables' as *;
+@use '../../../styles/tools';
+
+.ve-form-item {
+  display: grid;
+  line-height: 1.6;
+  grid-template-areas: "label wrapper" "label message";
+  grid-template-columns: auto 1fr;
+  color: rgb(31, 34, 37);
+
+  &__label {
+    grid-area: label;
+    color: inherit;
+    align-items: center;
+    text-align: right;
+    padding-right: 12px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  &__wrapper {
+    grid-area: wrapper;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 40px;
+  }
+
+  &__message {
+    grid-area: message;
+    min-height: 14px;
+  }
+}

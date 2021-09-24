@@ -1,11 +1,14 @@
 # 基础
 
 ```html
-<ve-switch 
-  v-model="value"
-/>
 
-<div class="mt-3">{{ value }}</div>
+<ve-form-item label="文本输入" :label-width="100">
+  <ve-input />
+</ve-form-item>
+
+<ve-form-item label="开关" :label-width="100">
+  <ve-switch />
+</ve-form-item>
 ```
 
 ```js
