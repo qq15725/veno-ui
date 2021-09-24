@@ -1,6 +1,6 @@
-// Utilities
-import { computed, getCurrentInstance } from 'vue'
-import { convertToUnit, propsFactory, toKebabCase } from '../utils'
+// Utils
+import { computed } from 'vue'
+import { convertToUnit, propsFactory } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'

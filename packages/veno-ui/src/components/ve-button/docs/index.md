@@ -6,7 +6,7 @@
 
 ```docs
 variant.md
-rounded.md
+shape.md
 disabled.md
 loading.md
 size.md

@@ -1,5 +1,5 @@
-// Utilities
-import { propsFactory } from '../utils'
+// Utils
+import { propsFactory } from '../../utils'
 
 // Types
 export interface TagProps

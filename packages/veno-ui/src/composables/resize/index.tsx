@@ -1,8 +1,9 @@
 // Utils
 import { ref, computed, watch } from 'vue'
-import { propsFactory } from '../utils'
+import { propsFactory } from '../../utils'
 
-import { useMove } from '../composables/move'
+// Composables
+import { useMove } from '../move'
 
 // Types
 import type { PropType } from 'vue'

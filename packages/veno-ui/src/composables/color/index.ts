@@ -1,6 +1,6 @@
-// Utilities
+// Utils
 import { computed, isRef } from 'vue'
-import { isCssColor, propsFactory } from '../utils'
+import { isCssColor, propsFactory } from '../../utils'
 
 // Types
 import type { CSSProperties, Ref } from 'vue'

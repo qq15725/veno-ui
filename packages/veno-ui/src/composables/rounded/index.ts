@@ -1,6 +1,6 @@
-// Utilities
+// Utils
 import { computed } from 'vue'
-import { propsFactory } from '../utils'
+import { propsFactory } from '../../utils'
 
 // Types
 export interface RoundedProps

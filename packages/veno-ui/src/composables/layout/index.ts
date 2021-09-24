@@ -1,6 +1,6 @@
-// Utilities
+// Utils
 import { computed, inject, onBeforeUnmount, provide, ref } from 'vue'
-import { convertToUnit, getUid, propsFactory } from '../utils'
+import { convertToUnit, getUid, propsFactory } from '../../utils'
 
 // Types
 import type { InjectionKey, Prop, Ref } from 'vue'

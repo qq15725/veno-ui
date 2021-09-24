@@ -1,4 +1,4 @@
-# 按钮种类
+# 基础
 
 按钮的 variant 分别为 `outlined`、`contained`、`text`。
 

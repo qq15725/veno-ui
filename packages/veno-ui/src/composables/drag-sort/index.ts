@@ -1,3 +1,4 @@
+// Utils
 import {
   reactive,
   ref,
@@ -10,10 +11,12 @@ import {
   watch,
 } from 'vue'
 
-import { useMove } from './move'
-import { useDragArea } from './drag-area'
-import { propsFactory, getUid } from '../utils'
+// Composables
+import { useMove } from '../move'
+import { useDragArea } from '../drag-area'
+import { propsFactory, getUid } from '../../utils'
 
+// Types
 import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 import type { UnwrapNestedRefs } from '@vue/reactivity'
 

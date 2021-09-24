@@ -1,5 +1,6 @@
+// Utils
 import { computed } from 'vue'
-import { propsFactory, convertToUnit } from '../utils'
+import { propsFactory, convertToUnit } from '../../utils'
 
 export const deviceModels: Dictionary<DeviceModel> = {
   iphonex: {

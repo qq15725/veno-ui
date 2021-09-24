@@ -1,5 +1,6 @@
+// Utils
 import { computed } from 'vue'
-import { convertToUnit, propsFactory } from '../utils'
+import { convertToUnit, propsFactory } from '../../utils'
 
 export interface DimensionProps
 {

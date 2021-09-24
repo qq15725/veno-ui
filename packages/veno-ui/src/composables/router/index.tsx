@@ -1,5 +1,4 @@
-// Utilities
-import { propsFactory } from '../utils'
+// Utils
 import {
   computed,
   getCurrentInstance,
@@ -8,6 +7,7 @@ import {
   resolveDynamicComponent,
   toRef,
 } from 'vue'
+import { propsFactory } from '../../utils'
 
 // Types
 import type { ComputedRef, PropType, Ref, SetupContext } from 'vue'

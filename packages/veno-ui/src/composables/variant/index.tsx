@@ -1,13 +1,13 @@
-// Composables
-import { useColor } from '../composables/color'
-
-// Utilities
+// Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '../utils'
+import { propsFactory } from '../../utils'
+
+// Composables
+import { useColor } from '../color'
 
 // Types
 import type { PropType } from 'vue'
-import type { MaybeRef } from '../utils'
+import type { MaybeRef } from '../../utils'
 
 export const allowedVariants = [
   'outlined',

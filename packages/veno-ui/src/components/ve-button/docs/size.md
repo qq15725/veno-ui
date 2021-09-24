@@ -1,4 +1,6 @@
-# 大小
+# 尺寸
+
+有 `x-small`、`small`、`default`、`large` 和 `x-large` 尺寸。
 
 ```html
 <ve-button

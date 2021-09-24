@@ -1,8 +1,10 @@
 // Utils
-import { PropType, ref } from 'vue'
-import { propsFactory } from '../utils'
+import { ref } from 'vue'
+import { propsFactory } from '../../utils'
 
 // Types
+import type { PropType } from 'vue'
+
 export const allowedDragAreaStates = ['dropped', 'entered', 'left'] as const
 
 export type DragAreaState = typeof allowedDragAreaStates[number]

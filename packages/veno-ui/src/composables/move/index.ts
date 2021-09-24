@@ -1,6 +1,6 @@
 // Utils
 import { ref, computed } from 'vue'
-import { propsFactory } from '../utils'
+import { propsFactory } from '../../utils'
 
 // Types
 export const allowedMoveStates = ['moved', 'moving'] as const

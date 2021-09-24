@@ -1,3 +1,5 @@
+// Utils
+import { computed, getCurrentInstance, inject, provide, ref, watch } from 'vue'
 import {
   colorToInt,
   colorToRGB,
@@ -9,13 +11,9 @@ import {
   mergeDeep,
   propsFactory,
   consoleError,
-} from '../utils'
-
+} from '../../utils'
 // @ts-ignore
-import { APCAcontrast } from '../utils/color/APCA'
-
-// Utilities
-import { computed, getCurrentInstance, inject, provide, ref, watch } from 'vue'
+import { APCAcontrast } from '../../utils/color/APCA'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'

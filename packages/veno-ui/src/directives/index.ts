@@ -1,0 +1,1 @@
+export { Intersect } from './intersect'
