@@ -5,6 +5,7 @@ import { defineComponent } from 'vue'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeVariantProps, useVariant } from '../../composables/variant'
+import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
 export default defineComponent({
   name: 'VeInput',
@@ -21,11 +22,13 @@ export default defineComponent({
     ...makeDisabledProps(),
     ...makeBorderProps(),
     ...makeVariantProps(),
+    ...makeRoundedProps(),
   },
 
   setup (props, { slots, emit }) {
     const { disabledClasses } = useDisabled(props, 've-input')
     const { borderClasses } = useBorder(props, 've-input')
+    const { roundedClasses } = useRounded(props, 've-input')
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-input')
 
     return () => {
@@ -42,6 +45,7 @@ export default defineComponent({
             colorClasses.value,
             disabledClasses.value,
             borderClasses.value,
+            roundedClasses.value,
             variantClasses.value,
           ] }
           style={ [

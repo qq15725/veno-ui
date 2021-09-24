@@ -21,7 +21,7 @@ const props = defineProps<{
       <ve-app-bar-items>
         <ve-button :width="60" :to="{ name: 'Playground' }">排练场</ve-button>
         <ve-button :width="60">深色</ve-button>
-        <ve-button :width="60">GitHub</ve-button>
+        <ve-button :width="60" href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
       </ve-app-bar-items>
     </ve-app-bar>
 

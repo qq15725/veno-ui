@@ -1,6 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
+@use '../../../styles/tools';
 
 .ve-input {
   display: inline-flex;
@@ -8,8 +8,10 @@
   align-items: center;
   max-width: 100%;
   padding: $input-padding;
-  @include border($input-border...);
-  @include use-variant($input-variant...);
+  @include tools.border($input-border...);
+  @include tools.rounded($input-border-radius);
+  @include tools.use-rounded();
+  @include tools.use-variant($input-variant...);
 
   &__prefix,
   &__suffix {
@@ -29,28 +31,23 @@
 
   &--textarea {
     width: 100%;
-
-    .ve-input__prefix {
-      align-self: start;
-    }
-
-    .ve-input__suffix {
-      align-self: start;
-    }
   }
 
-  &--autosize {
-    .ve-input__el {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-    }
+  &--textarea &__prefix,
+  &--textarea &__suffix {
+    align-self: start;
+  }
+
+  &--autosize &__el {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
 
   &--disabled,
-  &--disabled .ve-input__el {
+  &--disabled &__el {
     cursor: not-allowed;
     background-color: $input-disabled-background;
     color: $input-disabled-color;
