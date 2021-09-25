@@ -10,6 +10,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { makePositionProps, usePosition } from '../../composables/position'
 import { makeMoveProps, useMove } from '../../composables/move'
 import { makeResizeProps, useResize } from '../../composables/resize'
+import { makeTagProps } from '../../composables/tag'
 
 // Types
 import type { PropType, Ref } from 'vue'
@@ -22,7 +23,7 @@ export interface DragModel
   height: number
 }
 
-const defaultModel = { left: 0, top: 0, width: 30, height: 30 }
+const defaultModel = { left: 0, top: 0, width: 0, height: 0 }
 
 export default defineComponent({
   name: 'VeDrag',
@@ -37,6 +38,7 @@ export default defineComponent({
     ...makePositionProps(),
     ...makeMoveProps(),
     ...makeResizeProps(),
+    ...makeTagProps(),
     modelValue: Object as PropType<DragModel>,
   },
 
@@ -51,6 +53,8 @@ export default defineComponent({
       { ...defaultModel }
     ) as Ref<NonNullable<DragModel>>
 
+    const dragRef = ref<HTMLElement>()
+
     const startingModel = ref({
       left: model.value.left ?? defaultModel.left,
       top: model.value.top ?? defaultModel.top,
@@ -61,6 +65,22 @@ export default defineComponent({
     const { positionClasses, positionStyles } = usePosition(props, 've-drag')
     const { moveOn, moveState, movingOffsetPosition } = useMove(props)
     const { resizeHandles, resizeState, resizingOffsetPositionDimension } = useResize(props, 've-drag')
+
+    watch(dragRef, el => {
+      if (!el) return
+
+      const rect = el.getBoundingClientRect()
+
+      if (!model.value.width) {
+        startingModel.value.width = rect.width
+        model.value.width = rect.width
+      }
+
+      if (!model.value.height) {
+        startingModel.value.height = rect.height
+        model.value.height = rect.height
+      }
+    })
 
     watch([moveState, resizeState], ([moveState, resizeState]) => {
       if (props.moveable && moveState === 'moved'
@@ -90,12 +110,13 @@ export default defineComponent({
 
     const styles = computed(() => ({
       transform: `translate3d(${ convertToUnit(model.value.left) }, ${ convertToUnit(model.value.top) }, 0)`,
-      width: convertToUnit(model.value.width),
-      height: convertToUnit(model.value.height),
+      width: model.value.width ? convertToUnit(model.value.width) : undefined,
+      height: model.value.height ? convertToUnit(model.value.height) : undefined,
     }))
 
     return () => (
-      <div
+      <props.tag
+        ref={ dragRef }
         class={ [
           've-drag',
           positionClasses.value,
@@ -124,7 +145,7 @@ export default defineComponent({
         <div class="ve-drag__wrapper">
           { slots.default?.() }
         </div>
-      </div>
+      </props.tag>
     )
   }
 })

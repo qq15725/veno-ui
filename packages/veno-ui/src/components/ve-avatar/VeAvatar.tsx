@@ -6,6 +6,7 @@ import { defineComponent, toRef } from 'vue'
 
 // Composables
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
+import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeSizeProps, useSize } from '../../composables/size'
 import { makeTagProps } from '../../composables/tag'
 import { useBackgroundColor } from '../../composables/color'
@@ -20,6 +21,7 @@ export default defineComponent({
     color: String,
     image: String,
     ...makeRoundedProps(),
+    ...makeBorderProps(),
     ...makeSizeProps(),
     ...makeTagProps(),
   },
@@ -27,6 +29,7 @@ export default defineComponent({
   setup (props, { slots }) {
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
     const { roundedClasses } = useRounded(props, 've-avatar')
+    const { borderClasses } = useBorder(props, 've-avatar')
     const { sizeClasses, sizeStyles } = useSize(props, 've-avatar')
 
     return () => (
@@ -35,6 +38,7 @@ export default defineComponent({
           've-avatar',
           backgroundColorClasses.value,
           roundedClasses.value,
+          borderClasses.value,
           sizeClasses.value,
         ] }
         style={ [

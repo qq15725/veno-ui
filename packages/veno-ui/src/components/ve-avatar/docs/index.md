@@ -7,5 +7,8 @@
 ```demo
 basic.md
 shape.md
+size.md
+border.md
 color.md
+slot.md
 ```

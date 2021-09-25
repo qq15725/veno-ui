@@ -9,6 +9,6 @@
   :size="size"
   style="margin-right: 10px;"
 >
-  {{ size }}
+  按钮
 </ve-button>
 ```

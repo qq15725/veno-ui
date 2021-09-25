@@ -58,9 +58,9 @@ function codegen (option: CodegenOption) {
 
   let code = `<template>${ template }</template>`
   if (option.script) {
-    code += `<script lang="ts">${ option.script }</script>`
+    code += `<script>${ option.script }</script>`
   } else {
-    code += `<script lang="ts">
+    code += `<script>
 ${ importsCode }
 
 ${ option.title ? `export const title = "${ option.title }"` : '' }
@@ -115,7 +115,7 @@ function getOptionByTokens (
         .find(v => v.type === 'code' && v.lang === 'js')
 
       if (script) {
-        code += `\n\n<script lang="ts">\n${ script.text }\n</script>`
+        code += `\n\n<script>\n${ script.text }\n</script>`
       }
 
       option.tokens.push({

@@ -6,8 +6,8 @@
   :key="index"
   :variant="variant"
   block
-  style="margin-bottom: 10px;"
+  class="mb-3"
 >
-  {{ variant }}
+  按钮
 </ve-button>
 ```

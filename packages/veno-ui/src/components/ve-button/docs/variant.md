@@ -1,4 +1,4 @@
-# 基础
+# 变体
 
 按钮的 variant 分别为 `outlined`、`contained`、`text`。
 
@@ -10,6 +10,6 @@
   color="primary"
   class="mr-3"
 >
-  {{ variant }}
+  按钮
 </ve-button>
 ```

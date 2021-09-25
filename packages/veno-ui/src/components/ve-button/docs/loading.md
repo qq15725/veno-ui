@@ -6,9 +6,8 @@
   :key="index"
   :variant="variant"
   loading
-  color="error"
-  style="margin-right: 10px;"
+  class="mr-3"
 >
-  {{ variant }}
+  按钮
 </ve-button>
 ```

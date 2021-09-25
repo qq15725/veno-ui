@@ -5,11 +5,13 @@
 ## 演示
 
 ```demo
+basic.md
 variant.md
 shape.md
+size.md
+color.md
 disabled.md
 loading.md
-size.md
 block.md
 ```
 

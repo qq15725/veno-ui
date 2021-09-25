@@ -11,6 +11,8 @@ import { makeVariantProps, useVariant } from '../../composables/variant'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
 export default defineComponent({
+  name: 'VeSwitch',
+
   props: {
     modelValue: Boolean,
     activeColor: {
