@@ -1,5 +1,5 @@
 import createVuePlugin from '@vitejs/plugin-vue'
-import fs from 'fs'
+import { readFileSync } from 'fs'
 import { capitalize, camelize } from 'vue'
 // @ts-ignore
 import marked from 'marked'
@@ -58,9 +58,9 @@ function codegen (option: CodegenOption) {
 
   let code = `<template>${ template }</template>`
   if (option.script) {
-    code += `<script>${ option.script }</script>`
+    code += `<script lang="ts">${ option.script }</script>`
   } else {
-    code += `<script>
+    code += `<script lang="ts">
 ${ importsCode }
 
 ${ option.title ? `export const title = "${ option.title }"` : '' }
@@ -115,7 +115,7 @@ function getOptionByTokens (
         .find(v => v.type === 'code' && v.lang === 'js')
 
       if (script) {
-        code += `\n\n<script>\n${ script.text }\n</script>`
+        code += `\n\n<script lang="ts">\n${ script.text }\n</script>`
       }
 
       option.tokens.push({
@@ -174,7 +174,7 @@ function getOptionByTokens (
 async function getTransformedVueSrc (id: string) {
   return codegen(
     getOptionByTokens(
-      marked.lexer(fs.readFileSync(id).toString()),
+      marked.lexer(readFileSync(id).toString()),
       /index\.md/.test(id)
     )
   )

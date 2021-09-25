@@ -56,10 +56,11 @@
   &--disabled,
   &--loading {
     color: rgba(var(--v-theme-on-surface), $button-disabled-opacity);
+  }
 
-    .ve-button__overlay {
-      opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
-    }
+  &--disabled &__overlay,
+  &--loading &__overlay {
+    opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
   }
 
   &--disabled {
@@ -68,6 +69,10 @@
 
   &--loading {
     cursor: wait;
+  }
+
+  &__progress {
+    margin-right: 0.25rem;
   }
 
   // VeAppBarItems

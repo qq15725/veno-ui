@@ -19,6 +19,9 @@ $states: map-deep-merge(
     $states
 );
 
+$spacer: 0.25rem !default;
+
+$size-scale: $spacer * 2 !default;
 $size-scales: (
   'x-small': -2,
   'small': -1,
@@ -26,8 +29,6 @@ $size-scales: (
   'large': 1,
   'x-large': 2
 ) !default;
-
-$spacer: 0.25rem !default;
 
 // Mapping from transition to easings:
 // fast-out-slow-in -> standard

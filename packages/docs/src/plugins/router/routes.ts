@@ -6,6 +6,7 @@ import Guide from '@/views/Guide.vue'
 import componentRoutes from './component-routes'
 
 const routes: RouteRecordRaw[] = [
+  { name: 'Playground', path: '/playground', component: Playground },
   {
     path: '',
     props: {
@@ -15,10 +16,9 @@ const routes: RouteRecordRaw[] = [
     children: [
       ...componentRoutes,
       { name: 'Guide', path: '/guide', component: Guide },
+      { path: '', redirect: '/guide' }
     ],
   },
-  { name: 'Playground', path: '/playground', component: Playground },
-  { path: '/', redirect: '/guide' }
 ]
 
 export default routes

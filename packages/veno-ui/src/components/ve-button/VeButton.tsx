@@ -1,7 +1,10 @@
+// Styles
 import './styles/ve-button.scss'
 
+// Utils
 import { defineComponent } from 'vue'
 
+// Composables
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeTagProps } from '../../composables/tag'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -13,6 +16,9 @@ import { makeDimensionProps, useDimension } from '../../composables/dimensions'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'
+
+// Components
+import { VeProgress } from '../ve-progress'
 
 export default defineComponent({
   name: 'VeButton',
@@ -79,6 +85,15 @@ export default defineComponent({
           onClick={ props.disabled || link.navigate }
         >
           { props.variant !== 'text' && <div class="ve-button__overlay" /> }
+
+          { props.loading && (
+            <VeProgress
+              class="ve-button__progress"
+              size="x-small"
+              width="1"
+              indeterminate
+            />
+          ) }
 
           <span>{ slots.default?.() }</span>
         </Tag>
