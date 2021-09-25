@@ -1,7 +1,12 @@
 {
   "name": "veno-ui",
-  "version": "0.0.0",
-  "main": "src/entry.ts",
+  "version": "0.0.1",
+  "main": "dist/veno-ui.umd.js",
+  "module": "dist/veno-ui.es.js",
+  "files": [
+    "dist/"
+  ],
+  "types": "dist/veno-ui.d.ts",
   "scripts": {
     "build": "vite build"
   },
@@ -12,6 +17,7 @@
     "@vue/compiler-sfc": "^3.0.5",
     "typescript": "^4.3.2",
     "vite": "^2.4.4",
+    "vite-plugin-dts": "^0.8.1",
     "vue-tsc": "^0.2.2"
   },
   "peerDependencies": {
@@ -23,5 +29,9 @@
     "*.scss",
     "*.css",
     "*.vue"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq15725/veno-ui.git"
+  }
 }

@@ -1,7 +1,5 @@
-import 'veno-ui/src/styles/main.scss'
-import { createVeno } from 'veno-ui'
-import * as components from 'veno-ui/src/components'
+import 'veno-ui/dist/style.css'
 
-export default createVeno({
-  components
-})
+import { createVenoUi } from 'veno-ui'
+
+export default createVenoUi()

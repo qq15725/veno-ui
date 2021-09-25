@@ -1,4 +1,4 @@
-import type { ColorInt, XYZ } from '../colorUtils'
+import type { ColorInt, XYZ } from '../color-utils'
 import { clamp } from '../helpers'
 
 // For converting XYZ to sRGB
