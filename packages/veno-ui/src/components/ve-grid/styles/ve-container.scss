@@ -1,6 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/theme/grid' as *;
+@use '../../../styles/settings/grid' as *;
 @use 'mixins' as *;
 
 .ve-container {

@@ -1,18 +1,18 @@
 @use '../tools/functions' as *;
-@use 'variables' as *;
-@use 'border' as *;
+@use 'variables';
+@use 'borders' as *;
 
 $spacers: () !default;
 @if (type-of($spacers) == list) {
   @for $i from 0 through 10 {
-    $spacers: map-merge($spacers, ($i: $spacer * $i))
+    $spacers: map-merge($spacers, ($i: variables.$spacer * $i))
   }
 }
 
 $negative-spacers: () !default;
 @if (type-of($negative-spacers) == list) {
   @for $i from 1 through 10 {
-    $negative-spacers: map-merge($negative-spacers, ("n" + $i: -$spacer * $i))
+    $negative-spacers: map-merge($negative-spacers, ("n" + $i: variables.$spacer * -$i))
   }
 }
 

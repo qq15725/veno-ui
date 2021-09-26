@@ -1,5 +1,4 @@
-@use '../../../styles/theme/border';
-@use '../../../styles/theme/disabled';
+@use '../../../styles/settings';
 
 $input-padding: 8px !default;
 
@@ -8,15 +7,15 @@ $input-background: rgb(var(--v-theme-surface)) !default;
 $input-color: rgb(var(--v-theme-on-surface)) !default;
 
 // disabled
-$input-disabled-background: disabled.$disabled-background !default;
-$input-disabled-color: disabled.$disabled-color !default;
+$input-disabled-background: settings.$disabled-background !default;
+$input-disabled-color: settings.$disabled-color !default;
 
 // border
-$input-border-color: border.$border-color !default;
-$input-border-style: border.$border-style !default;
+$input-border-color: settings.$border-color !default;
+$input-border-style: settings.$border-style !default;
 $input-border-width: 0 !default;
 $input-border-thin-width: thin !default;
-$input-border-radius: border.$border-radius !default;
+$input-border-radius: settings.$border-radius !default;
 $input-border: (
   $input-border-color,
   $input-border-style,

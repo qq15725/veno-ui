@@ -60,7 +60,7 @@ export default defineComponent({
         ] }
       >
         <div
-          class="ve-app-bar__content"
+          class="ve-app-bar__wrap"
           style={ { height: convertToUnit(props.height) } }
         >
           { slots.default?.() }

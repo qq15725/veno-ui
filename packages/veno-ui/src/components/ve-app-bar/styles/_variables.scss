@@ -1,4 +1,4 @@
-@use '../../../styles/theme/border' as *;
+@use '../../../styles/settings';
 
 $app-bar-background: rgb(var(--v-theme-surface)) !default;
 $app-bar-color: rgb(var(--v-theme-on-surface)) !default;
@@ -7,9 +7,9 @@ $app-bar-padding-end: 1rem !default;
 $app-bar-padding-start: 1rem !default;
 
 // border
-$app-bar-border-color: $border-color !default;
-$app-bar-border-radius: map-get($rounded, '0') !default;
-$app-bar-border-style: $border-style !default;
+$app-bar-border-color: settings.$border-color !default;
+$app-bar-border-radius: map-get(settings.$rounded, '0') !default;
+$app-bar-border-style: settings.$border-style !default;
 $app-bar-border-width: 0 !default;
 $app-bar-border-thin-width: 0 0 thin !default;
 $app-bar-border: (

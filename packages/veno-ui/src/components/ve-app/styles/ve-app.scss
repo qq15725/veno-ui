@@ -6,7 +6,7 @@
   background: rgb(var(--v-theme-background));
   color: rgb(var(--v-theme-on-background));
 
-  &__wrapper {
+  &__wrap {
     flex: 1 1 auto;
     backface-visibility: hidden;
     display: flex;

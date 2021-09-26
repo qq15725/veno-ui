@@ -1,4 +1,4 @@
-@use '../../../styles/theme/variables' as *;
+@use '../../../styles/settings';
 
 .ve-progress {
   align-items: center;
@@ -6,11 +6,9 @@
   justify-content: center;
   position: relative;
   vertical-align: middle;
-  width: 32px;
-  height: 32px;
 
-  @each $name, $multiplier in $size-scales {
-    $size: 2rem + ($size-scale * $multiplier);
+  @each $name, $multiplier in settings.$size-scales {
+    $size: settings.$spacer * 9 + (settings.$size-scale * $multiplier);
     &--size-#{$name} {
       height: $size;
       width: $size;

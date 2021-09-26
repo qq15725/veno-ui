@@ -1,11 +1,11 @@
 @use "sass:map";
-@use "../../../styles/theme/border";
+@use "../../../styles/settings";
 
-$avatar-border-color: border.$border-color !default;
-$avatar-border-style: border.$border-style !default;
+$avatar-border-color: settings.$border-color !default;
+$avatar-border-style: settings.$border-style !default;
 $avatar-border-width: 0 !default;
 $avatar-border-thin-width: thin !default;
-$avatar-border-radius: border.$border-radius !default;
+$avatar-border-radius: settings.$border-radius !default;
 $avatar-border: (
   $avatar-border-color,
   $avatar-border-style,

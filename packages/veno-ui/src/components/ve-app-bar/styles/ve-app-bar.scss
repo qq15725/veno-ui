@@ -1,7 +1,7 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
-@use '../../../styles/theme/variables' as *;
+@use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-app-bar {
   align-items: flex-start;
@@ -13,13 +13,13 @@
   padding-left: $app-bar-padding-start;
   padding-right: calc(#{$app-bar-padding-end} + var(--v-scrollbar-offset));
   position: fixed;
-  transition: .2s $standard-easing;
+  transition: .2s settings.$standard-easing;
   transition-property: height, transform;
   color: $app-bar-color;
   background: $app-bar-background;
-  @include border($app-bar-border...);
+  @include tools.border($app-bar-border...);
 
-  &__content {
+  &__wrap {
     align-items: center;
     display: flex;
     flex: 0 0 auto;

@@ -1,5 +1,5 @@
-@use '../../../styles/theme/border' as *;
+@use '../../../styles/settings';
 
 // border
-$divider-border-color: $border-color !default;
-$divider-border-style: $border-style !default;
+$divider-border-color: settings.$border-color !default;
+$divider-border-style: settings.$border-style !default;

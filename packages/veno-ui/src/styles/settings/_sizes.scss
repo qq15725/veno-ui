@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+$sizes: (
+  'x-small',
+  'small',
+  'default',
+  'large',
+  'x-large'
+) !default;
+
+$size-scale: $spacer * 2 !default;
+$size-scales: (
+  'x-small': -2,
+  'small': -1,
+  'default': 0,
+  'large': 1,
+  'x-large': 2
+) !default;

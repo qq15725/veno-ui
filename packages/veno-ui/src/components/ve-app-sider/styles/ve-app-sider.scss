@@ -1,7 +1,7 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
-@use '../../../styles/theme/variables' as *;
+@use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-app-sider {
   -webkit-overflow-scrolling: touch;
@@ -14,10 +14,10 @@
   top: 0;
   transition-duration: 0.2s;
   transition-property: box-shadow, transform, visibility, width;
-  transition-timing-function: $standard-easing;
+  transition-timing-function: settings.$standard-easing;
   will-change: transform;
   position: fixed;
-  @include border($app-sider-border...);
+  @include tools.border($app-sider-border...);
 
   &--start {
     border-inline-end-width: $app-sider-border-thin-width;
@@ -27,7 +27,7 @@
     border-inline-start-width: $app-sider-border-thin-width;
   }
 
-  &__content {
+  &__wrap {
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;

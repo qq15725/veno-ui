@@ -60,7 +60,7 @@ export default defineComponent({
             )
           }
 
-          <div class="ve-input__wrapper">
+          <div class="ve-input__wrap">
             <Tag
               class="ve-input__el"
               value={ props.modelValue }

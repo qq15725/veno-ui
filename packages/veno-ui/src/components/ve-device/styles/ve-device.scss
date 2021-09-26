@@ -1,6 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
+@use '../../../styles/tools';
 
 .ve-device {
   display: flex;
@@ -8,8 +8,8 @@
   position: relative;
   color: $device-color;
   border-radius: $device-border-radius;
-  @include border($device-border...);
-  @include use-variant($device-variant...);
+  @include tools.border($device-border...);
+  @include tools.use-variant($device-variant...);
 
   &__app-header {
     display: block;

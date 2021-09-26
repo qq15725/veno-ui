@@ -57,9 +57,7 @@ export default defineComponent({
           layoutStyles.value,
         ] }
       >
-        <div
-          class="ve-app-sider__content"
-        >
+        <div class="ve-app-sider__wrap">
           { slots.default?.() }
         </div>
       </props.tag>

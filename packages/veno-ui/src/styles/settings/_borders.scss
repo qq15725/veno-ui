@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '../tools/functions' as *;
+@use '../tools/functions';
 
 $border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !default;
 $border-style: solid !default;
@@ -7,7 +7,7 @@ $border-width: thin !default;
 $border-radius: 0.25rem !default;
 
 $borders: () !default;
-$borders: map-deep-merge(
+$borders: functions.map-deep-merge(
     (
       0: 0,
       null: thin,
@@ -20,7 +20,7 @@ $borders: map-deep-merge(
 );
 
 $border-opacities: () !default;
-$border-opacities: map-deep-merge(
+$border-opacities: functions.map-deep-merge(
     (
       0: 0,
       null: .12,
@@ -33,7 +33,7 @@ $border-opacities: map-deep-merge(
 );
 
 $rounded: () !default;
-$rounded: map-deep-merge(
+$rounded: functions.map-deep-merge(
     (
       0: 0,
       'sm': math.div($border-radius, 2),

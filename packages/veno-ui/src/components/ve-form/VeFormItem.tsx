@@ -29,7 +29,7 @@ export default defineComponent({
           </label>
         ) }
 
-        <div class="ve-form-item__wrapper">{ slots.default?.() }</div>
+        <div class="ve-form-item__wrap">{ slots.default?.() }</div>
 
         <div class="ve-form-item__message" />
       </div>

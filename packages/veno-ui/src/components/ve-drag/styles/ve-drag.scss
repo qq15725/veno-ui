@@ -9,7 +9,7 @@
   touch-action: none;
   @include tools.use-position();
 
-  &__wrapper {
+  &__wrap {
     position: relative;
     width: 100%;
     height: 100%;

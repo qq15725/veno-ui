@@ -1,6 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/theme' as *;
+@use '../../../styles/settings';
 @use '../../../styles/tools';
 
 .ve-avatar {
@@ -15,8 +15,8 @@
   @include tools.border($avatar-border...);
   @include tools.use-rounded();
 
-  @each $name, $multiplier in $size-scales {
-    $size: 2.5rem + ($size-scale * $multiplier);
+  @each $name, $multiplier in settings.$size-scales {
+    $size: settings.$spacer * 9 + (settings.$size-scale * $multiplier);
     &--size-#{$name} {
       height: $size;
       width: $size;

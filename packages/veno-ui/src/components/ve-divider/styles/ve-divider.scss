@@ -1,6 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/tools' as *;
+@use '../../../styles/tools';
 
 .ve-divider {
   display: flex;
@@ -10,7 +10,7 @@
   width: 100%;
   font-size: 1rem;
   font-weight: 500;
-  @include border($divider-border-color, $divider-border-style, 0);
+  @include tools.border($divider-border-color, $divider-border-style, 0);
 
   @at-root {
     hr#{&} {

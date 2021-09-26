@@ -142,7 +142,7 @@ export default defineComponent({
           />
         )) }
 
-        <div class="ve-drag__wrapper">
+        <div class="ve-drag__wrap">
           { slots.default?.() }
         </div>
       </props.tag>

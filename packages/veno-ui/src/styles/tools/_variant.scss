@@ -1,4 +1,4 @@
-@use '../theme/border' as *;
+@use '../settings/borders';
 
 @mixin use-variant($contained-background, $contained-color) {
   &--variant-outlined,
@@ -13,7 +13,7 @@
   }
 
   &--variant-outlined {
-    border: thin solid $border-color;
+    border: thin solid borders.$border-color;
   }
 
   &--variant-custom-color {

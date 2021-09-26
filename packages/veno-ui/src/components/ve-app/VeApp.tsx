@@ -30,7 +30,7 @@ export default defineComponent({
         ] }
         data-app="true"
       >
-        <div class="ve-app__wrapper">
+        <div class="ve-app__wrap">
           { slots.default?.() }
         </div>
       </div>

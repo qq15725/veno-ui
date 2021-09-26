@@ -1,0 +1,21 @@
+@use '../tools/functions';
+
+$color-pack: true !default;
+
+$spacer: 4px !default;
+
+$font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-size: 14px !default;
+$line-height: 1.5 !default;
+
+// Mapping from transition to easings:
+// fast-out-slow-in -> standard
+// linear-out-slow-in -> decelerated
+// fast-out-linear-in -> accelerated
+// ease-in-out -> standard or accelerated depending on usage
+// fast-in-fast-out -> accelerated
+// swing -> standard
+
+$standard-easing: cubic-bezier(0.4, 0, 0.2, 1);
+$decelerated-easing: cubic-bezier(0.0, 0, 0.2, 1); // Entering
+$accelerated-easing: cubic-bezier(0.4, 0, 1, 1); // Leaving

@@ -1,4 +1,4 @@
-@use '../theme/grid' as *;
+@use '../settings/grid' as *;
 @use 'functions' as *;
 
 @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {

@@ -1,6 +1,6 @@
 @use 'sass:math';
-@use '../../../styles/theme/grid' as *;
-@use '../../../styles/tools' as *;
+@use '../../../styles/settings';
+@use '../../../styles/tools';
 @use 'mixins' as *;
 
 // 网格列数
@@ -8,15 +8,15 @@ $grid-columns: 12 !default;
 // xs sm md lg xl xxl
 
 // 容器
-$container-padding-x: math.div($grid-gutter, 2) !default;
+$container-padding-x: math.div(settings.$grid-gutter, 2) !default;
 
 $container-max-widths: () !default;
-$container-max-widths: map-deep-merge(
+$container-max-widths: tools.map-deep-merge(
     (
-      'md': map-get($grid-breakpoints, 'md') * 0.9375,
-      'lg': map-get($grid-breakpoints, 'lg') * 0.9375,
-      'xl': map-get($grid-breakpoints, 'xl') * 0.9375,
-      'xxl': map-get($grid-breakpoints, 'xxl') * 0.9375,
+      'md': map-get(settings.$grid-breakpoints, 'md') * 0.9375,
+      'lg': map-get(settings.$grid-breakpoints, 'lg') * 0.9375,
+      'xl': map-get(settings.$grid-breakpoints, 'xl') * 0.9375,
+      'xxl': map-get(settings.$grid-breakpoints, 'xxl') * 0.9375,
     ),
     $container-max-widths
 );
