@@ -7,11 +7,11 @@
   overflow: hidden;
   display: block;
   color: $card-color;
-  border-radius: $card-border-radius;
   text-decoration: none;
   @include tools.border($card-border...);
   @include tools.use-variant($card-variant...);
-  @include tools.position($card-positions);
+  @include tools.use-position($card-positions);
+  @include tools.use-rounded($card-border-radius);
 
   &--link {
     cursor: pointer;
@@ -27,10 +27,10 @@
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    font-size: 1.125rem;
-    font-weight: 500;
+    font-size: $card-title-font-size;
+    font-weight: $card-title-font-weight;
     hyphens: auto;
-    letter-spacing: .0125rem;
+    letter-spacing: $card-title-letter-spacing;
     overflow-wrap: normal;
     text-transform: none;
     word-break: normal;
@@ -44,8 +44,9 @@
   }
 
   &-text {
-    font-size: 0.875rem;
-    font-weight: 400;
+    font-size: $card-text-font-size;
+    font-weight: $card-text-font-weight;
+    letter-spacing: $card-text-letter-spacing;
     padding: 1rem;
     transition: inherit;
     transition-property: color, opacity;

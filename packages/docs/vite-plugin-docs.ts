@@ -25,7 +25,7 @@ renderer.heading = (text: string, level: number) => {
 
   const classes = level === 1 ? 'mb-5' : `my-${ 6 - level }`
 
-  return `<h${ level } id="${ id }" class="${ classes }">${ text }</h${ level }>`
+  return `<h${ level } id="${ id }" class="text-h${ level } ${ classes }">${ text }</h${ level }>`
 }
 
 renderer.codespan = (text: string) => {
@@ -33,7 +33,7 @@ renderer.codespan = (text: string) => {
 }
 
 renderer.paragraph = (text: string) => {
-  return `<p class="mb-4" style="font-size: .875rem;">${ text }</p>`
+  return `<div class="mb-4 text-body-2">${ text }</div>`
 }
 
 function parserMarked (tokens: Record<string, any>) {

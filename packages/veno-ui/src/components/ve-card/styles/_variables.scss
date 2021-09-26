@@ -1,4 +1,5 @@
 @use '../../../styles/settings';
+@use '../../../styles/tools';
 
 // positions
 $card-positions: absolute fixed !default;
@@ -6,6 +7,18 @@ $card-positions: absolute fixed !default;
 // color
 $card-background: rgb(var(--v-theme-surface)) !default;
 $card-color: rgb(var(--v-theme-on-surface)) !default;
+
+// title
+$card-title-font-size: tools.map-deep-get(settings.$typography, 'h6', 'size') !default;
+$card-title-font-weight: tools.map-deep-get(settings.$typography, 'h6', 'weight') !default;
+$card-title-letter-spacing: tools.map-deep-get(settings.$typography, 'h6', 'letter-spacing') !default;
+$card-title-line-height: tools.map-deep-get(settings.$typography, 'h6', 'line-height') !default;
+
+// text
+$card-text-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;
+$card-text-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
+$card-text-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;
+$card-text-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
 
 // disabled
 $card-disabled-background: settings.$disabled-background !default;

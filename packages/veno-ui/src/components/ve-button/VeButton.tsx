@@ -95,7 +95,7 @@ export default defineComponent({
             />
           ) }
 
-          <span>{ slots.default?.() }</span>
+          { slots.default?.() }
         </Tag>
       )
     }

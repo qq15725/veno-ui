@@ -128,7 +128,7 @@ export default defineComponent({
         </svg>
 
         { slots.default && (
-          <div class="ve-progress__content">
+          <div class="ve-progress__wrap">
             { slots.default({ value: normalizedValue.value }) }
           </div>
         ) }

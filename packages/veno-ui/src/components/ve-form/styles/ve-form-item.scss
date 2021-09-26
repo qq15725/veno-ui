@@ -1,11 +1,14 @@
-@use '../../../styles/settings/variables' as *;
+@use 'variables' as *;
 
 .ve-form-item {
   display: grid;
-  line-height: 1.6;
   grid-template-areas: "label wrapper" "label message";
   grid-template-columns: auto 1fr;
   color: rgb(31, 34, 37);
+  font-size: $form-item-font-size;
+  font-weight: $form-item-font-weight;
+  letter-spacing: $form-item-text-letter-spacing;
+  text-transform: $form-item-text-transform;
 
   &__label {
     grid-area: label;

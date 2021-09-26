@@ -1,14 +1,14 @@
 @use 'sass:string';
-@use '../settings' as *;
+@use '../settings';
 @use '../tools';
 
 // Utilities
-@each $breakpoint in map-keys($grid-breakpoints) {
+@each $breakpoint in map-keys(settings.$grid-breakpoints) {
   // Generate media query if needed
   @include tools.media-breakpoint-up($breakpoint) {
-    $infix: tools.breakpoint-infix($breakpoint, $grid-breakpoints);
+    $infix: tools.breakpoint-infix($breakpoint, settings.$grid-breakpoints);
     // Loop over each utility property
-    @each $key, $utility in $utilities {
+    @each $key, $utility in settings.$utilities {
       // The utility can be disabled with `false`, thus check if the utility is a map first
       // Only proceed if responsive media queries are enabled or if it's the base media query
 
@@ -31,7 +31,7 @@
 
 // Print utilities
 @media print {
-  @each $key, $utility in $utilities {
+  @each $key, $utility in settings.$utilities {
     // The utility can be disabled with `false`, thus check if the utility is a map first
     // Then check if the utility needs print styles
     @if string.slice($key, -4) == ':ltr' {

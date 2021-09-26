@@ -8,106 +8,106 @@ $typography: () !default;
 $typography: functions.map-deep-merge(
     (
       'h1': (
-        'size': 6rem,
-        'weight': 300,
-        'line-height': 6rem,
-        'letter-spacing': -.015625em,
+        'size': 30px,
+        'weight': 500,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h2': (
-        'size': 3.75rem,
-        'weight': 300,
-        'line-height': 3.75rem,
-        'letter-spacing': -.0083333333em,
+        'size': 22px,
+        'weight': 500,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h3': (
-        'size': 3rem,
+        'size': 18px,
         'weight': 400,
-        'line-height': 3.125rem,
+        'line-height': 1,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h4': (
-        'size': 2.125rem,
+        'size': 16px,
         'weight': 400,
-        'line-height': 2.5rem,
-        'letter-spacing': .0073529412em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h5': (
-        'size': 1.5rem,
+        'size': 16px,
         'weight': 400,
-        'line-height': 2rem,
+        'line-height': 1,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h6': (
-        'size': 1.25rem,
+        'size': 16px,
         'weight': 500,
-        'line-height': 2rem,
-        'letter-spacing': .0125em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'subtitle-1': (
-        'size': 1rem,
+        'size': 16px,
         'weight': normal,
-        'line-height': 1.75rem,
-        'letter-spacing': .009375em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
       ),
       'subtitle-2': (
-        'size': .875rem,
+        'size': 14px,
         'weight': 500,
-        'line-height': 1.375rem,
-        'letter-spacing': .0071428571em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
       ),
       'body-1': (
-        'size': 1rem,
+        'size': 16px,
         'weight': 400,
-        'line-height': 1.5rem,
-        'letter-spacing': .03125em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
       ),
       'body-2': (
-        'size': .875rem,
+        'size': 14px,
         'weight': 400,
-        'line-height': 1.25rem,
-        'letter-spacing': .0178571429em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
       ),
       'button': (
-        'size': .875rem,
-        'weight': 500,
-        'line-height': 2.25rem,
-        'letter-spacing': .0892857143em,
+        'size': 14px,
+        'weight': 400,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
-        'text-transform': uppercase
+        'text-transform': none
       ),
       'caption': (
-        'size': .75rem,
+        'size': 12px,
         'weight': 400,
-        'line-height': 1.25rem,
-        'letter-spacing': .0333333333em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
       ),
       'overline': (
-        'size': .75rem,
+        'size': 12px,
         'weight': 500,
-        'line-height': 2rem,
-        'letter-spacing': .1666666667em,
+        'line-height': 1,
+        'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': uppercase
       )

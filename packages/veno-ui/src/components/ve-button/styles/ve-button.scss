@@ -11,7 +11,9 @@
   justify-content: center;
   align-items: center;
   outline: none;
-  border-radius: $button-border-radius;
+  font-weight: $button-font-weight;
+  letter-spacing: $button-text-letter-spacing;
+  text-transform: $button-text-transform;
   transition-property: border-color, transform, opacity, color;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
@@ -19,24 +21,26 @@
   text-decoration: none;
   cursor: pointer;
 
+  @include tools.border($button-border...);
+  @include tools.use-variant($button-variant...);
+  @include tools.use-rounded($button-border-radius);
+  @include tools.use-position();
+
   @each $name, $multiplier in settings.$size-scales {
     $height: map.get($button-sizes, 'height') + settings.$spacer * 2 * $multiplier;
 
     &--size-#{$name} {
-      font-size: map-get($button-sizes, 'font-size') + math.div($multiplier, 8);
-      min-height: $height;
+      font-size: map-get($button-sizes, 'font-size') + 2 * $multiplier;
+      height: $height;
       min-width: tools.roundEven($height * map.get($button-sizes, 'width-ratio'));
       padding: 0 math.div($height, map.get($button-sizes, 'padding-ratio'));
     }
   }
 
-  @include tools.border($button-border...);
-  @include tools.use-variant($button-variant...);
-  @include tools.use-rounded();
-  @include tools.use-position();
-
   &--variant-text {
     padding: 0;
+    min-width: auto;
+    height: auto;
   }
 
   &--icon {

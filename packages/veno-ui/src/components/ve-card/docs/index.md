@@ -6,4 +6,5 @@
 
 ```demo
 basic.md
+shape.md
 ```

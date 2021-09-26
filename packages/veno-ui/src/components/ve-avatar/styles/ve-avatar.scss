@@ -11,9 +11,8 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
-  @include tools.rounded($avatar-border-radius);
   @include tools.border($avatar-border...);
-  @include tools.use-rounded();
+  @include tools.use-rounded($avatar-border-radius);
 
   @each $name, $multiplier in settings.$size-scales {
     $size: settings.$spacer * 9 + (settings.$size-scale * $multiplier);

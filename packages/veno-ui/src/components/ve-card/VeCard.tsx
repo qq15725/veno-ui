@@ -1,7 +1,10 @@
+// Styles
 import './styles/ve-card.scss'
 
+// Utils
 import { defineComponent } from 'vue'
 
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, useTheme } from '../../composables/theme';
 import { makeLoadingProps, useLoading } from '../../composables/loading';
@@ -12,6 +15,9 @@ import { makeDimensionProps, useDimension } from '../../composables/dimensions'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'
+
+// Components
+import VeCardText from './VeCardText'
 
 export default defineComponent({
   name: 'VeCard',
@@ -69,6 +75,8 @@ export default defineComponent({
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
         >
+          { slots.text && <VeCardText>{ slots.text() }</VeCardText> }
+
           { slots.default?.() }
         </Tag>
       )

@@ -2,12 +2,14 @@
   border-radius: $radius if($important, !important, null)
 }
 
-@mixin use-rounded() {
+@mixin use-rounded($radius: null, $important: false) {
+  @include rounded($radius, $important);
+
   &--tile {
     @include rounded(0);
   }
 
   &--rounded {
-    @include rounded(1.5rem);
+    @include rounded(34px);
   }
 }

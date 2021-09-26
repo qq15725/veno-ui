@@ -2,11 +2,16 @@
 
 ```html
 <ve-button
-  v-for="(variant, index) in ['outlined', 'contained', 'text']"
-  :key="index"
-  :variant="variant"
-  loading
   class="mr-3"
+  loading
+  size="small"
+>
+  按钮
+</ve-button>
+
+<ve-button
+  class="mr-3"
+  loading
 >
   按钮
 </ve-button>

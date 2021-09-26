@@ -4,7 +4,6 @@
 $border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !default;
 $border-style: solid !default;
 $border-width: thin !default;
-$border-radius: 0.25rem !default;
 
 $borders: () !default;
 $borders: functions.map-deep-merge(
@@ -30,19 +29,4 @@ $border-opacities: functions.map-deep-merge(
       100: 1
     ),
     $border-opacities
-);
-
-$rounded: () !default;
-$rounded: functions.map-deep-merge(
-    (
-      0: 0,
-      'sm': math.div($border-radius, 2),
-      null: $border-radius,
-      'lg': $border-radius * 2,
-      'xl': $border-radius * 6,
-      'pill': 9999px,
-      'circle': 50%,
-      'shaped': $border-radius * 6 0
-    ),
-    $rounded
 );
