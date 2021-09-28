@@ -11,7 +11,7 @@
   max-width: 100%;
   overflow: hidden;
   padding-left: $app-bar-padding-start;
-  padding-right: calc(#{$app-bar-padding-end} + var(--v-scrollbar-offset));
+  padding-right: calc(#{$app-bar-padding-end} + var(--ve-scrollbar-offset));
   position: fixed;
   transition: .2s settings.$standard-easing;
   transition-property: height, transform;

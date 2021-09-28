@@ -28,7 +28,7 @@
   }
 
   &__underlay {
-    color: rgba(var(--v-border-color), var(--v-border-opacity));
+    color: rgba(var(--ve-border-color), var(--ve-border-opacity));
     stroke: currentColor;
     z-index: 1;
   }

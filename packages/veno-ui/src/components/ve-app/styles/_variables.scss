@@ -1,7 +1,7 @@
 @use '../../../styles/settings';
 
-$app-header-background: rgb(var(--v-theme-surface)) !default;
-$app-header-color: rgb(var(--v-theme-on-surface)) !default;
+$app-header-background: rgb(var(--ve-theme-surface)) !default;
+$app-header-color: rgb(var(--ve-theme-on-surface)) !default;
 
 $app-header-border-color: settings.$border-color !default;
 $app-header-border-radius: map-get(settings.$rounded, '0') !default;

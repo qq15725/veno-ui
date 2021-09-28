@@ -24,6 +24,10 @@ export default defineComponent({
   name: 'VeButton',
 
   props: {
+    type: {
+      type: String,
+      default: 'button',
+    },
     block: Boolean,
     ...makeThemeProps(),
     ...makeTagProps({
@@ -57,7 +61,7 @@ export default defineComponent({
 
       return (
         <Tag
-          type={ Tag === 'a' ? undefined : 'button' }
+          type={ Tag === 'a' ? undefined : props.type }
           class={ [
             {
               've-button': true,

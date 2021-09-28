@@ -56,6 +56,7 @@
     font-weight: $card-subtitle-font-weight;
     letter-spacing: $card-subtitle-letter-spacing;
     line-height: $card-subtitle-line-height;
+    opacity: $card-subtitle-opacity;
   }
 
   &-title + &-subtitle {

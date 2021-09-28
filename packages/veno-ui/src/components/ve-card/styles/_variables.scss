@@ -5,8 +5,8 @@
 $card-positions: absolute fixed !default;
 
 // color
-$card-background: rgb(var(--v-theme-surface)) !default;
-$card-color: rgb(var(--v-theme-on-surface)) !default;
+$card-background: rgb(var(--ve-theme-surface)) !default;
+$card-color: rgb(var(--ve-theme-on-surface)) !default;
 
 // title
 $card-title-font-size: tools.map-deep-get(settings.$typography, 'h5', 'size') !default;
@@ -19,6 +19,7 @@ $card-subtitle-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'si
 $card-subtitle-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
 $card-subtitle-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;
 $card-subtitle-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
+$card-subtitle-opacity: var(--ve-medium-emphasis-opacity) !default;
 
 // text
 $card-text-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;

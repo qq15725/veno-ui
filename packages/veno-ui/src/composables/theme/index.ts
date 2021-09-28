@@ -14,6 +14,7 @@ import {
 } from '../../utils'
 // @ts-ignore
 import { APCAcontrast } from '../../utils/color/APCA'
+import defaultThemeOptions from './default-theme-options'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
@@ -102,81 +103,12 @@ export const makeThemeProps = propsFactory({
   theme: String,
 }, 'theme')
 
-const defaultThemeOptions: ThemeOptions = {
-  defaultTheme: 'light',
-  variations: { colors: [], lighten: 0, darken: 0 },
-  themes: {
-    light: {
-      dark: false,
-      colors: {
-        background: '#FFF',
-        surface: '#FFF',
-        primary: '#1890ff',
-        success: '#52c41a',
-        warning: '#faad14',
-        error: '#ff7875',
-        info: '#2196F3',
-      },
-      variables: {
-        'border-color': '#000',
-        'border-opacity': 0.08,
-        'high-emphasis-opacity': 0.87,
-        'medium-emphasis-opacity': 0.60,
-        'disabled-opacity': 0.38,
-        'activated-opacity': 0.12,
-        'idle-opacity': 0.04,
-        'hover-opacity': 0.12,
-        'focus-opacity': 0.12,
-        'selected-opacity': 0.08,
-        'dragged-opacity': 0.08,
-        'pressed-opacity': 0.16,
-        'kbd-background-color': '#212529',
-        'kbd-color': '#FFF',
-        'code-background-color': '#C2C2C2',
-      },
-    },
-    dark: {
-      dark: true,
-      colors: {
-        background: '#121212',
-        surface: '#2c2c2c',
-        primary: '#1890ff',
-        success: '#52c41a',
-        warning: '#faad14',
-        error: '#ff7875',
-        info: '#2196F3',
-      },
-      variables: {
-        'border-color': '#FFF',
-        'border-opacity': 0.08,
-        'high-emphasis-opacity': 0.87,
-        'medium-emphasis-opacity': 0.60,
-        'disabled-opacity': 0.38,
-        'activated-opacity': 0.12,
-        'idle-opacity': 0.10,
-        'hover-opacity': 0.04,
-        'focus-opacity': 0.12,
-        'selected-opacity': 0.08,
-        'dragged-opacity': 0.08,
-        'pressed-opacity': 0.16,
-        'kbd-background-color': '#212529',
-        'kbd-color': '#FFF',
-        'code-background-color': '#B7B7B7',
-      },
-    },
-  },
-}
-
 const parseThemeOptions = (options: ThemeOptions = defaultThemeOptions): InternalThemeOptions => {
-  if (!options) return {
-    ...defaultThemeOptions,
-    isDisabled: true
-  } as InternalThemeOptions
+  if (!options) {
+    return { ...defaultThemeOptions, isDisabled: true } as InternalThemeOptions
+  }
 
-  return mergeDeep(
-    defaultThemeOptions,
-    options,
-  ) as InternalThemeOptions
+  return mergeDeep(defaultThemeOptions, options) as InternalThemeOptions
 }
 
 // Composables
@@ -193,8 +125,11 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
         ...themes.value[key],
         colors: {
           ...themes.value[key].colors,
-          ...(parsedOptions.variations.colors ?? []).reduce((obj, color) => {
-            return { ...obj, ...genColorVariations(color, themes.value[key].colors[color]!) }
+          ...(variations.value.colors ?? []).reduce((obj, color) => {
+            return {
+              ...obj,
+              ...genColorVariations(color, themes.value[key].colors[color]!)
+            }
           }, {}),
         },
       }
@@ -208,16 +143,6 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
         const blackContrast = Math.abs(APCAcontrast(0, colorVal))
         const whiteContrast = Math.abs(APCAcontrast(0xffffff, colorVal))
 
-        // TODO: warn about poor color selections
-        // const contrastAsText = Math.abs(APCAcontrast(colorVal, colorToInt(theme.colors.background)))
-        // const minContrast = Math.max(blackContrast, whiteContrast)
-        // if (minContrast < 60) {
-        //   consoleInfo(`${key} theme color ${color} has poor contrast (${minContrast.toFixed()}%)`)
-        // } else if (contrastAsText < 60 && !['background', 'surface'].includes(color)) {
-        //   consoleInfo(`${key} theme color ${color} has poor contrast as text (${contrastAsText.toFixed()}%)`)
-        // }
-
-        // Prefer white text if both have an acceptable contrast ratio
         theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50) ? '#FFF' : '#000'
       }
 
@@ -250,9 +175,9 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
     const variables: string[] = []
     for (const [key, value] of Object.entries(theme.colors)) {
       const rgb = colorToRGB(value!)
-      variables.push(`--v-theme-${ key }: ${ rgb.r },${ rgb.g },${ rgb.b }`)
+      variables.push(`--ve-theme-${ key }: ${ rgb.r },${ rgb.g },${ rgb.b }`)
       if (!key.startsWith('on-')) {
-        variables.push(`--v-theme-${ key }-overlay-multiplier: ${ getLuma(value) > 0.18 ? lightOverlay : darkOverlay }`)
+        variables.push(`--ve-theme-${ key }-overlay-multiplier: ${ getLuma(value) > 0.18 ? lightOverlay : darkOverlay }`)
       }
     }
 
@@ -285,41 +210,64 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
 
     const lines = []
 
+    // 主题类
     for (const themeName of Object.keys(computedThemes.value)) {
       const variables = computedThemes.value[themeName].variables
 
-      lines.push(...createCssClass(`.v-theme--${ themeName }`, [
-        ...genCssVariables(themeName),
-        ...Object.keys(variables).map(key => {
-          const value = variables[key]
-          const color = typeof value === 'string' && value.startsWith('#') ? colorToRGB(value) : undefined
-          const rgb = color ? `${ color.r }, ${ color.g }, ${ color.b }` : undefined
+      lines.push(
+        ...createCssClass(`.ve-theme--${ themeName }`, [
+          // 颜色变量
+          ...genCssVariables(themeName),
+          // 自定义变量
+          ...Object.keys(variables).map(key => {
+            const value = variables[key]
 
-          return `--v-${ key }: ${ rgb ?? value }`
-        }),
-      ]))
+            const color = typeof value === 'string' && value.startsWith('#')
+              ? colorToRGB(value)
+              : undefined
+
+            const rgb = color
+              ? `${ color.r }, ${ color.g }, ${ color.b }`
+              : undefined
+
+            return `--ve-${ key }: ${ rgb ?? value }`
+          }),
+        ])
+      )
     }
 
-    // Assumption is that all theme objects have the same keys, so it doesn't matter which one
-    // we use since the values are all css variables.
+    // 颜色类
     const firstTheme = Object.keys(computedThemes.value)[0]
     for (const key of Object.keys(computedThemes.value[firstTheme].colors)) {
       if (/on-[a-z]/.test(key)) {
-        lines.push(...createCssClass(`.${ key }`, [`color: rgb(var(--v-theme-${ key }))`]))
+        lines.push(
+          ...createCssClass(`.${ key }`, [
+            `color: rgb(var(--ve-theme-${ key }))`
+          ])
+        )
       } else {
         lines.push(
+          // 背景颜色
           ...createCssClass(`.bg-${ key }`, [
-            `--v-theme-overlay-multiplier: var(--v-theme-${ key }-overlay-multiplier)`,
-            `background: rgb(var(--v-theme-${ key }))`,
-            `color: rgb(var(--v-theme-on-${ key }))`,
+            `--ve-theme-overlay-multiplier: var(--ve-theme-${ key }-overlay-multiplier)`,
+            `background: rgb(var(--ve-theme-${ key }))`,
+            `color: rgb(var(--ve-theme-on-${ key }))`,
           ]),
-          ...createCssClass(`.text-${ key }`, [`color: rgb(var(--v-theme-${ key }))`]),
-          ...createCssClass(`.border-${ key }`, [`--v-border-color: var(--v-theme-${ key })`]),
+          // 文字颜色
+          ...createCssClass(`.text-${ key }`, [
+            `color: rgb(var(--ve-theme-${ key }))`
+          ]),
+          // 边框颜色
+          ...createCssClass(`.border-${ key }`, [
+            `--ve-border-color: var(--ve-theme-${ key })`
+          ]),
         )
       }
     }
 
-    if (styleEl.value) styleEl.value.innerHTML = lines.map((str, i) => i === 0 ? str : `    ${ str }`).join('')
+    if (styleEl.value) {
+      styleEl.value.innerHTML = lines.join('')
+    }
   }
 
   watch(themes, updateStyles, { deep: true, immediate: true })
@@ -330,7 +278,11 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
     setTheme: (key: string, theme: ThemeDefinition) => themes.value[key] = theme,
     getTheme: (key: string) => computedThemes.value[key],
     current,
-    themeClasses: computed(() => parsedOptions.isDisabled ? undefined : `v-theme--${ current.value }`),
+    themeClasses: computed(() => {
+      return parsedOptions.isDisabled
+        ? undefined
+        : `ve-theme--${ current.value }`
+    }),
   }
 }
 
@@ -349,7 +301,11 @@ export function useTheme (props: { theme?: string }) {
     return props.theme ?? theme?.current.value
   })
 
-  const themeClasses = computed(() => theme.isDisabled ? undefined : `v-theme--${ current.value }`)
+  const themeClasses = computed(() => {
+    return theme.isDisabled
+      ? undefined
+      : `ve-theme--${ current.value }`
+  })
 
   const newTheme: ThemeInstance = {
     ...theme,

@@ -1,7 +1,7 @@
 @use 'sass:math';
 @use '../tools/functions';
 
-$border-color: rgba(var(--v-border-color), var(--v-border-opacity)) !default;
+$border-color: rgba(var(--ve-border-color), var(--ve-border-opacity)) !default;
 $border-style: solid !default;
 $border-width: thin !default;
 

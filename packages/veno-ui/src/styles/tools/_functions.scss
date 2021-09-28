@@ -85,7 +85,7 @@
 }
 
 @function theme-color($color, $opacity: 1) {
-  @return rgba(var(--v-theme-#{$color}), $opacity);
+  @return rgba(var(--ve-theme-#{$color}), $opacity);
 }
 
 @function roundEven($val) {

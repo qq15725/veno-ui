@@ -70,7 +70,7 @@
 
   &--disabled,
   &--loading {
-    color: rgba(var(--v-theme-on-surface), $button-disabled-opacity);
+    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
   }
 
   &--disabled &__overlay,

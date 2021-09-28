@@ -391,7 +391,7 @@ $utilities: functions.map-deep-merge(
         values: borders.$borders
       ),
       "border-opacity": (
-        property: --v-border-opacity,
+        property: --ve-border-opacity,
         class: border-opacity,
         values: borders.$border-opacities
       ),
@@ -452,9 +452,9 @@ $utilities: functions.map-deep-merge(
         property: opacity,
         class: text,
         values: (
-          high-emphasis: var(--v-high-emphasis-opacity),
-          medium-emphasis: var(--v-medium-emphasis-opacity),
-          disabled: var(--v-disabled-opacity)
+          high-emphasis: var(--ve-high-emphasis-opacity),
+          medium-emphasis: var(--ve-medium-emphasis-opacity),
+          disabled: var(--ve-disabled-opacity)
         )
       ),
       "text-overflow": (

@@ -3,8 +3,8 @@
 $input-padding: 8px !default;
 
 // color
-$input-background: rgb(var(--v-theme-surface)) !default;
-$input-color: rgb(var(--v-theme-on-surface)) !default;
+$input-background: rgb(var(--ve-theme-surface)) !default;
+$input-color: rgb(var(--ve-theme-on-surface)) !default;
 
 // disabled
 $input-disabled-background: settings.$disabled-background !default;

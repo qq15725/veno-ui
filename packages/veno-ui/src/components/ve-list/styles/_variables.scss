@@ -24,8 +24,8 @@ $list-item-border: (
   $list-item-border-thin-width
 ) !default;
 
-$list-background: rgba(var(--v-theme-surface)) !default;
-$list-color: rgba(var(--v-theme-on-surface)) !default;
+$list-background: rgba(var(--ve-theme-surface)) !default;
+$list-color: rgba(var(--ve-theme-on-surface)) !default;
 
 $list-item-variants: (
   $list-background,

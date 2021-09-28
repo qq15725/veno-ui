@@ -2,13 +2,15 @@
 
 ```html
 <ve-card
-  title="标题"
-  subtitle="子标题"
-  text="内容"
+  title="卡片标题"
+  subtitle="卡片子标题"
+  text="一些例子文本内容"
   divider
   #actions
 >
+  <ve-spacer />
   <ve-button class="mr-3">取消</ve-button>
   <ve-button>确认</ve-button>
+  <ve-spacer />
 </ve-card>
 ```
