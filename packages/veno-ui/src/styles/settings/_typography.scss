@@ -3,62 +3,64 @@
 @use 'variables' as *;
 
 $heading-font-family: $font-family !default;
+$heading-font-weight: 500 !default;
+$heading-line-height: 1.2 !default;
 
 $typography: () !default;
 $typography: functions.map-deep-merge(
     (
       'h1': (
-        'size': 30px,
-        'weight': 500,
-        'line-height': 1,
+        'size': $font-size * 2.5,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h2': (
-        'size': 22px,
-        'weight': 500,
-        'line-height': 1,
+        'size': $font-size * 2,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h3': (
-        'size': 18px,
-        'weight': 400,
-        'line-height': 1,
+        'size': $font-size * 1.75,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h4': (
-        'size': 16px,
-        'weight': 400,
-        'line-height': 1,
+        'size': $font-size * 1.5,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h5': (
-        'size': 16px,
-        'weight': 400,
-        'line-height': 1,
+        'size': $font-size * 1.25,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h6': (
-        'size': 16px,
-        'weight': 500,
-        'line-height': 1,
+        'size': $font-size,
+        'weight': $heading-font-weight,
+        'line-height': $heading-line-height,
         'letter-spacing': normal,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'subtitle-1': (
         'size': 16px,
-        'weight': normal,
-        'line-height': 1,
+        'weight': 400,
+        'line-height': 1.75,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -66,7 +68,7 @@ $typography: functions.map-deep-merge(
       'subtitle-2': (
         'size': 14px,
         'weight': 500,
-        'line-height': 1,
+        'line-height': 1.375,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -74,7 +76,7 @@ $typography: functions.map-deep-merge(
       'body-1': (
         'size': 16px,
         'weight': 400,
-        'line-height': 1,
+        'line-height': 1.5,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -82,7 +84,7 @@ $typography: functions.map-deep-merge(
       'body-2': (
         'size': 14px,
         'weight': 400,
-        'line-height': 1,
+        'line-height': 1.25,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -90,7 +92,7 @@ $typography: functions.map-deep-merge(
       'button': (
         'size': 14px,
         'weight': 400,
-        'line-height': 1,
+        'line-height': 2.25,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -98,7 +100,7 @@ $typography: functions.map-deep-merge(
       'caption': (
         'size': 12px,
         'weight': 400,
-        'line-height': 1,
+        'line-height': 1.25,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -106,7 +108,7 @@ $typography: functions.map-deep-merge(
       'overline': (
         'size': 12px,
         'weight': 500,
-        'line-height': 1,
+        'line-height': 2,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': uppercase

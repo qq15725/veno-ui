@@ -23,14 +23,25 @@
     color: $card-disabled-color;
   }
 
+  &-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    &-text {
+      flex: 1 1 auto;
+    }
+  }
+
   &-title {
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 20px;
     font-size: $card-title-font-size;
     font-weight: $card-title-font-weight;
-    hyphens: auto;
     letter-spacing: $card-title-letter-spacing;
+    line-height: $card-title-line-height;
+    hyphens: auto;
     overflow-wrap: normal;
     text-transform: none;
     word-break: normal;
@@ -40,22 +51,53 @@
   &-subtitle {
     display: flex;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 20px;
+    font-size: $card-subtitle-font-size;
+    font-weight: $card-subtitle-font-weight;
+    letter-spacing: $card-subtitle-letter-spacing;
+    line-height: $card-subtitle-line-height;
+  }
+
+  &-title + &-subtitle {
+    margin-top: 4px;
+  }
+
+  &-header &-title,
+  &-header &-subtitle {
+    padding: 0;
+  }
+
+  &-avatar {
+    align-self: flex-start;
+    padding: 0 20px;
+  }
+
+  &-header &-avatar:last-child {
+    padding-inline-end: 0;
+  }
+
+  &-header &-avatar:first-child {
+    padding-inline-start: 0;
   }
 
   &-text {
     font-size: $card-text-font-size;
     font-weight: $card-text-font-weight;
     letter-spacing: $card-text-letter-spacing;
-    padding: 1rem;
+    padding: 20px;
     transition: inherit;
     transition-property: color, opacity;
+  }
+
+  &-header + &-text,
+  &-title + &-text {
+    padding-top: 0;
   }
 
   &-actions {
     display: flex;
     align-items: center;
     flex: 1 1 0;
-    padding: 0.5rem 1rem;
+    padding: 10px 20px;
   }
 }

@@ -12,6 +12,7 @@
   align-items: center;
   outline: none;
   font-weight: $button-font-weight;
+  line-height: $button-line-height;
   letter-spacing: $button-text-letter-spacing;
   text-transform: $button-text-transform;
   transition-property: border-color, transform, opacity, color;

@@ -9,10 +9,16 @@ $card-background: rgb(var(--v-theme-surface)) !default;
 $card-color: rgb(var(--v-theme-on-surface)) !default;
 
 // title
-$card-title-font-size: tools.map-deep-get(settings.$typography, 'h6', 'size') !default;
-$card-title-font-weight: tools.map-deep-get(settings.$typography, 'h6', 'weight') !default;
-$card-title-letter-spacing: tools.map-deep-get(settings.$typography, 'h6', 'letter-spacing') !default;
-$card-title-line-height: tools.map-deep-get(settings.$typography, 'h6', 'line-height') !default;
+$card-title-font-size: tools.map-deep-get(settings.$typography, 'h5', 'size') !default;
+$card-title-font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight') !default;
+$card-title-letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing') !default;
+$card-title-line-height: tools.map-deep-get(settings.$typography, 'h5', 'line-height') !default;
+
+// subtitle
+$card-subtitle-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;
+$card-subtitle-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
+$card-subtitle-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;
+$card-subtitle-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
 
 // text
 $card-text-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;

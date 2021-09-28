@@ -17,13 +17,27 @@ import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 
 // Components
+import { VeAvatar } from '../ve-avatar'
+import VeCardHeader from './VeCardHeader'
+import VeCardHeaderText from './VeCardHeaderText'
+import VeCardAvatar from './VeCardAvatar'
+import VeCardTitle from './VeCardTitle'
+import VeCardSubtitle from './VeCardSubtitle'
+import { VeDivider } from '../ve-divider'
 import VeCardText from './VeCardText'
+import VeCardActions from './VeCardActions'
 
 export default defineComponent({
   name: 'VeCard',
 
   props: {
     link: Boolean,
+    appendAvatar: String,
+    prependAvatar: String,
+    title: String,
+    subtitle: String,
+    divider: Boolean,
+    text: String,
     ...makeTagProps(),
     ...makeThemeProps(),
     ...makeLoadingProps(),
@@ -49,6 +63,13 @@ export default defineComponent({
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
+      const hasTitle = !!(slots.title || props.title)
+      const hasSubtitle = !!(slots.subtitle || props.subtitle)
+      const hasHeaderText = hasTitle || hasSubtitle
+      const hasAppend = !!(slots.append || props.appendAvatar)
+      const hasPrepend = !!(slots.prepend || props.prependAvatar)
+      const hasHeader = hasHeaderText || hasPrepend || hasAppend
+      const hasText = !!(slots.text || props.text)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
       return (
@@ -75,9 +96,69 @@ export default defineComponent({
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
         >
-          { slots.text && <VeCardText>{ slots.text() }</VeCardText> }
+          { hasHeader && (
+            <VeCardHeader>
+              { hasPrepend && (
+                <VeCardAvatar>
+                  { slots.prepend
+                    ? slots.prepend()
+                    : (
+                      <VeAvatar
+                        image={ props.prependAvatar }
+                      />
+                    )
+                  }
+                </VeCardAvatar>
+              ) }
+
+              { hasHeaderText && (
+                <VeCardHeaderText>
+                  { hasTitle && (
+                    <VeCardTitle>
+                      { slots.title ? slots.title() : props.title }
+                    </VeCardTitle>
+                  ) }
+
+                  {
+                    hasSubtitle && (
+                      <VeCardSubtitle>
+                        { slots.subtitle ? slots.subtitle() : props.subtitle }
+                      </VeCardSubtitle>
+                    )
+                  }
+                </VeCardHeaderText>
+              ) }
+
+              { hasAppend && (
+                <VeCardAvatar>
+                  { slots.append
+                    ? slots.append()
+                    : (
+                      <VeAvatar
+                        image={ props.appendAvatar }
+                      />
+                    )
+                  }
+                </VeCardAvatar>
+              ) }
+            </VeCardHeader>
+          ) }
+
+          { props.divider && <VeDivider /> }
+
+          { hasText && (
+            <VeCardText>
+              { slots.text ? slots.text() : props.text }
+            </VeCardText>
+          ) }
 
           { slots.default?.() }
+
+          { slots.actions && props.divider && <VeDivider /> }
+
+          { slots.actions && (
+            <VeCardActions>{ slots.actions() }</VeCardActions>
+          ) }
         </Tag>
       )
     }

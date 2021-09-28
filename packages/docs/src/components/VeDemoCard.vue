@@ -21,23 +21,19 @@ const isActive = ref(false)
 </script>
 
 <template>
-  <ve-card>
-    <ve-card-title>
-      <div>{{ props.title }}</div>
-
-      <ve-spacer />
-
+  <ve-card :title="props.title">
+    <template #append>
       <ve-button
           @click="isActive = !isActive"
           size="x-small"
       >
         代码
       </ve-button>
-    </ve-card-title>
+    </template>
 
-    <ve-card-text>
+    <template #text>
       <slot />
-    </ve-card-text>
+    </template>
 
     <code v-if="isActive" class="hljs">
       <pre v-html="highlightedCode" />
