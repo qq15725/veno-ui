@@ -1,6 +1,6 @@
 @use '../settings/borders';
 
-@mixin use-variant($contained-background, $contained-color) {
+@mixin use-variant($contained-background: rgb(var(--ve-theme-surface)), $contained-color: rgb(var(--ve-theme-on-surface))) {
   &--variant-outlined,
   &--variant-text {
     background: transparent;
@@ -10,13 +10,10 @@
   &--variant-contained {
     background: $contained-background;
     color: $contained-color;
+    border-width: var(--ve-variant-border-width, thin);
   }
 
   &--variant-outlined {
-    border: thin solid borders.$border-color;
-  }
-
-  &--variant-custom-color {
-    border-color: currentColor;
+    border: thin solid currentColor;
   }
 }

@@ -16,10 +16,10 @@ html.overflow-y-hidden {
 }
 
 :root {
-  --ve-theme-background: #fff;
-  --ve-theme-on-background: #000;
-  --ve-theme-surface: #fff;
-  --ve-theme-on-surface: #333639;
+  --ve-theme-background: 255, 255, 255;
+  --ve-theme-on-background: 0, 0, 0;
+  --ve-theme-surface: 255, 255, 255;
+  --ve-theme-on-surface: 0, 0, 0;
   --ve-theme-overlay-multiplier: 1;
   --ve-scrollbar-offset: 0px;
 }

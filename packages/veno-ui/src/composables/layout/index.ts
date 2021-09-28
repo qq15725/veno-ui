@@ -51,7 +51,6 @@ export const makeLayoutItemProps = propsFactory({
     type: Number,
     default: 0,
   },
-  absolute: Boolean,
 }, 'layout-item')
 
 export function useMain () {
@@ -104,8 +103,8 @@ const generateLayers = (
 
     const layer = {
       ...previousLayer,
-      [position.value]: parseInt(previousLayer[position.value] as any, 10)
-      + (active.value ? parseInt(amount.value as string, 10) : 0),
+      [position.value]: previousLayer[position.value]
+      + (active.value ? parseInt(String(amount.value), 10) : 0),
     }
 
     layers.push({
@@ -161,9 +160,11 @@ export function createLayout (props: {
 
   const layers = computed(() => {
     const entries = [...priorities.entries()]
+
     const sortedEntries = entries
       .sort(([, a], [, b]) => a.value - b.value)
       .map(([id]) => id)
+
     return generateLayers(
       sortedEntries,
       registered.value,

@@ -1,13 +1,14 @@
 export default {
   dark: false,
   colors: {
-    background: '#FFF',
-    surface: '#FFF',
-    primary: '#1890FF',
-    success: '#52C41A',
-    warning: '#FAAD14',
-    error: '#FF7875',
-    info: '#2196F3',
+    'background': '#FFF',
+    'surface': '#FFF',
+    'on-surface': '#333639',
+    'primary': '#1890FF',
+    'success': '#52C41A',
+    'warning': '#FAAD14',
+    'error': '#FF7875',
+    'info': '#2196F3',
   },
   variables: {
     'border-color': '#000',

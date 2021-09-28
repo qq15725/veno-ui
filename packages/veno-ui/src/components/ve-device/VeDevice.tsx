@@ -29,7 +29,6 @@ export default defineComponent({
     ...makeTagProps(),
     ...makeVariantProps({
       color: '#F5F5F5',
-      variant: 'contained',
     } as const),
   },
 
