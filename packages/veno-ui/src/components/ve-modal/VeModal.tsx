@@ -21,6 +21,7 @@ export default defineComponent({
 
   props: {
     modelValue: Boolean,
+    persistent: Boolean,
   },
 
   emits: {
@@ -56,19 +57,26 @@ export default defineComponent({
                     've-modal__mask',
                   ] }
 
-                  onClick={ () => isActive.value = false }
+                  onClick={ () => {
+                    if (!props.persistent) {
+                      isActive.value = false
+                    }
+                  } }
                 />
               ) }
             </Transition>
 
-            <div
-              v-show={ isActive.value }
-              class={ [
-                've-modal__wrap',
-              ] }
-            >
-              { slots.default?.({ isActive }) }
-            </div>
+            <Transition name="modal-transition" appear>
+              <div
+                v-show={ isActive.value }
+                class={ [
+                  've-modal__wrap',
+                ] }
+                style="transform-origin: -34px 142px;"
+              >
+                { slots.default?.({ isActive }) }
+              </div>
+            </Transition>
           </div>
         </Teleport>
       </>
