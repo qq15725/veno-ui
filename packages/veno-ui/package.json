@@ -1,6 +1,6 @@
 {
   "name": "veno-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/veno-ui.umd.js",
   "module": "dist/veno-ui.es.js",
   "files": [
