@@ -1,5 +1,6 @@
 import container from 'markdown-it-container'
 import { dirname } from 'path'
+import { readFileSync } from 'fs'
 
 import type MarkdownIt from 'markdown-it'
 import type Token from 'markdown-it/lib/token'
@@ -16,7 +17,7 @@ export const includePlugin = (md: MarkdownIt) => {
       const dir = dirname(filename)
 
       if (token.nesting === 1) {
-        const row: any[] = []
+        const rows: any[] = []
 
         while (tokens[++index].type !== `container_${ name }_close`) {
           tokens[index]
@@ -24,7 +25,7 @@ export const includePlugin = (md: MarkdownIt) => {
             .trim()
             .split('\n')
             .forEach(v => {
-              const col = v.split(' ')
+              const row = v.split(' ')
                 .filter((v: string) => !!v)
                 .map(v => {
                   if (filename) {
@@ -37,15 +38,23 @@ export const includePlugin = (md: MarkdownIt) => {
                   return v
                 })
 
-              if (col.length > 0) {
-                row.push(col)
+              if (row.length > 0) {
+                rows.push(row)
               }
             })
         }
 
-        return `<include :items='${ JSON.stringify(row) }'>\n`
+        let code = ''
+        rows.forEach(row => {
+          row.forEach((col: string) => {
+            const src = readFileSync(col).toString()
+            const { html } = (md as any).render(src)
+            code += `<ve-col cols="6">\n${ html }\n</ve-col>`
+          })
+        })
+        return `<ve-row>\n${ code }\n</ve-row><template v-if="false">`
       } else {
-        return `</include>\n`
+        return '</template>'
       }
     }
   })

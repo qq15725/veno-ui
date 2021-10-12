@@ -12,3 +12,8 @@ declare module 'prismjs/components/index' {
   const def: any
   export default def
 }
+
+declare module 'markdown-it-container' {
+  const def: any
+  export default def
+}
