@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 import Playground from '@/views/Playground.vue'
 import Layout from '@/views/Layout.vue'
-import Guide from '@/views/Guide.vue'
+import Guide from '@/views/guide/README.md'
 import componentRoutes from './component-routes'
 
 const routes: RouteRecordRaw[] = [
@@ -15,8 +15,8 @@ const routes: RouteRecordRaw[] = [
     component: Layout,
     children: [
       ...componentRoutes,
-      { name: 'Guide', path: '/guide', component: Guide },
-      { path: '', redirect: '/guide' }
+      { name: 'Guide', path: '/guide.html', component: Guide },
+      { path: '', redirect: '/guide.html' }
     ],
   },
 ]

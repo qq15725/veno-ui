@@ -1,3 +1,4 @@
+:::demo
 # 形状
 
 ```html
@@ -7,3 +8,4 @@
 
 <ve-button rounded>按钮</ve-button>
 ```
+:::

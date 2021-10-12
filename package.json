@@ -5,13 +5,16 @@
     "docs:update": "npm run docs:build && npm run docs:publish"
   },
   "workspaces": [
-    "packages/*"
+    "packages/@veno-ui/*",
+    "packages/veno-ui",
+    "packages/docs"
   ],
   "engines": {
     "node": ">=12"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3",
-    "sass": "^1.39.0"
+    "sass": "^1.39.0",
+    "typescript": "^4.3.2"
   }
 }

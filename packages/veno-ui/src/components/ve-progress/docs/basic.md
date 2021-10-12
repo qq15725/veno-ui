@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -21,3 +22,4 @@ export default defineComponent({
   }
 })
 ```
+:::

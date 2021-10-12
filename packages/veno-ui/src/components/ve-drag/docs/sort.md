@@ -1,3 +1,4 @@
+:::demo
 # 拖拽排序
 
 ```html
@@ -16,3 +17,4 @@
   </ve-drag-sort>
 </ve-card>
 ```
+:::

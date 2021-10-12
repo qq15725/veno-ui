@@ -1,3 +1,3 @@
-import { createVenoUi } from 'veno-ui/src/entry.ts'
+import { createVenoUi } from 'veno-ui/src/entry'
 
 export default createVenoUi()

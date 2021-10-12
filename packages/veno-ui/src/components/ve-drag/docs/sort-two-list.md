@@ -1,3 +1,4 @@
+:::demo
 # 两个列表
 
 ```html
@@ -56,3 +57,4 @@ export default defineComponent({
   }
 })
 ```
+:::

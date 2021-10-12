@@ -1,3 +1,4 @@
+@use 'variables' as *;
 @use '../../../styles/settings';
 
 .ve-progress {
@@ -7,8 +8,8 @@
   position: relative;
   vertical-align: middle;
 
-  @each $name, $multiplier in settings.$size-scales {
-    $size: settings.$spacer * 9 + (settings.$size-scale * $multiplier);
+  @each $name, $multiplier in $progress-sizes {
+    $size: $progress-size + (settings.$size-scale * $multiplier);
     &--size-#{$name} {
       height: $size;
       width: $size;

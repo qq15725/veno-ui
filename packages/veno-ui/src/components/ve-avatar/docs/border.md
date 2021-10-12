@@ -1,3 +1,4 @@
+:::demo
 # 边框
 
 ```html
@@ -7,3 +8,4 @@
 
 <ve-avatar rounded border class="mr-3" />
 ```
+:::

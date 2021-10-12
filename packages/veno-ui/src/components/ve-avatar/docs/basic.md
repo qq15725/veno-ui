@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -5,3 +6,4 @@
   image="https://picsum.photos/id/11/500/300"
 />
 ```
+:::

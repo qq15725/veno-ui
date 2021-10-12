@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -9,3 +10,4 @@
   </ve-responsive>
 </ve-card>
 ```
+:::

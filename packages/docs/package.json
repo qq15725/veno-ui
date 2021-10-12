@@ -1,5 +1,5 @@
 {
-  "name": "venoui.com",
+  "name": "venojs.com",
   "private": true,
   "scripts": {
     "serve": "vite preview",
@@ -7,7 +7,7 @@
     "dev": "vite"
   },
   "dependencies": {
-    "highlight.js": "^11.2.0",
+    "prismjs": "^1.25.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.10"
   },
@@ -17,9 +17,15 @@
     "@vitejs/plugin-vue": "^1.3.0",
     "@vitejs/plugin-vue-jsx": "^1.1.7",
     "@vue/compiler-sfc": "^3.0.5",
-    "marked": "^3.0.4",
+    "markdown-it": "^12.2.0",
+    "markdown-it-anchor": "^8.3.1",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.0",
+    "prismjs": "^1.25.0",
+    "chalk": "^4.1.2",
+    "diacritics": "^1.3.0",
+    "escape-html": "^1.0.3",
     "sass-loader": "^10.0.0",
-    "typescript": "^4.3.2",
     "vite": "^2.4.4",
     "vue-tsc": "^0.2.2"
   }

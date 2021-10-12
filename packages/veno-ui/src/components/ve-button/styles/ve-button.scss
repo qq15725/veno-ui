@@ -60,7 +60,7 @@
     transition: opacity .2s ease-in-out;
   }
 
-  &:not(&--loading):not(&--disabled) {
+  &:not(&--disabled) {
     @include tools.states('.ve-button__overlay', false);
   }
 
@@ -68,13 +68,11 @@
     min-width: 100%;
   }
 
-  &--disabled,
-  &--loading {
+  &--disabled {
     color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
   }
 
-  &--disabled &__overlay,
-  &--loading &__overlay {
+  &--disabled &__overlay {
     opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
   }
 

@@ -1,3 +1,4 @@
+:::demo
 # 颜色
 
 ```html
@@ -11,3 +12,4 @@
 
 <ve-avatar color="#8a2be2" class="mr-3" />
 ```
+:::

@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -20,3 +21,4 @@
   </template>
 </ve-modal>
 ```
+:::

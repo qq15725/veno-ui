@@ -2,7 +2,7 @@
 import './styles/ve-button.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 // Composables
 import { makeThemeProps, useTheme } from '../../composables/theme'
@@ -11,7 +11,7 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makePositionProps, usePosition } from '../../composables/position'
-import { makeSizeProps, useSize } from '../../composables/size'
+import { makeSizeProps, useSize, predefinedSizes } from '../../composables/size'
 import { makeDimensionProps, useDimension } from '../../composables/dimensions'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
@@ -56,6 +56,10 @@ export default defineComponent({
     const { roundedClasses } = useRounded(props, 've-button')
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-button')
 
+    const progressSize = computed(() => {
+      return 18 + 4 * Number([-2, -1, 0, 1, 2][predefinedSizes.findIndex(v => v === props.size)])
+    })
+
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
 
@@ -93,8 +97,8 @@ export default defineComponent({
           { props.loading && (
             <VeProgress
               class="ve-button__progress"
-              size="x-small"
-              width="1"
+              size={ progressSize.value }
+              width={ 2 }
               indeterminate
             />
           ) }

@@ -10,14 +10,14 @@ export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
 
   return {
-    base: '/veno-ui/',
+    base: './',
     resolve: {
       alias: [
         {
           find: /^@\/(.*)/,
           replacement: resolve('./src/$1')
         }
-      ],
+      ]
     },
     build: {
       target: 'chrome58',

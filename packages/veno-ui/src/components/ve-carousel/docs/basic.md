@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -10,3 +11,4 @@
   </ve-carousel-item>
 </ve-carousel>
 ```
+:::

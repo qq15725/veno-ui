@@ -1,3 +1,4 @@
+:::demo
 # 基础
 
 ```html
@@ -15,3 +16,4 @@
   <ve-switch />
 </ve-form-item>
 ```
+:::

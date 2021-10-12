@@ -1,3 +1,4 @@
+:::demo
 # 变体
 
 按钮的 variant 分别为 `outlined`、`contained`、`text`。
@@ -13,3 +14,4 @@
   按钮
 </ve-button>
 ```
+:::
