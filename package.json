@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "docs:build": "npm run build -w venoui.com",
+    "docs:build": "npm run build -w venojs.com",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "npm run docs:build && npm run docs:publish"
   },
   "workspaces": [
-    "packages/@veno-ui/*",
     "packages/veno-ui",
     "packages/docs"
   ],
