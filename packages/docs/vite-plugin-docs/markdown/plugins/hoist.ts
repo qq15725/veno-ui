@@ -6,8 +6,8 @@ import type { MarkdownParsedData } from '..'
 export const hoistPlugin = (md: MarkdownIt) => {
   const RE = /^<(script|style)(?=(\s|>|$))/i
 
-  md.renderer.rules.html_block = (tokens, idx) => {
-    const content = tokens[idx].content
+  md.renderer.rules.html_block = (tokens, index) => {
+    const content = tokens[index].content
     const data = (md as any).__data as MarkdownParsedData
     const hoistedTags = data.hoistedTags || (data.hoistedTags = [])
     if (RE.test(content.trim())) {

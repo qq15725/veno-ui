@@ -5,9 +5,9 @@ export const preWrapperPlugin = (md: MarkdownIt) => {
 
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx] = args
+
     const lang = tokens[idx].info.trim()
-    return`<div class="language-${ lang }">
-  ${ fence(...args) }
-</div>`
+
+    return`<div class="language-${ lang }">\n${ fence(...args) }\n</div>`
   }
 }

@@ -1,5 +1,7 @@
+// Utils
 import container from 'markdown-it-container'
 
+// Types
 import type MarkdownIt from 'markdown-it'
 import type Token from 'markdown-it/lib/token'
 
@@ -7,46 +9,60 @@ export const demoPlugin = (md: MarkdownIt) => {
   const name = 'demo'
 
   md.use(container, name, {
-    render (tokens: Token[], idx: number) {
-      const token = tokens[idx]
+    render (tokens: Token[], index: number, options, env, self) {
+      const token = tokens[index]
 
       const data = {
         title: '',
         code: '',
-        template: '',
       }
 
       if (token.nesting === 1) {
-        let i = idx
-        while (tokens[++i].type !== `container_${ name }_close`) {
-          if (tokens[i].type === 'heading_open' && tokens[i].level === 1) {
-            data.title = tokens[i + 1].content
-          }
+        let skip = false
+        const templateTokens = []
+        while (tokens[++index].type !== `container_${ name }_close`) {
+          const cur = tokens[index]
+          if (cur.type === 'heading_open' && cur.level === 1) {
+            data.title = tokens[index + 1].content
+            skip = true
+          } else if (cur.type === 'heading_close' && cur.level === 1) {
+            skip = false
+          } else if (cur.type === 'fence' && cur.info === 'html') {
+            templateTokens.push({
+              type: 'html_block',
+              content: cur.content,
+            })
 
-          if (tokens[i].type === 'fence' && tokens[i].info === 'html') {
-            data.template = tokens[i].content
-            data.code = `<template>\n${ data.template
-              .split('\n')
-              .map((line) => (line.length ? '  ' + line : line))
-              .join('\n') }</template>`
-          }
-
-          if (tokens[i].type === 'fence' && tokens[i].info === 'js') {
-            const script = tokens[i].content
+            let templateCode = cur.content
               .split('\n')
               .map((line) => (line.length ? '  ' + line : line))
               .join('\n')
-            data.code += `\n\n<script>\n${ script }</script>`
+
+            templateCode = `<template>\n${ templateCode }</template>`
+
+            data.code += templateCode
+          } else if (cur.type === 'fence' && cur.info === 'js') {
+            let scriptCode = cur.content
+              .split('\n')
+              .map((line) => (line.length ? '  ' + line : line))
+              .join('\n')
+
+            scriptCode = `\n\n<script>\n${ scriptCode }</script>`
+
+            data.code += scriptCode
+
             const hoistedTags = (md as any).__data.hoistedTags || ((md as any).__data.hoistedTags = [])
-            hoistedTags.push(`<script>\n${ script }</script>`)
+            hoistedTags.push(scriptCode)
+          } else if (!skip) {
+            templateTokens.push(cur)
           }
         }
 
         return `<demo title="${ data.title }" code="${ encodeURIComponent(data.code) }">
-<template #preview>${ data.template }</template>
-`
+${ self.render(templateTokens, options, env) }
+<!--`
       } else {
-        return `</demo>\n`
+        return `-->\n</demo>\n`
       }
     }
   })

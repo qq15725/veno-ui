@@ -52,9 +52,10 @@ export const includePlugin = (md: MarkdownIt) => {
             code += `<ve-col cols="6">\n${ html }\n</ve-col>`
           })
         })
-        return `<ve-row>\n${ code }\n</ve-row><template v-if="false">`
+
+        return `<ve-row>\n${ code }\n<!--`
       } else {
-        return '</template>'
+        return `-->\n</ve-row>`
       }
     }
   })

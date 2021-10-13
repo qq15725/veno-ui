@@ -30,7 +30,7 @@ const isActive = ref(false)
     </template>
 
     <template #text>
-      <slot name="preview" />
+      <slot />
     </template>
 
     <div class="language-html my-0 rounded-0" v-if="isActive">
