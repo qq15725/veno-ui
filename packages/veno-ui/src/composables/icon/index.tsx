@@ -160,7 +160,9 @@ export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) =
     const iconSet = icons.sets[iconSetName ?? icons.defaultSet]
 
     if (typeof iconAlias === 'string') {
-      iconAlias = iconSetName ? iconAlias.slice(iconSetName.length + 1) : iconAlias
+      if (iconSetName) {
+        icon = iconAlias = iconAlias.slice(iconSetName.length + 1)
+      }
 
       if (iconAlias.includes('$')) {
         icon = iconSet.aliases?.[iconAlias.slice(iconAlias.indexOf('$') + 1)]

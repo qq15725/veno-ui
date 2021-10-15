@@ -33,7 +33,7 @@
 
     <ve-button
       icon="veno-ui:$close"
-      variant="contained"
+      variant="text"
       size="x-small"
       color="error"
       class="mr-3"
