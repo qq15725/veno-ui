@@ -19,6 +19,7 @@
     &--size-#{$name} {
       height: $size;
       width: $size;
+      --ve-avatar-height: #{$size};
     }
   }
 
@@ -26,5 +27,9 @@
     border-radius: inherit;
     width: inherit;
     height: inherit;
+  }
+
+  > .ve-icon {
+    font-size: var(--ve-avatar-height);
   }
 }

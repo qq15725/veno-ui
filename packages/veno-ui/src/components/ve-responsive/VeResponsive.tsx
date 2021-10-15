@@ -2,7 +2,7 @@
 import './styles/ve-responsive.scss'
 
 // Composables
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 
 // Utilities
 import { defineComponent, computed } from 'vue'

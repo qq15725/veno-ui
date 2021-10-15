@@ -1,5 +1,6 @@
 // Styles
 import './styles/vars.css'
+import './styles/layout.css'
 import './styles/code.css'
 
 import { createApp } from 'vue'

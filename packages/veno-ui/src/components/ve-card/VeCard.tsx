@@ -11,7 +11,7 @@ import { makeLoadingProps, useLoading } from '../../composables/loading';
 import { makeDisabledProps, useDisabled } from '../../composables/disabled';
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makePositionProps, usePosition } from '../../composables/position'
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'

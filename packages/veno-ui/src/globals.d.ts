@@ -1,6 +1,6 @@
 export {}
 
-import type { VNode } from 'vue'
+import type { ComponentPublicInstance, FunctionalComponent, VNode } from 'vue'
 
 declare global
 {
@@ -29,5 +29,12 @@ declare global
       [name: string]: any
     }
   }
+}
+
+declare module 'vue'
+{
+  export type JSXComponent<Props = any> = {
+    new (): ComponentPublicInstance<Props>
+  } | FunctionalComponent<Props>
 }
 

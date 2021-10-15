@@ -13,6 +13,7 @@ import { useBackgroundColor } from '../../composables/color'
 
 // Components
 import { VeImage } from '../ve-image'
+import { VeIcon } from '../ve-icon'
 
 export default defineComponent({
   name: 'VeAvatar',
@@ -20,6 +21,7 @@ export default defineComponent({
   props: {
     color: String,
     image: String,
+    icon: String,
     ...makeRoundedProps(),
     ...makeBorderProps(),
     ...makeSizeProps(),
@@ -47,6 +49,8 @@ export default defineComponent({
         ] }
       >
         { props.image && <VeImage src={ props.image } alt="" /> }
+
+        { props.icon && !props.image && <VeIcon icon={ props.icon } /> }
 
         { slots.default?.() }
       </props.tag>

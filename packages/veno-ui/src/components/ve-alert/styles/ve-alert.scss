@@ -1,0 +1,45 @@
+@forward 'variables';
+@use 'variables' as *;
+
+.ve-alert {
+  position: relative;
+  padding: 16px;
+  display: flex;
+
+  &__icon {
+    margin-right: 8px;
+  }
+
+  &:before {
+    background-color: currentColor;
+    border-radius: inherit;
+    bottom: 0;
+    content: "";
+    left: 0;
+    opacity: .12;
+    position: absolute;
+    pointer-events: none;
+    right: 0;
+    top: 0;
+  }
+
+  &__wrap {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__title + &__content {
+    margin-top: 8px;
+  }
+}
+
+
+
+

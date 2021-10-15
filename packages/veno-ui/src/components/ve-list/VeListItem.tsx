@@ -7,7 +7,7 @@ import { defineComponent, computed } from 'vue'
 // Composables
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeBorderProps, useBorder } from '../../composables/border'
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeTagProps } from '../../composables/tag'

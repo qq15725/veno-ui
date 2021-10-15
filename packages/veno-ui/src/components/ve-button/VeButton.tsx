@@ -12,13 +12,14 @@ import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makePositionProps, usePosition } from '../../composables/position'
 import { makeSizeProps, useSize, predefinedSizes } from '../../composables/size'
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 
 // Components
 import { VeProgress } from '../ve-progress'
+import { VeIcon } from '../ve-icon'
 
 export default defineComponent({
   name: 'VeButton',
@@ -28,6 +29,10 @@ export default defineComponent({
       type: String,
       default: 'button',
     },
+    icon: [Boolean, String],
+    prependIcon: String,
+    appendIcon: String,
+    stacked: Boolean,
     block: Boolean,
     ...makeThemeProps(),
     ...makeTagProps({
@@ -71,6 +76,8 @@ export default defineComponent({
               've-button': true,
               've-button--active': link.isExactActive?.value,
               've-button--block': props.block,
+              've-button--icon': !!props.icon,
+              've-button--stacked': props.stacked,
             },
             themeClasses.value,
             disabledClasses.value,
@@ -92,7 +99,9 @@ export default defineComponent({
           href={ link.href.value }
           onClick={ props.disabled || link.navigate }
         >
-          { props.variant !== 'text' && <div class="ve-button__overlay" /> }
+          { props.variant !== 'text' && !props.icon && (
+            <div class="ve-button__overlay" />
+          ) }
 
           { props.loading && (
             <VeProgress
@@ -103,7 +112,32 @@ export default defineComponent({
             />
           ) }
 
-          { slots.default?.() }
+          { !props.icon && props.prependIcon && (
+            <VeIcon
+              class="ve-button__icon"
+              icon={ props.prependIcon }
+              left={ !props.stacked }
+            />
+          ) }
+
+          { typeof props.icon === 'boolean'
+            ? slots.default?.()
+            : (
+              <VeIcon
+                class="ve-button__icon"
+                icon={ props.icon }
+                size={ props.size }
+              />
+            )
+          }
+
+          { !props.icon && props.appendIcon && (
+            <VeIcon
+              class="ve-button__icon"
+              icon={ props.appendIcon }
+              right={ !props.stacked }
+            />
+          ) }
         </Tag>
       )
     }

@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 
 // Composables
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeTagProps } from '../../composables/tag'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'

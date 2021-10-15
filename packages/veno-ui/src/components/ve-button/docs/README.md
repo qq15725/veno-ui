@@ -8,7 +8,8 @@
 basic.md variant.md
 shape.md size.md
 color.md disabled.md
-loading.md block.md
+loading.md icon.md
+block.md
 :::
 
 ## Props

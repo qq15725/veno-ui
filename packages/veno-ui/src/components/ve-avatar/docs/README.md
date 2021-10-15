@@ -7,5 +7,6 @@
 :::include
 basic.md border.md
 color.md shape.md
-size.md  slot.md
+size.md slot.md
+icon.md
 :::

@@ -6,7 +6,7 @@ import { defineComponent, toRef } from 'vue'
 
 // Composables
 import { makeBorderProps, useBorder } from '../../composables/border'
-import { makeDimensionProps, useDimension } from '../../composables/dimensions'
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { useBackgroundColor } from '../../composables/color'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'

@@ -157,7 +157,7 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
     for (const variation of (['lighten', 'darken'] as const)) {
       const fn = variation === 'lighten' ? lighten : darken
       for (const amount of createRange(variations.value[variation], 1)) {
-        obj[`${ name }-${ variation }-${ amount }`] = intToHex(fn(colorToInt(color), amount))
+        obj[`${ name }${ variation === 'lighten' ? '-n' : '-' }${ amount }`] = intToHex(fn(colorToInt(color), amount))
       }
     }
 
