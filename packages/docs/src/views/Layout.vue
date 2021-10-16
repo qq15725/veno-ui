@@ -1,28 +1,33 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { version } from 'veno-ui/package.json'
 
 const props = defineProps<{
   items?: any[]
 }>()
+
+const theme = ref()
 </script>
 
 <template>
-  <ve-app>
+  <ve-app :theme="theme">
     <ve-app-bar border>
       <ve-app-bar-title>Veno UI</ve-app-bar-title>
 
       <ve-app-bar-items style="margin-left: 140px;">
         <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
         <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
-        <ve-button :width="60">指令</ve-button>
-        <ve-button :width="60">组合</ve-button>
       </ve-app-bar-items>
 
       <ve-spacer />
 
       <ve-app-bar-items>
-        <ve-button :width="60" :to="{ name: 'Playground' }">排练场</ve-button>
-        <ve-button :width="60">深色</ve-button>
+        <ve-button
+            :width="60"
+            @click="theme = theme === 'dark' ? 'light' : 'dark'"
+        >
+          {{ theme === 'light' ? '深色' : '浅色' }}
+        </ve-button>
         <ve-button :width="60" href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
         <ve-button :width="60">{{ version }}</ve-button>
       </ve-app-bar-items>

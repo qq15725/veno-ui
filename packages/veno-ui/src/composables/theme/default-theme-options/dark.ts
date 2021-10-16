@@ -1,8 +1,8 @@
 export default {
   dark: true,
   colors: {
-    'background': '#121212',
-    'surface': '#2C2C2C',
+    'background': '#101014',
+    'surface': '#18181c',
     'on-surface': '#FFF',
     'primary': '#1890FF',
     'on-primary': '#FFF',
