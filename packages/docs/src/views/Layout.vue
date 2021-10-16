@@ -14,14 +14,18 @@ const theme = ref()
     <ve-app-bar border>
       <ve-app-bar-title>Veno UI</ve-app-bar-title>
 
-      <ve-app-bar-items style="margin-left: 140px;">
+      <div class="d-none d-md-block" style="margin-left: 140px;"></div>
+
+      <ve-spacer class="d-flex d-md-none" />
+
+      <ve-app-bar-items>
         <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
         <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
       </ve-app-bar-items>
 
-      <ve-spacer />
+      <ve-spacer class="d-none d-md-flex" />
 
-      <ve-app-bar-items>
+      <ve-app-bar-items class="d-none d-md-flex">
         <ve-button
             :width="60"
             @click="theme = theme === 'dark' ? 'light' : 'dark'"
@@ -49,7 +53,7 @@ const theme = ref()
     </ve-app-sider>
 
     <ve-app-main>
-      <ve-container class="px-10 py-8">
+      <ve-container class="px-md-10 py-md-8">
         <router-view />
       </ve-container>
     </ve-app-main>

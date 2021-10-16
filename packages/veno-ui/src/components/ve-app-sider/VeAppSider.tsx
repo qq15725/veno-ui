@@ -1,12 +1,14 @@
 // Styles
 import './styles/ve-app-sider.scss'
 
-// Utilities
-import { defineComponent, toRef } from 'vue'
+// Utils
+import { defineComponent, toRef, onBeforeMount, watch } from 'vue'
 
 import { makeTagProps } from '../../composables/tag'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
+import { useProxiedModel } from '../../composables/proxied-model'
+import { useDisplay } from '../../composables/display'
 
 import type { PropType } from 'vue'
 
@@ -14,13 +16,15 @@ export default defineComponent({
   name: 'VeAppSider',
 
   props: {
+    modelValue: {
+      type: Boolean,
+      default: null,
+    },
+    disableResizeWatcher: Boolean,
+    permanent: Boolean,
     width: {
       type: [Number, String],
       default: 256,
-    },
-    modelValue: {
-      type: Boolean,
-      default: true,
     },
     position: {
       type: String as PropType<'left' | 'right'>,
@@ -34,14 +38,30 @@ export default defineComponent({
 
   setup (props, { slots }) {
     const { borderClasses } = useBorder(props, 've-app-sider')
+    const isActive = useProxiedModel(props, 'modelValue')
+    const { mobile } = useDisplay()
     const layoutStyles = useLayoutItem(
       props.name,
       toRef(props, 'priority'),
       toRef(props, 'position'),
       toRef(props, 'width'),
       toRef(props, 'width'),
-      toRef(props, 'modelValue'),
+      isActive,
     )
+
+    if (!props.disableResizeWatcher) {
+      watch(mobile, val => !props.permanent && (isActive.value = !val))
+    }
+
+    watch(props, val => {
+      if (val.permanent) isActive.value = true
+    })
+
+    onBeforeMount(() => {
+      if (props.modelValue != null) return
+
+      isActive.value = props.permanent || !mobile.value
+    })
 
     return () => (
       <props.tag

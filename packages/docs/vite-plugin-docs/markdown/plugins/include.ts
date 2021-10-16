@@ -45,7 +45,7 @@ export const includePlugin = (md: MarkdownIt) => {
         const cols = rows.reduce((cols, row) => Math.max(cols, row.length), 2)
 
         for (let i = 0; i < cols; i++) {
-          code += `  <ve-col cols="${ 12 / cols }">`
+          code += `  <ve-col cols="12" md="${ 12 / cols }">`
           code += `    <ve-row>`
           rows.forEach(row => {
             if (row[i]) {
