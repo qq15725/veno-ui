@@ -2,6 +2,6 @@
 # 图标
 
 ```html
-<ve-avatar icon="ve:warning" color="warning" />
+<ve-avatar icon="veno-ui:$warning" border />
 ```
 :::

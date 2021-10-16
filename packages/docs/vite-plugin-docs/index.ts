@@ -1,4 +1,5 @@
 import createVuePlugin from '@vitejs/plugin-vue'
+import { dirname } from 'path'
 import { readFileSync } from 'fs'
 import { createMarkdownRenderer } from './markdown'
 import codegen from './codegen'
@@ -9,7 +10,9 @@ import type { PluginOption } from 'vite'
 async function getTransformedVueSrc (id: string) {
   const src = readFileSync(id).toString()
 
-  const { html, data } = createMarkdownRenderer().render(src, id)
+  const { html, data } = createMarkdownRenderer().render(src, {
+    filename: id.replace(dirname(dirname(dirname(__dirname))), ''),
+  })
 
   return codegen(html, data)
 }

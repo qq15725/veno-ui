@@ -1,11 +1,8 @@
 import container from 'markdown-it-container'
-import { dirname } from 'path'
-import { readFileSync } from 'fs'
+import { camelize, capitalize } from 'vue'
 
 import type MarkdownIt from 'markdown-it'
 import type Token from 'markdown-it/lib/token'
-
-const RE = /^\.\//
 
 export const includePlugin = (md: MarkdownIt) => {
   const name = 'include'
@@ -13,8 +10,6 @@ export const includePlugin = (md: MarkdownIt) => {
   md.use(container, name, {
     render (tokens: Token[], index: number) {
       const token = tokens[index]
-      const filename = (md as any).__data.filename
-      const dir = dirname(filename)
 
       if (token.nesting === 1) {
         const rows: any[] = []
@@ -27,15 +22,16 @@ export const includePlugin = (md: MarkdownIt) => {
             .forEach(v => {
               const row = v.split(' ')
                 .filter((v: string) => !!v)
-                .map(v => {
-                  if (filename) {
-                    if (RE.test(v)) {
-                      v = v.replace(RE, `${ dir }/`)
-                    } else {
-                      v = `${ dir }/${ v }`
-                    }
+                .map(id => {
+                  const variable = `VeDocs${ capitalize(camelize(id.replace('.', '-'))) }`
+                  const fileName = `./${ id }`
+
+                  return {
+                    id,
+                    variable,
+                    fileName,
+                    tag: `<${ variable } />`
                   }
-                  return v
                 })
 
               if (row.length > 0) {
@@ -44,14 +40,26 @@ export const includePlugin = (md: MarkdownIt) => {
             })
         }
 
+        const importStatements: string[] = []
         let code = ''
-        rows.forEach(row => {
-          row.forEach((col: string) => {
-            const src = readFileSync(col).toString()
-            const { html } = (md as any).render(src)
-            code += `<ve-col cols="6">\n${ html }\n</ve-col>`
+        const cols = rows.reduce((cols, row) => Math.max(cols, row.length), 2)
+
+        for (let i = 0; i < cols; i++) {
+          code += `  <ve-col cols="${ 12 / cols }">`
+          code += `    <ve-row>`
+          rows.forEach(row => {
+            if (row[i]) {
+              const { variable, tag, fileName } = row[i]
+              importStatements.push(`import ${ variable } from '${ fileName }'`)
+              code += `      <ve-col cols="12">${ tag }</ve-col>`
+            }
           })
-        })
+          code += `    </ve-row>`
+          code += `  </ve-col>`
+        }
+
+        const hoistedTags = (md as any).__data.hoistedTags || ((md as any).__data.hoistedTags = [])
+        hoistedTags.push(`<script setup>\n${ importStatements.join('\n') }\n</script>`)
 
         return `<ve-row>\n${ code }\n<!--`
       } else {

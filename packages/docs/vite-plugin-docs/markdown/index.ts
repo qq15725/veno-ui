@@ -28,18 +28,23 @@ export interface Header
   slug: string
 }
 
+export interface MarkdownEnv
+{
+  filename: string
+}
+
 export interface MarkdownParsedData
 {
   hoistedTags?: string[]
   links?: string[]
   headers?: Header[]
-  filename?: string
+  env: MarkdownEnv
 }
 
 export interface MarkdownRenderer
 {
   __data: MarkdownParsedData
-  render: (src: string, filename?: string, env?: any) => { html: string; data: any }
+  render: (src: string, env: MarkdownEnv) => { html: string; data: any }
 }
 
 export const createMarkdownRenderer = (
@@ -69,13 +74,12 @@ export const createMarkdownRenderer = (
 
   const render = md.render
 
-  const wrappedRender: MarkdownRenderer['render'] = (src, filename) => {
-    (md as any).__data = (md as any).__data || {
-      filename,
-    }
+  const wrappedRender: MarkdownRenderer['render'] = (src, env) => {
+    (md as any).__data = (md as any).__data || { env }
+
     return {
       html: render.call(md, src),
-      data: (md as any).__data
+      data: (md as any).__data,
     }
   }
 
