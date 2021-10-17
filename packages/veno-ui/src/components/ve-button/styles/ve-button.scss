@@ -46,6 +46,7 @@
   }
 
   &--icon {
+    --ve-variant-border-width: 0;
     padding: 4px;
     border-radius: $button-icon-border-radius;
     font-size: $button-icon-font-size;

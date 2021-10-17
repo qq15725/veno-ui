@@ -7,25 +7,29 @@ const props = defineProps<{
 }>()
 
 const theme = ref()
+
+const active = ref()
 </script>
 
 <template>
   <ve-app :theme="theme">
     <ve-app-bar border>
+      <ve-app-bar-nav-icon @click="active = !active" class="hidden-sm-and-up" />
+
       <ve-app-bar-title>Veno UI</ve-app-bar-title>
 
-      <div class="d-none d-md-block" style="margin-left: 140px;"></div>
+      <div class="hidden-sm-and-down" style="margin-left: 140px;"></div>
 
-      <ve-spacer class="d-flex d-md-none" />
+      <ve-spacer class="hidden-sm-and-up" />
 
       <ve-app-bar-items>
         <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
         <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
       </ve-app-bar-items>
 
-      <ve-spacer class="d-none d-md-flex" />
+      <ve-spacer class="hidden-sm-and-down" />
 
-      <ve-app-bar-items class="d-none d-md-flex">
+      <ve-app-bar-items class="hidden-sm-and-down">
         <ve-button
             :width="60"
             @click="theme = theme === 'dark' ? 'light' : 'dark'"
@@ -37,7 +41,7 @@ const theme = ref()
       </ve-app-bar-items>
     </ve-app-bar>
 
-    <ve-app-sider>
+    <ve-app-sider v-model="active">
       <ve-list>
         <ve-list-item
             v-for="item in props.items"

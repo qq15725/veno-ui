@@ -15,6 +15,8 @@ export interface IconAliases
   info: IconValue
   warning: IconValue
   error: IconValue
+  close: IconValue
+  menu: IconValue
 }
 
 export interface IconProps

@@ -2,7 +2,7 @@
 import './styles/ve-app-sider.scss'
 
 // Utils
-import { defineComponent, toRef, onBeforeMount, watch } from 'vue'
+import { defineComponent, computed, toRef, onBeforeMount, watch } from 'vue'
 
 import { makeTagProps } from '../../composables/tag'
 import { makeBorderProps, useBorder } from '../../composables/border'
@@ -22,6 +22,7 @@ export default defineComponent({
     },
     disableResizeWatcher: Boolean,
     permanent: Boolean,
+    temporary: Boolean,
     width: {
       type: [Number, String],
       default: 256,
@@ -40,12 +41,16 @@ export default defineComponent({
     const { borderClasses } = useBorder(props, 've-app-sider')
     const isActive = useProxiedModel(props, 'modelValue')
     const { mobile } = useDisplay()
+    const width = computed(() => {
+      return props.width
+    })
+    const isTemporary = computed(() => !props.permanent && (mobile.value || props.temporary))
     const layoutStyles = useLayoutItem(
       props.name,
       toRef(props, 'priority'),
       toRef(props, 'position'),
-      toRef(props, 'width'),
-      toRef(props, 'width'),
+      computed(() => isTemporary.value ? 0 : width.value),
+      width,
       isActive,
     )
 

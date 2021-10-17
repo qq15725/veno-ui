@@ -1,15 +1,17 @@
+// Utils
+import { reactive } from 'vue'
+import { mergeDeep } from './utils'
+
 // Composables
 import { createTheme, ThemeSymbol } from './composables/theme'
 import { defaultSets, IconSymbol } from './composables/icon'
 import { createDisplay, DisplaySymbol } from './composables/display'
 
+// Iconsets
 import { venoUiSvg } from './iconsets/veno-ui-svg'
 
-// Utils
-import { mergeDeep } from './utils'
-
 // Types
-import type { App } from 'vue'
+import type { App, ComponentPublicInstance, InjectionKey } from 'vue'
 import type { ThemeOptions } from './composables/theme'
 import type { IconOptions } from './composables/icon'
 import type { DisplayOptions } from './composables/display'
@@ -48,6 +50,29 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
         'veno-ui': venoUiSvg,
       },
     }, icons))
+
+    // Vue's inject() can only be used in setup
+    function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
+      const vm = this.$
+
+      const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
+
+      if (provides && (key as any) in provides) {
+        return provides[(key as string)]
+      }
+    }
+
+    app.mixin({
+      computed: {
+        $venoUi () {
+          return reactive({
+            display: inject.call(this, DisplaySymbol),
+            theme: inject.call(this, ThemeSymbol),
+            icons: inject.call(this, IconSymbol),
+          })
+        },
+      },
+    })
   }
 
   return { install }
