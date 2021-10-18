@@ -8,7 +8,7 @@
   display: block;
   color: $card-color;
   text-decoration: none;
-  @include tools.border($card-border...);
+  @include tools.use-border($card-border...);
   @include tools.use-variant($card-variant...);
   @include tools.use-position($card-positions);
   @include tools.use-rounded($card-border-radius);

@@ -8,7 +8,7 @@
   position: relative;
   color: $device-color;
   border-radius: $device-border-radius;
-  @include tools.border($device-border...);
+  @include tools.use-border($device-border...);
   @include tools.use-variant($device-variant...);
 
   &__app-header {

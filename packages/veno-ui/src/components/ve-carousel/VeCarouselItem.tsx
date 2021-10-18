@@ -35,7 +35,7 @@ export default defineComponent({
     return () => (
       <Transition name={ transitionName.value }>
         <props.tag
-          className={ [
+          class={ [
             've-carousel-item',
           ] }
           v-show={ isSelected.value }

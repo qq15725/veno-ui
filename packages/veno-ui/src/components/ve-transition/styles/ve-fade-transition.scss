@@ -1,0 +1,9 @@
+@use '../../../styles/tools';
+
+.fade-transition {
+  @include tools.use-transition();
+
+  &-enter-from, &-leave-to {
+    opacity: 0 !important;
+  }
+}

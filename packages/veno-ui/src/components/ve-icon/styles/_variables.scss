@@ -8,6 +8,8 @@ $icon-line-height: 1 !default;
 $icon-size: 1em !default;
 $icon-text-indent: 0 !default;
 $icon-vertical-align: middle !default;
+$icon-margin-end: map.get(settings.$grid-gutters, 'md') !default;
+$icon-margin-start: map.get(settings.$grid-gutters, 'md') !default;
 
 $icon-sizes: () !default;
 $icon-sizes: tools.map-deep-merge(

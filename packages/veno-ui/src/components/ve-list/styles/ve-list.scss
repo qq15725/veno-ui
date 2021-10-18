@@ -6,5 +6,5 @@
   overflow: auto;
   position: relative;
   padding: 8px 0;
-  @include tools.border($list-border...);
+  @include tools.use-border($list-border...);
 }

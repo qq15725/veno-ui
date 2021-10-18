@@ -10,7 +10,7 @@
   width: 100%;
   font-size: 1rem;
   font-weight: 500;
-  @include tools.border($divider-border-color, $divider-border-style, 0);
+  @include tools.use-border($divider-border-color, $divider-border-style, 0);
 
   @at-root {
     hr#{&} {

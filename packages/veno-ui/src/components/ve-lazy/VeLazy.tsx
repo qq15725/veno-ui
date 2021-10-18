@@ -7,6 +7,9 @@ import { makeTagProps } from '../../composables/tag'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'
 
+// Components
+import { VeFadeTransition } from '../../components/ve-transition'
+
 // Directives
 import intersect from '../../directives/intersect'
 
@@ -33,7 +36,9 @@ export default defineComponent({
 
     ...makeDimensionProps(),
     ...makeTagProps(),
-    ...makeTransitionProps({ transition: 'fade-transition' }),
+    ...makeTransitionProps({
+      transition: { component: VeFadeTransition, },
+    }),
   },
 
   emits: {

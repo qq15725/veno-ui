@@ -1,26 +1,29 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-alert {
   position: relative;
   padding: 16px;
   display: flex;
+  @include tools.use-border();
+  @include tools.use-variant();
+  @include tools.use-rounded();
 
   &__icon {
     margin-right: 8px;
   }
 
+  &__close {
+    margin-left: 8px;
+  }
+
   &:before {
+    @include tools.absolute();
     background-color: currentColor;
     border-radius: inherit;
-    bottom: 0;
-    content: "";
-    left: 0;
-    opacity: .12;
-    position: absolute;
+    opacity: .04;
     pointer-events: none;
-    right: 0;
-    top: 0;
   }
 
   &__wrap {

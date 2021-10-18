@@ -21,6 +21,14 @@
     }
   }
 
+  &--left {
+    margin-inline-end: $icon-margin-start;
+  }
+
+  &--right {
+    margin-inline-start: $icon-margin-end;
+  }
+
   &__svg {
     fill: currentColor;
   }

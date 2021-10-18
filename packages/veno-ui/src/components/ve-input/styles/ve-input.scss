@@ -8,7 +8,7 @@
   align-items: center;
   max-width: 100%;
   padding: $input-padding;
-  @include tools.border($input-border...);
+  @include tools.use-border($input-border...);
   @include tools.rounded($input-border-radius);
   @include tools.use-rounded();
   @include tools.use-variant($input-variant...);

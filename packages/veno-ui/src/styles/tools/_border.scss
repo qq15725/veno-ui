@@ -1,8 +1,10 @@
-@mixin border(
-  $color: null,
-  $style: null,
-  $width: null,
-  $thin-width: false,
+@use '../settings/borders' as *;
+
+@mixin use-border(
+  $color: $border-color,
+  $style: $border-style,
+  $width: 0,
+  $thin-width: thin,
   $important: false
 ) {
   border-color: $color if($important, !important, null);

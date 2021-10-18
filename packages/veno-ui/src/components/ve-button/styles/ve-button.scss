@@ -22,7 +22,7 @@
   text-decoration: none;
   cursor: pointer;
 
-  @include tools.border($button-border...);
+  @include tools.use-border($button-border...);
   @include tools.use-variant($button-variant...);
   @include tools.use-rounded($button-border-radius);
   @include tools.use-position();
@@ -47,7 +47,7 @@
 
   &--icon {
     --ve-variant-border-width: 0;
-    padding: 4px;
+    padding: 2px;
     border-radius: $button-icon-border-radius;
     font-size: $button-icon-font-size;
   }

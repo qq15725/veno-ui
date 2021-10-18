@@ -1,0 +1,15 @@
+@use '../settings/variables' as *;
+
+@mixin use-transition() {
+  &-enter-active {
+    transition: 0.3s $standard-easing;
+  }
+
+  &-leave-active {
+    transition: 0.3s $standard-easing;
+  }
+
+  &-move {
+    transition: transform .5s $standard-easing;
+  }
+}

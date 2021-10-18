@@ -8,13 +8,13 @@ import {
   mergeProps,
 } from 'vue'
 
+// Composables
 import { useProxiedModel } from '../../composables/proxied-model'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 
 // Components
-import {
-  Teleport,
-  Transition,
-} from 'vue'
+import { Teleport } from 'vue'
+import { VeModalTransition, VeFadeTransition } from '../../components/ve-transition'
 
 export default defineComponent({
   name: 'VeModal',
@@ -22,6 +22,9 @@ export default defineComponent({
   props: {
     modelValue: Boolean,
     persistent: Boolean,
+    ...makeTransitionProps({
+      transition: { component: VeModalTransition, },
+    })
   },
 
   emits: {
@@ -50,7 +53,7 @@ export default defineComponent({
               've-modal',
             ] }
           >
-            <Transition name="fade-transition" appear>
+            <VeFadeTransition>
               { isActive.value && (
                 <div
                   class={ [
@@ -64,9 +67,9 @@ export default defineComponent({
                   } }
                 />
               ) }
-            </Transition>
+            </VeFadeTransition>
 
-            <Transition name="modal-transition" appear>
+            <MaybeTransition transition={ props.transition }>
               <div
                 v-show={ isActive.value }
                 class={ [
@@ -76,7 +79,7 @@ export default defineComponent({
               >
                 { slots.default?.({ isActive }) }
               </div>
-            </Transition>
+            </MaybeTransition>
           </div>
         </Teleport>
       </>

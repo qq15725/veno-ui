@@ -10,6 +10,14 @@ declare global
       init: boolean
       observer: IntersectionObserver
     }
+
+    _transitionInitialStyles?: {
+      position: string
+      top: string
+      left: string
+      width: string
+      height: string
+    }
   }
 
   export type Dictionary<T> = Record<string, T>

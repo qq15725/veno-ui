@@ -1,8 +1,10 @@
+@use '../settings/rounded' as *;
+
 @mixin rounded($radius: null, $important: false) {
   border-radius: $radius if($important, !important, null)
 }
 
-@mixin use-rounded($radius: null, $important: false) {
+@mixin use-rounded($radius: $border-radius, $important: false) {
   @include rounded($radius, $important);
 
   &--tile {
