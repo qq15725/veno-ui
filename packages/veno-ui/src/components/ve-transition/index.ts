@@ -1,2 +1,3 @@
-export { VeFadeTransition } from './VeFadeTransition'
-export { VeModalTransition } from './VeModalTransition'
+export * from './VeFadeTransition'
+export * from './VeModalTransition'
+export * from './VeScaleTransition'

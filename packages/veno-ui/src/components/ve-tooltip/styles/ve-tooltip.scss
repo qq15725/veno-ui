@@ -1,0 +1,96 @@
+@use '../../../styles/settings';
+
+.ve-tooltip {
+  --ve-tooltip-arrow-height: 6px;
+
+  &__arrow {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .ve-overlay--side-top &__arrow {
+    bottom: auto;
+    top: 100%;
+    height: 10px;
+  }
+
+  .ve-overlay--side-top &__arrow-inner {
+    left: 50%;
+    top: calc(-0.707 * var(--ve-tooltip-arrow-height));
+    transform: translateX(calc(-0.707 * var(--ve-tooltip-arrow-height))) rotate(45deg);
+  }
+
+  .ve-overlay--side-bottom &__arrow {
+    top: auto;
+    bottom: 100%;
+    height: 10px;
+  }
+
+  .ve-overlay--side-bottom &__arrow-inner {
+    left: 50%;
+    bottom: calc(-0.707 * var(--ve-tooltip-arrow-height));
+    transform: translateX(calc(-0.707 * var(--ve-tooltip-arrow-height))) rotate(45deg);
+  }
+
+  .ve-overlay--side-start &__arrow {
+    right: auto;
+    left: 100%;
+    width: 10px;
+  }
+
+  .ve-overlay--side-start &__arrow-inner {
+    top: 50%;
+    left: calc(-0.707 * var(--ve-tooltip-arrow-height));
+    transform: translateY(calc(-0.707 * var(--ve-tooltip-arrow-height))) rotate(45deg);
+  }
+
+  .ve-overlay--side-end &__arrow {
+    left: auto;
+    right: 100%;
+    width: 10px;
+  }
+
+  .ve-overlay--side-end &__arrow-inner {
+    top: 50%;
+    right: calc(-0.707 * var(--ve-tooltip-arrow-height));
+    transform: translateY(calc(-0.707 * var(--ve-tooltip-arrow-height))) rotate(45deg);
+  }
+
+  &__arrow-inner {
+    position: absolute;
+    display: block;
+    width: calc(var(--ve-tooltip-arrow-height) * 1.414);
+    height: calc(var(--ve-tooltip-arrow-height) * 1.414);
+    box-shadow: 0 0 8px 0 rgb(0 0 0 / 12%);
+    transform: rotate(45deg);
+    background: rgba(var(--ve-theme-on-surface), 0.9);
+    pointer-events: all;
+  }
+
+  .ve-overlay__content {
+    background: rgba(var(--ve-theme-on-surface), 0.9);
+    color: rgb(var(--ve-theme-surface));
+    border-radius: 4px;
+    font-size: .875rem;
+    display: inline-block;
+    padding: 8px 14px;
+    text-transform: initial;
+    width: auto;
+    pointer-events: none;
+
+    &[class*="enter-active"] {
+      transition-timing-function: settings.$decelerated-easing;
+      transition-duration: 150ms;
+    }
+
+    &[class*="leave-active"] {
+      transition-timing-function: settings.$accelerated-easing;
+      transition-duration: 150ms;
+    }
+  }
+}

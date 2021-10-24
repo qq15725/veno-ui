@@ -1,6 +1,6 @@
 @use '../../../styles/tools';
 
-.fade-transition {
+.ve-fade-transition {
   @include tools.use-transition();
 
   &-enter-from, &-leave-to {

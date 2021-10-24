@@ -4,24 +4,25 @@ import './styles/ve-modal.scss'
 // Utils
 import {
   defineComponent,
-  toHandlers,
-  mergeProps,
+  computed,
 } from 'vue'
+import { getUid } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
-import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { makeTransitionProps } from '../../composables/transition'
 
 // Components
-import { Teleport } from 'vue'
-import { VeModalTransition, VeFadeTransition } from '../../components/ve-transition'
+import { VeModalTransition } from '../ve-transition'
+import { VeOverlay } from '../ve-overlay'
 
 export default defineComponent({
   name: 'VeModal',
 
   props: {
+    id: String,
     modelValue: Boolean,
-    persistent: Boolean,
+
     ...makeTransitionProps({
       transition: { component: VeModalTransition, },
     })
@@ -31,58 +32,28 @@ export default defineComponent({
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup (props, { slots, attrs }) {
     const isActive = useProxiedModel(props, 'modelValue')
 
+    const id = computed(() => props.id || `ve-modal-${ getUid() }`)
+
     return () => (
-      <>
-        { slots.activator?.({
-          isActive: isActive.value,
-          props: mergeProps({
-            modelValue: isActive.value,
-            'onUpdate:modelValue': (val: boolean) => isActive.value = val,
-          }, toHandlers({
-            click: () => isActive.value = true
-          })),
-        }) }
-        <Teleport
-          to={ document.body }
-        >
-          <div
-            class={ [
-              've-modal',
-            ] }
-          >
-            <VeFadeTransition>
-              { isActive.value && (
-                <div
-                  class={ [
-                    've-modal__mask',
-                  ] }
-
-                  onClick={ () => {
-                    if (!props.persistent) {
-                      isActive.value = false
-                    }
-                  } }
-                />
-              ) }
-            </VeFadeTransition>
-
-            <MaybeTransition transition={ props.transition }>
-              <div
-                v-show={ isActive.value }
-                class={ [
-                  've-modal__wrap',
-                ] }
-                style="transform-origin: -34px 142px;"
-              >
-                { slots.default?.({ isActive }) }
-              </div>
-            </MaybeTransition>
-          </div>
-        </Teleport>
-      </>
+      <VeOverlay
+        v-model={ isActive.value }
+        class={ [
+          've-modal',
+        ] }
+        id={ id.value }
+        transition={ props.transition }
+        activator-props={ {
+          'aria-describedby': id.value,
+        } }
+        { ...attrs }
+        v-slots={ {
+          activator: slots.activator,
+          default: slots.default,
+        } }
+      />
     )
   }
 })

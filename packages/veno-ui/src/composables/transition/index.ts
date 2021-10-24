@@ -8,7 +8,7 @@ import type { Component, FunctionalComponent, PropType, TransitionProps } from '
 export const makeTransitionProps = propsFactory({
   transition: {
     type: [Boolean, String, Object] as PropType<string | false | TransitionProps & { component?: Component }>,
-    default: 'fade-transition',
+    default: 've-fade-transition',
     validator: val => val !== true,
   },
 }, 'transition')

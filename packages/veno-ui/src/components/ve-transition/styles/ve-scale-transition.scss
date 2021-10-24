@@ -1,20 +1,22 @@
 @use '../../../styles/tools';
 
-.ve-modal-transition {
+.ve-scale-transition {
   @include tools.use-transition();
 
   &-enter-active,
   &-leave-active {
     transition-property: transform, opacity;
-    pointer-events: none;
   }
 
-  &-enter-from, &-leave-to {
-    transform: scale(0.9);
+  &-enter-from,
+  &-leave-to {
     opacity: 0;
+    transform: scale(.85);
   }
 
-  &-enter-to, &-leave-from {
+  &-enter-to,
+  &-leave-from {
     opacity: 1;
+    transform: scale(1);
   }
 }

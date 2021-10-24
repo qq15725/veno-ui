@@ -6,6 +6,7 @@ import { mergeDeep } from './utils'
 import { createTheme, ThemeSymbol } from './composables/theme'
 import { defaultSets, IconSymbol } from './composables/icon'
 import { createDisplay, DisplaySymbol } from './composables/display'
+import { createDefaults, DefaultsSymbol } from './composables/defaults'
 
 // Iconsets
 import { venoUiSvg } from './iconsets/veno-ui-svg'
@@ -15,11 +16,13 @@ import type { App, ComponentPublicInstance, InjectionKey } from 'vue'
 import type { ThemeOptions } from './composables/theme'
 import type { IconOptions } from './composables/icon'
 import type { DisplayOptions } from './composables/display'
+import type { DefaultsOptions } from './composables/defaults'
 
 export interface VenoUiOptions
 {
   components?: Record<string, any>
   directives?: Record<string, any>
+  defaults?: DefaultsOptions
   theme?: ThemeOptions
   icons?: IconOptions
   display?: DisplayOptions
@@ -41,6 +44,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       app.directive(key, directives[key])
     }
 
+    app.provide(DefaultsSymbol, createDefaults(options.defaults))
     app.provide(ThemeSymbol, createTheme(options.theme))
     app.provide(DisplaySymbol, createDisplay(options.display))
     app.provide(IconSymbol, mergeDeep({

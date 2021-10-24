@@ -1,3 +1,4 @@
+// Types
 import type { ComponentObjectPropsOptions, Prop, PropType } from 'vue'
 
 /**

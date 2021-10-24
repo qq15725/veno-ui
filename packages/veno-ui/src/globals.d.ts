@@ -11,6 +11,12 @@ declare global
       observer: IntersectionObserver
     }
 
+    _clickOutside?: {
+      lastMousedownWasOutside: boolean
+      onClick: EventListener
+      onMousedown: EventListener
+    }
+
     _transitionInitialStyles?: {
       position: string
       top: string

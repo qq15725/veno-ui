@@ -1,0 +1,51 @@
+.ve-overlay {
+  border-radius: inherit;
+  display: flex;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  z-index: 800;
+  padding-inline-end: var(--ve-scrollbar-offset);
+  bottom: 0;
+  right: 0;
+
+  &-container {
+    contain: layout;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    display: contents;
+  }
+
+  &-scroll-blocked {
+    padding-inline-end: var(--ve-scrollbar-offset);
+    overflow-y: hidden !important;
+  }
+
+  &--absolute {
+    position: absolute;
+  }
+
+  &__content {
+    outline: none;
+    position: absolute;
+    pointer-events: auto;
+    contain: layout;
+  }
+
+  &__scrim {
+    pointer-events: auto;
+    background: rgb(var(--ve-theme-on-surface));
+    border-radius: inherit;
+    bottom: 0;
+    left: 0;
+    opacity: 40%;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+}
+
+
