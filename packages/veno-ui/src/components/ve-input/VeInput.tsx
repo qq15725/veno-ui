@@ -1,7 +1,10 @@
+// Styles
 import './styles/ve-input.scss'
 
+// Utils
 import { defineComponent } from 'vue'
 
+// Composables
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeVariantProps, useVariant } from '../../composables/variant'
@@ -52,13 +55,11 @@ export default defineComponent({
             colorStyles.value,
           ] }
         >
-          {
-            slots.prefix && (
-              <div class="ve-input__prefix">
-                { slots.prefix?.() }
-              </div>
-            )
-          }
+          { slots.prefix && (
+            <div class="ve-input__prefix">
+              { slots.prefix?.() }
+            </div>
+          ) }
 
           <div class="ve-input__wrap">
             <Tag
@@ -71,23 +72,19 @@ export default defineComponent({
               disabled={ props.disabled }
             />
 
-            {
-              props.textarea && props.autosize && (
-                <div
-                  class="ve-input__mirror"
-                  v-text={ props.modelValue }
-                />
-              )
-            }
+            { props.textarea && props.autosize && (
+              <div
+                class="ve-input__mirror"
+                v-text={ props.modelValue }
+              />
+            ) }
           </div>
 
-          {
-            slots.suffix && (
-              <div class="ve-input__suffix">
-                { slots.suffix?.() }
-              </div>
-            )
-          }
+          { slots.suffix && (
+            <div class="ve-input__suffix">
+              { slots.suffix?.() }
+            </div>
+          ) }
         </div>
       )
     }

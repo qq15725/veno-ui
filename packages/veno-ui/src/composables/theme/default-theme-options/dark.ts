@@ -2,6 +2,7 @@ export default {
   dark: true,
   colors: {
     'background': '#101014',
+    'on-background': '#FFF',
     'surface': '#18181C',
     'on-surface': '#FFF',
     'primary': '#1890FF',

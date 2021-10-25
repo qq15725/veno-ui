@@ -21,15 +21,10 @@ export default defineComponent({
       type: String,
       default: 'Z+',
     },
-    headerColor: {
-      type: String,
-      default: '#FFF',
-    },
+    headerColor: String,
     ...makeDeviceProps(),
     ...makeTagProps(),
-    ...makeVariantProps({
-      color: '#F5F5F5',
-    } as const),
+    ...makeVariantProps(),
   },
 
   setup (props, { slots }) {

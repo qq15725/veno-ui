@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   padding: 1rem 0.5rem;
-  color: #000102;
+  color: rgb(var(--ve-theme-on-surface));
   font-weight: normal;
 
   &__mobile-signal {
