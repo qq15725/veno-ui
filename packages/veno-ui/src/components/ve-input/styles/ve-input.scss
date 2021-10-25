@@ -9,8 +9,7 @@
   max-width: 100%;
   padding: $input-padding;
   @include tools.use-border($input-border...);
-  @include tools.rounded($input-border-radius);
-  @include tools.use-rounded();
+  @include tools.use-rounded($input-border-radius);
   @include tools.use-variant($input-variant...);
 
   &__prefix,
@@ -71,6 +70,7 @@
     margin: 0;
     padding-right: 0;
     overflow: hidden;
+    color: inherit;
   }
 
   &__mirror {

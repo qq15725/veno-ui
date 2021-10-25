@@ -28,8 +28,6 @@ export default {
     'selected-opacity': 0.08,
     'dragged-opacity': 0.08,
     'pressed-opacity': 0.16,
-    'kbd-background-color': '#212529',
-    'kbd-color': '#FFF',
-    'code-background-color': '#C2C2C2',
+    'code-background-color': '#F4F4F8',
   },
 }

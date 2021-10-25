@@ -1,3 +1,7 @@
+// Styles
+import './styles/ve-code.scss'
+
+// Utils
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('d-inline-block text-grey-3 bg-grey-n3 px-1', 'code', 'VeCode')
+export default createSimpleFunctional('ve-code', 'code')

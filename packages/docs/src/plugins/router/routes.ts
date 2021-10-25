@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 import Playground from '@/views/Playground.vue'
 import Layout from '@/views/Layout.vue'
+// @ts-ignore
 import Guide from '@/views/guide/README.md'
 import componentRoutes from './component-routes'
 import composableRoutes from './composable-routes'

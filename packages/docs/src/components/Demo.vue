@@ -22,15 +22,12 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
 </script>
 
 <template>
-  <ve-card
-      :title="props.title"
-      :theme="theme"
-      divider
-  >
+  <ve-card :title="props.title" divider>
     <template #append>
       <ve-tooltip
           #activator="{ props }"
-          text="切换风格"
+          text="反转示例颜色"
+          :open-delay="300"
           anchor="top"
       >
         <ve-button
@@ -42,10 +39,10 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
         />
       </ve-tooltip>
 
-
       <ve-tooltip
           #activator="{ props }"
           text="在 GitHub 中编辑"
+          :open-delay="300"
           anchor="top"
       >
         <ve-button
@@ -60,7 +57,8 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
 
       <ve-tooltip
           #activator="{ props }"
-          text="显示代码"
+          text="查看源代码"
+          :open-delay="300"
           anchor="top"
       >
         <ve-button
@@ -78,9 +76,11 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
     </div>
 
     <ve-lazy>
-      <VeCardText>
-        <slot />
-      </VeCardText>
+      <ve-card tile :theme="theme" :border="0">
+        <ve-card-text>
+          <slot />
+        </ve-card-text>
+      </ve-card>
     </ve-lazy>
   </ve-card>
 </template>

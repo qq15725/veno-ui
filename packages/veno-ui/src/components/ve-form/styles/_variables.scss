@@ -3,6 +3,7 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+$form-item-color: rgb(var(--ve-theme-on-surface)) !default;
 $form-item-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;
 $form-item-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
 $form-item-text-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;

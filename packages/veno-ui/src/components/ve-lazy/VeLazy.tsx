@@ -8,7 +8,7 @@ import { makeTransitionProps, MaybeTransition } from '../../composables/transiti
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
-import { VeFadeTransition } from '../../components/ve-transition'
+import { VeFadeTransition } from '../ve-transition'
 
 // Directives
 import intersect from '../../directives/intersect'

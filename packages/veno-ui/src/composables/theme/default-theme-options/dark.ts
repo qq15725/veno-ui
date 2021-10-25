@@ -2,7 +2,7 @@ export default {
   dark: true,
   colors: {
     'background': '#101014',
-    'surface': '#18181c',
+    'surface': '#18181C',
     'on-surface': '#FFF',
     'primary': '#1890FF',
     'on-primary': '#FFF',
@@ -28,8 +28,6 @@ export default {
     'selected-opacity': 0.08,
     'dragged-opacity': 0.08,
     'pressed-opacity': 0.16,
-    'kbd-background-color': '#212529',
-    'kbd-color': '#FFF',
-    'code-background-color': '#B7B7B7',
+    'code-background-color': '#343438',
   },
 }

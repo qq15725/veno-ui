@@ -1,47 +1,47 @@
-@use '../../../styles/settings/variables' as *;
+@use '../../../styles/settings';
 @use '../../../styles/tools';
 
 .ve-switch {
-  vertical-align: middle;
-  user-select: none;
   display: inline-flex;
-  outline: none;
   justify-content: center;
   align-items: center;
+  vertical-align: middle;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  transition: .3s settings.$standard-easing;
   @include tools.use-rounded();
 
+  &__track,
+  &__thumb {
+    background-color: currentColor;
+    pointer-events: none;
+    transition: inherit;
+  }
+
   &__track {
+    position: relative;
     overflow: hidden;
     height: 22px;
     min-width: 40px;
+    color: rgba(var(--ve-theme-on-surface), .2);
     border-radius: inherit;
-    cursor: pointer;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.14);
-    transition-property: background-color, box-shadow;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: .3s;
   }
 
   &__thumb {
     position: absolute;
-    content: "";
+    content: '';
     top: 2px;
     left: 2px;
     height: 18px;
     width: 24px;
     max-width: 18px;
-    border-radius: inherit;
-    background-color: white;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3), inset 0 0 1px 0 rgba(0, 0, 0, 0.05);
-    box-sizing: border-box;
-    cursor: inherit;
-    transition-property: background-color, left, opacity, max-width, box-shadow;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: .3s;
+    color: #FFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
   }
 
   &--active &__thumb {
-    left: calc(100% - (20px + 18px) / 2);
+    left: calc(100% - (22px + 18px) / 2);
   }
 }
