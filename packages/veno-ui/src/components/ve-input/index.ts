@@ -1,1 +1,1 @@
-export { default as VeInput } from './VeInput'
+export * from './VeInput'

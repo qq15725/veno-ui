@@ -11,7 +11,7 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
-export default defineComponent({
+export const VeInput = defineComponent({
   name: 'VeInput',
 
   props: {
@@ -23,6 +23,7 @@ export default defineComponent({
       type: String,
       default: 'text',
     },
+    readonly: Boolean,
     ...makeDisabledProps(),
     ...makeBorderProps(),
     ...makeVariantProps(),
@@ -50,6 +51,7 @@ export default defineComponent({
             {
               've-input--textarea': props.textarea,
               've-input--autosize': props.autosize,
+              've-input--readonly': props.readonly,
             },
             colorClasses.value,
             disabledClasses.value,
@@ -75,6 +77,7 @@ export default defineComponent({
               type={ props.textarea ? undefined : props.type }
               rows={ props.textarea ? 3 : undefined }
               placeholder={ props.placeholder }
+              readonly={ props.readonly }
               disabled={ props.disabled }
             />
 

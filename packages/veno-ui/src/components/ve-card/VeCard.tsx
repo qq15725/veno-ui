@@ -15,6 +15,7 @@ import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeRoundedProps, useRounded } from '../../composables/rounded'
 import { makeVariantProps, useVariant } from '../../composables/variant'
+import { makeElevationProps, useElevation } from '../../composables/elevation'
 
 // Components
 import { VeAvatar } from '../ve-avatar'
@@ -48,6 +49,7 @@ export default defineComponent({
     ...makeBorderProps(),
     ...makeRoundedProps(),
     ...makeVariantProps(),
+    ...makeElevationProps(),
   },
 
   setup (props, { attrs, slots }) {
@@ -60,6 +62,7 @@ export default defineComponent({
     const { borderClasses } = useBorder(props, 've-card')
     const { roundedClasses } = useRounded(props, 've-card')
     const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-card')
+    const { elevationClasses } = useElevation(props)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
@@ -87,6 +90,7 @@ export default defineComponent({
             roundedClasses.value,
             colorClasses.value,
             variantClasses.value,
+            elevationClasses.value,
           ] }
           style={ [
             positionStyles.value,

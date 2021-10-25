@@ -74,9 +74,7 @@ export type OverlaySlots = MakeSlots<{
   activator: [{ isActive: boolean, props: Dictionary<any> }]
 }>
 
-export const VeOverlay = genericComponent<new () => {
-  $slots: OverlaySlots
-}>()({
+export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()({
   name: 'VeOverlay',
 
   directives: { ClickOutside },
@@ -84,6 +82,7 @@ export const VeOverlay = genericComponent<new () => {
   inheritAttrs: false,
 
   props: {
+    modelValue: Boolean,
     absolute: Boolean,
     attach: {
       type: [Boolean, String, Object] as PropType<boolean | string | Element>,
@@ -91,7 +90,6 @@ export const VeOverlay = genericComponent<new () => {
     },
     contentClass: null,
     noClickAnimation: Boolean,
-    modelValue: Boolean,
     persistent: Boolean,
     scrim: {
       type: [String, Boolean],
