@@ -5,6 +5,7 @@ import './styles/ve-input.scss'
 import { defineComponent } from 'vue'
 
 // Composables
+import { useProxiedModel } from '../../composables/proxied-model'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeVariantProps, useVariant } from '../../composables/variant'
@@ -28,7 +29,12 @@ export default defineComponent({
     ...makeRoundedProps(),
   },
 
-  setup (props, { slots, emit }) {
+  emits: {
+    'update:modelValue': (value: any) => true,
+  },
+
+  setup (props, { slots }) {
+    const model = useProxiedModel(props, 'modelValue')
     const { disabledClasses } = useDisabled(props, 've-input')
     const { borderClasses } = useBorder(props, 've-input')
     const { roundedClasses } = useRounded(props, 've-input')
@@ -43,7 +49,7 @@ export default defineComponent({
             've-input',
             {
               've-input--textarea': props.textarea,
-              've-input--autosize': props.textarea && props.autosize,
+              've-input--autosize': props.autosize,
             },
             colorClasses.value,
             disabledClasses.value,
@@ -64,18 +70,18 @@ export default defineComponent({
           <div class="ve-input__wrap">
             <Tag
               class="ve-input__el"
-              value={ props.modelValue }
+              value={ model.value }
+              onInput={ e => model.value = (e.target as HTMLInputElement).value }
               type={ props.textarea ? undefined : props.type }
               rows={ props.textarea ? 3 : undefined }
               placeholder={ props.placeholder }
-              onInput={ e => emit('update:modelValue', (e.target as HTMLInputElement).value) }
               disabled={ props.disabled }
             />
 
-            { props.textarea && props.autosize && (
+            { props.autosize && (
               <div
                 class="ve-input__mirror"
-                v-text={ props.modelValue }
+                v-text={ (model.value || '') + '\r\n' }
               />
             ) }
           </div>

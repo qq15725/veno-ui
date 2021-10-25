@@ -5,5 +5,5 @@
 ## 演示
 
 :::include
-basic.md
+basic.md autosize.md
 :::
