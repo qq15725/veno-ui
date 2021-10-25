@@ -1,0 +1,5 @@
+@use '../../../styles/tools';
+
+.ve-expand-transition {
+  @include tools.use-transition();
+}

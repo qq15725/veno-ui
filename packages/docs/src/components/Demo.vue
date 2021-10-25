@@ -40,13 +40,13 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
       </ve-tooltip>
 
       <ve-tooltip
-          #activator="{ props }"
+          #activator="{ props: tooltipProps }"
           text="在 GitHub 中编辑"
           :open-delay="300"
           anchor="top"
       >
         <ve-button
-            v-bind="props"
+            v-bind="tooltipProps"
             :href="`${ github }${ props.filename }`"
             target="_blank"
             variant="text"
@@ -71,9 +71,11 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
       </ve-tooltip>
     </template>
 
-    <div class="language-html my-0 rounded-0" v-if="isActive">
-      <pre><code v-html="highlightedCode" /></pre>
-    </div>
+    <ve-expand-transition>
+      <div class="language-html my-0 rounded-0" v-if="isActive">
+        <pre><code v-html="highlightedCode" /></pre>
+      </div>
+    </ve-expand-transition>
 
     <ve-lazy>
       <ve-card tile :theme="theme" :border="0">
