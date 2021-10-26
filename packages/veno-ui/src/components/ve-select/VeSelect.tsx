@@ -2,8 +2,8 @@
 import './styles/ve-select.scss'
 
 // Utils
-import { computed, defineComponent, ref } from 'vue'
-import { getUid } from '../../utils'
+import { computed, ref } from 'vue'
+import { getUid, genericComponent } from '../../utils'
 
 // Composables
 import { makeTransitionProps } from '../../composables/transition'
@@ -21,7 +21,9 @@ import { VeFadeTransition } from '../ve-transition'
 import type { PropType } from 'vue'
 import type { StrategyProps } from '../ve-overlay/composables/position-strategies'
 
-export const VeSelect = defineComponent({
+export const VeSelect = genericComponent()({
+  name: 'VeSelect',
+
   props: {
     modelValue: {
       type: null,
@@ -82,7 +84,7 @@ export const VeSelect = defineComponent({
             />
           ),
           default: () => (
-            <VeCard elevation={ 8 } border={ 0 }>
+            <VeCard shadow={ 8 } border={ 0 }>
               <VeList>
                 { props.items.map((item: any) => (
                   <VeListItem

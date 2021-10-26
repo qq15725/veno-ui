@@ -1,4 +1,7 @@
-@mixin use-variant($contained-background: rgb(var(--ve-theme-surface)), $contained-color: rgb(var(--ve-theme-on-surface))) {
+@mixin use-variant(
+  $contained-background: rgb(var(--ve-theme-surface)),
+  $contained-color: rgb(var(--ve-theme-on-surface))
+) {
   &--variant-outlined,
   &--variant-text {
     background: transparent;

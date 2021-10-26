@@ -7,7 +7,7 @@
   <template
     v-for="(anchor, key) in anchors"
   >
-    <ve-col cols="4">
+    <ve-col cols="4" class="text-center">
       <ve-tooltip
         v-if="anchor"
         :key="key"

@@ -11,7 +11,7 @@ import { makeDimensionProps, useDimension } from '../dimension'
 import { makeSizeProps, useSize } from '../size'
 import { makeBorderProps, useBorder } from '../border'
 import { makeRoundedProps, useRounded } from '../rounded'
-import { makeElevationProps, useElevation } from '../elevation'
+import { makeShadowProps, useShadow } from '../shadow'
 
 // Types
 import type { TagProps } from '../tag'
@@ -22,7 +22,7 @@ import type { DimensionProps } from '../dimension'
 import type { SizeProps } from '../size'
 import type { BorderProps } from '../border'
 import type { RoundedProps } from '../rounded'
-import type { ElevationProps } from '../elevation'
+import type { ShadowProps } from '../shadow'
 import type { MaybeRef } from '../../utils'
 
 export interface SheetProps
@@ -34,7 +34,7 @@ export interface SheetProps
     SizeProps,
     BorderProps,
     RoundedProps,
-    ElevationProps
+    ShadowProps
 {
   //
 }
@@ -48,7 +48,7 @@ export const makeSheetProps = propsFactory({
   ...makeSizeProps(),
   ...makeBorderProps(),
   ...makeRoundedProps(),
-  ...makeElevationProps(),
+  ...makeShadowProps(),
 }, 'sheet')
 
 export function useSheet (props: MaybeRef<SheetProps>, name: string) {
@@ -59,7 +59,7 @@ export function useSheet (props: MaybeRef<SheetProps>, name: string) {
   const { sizeClasses, sizeStyles } = useSize(props, name)
   const { borderClasses } = useBorder(props, name)
   const { roundedClasses } = useRounded(props, name)
-  const { elevationClasses } = useElevation(props)
+  const { shadowClasses } = useShadow(props)
 
   const sheetClasses = computed(() => ([
     themeClasses.value,
@@ -69,7 +69,7 @@ export function useSheet (props: MaybeRef<SheetProps>, name: string) {
     sizeClasses.value,
     borderClasses.value,
     roundedClasses.value,
-    elevationClasses.value,
+    shadowClasses.value,
   ]))
 
   const sheetStyles = computed(() => ([

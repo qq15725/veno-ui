@@ -79,9 +79,7 @@ export type MakeSlots<T extends Record<string, any[]>> = {
   [K in keyof T]: Slot<T[K]>
 }
 
-export function genericComponent<T extends (new () => {
-  $slots?: Record<string, Slot>
-})> (exposeDefaults = true): <PropsOptions extends Readonly<ComponentPropsOptions>,
+export function genericComponent<T extends (new () => { $slots?: Record<string, Slot> })> (exposeDefaults = true): <PropsOptions extends Readonly<ComponentPropsOptions>,
   RawBindings,
   D,
   C extends ComputedOptions = {},

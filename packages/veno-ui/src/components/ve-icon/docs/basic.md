@@ -1,5 +1,8 @@
 :::demo
+
 # 基础
+
+预设图标比较少。
 
 ```html
 <ve-icon 
@@ -26,4 +29,5 @@
   icon="veno-ui:$close" 
 />
 ```
+
 :::

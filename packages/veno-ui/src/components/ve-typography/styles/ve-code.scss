@@ -2,7 +2,6 @@
 @use './variables' as *;
 
 .ve-code {
-  display: inline-block;
   background-color: rgb(var(--ve-code-background-color));
   border-radius: $code-border-radius;
   font-size: $code-font-size;

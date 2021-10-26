@@ -68,6 +68,11 @@
     padding: 0;
   }
 
+  &-header + .ve-divider {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   &-avatar {
     align-self: flex-start;
     padding: 0 20px;
@@ -93,6 +98,11 @@
   &-header + &-text,
   &-title + &-text {
     padding-top: 0;
+  }
+
+  &-text + .ve-divider {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   &-actions {

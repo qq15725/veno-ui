@@ -1,0 +1,9 @@
+@use '../settings/size' as *;
+
+@mixin use-size() {
+  @each $name, $multiplier in $size-scales {
+    &--size-#{$name} {
+      --ve-size: #{$multiplier};
+    }
+  }
+}

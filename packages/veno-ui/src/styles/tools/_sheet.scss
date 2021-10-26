@@ -1,0 +1,13 @@
+@use 'variant' as *;
+@use 'position' as *;
+@use 'border' as *;
+@use 'rounded' as *;
+@use 'size' as *;
+
+@mixin use-sheet() {
+  @include use-variant();
+  @include use-size();
+  @include use-position();
+  @include use-border();
+  @include use-rounded();
+}

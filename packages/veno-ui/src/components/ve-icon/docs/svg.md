@@ -1,5 +1,8 @@
 :::demo
+
 # 自定义 svg 图标
+
+通过定义 `icon="svg:xxx"` 使用自定义 svg 图标。
 
 ```html
 <ve-icon 
@@ -54,4 +57,5 @@
   icon="svg:M20 14H14V20H10V14H4V10H10V4H14V10H20V14Z"
 />
 ```
+
 :::

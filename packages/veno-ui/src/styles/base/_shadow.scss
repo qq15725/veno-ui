@@ -1,0 +1,9 @@
+@use '../tools';
+
+$z: 24;
+@while $z >= 0 {
+  .shadow-#{$z} {
+    @include tools.shadow($z, $important: true);
+  }
+  $z: $z - 1;
+}
