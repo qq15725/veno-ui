@@ -1,8 +1,10 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
+import type { MaybeRef } from '../../utils'
+
 export interface ElevationProps
 {
   elevation?: number | string | null
@@ -20,13 +22,15 @@ export const makeElevationProps = propsFactory({
   },
 }, 'elevation')
 
-export function useElevation (props: ElevationProps) {
+export function useElevation (props: MaybeRef<ElevationProps>) {
   const elevationClasses = computed(() => {
+    const { elevation } = unref(props)
+
     const classes: string[] = []
 
-    if (props.elevation == null) return classes
+    if (elevation == null) return classes
 
-    classes.push(`elevation-${ props.elevation }`)
+    classes.push(`elevation-${ elevation }`)
 
     return classes
   })

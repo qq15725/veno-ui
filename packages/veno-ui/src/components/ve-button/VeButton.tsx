@@ -5,17 +5,11 @@ import './styles/ve-button.scss'
 import { computed, defineComponent } from 'vue'
 
 // Composables
-import { makeThemeProps, useTheme } from '../../composables/theme'
-import { makeTagProps } from '../../composables/tag'
-import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { makeLoadingProps, useLoading } from '../../composables/loading'
+import { makeSheetProps, useSheet } from '../../composables/sheet'
 import { makeRouterProps, useLink } from '../../composables/router'
-import { makePositionProps, usePosition } from '../../composables/position'
-import { makeSizeProps, useSize, predefinedSizes } from '../../composables/size'
-import { makeDimensionProps, useDimension } from '../../composables/dimension'
-import { makeBorderProps, useBorder } from '../../composables/border'
-import { makeRoundedProps, useRounded } from '../../composables/rounded'
-import { makeVariantProps, useVariant } from '../../composables/variant'
+import { makeLoadingProps, useLoading } from '../../composables/loading'
+import { makeDisabledProps, useDisabled } from '../../composables/disabled'
+import { predefinedSizes } from '../../composables/size'
 
 // Components
 import { VeProgress } from '../ve-progress'
@@ -34,32 +28,20 @@ export default defineComponent({
     appendIcon: String,
     stacked: Boolean,
     block: Boolean,
-    ...makeThemeProps(),
-    ...makeTagProps({
+    text: String,
+    ...makeSheetProps({
       tag: 'button',
     }),
     ...makeDisabledProps(),
     ...makeLoadingProps(),
     ...makeRouterProps(),
-    ...makePositionProps(),
-    ...makeSizeProps(),
-    ...makeDimensionProps(),
-    ...makeBorderProps(),
-    ...makeRoundedProps(),
-    ...makeVariantProps(),
   },
 
   setup: function (props, { attrs, slots }) {
+    const { sheetClasses, sheetStyles } = useSheet(props, 've-button')
     const link = useLink(props, attrs)
-    const { themeClasses } = useTheme(props)
     const { loadingClasses } = useLoading(props, 've-button')
     const { disabledClasses } = useDisabled(props, 've-button')
-    const { positionClasses, positionStyles } = usePosition(props, 've-button')
-    const { sizeClasses, sizeStyles } = useSize(props, 've-button')
-    const { dimensionStyles } = useDimension(props)
-    const { borderClasses } = useBorder(props, 've-button')
-    const { roundedClasses } = useRounded(props, 've-button')
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-button')
 
     const progressSize = computed(() => {
       return 18 + 4 * Number([-2, -1, 0, 1, 2][predefinedSizes.findIndex(v => v === props.size)])
@@ -79,21 +61,12 @@ export default defineComponent({
               've-button--icon': !!props.icon,
               've-button--stacked': props.stacked,
             },
-            themeClasses.value,
+            sheetClasses.value,
             disabledClasses.value,
             loadingClasses.value,
-            positionClasses.value,
-            sizeClasses.value,
-            borderClasses.value,
-            roundedClasses.value,
-            colorClasses.value,
-            variantClasses.value,
           ] }
           style={ [
-            positionStyles.value,
-            sizeStyles.value,
-            dimensionStyles.value,
-            colorStyles.value,
+            sheetStyles.value,
           ] }
           disabled={ props.disabled || undefined }
           href={ link.href.value }
@@ -121,15 +94,14 @@ export default defineComponent({
           ) }
 
           { typeof props.icon === 'boolean'
-            ? slots.default?.()
+            ? slots.default ? slots.default() : props.text
             : (
               <VeIcon
                 class="ve-button__icon"
                 icon={ props.icon }
                 size={ props.size }
               />
-            )
-          }
+            ) }
 
           { !props.icon && props.appendIcon && (
             <VeIcon

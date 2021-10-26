@@ -5,11 +5,9 @@ import './styles/ve-input.scss'
 import { defineComponent } from 'vue'
 
 // Composables
+import { makeSheetProps, useSheet } from '../../composables/sheet'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { makeVariantProps, useVariant } from '../../composables/variant'
-import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
 export const VeInput = defineComponent({
   name: 'VeInput',
@@ -24,10 +22,8 @@ export const VeInput = defineComponent({
       default: 'text',
     },
     readonly: Boolean,
+    ...makeSheetProps(),
     ...makeDisabledProps(),
-    ...makeBorderProps(),
-    ...makeVariantProps(),
-    ...makeRoundedProps(),
   },
 
   emits: {
@@ -36,10 +32,8 @@ export const VeInput = defineComponent({
 
   setup (props, { slots }) {
     const model = useProxiedModel(props, 'modelValue')
+    const { sheetClasses, sheetStyles } = useSheet(props, 've-input')
     const { disabledClasses } = useDisabled(props, 've-input')
-    const { borderClasses } = useBorder(props, 've-input')
-    const { roundedClasses } = useRounded(props, 've-input')
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-input')
 
     return () => {
       const Tag = props.textarea ? 'textarea' : 'input'
@@ -53,14 +47,11 @@ export const VeInput = defineComponent({
               've-input--autosize': props.autosize,
               've-input--readonly': props.readonly,
             },
-            colorClasses.value,
+            sheetClasses.value,
             disabledClasses.value,
-            borderClasses.value,
-            roundedClasses.value,
-            variantClasses.value,
           ] }
           style={ [
-            colorStyles.value,
+            sheetStyles.value,
           ] }
         >
           { slots.prefix && (

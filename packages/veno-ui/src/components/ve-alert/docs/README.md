@@ -1,6 +1,6 @@
-# 警示信息 Alert
+# 警告 Alert
 
-`ve-alert` 组件。
+组合了 `ve-sheet` 的所有能力，`ve-alert` 组件。
 
 ## 演示
 

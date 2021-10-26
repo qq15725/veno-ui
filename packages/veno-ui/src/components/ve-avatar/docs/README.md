@@ -1,12 +1,17 @@
 # 头像 Avatar
 
-`ve-avatar` 组件。
+组合了 `ve-sheet` 的所有能力，`ve-avatar` 组件。
 
 ## 演示
 
 :::include
+
 basic.md border.md
+
 color.md shape.md
+
 size.md slot.md
+
 icon.md
+
 :::

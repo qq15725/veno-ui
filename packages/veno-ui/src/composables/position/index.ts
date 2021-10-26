@@ -1,9 +1,10 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'
+import type { MaybeRef } from '../../utils'
 
 const positionValues = ['static', 'relative', 'fixed', 'absolute', 'sticky'] as const
 
@@ -33,32 +34,33 @@ export const makePositionProps = propsFactory({
   top: [Boolean, Number, String],
 }, 'position')
 
-export function usePosition (props: PositionProps, name: string) {
+export function usePosition (props: MaybeRef<PositionProps>, name: string) {
   const targets = ['top', 'right', 'bottom', 'left'] as const
 
+  const positionClasses = computed(() => {
+    const { fixed, absolute, position } = unref(props)
+    if (fixed) {
+      return `${ name }--fixed`
+    } else if (absolute) {
+      return `${ name }--absolute`
+    } else if (!!position) {
+      return `position-${ position }`
+    }
+  })
+
+  const positionStyles = computed(() => {
+    const unrefedProps = unref(props)
+    const styles: Partial<Record<typeof targets[number], string>> = {}
+    for (const target of targets) {
+      const prop = unrefedProps[target]
+      if (prop == null || prop === false) continue
+      styles[target] = convertToUnit(prop === true ? '0' : String(prop))
+    }
+    return styles
+  })
+
   return {
-    positionClasses: computed(() => {
-      switch (true) {
-        case props.fixed:
-          return `${ name }--fixed`
-        case props.absolute:
-          return `${ name }--absolute`
-        case !!props.position:
-          return `position-${ props.position }`
-      }
-    }),
-    positionStyles: computed(() => {
-      const styles: Partial<Record<typeof targets[number], string>> = {}
-
-      for (const target of targets) {
-        const prop = props[target]
-
-        if (prop == null || prop === false) continue
-
-        styles[target] = convertToUnit(prop === true ? '0' : String(prop))
-      }
-
-      return styles
-    })
+    positionClasses,
+    positionStyles,
   }
 }

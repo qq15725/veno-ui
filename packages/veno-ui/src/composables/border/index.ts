@@ -1,6 +1,9 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
+
+// Types
+import type { MaybeRef } from '../../utils'
 
 export interface BorderProps
 {
@@ -11,25 +14,22 @@ export const makeBorderProps = propsFactory({
   border: [Boolean, Number, String],
 }, 'border')
 
-export function useBorder (props: BorderProps, name: string) {
+export function useBorder (props: MaybeRef<BorderProps>, name: string) {
+  const borderClasses = computed(() => {
+    const { border } = unref(props)
+    const classes: string[] = []
+    if (border != null && border !== false) {
+      classes.push(`${ name }--border`)
+    }
+    if ((typeof border === 'string' && border !== '') || border === 0) {
+      for (const value of String(border).split(' ')) {
+        classes.push(`border-${ value }`)
+      }
+    }
+    return classes
+  })
+
   return {
-    borderClasses: computed(() => {
-      const classes: string[] = []
-
-      if (props.border != null && props.border !== false) {
-        classes.push(`${ name }--border`)
-      }
-
-      if (
-        (typeof props.border === 'string' && props.border !== '')
-        || props.border === 0
-      ) {
-        for (const value of String(props.border).split(' ')) {
-          classes.push(`border-${ value }`)
-        }
-      }
-
-      return classes
-    })
+    borderClasses,
   }
 }

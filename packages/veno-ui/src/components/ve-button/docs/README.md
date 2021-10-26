@@ -1,15 +1,21 @@
 # 按钮 Button
 
-`ve-button` 组件用来触发一些操作。
+组合了 `ve-sheet` 的所有能力，`ve-button` 组件用来触发一些操作。
 
 ## 演示
 
 :::include
+
 basic.md variant.md
+
 shape.md size.md
+
 color.md disabled.md
+
 loading.md icon.md
+
 block.md
+
 :::
 
 ## Props

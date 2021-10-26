@@ -2,7 +2,8 @@
 import './styles/ve-select.scss'
 
 // Utils
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import { getUid } from '../../utils'
 
 // Composables
 import { makeTransitionProps } from '../../composables/transition'
@@ -26,6 +27,7 @@ export const VeSelect = defineComponent({
       type: null,
       default: undefined as any,
     },
+    id: String,
     anchor: {
       type: String as PropType<StrategyProps['anchor']>,
       default: 'bottom',
@@ -46,10 +48,15 @@ export const VeSelect = defineComponent({
   setup (props, { attrs }) {
     const model = useProxiedModel(props, 'modelValue')
     const isActive = ref(false)
+    const id = computed(() => props.id || `ve-select-overlay-${ getUid() }`)
 
     return () => (
       <VeOverlay
         v-model={ isActive.value }
+        class={ [
+          've-select-overlay',
+        ] }
+        id={ id.value }
         absolute
         position-strategy="connected"
         scroll-strategy="reposition"
@@ -57,8 +64,6 @@ export const VeSelect = defineComponent({
         anchor={ props.anchor }
         origin={ props.origin }
         transition={ props.transition }
-        role="select"
-        eager
         v-slots={ {
           activator: ({ props: { modelValue, ...slotProps } }) => (
             <VeInput

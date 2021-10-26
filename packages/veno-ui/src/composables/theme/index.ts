@@ -1,5 +1,5 @@
 // Utils
-import { computed, getCurrentInstance, inject, provide, ref, watch } from 'vue'
+import { computed, getCurrentInstance, inject, provide, ref, unref, watch } from 'vue'
 import {
   colorToInt,
   colorToRGB,
@@ -18,6 +18,7 @@ import defaultThemeOptions from './default-theme-options'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
+import type { MaybeRef } from '../../utils'
 
 interface BaseColors
 {
@@ -286,11 +287,16 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
   }
 }
 
+export interface ThemeProps
+{
+  theme?: string
+}
+
 /**
  * Used to either set up and provide a new theme instance, or to pass
  * along the closest available already provided instance.
  */
-export function useTheme (props: { theme?: string }) {
+export function useTheme (props: MaybeRef<ThemeProps>) {
   const vm = getCurrentInstance()
   const theme = inject(ThemeSymbol, null)
 
@@ -298,7 +304,9 @@ export function useTheme (props: { theme?: string }) {
   if (!theme) throw new Error('Could not find theme injection')
 
   const current = computed<string>(() => {
-    return props.theme ?? theme?.current.value
+    const { theme: propTheme } = unref(props)
+
+    return propTheme ?? theme?.current.value
   })
 
   const themeClasses = computed(() => {

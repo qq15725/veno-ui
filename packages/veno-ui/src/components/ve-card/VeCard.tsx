@@ -5,26 +5,19 @@ import './styles/ve-card.scss'
 import { defineComponent } from 'vue'
 
 // Composables
-import { makeTagProps } from '../../composables/tag'
-import { makeThemeProps, useTheme } from '../../composables/theme';
-import { makeLoadingProps, useLoading } from '../../composables/loading';
-import { makeDisabledProps, useDisabled } from '../../composables/disabled';
+import { makeSheetProps, useSheet } from '../../composables/sheet'
 import { makeRouterProps, useLink } from '../../composables/router'
-import { makePositionProps, usePosition } from '../../composables/position'
-import { makeDimensionProps, useDimension } from '../../composables/dimension'
-import { makeBorderProps, useBorder } from '../../composables/border'
-import { makeRoundedProps, useRounded } from '../../composables/rounded'
-import { makeVariantProps, useVariant } from '../../composables/variant'
-import { makeElevationProps, useElevation } from '../../composables/elevation'
+import { makeLoadingProps, useLoading } from '../../composables/loading'
+import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
 // Components
 import { VeAvatar } from '../ve-avatar'
+import { VeDivider } from '../ve-divider'
 import VeCardHeader from './VeCardHeader'
 import VeCardHeaderText from './VeCardHeaderText'
 import VeCardAvatar from './VeCardAvatar'
 import VeCardTitle from './VeCardTitle'
 import VeCardSubtitle from './VeCardSubtitle'
-import { VeDivider } from '../ve-divider'
 import VeCardText from './VeCardText'
 import VeCardActions from './VeCardActions'
 
@@ -39,30 +32,17 @@ export default defineComponent({
     subtitle: String,
     divider: Boolean,
     text: String,
-    ...makeTagProps(),
-    ...makeThemeProps(),
+    ...makeSheetProps(),
+    ...makeRouterProps(),
     ...makeLoadingProps(),
     ...makeDisabledProps(),
-    ...makeRouterProps(),
-    ...makePositionProps(),
-    ...makeDimensionProps(),
-    ...makeBorderProps(),
-    ...makeRoundedProps(),
-    ...makeVariantProps(),
-    ...makeElevationProps(),
   },
 
   setup (props, { attrs, slots }) {
+    const { sheetClasses, sheetStyles } = useSheet(props, 've-card')
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-card')
-    const { themeClasses } = useTheme(props)
     const { disabledClasses } = useDisabled(props, 've-card')
-    const { positionClasses, positionStyles } = usePosition(props, 've-card')
-    const { dimensionStyles } = useDimension(props)
-    const { borderClasses } = useBorder(props, 've-card')
-    const { roundedClasses } = useRounded(props, 've-card')
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-card')
-    const { elevationClasses } = useElevation(props)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
@@ -82,20 +62,12 @@ export default defineComponent({
             {
               've-card--link': isClickable,
             },
-            themeClasses.value,
+            sheetClasses.value,
             loadingClasses.value,
             disabledClasses.value,
-            positionClasses.value,
-            borderClasses.value,
-            roundedClasses.value,
-            colorClasses.value,
-            variantClasses.value,
-            elevationClasses.value,
           ] }
           style={ [
-            positionStyles.value,
-            dimensionStyles.value,
-            colorStyles.value,
+            sheetStyles.value,
           ] }
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
@@ -123,13 +95,11 @@ export default defineComponent({
                     </VeCardTitle>
                   ) }
 
-                  {
-                    hasSubtitle && (
-                      <VeCardSubtitle>
-                        { slots.subtitle ? slots.subtitle() : props.subtitle }
-                      </VeCardSubtitle>
-                    )
-                  }
+                  { hasSubtitle && (
+                    <VeCardSubtitle>
+                      { slots.subtitle ? slots.subtitle() : props.subtitle }
+                    </VeCardSubtitle>
+                  ) }
                 </VeCardHeaderText>
               ) }
 
@@ -141,8 +111,7 @@ export default defineComponent({
                       <VeAvatar
                         image={ props.appendAvatar }
                       />
-                    )
-                  }
+                    ) }
                 </VeCardAvatar>
               ) }
             </VeCardHeader>

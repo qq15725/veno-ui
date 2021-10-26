@@ -5,16 +5,14 @@ import './styles/ve-alert.scss'
 import { defineComponent, computed } from 'vue'
 
 // Composables
-import { makeTagProps } from '../../composables/tag'
-import { makeVariantProps, useVariant } from '../../composables/variant'
+import { makeSheetProps, useSheet } from '../../composables/sheet'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
-import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
 // Components
-import { VeButton } from '../../components/ve-button'
-import { VeAvatar } from '../../components/ve-avatar'
-import { VeFadeTransition } from '../../components/ve-transition'
+import { VeButton } from '../ve-button'
+import { VeAvatar } from '../ve-avatar'
+import { VeFadeTransition } from '../ve-transition'
 
 // Types
 import type { PropType } from 'vue'
@@ -45,22 +43,18 @@ export default defineComponent({
       type: String,
       default: 'veno-ui:$close',
     },
-    ...makeTagProps(),
-    ...makeVariantProps(),
-    ...makeRoundedProps(),
+    ...makeSheetProps(),
     ...makeTransitionProps({
       transition: { component: VeFadeTransition, }
     }),
   },
 
   setup (props, { slots }) {
-    const variantProps = computed(() => ({
-      color: props.color,
+    const computedProps = computed(() => ({
+      ...props,
       textColor: props.textColor ?? props.type,
-      variant: props.variant,
     }))
-    const { colorClasses, colorStyles, variantClasses } = useVariant(variantProps, 've-alert')
-    const { roundedClasses } = useRounded(props, 've-alert')
+    const { sheetClasses, sheetStyles } = useSheet(computedProps, 've-alert')
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (props.icon === false) return undefined
@@ -81,12 +75,10 @@ export default defineComponent({
             <props.tag
               class={ [
                 've-alert',
-                colorClasses.value,
-                variantClasses.value,
-                roundedClasses.value,
+                sheetClasses.value,
               ] }
               style={ [
-                colorStyles.value,
+                sheetStyles.value,
               ] }
             >
               { props.type && (

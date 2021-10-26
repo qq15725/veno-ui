@@ -26,14 +26,13 @@ export const VeTooltip = genericComponent<new () => {
   inheritAttrs: false,
 
   props: {
-    id: String,
     modelValue: Boolean,
+    id: String,
     text: String,
     arrow: {
       type: Boolean,
       default: true,
     },
-
     anchor: {
       type: String as PropType<StrategyProps['anchor']>,
       default: 'end',
@@ -42,7 +41,6 @@ export const VeTooltip = genericComponent<new () => {
       type: String as PropType<StrategyProps['origin']>,
       default: 'auto',
     },
-
     ...makeTransitionProps({
       transition: { component: VeScaleTransition, },
     } as const),
@@ -54,15 +52,12 @@ export const VeTooltip = genericComponent<new () => {
 
   setup (props, { attrs, slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
-
     const id = computed(() => props.id || `ve-tooltip-${ getUid() }`)
-
     const anchor = computed(() => {
       return props.anchor.split(' ').length > 1
         ? props.anchor
         : props.anchor + ' center' as StrategyProps['anchor']
     })
-
     const origin = computed(() => {
       return (
         props.origin === 'auto' ||

@@ -1,6 +1,9 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
+
+// Types
+import type { MaybeRef } from '../../utils'
 
 export interface DimensionProps
 {
@@ -21,15 +24,19 @@ export const makeDimensionProps = propsFactory({
   width: [Number, String],
 }, 'dimension')
 
-export function useDimension (props: DimensionProps) {
+export function useDimension (props: MaybeRef<DimensionProps>) {
   return {
-    dimensionStyles: computed(() => ({
-      height: convertToUnit(props.height),
-      maxHeight: convertToUnit(props.maxHeight),
-      maxWidth: convertToUnit(props.maxWidth),
-      minHeight: convertToUnit(props.minHeight),
-      minWidth: convertToUnit(props.minWidth),
-      width: convertToUnit(props.width),
-    }))
+    dimensionStyles: computed(() => {
+      const { height, maxHeight, maxWidth, minHeight, minWidth, width } = unref(props)
+
+      return {
+        height: convertToUnit(height),
+        maxHeight: convertToUnit(maxHeight),
+        maxWidth: convertToUnit(maxWidth),
+        minHeight: convertToUnit(minHeight),
+        minWidth: convertToUnit(minWidth),
+        width: convertToUnit(width),
+      }
+    })
   }
 }

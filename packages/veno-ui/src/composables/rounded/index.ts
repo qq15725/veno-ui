@@ -1,8 +1,10 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
+import type { MaybeRef } from '../../utils'
+
 export interface RoundedProps
 {
   rounded?: boolean | string | number | null
@@ -18,26 +20,23 @@ export const makeRoundedProps = propsFactory({
   tile: Boolean,
 }, 'rounded')
 
-export function useRounded (props: RoundedProps, name: string) {
-  return {
-    roundedClasses: computed(() => {
-      const classes: string[] = []
-
-      switch (true) {
-        case props.tile:
-          classes.push(`${ name }--tile`)
-          break
-        case props.rounded === true || props.rounded === '':
-          classes.push(`${ name }--rounded`)
-          break
-        case typeof props.rounded === 'string' || props.rounded === 0:
-          for (const value of String(props.rounded).split(' ')) {
-            classes.push(`rounded-${ value }`)
-          }
-          break
+export function useRounded (props: MaybeRef<RoundedProps>, name: string) {
+  const roundedClasses = computed(() => {
+    const { tile, rounded } = unref(props)
+    const classes: string[] = []
+    if (tile) {
+      classes.push(`${ name }--tile`)
+    } else if (rounded === true || rounded === '') {
+      classes.push(`${ name }--rounded`)
+    } else if (typeof rounded === 'string' || rounded === 0) {
+      for (const value of String(rounded).split(' ')) {
+        classes.push(`rounded-${ value }`)
       }
+    }
+    return classes
+  })
 
-      return classes
-    })
+  return {
+    roundedClasses,
   }
 }

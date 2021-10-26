@@ -42,7 +42,7 @@ export const includePlugin = (md: MarkdownIt) => {
 
         const importStatements: string[] = []
         let code = ''
-        const cols = rows.reduce((cols, row) => Math.max(cols, row.length), 2)
+        const cols = rows.reduce((cols, row) => Math.max(cols, row.length), 1)
 
         for (let i = 0; i < cols; i++) {
           code += `  <ve-col cols="12" md="${ 12 / cols }">`
