@@ -11,25 +11,28 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
+  font-size: 1rem;
   @include tools.use-border($avatar-border...);
   @include tools.use-rounded($avatar-border-radius);
 
   @each $name, $multiplier in settings.$size-scales {
-    $size: settings.$spacer * 9 + (settings.$size-scale * $multiplier);
+    $size: 40px + (settings.$size-scale * $multiplier);
     &--size-#{$name} {
       height: $size;
       width: $size;
-      --ve-avatar-height: #{$size};
     }
   }
 
-  > * {
+  > .ve-image {
     border-radius: inherit;
     width: inherit;
     height: inherit;
   }
 
-  > .ve-icon {
-    font-size: var(--ve-avatar-height);
+  // VeList
+  .ve-list-item-avatar & {
+    overflow: visible;
+    height: inherit;
+    width: inherit;
   }
 }

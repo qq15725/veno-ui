@@ -32,8 +32,8 @@ export default defineComponent({
     const isActive = useProxiedModel(props, 'modelValue')
     const activeColor = props.activeColor ?? props.color
     const computedProps = computed(() => ({
-      color: isActive.value ? activeColor : props.color,
       ...props,
+      color: isActive.value ? activeColor : props.color,
     }))
     const { materialClasses, materialStyles } = useMaterial(computedProps, 've-switch')
 

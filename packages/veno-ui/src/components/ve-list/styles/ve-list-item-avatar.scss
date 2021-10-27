@@ -1,0 +1,19 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools';
+
+.ve-list-item-avatar {
+  align-self: center;
+  transition: inherit;
+  transition-property: height, width;
+  width: 40px;
+  height: 40px;
+
+  &--start {
+    margin-inline-end: 16px;
+  }
+
+  &--end {
+    margin-inline-start: 16px;
+  }
+}

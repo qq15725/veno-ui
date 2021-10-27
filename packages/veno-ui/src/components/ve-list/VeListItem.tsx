@@ -2,7 +2,7 @@
 import './styles/ve-list-item.scss'
 
 // Utils
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
@@ -11,20 +11,29 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeRouterProps, useLink } from '../../composables/router'
 
 // Components
-import VeListItemHeader from './VeListItemHeader'
-import VeListItemTitle from './VeListItemTitle'
-import VeListItemSubtitle from './VeListItemSubtitle'
+import { VeAvatar } from '../ve-avatar'
+import { VeListItemAvatar } from './VeListItemAvatar'
+import { VeListItemHeader } from './VeListItemHeader'
+import { VeListItemTitle } from './VeListItemTitle'
+import { VeListItemSubtitle } from './VeListItemSubtitle'
 
 export const VeListItem = genericComponent()({
   name: 'VeListItem',
 
   props: {
     active: Boolean,
-    activeColor: String,
+    activeColor: {
+      type: String,
+      default: 'primary',
+    },
     activeClass: String,
     link: Boolean,
     subtitle: String,
     title: String,
+    prependAvatar: String,
+    prependIcon: String,
+    appendAvatar: String,
+    appendIcon: String,
     ...makeMaterialProps({
       variant: 'text'
     } as const),
@@ -37,19 +46,20 @@ export const VeListItem = genericComponent()({
     const isActive = computed(() => {
       return props.active || link.isExactActive?.value
     })
-    const activeColor = props.activeColor ?? props.color
     const computedProps = computed(() => ({
-      color: isActive.value ? activeColor : props.color,
       ...props,
+      color: isActive.value ? props.activeColor ?? props.color : props.color,
     }))
     const { materialClasses, materialStyles } = useMaterial(computedProps, 've-list-item')
     const { disabledClasses } = useDisabled(props, 've-list-item')
 
     return () => {
-      const Tag = (link.isLink.value) ? 'a' : props.tag
+      const Tag = link.isLink.value ? 'a' : props.tag
       const hasTitle = (slots.title || props.title)
       const hasSubtitle = (slots.subtitle || props.subtitle)
       const hasHeader = !!(hasTitle || hasSubtitle)
+      const hasPrepend = !!(slots.prepend || props.prependAvatar || props.prependIcon)
+      const hasAppend = !!(slots.append || props.appendAvatar || props.appendIcon)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
       return (
@@ -72,6 +82,19 @@ export const VeListItem = genericComponent()({
           onClick={ isClickable && link.navigate }
         >
           { isClickable && <div class="ve-list-item__overlay" /> }
+
+          { hasPrepend && (
+            slots.prepend
+              ? slots.prepend()
+              : (
+                <VeListItemAvatar left>
+                  <VeAvatar
+                    icon={ props.prependIcon }
+                    image={ props.prependAvatar }
+                  />
+                </VeListItemAvatar>
+              )
+          ) }
 
           { hasHeader && (
             <VeListItemHeader>
@@ -96,6 +119,19 @@ export const VeListItem = genericComponent()({
           ) }
 
           { slots.default?.() }
+
+          { hasAppend && (
+            slots.append
+              ? slots.append()
+              : (
+                <VeListItemAvatar right>
+                  <VeAvatar
+                    icon={ props.appendIcon }
+                    image={ props.appendAvatar }
+                  />
+                </VeListItemAvatar>
+              )
+          ) }
         </Tag>
       )
     }

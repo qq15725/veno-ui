@@ -1,3 +1,6 @@
-export { default as VeList } from './VeList'
+export * from './VeList'
 export * from './VeListItem'
-export { default as VeListItemTitle } from './VeListItemTitle'
+export * from './VeListItemAvatar'
+export * from './VeListItemHeader'
+export * from './VeListItemTitle'
+export * from './VeListItemSubtitle'

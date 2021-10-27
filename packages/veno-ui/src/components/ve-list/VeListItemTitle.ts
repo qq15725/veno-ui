@@ -1,5 +1,7 @@
+// Styles
 import './styles/ve-list-item-title.scss'
 
+// Utils
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('ve-list-item-title')
+export const VeListItemTitle = createSimpleFunctional('ve-list-item-title')

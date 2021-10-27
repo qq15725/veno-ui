@@ -10,9 +10,9 @@
   outline: none;
   text-decoration: none;
 
-  @include tools.use-border($list-item-border...);
   @include tools.states('.ve-list-item__overlay');
-  @include tools.rounded($list-item-border-radius);
+  @include tools.use-border($list-item-border...);
+  @include tools.use-rounded($list-item-border-radius);
   @include tools.use-variant($list-item-variants...);
 
   &__overlay {

@@ -2,13 +2,13 @@
 import './styles/ve-list.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
-export default defineComponent({
+export const VeList = genericComponent()({
   name: 'VeList',
 
   props: {
@@ -28,13 +28,14 @@ export default defineComponent({
             materialClasses.value,
             disabledClasses.value,
           ] }
-          style={[
+          style={ [
             materialStyles.value,
-          ]}
-        >
-          { slots.default?.() }
-        </props.tag>
+          ] }
+          v-slots={ slots }
+        />
       )
     }
   },
 })
+
+export type VeList = InstanceType<typeof VeList>

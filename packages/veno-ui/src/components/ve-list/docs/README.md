@@ -6,6 +6,6 @@
 
 :::include
 
-basic.md
+basic.md icon.md
 
 :::
