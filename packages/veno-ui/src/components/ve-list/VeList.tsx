@@ -5,19 +5,19 @@ import './styles/ve-list.scss'
 import { defineComponent } from 'vue'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
 export default defineComponent({
   name: 'VeList',
 
   props: {
-    ...makeSheetProps(),
+    ...makeMaterialProps(),
     ...makeDisabledProps(),
   },
 
   setup (props, { slots }) {
-    const { sheetClasses, sheetStyles } = useSheet(props, 've-list')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-list')
     const { disabledClasses } = useDisabled(props, 've-list')
 
     return () => {
@@ -25,11 +25,11 @@ export default defineComponent({
         <props.tag
           class={ [
             've-list',
-            sheetClasses.value,
+            materialClasses.value,
             disabledClasses.value,
           ] }
           style={[
-            sheetStyles.value,
+            materialStyles.value,
           ]}
         >
           { slots.default?.() }

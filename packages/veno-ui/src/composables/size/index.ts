@@ -2,6 +2,9 @@
 import { computed, unref } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
 
+// Constants
+export const sizes = ['x-small', 'small', 'default', 'large', 'x-large']
+
 // Types
 import type { MaybeRef } from '../../utils'
 
@@ -9,8 +12,6 @@ export interface SizeProps
 {
   size?: string | number
 }
-
-export const predefinedSizes = ['x-small', 'small', 'default', 'large', 'x-large']
 
 export const makeSizeProps = propsFactory({
   size: {
@@ -23,22 +24,20 @@ export function useSize (props: MaybeRef<SizeProps>, name?: string) {
   const sizeClasses = computed(() => {
     const { size } = unref(props)
 
-    return name && predefinedSizes.includes(size as string)
-      ? `${ name }--size-${ size }`
-      : null
+    if (!name || !size || !sizes.includes(size as string)) return null
+
+    return `${ name }--size-${ size }`
   })
 
   const sizeStyles = computed(() => {
     const { size } = unref(props)
 
-    if (!predefinedSizes.includes(size as string) && size) {
-      return {
-        width: convertToUnit(size),
-        height: convertToUnit(size),
-      }
-    }
+    if (sizes.includes(size as string)) return null
 
-    return null
+    return {
+      width: convertToUnit(size),
+      height: convertToUnit(size),
+    }
   })
 
   return {

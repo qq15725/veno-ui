@@ -1,11 +1,11 @@
 // Utils
 import container from 'markdown-it-container'
+import Token from 'markdown-it/lib/token'
 
 // Types
 import type MarkdownIt from 'markdown-it'
-import Token from 'markdown-it/lib/token'
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import { MarkdownParsedData } from '../index'
+import type { MarkdownParsedData } from '../index'
 
 export const demoPlugin = (md: MarkdownIt) => {
   const name = 'demo'
@@ -13,7 +13,7 @@ export const demoPlugin = (md: MarkdownIt) => {
   const demoRender: RenderRule = (tokens, index, options, env, self) => {
     const token = tokens[index]
 
-    const data = {
+    const props = {
       title: '',
       code: '',
     }
@@ -24,7 +24,7 @@ export const demoPlugin = (md: MarkdownIt) => {
       while (tokens[++index].type !== `container_${ name }_close`) {
         const cur = tokens[index]
         if (cur.type === 'heading_open' && cur.level === 1) {
-          data.title = tokens[index + 1].content
+          props.title = tokens[index + 1].content
           skip = true
         } else if (cur.type === 'heading_close' && cur.level === 1) {
           skip = false
@@ -40,7 +40,7 @@ export const demoPlugin = (md: MarkdownIt) => {
 
           templateCode = `<template>\n${ templateCode }</template>`
 
-          data.code += templateCode
+          props.code += templateCode
         } else if (cur.type === 'fence' && cur.info === 'js') {
           let scriptCode = cur.content
             .split('\n')
@@ -49,7 +49,7 @@ export const demoPlugin = (md: MarkdownIt) => {
 
           scriptCode = `\n\n<script>\n${ scriptCode }</script>`
 
-          data.code += scriptCode
+          props.code += scriptCode
 
           const hoistedTags = (md as any).__data.hoistedTags || ((md as any).__data.hoistedTags = [])
           hoistedTags.push(scriptCode)
@@ -61,8 +61,8 @@ export const demoPlugin = (md: MarkdownIt) => {
       const mdData = (md as any).__data as MarkdownParsedData
 
       return `<demo 
-  title="${ data.title }" 
-  code="${ encodeURIComponent(data.code) }" 
+  title="${ props.title }" 
+  code="${ encodeURIComponent(props.code) }" 
   filename="${ mdData.env.filename }"
 >
   ${ self.render(templateTokens, options, env) }

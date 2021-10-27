@@ -3,7 +3,7 @@
 
 ```html
 垂直
-<ve-divider vertical />
+<ve-divider vertical class="mx-3" />
 分割线
 ```
 :::

@@ -1,8 +1,8 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-.ve-sheet {
+.ve-material {
   width: calc(var(--ve-size, 0) * #{settings.$spacer * 2} + 50px);
   height: calc(var(--ve-size, 0) * #{settings.$spacer * 2} + 50px);
-  @include tools.use-sheet();
+  @include tools.use-material();
 }

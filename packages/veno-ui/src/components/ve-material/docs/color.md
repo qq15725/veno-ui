@@ -3,9 +3,8 @@
 # 颜色
 
 ```html
-
-<ve-row>
-  <ve-col
+<ve-grid>
+  <ve-material
     v-for="(color, index) in [
       'primary',
       'error',
@@ -14,13 +13,9 @@
       '#8a2be2',
     ]"
     :key="index"
-    cols="auto"
-  >
-    <ve-sheet
-      :color="color"
-    />
-  </ve-col>
-</ve-row>
+    :color="color"
+  />
+</ve-grid>
 ```
 
 :::

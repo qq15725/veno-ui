@@ -1,25 +1,37 @@
 // Styles
 import './styles/ve-divider.scss'
 
-// Utilities
-import { computed, defineComponent } from 'vue'
-import { convertToUnit } from '../../utils'
+// Utils
+import { computed } from 'vue'
+import { convertToUnit, genericComponent } from '../../utils'
+
+// Composables
+import { makeTagProps } from '../../composables/tag'
+
+// Constants
+const allowedTextAlign = ['left', 'center', 'right'] as const
 
 // Types
-type DividerKey = 'maxHeight' | 'maxWidth'
-type DividerStyles = Partial<Record<DividerKey, string>>
+import type { PropType } from 'vue'
 
-export default defineComponent({
+type DividerStyles = Partial<Record<'maxHeight' | 'maxWidth', string>>
+type DividerTextAlign = typeof allowedTextAlign[number]
+
+export const VeDivider = genericComponent()({
   name: 'VeDivider',
 
   props: {
-    placement: {
-      type: String,
+    textAlign: {
+      type: String as PropType<DividerTextAlign>,
       default: 'center',
+      validator: (val: DividerTextAlign) => allowedTextAlign.includes(val),
     },
-    dashed: Boolean,
     length: [Number, String],
+    dashed: Boolean,
     vertical: Boolean,
+    ...makeTagProps({
+      tag: 'hr',
+    } as const),
   },
 
   setup (props, { attrs, slots }) {
@@ -33,8 +45,8 @@ export default defineComponent({
 
     return () => {
       const hasDefaultSlot = !!slots.default
-      const Tag = hasDefaultSlot ? 'div' : 'hr'
-      const role = attrs.role as string | undefined
+      const Tag = hasDefaultSlot ? 'div' : props.tag
+      const role = attrs.role as string | undefined ?? 'separator'
 
       return (
         <Tag
@@ -43,39 +55,28 @@ export default defineComponent({
             {
               've-divider--dashed': props.dashed,
               've-divider--vertical': props.vertical,
+              've-divider--text': hasDefaultSlot,
+              've-divider--text-left': props.textAlign === 'left',
+              've-divider--text-right': props.textAlign === 'right',
             },
           ] }
           style={ [
             dividerStyles.value,
           ] }
-          ariaOrientation={
-            !role || role === 'separator'
+          aria-orientation={
+            role === 'separator'
               ? props.vertical ? 'vertical' : 'horizontal'
               : undefined
           }
-          role={ role || 'separator' }
+          role={ role }
           v-slots={ {
             default: hasDefaultSlot
               ? () => [
                 (
                   <>
-                    <div
-                      class={ [
-                        've-divider__line',
-                        {
-                          've-divider__line--inset': props.placement === 'left',
-                        }
-                      ] }
-                    />
-                    <div class="ve-divider__content">{ slots.default?.() }</div>
-                    <div
-                      class={ [
-                        've-divider__line',
-                        {
-                          've-divider__line--inset': props.placement === 'right',
-                        }
-                      ] }
-                    />
+                    <div class="ve-divider__line" />
+                    <div class="ve-divider__wrap">{ slots.default?.() }</div>
+                    <div class="ve-divider__line" />
                   </>
                 )
               ]
@@ -86,3 +87,5 @@ export default defineComponent({
     }
   }
 })
+
+export type VeDivider = InstanceType<typeof VeDivider>

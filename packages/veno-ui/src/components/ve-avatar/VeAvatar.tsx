@@ -2,35 +2,35 @@
 import './styles/ve-avatar.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 
 // Components
 import { VeImage } from '../ve-image'
 import { VeIcon } from '../ve-icon'
 
-export default defineComponent({
+export const VeAvatar = genericComponent()({
   name: 'VeAvatar',
 
   props: {
     image: String,
     icon: String,
-    ...makeSheetProps(),
+    ...makeMaterialProps(),
   },
 
   setup (props, { slots }) {
-    const { sheetClasses, sheetStyles } = useSheet(props, 've-avatar')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-avatar')
 
     return () => (
       <props.tag
         class={ [
           've-avatar',
-          sheetClasses.value,
+          materialClasses.value,
         ] }
         style={ [
-          sheetStyles.value,
+          materialStyles.value,
         ] }
       >
         { props.image && <VeImage src={ props.image } /> }
@@ -42,3 +42,5 @@ export default defineComponent({
     )
   }
 })
+
+export type VeAvatar = InstanceType<typeof VeAvatar>

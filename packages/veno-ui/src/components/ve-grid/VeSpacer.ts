@@ -1,3 +1,7 @@
+// Styles
+import './styles/ve-spacer.scss'
+
+// Utils
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('flex-grow-1', 'div', 'VeSpacer')
+export const VeSpacer = createSimpleFunctional('ve-spacer')

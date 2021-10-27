@@ -1,4 +1,4 @@
-@use '../settings/variables' as *;
+@use '../settings/transition' as *;
 
 @mixin use-transition() {
   &-enter-active {

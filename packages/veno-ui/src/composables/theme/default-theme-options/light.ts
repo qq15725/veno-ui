@@ -1,7 +1,7 @@
 export default {
   dark: false,
   colors: {
-    'background': '#FFF',
+    'background': '#F5F5F5',
     'on-background': '#333639',
     'surface': '#FFF',
     'on-surface': '#333639',

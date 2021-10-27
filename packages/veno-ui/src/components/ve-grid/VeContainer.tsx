@@ -1,13 +1,13 @@
 // Styles
 import './styles/ve-container.scss'
 
+// Utils
+import { genericComponent } from '../../utils'
+
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
-// Utilities
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+export const VeContainer = genericComponent()({
   name: 'VeContainer',
 
   props: {
@@ -21,12 +21,14 @@ export default defineComponent({
   setup (props, { slots }) {
     return () => (
       <props.tag
-        class={[
+        class={ [
           've-container',
           { 've-container--fluid': props.fluid },
-        ]}
+        ] }
         v-slots={ slots }
       />
     )
   },
 })
+
+export type VeContainer = InstanceType<typeof VeContainer>

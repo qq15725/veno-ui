@@ -5,10 +5,8 @@ import './styles/ve-switch.scss'
 import { computed, defineComponent } from 'vue'
 
 // Composables
-import { makeTagProps } from '../../composables/tag'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { makeVariantProps, useVariant } from '../../composables/variant'
-import { makeRoundedProps, useRounded } from '../../composables/rounded'
 
 export default defineComponent({
   name: 'VeSwitch',
@@ -20,11 +18,10 @@ export default defineComponent({
       default: 'primary',
     },
     activeClass: String,
-    ...makeTagProps(),
-    ...makeRoundedProps({
+    ...makeMaterialProps({
+      variant: 'contained',
       rounded: true,
-    }),
-    ...makeVariantProps({ variant: 'contained' } as const),
+    } as const),
   },
 
   emit: {
@@ -34,13 +31,11 @@ export default defineComponent({
   setup (props) {
     const isActive = useProxiedModel(props, 'modelValue')
     const activeColor = props.activeColor ?? props.color
-    const variantProps = computed(() => ({
+    const computedProps = computed(() => ({
       color: isActive.value ? activeColor : props.color,
-      textColor: props.textColor,
-      variant: props.variant,
+      ...props,
     }))
-    const { colorClasses, colorStyles, variantClasses } = useVariant(variantProps, 've-switch')
-    const { roundedClasses } = useRounded(props, 've-switch')
+    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-switch')
 
     return () => (
       <props.tag
@@ -52,12 +47,10 @@ export default defineComponent({
             've-switch--active': isActive.value,
             [`${ props.activeClass }`]: isActive.value && props.activeClass,
           },
-          colorClasses.value,
-          variantClasses.value,
-          roundedClasses.value,
+          materialClasses.value,
         ] }
         style={ [
-          colorStyles.value,
+          materialStyles.value,
         ] }
         onClick={ () => isActive.value = !isActive.value }
       >

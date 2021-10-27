@@ -1,6 +1,6 @@
 # 头像 Avatar
 
-组合了 `ve-sheet` 的所有能力，`ve-avatar` 组件。
+组合了 `ve-material` 的所有能力，`ve-avatar` 组件。
 
 ## 演示
 

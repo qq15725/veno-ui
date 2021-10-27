@@ -4,7 +4,7 @@
 @use 'rounded' as *;
 @use 'size' as *;
 
-@mixin use-sheet() {
+@mixin use-material() {
   @include use-variant();
   @include use-size();
   @include use-position();

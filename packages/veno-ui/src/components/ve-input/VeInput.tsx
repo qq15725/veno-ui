@@ -5,7 +5,7 @@ import './styles/ve-input.scss'
 import { defineComponent } from 'vue'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
@@ -22,7 +22,7 @@ export const VeInput = defineComponent({
       default: 'text',
     },
     readonly: Boolean,
-    ...makeSheetProps(),
+    ...makeMaterialProps(),
     ...makeDisabledProps(),
   },
 
@@ -32,7 +32,7 @@ export const VeInput = defineComponent({
 
   setup (props, { slots }) {
     const model = useProxiedModel(props, 'modelValue')
-    const { sheetClasses, sheetStyles } = useSheet(props, 've-input')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-input')
     const { disabledClasses } = useDisabled(props, 've-input')
 
     return () => {
@@ -47,11 +47,11 @@ export const VeInput = defineComponent({
               've-input--autosize': props.autosize,
               've-input--readonly': props.readonly,
             },
-            sheetClasses.value,
+            materialClasses.value,
             disabledClasses.value,
           ] }
           style={ [
-            sheetStyles.value,
+            materialStyles.value,
           ] }
         >
           { slots.prefix && (

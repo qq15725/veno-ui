@@ -10,8 +10,8 @@ import { makePositionProps, usePosition } from '../position'
 import { makeDimensionProps, useDimension } from '../dimension'
 import { makeSizeProps, useSize } from '../size'
 import { makeBorderProps, useBorder } from '../border'
-import { makeRoundedProps, useRounded } from '../rounded'
-import { makeShadowProps, useShadow } from '../shadow'
+import { makeShapeProps, useShape } from '../shape'
+import { makeElevationProps, useElevation } from '../elevation'
 
 // Types
 import type { TagProps } from '../tag'
@@ -21,11 +21,11 @@ import type { PositionProps } from '../position'
 import type { DimensionProps } from '../dimension'
 import type { SizeProps } from '../size'
 import type { BorderProps } from '../border'
-import type { RoundedProps } from '../rounded'
-import type { ShadowProps } from '../shadow'
+import type { ShapeProps } from '../shape'
+import type { ElevationProps } from '../elevation'
 import type { MaybeRef } from '../../utils'
 
-export interface SheetProps
+export interface MaterialProps
   extends TagProps,
     ThemeProps,
     VariantProps,
@@ -33,13 +33,13 @@ export interface SheetProps
     DimensionProps,
     SizeProps,
     BorderProps,
-    RoundedProps,
-    ShadowProps
+    ShapeProps,
+    ElevationProps
 {
   //
 }
 
-export const makeSheetProps = propsFactory({
+export const makeMaterialProps = propsFactory({
   ...makeTagProps(),
   ...makeThemeProps(),
   ...makeVariantProps(),
@@ -47,32 +47,32 @@ export const makeSheetProps = propsFactory({
   ...makeDimensionProps(),
   ...makeSizeProps(),
   ...makeBorderProps(),
-  ...makeRoundedProps(),
-  ...makeShadowProps(),
-}, 'sheet')
+  ...makeShapeProps(),
+  ...makeElevationProps(),
+}, 'material')
 
-export function useSheet (props: MaybeRef<SheetProps>, name: string) {
+export function useMaterial (props: MaybeRef<MaterialProps>, name: string) {
   const { themeClasses } = useTheme(props)
   const { colorClasses, variantClasses, colorStyles } = useVariant(props, name)
   const { positionClasses, positionStyles } = usePosition(props, name)
   const { dimensionStyles } = useDimension(props)
   const { sizeClasses, sizeStyles } = useSize(props, name)
   const { borderClasses } = useBorder(props, name)
-  const { roundedClasses } = useRounded(props, name)
-  const { shadowClasses } = useShadow(props)
+  const { shapeClasses } = useShape(props, name)
+  const { elevationClasses } = useElevation(props)
 
-  const sheetClasses = computed(() => ([
+  const materialClasses = computed(() => ([
     themeClasses.value,
     colorClasses.value,
     variantClasses.value,
     positionClasses.value,
     sizeClasses.value,
     borderClasses.value,
-    roundedClasses.value,
-    shadowClasses.value,
+    shapeClasses.value,
+    elevationClasses.value,
   ]))
 
-  const sheetStyles = computed(() => ([
+  const materialStyles = computed(() => ([
     colorStyles.value,
     positionStyles.value,
     dimensionStyles.value,
@@ -80,7 +80,7 @@ export function useSheet (props: MaybeRef<SheetProps>, name: string) {
   ]))
 
   return {
-    sheetClasses,
-    sheetStyles,
+    materialClasses,
+    materialStyles,
   }
 }

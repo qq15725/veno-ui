@@ -1,4 +1,4 @@
-@use '../../../styles/settings/variables' as *;
+@use '../../../styles/settings';
 
 .ve-responsive {
   display: flex;
@@ -19,7 +19,7 @@
 
   &__sizer {
     flex: 1 0 0;
-    transition: padding-bottom 0.2s $standard-easing;
+    transition: padding-bottom 0.2s settings.$standard-easing;
     pointer-events: none;
   }
 }

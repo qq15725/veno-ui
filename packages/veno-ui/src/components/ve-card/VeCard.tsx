@@ -5,7 +5,7 @@ import './styles/ve-card.scss'
 import { defineComponent } from 'vue'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -32,14 +32,14 @@ export default defineComponent({
     subtitle: String,
     divider: Boolean,
     text: String,
-    ...makeSheetProps(),
+    ...makeMaterialProps(),
     ...makeRouterProps(),
     ...makeLoadingProps(),
     ...makeDisabledProps(),
   },
 
   setup (props, { attrs, slots }) {
-    const { sheetClasses, sheetStyles } = useSheet(props, 've-card')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-card')
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-card')
     const { disabledClasses } = useDisabled(props, 've-card')
@@ -62,12 +62,12 @@ export default defineComponent({
             {
               've-card--link': isClickable,
             },
-            sheetClasses.value,
+            materialClasses.value,
             loadingClasses.value,
             disabledClasses.value,
           ] }
           style={ [
-            sheetStyles.value,
+            materialStyles.value,
           ] }
           href={ link.href.value }
           onClick={ isClickable && link.navigate }

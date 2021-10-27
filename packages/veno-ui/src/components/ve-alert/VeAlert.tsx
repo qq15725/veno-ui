@@ -5,7 +5,7 @@ import './styles/ve-alert.scss'
 import { defineComponent, computed } from 'vue'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 
@@ -14,12 +14,13 @@ import { VeButton } from '../ve-button'
 import { VeAvatar } from '../ve-avatar'
 import { VeFadeTransition } from '../ve-transition'
 
+// Constants
+const allowedTypes = ['success', 'info', 'warning', 'error'] as const
+
 // Types
 import type { PropType } from 'vue'
 
-const allowedTypes = ['success', 'info', 'warning', 'error'] as const
-
-type ContextualType = typeof allowedTypes[number]
+type AlertType = typeof allowedTypes[number]
 
 export default defineComponent({
   name: 'VeAlert',
@@ -31,8 +32,8 @@ export default defineComponent({
     },
     title: String,
     type: {
-      type: String as PropType<ContextualType>,
-      validator: (val: ContextualType) => allowedTypes.includes(val),
+      type: String as PropType<AlertType>,
+      validator: (val: AlertType) => allowedTypes.includes(val),
     },
     icon: {
       type: [Boolean, String] as PropType<false | string>,
@@ -43,7 +44,7 @@ export default defineComponent({
       type: String,
       default: 'veno-ui:$close',
     },
-    ...makeSheetProps(),
+    ...makeMaterialProps(),
     ...makeTransitionProps({
       transition: { component: VeFadeTransition, }
     }),
@@ -54,7 +55,7 @@ export default defineComponent({
       ...props,
       textColor: props.textColor ?? props.type,
     }))
-    const { sheetClasses, sheetStyles } = useSheet(computedProps, 've-alert')
+    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-alert')
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (props.icon === false) return undefined
@@ -75,10 +76,10 @@ export default defineComponent({
             <props.tag
               class={ [
                 've-alert',
-                sheetClasses.value,
+                materialClasses.value,
               ] }
               style={ [
-                sheetStyles.value,
+                materialStyles.value,
               ] }
             >
               { props.type && (

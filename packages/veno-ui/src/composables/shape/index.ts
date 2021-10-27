@@ -5,14 +5,13 @@ import { propsFactory } from '../../utils'
 // Types
 import type { MaybeRef } from '../../utils'
 
-export interface RoundedProps
+export interface ShapeProps
 {
   rounded?: boolean | string | number | null
   tile?: boolean
 }
 
-// Composables
-export const makeRoundedProps = propsFactory({
+export const makeShapeProps = propsFactory({
   rounded: {
     type: [Boolean, Number, String],
     default: undefined,
@@ -20,8 +19,8 @@ export const makeRoundedProps = propsFactory({
   tile: Boolean,
 }, 'rounded')
 
-export function useRounded (props: MaybeRef<RoundedProps>, name: string) {
-  const roundedClasses = computed(() => {
+export function useShape (props: MaybeRef<ShapeProps>, name: string) {
+  const shapeClasses = computed(() => {
     const { tile, rounded } = unref(props)
     const classes: string[] = []
     if (tile) {
@@ -37,6 +36,6 @@ export function useRounded (props: MaybeRef<RoundedProps>, name: string) {
   })
 
   return {
-    roundedClasses,
+    shapeClasses,
   }
 }

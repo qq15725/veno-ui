@@ -84,7 +84,7 @@ export const VeSelect = genericComponent()({
             />
           ),
           default: () => (
-            <VeCard shadow={ 8 } border={ 0 }>
+            <VeCard elevation={ 8 } border={ 0 }>
               <VeList>
                 { props.items.map((item: any) => (
                   <VeListItem

@@ -2,20 +2,21 @@
 import './styles/ve-button.scss'
 
 // Utils
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
-import { makeSheetProps, useSheet } from '../../composables/sheet'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { predefinedSizes } from '../../composables/size'
+import { sizes } from '../../composables/size'
 
 // Components
 import { VeProgress } from '../ve-progress'
 import { VeIcon } from '../ve-icon'
 
-export default defineComponent({
+export const VeButton = genericComponent()({
   name: 'VeButton',
 
   props: {
@@ -29,7 +30,7 @@ export default defineComponent({
     stacked: Boolean,
     block: Boolean,
     text: String,
-    ...makeSheetProps({
+    ...makeMaterialProps({
       tag: 'button',
     }),
     ...makeDisabledProps(),
@@ -38,13 +39,13 @@ export default defineComponent({
   },
 
   setup: function (props, { attrs, slots }) {
-    const { sheetClasses, sheetStyles } = useSheet(props, 've-button')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-button')
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-button')
     const { disabledClasses } = useDisabled(props, 've-button')
 
     const progressSize = computed(() => {
-      return 18 + 4 * Number([-2, -1, 0, 1, 2][predefinedSizes.findIndex(v => v === props.size)])
+      return 18 + 4 * Number([-2, -1, 0, 1, 2][sizes.findIndex(v => v === props.size)])
     })
 
     return () => {
@@ -61,12 +62,12 @@ export default defineComponent({
               've-button--icon': !!props.icon,
               've-button--stacked': props.stacked,
             },
-            sheetClasses.value,
+            materialClasses.value,
             disabledClasses.value,
             loadingClasses.value,
           ] }
           style={ [
-            sheetStyles.value,
+            materialStyles.value,
           ] }
           disabled={ props.disabled || undefined }
           href={ link.href.value }
@@ -115,3 +116,5 @@ export default defineComponent({
     }
   }
 })
+
+export type VeButton = InstanceType<typeof VeButton>

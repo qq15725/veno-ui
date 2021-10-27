@@ -1,0 +1,9 @@
+@use 'sass:math';
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/settings/grid' as *;
+@use 'mixins' as *;
+
+.ve-spacer {
+  flex-grow: 1;
+}

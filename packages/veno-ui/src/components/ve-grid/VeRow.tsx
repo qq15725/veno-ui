@@ -1,18 +1,19 @@
 // Styles
 import './styles/ve-row.scss'
 
+// Utils
+import { capitalize, computed, h } from 'vue'
+import { genericComponent } from '../../utils'
+
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
-// Utilities
-import { defineComponent, capitalize, computed, h } from 'vue'
+// Constants
+const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
+const alignments = ['start', 'end', 'center'] as const
 
 // Types
 import type { Prop } from 'vue'
-
-const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
-
-const ALIGNMENT = ['start', 'end', 'center'] as const
 
 function makeRowProps (prefix: string, def: () => Prop<string, null>) {
   return breakpoints.reduce((props, val) => {
@@ -22,7 +23,7 @@ function makeRowProps (prefix: string, def: () => Prop<string, null>) {
 }
 
 // align
-const alignValidator = (str: any) => [...ALIGNMENT, 'baseline', 'stretch'].includes(str)
+const alignValidator = (str: any) => [...alignments, 'baseline', 'stretch'].includes(str)
 const alignProps = makeRowProps('align', () => ({
   type: String,
   default: null,
@@ -30,7 +31,7 @@ const alignProps = makeRowProps('align', () => ({
 }))
 
 // justify
-const justifyValidator = (str: any) => [...ALIGNMENT, 'space-between', 'space-around'].includes(str)
+const justifyValidator = (str: any) => [...alignments, 'space-between', 'space-around'].includes(str)
 const justifyProps = makeRowProps('justify', () => ({
   type: String,
   default: null,
@@ -38,7 +39,7 @@ const justifyProps = makeRowProps('justify', () => ({
 }))
 
 // alignContent
-const alignContentValidator = (str: any) => [...ALIGNMENT, 'space-between', 'space-around', 'stretch'].includes(str)
+const alignContentValidator = (str: any) => [...alignments, 'space-between', 'space-around', 'stretch'].includes(str)
 const alignContentProps = makeRowProps('alignContent', () => ({
   type: String,
   default: null,
@@ -72,7 +73,7 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: string)
   return className.toLowerCase()
 }
 
-export default defineComponent({
+export const VeRow = genericComponent()({
   name: 'VeRow',
 
   props: {
@@ -129,3 +130,5 @@ export default defineComponent({
     }, slots.default?.())
   },
 })
+
+export type VeRow = InstanceType<typeof VeRow>

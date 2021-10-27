@@ -19,9 +19,12 @@ export const includePlugin = (md: MarkdownIt) => {
             .content
             .trim()
             .split('\n')
+            .filter((v: string) => !!v.trim())
             .forEach(v => {
-              const row = v.split(' ')
-                .filter((v: string) => !!v)
+              const row = v
+                .trim()
+                .split(' ')
+                .filter((v: string) => !!v.trim())
                 .map(id => {
                   const variable = `VeDocs${ capitalize(camelize(id.replace('.', '-'))) }`
                   const fileName = `./${ id }`

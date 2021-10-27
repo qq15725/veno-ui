@@ -10,14 +10,7 @@
   width: 100%;
   font-size: 1rem;
   font-weight: 500;
-  margin: 24px 0;
-  @include tools.use-border($divider-border-color, $divider-border-style, 0);
-
-  @at-root {
-    hr#{&} {
-      border-top-width: 1px;
-    }
-  }
+  @include tools.use-border($divider-border...);
 
   &--dashed {
     border-style: dashed;
@@ -29,8 +22,19 @@
     width: 0;
     border-top-width: 0;
     border-left-width: thin;
-    margin: 0 8px;
     vertical-align: middle;
+  }
+
+  &:not(&--text) {
+    border-top-width: 1px;
+  }
+
+  &--text-left &__line:first-child {
+    max-width: 5%;
+  }
+
+  &--text-right &__line:last-child {
+    max-width: 5%;
   }
 
   &__line {
@@ -41,13 +45,9 @@
     border-top-width: thin;
     border-top-style: inherit;
     border-top-color: inherit;
-
-    &--inset {
-      max-width: 5%;
-    }
   }
 
-  &__content {
+  &__wrap {
     display: flex;
     align-items: center;
     margin-left: 1rem;

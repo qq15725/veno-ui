@@ -1,1 +1,1 @@
-export { default as VeDivider } from './VeDivider'
+export * from './VeDivider'

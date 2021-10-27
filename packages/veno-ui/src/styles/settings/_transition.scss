@@ -1,0 +1,14 @@
+// Mapping from transition to easings:
+// fast-out-slow-in -> standard
+// linear-out-slow-in -> decelerated
+// fast-out-linear-in -> accelerated
+// ease-in-out -> standard or accelerated depending on usage
+// fast-in-fast-out -> accelerated
+// swing -> standard
+
+// 标准曲线。
+$standard-easing: cubic-bezier(0.4, 0, 0.2, 1);
+// 减速曲线，常用于物体进入。
+$decelerated-easing: cubic-bezier(0.0, 0, 0.2, 1);
+// 加速曲线，常用于物体离开。
+$accelerated-easing: cubic-bezier(0.4, 0, 1, 1);

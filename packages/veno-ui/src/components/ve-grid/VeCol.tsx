@@ -1,16 +1,18 @@
 // Styles
 import './styles/ve-col.scss'
 
+// Utils
+import { capitalize, computed, h } from 'vue'
+import { genericComponent } from '../../utils'
+
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
-// Utilities
-import { defineComponent, capitalize, computed, h } from 'vue'
+// Constants
+const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
 
 // Types
 import type { Prop } from 'vue'
-
-const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
 
 const breakpointProps = (() => {
   return breakpoints.reduce((props, val) => {
@@ -72,7 +74,7 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: boolean
   return className.toLowerCase()
 }
 
-export default defineComponent({
+export const VeCol = genericComponent()({
   name: 'VeCol',
 
   props: {
@@ -132,3 +134,5 @@ export default defineComponent({
     }, slots.default?.())
   },
 })
+
+export type VeCol = InstanceType<typeof VeCol>
