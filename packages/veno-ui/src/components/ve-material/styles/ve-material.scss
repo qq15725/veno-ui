@@ -2,7 +2,10 @@
 @use '../../../styles/tools';
 
 .ve-material {
-  width: calc(var(--ve-size, 0) * #{settings.$spacer * 2} + 50px);
-  height: calc(var(--ve-size, 0) * #{settings.$spacer * 2} + 50px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
+  height: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
   @include tools.use-material();
 }

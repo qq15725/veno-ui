@@ -6,15 +6,13 @@
 
 :::include
 
-basic.md variant.md
+basic.md icon.md
 
-shape.md size.md
+shape.md size.md 
 
-color.md disabled.md
+color.md disabled.md 
 
-loading.md icon.md
-
-block.md
+loading.md block.md
 
 :::
 

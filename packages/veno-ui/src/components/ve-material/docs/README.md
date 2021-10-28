@@ -6,12 +6,12 @@
 
 :::include
 
-variant.md shape.md
+basic.md shape.md
 
 size.md dimension.md 
 
-color.md position.md
+color.md elevation.md
 
-elevation.md
+position.md
 
 :::

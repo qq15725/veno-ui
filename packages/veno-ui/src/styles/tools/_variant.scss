@@ -15,6 +15,7 @@
   }
 
   &--variant-outlined {
-    border: thin solid currentColor;
+    border-width: thin;
+    border-color: currentColor;
   }
 }

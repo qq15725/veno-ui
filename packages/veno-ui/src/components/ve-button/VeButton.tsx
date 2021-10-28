@@ -73,9 +73,7 @@ export const VeButton = genericComponent()({
           href={ link.href.value }
           onClick={ props.disabled || link.navigate }
         >
-          { props.variant !== 'text' && !props.icon && (
-            <div class="ve-button__overlay" />
-          ) }
+          <div class="ve-button__overlay" />
 
           { props.loading && (
             <VeProgress

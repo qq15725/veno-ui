@@ -36,7 +36,7 @@ $button-border-color: settings.$border-color !default;
 $button-border-style: settings.$border-style !default;
 $button-border-width: 0 !default;
 $button-border-thin-width: thin !default;
-$button-border-radius: map.get(settings.$rounded, 'sm') !default;
+$button-border-radius: settings.$border-radius !default;
 $button-border: (
   $button-border-color,
   $button-border-style,
@@ -45,7 +45,6 @@ $button-border: (
 ) !default;
 
 // icon
-$button-icon-border-radius: map.get(settings.$rounded, 'circle') !default;
 $button-icon-font-size: 1rem !default;
 
 // variant

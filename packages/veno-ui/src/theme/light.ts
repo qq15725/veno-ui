@@ -1,15 +1,13 @@
 export default {
   dark: false,
   colors: {
-    background: '#F5F5F5',
-    // 'on-background': '#333639',
+    background: '#FFF',
     surface: '#FFF',
-    // 'on-surface': '#333639',
-    primary: '#1890FF',
-    secondary: '#03DAC6',
-    success: '#18A058',
-    warning: '#F0A020',
-    error: '#D03050',
+    primary: '#165DFF',
+    secondary: '#F2F3F5',
+    success: '#00B42A',
+    warning: '#FF7D00',
+    error: '#F53F3F',
     info: '#2080F0',
   },
   variables: {

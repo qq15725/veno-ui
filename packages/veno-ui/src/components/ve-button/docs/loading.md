@@ -5,7 +5,13 @@
 按钮有加载状态。
 
 ```html
-<ve-button :loading="loading" @click="toggle">点我</ve-button>
+<ve-button
+  :loading="loading" 
+  @click="toggle"
+  color="primary"
+>
+  点我
+</ve-button>
 ```
 
 ```js

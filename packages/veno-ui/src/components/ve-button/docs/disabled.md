@@ -1,6 +1,6 @@
 :::demo
 
-# 禁用
+# 禁用状态
 
 ```html
 <ve-grid dense>

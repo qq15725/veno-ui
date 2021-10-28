@@ -34,7 +34,7 @@ const active = ref()
             :width="60"
             @click="theme = theme === 'dark' ? 'light' : 'dark'"
         >
-          {{ theme === 'dark' ? '浅色' : '深色' }}
+          {{ theme === 'dark' ? '亮色' : '暗黑' }}
         </ve-button>
         <ve-button :width="60" href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
         <ve-button :width="60">{{ version }}</ve-button>

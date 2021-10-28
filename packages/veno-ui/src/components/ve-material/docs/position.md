@@ -1,13 +1,10 @@
 :::demo
 
-# 位置
+# 材料位置
 
 ```html
-<ve-grid>
-  <ve-material
-    position="relative"
-    left="100"
-  />
+<ve-grid dense>
+  <ve-material position="relative" left="100" />
 </ve-grid>
 ```
 
