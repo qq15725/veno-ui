@@ -1,16 +1,17 @@
 :::demo
+
 # 尺寸
 
 有 `x-small`、`small`、`default`、`large` 和 `x-large` 尺寸。
 
 ```html
-<ve-progress
-  v-for="(size, index) in ['x-small', 'small', 'default', 'large', 'x-large']"
-  :key="index"
-  :size="size"
-  color="primary"
-  :model-value="30"
-  class="mr-3"
-/>
+<ve-grid dense align="center">
+  <ve-progress size="x-small" color="primary" :model-value="30" />
+  <ve-progress size="small" color="primary" :model-value="30" />
+  <ve-progress color="primary" :model-value="30" />
+  <ve-progress size="large" color="primary" :model-value="30" />
+  <ve-progress size="x-large" color="primary" :model-value="30" />
+</ve-grid>
 ```
+
 :::

@@ -1,15 +1,13 @@
 :::demo
+
 # 禁用
 
 ```html
-<ve-button
-  v-for="(variant, index) in ['outlined', 'contained', 'text']"
-  :key="index"
-  :variant="variant"
-  disabled
-  class="mr-3"
->
-  按钮
-</ve-button>
+<ve-grid dense>
+  <ve-button variant="contained" disabled>Contained</ve-button>
+  <ve-button variant="outlined" disabled>Outlined</ve-button>
+  <ve-button variant="text" disabled>Text</ve-button>
+</ve-grid>
 ```
+
 :::

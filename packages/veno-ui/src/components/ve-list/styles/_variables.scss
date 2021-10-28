@@ -1,10 +1,16 @@
-@use '../../../styles/settings' as *;
+@use '../../../styles/settings';
+@use '../../../styles/tools';
 
-$list-border-color: $border-color !default;
-$list-border-style: $border-style !default;
+// List
+$list-background: rgba(var(--ve-theme-surface)) !default;
+$list-color: rgba(var(--ve-theme-on-surface)) !default;
+
+$list-border-color: settings.$border-color !default;
+$list-border-style: settings.$border-style !default;
 $list-border-width: 0 !default;
 $list-border-thin-width: thin !default;
-$list-border-radius: $border-radius !default;
+$list-border-radius: settings.$border-radius !default;
+
 $list-border: (
   $list-border-color,
   $list-border-style,
@@ -12,11 +18,13 @@ $list-border: (
   $list-border-thin-width
 ) !default;
 
-$list-item-border-color: $border-color !default;
-$list-item-border-radius: 0 !default;
-$list-item-border-style: $border-style !default;
+// ListItem
+$list-item-border-color: settings.$border-color !default;
+$list-item-border-style: settings.$border-style !default;
 $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
+$list-item-border-radius: settings.$border-radius !default;
+
 $list-item-border: (
   $list-item-border-color,
   $list-item-border-style,
@@ -24,10 +32,38 @@ $list-item-border: (
   $list-item-border-thin-width
 ) !default;
 
-$list-background: rgba(var(--ve-theme-surface)) !default;
-$list-color: rgba(var(--ve-theme-on-surface)) !default;
-
 $list-item-variants: (
   $list-background,
   $list-color
+);
+
+// ListItemTitle
+$list-item-title-font-size: tools.map-deep-get(settings.$typography, 'body-1', 'size') !default;
+$list-item-title-font-weight: tools.map-deep-get(settings.$typography, 'body-1', 'weight') !default;
+$list-item-title-header-padding: 0 !default;
+$list-item-title-hyphens: auto !default;
+$list-item-title-letter-spacing: tools.map-deep-get(settings.$typography, 'subtitle-1', 'letter-spacing') !default;
+$list-item-title-line-height: tools.map-deep-get(settings.$typography, 'body-1', 'line-height') !default;
+$list-item-title-text-transform: none !default;
+
+$list-item-title-typography: (
+  $list-item-title-font-size,
+  $list-item-title-font-weight,
+  $list-item-title-letter-spacing,
+  $list-item-title-line-height,
+  $list-item-title-text-transform
+);
+
+// Nav ListItemTitle
+$list-item-nav-title-font-size: .8125rem !default;
+$list-item-nav-title-font-weight: 500 !default;
+$list-item-nav-title-letter-spacing: normal !default;
+$list-item-nav-title-line-height: 1rem !default;
+
+$list-item-nav-title-typography: (
+  $list-item-nav-title-font-size,
+  $list-item-nav-title-font-weight,
+  $list-item-nav-title-letter-spacing,
+  $list-item-nav-title-line-height,
+  null
 );

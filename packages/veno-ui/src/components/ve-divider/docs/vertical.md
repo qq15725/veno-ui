@@ -1,4 +1,5 @@
 :::demo
+
 # 垂直
 
 ```html
@@ -6,4 +7,5 @@
 <ve-divider vertical class="mx-3" />
 分割线
 ```
+
 :::

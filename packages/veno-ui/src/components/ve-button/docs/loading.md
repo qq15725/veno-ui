@@ -1,15 +1,11 @@
 :::demo
+
 # 加载中
 
 按钮有加载状态。
 
 ```html
-<ve-button
-  :loading="loading"
-  @click="toggle"
->
-  点我
-</ve-button>
+<ve-button :loading="loading" @click="toggle">点我</ve-button>
 ```
 
 ```js
@@ -28,4 +24,5 @@ export default defineComponent({
   }
 })
 ```
+
 :::

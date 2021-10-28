@@ -10,13 +10,13 @@
   outline: none;
   text-decoration: none;
 
-  @include tools.states('.ve-list-item__overlay');
+  @include tools.states(#{&}__overlay);
   @include tools.use-border($list-item-border...);
   @include tools.use-rounded($list-item-border-radius);
   @include tools.use-variant($list-item-variants...);
 
   &__overlay {
-    @include tools.absolute(false);
+    @include tools.absolute();
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;

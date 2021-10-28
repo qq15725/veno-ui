@@ -7,4 +7,13 @@
   position: relative;
   padding: 8px 0;
   @include tools.use-border($list-border...);
+
+  &--nav {
+    padding-inline-end: 12px;
+    padding-inline-start: 12px;
+
+    .ve-list-item + .ve-list-item {
+      margin-block-start: 4px;
+    }
+  }
 }

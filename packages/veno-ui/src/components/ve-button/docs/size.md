@@ -1,16 +1,17 @@
 :::demo
+
 # 尺寸
 
 有 `x-small`、`small`、`default`、`large` 和 `x-large` 尺寸。
 
 ```html
-<ve-button
-  v-for="(size, index) in ['x-small', 'small', 'default', 'large', 'x-large']"
-  :key="index"
-  :size="size"
-  class="mr-3"
->
-  按钮
-</ve-button>
+<ve-grid dense>
+  <ve-button size="x-small">XSmall</ve-button>
+  <ve-button size="small">Small</ve-button>
+  <ve-button>Default</ve-button>
+  <ve-button size="large">Large</ve-button>
+  <ve-button size="x-large">XLarge</ve-button>
+</ve-grid>
 ```
+
 :::

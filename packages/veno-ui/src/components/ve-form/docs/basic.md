@@ -2,19 +2,11 @@
 # 基础
 
 ```html
-<ve-form-item 
-  label="文本输入" 
-  label-width="100"
->
-  <ve-input
-    placeholder="请输入"
-  />
+<ve-form-item label="文本输入" label-width="100">
+  <ve-input placeholder="请输入" />
 </ve-form-item>
 
-<ve-form-item
-  label="选择"
-  label-width="100"
->
+<ve-form-item label="选择" label-width="100">
   <ve-select
     placeholder="请选择"
     :items="[
@@ -25,10 +17,7 @@
   />
 </ve-form-item>
 
-<ve-form-item
-  label="开关"
-  label-width="100"
->
+<ve-form-item label="开关" label-width="100">
   <ve-switch />
 </ve-form-item>
 ```

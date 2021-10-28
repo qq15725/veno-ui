@@ -1,15 +1,15 @@
 :::demo
+
 # 颜色
 
 ```html
-<ve-avatar color="primary" class="mr-3" />
-
-<ve-avatar color="error" class="mr-3" />
-
-<ve-avatar color="red" class="mr-3" />
-
-<ve-avatar color="blue" class="mr-3" />
-
-<ve-avatar color="#8a2be2" class="mr-3" />
+<ve-grid dense>
+  <ve-avatar color="primary" />
+  <ve-avatar color="error" />
+  <ve-avatar color="red" />
+  <ve-avatar color="blue" />
+  <ve-avatar color="#8a2be2" />
+</ve-grid>
 ```
+
 :::

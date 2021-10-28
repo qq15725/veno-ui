@@ -1,8 +1,8 @@
 // Utilities
 import { consoleWarn } from './console'
 import { chunk, padEnd } from './helpers'
-import * as sRGB from './color/transformSRGB'
-import * as CIELAB from './color/transformCIELAB'
+import * as sRGB from './color/transform-srgb'
+import * as CIELAB from './color/transform-cielab'
 
 // Types
 import type { ThemeDefinition } from '../composables/theme'

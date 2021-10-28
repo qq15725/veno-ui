@@ -12,6 +12,7 @@ export const VeList = genericComponent()({
   name: 'VeList',
 
   props: {
+    nav: Boolean,
     ...makeMaterialProps(),
     ...makeDisabledProps(),
   },
@@ -25,6 +26,9 @@ export const VeList = genericComponent()({
         <props.tag
           class={ [
             've-list',
+            {
+              've-list--nav': props.nav,
+            },
             materialClasses.value,
             disabledClasses.value,
           ] }

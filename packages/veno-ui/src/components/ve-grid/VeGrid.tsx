@@ -11,10 +11,6 @@ export const VeGrid = genericComponent()({
 
   props: {
     container: Boolean,
-    rowProps: {
-      type: Object,
-      default: () => ({})
-    },
     colProps: {
       type: Object,
       default: () => ({
@@ -23,7 +19,7 @@ export const VeGrid = genericComponent()({
     },
   },
 
-  setup (props, { slots }) {
+  setup (props, { slots, attrs }) {
     return () => {
       let nodes = slots.default?.()
 
@@ -32,7 +28,7 @@ export const VeGrid = genericComponent()({
       }
 
       const row = (
-        <VeRow { ...props.rowProps }>
+        <VeRow { ...attrs }>
           { nodes?.map((node: any) => (
             <VeCol { ...props.colProps }>{ node }</VeCol>
           )) }

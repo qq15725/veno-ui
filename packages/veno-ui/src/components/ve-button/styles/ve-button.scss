@@ -28,21 +28,24 @@
   @include tools.use-position();
 
   @each $name, $multiplier in settings.$size-scales {
-    $height: map.get($button-sizes, 'height') + settings.$spacer * 2 * $multiplier;
+    $height: map.get($button-sizes, 'height') + 4 * $multiplier;
+    $size: map.get($button-sizes, 'font-size') + 4 * $multiplier;
 
     &--size-#{$name} {
-      font-size: map-get($button-sizes, 'font-size') + 2 * $multiplier;
+      --ve-button-size: #{$size};
+      --ve-button-height: #{$height};
       height: $height;
+      font-size: $size;
       min-width: tools.roundEven($height * map.get($button-sizes, 'width-ratio'));
       padding: 0 math.div($height, map.get($button-sizes, 'padding-ratio'));
     }
   }
 
-  &--variant-text,
   &--icon {
     padding: 0;
     min-width: auto;
-    height: auto;
+    height: var(--ve-button-height, auto);
+    width: var(--ve-button-height, auto);
   }
 
   &--icon {
@@ -53,7 +56,7 @@
   }
 
   &__overlay {
-    @include tools.absolute(false);
+    @include tools.absolute();
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;

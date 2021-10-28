@@ -1,5 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-list-item-title {
   hyphens: auto;
@@ -10,4 +11,9 @@
   text-overflow: ellipsis;
   word-break: normal;
   word-wrap: break-word;
+  @include tools.typography($list-item-title-typography...);
+
+  .ve-list--nav & {
+    @include tools.typography($list-item-nav-title-typography...);
+  }
 }

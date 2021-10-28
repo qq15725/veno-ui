@@ -3,11 +3,7 @@
 # 基础
 
 ```html
-<ve-grid 
-  container
-  :row-props="{ dense: true }"
-  :col-props="{ cols: 3 }"
->
+<ve-grid container dense :col-props="{ cols: 3 }">
   <ve-material 
     v-for="i in 20" :key="i"
     width="100%"

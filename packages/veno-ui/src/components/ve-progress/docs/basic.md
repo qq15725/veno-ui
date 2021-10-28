@@ -1,10 +1,9 @@
 :::demo
+
 # 基础
 
 ```html
-<ve-progress :model-value="value">
-  {{ value }}
-</ve-progress>
+<ve-progress :model-value="value">{{ value }}</ve-progress>
 
 <div class="mt-3">
   <ve-input v-model="value" type="number" />
@@ -22,4 +21,5 @@ export default defineComponent({
   }
 })
 ```
+
 :::

@@ -13,8 +13,8 @@ import {
   consoleError,
 } from '../../utils'
 // @ts-ignore
-import { APCAcontrast } from '../../utils/color/APCA'
-import defaultThemeOptions from './default-theme-options'
+import { APCAcontrast } from '../../utils/color/apca'
+import defaultThemeOptions from '../../theme'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
@@ -25,6 +25,7 @@ interface BaseColors
   background: string
   surface: string
   primary: string
+  secondary: string
   success: string
   warning: string
   error: string

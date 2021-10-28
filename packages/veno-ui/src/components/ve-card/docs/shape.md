@@ -1,11 +1,13 @@
 :::demo
+
 # 形状
 
 ```html
-<ve-card tile class="mb-3" text="内容" />
-
-<ve-card class="mb-3" text="内容" />
-
-<ve-card rounded text="内容" />
+<ve-grid dense align="center">
+  <ve-card tile text="内容" />
+  <ve-card text="内容" />
+  <ve-card rounded text="内容" />  
+</ve-grid>
 ```
+
 :::

@@ -84,7 +84,7 @@ $typography: functions.map-deep-merge(
       'body-2': (
         'size': 14px,
         'weight': 400,
-        'line-height': 1.25,
+        'line-height': 1.5,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none
@@ -92,7 +92,7 @@ $typography: functions.map-deep-merge(
       'button': (
         'size': 14px,
         'weight': 400,
-        'line-height': 2.25,
+        'line-height': normal,
         'letter-spacing': normal,
         'font-family': $font-family,
         'text-transform': none

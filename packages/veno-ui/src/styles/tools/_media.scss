@@ -6,9 +6,9 @@
 
   @if $min {
     @media (min-width: $min) {
-      @content
+      @content;
     }
   } @else {
-    @content
+    @content;
   }
 }

@@ -19,6 +19,7 @@
   }
 
   &:before {
+    content: '';
     @include tools.absolute();
     background-color: currentColor;
     border-radius: inherit;

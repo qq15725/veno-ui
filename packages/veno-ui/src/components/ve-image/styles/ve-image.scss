@@ -6,6 +6,6 @@
 
   &__img {
     z-index: -1;
-    @include tools.absolute(false);
+    @include tools.absolute();
   }
 }
