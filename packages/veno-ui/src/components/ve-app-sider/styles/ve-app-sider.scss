@@ -27,6 +27,10 @@
     border-inline-start-width: $app-sider-border-thin-width;
   }
 
+  &--temporary {
+    @include tools.elevation(16);
+  }
+
   &__wrap {
     flex: 0 1 auto;
     height: 100%;

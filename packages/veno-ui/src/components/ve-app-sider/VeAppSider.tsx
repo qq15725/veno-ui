@@ -4,12 +4,17 @@ import './styles/ve-app-sider.scss'
 // Utils
 import { defineComponent, computed, toRef, onBeforeMount, watch } from 'vue'
 
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { useDisplay } from '../../composables/display'
 
+// Components
+import { VeOverlay } from '../ve-overlay'
+
+// Types
 import type { PropType } from 'vue'
 
 export default defineComponent({
@@ -75,6 +80,7 @@ export default defineComponent({
           {
             've-app-sider--start': props.position === 'left',
             've-app-sider--end': props.position === 'right',
+            've-app-sider--temporary': isTemporary.value,
           },
           borderClasses.value,
         ] }
@@ -82,6 +88,10 @@ export default defineComponent({
           layoutStyles.value,
         ] }
       >
+        { isTemporary.value && (
+          <VeOverlay v-model={ isActive.value } style="z-index: 0;" />
+        ) }
+
         <div class="ve-app-sider__wrap">
           { slots.default?.() }
         </div>

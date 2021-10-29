@@ -22,14 +22,14 @@ const active = ref()
 
       <ve-spacer class="hidden-sm-and-up" />
 
-      <ve-app-bar-items>
+      <ve-app-bar-items class="hidden-sm-and-down">
         <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
         <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
       </ve-app-bar-items>
 
       <ve-spacer class="hidden-sm-and-down" />
 
-      <ve-app-bar-items class="hidden-sm-and-down">
+      <ve-app-bar-items>
         <ve-button
             :width="60"
             @click="theme = theme === 'dark' ? 'light' : 'dark'"
