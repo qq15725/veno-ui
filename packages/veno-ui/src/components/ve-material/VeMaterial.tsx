@@ -18,6 +18,7 @@ export const VeMaterial = genericComponent<new <T>() => {
   name: 'VeMaterial',
 
   props: {
+    textCenter: Boolean,
     ...makeMaterialProps(),
   },
 
@@ -28,6 +29,9 @@ export const VeMaterial = genericComponent<new <T>() => {
       <props.tag
         class={ [
           've-material',
+          {
+            've-material--text-center': props.textCenter,
+          },
           materialClasses.value
         ] }
         style={ [

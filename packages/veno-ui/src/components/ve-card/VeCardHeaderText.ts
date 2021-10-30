@@ -1,3 +1,3 @@
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('ve-card-header-text')
+export const VeCardHeaderText = createSimpleFunctional('ve-card-header-text')

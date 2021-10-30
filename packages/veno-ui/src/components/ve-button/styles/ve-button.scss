@@ -28,8 +28,8 @@
   @include tools.use-position();
 
   @each $name, $multiplier in settings.$size-scales {
-    $height: map.get($button-sizes, 'height') + 4 * $multiplier;
     $size: map.get($button-sizes, 'font-size') + 4 * $multiplier;
+    $height: map.get($button-sizes, 'height') + 4 * $multiplier;
 
     &--size-#{$name} {
       --ve-button-size: #{$size};
@@ -43,10 +43,9 @@
 
   &--icon {
     padding: 0;
-    min-width: auto;
+    min-width: 0;
     height: var(--ve-button-height, auto);
     width: var(--ve-button-height, auto);
-    font-size: $button-icon-font-size;
   }
 
   &__overlay {
@@ -82,8 +81,14 @@
     cursor: wait;
   }
 
-  &__progress {
-    margin-right: 0.25rem;
+  &__icon {
+    width: 1em !important;
+    height: 1em !important;
+    font-size: 1em !important;
+
+    &.ve-progress {
+      margin-inline-end: map.get(settings.$grid-gutters, 'md');
+    }
   }
 
   // VeAppBarItems

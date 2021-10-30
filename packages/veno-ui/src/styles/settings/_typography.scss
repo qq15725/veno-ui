@@ -3,57 +3,55 @@
 @use 'variables' as *;
 
 $heading-font-family: $font-family !default;
-$heading-font-weight: 500 !default;
-$heading-line-height: 1.2 !default;
 
 $typography: () !default;
 $typography: functions.map-deep-merge(
     (
       'h1': (
-        'size': $font-size * 2.5,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 40px,
+        'weight': 800,
+        'line-height': 1.2,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h2': (
-        'size': $font-size * 2,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 32px,
+        'weight': 700,
+        'line-height': 1.5,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h3': (
-        'size': $font-size * 1.75,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 28px,
+        'weight': 700,
+        'line-height': 1.5,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h4': (
-        'size': $font-size * 1.5,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 24px,
+        'weight': 500,
+        'line-height': 1.5,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h5': (
-        'size': $font-size * 1.25,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 20px,
+        'weight': 500,
+        'line-height': 1.5,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),
       'h6': (
-        'size': $font-size,
-        'weight': $heading-font-weight,
-        'line-height': $heading-line-height,
-        'letter-spacing': normal,
+        'size': 16px,
+        'weight': 400,
+        'line-height': 1.5,
+        'letter-spacing': 0,
         'font-family': $heading-font-family,
         'text-transform': none
       ),

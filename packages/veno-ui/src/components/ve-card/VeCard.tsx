@@ -13,21 +13,27 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 // Components
 import { VeAvatar } from '../ve-avatar'
 import { VeDivider } from '../ve-divider'
-import VeCardHeader from './VeCardHeader'
-import VeCardHeaderText from './VeCardHeaderText'
-import VeCardAvatar from './VeCardAvatar'
-import VeCardTitle from './VeCardTitle'
-import VeCardSubtitle from './VeCardSubtitle'
-import VeCardText from './VeCardText'
-import VeCardActions from './VeCardActions'
+import { VeImage } from '../ve-image'
+import { VeCardImage } from './VeCardImage'
+import { VeCardAvatar } from './VeCardAvatar'
+import { VeCardHeader } from './VeCardHeader'
+import { VeCardHeaderText } from './VeCardHeaderText'
+import { VeCardTitle } from './VeCardTitle'
+import { VeCardSubtitle } from './VeCardSubtitle'
+import { VeCardText } from './VeCardText'
+import { VeCardActions } from './VeCardActions'
 
-export default defineComponent({
+export const VeCard = defineComponent({
   name: 'VeCard',
 
   props: {
     link: Boolean,
-    appendAvatar: String,
+    hover: Boolean,
+    image: String,
     prependAvatar: String,
+    prependIcon: String,
+    appendAvatar: String,
+    appendIcon: String,
     title: String,
     subtitle: String,
     divider: Boolean,
@@ -46,11 +52,12 @@ export default defineComponent({
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
+      const hasImage = !!(slots.image || props.image)
       const hasTitle = !!(slots.title || props.title)
       const hasSubtitle = !!(slots.subtitle || props.subtitle)
       const hasHeaderText = hasTitle || hasSubtitle
-      const hasAppend = !!(slots.append || props.appendAvatar)
-      const hasPrepend = !!(slots.prepend || props.prependAvatar)
+      const hasPrepend = !!(slots.prepend || props.prependAvatar || props.prependIcon)
+      const hasAppend = !!(slots.append || props.appendAvatar || props.appendIcon)
       const hasHeader = hasHeaderText || hasPrepend || hasAppend
       const hasText = !!(slots.text || props.text)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
@@ -60,6 +67,7 @@ export default defineComponent({
           class={ [
             've-card',
             {
+              've-card--hover': props.hover && !props.disabled,
               've-card--link': isClickable,
             },
             materialClasses.value,
@@ -72,18 +80,29 @@ export default defineComponent({
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
         >
+          { isClickable && <div class="ve-card__overlay" /> }
+
+          { hasImage && (
+            <VeCardImage>
+              { slots.image
+                ? slots.image?.({ src: props.image })
+                : (<VeImage src={ props.image } cover alt="" />)
+              }
+            </VeCardImage>
+          ) }
+
+          { slots.media?.() }
+
           { hasHeader && (
             <VeCardHeader>
               { hasPrepend && (
                 <VeCardAvatar>
                   { slots.prepend
                     ? slots.prepend()
-                    : (
-                      <VeAvatar
-                        image={ props.prependAvatar }
-                      />
-                    )
-                  }
+                    : (<VeAvatar
+                      icon={ props.prependIcon }
+                      image={ props.prependAvatar }
+                    />) }
                 </VeCardAvatar>
               ) }
 
@@ -107,11 +126,10 @@ export default defineComponent({
                 <VeCardAvatar>
                   { slots.append
                     ? slots.append()
-                    : (
-                      <VeAvatar
-                        image={ props.appendAvatar }
-                      />
-                    ) }
+                    : (<VeAvatar
+                      icon={ props.appendIcon }
+                      image={ props.appendAvatar }
+                    />) }
                 </VeCardAvatar>
               ) }
             </VeCardHeader>

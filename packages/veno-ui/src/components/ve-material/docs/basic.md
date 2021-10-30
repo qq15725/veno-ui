@@ -6,9 +6,9 @@
 
 ```html
 <ve-grid container dense class="bg-grey-n2">
-  <ve-material variant="contained">Contained</ve-material>
-  <ve-material variant="outlined">Outlined</ve-material>
-  <ve-material variant="text">Text</ve-material>
+  <ve-material text-center variant="contained">Contained</ve-material>
+  <ve-material text-center variant="outlined">Outlined</ve-material>
+  <ve-material text-center variant="text">Text</ve-material>
 </ve-grid>
 ```
 

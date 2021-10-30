@@ -31,7 +31,7 @@ export default defineComponent({
     },
     width: {
       type: [Number, String],
-      default: 4,
+      default: 3,
     },
     ...makeThemeProps(),
     ...makeColorProps(),

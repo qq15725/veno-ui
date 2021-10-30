@@ -1,7 +1,6 @@
 @forward 'variables';
 @use 'variables' as *;
 @use 'sass:map';
-@use '../../../styles/settings';
 
 .ve-icon {
   display: inline-block;
@@ -15,9 +14,9 @@
   height: $icon-size;
   width: $icon-size;
 
-  @each $name in settings.$sizes {
+  @each $name, $multiplier in $icon-sizes {
     &--size-#{$name} {
-      font-size: map.get($icon-sizes, $name);
+      font-size: $multiplier;
     }
   }
 

@@ -1,6 +1,6 @@
 :::demo
 
-# 形状
+# 卡片形状
 
 ```html
 <ve-grid dense align="center">

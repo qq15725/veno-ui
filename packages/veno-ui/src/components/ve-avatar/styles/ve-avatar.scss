@@ -14,6 +14,7 @@
   font-size: 1rem;
   @include tools.use-border($avatar-border...);
   @include tools.use-rounded($avatar-border-radius);
+  @include tools.use-variant();
 
   @each $name, $multiplier in settings.$size-scales {
     $size: 40px + (settings.$size-scale * $multiplier);
@@ -27,6 +28,14 @@
     border-radius: inherit;
     width: inherit;
     height: inherit;
+  }
+
+  &__wrap {
+    position: absolute;
+    display: inline-block;
+    white-space: nowrap;
+    left: 50%;
+    top: 50%;
   }
 
   // VeList

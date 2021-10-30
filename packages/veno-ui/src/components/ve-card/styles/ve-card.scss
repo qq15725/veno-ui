@@ -4,7 +4,6 @@
 
 .ve-card {
   position: relative;
-  overflow: hidden;
   display: block;
   color: $card-color;
   text-decoration: none;
@@ -13,14 +12,71 @@
   @include tools.use-position($card-positions);
   @include tools.use-rounded($card-border-radius);
 
+  &__overlay {
+    @include tools.absolute();
+    background-color: currentColor;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+  }
+
   &--link {
     cursor: pointer;
+    @include tools.states('.ve-card__overlay', false);
+  }
+
+  &--hover {
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      border-radius: inherit;
+      bottom: 0;
+      content: '';
+      display: block;
+      left: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: inherit;
+    }
+
+    &::before {
+      opacity: 1;
+      z-index: -1;
+      @include tools.elevation(1);
+    }
+
+    &::after {
+      z-index: 1;
+      opacity: 0;
+      @include tools.elevation(8);
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+
+    &:hover::before {
+      opacity: 0;
+    }
+
+    @include tools.elevation(0);
   }
 
   &--disabled {
     cursor: not-allowed;
     background-color: $card-disabled-background;
     color: $card-disabled-color;
+  }
+
+  &-image {
+    border-radius: inherit;
+    display: flex;
+    overflow: hidden;
+    @include tools.absolute();
   }
 
   &-header {
@@ -74,7 +130,7 @@
   }
 
   &-avatar {
-    align-self: flex-start;
+    align-self: center;
     padding: 0 20px;
   }
 

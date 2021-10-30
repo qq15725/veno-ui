@@ -4,9 +4,9 @@
 
 ```html
 <ve-grid dense>
-  <ve-avatar tile border />
-  <ve-avatar border />
-  <ve-avatar rounded border />
+  <ve-avatar variant="outlined" tile />
+  <ve-avatar variant="outlined" />
+  <ve-avatar variant="outlined" rounded />
 </ve-grid>
 ```
 

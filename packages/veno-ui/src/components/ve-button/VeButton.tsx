@@ -2,7 +2,6 @@
 import './styles/ve-button.scss'
 
 // Utils
-import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
@@ -10,7 +9,6 @@ import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { sizes } from '../../composables/size'
 
 // Components
 import { VeProgress } from '../ve-progress'
@@ -44,10 +42,6 @@ export const VeButton = genericComponent()({
     const { loadingClasses } = useLoading(props, 've-button')
     const { disabledClasses } = useDisabled(props, 've-button')
 
-    const progressSize = computed(() => {
-      return 18 + 4 * Number([-2, -1, 0, 1, 2][sizes.findIndex(v => v === props.size)])
-    })
-
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
 
@@ -77,14 +71,13 @@ export const VeButton = genericComponent()({
 
           { props.loading && (
             <VeProgress
-              class="ve-button__progress"
-              size={ progressSize.value }
-              width={ 2 }
+              class="ve-button__icon"
               indeterminate
+              width={ 2 }
             />
           ) }
 
-          { !props.icon && props.prependIcon && (
+          { !props.loading && !props.icon && props.prependIcon && (
             <VeIcon
               class="ve-button__icon"
               icon={ props.prependIcon }

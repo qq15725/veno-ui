@@ -1,4 +1,4 @@
-# 进度 Progress
+# 进度条 Progress
 
 `ve-progress` 组件。
 

@@ -9,6 +9,7 @@
   :loading="loading" 
   @click="toggle"
   color="primary"
+  prepend-icon="veno-ui:$close"
 >
   点我
 </ve-button>

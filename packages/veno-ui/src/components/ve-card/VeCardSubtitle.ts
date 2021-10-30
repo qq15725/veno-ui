@@ -1,3 +1,3 @@
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('ve-card-subtitle')
+export const VeCardSubtitle = createSimpleFunctional('ve-card-subtitle')

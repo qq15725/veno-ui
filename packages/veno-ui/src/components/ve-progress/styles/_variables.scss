@@ -1,9 +1,15 @@
-$progress-size: 32px !default;
+@use '../../../styles/tools';
 
-$progress-sizes: (
-  'x-small': -2,
-  'small': -1,
-  'default': 0,
-  'large': 2,
-  'x-large': 4
-) !default;
+$progress-size: 40px !default;
+
+$progress-sizes: () !default;
+$progress-sizes: tools.map-deep-merge(
+    (
+      'x-small': -2,
+      'small': -1,
+      'default': 0,
+      'large': 2,
+      'x-large': 4
+    ),
+    $progress-sizes
+);

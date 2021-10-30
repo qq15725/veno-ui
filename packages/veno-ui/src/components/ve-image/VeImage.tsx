@@ -2,6 +2,7 @@ import './styles/ve-image.scss'
 
 // Utils
 import { computed, h, defineComponent, ref, watch, onBeforeMount, nextTick } from 'vue'
+import { convertToUnit } from '../../utils'
 
 // Components
 import { VeResponsive } from '../ve-responsive'
@@ -11,11 +12,13 @@ export default defineComponent({
 
   props: {
     aspectRatio: [String, Number],
+    cover: Boolean,
     eager: Boolean,
     alt: String,
     src: String,
     sizes: String,
     srcset: String,
+    width: [String, Number],
   },
 
   emits: ['loadstart', 'load', 'error'],
@@ -92,9 +95,14 @@ export default defineComponent({
       poll()
     }
 
+    const containClasses = computed(() => ({
+      've-image__img--cover': props.cover,
+      've-image__img--contain': !props.cover,
+    }))
+
     const __image = computed(() => {
       return h('img', {
-        class: ['ve-image__img'],
+        class: ['ve-image__img', containClasses.value],
         src: props.src,
         srcset: props.srcset,
         sizes: props.sizes,
@@ -107,6 +115,9 @@ export default defineComponent({
     return () => (
       <VeResponsive
         class="ve-image"
+        style={{
+          width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width)
+        }}
         aspect-ratio={ aspectRatio.value }
         aria-label={ props.alt }
         role={ props.alt ? 'img' : undefined }

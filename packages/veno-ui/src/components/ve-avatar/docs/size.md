@@ -6,11 +6,11 @@
 
 ```html
 <ve-grid dense align="center">
-  <ve-avatar size="x-small" image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar size="small" image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar size="large" image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar size="x-large" image="https://picsum.photos/id/11/500/300" />
+  <ve-avatar size="x-small" text="XSmall"/>
+  <ve-avatar size="small" text="Small" />
+  <ve-avatar text="Default"/>
+  <ve-avatar size="large" text="Large" />
+  <ve-avatar size="x-large" text="XLarge" />
 </ve-grid>
 ```
 

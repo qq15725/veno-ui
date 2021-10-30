@@ -2,10 +2,15 @@
 @use '../../../styles/tools';
 
 .ve-material {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  display: block;
   width: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
   height: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
   @include tools.use-material();
+
+  &--text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

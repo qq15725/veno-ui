@@ -6,9 +6,9 @@
 
 ```html
 <ve-grid dense>
-  <ve-material size="50" />
-  <ve-material width="50" height="25" />
-  <ve-material width="25" height="50" />
+  <ve-material text-center size="50" />
+  <ve-material text-center width="50" height="25" />
+  <ve-material text-center width="25" height="50" />
 </ve-grid>
 ```
 

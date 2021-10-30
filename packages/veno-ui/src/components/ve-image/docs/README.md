@@ -8,4 +8,6 @@
 
 basic.md aspect-ratio.md
 
+cover.md
+
 :::

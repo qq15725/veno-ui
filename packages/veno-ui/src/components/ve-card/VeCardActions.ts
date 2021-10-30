@@ -1,3 +1,3 @@
 import { createSimpleFunctional } from '../../utils'
 
-export default createSimpleFunctional('ve-card-actions')
+export const VeCardActions = createSimpleFunctional('ve-card-actions')

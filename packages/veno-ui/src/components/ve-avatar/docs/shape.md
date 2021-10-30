@@ -6,9 +6,9 @@
 
 ```html
 <ve-grid dense>
-  <ve-avatar image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar tile image="https://picsum.photos/id/11/500/300" />
-  <ve-avatar rounded image="https://picsum.photos/id/11/500/300" />  
+  <ve-avatar tile text="Tile" />
+  <ve-avatar text="Default" />
+  <ve-avatar rounded text="Rounded" />  
 </ve-grid>
 ```
 

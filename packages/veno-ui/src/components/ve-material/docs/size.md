@@ -6,11 +6,11 @@
 
 ```html
 <ve-grid dense align="center">
-  <ve-material size="x-small">XSmall</ve-material>
-  <ve-material size="small">Small</ve-material>
-  <ve-material>Default</ve-material>
-  <ve-material size="large">Large</ve-material>
-  <ve-material size="x-large">XLarge</ve-material>
+  <ve-material text-center size="x-small">XSmall</ve-material>
+  <ve-material text-center size="small">Small</ve-material>
+  <ve-material text-center>Default</ve-material>
+  <ve-material text-center size="large">Large</ve-material>
+  <ve-material text-center size="x-large">XLarge</ve-material>
 </ve-grid>
 ```
 

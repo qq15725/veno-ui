@@ -1,19 +1,15 @@
 :::demo
 
-# 基础
+# 基本用法
 
 ```html
-<ve-card
-  title="卡片标题"
-  subtitle="卡片子标题"
-  text="一些例子文本内容"
-  divider
-  #actions
->
-  <ve-spacer />
-  <ve-button class="mr-3">取消</ve-button>
-  <ve-button>确认</ve-button>
-  <ve-spacer />
+<ve-card title="标题" subtitle="子标题" text="内容">
+  <template #media>
+    <ve-image
+      :aspect-ratio="5 / 3"
+      src="https://picsum.photos/id/11/500/300"
+    />
+  </template>
 </ve-card>
 ```
 

@@ -11,6 +11,11 @@ declare global
       observer: IntersectionObserver
     }
 
+    _onResize?: {
+      handler: () => void
+      options: AddEventListenerOptions
+    }
+
     _clickOutside?: {
       lastMousedownWasOutside: boolean
       onClick: EventListener

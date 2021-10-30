@@ -86,6 +86,8 @@ export default defineComponent({
                 <div class="ve-alert__icon">
                   <VeAvatar
                     icon={ icon.value }
+                    color="transparent"
+                    text-color={ computedProps.value.textColor }
                   />
                 </div>
               ) }

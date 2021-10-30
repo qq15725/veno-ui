@@ -8,4 +8,8 @@
 
 basic.md shape.md
 
+personal-card-concise.md click.md
+
+personal-card.md slot.md
+
 :::
