@@ -17,7 +17,7 @@
   transition-timing-function: settings.$standard-easing;
   will-change: transform;
   position: fixed;
-  @include tools.use-border($app-sider-border...);
+  @include tools.use-border($app-sider-border);
 
   &--start {
     border-inline-end-width: $app-sider-border-thin-width;

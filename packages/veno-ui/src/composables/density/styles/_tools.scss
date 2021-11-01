@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use 'variables';
+
+@mixin use-density($props: variables.$density-props) {
+  @each $name, $multiplier in map.get($props, 'density') {
+    &--density-#{$name} {
+      --ve-density: #{$multiplier};
+    }
+  }
+}

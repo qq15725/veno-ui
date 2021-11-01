@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use 'variables';
+@use '../../../styles/tools/functions';
+
+@mixin use-variant($props: variables.$variant-props) {
+  &--variant-outlined,
+  &--variant-text {
+    background: transparent;
+    color: inherit;
+  }
+
+  &--variant-contained {
+    background: functions.map-deep-get($props, 'variant', 'contained', 'background');
+    color: functions.map-deep-get($props, 'variant', 'contained', 'color');
+    border-width: var(--ve-variant-border-width, thin);
+  }
+
+  &--variant-outlined {
+    border-width: thin;
+    border-color: currentColor;
+  }
+}

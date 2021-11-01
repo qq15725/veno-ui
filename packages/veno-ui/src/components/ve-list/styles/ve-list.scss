@@ -6,7 +6,7 @@
   overflow: auto;
   position: relative;
   padding: 8px 0;
-  @include tools.use-border($list-border...);
+  // @include tools.use-border($list-border...);
 
   &--nav {
     padding-inline-end: 12px;

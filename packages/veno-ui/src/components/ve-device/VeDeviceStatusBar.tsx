@@ -1,12 +1,18 @@
+// Styles
 import './styles/ve-device-status-bar.scss'
 
-import { defineComponent, ref, onBeforeUnmount, computed, unref } from 'vue'
+// Utils
+import { ref, onBeforeUnmount, computed, unref } from 'vue'
+import { genericComponent, convertToUnit } from '../../utils'
 
-import { convertToUnit } from '../../utils'
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeColorProps, useColor } from '../../composables/color'
 
-export default defineComponent({
+// Types
+export type VeDeviceStatusBar = InstanceType<typeof VeDeviceStatusBar>
+
+export const VeDeviceStatusBar = genericComponent()({
   name: 'VeDeviceStatusBar',
 
   props: {

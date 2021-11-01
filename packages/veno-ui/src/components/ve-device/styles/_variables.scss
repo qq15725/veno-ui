@@ -13,14 +13,14 @@ $device-border-width: 0 !default;
 $device-border-thin-width: thin !default;
 $device-border-radius: settings.$border-radius !default;
 $device-border: (
-  $device-border-color,
-  $device-border-style,
-  $device-border-width,
-  $device-border-thin-width
-) !default;
-
-// variant
-$device-variant: (
-  $device-background,
-  $device-color
+  'border': (
+    null: (
+      'color': $device-border-color,
+      'style': $device-border-style,
+      'width': $device-border-width,
+    ),
+    '': (
+      'width': $device-border-thin-width,
+    )
+  )
 ) !default;

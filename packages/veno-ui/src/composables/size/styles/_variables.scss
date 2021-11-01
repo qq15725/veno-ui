@@ -1,0 +1,17 @@
+@use '../../../styles/tools/functions';
+
+$sizes: (
+  'x-small': -2,
+  'small': -1,
+  'default': 0,
+  'large': 1,
+  'x-large': 2
+) !default;
+
+$size-props: () !default;
+$size-props: functions.map-deep-merge(
+    (
+      'size': $sizes,
+    ),
+    $size-props
+);

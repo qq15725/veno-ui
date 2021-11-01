@@ -21,13 +21,9 @@
   user-select: none;
   text-decoration: none;
   cursor: pointer;
+  @include tools.use-material($button-material);
 
-  @include tools.use-border($button-border...);
-  @include tools.use-variant($button-variant...);
-  @include tools.use-rounded($button-border-radius);
-  @include tools.use-position();
-
-  @each $name, $multiplier in settings.$size-scales {
+  @each $name, $multiplier in settings.$sizes {
     $size: map.get($button-sizes, 'font-size') + 4 * $multiplier;
     $height: map.get($button-sizes, 'height') + 4 * $multiplier;
 

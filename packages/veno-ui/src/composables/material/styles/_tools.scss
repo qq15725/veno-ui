@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use 'variables';
+@use '../../variant' as *;
+@use '../../position' as *;
+@use '../../size' as *;
+@use '../../density' as *;
+@use '../../border' as *;
+@use '../../shape' as *;
+
+@mixin use-material($props: variables.$material-props) {
+  @include use-variant($props);
+  @include use-position($props);
+  @include use-size($props);
+  @include use-density($props);
+  @include use-border($props);
+  @include use-shape($props);
+}

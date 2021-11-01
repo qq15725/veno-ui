@@ -1,15 +1,22 @@
+// Styles
 import './styles/ve-device.scss'
 
-import { defineComponent } from 'vue'
+// Utils
+import { genericComponent } from '../../utils'
 
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 import { makeDeviceProps, useDevice } from '../../composables/device'
 import { convertToUnit } from '../../utils'
 
-import VeDeviceStatusBar from './VeDeviceStatusBar'
+// Components
+import { VeDeviceStatusBar } from './VeDeviceStatusBar'
 
-export default defineComponent({
+// Types
+export type VeDevice = InstanceType<typeof VeDevice>
+
+export const VeDevice = genericComponent()({
   name: 'VeDevice',
 
   props: {

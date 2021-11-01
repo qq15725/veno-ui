@@ -45,32 +45,40 @@ export const VeAvatar = genericComponent()({
       }
     }
 
-    return () => (
-      <props.tag
-        class={ [
-          've-avatar',
-          materialClasses.value,
-        ] }
-        style={ [
-          materialStyles.value,
-        ] }
-        ref={ selfRef }
-      >
-        { props.image && <VeImage src={ props.image } /> }
+    return () => {
+      const hasImage = !!props.image
+      const hasIcon = !!props.icon && !hasImage
+      const hasText = !!(props.text || slots.default)
 
-        { props.icon && !props.image && <VeIcon icon={ props.icon } /> }
-
-        <div
-          class="ve-avatar__wrap"
-          ref={ wrapRef }
-          v-resize={ fitSizeTransform }
+      return (
+        <props.tag
+          class={ [
+            've-avatar',
+            materialClasses.value,
+          ] }
+          style={ [
+            materialStyles.value,
+          ] }
+          ref={ selfRef }
         >
-          { props.text && props.text }
+          { hasImage && <VeImage src={ props.image } /> }
 
-          { slots.default?.() }
-        </div>
-      </props.tag>
-    )
+          { hasIcon && <VeIcon icon={ props.icon } /> }
+
+          { hasText && (
+            <div
+              class="ve-avatar__wrap"
+              ref={ wrapRef }
+              v-resize={ fitSizeTransform }
+            >
+              { props.text && props.text }
+
+              { slots.default?.() }
+            </div>
+          ) }
+        </props.tag>
+      )
+    }
   }
 })
 

@@ -3,7 +3,7 @@ import './styles/ve-select.scss'
 
 // Utils
 import { computed, ref } from 'vue'
-import { getUid, genericComponent } from '../../utils'
+import { genericComponent, getUid } from '../../utils'
 
 // Composables
 import { makeTransitionProps } from '../../composables/transition'
@@ -20,6 +20,7 @@ import { VeFadeTransition } from '../ve-transition'
 // Types
 import type { PropType } from 'vue'
 import type { StrategyProps } from '../ve-overlay/composables/position-strategies'
+export type VeSelect = InstanceType<typeof VeSelect>
 
 export const VeSelect = genericComponent()({
   name: 'VeSelect',

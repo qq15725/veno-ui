@@ -2,8 +2,8 @@
 import './styles/ve-progress.scss'
 
 // Utils
-import { defineComponent, toRef, computed } from 'vue'
-import { convertToUnit } from '../../utils'
+import { toRef, computed } from 'vue'
+import { genericComponent, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -14,8 +14,9 @@ import { useIntersectionObserver } from '../../composables/intersection-observer
 
 // Types
 import type { PropType } from 'vue'
+export type VeProgress = InstanceType<typeof VeProgress>
 
-export default defineComponent({
+export const VeProgress = genericComponent()({
   name: 'VeProgress',
 
   props: {

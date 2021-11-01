@@ -1,10 +1,10 @@
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Components
 import { VeButton } from '../../components/ve-button'
 
-export default defineComponent({
+export const VeAppBarNavIcon = genericComponent()({
   name: 'VeAppBarNavIcon',
 
   props: {

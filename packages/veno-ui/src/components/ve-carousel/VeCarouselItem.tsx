@@ -2,7 +2,8 @@
 import './styles/ve-carousel.scss'
 
 // Utils
-import { defineComponent, watch, ref } from 'vue'
+import { watch, ref } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { Transition } from 'vue'
@@ -12,7 +13,10 @@ import { makeTagProps } from '../../composables/tag'
 // Components
 import { VeCarouselSymbol } from './VeCarousel'
 
-export default defineComponent({
+// Types
+export type VeCarouselItem = InstanceType<typeof VeCarouselItem>
+
+export const VeCarouselItem = genericComponent()({
   name: 'VeCarouselItem',
 
   props: {

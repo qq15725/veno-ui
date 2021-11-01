@@ -1,18 +1,21 @@
 // Styles
 import './styles/ve-app-bar.scss'
 
-// Utilities
-import { defineComponent, toRef } from 'vue'
+// Utils
+import { toRef } from 'vue'
+import { genericComponent, convertToUnit } from '../../utils'
 
-import { convertToUnit } from '../../utils'
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 
+// Types
 import type { PropType } from 'vue'
+export type VeAppBar = InstanceType<typeof VeAppBar>
 
-export default defineComponent({
+export const VeAppBar = genericComponent()({
   name: 'VeAppBar',
 
   props: {

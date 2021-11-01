@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use 'variables';
+
+@mixin use-size($props: variables.$size-props) {
+  @each $name, $multiplier in map.get($props, 'size') {
+    &--size-#{$name} {
+      --ve-size: #{$multiplier};
+    }
+  }
+}

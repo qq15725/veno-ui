@@ -1,1 +1,1 @@
-export { default as VeProgress } from './VeProgress'
+export * from './VeProgress'

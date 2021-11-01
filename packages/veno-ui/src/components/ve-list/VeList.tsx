@@ -8,6 +8,9 @@ import { genericComponent } from '../../utils'
 import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
+// Types
+export type VeList = InstanceType<typeof VeList>
+
 export const VeList = genericComponent()({
   name: 'VeList',
 
@@ -41,5 +44,3 @@ export const VeList = genericComponent()({
     }
   },
 })
-
-export type VeList = InstanceType<typeof VeList>

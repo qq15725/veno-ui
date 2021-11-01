@@ -1,11 +1,14 @@
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeDelayProps, useDelay } from '../../composables/delay'
 import { useProxiedModel } from '../../composables/proxied-model'
 
-export default defineComponent({
+// Types
+export type VeHover = InstanceType<typeof VeHover>
+
+export const VeHover = genericComponent()({
   name: 'VeHover',
 
   props: {

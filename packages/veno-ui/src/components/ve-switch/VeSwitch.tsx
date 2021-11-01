@@ -2,13 +2,17 @@
 import './styles/ve-switch.scss'
 
 // Utils
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
 
-export default defineComponent({
+// Types
+export type VeSwitch = InstanceType<typeof VeSwitch>
+
+export const VeSwitch = genericComponent()({
   name: 'VeSwitch',
 
   props: {

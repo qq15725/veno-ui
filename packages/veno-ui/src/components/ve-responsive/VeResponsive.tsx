@@ -1,12 +1,14 @@
 // Styles
 import './styles/ve-responsive.scss'
 
+// Utils
+import { computed } from 'vue'
+import { genericComponent } from '../../utils'
+
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
 
-// Utilities
-import { defineComponent, computed } from 'vue'
-
+// Components
 export function useAspectStyles (props: { aspectRatio?: string | number }) {
   return {
     aspectStyles: computed(() => {
@@ -19,7 +21,10 @@ export function useAspectStyles (props: { aspectRatio?: string | number }) {
   }
 }
 
-export default defineComponent({
+// Types
+export type VeResponsive = InstanceType<typeof VeResponsive>
+
+export const VeResponsive = genericComponent()({
   name: 'VeResponsive',
 
   props: {

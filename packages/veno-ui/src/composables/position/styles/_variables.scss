@@ -1,0 +1,14 @@
+@use '../../../styles/tools/functions';
+
+$positions: (
+  'absolute',
+  'fixed',
+) !default;
+
+$position-props: () !default;
+$position-props: functions.map-deep-merge(
+    (
+      'position': $positions,
+    ),
+    $position-props
+);

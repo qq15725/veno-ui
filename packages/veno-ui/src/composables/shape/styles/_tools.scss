@@ -1,0 +1,18 @@
+@use 'sass:map';
+@use 'variables';
+
+@mixin generate-shape($prop, $name) {
+  border-radius: $prop;
+}
+
+@mixin use-shape($props: variables.$shape-props) {
+  @each $name, $prop in map.get($props, 'shape') {
+    @if ($name == null) {
+      @include generate-shape($prop, $name);
+    } @else {
+      &--#{$name} {
+        @include generate-shape($prop, $name);
+      }
+    }
+  }
+}

@@ -9,22 +9,22 @@ import { convertToUnit, genericComponent } from '../../utils'
 import { makeTagProps } from '../../composables/tag'
 
 // Constants
-const allowedTextAlign = ['left', 'center', 'right'] as const
+const VeDividerTextAligns = ['left', 'center', 'right'] as const
 
 // Types
 import type { PropType } from 'vue'
 
-type DividerStyles = Partial<Record<'maxHeight' | 'maxWidth', string>>
-type DividerTextAlign = typeof allowedTextAlign[number]
+type VeDividerStyles = Partial<Record<'maxHeight' | 'maxWidth', string>>
+type VeDividerTextAlign = typeof VeDividerTextAligns[number]
 
 export const VeDivider = genericComponent()({
   name: 'VeDivider',
 
   props: {
     textAlign: {
-      type: String as PropType<DividerTextAlign>,
+      type: String as PropType<VeDividerTextAlign>,
       default: 'center',
-      validator: (val: DividerTextAlign) => allowedTextAlign.includes(val),
+      validator: (val: VeDividerTextAlign) => VeDividerTextAligns.includes(val),
     },
     length: [Number, String],
     dashed: Boolean,
@@ -36,7 +36,7 @@ export const VeDivider = genericComponent()({
 
   setup (props, { attrs, slots }) {
     const dividerStyles = computed(() => {
-      const styles: DividerStyles = {}
+      const styles: VeDividerStyles = {}
       if (props.length) {
         styles[props.vertical ? 'maxHeight' : 'maxWidth'] = convertToUnit(props.length)
       }

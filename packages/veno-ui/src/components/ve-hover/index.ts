@@ -1,1 +1,1 @@
-export { default as VeHover } from './VeHover'
+export * from './VeHover'

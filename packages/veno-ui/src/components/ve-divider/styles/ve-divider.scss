@@ -10,7 +10,7 @@
   width: 100%;
   font-size: 1rem;
   font-weight: 500;
-  @include tools.use-border($divider-border...);
+  @include tools.use-border($divider-border);
 
   &--dashed {
     border-style: dashed;

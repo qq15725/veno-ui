@@ -1,5 +1,5 @@
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
@@ -15,8 +15,9 @@ import intersect from '../../directives/intersect'
 
 // Types
 import type { PropType } from 'vue'
+export type VeLazy = InstanceType<typeof VeLazy>
 
-export default defineComponent({
+export const VeLazy = genericComponent()({
   name: 'VeLazy',
 
   directives: { intersect },

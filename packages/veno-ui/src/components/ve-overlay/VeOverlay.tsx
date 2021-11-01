@@ -74,6 +74,8 @@ export type OverlaySlots = MakeSlots<{
   activator: [{ isActive: boolean, props: Dictionary<any> }]
 }>
 
+export type VeOverlay = InstanceType<typeof VeOverlay>
+
 export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()({
   name: 'VeOverlay',
 
@@ -276,5 +278,3 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
     }
   },
 })
-
-export type VeOverlay = InstanceType<typeof VeOverlay>

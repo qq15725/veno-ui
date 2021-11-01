@@ -2,7 +2,7 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-// positions
+// position
 $card-positions: absolute fixed !default;
 
 // color
@@ -38,15 +38,30 @@ $card-border-style: settings.$border-style !default;
 $card-border-width: 0 !default;
 $card-border-thin-width: thin !default;
 $card-border-radius: settings.$border-radius !default;
-$card-border: (
-  $card-border-color,
-  $card-border-style,
-  $card-border-width,
-  $card-border-thin-width
-) !default;
 
-// variant
-$card-variant: (
-  $card-background,
-  $card-color
-) !default;
+$card-material: () !default;
+$card-material: tools.map-deep-merge(
+    (
+      'variant': (
+        'contained': (
+          'background': $card-background,
+          'color': $card-color,
+        ),
+      ),
+      'position': $card-positions,
+      'border': (
+        null: (
+          'color': $card-border-color,
+          'style': $card-border-style,
+          'width': $card-border-width,
+        ),
+        '': (
+          'width': $card-border-thin-width,
+        )
+      ),
+      'shape': (
+        null: $card-border-radius,
+      ),
+    ),
+    $card-material
+);

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'sass:math';
 
 @function map-deep-set($map, $keys, $value) {
@@ -13,7 +14,7 @@
   // If $keys is a single key
   // Just merge and return
   @if length($keys) == 1 {
-    @return map-merge($map, ($keys: $value));
+    @return map.merge($map, ($keys: $value));
   }
 
   // Loop from the first to the second to last key from $keys
@@ -22,7 +23,7 @@
   @for $i from 1 through length($keys) - 1 {
     $current-key: nth($keys, $i);
     $current-map: nth($maps, -1);
-    $current-get: map-get($current-map, $current-key);
+    $current-get: map.get($current-map, $current-key);
     @if $current-get == null {
       @error "Key `#{$key}` doesn't exist at current level in map.";
     }
@@ -35,7 +36,7 @@
     $current-map: nth($maps, $i);
     $current-key: nth($keys, $i);
     $current-val: if($i == length($maps), $value, $result);
-    $result: map-merge($current-map, ($current-key: $current-val));
+    $result: map.merge($current-map, ($current-key: $current-val));
   }
 
   // Return result
@@ -44,14 +45,18 @@
 
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-    $map: map-get($map, $key);
+    @if map.has-key($map, $key) {
+      $map: map.get($map, $key);
+    } @else {
+      @return null;
+    }
   }
 
   @return $map;
 }
 
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
+  $min: map.get($breakpoints, $name);
 
   @return if($min != 0, $min, null);
 }
@@ -61,23 +66,25 @@
 }
 
 // Adapted from https://gist.github.com/pentzzsolt/4949bbd7691d43d00616dc4f1451cae9#file-non-destructive-map-merge-4-scss
-@function map-deep-merge($parent-map, $child-map) {
+@function map-deep-merge($parent-map, $child-maps...) {
   $result: $parent-map;
 
-  @each $key, $child in $child-map {
-    $parent-has-key: map-has-key($result, $key);
-    $parent-value: map-get($result, $key);
-    $parent-type: type-of($parent-value);
-    $child-type: type-of($child);
-    $parent-is-map: $parent-type == map;
-    $child-is-map: $child-type == map;
+  @each $child-map in $child-maps {
+    @each $key, $child in $child-map {
+      $parent-has-key: map.has-key($result, $key);
+      $parent-value: map.get($result, $key);
+      $parent-type: type-of($parent-value);
+      $child-type: type-of($child);
+      $parent-is-map: $parent-type == map;
+      $child-is-map: $child-type == map;
 
-    @if (not $parent-has-key)
+      @if (not $parent-has-key)
     or ($parent-type != $child-type)
     or (not ($parent-is-map and $child-is-map)) {
-      $result: map-merge($result, ($key: $child));
-    } @else {
-      $result: map-merge($result, ($key: map-deep-merge($parent-value, $child)));
+        $result: map.merge($result, ($key: $child));
+      } @else {
+        $result: map.merge($result, ($key: map-deep-merge($parent-value, $child)));
+      }
     }
   }
 

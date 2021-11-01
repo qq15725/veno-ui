@@ -1,2 +1,2 @@
-export { default as VeCarousel } from './VeCarousel'
-export { default as VeCarouselItem } from './VeCarouselItem'
+export * from './VeCarousel'
+export * from './VeCarouselItem'

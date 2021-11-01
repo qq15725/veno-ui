@@ -1,0 +1,19 @@
+@use '../../../styles/tools/functions';
+
+$shape-border-radius: 4px !default;
+$shape-border-radius-tile: 0 !default;
+$shape-border-radius-rounded: 34px !default;
+
+$shapes: (
+  null: $shape-border-radius,
+  'tile': $shape-border-radius-tile,
+  'rounded': $shape-border-radius-rounded,
+) !default;
+
+$shape-props: () !default;
+$shape-props: functions.map-deep-merge(
+    (
+      'shape': $shapes,
+    ),
+    $shape-props
+);

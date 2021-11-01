@@ -7,10 +7,7 @@
   display: block;
   color: $card-color;
   text-decoration: none;
-  @include tools.use-border($card-border...);
-  @include tools.use-variant($card-variant...);
-  @include tools.use-position($card-positions);
-  @include tools.use-rounded($card-border-radius);
+  @include tools.use-material($card-material);
 
   &__overlay {
     @include tools.absolute();

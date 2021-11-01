@@ -1,1 +1,1 @@
-export { default as VeResponsive } from './VeResponsive'
+export * from './VeResponsive'

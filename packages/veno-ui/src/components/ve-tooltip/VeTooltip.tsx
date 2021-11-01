@@ -17,6 +17,7 @@ import { genericComponent, getUid } from '../../utils'
 import type { PropType } from 'vue'
 import type { OverlaySlots } from '../ve-overlay'
 import type { StrategyProps } from '../ve-overlay/composables/position-strategies'
+export type VeTooltip = InstanceType<typeof VeTooltip>
 
 export const VeTooltip = genericComponent<new () => {
   $slots: OverlaySlots
@@ -110,5 +111,3 @@ export const VeTooltip = genericComponent<new () => {
     }
   },
 })
-
-export type VeTooltip = InstanceType<typeof VeTooltip>

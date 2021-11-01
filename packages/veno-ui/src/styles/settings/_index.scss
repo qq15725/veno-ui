@@ -1,6 +1,6 @@
 @forward 'variables';
 @forward 'transition';
-@forward 'borders';
+@forward 'border';
 @forward 'rounded';
 @forward 'grid';
 @forward 'colors';
@@ -8,6 +8,6 @@
 @forward 'disabled';
 @forward 'typography';
 @forward 'states';
-@forward 'size';
 @forward 'display';
 @forward 'elevation';
+@forward '../../composables/settings';

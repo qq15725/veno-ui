@@ -2,8 +2,12 @@
 import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
+// Constants
+export const SHAPES = ['tile', 'default', 'rounded'] as const
+
 // Types
 import type { MaybeRef } from '../../utils'
+type Shape = typeof SHAPES[number]
 
 export interface ShapeProps
 {

@@ -2,14 +2,17 @@
 import './styles/ve-input.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
-export const VeInput = defineComponent({
+// Types
+export type VeInput = InstanceType<typeof VeInput>
+
+export const VeInput = genericComponent()({
   name: 'VeInput',
 
   props: {

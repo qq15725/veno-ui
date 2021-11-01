@@ -6,16 +6,23 @@
   position: relative;
   padding: 16px;
   display: flex;
-  @include tools.use-border();
-  @include tools.use-variant();
-  @include tools.use-rounded();
+  @include tools.use-material();
 
-  &__icon {
-    margin-right: 8px;
+  &__avatar {
+    margin-inline-end: 8px;
+    max-height: 24px;
+    max-width: 24px;
+
+    .ve-avatar {
+      height: auto;
+      width: auto;
+      max-width: inherit;
+      max-height: inherit;
+    }
   }
 
   &__close {
-    margin-left: 8px;
+    margin-inline-start: 8px;
   }
 
   &:before {

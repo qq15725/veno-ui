@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use 'variables';
+
+@mixin use-position($props: variables.$position-props) {
+  $important: map.get($props, 'position-important');
+
+  @each $position in map.get($props, 'position') {
+    &--#{$position} {
+      position: #{$position} if($important, !important, null);
+    }
+  }
+}

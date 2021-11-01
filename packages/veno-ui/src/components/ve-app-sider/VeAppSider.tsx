@@ -2,7 +2,8 @@
 import './styles/ve-app-sider.scss'
 
 // Utils
-import { defineComponent, computed, toRef, onBeforeMount, watch } from 'vue'
+import { computed, toRef, onBeforeMount, watch } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -16,8 +17,9 @@ import { VeOverlay } from '../ve-overlay'
 
 // Types
 import type { PropType } from 'vue'
+export type VeAppSider = InstanceType<typeof VeAppSider>
 
-export default defineComponent({
+export const VeAppSider = genericComponent()({
   name: 'VeAppSider',
 
   props: {

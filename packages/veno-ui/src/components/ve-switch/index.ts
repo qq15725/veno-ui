@@ -1,1 +1,1 @@
-export { default as VeSwitch } from './VeSwitch'
+export * from './VeSwitch'

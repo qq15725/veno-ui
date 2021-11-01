@@ -1,1 +1,1 @@
-export { default as VeModal } from './VeModal'
+export * from './VeModal'

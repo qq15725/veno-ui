@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use 'variables';
+
+@mixin generate-border($prop, $name) {
+  $important: map.get($prop, 'important');
+  border-color: map.get($prop, 'color') if($important, !important, null);
+  border-style: map.get($prop, 'style') if($important, !important, null);
+  border-width: map.get($prop, 'width') if($important, !important, null);
+}
+
+@mixin use-border($props: variables.$border-props) {
+  @each $name, $prop in map.get($props, 'border') {
+    @if ($name == null) {
+      @include generate-border($prop, $name);
+    } @else if ($name == '') {
+      &--border {
+        @include generate-border($prop, $name);
+      }
+    } @else {
+      &--border-#{$name} {
+        @include generate-border($prop, $name);
+      }
+    }
+  }
+}

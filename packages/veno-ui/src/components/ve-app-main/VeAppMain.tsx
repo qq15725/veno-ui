@@ -1,14 +1,19 @@
 // Styles
 import './styles/ve-app-main.scss'
 
-// Utilities
-import { computed, defineComponent, unref } from 'vue'
+// Utils
+import { computed, unref } from 'vue'
+import { genericComponent } from '../../utils'
 
+// Composables
 import { makeTagProps } from '../../composables/tag'
 import { useMain } from '../../composables/layout'
 import { makeColorProps, useColor } from '../../composables/color'
 
-export default defineComponent({
+// Types
+export type VeAppMain = InstanceType<typeof VeAppMain>
+
+export const VeAppMain = genericComponent()({
   name: 'VeAppMain',
 
   props: {

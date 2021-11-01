@@ -1,0 +1,24 @@
+@use 'sass:math';
+@use '../../../styles/tools/functions';
+
+$border-color: rgba(var(--ve-border-color), var(--ve-border-opacity)) !default;
+$border-style: solid !default;
+$border-width: thin !default;
+
+$border-props: () !default;
+$border-props: functions.map-deep-merge(
+    (
+      'border': (
+        null: (
+          'color': $border-color,
+          'style': $border-style,
+          'width': $border-width,
+          'important': false,
+        ),
+        '': (
+          'width': $border-width,
+        )
+      )
+    ),
+    $border-props
+);

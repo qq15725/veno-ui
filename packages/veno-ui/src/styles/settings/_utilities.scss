@@ -1,7 +1,7 @@
 @use '../tools/functions';
 @use 'variables';
 @use 'typography';
-@use 'borders';
+@use 'border';
 @use 'rounded';
 
 $spacers: () !default;
@@ -388,32 +388,32 @@ $utilities: functions.map-deep-merge(
       "border": (
         property: border-width border-style border-color,
         class: border,
-        values: borders.$borders
+        values: border.$borders
       ),
       "border-opacity": (
         property: --ve-border-opacity,
         class: border-opacity,
-        values: borders.$border-opacities
+        values: border.$border-opacities
       ),
       "border-top": (
         property: border-top-width border-top-style border-top-color,
         class: border-t,
-        values: borders.$borders
+        values: border.$borders
       ),
       "border-right": (
         property: border-right-width border-right-style border-right-color,
         class: border-r,
-        values: borders.$borders
+        values: border.$borders
       ),
       "border-bottom": (
         property: border-bottom-width border-bottom-style border-bottom-color,
         class: border-b,
-        values: borders.$borders
+        values: border.$borders
       ),
       "border-left": (
         property: border-left-width border-left-style border-left-color,
         class: border-l,
-        values: borders.$borders
+        values: border.$borders
       ),
       "border-style": (
         property: border-style,

@@ -2,11 +2,8 @@
 import './styles/ve-modal.scss'
 
 // Utils
-import {
-  defineComponent,
-  computed,
-} from 'vue'
-import { getUid } from '../../utils'
+import { computed } from 'vue'
+import { genericComponent, getUid } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -16,7 +13,10 @@ import { makeTransitionProps } from '../../composables/transition'
 import { VeModalTransition } from '../ve-transition'
 import { VeOverlay } from '../ve-overlay'
 
-export default defineComponent({
+// Types
+export type VeModal = InstanceType<typeof VeModal>
+
+export const VeModal = genericComponent()({
   name: 'VeModal',
 
   props: {

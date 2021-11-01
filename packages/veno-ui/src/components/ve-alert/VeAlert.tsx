@@ -2,7 +2,8 @@
 import './styles/ve-alert.scss'
 
 // Utils
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -15,14 +16,15 @@ import { VeAvatar } from '../ve-avatar'
 import { VeFadeTransition } from '../ve-transition'
 
 // Constants
-const allowedTypes = ['success', 'info', 'warning', 'error'] as const
+export const VeAlertTypes = ['success', 'info', 'warning', 'error'] as const
 
 // Types
 import type { PropType } from 'vue'
 
-type AlertType = typeof allowedTypes[number]
+export type VeAlertType = typeof VeAlertTypes[number]
+export type VeAlert = InstanceType<typeof VeAlert>
 
-export default defineComponent({
+export const VeAlert = genericComponent()({
   name: 'VeAlert',
 
   props: {
@@ -32,8 +34,8 @@ export default defineComponent({
     },
     title: String,
     type: {
-      type: String as PropType<AlertType>,
-      validator: (val: AlertType) => allowedTypes.includes(val),
+      type: String as PropType<VeAlertType>,
+      validator: (val: VeAlertType) => VeAlertTypes.includes(val),
     },
     icon: {
       type: [Boolean, String] as PropType<false | string>,
@@ -83,7 +85,7 @@ export default defineComponent({
               ] }
             >
               { props.type && (
-                <div class="ve-alert__icon">
+                <div class="ve-alert__avatar">
                   <VeAvatar
                     icon={ icon.value }
                     color="transparent"
@@ -106,13 +108,11 @@ export default defineComponent({
                 <div class="ve-alert__close">
                   { slots.close
                     ? slots.close({ props: { onClick: onCloseClick } })
-                    : (
-                      <VeButton
-                        icon={ props.closeIcon }
-                        variant="text"
-                        onClick={ onCloseClick }
-                      />
-                    )
+                    : <VeButton
+                      icon={ props.closeIcon }
+                      variant="text"
+                      onClick={ onCloseClick }
+                    />
                   }
                 </div>
               ) }

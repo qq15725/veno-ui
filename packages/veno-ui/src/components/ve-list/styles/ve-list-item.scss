@@ -9,11 +9,8 @@
   position: relative;
   outline: none;
   text-decoration: none;
-
+  @include tools.use-material($list-item-material);
   @include tools.states(#{&}__overlay);
-  @include tools.use-border($list-item-border...);
-  @include tools.use-rounded($list-item-border-radius);
-  @include tools.use-variant($list-item-variants...);
 
   &__overlay {
     @include tools.absolute();

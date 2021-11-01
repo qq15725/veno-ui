@@ -25,16 +25,30 @@ $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
 $list-item-border-radius: settings.$border-radius !default;
 
-$list-item-border: (
-  $list-item-border-color,
-  $list-item-border-style,
-  $list-item-border-width,
-  $list-item-border-thin-width
-) !default;
-
-$list-item-variants: (
-  $list-background,
-  $list-color
+$list-item-material: () !default;
+$list-item-material: tools.map-deep-merge(
+    (
+      'variant': (
+        'contained': (
+          'background': $list-background,
+          'color': $list-color,
+        ),
+      ),
+      'border': (
+        null: (
+          'color': $list-item-border-color,
+          'style': $list-item-border-style,
+          'width': $list-item-border-width,
+        ),
+        '': (
+          'width': $list-item-border-thin-width,
+        )
+      ),
+      'shape': (
+        null: $list-item-border-radius,
+      ),
+    ),
+    $list-item-material
 );
 
 // ListItemTitle

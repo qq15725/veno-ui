@@ -17,6 +17,9 @@ import { VeListItemHeader } from './VeListItemHeader'
 import { VeListItemTitle } from './VeListItemTitle'
 import { VeListItemSubtitle } from './VeListItemSubtitle'
 
+// Types
+export type VeListItem = InstanceType<typeof VeListItem>
+
 export const VeListItem = genericComponent()({
   name: 'VeListItem',
 
@@ -137,5 +140,3 @@ export const VeListItem = genericComponent()({
     }
   },
 })
-
-export type VeListItem = InstanceType<typeof VeListItem>

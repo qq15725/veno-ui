@@ -1,1 +1,1 @@
-export { default as VeAlert } from './VeAlert'
+export * from './VeAlert'

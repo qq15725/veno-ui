@@ -13,10 +13,14 @@ $app-bar-border-style: settings.$border-style !default;
 $app-bar-border-width: 0 !default;
 $app-bar-border-thin-width: 0 0 thin !default;
 $app-bar-border: (
-  $app-bar-border-color,
-  $app-bar-border-style,
-  $app-bar-border-width,
-  $app-bar-border-thin-width
+  border: (
+    null: (
+      'color':$app-bar-border-color,
+      'style':$app-bar-border-style,
+      'width': $app-bar-border-width,
+      // $app-bar-border-thin-width
+    )
+  )
 ) !default;
 
 // title

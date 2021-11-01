@@ -1,1 +1,1 @@
-export { default as VeAppSider } from './VeAppSider'
+export * from './VeAppSider'
