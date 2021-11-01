@@ -18,7 +18,9 @@ $app-bar-border: (
       'color':$app-bar-border-color,
       'style':$app-bar-border-style,
       'width': $app-bar-border-width,
-      // $app-bar-border-thin-width
+    ),
+    '': (
+      'width': $app-bar-border-thin-width,
     )
   )
 ) !default;
