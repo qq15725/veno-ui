@@ -35,17 +35,17 @@ $list-item-material: tools.map-deep-merge(
         ),
       ),
       'borders': (
-        null: (
+        'default': (
           'color': $list-item-border-color,
           'style': $list-item-border-style,
           'width': $list-item-border-width,
         ),
-        '': (
+        'existence': (
           'width': $list-item-border-thin-width,
         )
       ),
       'shapes': (
-        null: $list-item-border-radius,
+        'default': $list-item-border-radius,
       ),
     ),
     $list-item-material

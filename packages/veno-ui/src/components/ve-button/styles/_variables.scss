@@ -48,17 +48,17 @@ $button-material: tools.map-deep-merge(
         ),
       ),
       'borders': (
-        null: (
+        'default': (
           'color': $button-border-color,
           'style': $button-border-style,
           'width': $button-border-width,
         ),
-        '': (
+        'existence': (
           'width': $button-border-thin-width,
         )
       ),
       'shapes': (
-        null: $button-border-radius,
+        'default': $button-border-radius,
       ),
     ),
     $button-material

@@ -9,16 +9,16 @@ $avatar-border-radius: settings.$border-radius !default;
 
 $avatar-material: (
   'borders': (
-    null: (
+    'default': (
       'color': $avatar-border-color,
       'style': $avatar-border-style,
       'width': $avatar-border-width,
     ),
-    '': (
+    'existence': (
       'width': $avatar-border-thin-width,
     ),
   ),
   'shapes': (
-    null: $avatar-border-radius,
+    'default': $avatar-border-radius,
   )
 ) !default;

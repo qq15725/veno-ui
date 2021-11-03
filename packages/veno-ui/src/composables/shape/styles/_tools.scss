@@ -10,7 +10,7 @@
   $props: functions.map-deep-merge(variables.$shape-props, $props);
   
   @each $name, $prop in map.get($props, 'shapes') {
-    @if ($name == null) {
+    @if ($name == 'default') {
       @include generate-shape($prop, $name);
     } @else {
       &--#{$name} {

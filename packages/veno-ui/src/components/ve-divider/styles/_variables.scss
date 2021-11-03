@@ -5,7 +5,7 @@ $divider-border-color: settings.$border-color !default;
 $divider-border-style: settings.$border-style !default;
 $divider-border-width: 0 !default;
 $divider-borders: (
-  null: (
+  'default': (
     'color': $divider-border-color,
     'style': $divider-border-style,
     'width': $divider-border-width,

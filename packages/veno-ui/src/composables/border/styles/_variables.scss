@@ -9,13 +9,13 @@ $border-props: () !default;
 $border-props: functions.map-deep-merge(
     (
       'borders': (
-        null: (
+        'default': (
           'color': $border-color,
           'style': $border-style,
           'width': $border-width,
           'important': false,
         ),
-        '': (
+        'existence': (
           'width': $border-width,
         )
       )

@@ -50,17 +50,17 @@ $card-material: tools.map-deep-merge(
       ),
       'positions': $card-positions,
       'borders': (
-        null: (
+        'default': (
           'color': $card-border-color,
           'style': $card-border-style,
           'width': $card-border-width,
         ),
-        '': (
+        'existence': (
           'width': $card-border-thin-width,
         )
       ),
       'shapes': (
-        null: $card-border-radius,
+        'default': $card-border-radius,
       ),
     ),
     $card-material

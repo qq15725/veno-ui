@@ -9,7 +9,7 @@ $variants: functions.map-deep-merge(
       ),
     ),
     $variants
-) !default;
+);
 
 $variant-props: () !default;
 $variant-props: functions.map-deep-merge(

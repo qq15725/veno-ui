@@ -13,9 +13,9 @@
   $props: functions.map-deep-merge(variables.$border-props, $props);
 
   @each $name, $prop in map.get($props, 'borders') {
-    @if ($name == null) {
+    @if ($name == 'default') {
       @include generate-border($prop, $name);
-    } @else if ($name == '') {
+    } @else if ($name == 'existence') {
       &--border {
         @include generate-border($prop, $name);
       }
