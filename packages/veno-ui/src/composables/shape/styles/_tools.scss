@@ -1,12 +1,15 @@
 @use 'sass:map';
 @use 'variables';
+@use '../../../styles/tools/functions';
 
 @mixin generate-shape($prop, $name) {
   border-radius: $prop;
 }
 
-@mixin use-shape($props: variables.$shape-props) {
-  @each $name, $prop in map.get($props, 'shape') {
+@mixin use-shape($props: ()) {
+  $props: functions.map-deep-merge(variables.$shape-props, $props);
+  
+  @each $name, $prop in map.get($props, 'shapes') {
     @if ($name == null) {
       @include generate-shape($prop, $name);
     } @else {

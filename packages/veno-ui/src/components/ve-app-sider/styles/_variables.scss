@@ -7,15 +7,13 @@ $app-sider-border-style: settings.$border-style !default;
 $app-sider-border-width: 0 !default;
 $app-sider-border-thin-width: thin !default;
 $app-sider-border-radius: map-get(settings.$rounded, '0') !default;
-$app-sider-border: (
-  'border': (
-    null: (
-      'color': $app-sider-border-color,
-      'style': $app-sider-border-style,
-      'width': $app-sider-border-width,
-    ),
-    '': (
-      'width': $app-sider-border-thin-width,
-    )
+$app-sider-borders: (
+  null: (
+    'color': $app-sider-border-color,
+    'style': $app-sider-border-style,
+    'width': $app-sider-border-width,
+  ),
+  '': (
+    'width': $app-sider-border-thin-width,
   )
 ) !default;

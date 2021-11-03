@@ -11,7 +11,7 @@ $sizes: (
 $size-props: () !default;
 $size-props: functions.map-deep-merge(
     (
-      'size': $sizes,
+      'sizes': $sizes,
     ),
     $size-props
 );

@@ -8,7 +8,7 @@ $avatar-border-thin-width: thin !default;
 $avatar-border-radius: settings.$border-radius !default;
 
 $avatar-material: (
-  'border': (
+  'borders': (
     null: (
       'color': $avatar-border-color,
       'style': $avatar-border-style,
@@ -18,7 +18,7 @@ $avatar-material: (
       'width': $avatar-border-thin-width,
     ),
   ),
-  'shape': (
+  'shapes': (
     null: $avatar-border-radius,
   )
 ) !default;

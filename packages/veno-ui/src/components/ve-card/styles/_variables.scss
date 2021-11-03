@@ -42,14 +42,14 @@ $card-border-radius: settings.$border-radius !default;
 $card-material: () !default;
 $card-material: tools.map-deep-merge(
     (
-      'variant': (
+      'variants': (
         'contained': (
           'background': $card-background,
           'color': $card-color,
         ),
       ),
-      'position': $card-positions,
-      'border': (
+      'positions': $card-positions,
+      'borders': (
         null: (
           'color': $card-border-color,
           'style': $card-border-style,
@@ -59,7 +59,7 @@ $card-material: tools.map-deep-merge(
           'width': $card-border-thin-width,
         )
       ),
-      'shape': (
+      'shapes': (
         null: $card-border-radius,
       ),
     ),

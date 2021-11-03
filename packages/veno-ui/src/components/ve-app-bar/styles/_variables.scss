@@ -12,16 +12,14 @@ $app-bar-border-radius: map-get(settings.$rounded, '0') !default;
 $app-bar-border-style: settings.$border-style !default;
 $app-bar-border-width: 0 !default;
 $app-bar-border-thin-width: 0 0 thin !default;
-$app-bar-border: (
-  border: (
-    null: (
-      'color':$app-bar-border-color,
-      'style':$app-bar-border-style,
-      'width': $app-bar-border-width,
-    ),
-    '': (
-      'width': $app-bar-border-thin-width,
-    )
+$app-bar-borders: (
+  null: (
+    'color':$app-bar-border-color,
+    'style':$app-bar-border-style,
+    'width': $app-bar-border-width,
+  ),
+  '': (
+    'width': $app-bar-border-thin-width,
   )
 ) !default;
 

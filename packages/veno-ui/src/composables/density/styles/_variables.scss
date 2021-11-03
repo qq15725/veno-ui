@@ -9,7 +9,7 @@ $densities: (
 $density-props: () !default;
 $density-props: functions.map-deep-merge(
     (
-      'density': $densities,
+      'densities': $densities,
     ),
     $density-props
 );

@@ -8,7 +8,7 @@ $border-width: thin !default;
 $border-props: () !default;
 $border-props: functions.map-deep-merge(
     (
-      'border': (
+      'borders': (
         null: (
           'color': $border-color,
           'style': $border-style,

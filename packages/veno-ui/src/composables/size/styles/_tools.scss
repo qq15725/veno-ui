@@ -1,8 +1,11 @@
 @use 'sass:map';
 @use 'variables';
+@use '../../../styles/tools/functions';
 
-@mixin use-size($props: variables.$size-props) {
-  @each $name, $multiplier in map.get($props, 'size') {
+@mixin use-size($props: ()) {
+  $props: functions.map-deep-merge(variables.$size-props, $props);
+
+  @each $name, $multiplier in map.get($props, 'sizes') {
     &--size-#{$name} {
       --ve-size: #{$multiplier};
     }

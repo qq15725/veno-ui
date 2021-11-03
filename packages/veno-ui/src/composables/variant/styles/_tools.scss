@@ -2,7 +2,10 @@
 @use 'variables';
 @use '../../../styles/tools/functions';
 
-@mixin use-variant($props: variables.$variant-props) {
+@mixin use-variant($props: ()) {
+  $props: functions.map-deep-merge(variables.$variant-props, $props);
+  $variants: map.get($props, 'variants');
+
   &--variant-outlined,
   &--variant-text {
     background: transparent;
@@ -10,8 +13,8 @@
   }
 
   &--variant-contained {
-    background: functions.map-deep-get($props, 'variant', 'contained', 'background');
-    color: functions.map-deep-get($props, 'variant', 'contained', 'color');
+    background: functions.map-deep-get($variants, 'contained', 'background');
+    color: functions.map-deep-get($variants, 'contained', 'color');
     border-width: var(--ve-variant-border-width, thin);
   }
 

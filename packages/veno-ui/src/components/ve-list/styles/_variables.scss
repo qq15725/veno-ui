@@ -28,13 +28,13 @@ $list-item-border-radius: settings.$border-radius !default;
 $list-item-material: () !default;
 $list-item-material: tools.map-deep-merge(
     (
-      'variant': (
+      'variants': (
         'contained': (
           'background': $list-background,
           'color': $list-color,
         ),
       ),
-      'border': (
+      'borders': (
         null: (
           'color': $list-item-border-color,
           'style': $list-item-border-style,
@@ -44,7 +44,7 @@ $list-item-material: tools.map-deep-merge(
           'width': $list-item-border-thin-width,
         )
       ),
-      'shape': (
+      'shapes': (
         null: $list-item-border-radius,
       ),
     ),

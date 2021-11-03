@@ -4,12 +4,10 @@
 $divider-border-color: settings.$border-color !default;
 $divider-border-style: settings.$border-style !default;
 $divider-border-width: 0 !default;
-$divider-border: (
-  'border': (
-    null: (
-      'color': $divider-border-color,
-      'style': $divider-border-style,
-      'width': $divider-border-width,
-    )
+$divider-borders: (
+  null: (
+    'color': $divider-border-color,
+    'style': $divider-border-style,
+    'width': $divider-border-width,
   )
 ) !default;

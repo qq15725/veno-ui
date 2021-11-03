@@ -41,13 +41,13 @@ $button-border-radius: settings.$border-radius !default;
 $button-material: () !default;
 $button-material: tools.map-deep-merge(
     (
-      'variant': (
+      'variants': (
         'contained': (
           'background': $button-background,
           'color': $button-color,
         ),
       ),
-      'border': (
+      'borders': (
         null: (
           'color': $button-border-color,
           'style': $button-border-style,
@@ -57,7 +57,7 @@ $button-material: tools.map-deep-merge(
           'width': $button-border-thin-width,
         )
       ),
-      'shape': (
+      'shapes': (
         null: $button-border-radius,
       ),
     ),

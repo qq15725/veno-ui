@@ -1,10 +1,12 @@
 @use 'sass:map';
 @use 'variables';
+@use '../../../styles/tools/functions';
 
-@mixin use-position($props: variables.$position-props) {
+@mixin use-position($props: ()) {
+  $props: functions.map-deep-merge(variables.$position-props, $props);
   $important: map.get($props, 'position-important');
 
-  @each $position in map.get($props, 'position') {
+  @each $position in map.get($props, 'positions') {
     &--#{$position} {
       position: #{$position} if($important, !important, null);
     }

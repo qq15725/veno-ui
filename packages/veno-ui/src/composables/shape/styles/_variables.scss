@@ -13,7 +13,7 @@ $shapes: (
 $shape-props: () !default;
 $shape-props: functions.map-deep-merge(
     (
-      'shape': $shapes,
+      'shapes': $shapes,
     ),
     $shape-props
 );

@@ -1,16 +1,20 @@
 @use '../../../styles/tools/functions';
 
-$variants: (
-  'contained': (
-    'background': rgb(var(--ve-theme-surface)),
-    'color': rgb(var(--ve-theme-on-surface)),
-  ),
-);
+$variants: () !default;
+$variants: functions.map-deep-merge(
+    (
+      'contained': (
+        'background': rgb(var(--ve-theme-surface)),
+        'color': rgb(var(--ve-theme-on-surface)),
+      ),
+    ),
+    $variants
+) !default;
 
 $variant-props: () !default;
 $variant-props: functions.map-deep-merge(
     (
-      'variant': $variants,
+      'variants': $variants,
     ),
     $variant-props
 );

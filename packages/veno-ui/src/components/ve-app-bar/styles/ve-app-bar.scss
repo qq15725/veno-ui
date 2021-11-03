@@ -17,7 +17,7 @@
   transition-property: height, transform;
   color: $app-bar-color;
   background: $app-bar-background;
-  @include tools.use-border($app-bar-border);
+  @include tools.use-border(('borders': $app-bar-borders));
 
   &__wrap {
     align-items: center;

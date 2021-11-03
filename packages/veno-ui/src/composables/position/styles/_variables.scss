@@ -8,7 +8,7 @@ $positions: (
 $position-props: () !default;
 $position-props: functions.map-deep-merge(
     (
-      'position': $positions,
+      'positions': $positions,
     ),
     $position-props
 );

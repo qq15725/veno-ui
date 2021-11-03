@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'variables';
+@use '../../../styles/tools/functions';
 
 @mixin generate-border($prop, $name) {
   $important: map.get($prop, 'important');
@@ -8,8 +9,10 @@
   border-width: map.get($prop, 'width') if($important, !important, null);
 }
 
-@mixin use-border($props: variables.$border-props) {
-  @each $name, $prop in map.get($props, 'border') {
+@mixin use-border($props: ()) {
+  $props: functions.map-deep-merge(variables.$border-props, $props);
+
+  @each $name, $prop in map.get($props, 'borders') {
     @if ($name == null) {
       @include generate-border($prop, $name);
     } @else if ($name == '') {
