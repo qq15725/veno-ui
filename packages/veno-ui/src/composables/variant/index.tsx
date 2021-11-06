@@ -19,14 +19,20 @@ export type Variant = typeof allowedVariants[number]
 
 export interface VariantProps
 {
-  color?: string
-  textColor?: string
+  color?: string | false | null
+  textColor?: string | false | null
   variant: Variant
 }
 
 export const makeVariantProps = propsFactory({
-  color: String,
-  textColor: String,
+  color: {
+    type: [String, Boolean] as PropType<string | false | null>,
+    default: undefined,
+  },
+  textColor: {
+    type: [String, Boolean] as PropType<string | false | null>,
+    default: undefined,
+  },
   variant: {
     type: String as PropType<Variant>,
     default: 'contained',
@@ -58,7 +64,7 @@ export function useVariant (props: MaybeRef<VariantProps>, name: string) {
 
     const { variant, color } = unref(props)
 
-    if (variant === 'contained' && color !== undefined) {
+    if (variant === 'contained' && color) {
       styles['--ve-variant-border-width'] = 0
     }
 

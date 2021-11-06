@@ -2,7 +2,7 @@
 import './styles/ve-avatar.scss'
 
 // Utils
-import { ref } from 'vue'
+import { ref, toRef, watch } from 'vue'
 import { genericComponent } from '../../utils'
 import { Resize } from '../../directives/resize'
 
@@ -12,6 +12,9 @@ import { makeMaterialProps, useMaterial } from '../../composables/material'
 // Components
 import { VeImage } from '../ve-image'
 import { VeIcon } from '../ve-icon'
+
+// Types
+export type VeAvatar = InstanceType<typeof VeAvatar>
 
 export const VeAvatar = genericComponent()({
   name: 'VeAvatar',
@@ -25,7 +28,8 @@ export const VeAvatar = genericComponent()({
     ...makeMaterialProps({
       color: 'grey',
       textColor: 'white',
-    }),
+      variant: 'contained',
+    } as const),
   },
 
   setup (props, { slots }) {
@@ -44,6 +48,8 @@ export const VeAvatar = genericComponent()({
         wrapRef.value.style.transform = `translateX(-50%) translateY(-50%) scale(${ ratio })`
       }
     }
+
+    watch(toRef(props, 'text'), fitSizeTransform)
 
     return () => {
       const hasImage = !!props.image
@@ -81,5 +87,3 @@ export const VeAvatar = genericComponent()({
     }
   }
 })
-
-export type VeAvatar = InstanceType<typeof VeAvatar>

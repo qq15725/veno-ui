@@ -103,6 +103,8 @@ export const VeCard = defineComponent({
                   { slots.prepend
                     ? slots.prepend()
                     : (<VeAvatar
+                      color={ false }
+                      variant="text"
                       icon={ props.prependIcon }
                       image={ props.prependAvatar }
                     />) }
@@ -130,6 +132,8 @@ export const VeCard = defineComponent({
                   { slots.append
                     ? slots.append()
                     : (<VeAvatar
+                      color={ false }
+                      variant="text"
                       icon={ props.appendIcon }
                       image={ props.appendAvatar }
                     />) }

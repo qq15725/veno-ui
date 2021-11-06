@@ -92,6 +92,8 @@ export const VeListItem = genericComponent()({
               : (
                 <VeListItemAvatar left>
                   <VeAvatar
+                    color={ false }
+                    variant="text"
                     icon={ props.prependIcon }
                     image={ props.prependAvatar }
                   />
@@ -129,6 +131,8 @@ export const VeListItem = genericComponent()({
               : (
                 <VeListItemAvatar right>
                   <VeAvatar
+                    color={ false }
+                    variant="text"
                     icon={ props.appendIcon }
                     image={ props.appendAvatar }
                   />

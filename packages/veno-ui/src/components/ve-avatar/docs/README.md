@@ -12,6 +12,6 @@ color.md shape.md
 
 size.md slot.md
 
-icon.md
+icon.md fit-size.md
 
 :::
