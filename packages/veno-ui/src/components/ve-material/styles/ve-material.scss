@@ -4,9 +4,26 @@
 .ve-material {
   position: relative;
   display: block;
-  width: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
-  height: calc(80px + var(--ve-size, 0) * #{settings.$spacer * 2});
-  @include tools.use-material();
+
+  @include tools.use-material((
+    'use-size': false,
+    'use-density': false,
+  ));
+
+  @each $name, $multiplier in settings.$sizes {
+    &--size-#{$name} {
+      $height: 80px + $multiplier * settings.$spacer * 2;
+      --ve-material-height: #{$height};
+      width: $height;
+      height: $height;
+    }
+  }
+
+  @each $name, $multiplier in settings.$densities {
+    &--density-#{$name} {
+      height: calc(var(--ve-material-height) + #{$multiplier * settings.$spacer * 2});
+    }
+  }
 
   &--text-center {
     display: flex;

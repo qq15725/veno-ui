@@ -47,6 +47,9 @@ $button-material: tools.map-deep-merge(
           'color': $button-color,
         ),
       ),
+      'positions': absolute fixed,
+      'use-size': false,
+      'use-density': false,
       'borders': (
         'default': (
           'color': $button-border-color,

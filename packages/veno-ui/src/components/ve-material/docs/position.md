@@ -4,7 +4,7 @@
 
 ```html
 <ve-grid dense>
-  <ve-material text-center position="relative" left="100" />
+  <ve-material text-center size="medium" position="relative" left="100" />
 </ve-grid>
 ```
 

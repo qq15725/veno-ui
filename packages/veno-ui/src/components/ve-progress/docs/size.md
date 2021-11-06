@@ -2,7 +2,7 @@
 
 # 尺寸
 
-有 `x-small`、`small`、`default`、`large` 和 `x-large` 尺寸。
+有 `x-small`、`small`、`medium`、`large` 和 `x-large` 尺寸。
 
 ```html
 <ve-grid dense align="center">

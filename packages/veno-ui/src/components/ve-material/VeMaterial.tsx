@@ -19,7 +19,10 @@ export const VeMaterial = genericComponent<new <T>() => {
 
   props: {
     textCenter: Boolean,
-    ...makeMaterialProps(),
+    ...makeMaterialProps({
+      size: null,
+      density: null,
+    }),
   },
 
   setup (props, { slots }) {

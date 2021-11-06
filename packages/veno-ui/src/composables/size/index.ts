@@ -3,7 +3,7 @@ import { computed, unref } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
 
 // Constants
-export const SIZES = ['x-small', 'small', 'default', 'large', 'x-large']
+export const SIZES = [null, 'x-small', 'small', 'medium', 'large', 'x-large']
 
 // Types
 import type { MaybeRef } from '../../utils'
@@ -11,13 +11,13 @@ type Size = typeof SIZES[number]
 
 export interface SizeProps
 {
-  size?: string | number
+  size?: string | number | null
 }
 
 export const makeSizeProps = propsFactory({
   size: {
     type: [String, Number],
-    default: 'default',
+    default: 'medium',
   },
 }, 'size')
 

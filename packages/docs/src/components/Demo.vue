@@ -85,7 +85,7 @@ const icons = {
     </ve-expand-transition>
 
     <ve-lazy>
-      <ve-material tile :theme="theme" size="auto" border="0">
+      <ve-material tile :theme="theme" border="0">
         <ve-card-text>
           <slot />
         </ve-card-text>

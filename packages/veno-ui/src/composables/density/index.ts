@@ -1,12 +1,13 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Constants
-const DENSITIES = [null, 'default', 'comfortable', 'compact'] as const
+const DENSITIES = [null, 'medium', 'comfortable', 'compact'] as const
 
 // Types
 import type { PropType } from 'vue'
+import type { MaybeRef } from '../../utils'
 
 export type Density = typeof DENSITIES[number]
 
@@ -19,14 +20,20 @@ export interface DensityProps
 export const makeDensityProps = propsFactory({
   density: {
     type: String as PropType<Density>,
-    default: 'default',
+    default: 'medium',
     validator: (v: any) => DENSITIES.includes(v),
   },
 }, 'density')
 
-export function useDensity (props: DensityProps, name: string) {
+export function useDensity (props: MaybeRef<DensityProps>, name: string) {
   const densityClasses = computed(() => {
-    return `${ name }--density-${ props.density }`
+    const { density } = unref(props)
+
+    if (density) {
+      return `${ name }--density-${ density }`
+    }
+
+    return null
   })
 
   return { densityClasses }

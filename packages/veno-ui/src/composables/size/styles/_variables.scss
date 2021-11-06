@@ -3,7 +3,7 @@
 $sizes: (
   'x-small': -2,
   'small': -1,
-  'default': 0,
+  'medium': 0,
   'large': 1,
   'x-large': 2
 ) !default;
@@ -11,6 +11,7 @@ $sizes: (
 $size-props: () !default;
 $size-props: functions.map-deep-merge(
     (
+      'use-size': true,
       'sizes': $sizes,
     ),
     $size-props

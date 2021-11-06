@@ -9,6 +9,7 @@ import { makeVariantProps, useVariant } from '../variant'
 import { makePositionProps, usePosition } from '../position'
 import { makeDimensionProps, useDimension } from '../dimension'
 import { makeSizeProps, useSize } from '../size'
+import { makeDensityProps, useDensity } from '../density'
 import { makeBorderProps, useBorder } from '../border'
 import { makeShapeProps, useShape } from '../shape'
 import { makeElevationProps, useElevation } from '../elevation'
@@ -20,6 +21,7 @@ import type { VariantProps } from '../variant'
 import type { PositionProps } from '../position'
 import type { DimensionProps } from '../dimension'
 import type { SizeProps } from '../size'
+import type { DensityProps } from '../density'
 import type { BorderProps } from '../border'
 import type { ShapeProps } from '../shape'
 import type { ElevationProps } from '../elevation'
@@ -32,6 +34,7 @@ export interface MaterialProps
     PositionProps,
     DimensionProps,
     SizeProps,
+    DensityProps,
     BorderProps,
     ShapeProps,
     ElevationProps
@@ -46,6 +49,7 @@ export const makeMaterialProps = propsFactory({
   ...makePositionProps(),
   ...makeDimensionProps(),
   ...makeSizeProps(),
+  ...makeDensityProps(),
   ...makeBorderProps(),
   ...makeShapeProps(),
   ...makeElevationProps(),
@@ -57,6 +61,7 @@ export function useMaterial (props: MaybeRef<MaterialProps>, name: string) {
   const { positionClasses, positionStyles } = usePosition(props, name)
   const { dimensionStyles } = useDimension(props)
   const { sizeClasses, sizeStyles } = useSize(props, name)
+  const { densityClasses } = useDensity(props, name)
   const { borderClasses } = useBorder(props, name)
   const { shapeClasses } = useShape(props, name)
   const { elevationClasses } = useElevation(props)
@@ -67,6 +72,7 @@ export function useMaterial (props: MaybeRef<MaterialProps>, name: string) {
     variantClasses.value,
     positionClasses.value,
     sizeClasses.value,
+    densityClasses.value,
     borderClasses.value,
     shapeClasses.value,
     elevationClasses.value,

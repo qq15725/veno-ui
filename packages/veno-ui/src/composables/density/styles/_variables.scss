@@ -3,12 +3,13 @@
 $densities: (
   'compact': -2,
   'comfortable': -1,
-  'default': 0
+  'medium': 0
 ) !default;
 
 $density-props: () !default;
 $density-props: functions.map-deep-merge(
     (
+      'use-density': true,
       'densities': $densities,
     ),
     $density-props

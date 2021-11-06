@@ -6,7 +6,7 @@
 <ve-row>
   <ve-spacer />
   
-  <ve-material color="grey-n2" />
+  <ve-material size="medium" color="grey-n2" />
 </ve-row>
 ```
 

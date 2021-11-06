@@ -38,7 +38,10 @@ export const VeCard = defineComponent({
     subtitle: String,
     divider: Boolean,
     text: String,
-    ...makeMaterialProps(),
+    ...makeMaterialProps({
+      size: null,
+      density: null,
+    }),
     ...makeRouterProps(),
     ...makeLoadingProps(),
     ...makeDisabledProps(),

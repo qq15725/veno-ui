@@ -5,9 +5,11 @@
 @mixin use-size($props: ()) {
   $props: functions.map-deep-merge(variables.$size-props, $props);
 
-  @each $name, $multiplier in map.get($props, 'sizes') {
-    &--size-#{$name} {
-      --ve-size: #{$multiplier};
+  @if map.get($props, 'use-size') {
+    @each $name, $multiplier in map.get($props, 'sizes') {
+      &--size-#{$name} {
+        --ve-size: #{$multiplier};
+      }
     }
   }
 }

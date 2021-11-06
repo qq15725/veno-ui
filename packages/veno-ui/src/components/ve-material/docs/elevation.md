@@ -10,6 +10,7 @@
     v-for="elevation in [0, 1, 2, 3, 4, 6, 8, 12, 16, 24]"
     :key="elevation"
     text-center
+    size="medium"
     :elevation="elevation"
   >
     {{ elevation }}

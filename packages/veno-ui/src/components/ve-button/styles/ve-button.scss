@@ -37,6 +37,14 @@
     }
   }
 
+  @each $name, $multiplier in settings.$densities {
+    $value: calc(var(--ve-button-height) + #{$multiplier * settings.$spacer});
+
+    &--density-#{$name} {
+      height: $value;
+    }
+  }
+
   &--icon {
     padding: 0;
     min-width: 0;

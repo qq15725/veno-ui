@@ -5,9 +5,11 @@
 @mixin use-density($props: ()) {
   $props: functions.map-deep-merge(variables.$density-props, $props);
 
-  @each $name, $multiplier in map.get($props, 'densities') {
-    &--density-#{$name} {
-      --ve-density: #{$multiplier};
+  @if map.get($props, 'use-density') {
+    @each $name, $multiplier in map.get($props, 'densities') {
+      &--density-#{$name} {
+        --ve-density: #{$multiplier};
+      }
     }
   }
 }
