@@ -18,6 +18,9 @@ $avatar-material: (
       'width': $avatar-border-thin-width,
     ),
   ),
+  'positions': absolute fixed,
+  'use-size': false,
+  'use-density': false,
   'shapes': (
     'default': $avatar-border-radius,
   )

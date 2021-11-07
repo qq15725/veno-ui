@@ -15,10 +15,19 @@
   @include tools.use-material($avatar-material);
 
   @each $name, $multiplier in settings.$sizes {
-    $size: 40px + 4px * $multiplier;
+    $size: 40px + 8px * $multiplier;
     &--size-#{$name} {
-      height: $size;
       width: $size;
+      height: $size;
+      --ve-avatar-height: #{$size};
+    }
+  }
+
+  @each $name, $multiplier in settings.$densities {
+    $value: calc(var(--ve-avatar-height) + #{4px * $multiplier});
+    &--density-#{$name} {
+      height: $value;
+      width: $value;
     }
   }
 
