@@ -10,8 +10,10 @@ basic.md border.md
 
 color.md shape.md
 
-size.md slot.md
+size.md density.md
 
-icon.md fit-size.md
+slot.md icon.md
+
+fit-size.md
 
 :::

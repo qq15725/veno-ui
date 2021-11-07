@@ -1,8 +1,8 @@
 :::demo
 
-# 尺寸
+# 头像尺寸
 
-有 `x-small`、`small`、`medium`、`large` 和 `x-large` 尺寸。
+有 `x-small`、`small`、`medium`、`large` 和 `x-large` 预设尺寸。
 
 ```html
 <ve-grid dense align="center">
