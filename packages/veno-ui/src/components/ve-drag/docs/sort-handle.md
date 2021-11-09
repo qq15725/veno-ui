@@ -11,7 +11,7 @@
         <ve-button
           v-on="on"
           class="mr-3"
-          size="x-small"
+          size="xs"
         >
           拖我
         </ve-button>

@@ -11,19 +11,42 @@ $list-border-width: 0 !default;
 $list-border-thin-width: thin !default;
 $list-border-radius: settings.$border-radius !default;
 
-$list-border: (
-  $list-border-color,
-  $list-border-style,
-  $list-border-width,
-  $list-border-thin-width
-) !default;
+$list-material: () !default;
+$list-material: tools.map-deep-merge(
+    (
+      'variants': (
+        'contained': (
+          'background': $list-background,
+          'color': $list-color,
+          'border-width': 0,
+        ),
+      ),
+      'borders': (
+        'default': (
+          'color': $list-border-color,
+          'style': $list-border-style,
+          'width': $list-border-width,
+        ),
+        'existence': (
+          'width': $list-border-thin-width,
+        ),
+      ),
+      'positions': absolute fixed,
+      'use-size': false,
+      'use-density': false,
+      'shapes': (
+        'default': $list-border-radius,
+      )
+    ),
+    $list-material
+);
 
 // ListItem
 $list-item-border-color: settings.$border-color !default;
 $list-item-border-style: settings.$border-style !default;
 $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
-$list-item-border-radius: settings.$border-radius !default;
+$list-item-border-radius: 0 !default;
 
 $list-item-material: () !default;
 $list-item-material: tools.map-deep-merge(
@@ -44,12 +67,18 @@ $list-item-material: tools.map-deep-merge(
           'width': $list-item-border-thin-width,
         )
       ),
+      'positions': absolute fixed,
+      'use-size': false,
+      'use-density': false,
       'shapes': (
         'default': $list-item-border-radius,
       ),
     ),
     $list-item-material
 );
+
+// Nav ListItem
+$list-item-nav-border-radius: settings.$border-radius !default;
 
 // ListItemTitle
 $list-item-title-font-size: tools.map-deep-get(settings.$typography, 'body-1', 'size') !default;

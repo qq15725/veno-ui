@@ -1,6 +1,28 @@
 // Styles
 import './styles/ve-app-bar-title.scss'
 
-import { createSimpleFunctional } from '../../utils'
+// Utils
+import { defineComponent } from '../../utils'
 
-export const VeAppBarTitle = createSimpleFunctional('ve-app-bar-title')
+// Composables
+import { makeTagProps } from '../../composables/tag'
+
+export const VeAppBarTitle = defineComponent({
+  name: 'VeAppBarTitle',
+
+  props: {
+    ...makeTagProps({ tag: 'header' }),
+  },
+
+  setup (props, { slots }) {
+    return () => (
+      <props.tag class="ve-app-bar-title">
+        { slots.default && (
+          <div class="ve-app-bar-title__wrap">
+            { slots.default() }
+          </div>
+        ) }
+      </props.tag>
+    )
+  },
+})

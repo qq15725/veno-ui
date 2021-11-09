@@ -38,7 +38,8 @@ export const VeListItem = genericComponent()({
     appendAvatar: String,
     appendIcon: String,
     ...makeMaterialProps({
-      variant: 'text'
+      variant: 'text',
+      size: null,
     } as const),
     ...makeDisabledProps(),
     ...makeRouterProps(),
@@ -94,6 +95,7 @@ export const VeListItem = genericComponent()({
                   <VeAvatar
                     color={ false }
                     variant="text"
+                    density={ props.density }
                     icon={ props.prependIcon }
                     image={ props.prependAvatar }
                   />
@@ -107,8 +109,7 @@ export const VeListItem = genericComponent()({
                 <VeListItemTitle>
                   { slots.title
                     ? slots.title()
-                    : props.title
-                  }
+                    : props.title }
                 </VeListItemTitle>
               ) }
 
@@ -116,8 +117,7 @@ export const VeListItem = genericComponent()({
                 <VeListItemSubtitle>
                   { slots.subtitle
                     ? slots.subtitle()
-                    : props.subtitle
-                  }
+                    : props.subtitle }
                 </VeListItemSubtitle>
               ) }
             </VeListItemHeader>
@@ -133,6 +133,7 @@ export const VeListItem = genericComponent()({
                   <VeAvatar
                     color={ false }
                     variant="text"
+                    density={ props.density }
                     icon={ props.appendIcon }
                     image={ props.appendAvatar }
                   />

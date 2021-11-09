@@ -8,7 +8,7 @@
     v-for="i in 20" :key="i"
     color="grey-n2"
     width="100%"
-    size="medium"
+    size="md"
   />
 </ve-grid>
 ```

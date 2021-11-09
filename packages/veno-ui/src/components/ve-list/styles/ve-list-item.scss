@@ -12,6 +12,10 @@
   @include tools.use-material($list-item-material);
   @include tools.states(#{&}__overlay);
 
+  &--link {
+    cursor: pointer;
+  }
+
   &__overlay {
     @include tools.absolute();
     background-color: currentColor;
@@ -20,7 +24,14 @@
     opacity: 0;
   }
 
-  &--link {
-    cursor: pointer;
+  // nav
+  .ve-list--nav & {
+    border-radius: $list-item-nav-border-radius;
+  }
+}
+
+.ve-list-group__items {
+  .ve-list-item:not(.ve-list-item--prepend) {
+    padding-inline-start: calc(16px + (var(--ve-list-depth) * 40px)) !important;
   }
 }

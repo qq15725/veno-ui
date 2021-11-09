@@ -14,11 +14,11 @@ $icon-margin-start: map.get(settings.$grid-gutters, 'md') !default;
 $icon-sizes: () !default;
 $icon-sizes: tools.map-deep-merge(
   (
-    'x-small': 1em,
-    'small': 1.25em,
-    'medium': 1.5em,
-    'large': 1.75em,
-    'x-large': 2em,
+    'xs': 1em,
+    'sm': 1.25em,
+    'md': 1.5em,
+    'lg': 1.75em,
+    'xl': 2em,
   ),
   $icon-sizes
 );

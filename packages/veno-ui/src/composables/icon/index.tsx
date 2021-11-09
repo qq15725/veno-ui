@@ -17,6 +17,7 @@ export interface IconAliases
   error: IconValue
   close: IconValue
   menu: IconValue
+  dropdown: IconValue
 }
 
 export interface IconProps

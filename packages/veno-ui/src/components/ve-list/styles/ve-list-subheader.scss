@@ -1,0 +1,24 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-list-subheader {
+  align-items: center;
+  background: inherit;
+  display: flex;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.375rem;
+  padding-inline-end: 16px;
+  padding-inline-start: 16px;
+  min-height: 48px;
+  transition: 0.2s min-height settings.$standard-easing;
+
+  &__text {
+    opacity: var(--ve-medium-emphasis-opacity);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

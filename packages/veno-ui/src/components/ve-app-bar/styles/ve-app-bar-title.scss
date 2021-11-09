@@ -4,6 +4,12 @@
 .ve-app-bar-title {
   font-size: $app-bar-title-font-size;
   padding: $app-bar-title-padding;
+
+  &__wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 

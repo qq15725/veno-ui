@@ -2,15 +2,15 @@
 
 # 尺寸
 
-有 `x-small`、`small`、`medium`、`large` 和 `x-large` 尺寸。
+有 `xs`、`sm`、`md`、`lg` 和 `xl` 尺寸。
 
 ```html
 <ve-grid dense align="center">
-  <ve-progress size="x-small" color="primary" :model-value="30" />
-  <ve-progress size="small" color="primary" :model-value="30" />
+  <ve-progress size="xs" color="primary" :model-value="30" />
+  <ve-progress size="sm" color="primary" :model-value="30" />
   <ve-progress color="primary" :model-value="30" />
-  <ve-progress size="large" color="primary" :model-value="30" />
-  <ve-progress size="x-large" color="primary" :model-value="30" />
+  <ve-progress size="lg" color="primary" :model-value="30" />
+  <ve-progress size="xl" color="primary" :model-value="30" />
 </ve-grid>
 ```
 

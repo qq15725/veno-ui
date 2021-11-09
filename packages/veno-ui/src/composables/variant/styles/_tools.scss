@@ -15,7 +15,7 @@
   &--variant-contained {
     background: functions.map-deep-get($variants, 'contained', 'background');
     color: functions.map-deep-get($variants, 'contained', 'color');
-    border-width: var(--ve-variant-border-width, thin);
+    border-width: functions.map-deep-get($variants, 'contained', 'border-width');
   }
 
   &--variant-outlined {

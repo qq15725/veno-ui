@@ -36,7 +36,7 @@ block.md
 | replace | `boolean` | `false` | `vue-router` 的 `replace`。 |
 | href | `string` | `undefined` | 设置跳转链接。设置此属性时，按钮渲染为a标签。 |
 | variant | `'contained' \| 'outlined' \| 'text'` | `'contained'` | 按钮的变体种类 |
-| size | `'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| number \| string` | `'medium'` | 按钮的大小 |
+| size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| number \| string` | `'medium'` | 按钮的大小 |
 | density | `'compact' \| 'comfortable' \| 'medium'` | `'medium'` | 按钮的密度 |
 | color | `string` | `undefined` | 按钮的颜色 |
 

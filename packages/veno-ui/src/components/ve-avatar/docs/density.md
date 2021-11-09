@@ -8,23 +8,23 @@
 
 ```html
 <ve-grid dense :col-props="{ cols: 12 }">
-  <div class="text-grey">XSmall size</div>
+  <div class="text-grey">xs size</div>
 
   <ve-grid dense align="center">
-    <ve-avatar density="compact" size="x-small">Compact</ve-avatar>
-    <ve-avatar density="comfortable" size="x-small">Comfortable</ve-avatar>
-    <ve-avatar size="x-small">Medium</ve-avatar>
+    <ve-avatar density="compact" size="xs">Compact</ve-avatar>
+    <ve-avatar density="comfortable" size="xs">Comfortable</ve-avatar>
+    <ve-avatar size="xs">Medium</ve-avatar>
   </ve-grid>
 
-  <div class="text-grey">Small size</div>
+  <div class="text-grey">sm size</div>
 
   <ve-grid dense align="center">
-    <ve-avatar density="compact" size="small">Compact</ve-avatar>
-    <ve-avatar density="comfortable" size="small">Comfortable</ve-avatar>
-    <ve-avatar size="small">Medium</ve-avatar>
+    <ve-avatar density="compact" size="sm">Compact</ve-avatar>
+    <ve-avatar density="comfortable" size="sm">Comfortable</ve-avatar>
+    <ve-avatar size="sm">Medium</ve-avatar>
   </ve-grid>
 
-  <div class="text-grey">Medium size</div>
+  <div class="text-grey">md size</div>
 
   <ve-grid dense align="center">
     <ve-avatar density="compact">Compact</ve-avatar>
@@ -32,20 +32,20 @@
     <ve-avatar>Medium</ve-avatar>
   </ve-grid>
 
-  <div class="text-grey">Large size</div>
+  <div class="text-grey">lg size</div>
 
   <ve-grid dense align="center">
-    <ve-avatar density="compact" size="large">Compact</ve-avatar>
-    <ve-avatar density="comfortable" size="large">Comfortable</ve-avatar>
-    <ve-avatar size="large">Medium</ve-avatar>
+    <ve-avatar density="compact" size="lg">Compact</ve-avatar>
+    <ve-avatar density="comfortable" size="lg">Comfortable</ve-avatar>
+    <ve-avatar size="lg">Medium</ve-avatar>
   </ve-grid>
 
-  <div class="text-grey">XLarge size</div>
+  <div class="text-grey">xl size</div>
 
   <ve-grid dense align="center">
-    <ve-avatar density="compact" size="x-large">Compact</ve-avatar>
-    <ve-avatar density="comfortable" size="x-large">Comfortable</ve-avatar>
-    <ve-avatar size="x-large">Medium</ve-avatar>
+    <ve-avatar density="compact" size="xl">Compact</ve-avatar>
+    <ve-avatar density="comfortable" size="xl">Comfortable</ve-avatar>
+    <ve-avatar size="xl">Medium</ve-avatar>
   </ve-grid>
 </ve-grid>
 ```

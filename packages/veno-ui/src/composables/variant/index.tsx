@@ -1,5 +1,5 @@
 // Utils
-import { computed, CSSProperties, unref } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Composables

@@ -11,6 +11,7 @@
   <ve-icon icon="veno-ui:$warning" color="warning" />
   <ve-icon icon="veno-ui:$error" color="error" />
   <ve-icon icon="veno-ui:$close" />
+  <ve-icon icon="veno-ui:$dropdown" />
 </ve-grid>
 ```
 

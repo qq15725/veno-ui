@@ -1,4 +1,6 @@
 export * from './VeList'
+export * from './VeListSubheader'
+export * from './VeListGroup'
 export * from './VeListItem'
 export * from './VeListItemAvatar'
 export * from './VeListItemHeader'

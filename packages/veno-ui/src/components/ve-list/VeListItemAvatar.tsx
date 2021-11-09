@@ -7,6 +7,9 @@ import { makeTagProps } from '../../composables/tag'
 // Utils
 import { genericComponent } from '../../utils'
 
+// Types
+export type VeListItemAvatar = InstanceType<typeof VeListItemAvatar>
+
 export const VeListItemAvatar = genericComponent()({
   name: 'VeListItemAvatar',
 
@@ -33,5 +36,3 @@ export const VeListItemAvatar = genericComponent()({
     }
   },
 })
-
-export type VeListItemAvatar = InstanceType<typeof VeListItemAvatar>

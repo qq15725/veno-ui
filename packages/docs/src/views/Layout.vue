@@ -16,7 +16,9 @@ const active = ref()
     <ve-app-bar border>
       <ve-app-bar-nav-icon @click="active = !active" class="hidden-sm-and-up" />
 
-      <ve-app-bar-title>Veno UI</ve-app-bar-title>
+      <ve-app-bar-title class="hidden-sm-and-down" style="font-weight: 700;">
+        Veno UI
+      </ve-app-bar-title>
 
       <div class="hidden-sm-and-down" style="margin-left: 140px;"></div>
 

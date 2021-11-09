@@ -6,6 +6,7 @@ $variants: functions.map-deep-merge(
       'contained': (
         'background': rgb(var(--ve-theme-surface)),
         'color': rgb(var(--ve-theme-on-surface)),
+        'border-width': var(--ve-variant-border-width, thin),
       ),
     ),
     $variants

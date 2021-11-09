@@ -8,23 +8,23 @@
 
 ```html
 <ve-grid dense :col-props="{ cols: 12 }">
-  <div class="text-grey">XSmall size</div>
+  <div class="text-grey">xs size</div>
 
   <ve-grid dense align="center">
-    <ve-button density="compact" color="primary" size="x-small">Compact</ve-button>
-    <ve-button density="comfortable" color="primary" size="x-small">Comfortable</ve-button>
-    <ve-button color="primary" size="x-small">Medium</ve-button>
+    <ve-button density="compact" color="primary" size="xs">Compact</ve-button>
+    <ve-button density="comfortable" color="primary" size="xs">Comfortable</ve-button>
+    <ve-button color="primary" size="xs">Medium</ve-button>
   </ve-grid>
 
-  <div class="text-grey">Small size</div>
+  <div class="text-grey">xm size</div>
 
   <ve-grid dense align="center">
-    <ve-button density="compact" color="primary" size="small">Compact</ve-button>
-    <ve-button density="comfortable" color="primary" size="small">Comfortable</ve-button>
-    <ve-button color="primary" size="small">Medium</ve-button>
+    <ve-button density="compact" color="primary" size="sm">Compact</ve-button>
+    <ve-button density="comfortable" color="primary" size="sm">Comfortable</ve-button>
+    <ve-button color="primary" size="sm">Medium</ve-button>
   </ve-grid>
 
-  <div class="text-grey">Medium size</div>
+  <div class="text-grey">md size</div>
 
   <ve-grid dense align="center">
     <ve-button density="compact" color="primary">Compact</ve-button>
@@ -32,20 +32,20 @@
     <ve-button color="primary">Medium</ve-button>
   </ve-grid>
 
-  <div class="text-grey">Large size</div>
+  <div class="text-grey">lg size</div>
 
   <ve-grid dense align="center">
-    <ve-button density="compact" color="primary" size="large">Compact</ve-button>
-    <ve-button density="comfortable" color="primary" size="large">Comfortable</ve-button>
-    <ve-button color="primary" size="large">Medium</ve-button>
+    <ve-button density="compact" color="primary" size="lg">Compact</ve-button>
+    <ve-button density="comfortable" color="primary" size="lg">Comfortable</ve-button>
+    <ve-button color="primary" size="lg">Medium</ve-button>
   </ve-grid>
 
-  <div class="text-grey">XLarge size</div>
+  <div class="text-grey">xl size</div>
 
   <ve-grid dense align="center">
-    <ve-button density="compact" color="primary" size="x-large">Compact</ve-button>
-    <ve-button density="comfortable" color="primary" size="x-large">Comfortable</ve-button>
-    <ve-button color="primary" size="x-large">Medium</ve-button>
+    <ve-button density="compact" color="primary" size="xl">Compact</ve-button>
+    <ve-button density="comfortable" color="primary" size="xl">Comfortable</ve-button>
+    <ve-button color="primary" size="xl">Medium</ve-button>
   </ve-grid>
 </ve-grid>
 ```
