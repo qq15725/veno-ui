@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 图标 Icon
 
 `ve-icon` 组件。

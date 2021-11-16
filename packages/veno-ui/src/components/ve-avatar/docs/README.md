@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 头像 Avatar
 
 组合了 `ve-material` 的所有能力，`ve-avatar` 组件。

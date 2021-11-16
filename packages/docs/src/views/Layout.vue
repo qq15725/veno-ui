@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { version } from 'veno-ui/package.json'
 
 const props = defineProps<{
-  items?: any[]
+  menus?: any[]
 }>()
 
 const theme = ref()
@@ -44,13 +44,14 @@ const active = ref()
     </ve-app-bar>
 
     <ve-app-sider v-model="active">
-      <ve-list nav>
-        <ve-list-item
-            v-for="(item, index) in props.items"
-            :key="index"
-            :to="{ name: item.name }"
-            :title="`${item.meta.title} ${item.meta.name}`"
-        />
+      <ve-list
+          nav
+          :items="props.menus"
+          :opened="props.menus.map(item => item.value)"
+      >
+        <template #header="{ title }">
+          <ve-list-subheader>{{ title }}</ve-list-subheader>
+        </template>
       </ve-list>
     </ve-app-sider>
 

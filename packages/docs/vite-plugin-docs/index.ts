@@ -3,18 +3,22 @@ import { dirname } from 'path'
 import { readFileSync } from 'fs'
 import { createMarkdownRenderer } from './markdown'
 import codegen from './codegen'
+import matter from 'gray-matter'
 
 // Types
 import type { PluginOption } from 'vite'
 
 async function getTransformedVueSrc (id: string) {
-  const src = readFileSync(id).toString()
-
-  const { html, data } = createMarkdownRenderer().render(src, {
-    filename: id.replace(dirname(dirname(dirname(__dirname))), ''),
+  const contentRaw = readFileSync(id).toString()
+  const filename = id.replace(dirname(dirname(dirname(__dirname))), '')
+  const { data: matterData = {}, content } = matter(contentRaw)
+  const { html, data } = createMarkdownRenderer().render(content, {
+    filename,
   })
-
-  return codegen(html, data)
+  return codegen(html, {
+    ...data,
+    ...matterData,
+  })
 }
 
 const vuePlugin = createVuePlugin({

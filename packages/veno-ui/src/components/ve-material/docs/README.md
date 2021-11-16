@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 材料 Material
 
 `ve-material` 是一个基础组件，很多组件都组合了它。

@@ -43,6 +43,7 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
       const defaults = useDefaults()
 
       const _props = shallowReactive({ ...toRaw(props) })
+
       watchEffect(() => {
         const globalDefaults = defaults.value.global
         const componentDefaults = defaults.value[options.name!]
@@ -52,7 +53,9 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
           if (propIsDefined(vm.vnode, prop)) {
             newVal = props[prop]
           } else {
-            newVal = componentDefaults?.[prop] ?? globalDefaults?.[prop] ?? props[prop]
+            newVal = componentDefaults?.[prop]
+              ?? globalDefaults?.[prop]
+              ?? props[prop]
           }
           if (_props[prop] !== newVal) {
             _props[prop] = newVal
@@ -60,7 +63,7 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
         }
       })
 
-      return options._setup(_props, ctx)
+      return options._setup(props, ctx)
     }
   }
 

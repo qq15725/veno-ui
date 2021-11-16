@@ -1,3 +1,7 @@
+---
+category: 反馈
+---
+
 # 工具提示 Tooltip
 
 `ve-tooltip` 组件。

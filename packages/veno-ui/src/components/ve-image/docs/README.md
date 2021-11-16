@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 图片 Image
 
 `ve-image` 组件。

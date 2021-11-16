@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 按钮 Button
 
 组合了 `ve-material` 的所有能力，`ve-button` 组件用来触发一些操作。

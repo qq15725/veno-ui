@@ -1,3 +1,7 @@
+---
+category: 通用
+---
+
 # 轮播图 Carousel
 
 `ve-carousel` 组件。

@@ -1,3 +1,7 @@
+---
+category: 其他
+---
+
 # 悬停 Hover
 
 `ve-hover` 组件。

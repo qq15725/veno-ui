@@ -6,11 +6,18 @@ const scriptClientRe = /<\s*script[^>]*\bclient\b[^>]*/
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
 const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
 
-export default (html: string, data: MarkdownParsedData) => {
-  const tags = data.hoistedTags || []
+export interface ParsedData extends MarkdownParsedData
+{
+  category?: string
+}
+
+export default (html: string, data: ParsedData) => {
   const pageData = {
-    title: '',
+    title: data.title,
+    category: data.category,
   }
+
+  const tags = data.hoistedTags || []
 
   if (data.headers) {
     const h1 = data.headers.find(v => v.level === 1)

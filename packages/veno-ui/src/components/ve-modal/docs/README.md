@@ -1,3 +1,7 @@
+---
+category: 反馈
+---
+
 # 模态框 Modal
 
 `ve-modal` 组件。
