@@ -63,7 +63,7 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
         }
       })
 
-      return options._setup(props, ctx)
+      return options._setup(_props, ctx)
     }
   }
 

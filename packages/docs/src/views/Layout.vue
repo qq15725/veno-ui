@@ -46,6 +46,7 @@ const active = ref()
     <ve-app-sider v-model="active">
       <ve-list
           nav
+          density="compact"
           :items="props.menus"
           :opened="props.menus.map(item => item.value)"
       >

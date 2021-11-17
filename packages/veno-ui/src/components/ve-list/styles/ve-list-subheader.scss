@@ -15,6 +15,15 @@
   min-height: 48px;
   transition: 0.2s min-height settings.$standard-easing;
 
+  $root: &;
+  @at-root {
+    @include tools.density('ve-list') using($modifier) {
+      #{$root} {
+        min-height: 48px + $modifier;
+      }
+    }
+  }
+
   &__text {
     opacity: var(--ve-medium-emphasis-opacity);
     overflow: hidden;

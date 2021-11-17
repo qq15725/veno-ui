@@ -12,6 +12,16 @@
   @include tools.use-material($list-item-material);
   @include tools.states(#{&}__overlay);
 
+  $root: &;
+  @at-root {
+    @include tools.density('ve-list') using($modifier) {
+      #{$root} {
+        min-height: 48px + $modifier;
+        padding: (8px + $modifier) 16px;
+      }
+    }
+  }
+
   &--link {
     cursor: pointer;
   }
@@ -32,6 +42,6 @@
 
 .ve-list-group__items {
   .ve-list-item:not(.ve-list-item--prepend) {
-    padding-inline-start: calc(16px + (var(--ve-list-depth) * 40px)) !important;
+    padding-inline-start: calc(16px + (var(--ve-list-depth) * 16px)) !important;
   }
 }

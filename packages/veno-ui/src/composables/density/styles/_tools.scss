@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'variables';
 @use '../../../styles/tools/functions';
+@use '../../../styles/settings/variables' as settings;
 
 @mixin use-density($props: ()) {
   $props: functions.map-deep-merge(variables.$density-props, $props);
@@ -10,6 +11,14 @@
       &--density-#{$name} {
         --ve-density: #{$multiplier};
       }
+    }
+  }
+}
+
+@mixin density($name, $densities: variables.$densities) {
+  @each $density, $multiplier in $densities {
+    .#{$name}--density-#{$density} {
+      @content($multiplier * settings.$spacer);
     }
   }
 }
