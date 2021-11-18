@@ -1,15 +1,10 @@
-// Styles
-import './styles/vars.css'
-import './styles/layout.css'
-import './styles/code.css'
-
 import { createApp } from 'vue'
-import App from './App.vue'
 
 // Plugins
 import * as plugins from './plugins'
 
 // Components
+import App from './App.vue'
 import Demo from './components/Demo.vue'
 
 const app = createApp(App)
