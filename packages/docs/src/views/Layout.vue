@@ -32,14 +32,11 @@ const active = ref()
       <ve-spacer class="hidden-sm-and-down" />
 
       <ve-app-bar-items>
-        <ve-button
-            :width="60"
-            @click="theme = theme === 'dark' ? 'light' : 'dark'"
-        >
+        <ve-button @click="theme = theme === 'dark' ? 'light' : 'dark'">
           {{ theme === 'dark' ? '亮色' : '暗黑' }}
         </ve-button>
-        <ve-button :width="60" href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
-        <ve-button :width="60">{{ version }}</ve-button>
+        <ve-button href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
+        <ve-button>{{ version }}</ve-button>
       </ve-app-bar-items>
     </ve-app-bar>
 
