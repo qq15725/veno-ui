@@ -2,6 +2,7 @@
 import {
   getCurrentInstance,
   IN_BROWSER,
+  SUPPORT_TOUCH,
   propsFactory,
   SUPPORT_FOCUS_VISIBLE
 } from '../../../utils'
@@ -92,6 +93,15 @@ export function useActivator (
       isHovered = false
       runCloseDelay()
     },
+    touchstart: (e: MouseEvent) => {
+      activatorEl.value = (e.currentTarget || e.target) as HTMLElement
+      isHovered = true
+      runOpenDelay()
+    },
+    touchend: (e: MouseEvent) => {
+      isHovered = false
+      runCloseDelay()
+    },
     focus: (e: FocusEvent) => {
       if (
         SUPPORT_FOCUS_VISIBLE &&
@@ -117,10 +127,17 @@ export function useActivator (
     if (openOnClick.value) {
       events.click = availableEvents.click
     }
+
     if (props.openOnHover) {
-      events.mouseenter = availableEvents.mouseenter
-      events.mouseleave = availableEvents.mouseleave
+      if (SUPPORT_TOUCH) {
+        events.touchstart = availableEvents.touchstart
+        events.touchend = availableEvents.touchend
+      } else {
+        events.mouseenter = availableEvents.mouseenter
+        events.mouseleave = availableEvents.mouseleave
+      }
     }
+
     if (openOnFocus.value) {
       events.focus = availableEvents.focus
       events.blur = availableEvents.blur
