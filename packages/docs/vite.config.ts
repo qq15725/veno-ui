@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: './',
+    server: {
+      host: '0.0.0.0',
+    },
     resolve: {
       alias: [
         {
