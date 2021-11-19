@@ -14,29 +14,52 @@ const active = ref()
 <template>
   <ve-app :theme="theme">
     <ve-app-bar border>
-      <ve-app-bar-nav-icon @click="active = !active" class="hidden-sm-and-up" />
+      <ve-app-bar-nav-icon
+          @click="active = !active"
+          class="hidden-sm-and-up"
+          text-color="primary"
+      />
 
-      <ve-app-bar-title class="hidden-sm-and-down" style="font-weight: 700;">
+      <ve-app-bar-title
+          class="hidden-sm-and-down"
+          style="font-weight: 700;"
+      >
         Veno UI
       </ve-app-bar-title>
 
-      <div class="hidden-sm-and-down" style="margin-left: 140px;"></div>
-
-      <ve-spacer class="hidden-sm-and-up" />
-
-      <ve-app-bar-items class="hidden-sm-and-down">
-        <ve-button :width="60" :to="{ name: 'Guide' }">文档</ve-button>
-        <ve-button :width="60" :to="{ name: 'ButtonComponent' }">组件</ve-button>
-      </ve-app-bar-items>
-
-      <ve-spacer class="hidden-sm-and-down" />
+      <ve-spacer />
 
       <ve-app-bar-items>
-        <ve-button @click="theme = theme === 'dark' ? 'light' : 'dark'">
-          {{ theme === 'dark' ? '亮色' : '暗黑' }}
-        </ve-button>
-        <ve-button href="https://github.com/qq15725/veno-ui" target="_blank">GitHub</ve-button>
-        <ve-button>{{ version }}</ve-button>
+        <ve-tooltip
+            #activator="{ props }"
+            text="反转示例颜色"
+            :arrow="false"
+        >
+          <ve-button
+              v-bind="props"
+              class="mr-3"
+              @click="theme = theme === 'dark' ? 'light' : 'dark'"
+              :icon="`$${theme || 'light'}`"
+              size="xl"
+              text-color="primary"
+          />
+        </ve-tooltip>
+
+        <ve-tooltip
+            #activator="{ props }"
+            text="在 Github 中查看"
+            anchor="bottom end"
+            :arrow="false"
+        >
+          <ve-button
+              v-bind="props"
+              href="https://github.com/qq15725/veno-ui"
+              target="_blank"
+              icon="$github"
+              size="xl"
+              text-color="primary"
+          />
+        </ve-tooltip>
       </ve-app-bar-items>
     </ve-app-bar>
 

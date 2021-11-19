@@ -52,6 +52,10 @@ export const VeAlert = genericComponent()({
     }),
   },
 
+  emits: {
+    'update:modelValue': (value: boolean) => true,
+  },
+
   setup (props, { slots }) {
     const computedProps = computed(() => ({
       ...props,
@@ -76,6 +80,7 @@ export const VeAlert = genericComponent()({
         <MaybeTransition transition={ props.transition }>
           { isActive.value && (
             <props.tag
+              role="alert"
               class={ [
                 've-alert',
                 materialClasses.value,

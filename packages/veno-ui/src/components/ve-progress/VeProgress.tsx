@@ -73,6 +73,10 @@ export const VeProgress = genericComponent()({
 
     return () => (
       <props.tag
+        role="progressbar"
+        aria-valuenow={ props.indeterminate ? undefined : normalizedValue.value }
+        aria-valuemin="0"
+        aria-valuemax="100"
         ref={ intersectionRef }
         class={ [
           've-progress',
@@ -89,10 +93,6 @@ export const VeProgress = genericComponent()({
           sizeStyles.value,
           textColorStyles.value,
         ] }
-        role="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow={ props.indeterminate ? undefined : normalizedValue.value }
       >
         <svg
           style={ {

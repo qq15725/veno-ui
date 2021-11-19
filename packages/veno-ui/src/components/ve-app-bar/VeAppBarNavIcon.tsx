@@ -12,16 +12,21 @@ export const VeAppBarNavIcon = genericComponent()({
       type: String,
       default: 'veno-ui:$menu',
     },
+    size: {
+      type: String,
+      default: 'xl',
+    }
   },
 
-  setup (props, { slots }) {
+  setup (props, { attrs, slots }) {
     return () => (
       <VeButton
         class="ve-app-bar-nav-icon"
         icon={ props.icon }
-      >
-        { slots.default?.() }
-      </VeButton>
+        size={ props.size }
+        slots={ slots }
+        { ...attrs }
+      />
     )
   },
 })

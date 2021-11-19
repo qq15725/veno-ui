@@ -36,7 +36,7 @@ export const VeTooltip = genericComponent<new () => {
     },
     anchor: {
       type: String as PropType<StrategyProps['anchor']>,
-      default: 'end',
+      default: 'bottom',
     },
     origin: {
       type: String as PropType<StrategyProps['origin']>,
@@ -72,6 +72,7 @@ export const VeTooltip = genericComponent<new () => {
     return () => {
       return (
         <VeOverlay
+          role="tooltip"
           v-model={ isActive.value }
           class={ [
             've-tooltip',
@@ -89,8 +90,6 @@ export const VeTooltip = genericComponent<new () => {
           persistent
           open-on-click={ false }
           open-on-hover
-          role="tooltip"
-          eager
           activator-props={ {
             'aria-describedby': id.value,
           } }

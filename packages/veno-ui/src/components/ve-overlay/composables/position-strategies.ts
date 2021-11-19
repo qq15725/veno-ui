@@ -142,8 +142,10 @@ function connectedPositionStrategy (
 
   const preferredAnchor = computed(() => parseAnchor(props.anchor))
   const preferredOrigin = computed(() =>
-    props.origin === 'overlap' ? preferredAnchor.value
-      : props.origin === 'auto' ? oppositeAnchor(preferredAnchor.value)
+    props.origin === 'overlap'
+      ? preferredAnchor.value
+      : props.origin === 'auto'
+      ? oppositeAnchor(preferredAnchor.value)
       : parseAnchor(props.origin)
   )
   const doesOverlap = computed(() => {

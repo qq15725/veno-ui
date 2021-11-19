@@ -47,6 +47,7 @@ export const VeButton = genericComponent()({
 
       return (
         <Tag
+          role="button"
           type={ Tag === 'a' ? undefined : props.type }
           class={ [
             {
