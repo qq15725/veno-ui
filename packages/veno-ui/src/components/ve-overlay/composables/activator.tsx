@@ -57,17 +57,21 @@ export const makeActivatorProps = propsFactory({
   ...makeDelayProps(),
 })
 
-export function useActivator (
-  props: ActivatorProps,
-  isActive: Ref<boolean>
-) {
+export function useActivator (props: ActivatorProps, isActive: Ref<boolean>) {
   const activatorEl = ref<HTMLElement>()
 
   let isHovered = false
   let isFocused = false
 
-  const openOnFocus = computed(() => props.openOnFocus || (props.openOnFocus == null && props.openOnHover))
-  const openOnClick = computed(() => props.openOnClick || (props.openOnClick == null && !props.openOnHover && !openOnFocus.value))
+  const openOnFocus = computed(() => {
+    return props.openOnFocus
+      || (props.openOnFocus == null && props.openOnHover)
+  })
+
+  const openOnClick = computed(() => {
+    return props.openOnClick
+      || (props.openOnClick == null && !props.openOnHover && !openOnFocus.value)
+  })
 
   const { runOpenDelay, runCloseDelay } = useDelay(props, value => {
     if (value === (
@@ -104,19 +108,17 @@ export function useActivator (
     },
     focus: (e: FocusEvent) => {
       if (
-        SUPPORT_FOCUS_VISIBLE &&
-        !(e.target as HTMLElement).matches(':focus-visible')
+        SUPPORT_FOCUS_VISIBLE
+        && !(e.target as HTMLElement).matches(':focus-visible')
       ) return
-
-      isFocused = true
       e.stopPropagation()
-
+      activatorEl.value = (e.currentTarget || e.target) as HTMLElement
+      isFocused = true
       runOpenDelay()
     },
     blur: (e: FocusEvent) => {
-      isFocused = false
       e.stopPropagation()
-
+      isFocused = false
       runCloseDelay()
     },
   }

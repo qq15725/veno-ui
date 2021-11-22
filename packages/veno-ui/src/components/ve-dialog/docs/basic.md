@@ -2,9 +2,9 @@
 # 基础
 
 ```html
-<ve-modal>
+<ve-dialog>
   <template #activator="{ props }">
-    <ve-button v-bind="props">模态框</ve-button>
+    <ve-button v-bind="props">对话框</ve-button>
   </template>
   
   <template #default="{ isActive }">
@@ -19,6 +19,6 @@
       <ve-button color="primary" @click="isActive.value = false">确认</ve-button>
     </ve-card>  
   </template>
-</ve-modal>
+</ve-dialog>
 ```
 :::

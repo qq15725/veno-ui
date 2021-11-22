@@ -15,13 +15,11 @@ import { genericComponent, getUid } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'
-import type { OverlaySlots } from '../ve-overlay'
-import type { StrategyProps } from '../ve-overlay/composables/position-strategies'
+import type { OverlaySlots, StrategyProps } from '../ve-overlay'
+
 export type VeTooltip = InstanceType<typeof VeTooltip>
 
-export const VeTooltip = genericComponent<new () => {
-  $slots: OverlaySlots
-}>()({
+export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()({
   name: 'VeTooltip',
 
   inheritAttrs: false,
@@ -100,11 +98,7 @@ export const VeTooltip = genericComponent<new () => {
         >
           { slots.default?.() ?? props.text }
 
-          { props.arrow && (
-            <div class="ve-tooltip__arrow">
-              <div class="ve-tooltip__arrow-inner" />
-            </div>
-          ) }
+          { props.arrow && <div class="ve-tooltip__arrow" /> }
         </VeOverlay>
       )
     }

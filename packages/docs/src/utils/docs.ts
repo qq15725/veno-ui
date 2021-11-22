@@ -13,13 +13,13 @@ export function loadDocsModules (type: DocType) {
   switch (type) {
     case 'component':
       return {
-        nameRE: /components\/ve-(.+)\/docs\/README\.md/,
-        modules: import.meta.globEager('../../../veno-ui/src/components/**/docs/README.md'),
+        nameRE: /components\/ve-(\w+)(.|\/)*README\.md/,
+        modules: import.meta.globEager('../../../veno-ui/src/components/**/README.md'),
       }
     case 'composable':
       return {
-        nameRE: /composables\/(.+)\/docs\/README\.md/,
-        modules: import.meta.globEager('../../../veno-ui/src/composables/**/docs/README.md'),
+        nameRE: /composables\/(\w+)(.|\/)*README\.md/,
+        modules: import.meta.globEager('../../../veno-ui/src/composables/**/README.md'),
       }
   }
 }

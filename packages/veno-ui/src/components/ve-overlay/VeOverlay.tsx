@@ -23,7 +23,7 @@ import {
 
 // Composables
 import { makeActivatorProps, useActivator } from './composables/activator'
-import { makePositionStrategyProps, usePositionStrategies } from './composables/position-strategies'
+import { makePositionStrategyProps, usePositionStrategies } from './composables/position-strategy'
 import { makeScrollStrategyProps, useScrollStrategies } from './composables/scroll-strategies'
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
@@ -39,9 +39,11 @@ import { useStack } from '../../composables/stack'
 import { ClickOutside } from '../../directives/click-outside'
 
 // Types
-import type { PropType, Ref } from 'vue'
+import type { PropType, Ref, ComponentPublicInstance } from 'vue'
 import type { MakeSlots } from '../../utils'
 import type { BackgroundColorData } from '../../composables/color'
+
+export type { StrategyProps } from './composables/position-strategy'
 
 interface ScrimProps
 {
@@ -177,7 +179,11 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
 
     const root = ref()
     const top = ref<number>()
-    watch(() => isActive.value && props.absolute && teleportTarget.value == null, val => {
+    watch(() => {
+      return isActive.value
+        && props.absolute
+        && teleportTarget.value == null
+    }, val => {
       if (val) {
         const scrollParent = getScrollParent(root.value)
         if (scrollParent && scrollParent !== document.scrollingElement) {
@@ -204,6 +210,19 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
       <>
         { slots.activator?.({
           isActive: isActive.value,
+          ref: (selector: HTMLElement | ComponentPublicInstance) => {
+            let activator: HTMLElement
+            if ('$el' in selector) {
+              // Component (ref)
+              activator = selector.$el
+            } else {
+              // HTMLElement | Element
+              activator = selector
+            }
+            if (activator?.nodeType === Node.ELEMENT_NODE) {
+              activatorEl.value = activator
+            }
+          },
           props: mergeProps(
             {
               modelValue: isActive.value,

@@ -26,7 +26,9 @@ export function parseAnchor (anchor: Anchor) {
   if (!align) {
     align = side === 'top' || side === 'bottom'
       ? 'start'
-      : side === 'start' || side === 'end' ? 'top' : 'center'
+      : side === 'start' || side === 'end'
+        ? 'top'
+        : 'center'
   }
 
   return {

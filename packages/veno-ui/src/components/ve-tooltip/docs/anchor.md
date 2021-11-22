@@ -15,11 +15,7 @@
         #activator="{ props }"
         text="提示"
       >
-        <ve-button
-          v-bind="props"
-        >
-          {{ anchor }}
-        </ve-button>
+        <ve-button v-bind="props">{{ anchor }}</ve-button>
       </ve-tooltip>
     </ve-col>
   </template>

@@ -33,7 +33,6 @@ const active = ref()
         <ve-tooltip
             #activator="{ props }"
             text="反转示例颜色"
-            :arrow="false"
         >
           <ve-button
               v-bind="props"
@@ -48,8 +47,6 @@ const active = ref()
         <ve-tooltip
             #activator="{ props }"
             text="在 Github 中查看"
-            anchor="bottom end"
-            :arrow="false"
         >
           <ve-button
               v-bind="props"

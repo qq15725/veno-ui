@@ -38,42 +38,55 @@ export function getOffset<T extends Point> (a: T, b: T) {
 
 /** Convert an anchor object to a point in local space */
 export function anchorToPoint (anchor: ParsedAnchor, box: Box): ViewportPoint {
-  if (anchor.side === 'top' || anchor.side === 'bottom') {
-    const { side, align } = anchor
+  const { side, align } = anchor
+  let x, y: number = 0
 
-    const x: number =
-      align === 'start' ? 0
-        : align === 'center' ? box.width / 2
-        : align === 'end' ? box.width
-          : align
-    const y: number =
-      side === 'top' ? 0
-        : side === 'bottom' ? box.height
-        : side
+  if (side === 'top' || side === 'bottom') {
+    switch (side) {
+      case 'top':
+        y = 0
+        break
+      case 'bottom':
+        y = box.height
+        break
+    }
 
-    return elementToViewport({ x, y } as ElementPoint, box)
-  } else if (anchor.side === 'start' || anchor.side === 'end') {
-    const { side, align } = anchor
+    switch (align) {
+      case 'start':
+        x = 0
+        break
+      case 'center':
+        x = box.width / 2
+        break
+      case 'end':
+        x = box.width
+        break
+    }
+  } else if (side === 'start' || side === 'end') {
+    switch (side) {
+      case 'start':
+        x = 0
+        break
+      case 'end':
+        x = box.width
+        break
+    }
 
-    const x: number = side === 'start'
-      ? 0
-      : side === 'end'
-        ? box.width
-        : side
-
-    const y: number = align === 'top'
-      ? 0
-      : align === 'center'
-        ? box.height / 2
-        : align === 'bottom'
-          ? box.height
-          : align
-
-    return elementToViewport({ x, y } as ElementPoint, box)
+    switch (align) {
+      case 'top':
+        y = 0
+        break
+      case 'center':
+        y = box.height / 2
+        break
+      case 'bottom':
+        y = box.height
+        break
+    }
+  } else {
+    x = box.width / 2
+    y = box.height / 2
   }
 
-  return elementToViewport({
-    x: box.width / 2,
-    y: box.height / 2,
-  } as ElementPoint, box)
+  return elementToViewport({ x, y } as ElementPoint, box)
 }
