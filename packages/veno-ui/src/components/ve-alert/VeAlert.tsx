@@ -48,8 +48,8 @@ export const VeAlert = genericComponent()({
     },
     ...makeMaterialProps(),
     ...makeTransitionProps({
-      transition: { component: VeFadeTransition, }
-    }),
+      transition: { component: VeFadeTransition },
+    } as const),
   },
 
   emits: {

@@ -153,14 +153,14 @@ export function useActivator (props: ActivatorProps, isActive: Ref<boolean>) {
     if (val && IN_BROWSER) {
       scope = effectScope()
       scope.run(() => {
-        _useActivator(props, { activatorEl, activatorEvents })
+        _useActivator(props, { activatorEl, activatorEvents, runOpenDelay, runCloseDelay })
       })
     } else if (scope) {
       scope.stop()
     }
   }, { flush: 'post', immediate: true })
 
-  return { activatorEl, activatorEvents }
+  return { activatorEl, activatorEvents, runOpenDelay, runCloseDelay }
 }
 
 function _useActivator (props: ActivatorProps, { activatorEl, activatorEvents }: ReturnType<typeof useActivator>) {

@@ -19,7 +19,7 @@ import { VeFadeTransition } from '../ve-transition'
 
 // Types
 import type { PropType } from 'vue'
-import type { StrategyProps } from '../ve-overlay/composables/position-strategies'
+import type { StrategyProps } from '../ve-overlay'
 export type VeSelect = InstanceType<typeof VeSelect>
 
 export const VeSelect = genericComponent()({
@@ -44,7 +44,7 @@ export const VeSelect = genericComponent()({
       default: () => [],
     },
     ...makeTransitionProps({
-      transition: { component: VeFadeTransition, },
+      transition: { component: VeFadeTransition },
     } as const),
   },
 

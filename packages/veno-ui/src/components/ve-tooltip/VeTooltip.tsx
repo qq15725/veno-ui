@@ -41,7 +41,7 @@ export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()(
       default: 'auto',
     },
     ...makeTransitionProps({
-      transition: { component: VeScaleTransition, },
+      transition: { component: VeScaleTransition },
     } as const),
   },
 
@@ -96,9 +96,11 @@ export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()(
             activator: slots.activator,
           } }
         >
-          { slots.default?.() ?? props.text }
+          <div class="ve-tooltip__wrap">
+            { slots.default?.() ?? props.text }
 
-          { props.arrow && <div class="ve-tooltip__arrow" /> }
+            { props.arrow && <div class="ve-tooltip__arrow" /> }
+          </div>
         </VeOverlay>
       )
     }

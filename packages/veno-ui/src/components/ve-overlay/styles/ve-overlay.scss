@@ -1,14 +1,14 @@
 .ve-overlay {
-  border-radius: inherit;
+  position: fixed;
+  z-index: 800;
   display: flex;
   left: 0;
-  pointer-events: none;
-  position: fixed;
   top: 0;
-  z-index: 800;
-  padding-inline-end: var(--ve-scrollbar-offset);
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  padding-inline-end: var(--ve-scrollbar-offset);
 
   &-container {
     contain: layout;

@@ -165,16 +165,18 @@ export function connectedPositionStrategy (
     }
     const minWidth = Math.min(configuredMinWidth.value, maxWidth!, targetBox.width)
 
-    if (anchor.side === 'top' || anchor.side === 'bottom') {
-      const maxX = viewportWidth - Math.min(maxWidth ?? contentWidth, contentWidth) - viewportMargin
-      if (x > maxX) {
-        x = maxX
-        anchor.align = 'end'
-        origin = oppositeAnchor(anchor)
-      } else if (x < 0) {
-        x = 0
-        anchor.align = 'start'
-        origin = oppositeAnchor(anchor)
+    if (contentWidth !== Infinity) {
+      if (anchor.side === 'top' || anchor.side === 'bottom') {
+        const maxX = viewportWidth - Math.min(maxWidth ?? contentWidth, contentWidth) - viewportMargin
+        if (x > maxX) {
+          x = maxX
+          anchor.align = 'end'
+          origin = oppositeAnchor(anchor)
+        } else if (x < 0) {
+          x = 0
+          anchor.align = 'start'
+          origin = oppositeAnchor(anchor)
+        }
       }
     }
 

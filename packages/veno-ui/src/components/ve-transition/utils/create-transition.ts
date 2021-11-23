@@ -24,9 +24,12 @@ export function createCssTransition (
         type: String,
         default: origin,
       },
+      onBeforeEnter: Function,
+      onLeave: Function,
+      onAfterLeave: Function,
     },
 
-    setup (props, { slots }) {
+    setup (props, { slots, attrs }) {
       return () => {
         const tag = props.group ? TransitionGroup : Transition
 
@@ -35,6 +38,7 @@ export function createCssTransition (
           mode: props.mode,
           onBeforeEnter (el: HTMLElement) {
             el.style.transformOrigin = props.origin
+            props.onBeforeEnter && props.onBeforeEnter()
           },
           onLeave (el: HTMLElement) {
             if (props.leaveAbsolute) {
@@ -47,16 +51,18 @@ export function createCssTransition (
                 height: el.style.height,
               }
               el.style.position = 'absolute'
-              el.style.top = `${offsetTop}px`
-              el.style.left = `${offsetLeft}px`
-              el.style.width = `${offsetWidth}px`
-              el.style.height = `${offsetHeight}px`
+              el.style.top = `${ offsetTop }px`
+              el.style.left = `${ offsetLeft }px`
+              el.style.width = `${ offsetWidth }px`
+              el.style.height = `${ offsetHeight }px`
             }
 
             if (props.hideOnLeave) {
               (el as any)._initialDisplay = el.style.display
               el.style.display = 'none'
             }
+
+            props.onLeave && props.onLeave()
           },
           onAfterLeave (el: HTMLElement) {
             if (props.leaveAbsolute && el?._transitionInitialStyles) {
@@ -72,7 +78,10 @@ export function createCssTransition (
             if (props.hideOnLeave && el) {
               el.style.display = (el as any)._initialDisplay || ''
             }
+
+            props.onAfterLeave && props.onAfterLeave()
           },
+          ...attrs,
         }, slots.default)
       }
     },

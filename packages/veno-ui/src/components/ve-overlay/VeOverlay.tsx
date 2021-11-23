@@ -122,7 +122,7 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
     const scrimColor = useBackgroundColor(computed(() => {
       return typeof props.scrim === 'string' ? props.scrim : null
     }))
-    const { activatorEl, activatorEvents } = useActivator(props, isActive)
+    const { activatorEl, activatorEvents, runOpenDelay, runCloseDelay } = useActivator(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
 
@@ -280,6 +280,12 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
                     dimensionStyles.value,
                     contentStyles.value,
                   ] }
+                  onMouseenter={ () => {
+                    props.openOnHover && runOpenDelay()
+                  } }
+                  onMouseleave={ () => {
+                    props.openOnHover && runCloseDelay()
+                  } }
                 >
                   { slots.default?.({ isActive }) }
                 </div>
@@ -295,5 +301,5 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
       contentEl,
       activatorEl,
     }
-  },
+  }
 })

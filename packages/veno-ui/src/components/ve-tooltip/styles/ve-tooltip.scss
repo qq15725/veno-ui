@@ -2,11 +2,12 @@
 @use 'sass:map';
 
 .ve-tooltip {
+  height: 0;
   --ve-tooltip-arrow-height: 6px;
   --ve-tooltip-arrow-offset: 14px;
 
-  .ve-overlay__content {
-    background: rgba(var(--ve-theme-on-surface), 0.9);
+  &__wrap {
+    background: rgba(var(--ve-theme-on-surface), 0.85);
     color: rgb(var(--ve-theme-surface));
     border-radius: 4px;
     font-size: .875rem;
@@ -29,7 +30,6 @@
   &__arrow {
     position: absolute;
     overflow: hidden;
-    pointer-events: none;
     right: 0;
     left: 0;
     top: 0;
@@ -44,7 +44,6 @@
       background: rgba(var(--ve-theme-on-surface), 0.9);
       box-shadow: 0 0 8px 0 rgb(0 0 0 / 12%);
       transform: rotate(45deg);
-      pointer-events: all;
     }
   }
 

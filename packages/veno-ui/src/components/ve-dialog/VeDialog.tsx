@@ -23,8 +23,8 @@ export const VeDialog = genericComponent()({
     id: String,
     modelValue: Boolean,
     ...makeTransitionProps({
-      transition: { component: VeModalTransition, },
-    })
+      transition: { component: VeModalTransition },
+    } as const)
   },
 
   emits: {

@@ -38,8 +38,8 @@ export const VeLazy = genericComponent()({
     ...makeDimensionProps(),
     ...makeTagProps(),
     ...makeTransitionProps({
-      transition: { component: VeFadeTransition, },
-    }),
+      transition: { component: VeFadeTransition },
+    } as const),
   },
 
   emits: {
