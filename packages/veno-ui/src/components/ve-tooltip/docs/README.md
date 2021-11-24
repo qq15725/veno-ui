@@ -10,8 +10,6 @@ category: 反馈
 
 :::include
 
-basic.md anchor.md
-
-arrow.md
+anchor.md arrow.md
 
 :::

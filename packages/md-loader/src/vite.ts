@@ -30,7 +30,7 @@ const fileRegex = /\.md$/
 export default (): PluginOption[] => {
   return [
     {
-      name: 'docs',
+      name: '@veno-ui/md-loader',
       async transform (code: string, id: string) {
         if (fileRegex.test(id)) {
           return await getTransformedVueSrc(id)

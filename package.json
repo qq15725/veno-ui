@@ -5,8 +5,7 @@
     "docs:update": "npm run docs:build && npm run docs:publish"
   },
   "workspaces": [
-    "packages/veno-ui",
-    "packages/docs"
+    "packages/**"
   ],
   "engines": {
     "node": ">=12"

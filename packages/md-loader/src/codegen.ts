@@ -8,6 +8,7 @@ const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
 
 export interface ParsedData extends MarkdownParsedData
 {
+  title?: string
   category?: string
 }
 

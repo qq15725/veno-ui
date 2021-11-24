@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "include": [
-    "src",
-    "vite-plugin-docs"
+    "src"
   ],
   "compilerOptions": {
     "baseUrl": ".",

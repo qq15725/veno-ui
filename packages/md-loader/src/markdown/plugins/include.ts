@@ -1,5 +1,5 @@
 import container from 'markdown-it-container'
-import { camelize, capitalize } from 'vue'
+import { camelize, capitalize } from '../utils/string'
 
 import type MarkdownIt from 'markdown-it'
 import type Token from 'markdown-it/lib/token'
