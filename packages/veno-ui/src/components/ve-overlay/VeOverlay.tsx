@@ -2,29 +2,13 @@
 import './styles/ve-overlay.scss'
 
 // Utils
-import {
-  convertToUnit,
-  genericComponent,
-  getScrollParent,
-  standardEasing,
-  useRender,
-} from '../../utils'
-
-import {
-  computed,
-  mergeProps,
-  ref,
-  toHandlers,
-  toRef,
-  watch,
-  Teleport,
-  Transition,
-} from 'vue'
+import { computed, mergeProps, ref, toHandlers, toRef, watch, Teleport, Transition } from 'vue'
+import { convertToUnit, genericComponent, getScrollParent, standardEasing, useRender } from '../../utils'
 
 // Composables
-import { makeActivatorProps, useActivator } from './composables/activator'
-import { makePositionStrategyProps, usePositionStrategies } from './composables/position-strategy'
-import { makeScrollStrategyProps, useScrollStrategies } from './composables/scroll-strategies'
+import { makeActivatorProps, useActivator } from '../../composables/activator'
+import { makePositionStrategyProps, usePositionStrategy } from '../../composables/position-strategy'
+import { makeScrollStrategyProps, useScrollStrategy } from '../../composables/scroll-strategy'
 import { makeThemeProps, useTheme } from '../../composables/theme'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useBackButton } from '../../composables/router'
@@ -42,8 +26,6 @@ import { ClickOutside } from '../../directives/click-outside'
 import type { PropType, Ref, ComponentPublicInstance } from 'vue'
 import type { MakeSlots } from '../../utils'
 import type { BackgroundColorData } from '../../composables/color'
-
-export type { StrategyProps } from './composables/position-strategy'
 
 interface ScrimProps
 {
@@ -127,13 +109,13 @@ export const VeOverlay = genericComponent<new () => { $slots: OverlaySlots }>()(
     const { isTop } = useStack(isActive)
 
     const contentEl = ref<HTMLElement>()
-    const { contentStyles, anchorClasses, updatePosition } = usePositionStrategies(props, {
+    const { contentStyles, anchorClasses, updatePosition } = usePositionStrategy(props, {
       contentEl,
       activatorEl,
       isActive,
     })
 
-    useScrollStrategies(props, {
+    useScrollStrategy(props, {
       contentEl,
       activatorEl,
       isActive,

@@ -1,16 +1,26 @@
 // Utils
 import { computed, nextTick, onScopeDispose, watch } from 'vue'
-import { convertToUnit, getScrollParent, isFixedPosition, nullifyTransforms, Box } from '../../../../../utils'
-import { oppositeAnchor, parseAnchor, physicalAnchor } from '../../../utils/anchor'
-import { anchorToPoint, getOffset } from '../../../utils/point'
+import {
+  convertToUnit, getScrollParent, isFixedPosition, nullifyTransforms, Box,
+  oppositeAnchor, parseAnchor, physicalAnchor,
+  anchorToPoint, getOffset
+} from '../../utils'
 
 // Types
 import type { Ref } from 'vue'
-import type { PositionStrategyData, StrategyProps } from '../index'
+import type { PositionStrategyData, PositionStrategyProps } from './positionStrategy'
 
-export function connectedPositionStrategy (
+/**
+ * 连接的定位策略
+ *
+ * @param data
+ * @param props
+ * @param contentStyles
+ * @param anchorClasses
+ */
+export function positionStrategyConnected (
   data: PositionStrategyData,
-  props: StrategyProps,
+  props: PositionStrategyProps,
   contentStyles: Ref<Dictionary<string>>,
   anchorClasses: Ref<string[]>
 ) {

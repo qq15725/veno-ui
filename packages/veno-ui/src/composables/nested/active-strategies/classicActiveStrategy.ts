@@ -1,5 +1,5 @@
 // Types
-import type { ActiveStrategyFn } from './active-strategy'
+import type { ActiveStrategyFn } from '.'
 
 /**
  * Class 激活策略。

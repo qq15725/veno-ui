@@ -1,12 +1,20 @@
 // Utils
 import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
-import { IN_BROWSER, propsFactory } from '../../../../utils'
-import { staticPositionStrategy, connectedPositionStrategy } from './strategies'
+import { IN_BROWSER, propsFactory } from '../../utils'
+
+// Strategies
+import { positionStrategyStatic } from './positionStrategyStatic'
+import { positionStrategyConnected } from './positionStrategyConnected'
+
+export const positionStrategies = {
+  static: positionStrategyStatic, // specific viewport position, usually centered
+  connected: positionStrategyConnected, // connected to a certain element
+}
 
 // Types
 import type { EffectScope, PropType } from 'vue'
 import type { Ref } from 'vue'
-import type { Anchor } from '../../utils/anchor'
+import type { Anchor } from '../../utils'
 
 export interface PositionStrategyData
 {
@@ -15,21 +23,20 @@ export interface PositionStrategyData
   isActive: Ref<boolean>
 }
 
-export const positionStrategies = {
-  static: staticPositionStrategy, // specific viewport position, usually centered
-  connected: connectedPositionStrategy, // connected to a certain element
-}
+export type PositionStrategy = keyof typeof positionStrategies | ((
+  data: PositionStrategyData,
+  props: PositionStrategyProps,
+  contentStyles: Ref<Dictionary<string>>,
+  anchorClasses: Ref<string[]>
+) => undefined | { updatePosition: (e: Event) => void })
 
-export interface StrategyProps
+export type Origin = Anchor | 'auto' | 'overlap'
+
+export interface PositionStrategyProps
 {
-  positionStrategy: keyof typeof positionStrategies | ((
-    data: PositionStrategyData,
-    props: StrategyProps,
-    contentStyles: Ref<Dictionary<string>>,
-    anchorClasses: Ref<string[]>
-  ) => undefined | { updatePosition: (e: Event) => void })
+  positionStrategy: PositionStrategy
   anchor: Anchor
-  origin: Anchor | 'auto' | 'overlap'
+  origin: Origin
   offset?: number | string
   maxHeight?: number | string
   maxWidth?: number | string
@@ -39,22 +46,22 @@ export interface StrategyProps
 
 export const makePositionStrategyProps = propsFactory({
   positionStrategy: {
-    type: [String, Function] as PropType<StrategyProps['positionStrategy']>,
+    type: [String, Function] as PropType<PositionStrategy>,
     default: 'static',
     validator: (val: any) => typeof val === 'function' || val in positionStrategies,
   },
   anchor: {
-    type: String as PropType<StrategyProps['anchor']>,
+    type: String as PropType<Anchor>,
     default: 'bottom',
   },
   origin: {
-    type: String as PropType<StrategyProps['origin']>,
+    type: String as PropType<Origin>,
     default: 'auto',
   },
   offset: [Number, String],
 })
 
-export function usePositionStrategies (props: StrategyProps, data: PositionStrategyData) {
+export function usePositionStrategy (props: PositionStrategyProps, data: PositionStrategyData) {
   const contentStyles = ref({})
   const anchorClasses = ref([])
   const updatePosition = ref<(e: Event) => void>()

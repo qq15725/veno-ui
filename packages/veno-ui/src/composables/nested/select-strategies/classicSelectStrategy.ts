@@ -1,4 +1,5 @@
-import { SelectStrategy } from './select-strategy'
+// Types
+import type { SelectStrategy } from '.'
 
 /**
  * Class 选择策略。

@@ -1,5 +1,5 @@
 // Utils
-import { getCurrentInstance } from './get-current-instance'
+import { getCurrentInstance } from './getCurrentInstance'
 
 // Types
 import type { VNode } from 'vue'

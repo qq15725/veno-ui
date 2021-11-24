@@ -1,36 +1,21 @@
 // Utils
-import {
-  getCurrentInstance,
-  IN_BROWSER,
-  SUPPORT_TOUCH,
-  propsFactory,
-  SUPPORT_FOCUS_VISIBLE
-} from '../../../utils'
+import { computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
+import { getCurrentInstance, IN_BROWSER, SUPPORT_TOUCH, propsFactory, SUPPORT_FOCUS_VISIBLE } from '../../utils'
 
-import { makeDelayProps, useDelay } from '../../../composables/delay'
-
-import {
-  computed,
-  effectScope,
-  nextTick,
-  onScopeDispose,
-  ref,
-  watch,
-} from 'vue'
+// Composables
+import { makeDelayProps, useDelay } from '../delay'
 
 // Types
-import type { DelayProps } from '../../../composables/delay'
-import type {
-  ComponentPublicInstance,
-  EffectScope,
-  PropType,
-  Ref,
-} from 'vue'
+import type { ComponentPublicInstance, EffectScope, PropType, Ref } from 'vue'
+import type { DelayProps } from '../delay'
+
+type Activator = 'parent' | string | Element | ComponentPublicInstance
+type activatorProps = Dictionary<any>
 
 interface ActivatorProps extends DelayProps
 {
-  activator?: 'parent' | string | Element | ComponentPublicInstance
-  activatorProps: Dictionary<any>
+  activator?: Activator
+  activatorProps: activatorProps
 
   openOnClick: boolean | undefined
   openOnHover: boolean
@@ -38,17 +23,35 @@ interface ActivatorProps extends DelayProps
 }
 
 export const makeActivatorProps = propsFactory({
-  activator: [String, Object] as PropType<ActivatorProps['activator']>,
+  /**
+   * @zh: 激活器
+   */
+  activator: [String, Object] as PropType<Activator>,
+
+  /**
+   * @zh: 激活器属性
+   */
   activatorProps: {
-    type: Object as PropType<ActivatorProps['activatorProps']>,
+    type: Object as PropType<activatorProps>,
     default: () => ({}),
   },
 
+  /**
+   * @zh: 点击时打开
+   */
   openOnClick: {
     type: Boolean,
     default: undefined,
   },
+
+  /**
+   * @zh: 悬停时打开
+   */
   openOnHover: Boolean,
+
+  /**
+   * @zh: 获取焦点时打开
+   */
   openOnFocus: {
     type: Boolean,
     default: undefined,
@@ -74,10 +77,9 @@ export function useActivator (props: ActivatorProps, isActive: Ref<boolean>) {
   })
 
   const { runOpenDelay, runCloseDelay } = useDelay(props, value => {
-    if (value === (
-      (props.openOnHover && isHovered) ||
-      (openOnFocus.value && isFocused)
-    )) {
+    const hovered = props.openOnHover && isHovered
+    const focused = openOnFocus.value && isFocused
+    if (value === (hovered || focused)) {
       isActive.value = value
     }
   })

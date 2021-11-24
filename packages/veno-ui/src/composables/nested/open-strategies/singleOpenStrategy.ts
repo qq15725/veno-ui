@@ -1,5 +1,5 @@
 // Types
-import type { OpenStrategyFn } from './open-strategy'
+import type { OpenStrategyFn } from '.'
 
 /**
  * 单个嵌套子节点的打开策略。

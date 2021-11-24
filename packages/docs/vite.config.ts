@@ -1,8 +1,9 @@
 import * as path from 'path'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import legacy from '@vitejs/plugin-legacy'
 import { defineConfig, loadEnv } from 'vite'
-import docs from '../md-loader/src/vite'
+import legacy from '@vitejs/plugin-legacy'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import docs from '../plugin-docs/src/vite'
 
 const resolve = (file: string) => path.resolve(__dirname, file)
 
@@ -26,12 +27,14 @@ export default defineConfig(({ mode }) => {
       target: 'chrome58',
     },
     plugins: [
-      docs(),
+      docs(vue({
+        include: [/\.vue$/, /\.md$/],
+      })),
+      vueJsx({ optimize: true, enableObjectSlots: false }),
       legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),
-      vueJsx({ optimize: true, enableObjectSlots: false }),
     ]
   }
 })

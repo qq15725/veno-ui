@@ -1,3 +1,3 @@
-export * from './open-strategy'
-export * from './single-open-strategy'
-export * from './multiple-open-strategy'
+export * from './openStrategy'
+export * from './singleOpenStrategy'
+export * from './multipleOpenStrategy'

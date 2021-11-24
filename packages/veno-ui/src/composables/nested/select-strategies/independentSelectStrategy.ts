@@ -1,5 +1,5 @@
 // Types
-import type { SelectStrategy } from './select-strategy'
+import type { SelectStrategy } from '.'
 
 export const independentSelectStrategy: SelectStrategy = {
   select: ({ id, value, selected }) => {

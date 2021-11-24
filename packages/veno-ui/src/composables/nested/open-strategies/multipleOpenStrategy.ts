@@ -1,4 +1,5 @@
-import { OpenStrategyFn } from './open-strategy'
+// Types
+import type { OpenStrategyFn } from '.'
 
 /**
  * 多个嵌套子节点的打开策略。
