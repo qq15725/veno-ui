@@ -33,6 +33,16 @@ app.use(venoUi)
 app.mount('#app')
 ```
 
+## 生态
+
+| 项目               | 介绍                                             |
+| --------------------- | ------------------------------------------------------- |
+| [@veno-ui/markdown] | Markdown 渲染器，解析成 VenoUI 组件构成的 HTML。 |
+| [@veno-ui/vite-plugin-vue-docs] | Vite Vue 文档插件。 |
+
+[@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
+[@veno-ui/vite-plugin-vue-docs]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-vue-docs
+
 ## License
 
 [MIT 协议](./LICENSE)
