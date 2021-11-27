@@ -14,6 +14,7 @@ import {
   includePlugin,
   demoPlugin,
   highlightLinePlugin,
+  preWrapperPlugin,
 } from './plugins'
 
 import type { Options } from 'markdown-it'
@@ -53,7 +54,6 @@ export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
   options = {
     html: true,
     linkify: true,
-    langPrefix: 'language-',
     highlight,
     ...options
   }
@@ -68,6 +68,7 @@ export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
       .use(includePlugin)
       .use(demoPlugin)
       .use(highlightLinePlugin)
+      .use(preWrapperPlugin)
       // 第三方插件
       .use(anchor, {
         slugify,

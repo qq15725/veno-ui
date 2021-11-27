@@ -5,7 +5,7 @@ import { loadDocsRoutes, convertRoutesToMenus } from '../../utils'
 import Playground from '@/views/Playground.vue'
 import Layout from '@/views/Layout.vue'
 // @ts-ignore
-import Guide from '@/views/guide/README.md'
+import Readme from '@root/README.md'
 
 // Types
 import type { RouteRecordRaw } from 'vue-router'
@@ -26,8 +26,8 @@ const routes: RouteRecordRaw[] = [
     component: Layout,
     children: [
       ...docsRoutes,
-      { name: 'Guide', path: '/guide.html', component: Guide },
-      { path: '', redirect: '/guide.html' }
+      { name: 'Readme', path: '/readme.html', component: Readme },
+      { path: '', redirect: '/readme.html' }
     ],
   },
 ]

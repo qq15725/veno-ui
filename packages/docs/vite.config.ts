@@ -1,11 +1,11 @@
-import * as path from 'path'
+import path from 'path'
 import { defineConfig, loadEnv } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDocs from '@veno-ui/vite-plugin-vue-docs'
 
-const resolve = (file: string) => path.resolve(__dirname, file)
+const resolve = (...args: string[]) => path.resolve(__dirname, ...args)
 
 export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
@@ -18,6 +18,10 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: [
+        {
+          find: /^@root\/(.*)/,
+          replacement: resolve('../../$1')
+        },
         {
           find: /^@\/(.*)/,
           replacement: resolve('./src/$1')
