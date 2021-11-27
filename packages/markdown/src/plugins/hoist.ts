@@ -1,9 +1,10 @@
-import type MarkdownIt from 'markdown-it'
+// Types
+import type { PluginSimple } from 'markdown-it/lib'
 import type { MarkdownParsedData } from '..'
 
 // hoist <script> and <style> tags out of the returned html
 // so that they can be placed outside as SFC blocks.
-export const hoistPlugin = (md: MarkdownIt) => {
+export const hoistPlugin: PluginSimple = md => {
   const RE = /^<(script|style)(?=(\s|>|$))/i
 
   md.renderer.rules.html_block = (tokens, index) => {

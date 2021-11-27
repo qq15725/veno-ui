@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import docs from '../plugin-docs/src/vite'
+import vueDocs from '@veno-ui/vite-plugin-vue-docs'
 
 const resolve = (file: string) => path.resolve(__dirname, file)
 
@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
   return {
     base: './',
     server: {
+      // open: true,
       host: '0.0.0.0',
     },
     resolve: {
@@ -20,17 +21,16 @@ export default defineConfig(({ mode }) => {
         {
           find: /^@\/(.*)/,
           replacement: resolve('./src/$1')
-        }
+        },
       ]
     },
     build: {
-      target: 'chrome58',
+      target: 'es2015',
     },
     plugins: [
-      docs(vue({
-        include: [/\.vue$/, /\.md$/],
-      })),
-      vueJsx({ optimize: true, enableObjectSlots: false }),
+      vueDocs(),
+      vue(),
+      vueJsx(),
       legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']

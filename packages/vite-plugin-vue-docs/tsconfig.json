@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "module": "CommonJS",
+    "target": "ES2015",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "lib": [
+      "ES2020"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

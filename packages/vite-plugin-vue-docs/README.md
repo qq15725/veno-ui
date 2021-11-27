@@ -1,3 +1,22 @@
+# @veno-ui/vite-plugin-vue-docs
+
+Markdown 生成由 VenoUI 组件渲染的文档
+
+## 使用
+
+```tsx
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDocs from '@veno-ui/vite-plugin-vue-docs'
+
+export default defineConfig({
+  plugins: [
+    vueDocs(), 
+    vue()
+  ],
+})
+```
+
 ## Roadmap
 
 - [x] 解析 .md 文件，生成 Usage 用法。

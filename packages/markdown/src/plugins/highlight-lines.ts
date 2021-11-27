@@ -1,10 +1,11 @@
 // Modified from https://github.com/egoist/markdown-it-highlight-lines
-import MarkdownIt from 'markdown-it'
+// Types
+import type { PluginSimple } from 'markdown-it/lib'
 
 const RE = /{([\d,-]+)}/
 const wrapperRE = /^<pre .*?><code>/
 
-export const highlightLinePlugin = (md: MarkdownIt) => {
+export const highlightLinePlugin: PluginSimple = md => {
   const fence = md.renderer.rules.fence!
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx, options] = args
@@ -21,7 +22,10 @@ export const highlightLinePlugin = (md: MarkdownIt) => {
 
     const lineNumbers = RE.exec(rawInfo)![1]
       .split(',')
-      .map((v) => v.split('-').map((v) => parseInt(v, 10)))
+      .map((v) => (
+        v.split('-')
+          .map((v) => parseInt(v, 10))
+      ))
 
     const code = options.highlight
       ? options.highlight(token.content, langName, '')

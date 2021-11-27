@@ -1,18 +1,20 @@
+// Utils
 import MarkdownIt from 'markdown-it'
+import { highlight } from './highlight'
+import { slugify } from './utils'
+
+// Plugins
+import anchor from 'markdown-it-anchor'
 import {
   componentPlugin,
   paragraphPlugin,
   headerPlugin,
   codePlugin,
-  slugify,
   hoistPlugin,
   includePlugin,
   demoPlugin,
-  highlight,
   highlightLinePlugin,
-  preWrapperPlugin,
 } from './plugins'
-import anchor from 'markdown-it-anchor'
 
 import type { Options } from 'markdown-it'
 
@@ -47,30 +49,31 @@ export interface MarkdownRenderer
   render: (src: string, env: MarkdownEnv) => { html: string; data: any }
 }
 
-export const createMarkdownRenderer = (
-  options: MarkdownOptions = {}
-): MarkdownRenderer => {
-  const md = new MarkdownIt({
+export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
+  options = {
     html: true,
     linkify: true,
+    langPrefix: 'language-',
     highlight,
     ...options
-  })
+  }
 
-  md.use(componentPlugin)
-    .use(headerPlugin)
-    .use(paragraphPlugin)
-    .use(codePlugin)
-    .use(hoistPlugin)
-    .use(includePlugin)
-    .use(demoPlugin)
-    .use(highlightLinePlugin)
-    .use(preWrapperPlugin)
-    // 3rd party plugins
-    .use(anchor, {
-      slugify,
-      ...options.anchor
-    })
+  const md = (
+    new MarkdownIt(options)
+      .use(componentPlugin)
+      .use(headerPlugin)
+      .use(paragraphPlugin)
+      .use(codePlugin)
+      .use(hoistPlugin)
+      .use(includePlugin)
+      .use(demoPlugin)
+      .use(highlightLinePlugin)
+      // 第三方插件
+      .use(anchor, {
+        slugify,
+        ...options.anchor
+      })
+  )
 
   const render = md.render
 

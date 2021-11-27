@@ -1,7 +1,8 @@
 import blockNames from 'markdown-it/lib/common/html_blocks'
 import { HTML_OPEN_CLOSE_TAG_RE } from 'markdown-it/lib/common/html_re'
 
-import type MarkdownIt from 'markdown-it'
+// Types
+import type { PluginSimple } from 'markdown-it/lib'
 import type { RuleBlock } from 'markdown-it/lib/parser_block'
 
 // Replacing the default htmlBlock rule to allow using custom components at
@@ -27,7 +28,7 @@ const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
   [new RegExp(HTML_OPEN_CLOSE_TAG_RE.source + '\\s*$'), /^$/, false]
 ]
 
-export const componentPlugin = (md: MarkdownIt) => {
+export const componentPlugin: PluginSimple = md => {
   md.block.ruler.at('html_block', htmlBlock)
 }
 

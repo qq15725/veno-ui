@@ -1,4 +1,4 @@
-import type { MarkdownParsedData } from './markdown'
+import type { MarkdownParsedData } from '@veno-ui/markdown'
 
 const scriptRE = /<\/script>/
 const scriptSetupRE = /<\s*script[^>]*\bsetup\b[^>]*/

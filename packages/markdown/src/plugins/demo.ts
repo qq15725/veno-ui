@@ -3,11 +3,11 @@ import container from 'markdown-it-container'
 import Token from 'markdown-it/lib/token'
 
 // Types
-import type MarkdownIt from 'markdown-it'
+import type { PluginSimple } from 'markdown-it/lib'
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { MarkdownParsedData } from '../index'
+import type { MarkdownParsedData } from '..'
 
-export const demoPlugin = (md: MarkdownIt) => {
+export const demoPlugin: PluginSimple = md => {
   const name = 'demo'
 
   const demoRender: RenderRule = (tokens, index, options, env, self) => {
