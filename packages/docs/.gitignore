@@ -1,7 +1,6 @@
 .DS_Store
 node_modules/
 .env
-package-lock.json
 dist
 
 # IDE user config
