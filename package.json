@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3",
+    "lerna": "^3.20.2",
     "sass": "^1.39.0",
     "typescript": "^4.3.2"
   }
