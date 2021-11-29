@@ -34,12 +34,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 // VenoUI
-import 'veno-ui/dist/style.css'
+import 'veno-ui/styles'
 import { createVenoUi } from 'veno-ui'
-const venoUi = createVenoUi()
+import * as components from 'veno-ui/components'
 
 const app = createApp(App)
-app.use(venoUi)
+app.use(createVenoUi({
+  components
+}))
 app.mount('#app')
 ```
 
