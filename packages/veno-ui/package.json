@@ -16,25 +16,27 @@
   "main": "dist/veno-ui.umd.js",
   "module": "dist/veno-ui.es.js",
   "files": [
-    "dist/"
+    "lib",
+    "dist"
   ],
   "types": "dist/veno-ui.d.ts",
   "scripts": {
-    "build": "vite build"
+    "build:dist": "vite build -c vite.dist.config.ts",
+    "build:lib": "vite build -c vite.lib.config.ts",
+    "build": "npm run build:lib && npm run build:dist"
   },
   "devDependencies": {
     "@types/node": "^14.11.10",
     "@vitejs/plugin-vue": "^1.9.4",
     "@vitejs/plugin-vue-jsx": "^1.2.0",
-    "@vue/compiler-sfc": "^3.2.22",
+    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.3.2",
     "vite": "^2.6.14",
-    "vite-plugin-dts": "^0.8.3",
-    "vue-tsc": "^0.2.3"
+    "vite-plugin-dts": "^0.9.6",
+    "vue-router": "^4.0.12"
   },
   "peerDependencies": {
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.10"
+    "vue": "^3.0.0"
   },
   "sideEffects": [
     "*.sass",

@@ -3,6 +3,7 @@ node_modules/
 .env
 package-lock.json
 dist/
+lib/
 
 # IDE user config
 .vscode/

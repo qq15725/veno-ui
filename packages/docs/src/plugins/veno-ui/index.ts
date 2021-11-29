@@ -1,4 +1,4 @@
-import { createVenoUi } from 'veno-ui/src/entry'
+import { createVenoUi } from 'veno-ui'
 import { docsSvg } from '../../iconsets/docs-svg'
 
 export default createVenoUi({

@@ -19,7 +19,7 @@ import { VeFadeTransition } from '../ve-transition'
 
 // Types
 import type { PropType } from 'vue'
-import type { StrategyProps } from '../ve-overlay'
+import type { Anchor, Origin } from '../../composables/position-strategy'
 export type VeSelect = InstanceType<typeof VeSelect>
 
 export const VeSelect = genericComponent()({
@@ -32,11 +32,11 @@ export const VeSelect = genericComponent()({
     },
     id: String,
     anchor: {
-      type: String as PropType<StrategyProps['anchor']>,
+      type: String as PropType<Anchor>,
       default: 'bottom',
     },
     origin: {
-      type: String as PropType<StrategyProps['origin']>,
+      type: String as PropType<Origin>,
       default: 'auto',
     },
     items: {

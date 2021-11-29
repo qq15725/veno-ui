@@ -1,14 +1,24 @@
 {
   "compilerOptions": {
     "outDir": "es",
-    "target": "ES2015",
+    "target": "ES2020",
     "module": "ES2020",
     "moduleResolution": "node",
     "removeComments": true,
     "strict": true,
     "allowJs": true,
-    "isolatedModules": true,
+    // "isolatedModules": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
-  }
+    "jsx": "preserve",
+    "types": [
+      "node",
+      "vue-router"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

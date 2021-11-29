@@ -1,6 +1,5 @@
 // Utils
 import {
-  reactive,
   ref,
   toRef,
   provide,
@@ -18,13 +17,12 @@ import { propsFactory, getUid } from '../../utils'
 
 // Types
 import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
-import type { UnwrapNestedRefs } from '@vue/reactivity'
 
 interface DragSortProvide
 {
   register: (item: DragSortItem) => void
   unregister: (id: number) => void
-  items: UnwrapNestedRefs<DragSortItem[]>
+  items: Ref<UnwrapRef<DragSortItem[]>>
   selected: Ref<number | null>
   select: (id: number) => void
   dragenter: (id: number, index?: number) => void
@@ -206,15 +204,15 @@ export function useDragSort (
 }
 
 export function createDragSortProvider (injectKey = DragSortProviderKey) {
-  const items = reactive<DragSortItem[]>([])
+  const items = ref<DragSortItem[]>([])
   const selected = ref<number | null>(null)
 
   function register (item: DragSortItem) {
-    items.push(item as unknown as UnwrapRef<DragSortItem>)
+    items.value.push(item as unknown as UnwrapRef<DragSortItem>)
   }
 
   function unregister (id: number) {
-    items.splice(items.findIndex(item => item.id === id), 1)
+    items.value.splice(items.value.findIndex(item => item.id === id), 1)
   }
 
   function select (id: number) {
@@ -228,7 +226,7 @@ export function createDragSortProvider (injectKey = DragSortProviderKey) {
   }
 
   function find (id: number) {
-    return items.find(v => v.id === id)
+    return items.value.find(v => v.id === id)
   }
 
   function dragenter (id: number, index?: number) {

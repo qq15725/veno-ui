@@ -4,6 +4,8 @@ import type { ComponentPublicInstance, FunctionalComponent, VNode } from 'vue'
 
 declare global
 {
+  export const __VENO_UI_VERSION__: string
+
   interface Element
   {
     _intersect?: {

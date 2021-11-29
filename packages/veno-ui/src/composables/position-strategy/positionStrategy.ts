@@ -30,6 +30,8 @@ export type PositionStrategy = keyof typeof positionStrategies | ((
   anchorClasses: Ref<string[]>
 ) => undefined | { updatePosition: (e: Event) => void })
 
+
+export type { Anchor } from '../../utils'
 export type Origin = Anchor | 'auto' | 'overlap'
 
 export interface PositionStrategyProps

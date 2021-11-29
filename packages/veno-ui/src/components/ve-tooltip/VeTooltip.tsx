@@ -15,7 +15,8 @@ import { genericComponent, getUid } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'
-import type { OverlaySlots, StrategyProps } from '../ve-overlay'
+import type { OverlaySlots } from '../ve-overlay'
+import type { Anchor, Origin } from '../../composables/position-strategy'
 
 export type VeTooltip = InstanceType<typeof VeTooltip>
 
@@ -33,11 +34,11 @@ export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()(
       default: true,
     },
     anchor: {
-      type: String as PropType<StrategyProps['anchor']>,
+      type: String as PropType<Anchor>,
       default: 'bottom',
     },
     origin: {
-      type: String as PropType<StrategyProps['origin']>,
+      type: String as PropType<Origin>,
       default: 'auto',
     },
     ...makeTransitionProps({
@@ -55,7 +56,7 @@ export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()(
     const anchor = computed(() => {
       return props.anchor.split(' ').length > 1
         ? props.anchor
-        : props.anchor + ' center' as StrategyProps['anchor']
+        : props.anchor + ' center' as Anchor
     })
     const origin = computed(() => {
       return (
@@ -64,7 +65,7 @@ export const VeTooltip = genericComponent<new () => { $slots: OverlaySlots }>()(
         props.origin.split(' ').length > 1 ||
         props.anchor.split(' ').length > 1
       ) ? props.origin
-        : props.origin + ' center' as StrategyProps['origin']
+        : props.origin + ' center' as Origin
     })
 
     return () => {

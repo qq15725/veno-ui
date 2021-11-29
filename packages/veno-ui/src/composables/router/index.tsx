@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Utils
 import {
   computed,

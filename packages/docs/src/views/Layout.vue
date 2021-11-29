@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { version } from 'veno-ui/package.json'
+import { version } from 'veno-ui'
 
 const props = defineProps<{
   menus?: any[]

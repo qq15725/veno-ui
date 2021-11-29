@@ -10,9 +10,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "veno-ui": ["../veno-ui/src/entry.ts"]
     }
   }
 }
