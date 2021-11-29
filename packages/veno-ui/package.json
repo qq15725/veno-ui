@@ -19,6 +19,20 @@
     "lib",
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./lib/framework.js",
+      "require": "./dist/veno-ui.js"
+    },
+    "./styles": "./lib/styles/main.scss",
+    "./styles/*": "./lib/styles/*",
+    "./framework": "./lib/framework.js",
+    "./components": "./lib/components/index.js",
+    "./directives": "./lib/directives/index.js",
+    "./directives/*": "./lib/directives/*/*.js",
+    "./iconsets/*": "./lib/iconsets/*.js",
+    "./*": "./*"
+  },
   "types": "dist/veno-ui.d.ts",
   "scripts": {
     "build:dist": "vite build -c vite.dist.config.ts",
