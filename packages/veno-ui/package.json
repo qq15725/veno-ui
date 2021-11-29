@@ -13,8 +13,9 @@
     "ui library",
     "vue"
   ],
-  "main": "dist/veno-ui.umd.js",
-  "module": "dist/veno-ui.es.js",
+  "main": "lib/framework.js",
+  "module": "lib/framework.js",
+  "types": "lib/framework.d.ts",
   "files": [
     "lib",
     "dist"
@@ -33,7 +34,6 @@
     "./iconsets/*": "./lib/iconsets/*.js",
     "./*": "./*"
   },
-  "types": "dist/veno-ui.d.ts",
   "scripts": {
     "build:dist": "vite build -c vite.dist.config.ts",
     "build:lib": "vite build -c vite.lib.config.ts",
