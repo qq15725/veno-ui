@@ -1,5 +1,6 @@
-import vue from '@vitejs/plugin-vue'
 import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { promises } from 'fs'
 // @ts-ignore
 import path from 'path'
@@ -38,6 +39,8 @@ export default defineConfig(async ({ mode }) => {
       },
     },
     plugins: [
+      vue(),
+      vueJsx(),
       dts({
         include: 'src',
         staticImport: true,

@@ -34,6 +34,23 @@
     "./iconsets/*": "./lib/iconsets/*.js",
     "./*": "./*"
   },
+  "typesVersions": {
+    "*": {
+      "lib/framework.js": [
+        "lib/framework.d.ts"
+      ],
+      "framework": [
+        "lib/framework.d.ts"
+      ],
+      "*": [
+        "*",
+        "dist/*",
+        "lib/*",
+        "lib/*.d.ts",
+        "lib/*/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build:dist": "vite build -c vite.dist.config.ts",
     "build:lib": "vite build -c vite.lib.config.ts",

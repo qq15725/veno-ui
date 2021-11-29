@@ -1,4 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { terser } from 'rollup-plugin-terser'
 import { promises } from 'fs'
 
@@ -45,6 +47,10 @@ export default defineConfig(async ({ mode }) => {
         ],
       },
     },
+    plugins: [
+      vue(),
+      vueJsx(),
+    ],
     define: {
       __VENO_UI_VERSION__: JSON.stringify(venoUiPackage.version)
     }
