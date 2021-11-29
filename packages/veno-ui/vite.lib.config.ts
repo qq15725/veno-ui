@@ -40,7 +40,6 @@ export default defineConfig(async ({ mode }) => {
     plugins: [
       dts({
         include: 'src',
-        insertTypesEntry: true,
         staticImport: true,
         logDiagnostics: true,
         beforeWriteFile: (filePath: string, content: string) => {
@@ -48,14 +47,6 @@ export default defineConfig(async ({ mode }) => {
             filePath: filePath.replace('lib/src', 'lib'),
             content
           }
-        },
-        afterBuild: async () => {
-          const filename = './dist/veno-ui.d.ts'
-          promises.writeFile(
-            filename,
-            (await promises.readFile(filename, 'utf8')).replace('lib/src', 'lib'),
-            'utf8'
-          )
         }
       }),
       {
