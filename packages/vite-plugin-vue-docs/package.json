@@ -28,5 +28,8 @@
   "devDependencies": {
     "@veno-ui/markdown": "^0.0.6",
     "gray-matter": "^4.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

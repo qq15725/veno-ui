@@ -57,5 +57,8 @@
     "*.scss",
     "*.css",
     "*.vue"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
