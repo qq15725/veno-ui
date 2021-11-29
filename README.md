@@ -1,4 +1,14 @@
 <h1 align="center">Veno UI</h1>
+
+<p align="center">
+  <a href="https://github.com/qq15725/veno-ui/blob/master/LICENSE.md">
+    <img src="https://img.shields.io/npm/l/veno-ui.svg" alt="License">
+  </a>
+  <a href="https://www.npmjs.com/package/veno-ui">
+    <img src="https://img.shields.io/npm/v/veno-ui.svg" alt="Version">
+  </a>
+</p>
+
 <p align="center">一个 Vue 3 UI 组件库。</p>
 
 ## 文档
