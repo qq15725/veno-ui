@@ -17,14 +17,50 @@ const highlightedCode = computed(() => {
 })
 
 const isActive = ref(false)
+const btn = ref()
 const theme = ref()
 const github = ref('https://github.com/qq15725/veno-ui/blob/master')
+const focusBtn = () => {
+  setTimeout(() => {
+    btn.value?.$el?.focus()
+  }, 0)
+}
 </script>
 
 <template>
   <ve-card :title="props.title" divider>
     <template #append>
       <ve-grid dense>
+        <ve-tooltip
+            #activator="{ props }"
+            :text="isActive ? '隐藏源代码' : '查看源代码'"
+            :open-delay="300"
+            anchor="top"
+        >
+          <ve-button
+              v-bind="props"
+              @click="isActive = !isActive"
+              rounded
+              style="opacity: .8;"
+              icon="$code"
+          />
+        </ve-tooltip>
+
+        <ve-tooltip
+            #activator="{ props }"
+            text="重置焦点以测试键盘导航"
+            :open-delay="300"
+            anchor="top"
+        >
+          <ve-button
+              v-bind="props"
+              @click="focusBtn"
+              rounded
+              style="opacity: .8;"
+              icon="$focus"
+          />
+        </ve-tooltip>
+
         <ve-tooltip
             #activator="{ props }"
             text="反转示例颜色"
@@ -55,21 +91,6 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
               icon="$github"
           />
         </ve-tooltip>
-
-        <ve-tooltip
-            #activator="{ props }"
-            text="查看源代码"
-            :open-delay="300"
-            anchor="top"
-        >
-          <ve-button
-              v-bind="props"
-              @click="isActive = !isActive"
-              rounded
-              style="opacity: .8;"
-              icon="$code"
-          />
-        </ve-tooltip>
       </ve-grid>
     </template>
 
@@ -79,12 +100,28 @@ const github = ref('https://github.com/qq15725/veno-ui/blob/master')
       </div>
     </ve-expand-transition>
 
-    <ve-lazy>
-      <ve-material tile :theme="theme" border="0">
-        <ve-card-text>
-          <slot />
-        </ve-card-text>
-      </ve-material>
-    </ve-lazy>
+    <ve-material tile :theme="theme" border="0">
+      <ve-button
+          ref="btn"
+          class="test-kb-nav"
+          absolute
+          border="0"
+          icon
+          rounded
+          tabindex="-1"
+          aria-label="此容器仅用于测试组件键盘导航功能。"
+          color="transparent"
+          style="pointer-events: none;"
+      />
+      <ve-card-text>
+        <slot />
+      </ve-card-text>
+    </ve-material>
   </ve-card>
 </template>
+
+<style>
+.test-kb-nav {
+
+}
+</style>

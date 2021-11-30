@@ -29,35 +29,45 @@ export const BreadcrumbItem = genericComponent<new <T>() => {
     ...makeGroupItemProps(),
   },
 
-  setup (props, { slots }) {
+  setup (props, { slots, attrs }) {
     const { id, group } = useGroupItem(props, BreadcrumbSymbol)
 
-    const isLastOne = computed(() => {
+    const isLast = computed(() => {
       return group.items.value[group.items.value.length - 1] === id
     })
+
+    // TODO 如果是导航按钮，当前页设置 aria-current="page"
 
     return () => {
       return (
         <>
-          <Button
+          <li
             class={ [
               've-breadcrumb-item',
               {
-                've-breadcrumb-item--active': isLastOne.value,
+                've-breadcrumb-item--last': isLast.value
               }
             ] }
-            variant="text"
           >
-            { slots.default?.() }
-          </Button>
+            <Button
+              variant="text"
+              { ...attrs }
+              v-slots={ slots }
+            />
+          </li>
 
-          <div class="ve-breadcrumb-item__separator">
-            { !isLastOne.value && (
-              slots.separator?.()
-              ?? group.vm?.slots.separator?.()
-              ?? <Icon icon="veno-ui:$separator" />
-            ) }
-          </div>
+          { !isLast.value && (
+            <li
+              class="ve-breadcrumb-separator"
+              aria-hidden="true"
+            >
+              {
+                slots.separator?.()
+                ?? group.vm?.slots.separator?.()
+                ?? <Icon icon="veno-ui:$separator" />
+              }
+            </li>
+          ) }
         </>
       )
     }

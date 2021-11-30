@@ -5,6 +5,7 @@ import './styles/breadcrumb.scss'
 import { genericComponent } from '../../utils'
 
 // Composables
+import { makeTagProps } from '../../composables/tag'
 import { makeGroupProps, useGroup } from '../../composables/group'
 
 // Symbols
@@ -12,8 +13,8 @@ export const BreadcrumbSymbol = Symbol.for('veno-ui:breadcrumb')
 
 // Types
 import type { MakeSlots } from '../../utils'
-export type Breadcrumb = InstanceType<typeof
-  Breadcrumb>
+
+export type Breadcrumb = InstanceType<typeof Breadcrumb>
 
 export const Breadcrumb = genericComponent<new <T>() => {
   $slots: MakeSlots<{
@@ -24,6 +25,9 @@ export const Breadcrumb = genericComponent<new <T>() => {
   name: 'Breadcrumb',
 
   props: {
+    ...makeTagProps({
+      tag: 'nav',
+    }),
     ...makeGroupProps(),
   },
 
@@ -32,13 +36,14 @@ export const Breadcrumb = genericComponent<new <T>() => {
 
     return () => {
       return (
-        <div
+        <props.tag
+          aria-label="breadcrumb"
           class={ [
             've-breadcrumb',
           ] }
         >
-          { slots.default?.() }
-        </div>
+          <ol>{ slots.default?.() }</ol>
+        </props.tag>
       )
     }
   }
