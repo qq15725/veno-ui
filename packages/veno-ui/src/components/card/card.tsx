@@ -40,7 +40,6 @@ export const Card = defineComponent({
     text: String,
     ...makeMaterialProps({
       size: null,
-      density: null,
     }),
     ...makeRouterProps(),
     ...makeLoadingProps(),

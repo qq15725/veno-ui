@@ -1,6 +1,7 @@
 @forward 'variables';
 @use 'variables' as *;
 @use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-card {
   position: relative;
@@ -8,6 +9,12 @@
   color: $card-color;
   text-decoration: none;
   @include tools.use-material($card-material);
+
+  @each $name, $multiplier in settings.$densities {
+    &--density-#{$name} {
+      --ve-card-density-offset: #{$multiplier * settings.$spacer};
+    }
+  }
 
   &__overlay {
     @include tools.absolute();
@@ -79,7 +86,7 @@
   &-header {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: $card-header-padding;
 
     &-text {
       flex: 1 1 auto;
@@ -89,7 +96,7 @@
   &-title {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: $card-title-padding;
     font-size: $card-title-font-size;
     font-weight: $card-title-font-weight;
     letter-spacing: $card-title-letter-spacing;
@@ -104,7 +111,7 @@
   &-subtitle {
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: $card-subtitle-padding;
     font-size: $card-subtitle-font-size;
     font-weight: $card-subtitle-font-weight;
     letter-spacing: $card-subtitle-letter-spacing;
@@ -140,10 +147,10 @@
   }
 
   &-text {
+    padding: $card-text-padding;
     font-size: $card-text-font-size;
     font-weight: $card-text-font-weight;
     letter-spacing: $card-text-letter-spacing;
-    padding: 20px;
     transition: inherit;
     transition-property: color, opacity;
   }
@@ -157,6 +164,6 @@
     display: flex;
     align-items: center;
     flex: 1 1 0;
-    padding: 10px 20px;
+    padding: $card-actions-padding;
   }
 }
