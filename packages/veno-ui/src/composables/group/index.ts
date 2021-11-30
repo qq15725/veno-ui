@@ -27,6 +27,7 @@ interface GroupProps
 
 interface GroupProvide
 {
+  vm: ComponentInternalInstance | null
   register: (item: GroupItem, cmp: ComponentInternalInstance) => void
   unregister: (id: number) => void
   select: (id: number, value: boolean) => void
@@ -74,7 +75,11 @@ export const makeGroupItemProps = propsFactory({
 
 // Composables
 export function useGroupItem (
-  props: { value?: unknown, disabled?: boolean, selectedClass?: string },
+  props: {
+    value?: unknown,
+    disabled?: boolean,
+    selectedClass?: string
+  },
   injectKey: InjectionKey<GroupProvide>,
 ): GroupItemProvide {
   const vm = getCurrentInstance()
@@ -123,10 +128,7 @@ export function useGroupItem (
   }
 }
 
-export function useGroup (
-  props: GroupProps,
-  injectKey: InjectionKey<GroupProvide>
-) {
+export function useGroup (props: GroupProps, injectKey: InjectionKey<GroupProvide>) {
   let isUnmounted = false
   const items = reactive<GroupItem[]>([])
   const selected = useProxiedModel(
@@ -150,14 +152,11 @@ export function useGroup (
   function register (item: GroupItem, vm: ComponentInternalInstance) {
     // Is there a better way to fix this typing?
     const unwrapped = item as unknown as UnwrapRef<GroupItem>
-
-    const children = findChildren(groupVm?.vnode)
-    const instances = children
+    const index = findChildren(groupVm?.vnode)
       .slice(1) // First one is group component itself
       // @ts-ignore
-      .filter(cmp => !!cmp.provides[injectKey as any]) // TODO: Fix in TS 4.4
-    const index = instances.indexOf(vm)
-
+      .filter(cmp => !!cmp.provides[injectKey as any])
+      .indexOf(vm)
     if (index > -1) items.splice(index, 0, unwrapped)
     else items.push(unwrapped)
   }
@@ -251,6 +250,7 @@ export function useGroup (
   }
 
   const state = {
+    vm: groupVm,
     register,
     unregister,
     selected,

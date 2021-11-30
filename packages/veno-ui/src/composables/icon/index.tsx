@@ -18,6 +18,7 @@ export interface IconAliases
   close: IconValue
   menu: IconValue
   dropdown: IconValue
+  separator: IconValue
 }
 
 export interface IconProps

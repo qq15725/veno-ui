@@ -1,0 +1,31 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+.ve-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+
+  &-item {
+    padding: 0 4px;
+    min-width: auto;
+    height: auto;
+    opacity: .6;
+
+    &--active {
+      opacity: 1;
+    }
+
+    &__separator {
+      opacity: .6;
+      margin: 0 4px;
+
+      .ve-icon {
+        width: 1em !important;
+        height: 1em !important;
+        font-size: 1em !important;
+      }
+    }
+  }
+}
