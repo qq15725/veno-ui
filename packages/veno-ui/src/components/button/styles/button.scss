@@ -6,6 +6,7 @@
 @use '../../../styles/settings';
 
 .ve-button {
+  --ve-button-height: calc(#{map.get($button-sizes, 'height')} + var(--ve-button-size-offset, 0px) + var(--ve-button-density-offset, 0px));
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -21,35 +22,30 @@
   user-select: none;
   text-decoration: none;
   cursor: pointer;
+  height: var(--ve-button-height);
+  font-size: var(--ve-button-font-size, #{map.get($button-sizes, 'font-size')});
+  min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
+  padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
   @include tools.use-material($button-material);
 
   @each $name, $multiplier in settings.$sizes {
-    $size: map.get($button-sizes, 'font-size') + 4 * $multiplier;
-    $height: map.get($button-sizes, 'height') + 4 * $multiplier;
-
     &--size-#{$name} {
-      --ve-button-size: #{$size};
-      --ve-button-height: #{$height};
-      height: $height;
-      font-size: $size;
-      min-width: tools.roundEven($height * map.get($button-sizes, 'width-ratio'));
-      padding: 0 math.div($height, map.get($button-sizes, 'padding-ratio'));
+      --ve-button-size-offset: #{$multiplier * settings.$spacer};
+      --ve-button-font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
     }
   }
 
   @each $name, $multiplier in settings.$densities {
-    $value: calc(var(--ve-button-height) + #{$multiplier * settings.$spacer});
-
     &--density-#{$name} {
-      height: $value;
+      --ve-button-density-offset: #{$multiplier * settings.$spacer};
     }
   }
 
   &--icon {
     padding: 0;
     min-width: 0;
-    height: var(--ve-button-height, auto);
-    width: var(--ve-button-height, auto);
+    height: var(--ve-button-height);
+    width: var(--ve-button-height);
   }
 
   &__overlay {

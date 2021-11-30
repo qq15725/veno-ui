@@ -14,10 +14,10 @@ $card-disabled-background: settings.$disabled-background !default;
 $card-disabled-color: settings.$disabled-color !default;
 
 // header
-$card-header-padding: calc(16px + var(--ve-card-density-offset)) 16px !default;
+$card-header-padding: calc(16px + var(--ve-card-density-offset, 0)) 16px !default;
 
 // title
-$card-title-padding: calc(16px + var(--ve-card-density-offset)) 16px !default;
+$card-title-padding: calc(16px + var(--ve-card-density-offset, 0)) 16px !default;
 $card-title-font-size: tools.map-deep-get(settings.$typography, 'h5', 'size') !default;
 $card-title-font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight') !default;
 $card-title-letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing') !default;
@@ -39,7 +39,7 @@ $card-text-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'l
 $card-text-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
 
 // actions
-$card-actions-padding: calc(16px + var(--ve-card-density-offset)) 16px !default;
+$card-actions-padding: calc(16px + var(--ve-card-density-offset, 0)) 16px !default;
 
 // border
 $card-border-color: settings.$border-color !default;
