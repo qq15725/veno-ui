@@ -20,6 +20,7 @@ import type { DefaultsOptions } from './composables/defaults'
 
 export interface VenoUiOptions
 {
+  componentPrefix?: string,
   components?: Record<string, any>
   directives?: Record<string, any>
   defaults?: DefaultsOptions
@@ -31,13 +32,14 @@ export interface VenoUiOptions
 export const createVenoUi = (options: VenoUiOptions = {}) => {
   const install = (app: App) => {
     const {
+      componentPrefix = 'Ve',
       components = {},
       directives = {},
       icons = {},
     } = options
 
     for (const key in components) {
-      app.component(key, components[key])
+      app.component(`${ componentPrefix }${ key }`, components[key])
     }
 
     for (const key in directives) {

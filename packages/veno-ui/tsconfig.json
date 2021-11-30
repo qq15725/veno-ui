@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "es",
-    "target": "ES2020",
-    "module": "ES2020",
+    "outDir": "lib",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "removeComments": true,
     "strict": true,

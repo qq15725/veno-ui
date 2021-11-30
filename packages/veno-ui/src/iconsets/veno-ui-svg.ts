@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 // Components
-import { VeSvgIcon } from '../composables/icon'
+import { SvgIcon } from '../composables/icon'
 
 // Types
 import type { IconAliases, IconSet } from '../composables/icon'
@@ -17,7 +17,7 @@ const aliases: IconAliases = {
 }
 
 const venoUiSvg: IconSet = {
-  component: VeSvgIcon,
+  component: SvgIcon,
   aliases,
 }
 

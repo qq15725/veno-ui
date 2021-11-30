@@ -29,6 +29,7 @@
     "./styles/*": "./lib/styles/*",
     "./framework": "./lib/framework.js",
     "./components": "./lib/components/index.js",
+    "./components/*": "./lib/components/*/*.js",
     "./directives": "./lib/directives/index.js",
     "./directives/*": "./lib/directives/*/*.js",
     "./iconsets/*": "./lib/iconsets/*.js",

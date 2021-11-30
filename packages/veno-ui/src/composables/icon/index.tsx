@@ -59,8 +59,8 @@ export const makeIconProps = propsFactory({
   },
 }, 'icon')
 
-export const VeComponentIcon = defineComponent({
-  name: 'VeComponentIcon',
+export const ComponentIcon = defineComponent({
+  name: 'ComponentIcon',
 
   props: makeIconProps(),
 
@@ -77,8 +77,8 @@ export const VeComponentIcon = defineComponent({
   },
 })
 
-export const VeSvgIcon = defineComponent({
-  name: 'VeSvgIcon',
+export const SvgIcon = defineComponent({
+  name: 'SvgIcon',
 
   inheritAttrs: false,
 
@@ -103,8 +103,8 @@ export const VeSvgIcon = defineComponent({
   },
 })
 
-export const VeLigatureIcon = defineComponent({
-  name: 'VeLigatureIcon',
+export const LigatureIcon = defineComponent({
+  name: 'LigatureIcon',
 
   props: makeIconProps(),
 
@@ -115,8 +115,8 @@ export const VeLigatureIcon = defineComponent({
   },
 })
 
-export const VeClassIcon = defineComponent({
-  name: 'VeClassIcon',
+export const ClassIcon = defineComponent({
+  name: 'ClassIcon',
 
   props: makeIconProps(),
 
@@ -129,10 +129,10 @@ export const VeClassIcon = defineComponent({
 
 export const defaultSets: Record<string, IconSet> = {
   svg: {
-    component: VeSvgIcon,
+    component: SvgIcon,
   },
   class: {
-    component: VeClassIcon,
+    component: ClassIcon,
   },
 }
 
@@ -151,7 +151,7 @@ export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) =
 
     if (typeof icon !== 'string') {
       return {
-        component: VeComponentIcon,
+        component: ComponentIcon,
         icon,
       }
     }

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 // Components
-import { VeSvgIcon } from 'veno-ui'
+import { SvgIcon } from 'veno-ui'
 
 // Types
 import type { IconSet, IconValue } from 'veno-ui'
@@ -14,7 +14,7 @@ const aliases: Record<string, IconValue> = {
 }
 
 const docsSvg: IconSet = {
-  component: VeSvgIcon,
+  component: SvgIcon,
   aliases,
 }
 

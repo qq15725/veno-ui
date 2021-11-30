@@ -13,7 +13,7 @@ export function loadDocsModules (type: DocType) {
   switch (type) {
     case 'component':
       return {
-        nameRE: /components\/ve-(\w+)(.|\/)*README\.md/,
+        nameRE: /components\/(\w+)(.|\/)*README\.md/,
         modules: import.meta.globEager('../../../veno-ui/src/components/**/README.md'),
       }
     case 'composable':
