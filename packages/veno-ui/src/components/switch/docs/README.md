@@ -4,10 +4,12 @@ category: 数据输入
 
 # 开关 Switch
 
-`ve-switch` 组件。
+`switch` 组件。
 
 ## 演示
 
 :::include
+
 basic.md
+
 :::

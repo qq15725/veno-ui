@@ -1,14 +1,17 @@
 @use 'sass:map';
+@use 'sass:string';
 @use 'variables';
 @use '../../../styles/tools/functions';
+@use '../../../styles/settings/variables' as settings;
 
 @mixin use-size($props: ()) {
   $props: functions.map-deep-merge(variables.$size-props, $props);
+  $prefix: string.slice(#{&}, 2);
 
   @if map.get($props, 'use-size') {
     @each $name, $multiplier in map.get($props, 'sizes') {
       &--size-#{$name} {
-        --ve-size: #{$multiplier};
+        --#{$prefix}-size-offset: #{$multiplier * settings.$spacer};
       }
     }
   }

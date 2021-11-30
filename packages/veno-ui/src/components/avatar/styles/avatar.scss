@@ -4,6 +4,7 @@
 @use '../../../styles/tools';
 
 .ve-avatar {
+  --ve-avatar-size: calc(40px + var(--ve-avatar-size-offset, 0px) + var(--ve-avatar-density-offset, 0px));
   align-items: center;
   display: inline-flex;
   justify-content: center;
@@ -12,24 +13,9 @@
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
+  width: var(--ve-avatar-size);
+  height: var(--ve-avatar-size);
   @include tools.use-material($avatar-material);
-
-  @each $name, $multiplier in settings.$sizes {
-    $size: 40px + 8px * $multiplier;
-    &--size-#{$name} {
-      width: $size;
-      height: $size;
-      --ve-avatar-height: #{$size};
-    }
-  }
-
-  @each $name, $multiplier in settings.$densities {
-    $value: calc(var(--ve-avatar-height) + #{4px * $multiplier});
-    &--density-#{$name} {
-      height: $value;
-      width: $value;
-    }
-  }
 
   > .ve-image {
     border-radius: inherit;

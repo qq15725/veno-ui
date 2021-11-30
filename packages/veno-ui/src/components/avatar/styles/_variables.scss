@@ -8,6 +8,13 @@ $avatar-border-thin-width: thin !default;
 $avatar-border-radius: settings.$border-radius !default;
 
 $avatar-material: (
+  'sizes': (
+    'xs': -4,
+    'sm': -2,
+    'md': 0,
+    'lg': 2,
+    'xl': 4
+  ),
   'borders': (
     'default': (
       'color': $avatar-border-color,
@@ -19,8 +26,6 @@ $avatar-material: (
     ),
   ),
   'positions': absolute fixed,
-  'use-size': false,
-  'use-density': false,
   'shapes': (
     'default': $avatar-border-radius,
   )

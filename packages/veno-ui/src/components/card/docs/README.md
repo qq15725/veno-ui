@@ -1,10 +1,10 @@
 ---
-category: 通用
+category: 数据展示
 ---
 
 # 卡片 Card
 
-组合了 `ve-material` 的所有能力，`ve-card` 组件。
+`card` 包装了 `material`。
 
 ## 演示
 

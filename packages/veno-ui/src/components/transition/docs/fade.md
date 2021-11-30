@@ -2,7 +2,7 @@
 
 # fade 淡入淡出
 
-使用 `ve-fade-transition` 组件实现淡入淡出效果。
+使用 `fade-transition` 组件实现淡入淡出效果。
 
 点击方块查看。
 

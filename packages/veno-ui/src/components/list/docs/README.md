@@ -1,10 +1,10 @@
 ---
-category: 通用
+category: 数据展示
 ---
 
 # 列表 List
 
-组合了 `ve-material` 的所有能力，`ve-list` 组件用于显示信息。
+`list` 包装了 `material`，用于显示列表信息。
 
 ## 演示
 

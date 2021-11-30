@@ -4,7 +4,7 @@ category: 布局
 
 # 栅格 Grid
 
-`ve-grid`、`ve-container`、`ve-row`、`ve-col`、`ve-spacer` 组件。
+`grid`、`container`、`row`、`col`、`spacer` 组件。
 
 ## 演示
 

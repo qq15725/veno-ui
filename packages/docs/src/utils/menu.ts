@@ -40,5 +40,10 @@ export function convertRoutesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
       }
       return items
     }, [])
-    .sort((a, b) => (b.children as any[]).length - (a.children as any[]).length)
+    .sort((a, b) => {
+      if (a.value === '通用') {
+        return -1
+      }
+      return (b.children as any[]).length - (a.children as any[]).length
+    })
 }

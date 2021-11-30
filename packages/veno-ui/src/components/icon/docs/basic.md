@@ -2,8 +2,6 @@
 
 # 基础
 
-预设图标比较少。
-
 ```html
 <ve-grid dense>
   <ve-icon icon="veno-ui:$success" color="success" />

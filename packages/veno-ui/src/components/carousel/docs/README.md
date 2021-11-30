@@ -1,10 +1,10 @@
 ---
-category: 通用
+category: 数据展示
 ---
 
-# 轮播图 Carousel
+# 图片轮播 Carousel
 
-`ve-carousel` 组件。
+`carousel` 组件。
 
 ## 演示
 

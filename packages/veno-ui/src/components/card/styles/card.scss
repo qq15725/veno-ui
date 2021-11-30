@@ -10,12 +10,6 @@
   text-decoration: none;
   @include tools.use-material($card-material);
 
-  @each $name, $multiplier in settings.$densities {
-    &--density-#{$name} {
-      --ve-card-density-offset: #{$multiplier * settings.$spacer};
-    }
-  }
-
   &__overlay {
     @include tools.absolute();
     background-color: currentColor;

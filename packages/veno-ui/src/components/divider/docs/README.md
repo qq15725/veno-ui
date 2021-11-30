@@ -4,7 +4,7 @@ category: 布局
 
 # 分割线 Divider
 
-`ve-divider` 组件用于分隔内容。
+`divider` 组件用于分隔内容。
 
 ## 演示
 

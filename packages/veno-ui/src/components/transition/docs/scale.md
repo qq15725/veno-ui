@@ -2,7 +2,7 @@
 
 # scale 缩放
 
-使用 `ve-scale-transition` 组件实现缩放效果。
+使用 `scale-transition` 组件实现缩放效果。
 
 点击方块查看。
 

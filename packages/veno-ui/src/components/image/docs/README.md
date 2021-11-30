@@ -1,10 +1,10 @@
 ---
-category: 通用
+category: 数据展示
 ---
 
 # 图片 Image
 
-`ve-image` 组件。
+`image` 组件。
 
 ## 演示
 

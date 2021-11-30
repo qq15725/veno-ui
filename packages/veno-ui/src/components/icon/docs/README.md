@@ -4,7 +4,7 @@ category: 通用
 
 # 图标 Icon
 
-`ve-icon` 组件。
+`icon` 组件。
 
 ## 演示
 

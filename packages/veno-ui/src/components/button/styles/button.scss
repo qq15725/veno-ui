@@ -30,14 +30,7 @@
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
-      --ve-button-size-offset: #{$multiplier * settings.$spacer};
       --ve-button-font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
-    }
-  }
-
-  @each $name, $multiplier in settings.$densities {
-    &--density-#{$name} {
-      --ve-button-density-offset: #{$multiplier * settings.$spacer};
     }
   }
 

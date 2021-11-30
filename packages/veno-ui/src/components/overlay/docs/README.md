@@ -4,7 +4,7 @@ category: 反馈
 
 # 遮罩层 Overlay
 
-`ve-overlay` 组件。
+`overlay` 组件。
 
 ## 演示
 

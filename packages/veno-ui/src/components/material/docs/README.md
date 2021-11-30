@@ -1,10 +1,10 @@
 ---
-category: 通用
+category: 数据展示
 ---
 
 # 材料 Material
 
-`ve-material` 是一个基础组件，很多组件都组合了它。
+`material` 是一个基础组件，很多组件都组合了它。
 
 ## 演示
 

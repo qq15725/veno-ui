@@ -2,7 +2,7 @@
 
 # expand 扩展
 
-使用 `ve-expand-transition` 组件实现扩展效果。
+使用 `expand-transition` 组件实现扩展效果。
 
 点击方块查看。
 

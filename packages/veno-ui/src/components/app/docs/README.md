@@ -4,7 +4,7 @@ category: 布局
 
 # 应用 App
 
-`ve-app`、`ve-app-bar`、`ve-app-sider`、`ve-app-main` 组件。
+`app`、`app-bar`、`app-sider`、`app-main` 组件。
 
 ## 代码
 

@@ -60,7 +60,6 @@ $card-material: tools.map-deep-merge(
       ),
       'positions': $card-positions,
       'use-size': false,
-      'use-density': false,
       'borders': (
         'default': (
           'color': $card-border-color,
