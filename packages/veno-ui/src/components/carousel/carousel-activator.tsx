@@ -11,6 +11,7 @@ export const CarouselActivator = genericComponent()({
   name: 'CarouselActivator',
 
   props: {
+    // TODO variant: 'dot' | 'line' | 'slider'
     active: Boolean,
   },
 

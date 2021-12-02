@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makeMaterialProps, MaterialProps, useMaterial } from '../../composables/material'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -15,9 +15,20 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { Progress } from '../progress'
 import { Icon } from '../icon'
 
-// Types
-import { MakeSlots } from '../../utils'
+// Constants
+export const allowedVariants = [
+  'outlined', // 轮廓按钮
+  'contained', // 容器按钮
+  'text', // 文本按钮
+  'link', // 链接按钮
+  'icon', // 图标按钮
+] as const
 
+// Types
+import type { PropType } from 'vue'
+import type { MakeSlots } from '../../utils'
+
+export type ButtonVariant = typeof allowedVariants[number]
 export type Button = InstanceType<typeof Button>
 
 export const Button = genericComponent<new <T>() => {
@@ -33,7 +44,6 @@ export const Button = genericComponent<new <T>() => {
       default: 'button',
     },
     icon: [Boolean, String],
-    link: Boolean,
     prependIcon: String,
     appendIcon: String,
     stacked: Boolean,
@@ -45,13 +55,18 @@ export const Button = genericComponent<new <T>() => {
     ...makeDisabledProps(),
     ...makeLoadingProps(),
     ...makeRouterProps(),
+    variant: {
+      type: String as PropType<ButtonVariant>,
+      default: 'contained',
+      validator: (v: any) => allowedVariants.includes(v),
+    },
   },
 
   setup: function (props, { attrs, slots }) {
     const computedProps = computed(() => ({
       ...props,
-      color: props.color ?? (props.link ? 'primary' : undefined),
-      variant: props.link ? 'text' : props.variant,
+      color: props.color ?? (props.variant === 'link' ? 'primary' : undefined),
+      variant: props.icon ? 'icon' : props.variant
     }))
     const { materialClasses, materialStyles } = useMaterial(computedProps, 've-button')
     const link = useLink(props, attrs)
@@ -60,7 +75,18 @@ export const Button = genericComponent<new <T>() => {
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
-
+      const hasOverlay = computedProps.value.variant !== 'link'
+      const hasLoding = props.loading
+      const hasPrependIcon = (
+        !hasLoding
+        && computedProps.value.variant !== 'icon'
+        && props.prependIcon
+      )
+      const hasAppendIcon = (
+        !hasLoding
+        && computedProps.value.variant !== 'icon'
+        && props.appendIcon
+      )
       return (
         <Tag
           role="button"
@@ -70,8 +96,6 @@ export const Button = genericComponent<new <T>() => {
               've-button': true,
               've-button--active': link.isExactActive?.value,
               've-button--block': props.block,
-              've-button--link': props.link,
-              've-button--icon': !!props.icon,
               've-button--stacked': props.stacked,
             },
             materialClasses.value,
@@ -85,9 +109,9 @@ export const Button = genericComponent<new <T>() => {
           href={ link.href.value }
           onClick={ props.disabled || link.navigate }
         >
-          { !props.link && (<div class="ve-button__overlay" />) }
+          { hasOverlay && <div class="ve-button__overlay" /> }
 
-          { props.loading && (
+          { hasLoding && (
             <Progress
               class="ve-button__icon"
               indeterminate
@@ -95,7 +119,7 @@ export const Button = genericComponent<new <T>() => {
             />
           ) }
 
-          { !props.loading && !props.icon && props.prependIcon && (
+          { hasPrependIcon && (
             <Icon
               class="ve-button__icon"
               icon={ props.prependIcon }
@@ -113,7 +137,7 @@ export const Button = genericComponent<new <T>() => {
               />
             ) }
 
-          { !props.icon && props.appendIcon && (
+          { hasAppendIcon && (
             <Icon
               class="ve-button__icon"
               icon={ props.appendIcon }

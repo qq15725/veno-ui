@@ -9,13 +9,7 @@ import { useColor } from '../color'
 import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export const allowedVariants = [
-  'outlined',
-  'contained',
-  'text',
-] as const
-
-export type Variant = typeof allowedVariants[number]
+export type Variant = 'outlined' | 'contained' | 'text' | string
 
 export interface VariantProps
 {
@@ -36,7 +30,6 @@ export const makeVariantProps = propsFactory({
   variant: {
     type: String as PropType<Variant>,
     default: 'contained',
-    validator: (v: any) => allowedVariants.includes(v),
   },
   dashed: Boolean,
 }, 'variant')

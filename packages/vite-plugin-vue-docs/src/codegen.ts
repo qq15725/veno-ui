@@ -29,7 +29,7 @@ export function codegen (html: string, data: Data) {
 ${ tags.join('\n') }
 
 <template>
-${ genBreadcrumb([pageData.category, pageData.title].filter(Boolean) as string[]) }
+${ genBreadcrumb(['组件', pageData.category].filter(Boolean) as string[]) }
 ${ html }
 </template>
 `

@@ -34,33 +34,34 @@
     }
   }
 
-  &--icon {
+  &--variant-text {
+    @at-root {
+      // AppBarItems
+      .ve-app-bar-items & {
+        border-radius: 0;
+        height: 100% !important;
+        border-width: 0;
+      }
+    }
+  }
+
+  &--variant-link {
+    padding: 0;
+    min-width: 0;
+    text-decoration: underline currentColor;
+    user-select: auto;
+    height: auto;
+    width: auto;
+    background: transparent;
+    color: inherit;
+  }
+
+  &--variant-icon {
     padding: 0;
     min-width: 0;
     height: var(--ve-button-height);
     width: var(--ve-button-height);
-  }
-
-  &--link {
-    padding: 0;
-    min-width: 0;
-    height: auto;
-    width: auto;
-    text-decoration: underline currentColor;
-    user-select: auto;
-  }
-
-  &__overlay {
-    @include tools.absolute();
-    background-color: currentColor;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .2s ease-in-out;
-  }
-
-  &:not(&--disabled) {
-    @include tools.states('.ve-button__overlay', false);
+    border-width: var(--ve-variant-border-width, thin);
   }
 
   &--block {
@@ -84,20 +85,29 @@
     cursor: wait;
   }
 
+  &__overlay {
+    @include tools.absolute();
+    background-color: currentColor;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+  }
+
+  &:not(&--disabled) {
+    @include tools.states('.ve-button__overlay', false);
+  }
+
   &__icon {
     width: 1em !important;
     height: 1em !important;
     font-size: 1em !important;
 
-    &.ve-progress {
-      margin-inline-end: map.get(settings.$grid-gutters, 'md');
+    @at-root {
+      // Progress
+      .ve-progress#{&} {
+        margin-inline-end: map.get(settings.$grid-gutters, 'md');
+      }
     }
-  }
-
-  // VeAppBarItems
-  .ve-app-bar-items &--variant-text {
-    border-radius: 0;
-    height: 100% !important;
-    border-width: 0;
   }
 }
