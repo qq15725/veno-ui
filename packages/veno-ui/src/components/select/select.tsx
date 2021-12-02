@@ -20,6 +20,7 @@ import { FadeTransition } from '../transition'
 // Types
 import type { PropType } from 'vue'
 import type { Anchor, Origin } from '../../composables/position-strategy'
+
 export type Select = InstanceType<typeof Select>
 
 export const Select = genericComponent()({
@@ -52,7 +53,16 @@ export const Select = genericComponent()({
     const model = useProxiedModel(props, 'modelValue')
     const isActive = ref(false)
     const id = computed(() => props.id || `ve-select-overlay-${ getUid() }`)
-
+    const label = computed(() => {
+      const item = props.items.find((item: any) => {
+        if (typeof item === 'object') {
+          return item.value === model.value
+        }
+        return item === model.value
+      }) as any
+      if (!item) return null
+      return typeof item === 'object' ? item.label : item
+    })
     return () => (
       <Overlay
         v-model={ isActive.value }
@@ -74,7 +84,7 @@ export const Select = genericComponent()({
                 've-select'
               ] }
               readonly
-              v-model={ model.value }
+              modelValue={ label.value }
               v-slots={ {
                 suffix: () => (
                   <Icon icon="veno-ui:$dropdown" />
@@ -90,11 +100,15 @@ export const Select = genericComponent()({
                 { props.items.map((item: any) => (
                   <ListItem
                     onClick={ () => {
-                      model.value = item.label
+                      if (typeof item === 'object') {
+                        model.value = item.value
+                      } else {
+                        model.value = item
+                      }
                       isActive.value = false
                     } }
                   >
-                    { item.label }
+                    { typeof item === 'object' ? item.label : item }
                   </ListItem>
                 )) }
               </List>

@@ -16,6 +16,7 @@ export interface VariantProps
   color?: string | false | null
   textColor?: string | false | null
   variant: Variant
+  contained?: boolean
 }
 
 export const makeVariantProps = propsFactory({
@@ -35,32 +36,32 @@ export const makeVariantProps = propsFactory({
 }, 'variant')
 
 export function useVariant (props: MaybeRef<VariantProps>, name: string) {
+  const isContained = computed(() => {
+    const { variant, contained } = unref(props)
+    return variant === 'contained' || !!contained
+  })
+
   const variantClasses = computed(() => {
     const { variant } = unref(props)
-
     return [
       `${ name }--variant-${ variant }`,
     ]
   })
 
   const { colorClasses, colorStyles: _colorStyles } = useColor(computed(() => {
-    const { textColor, variant, color } = unref(props)
-
+    const { textColor, color } = unref(props)
     return {
       text: textColor,
-      [variant === 'contained' ? 'background' : 'text']: color,
+      [isContained.value ? 'background' : 'text']: color,
     }
   }))
 
   const colorStyles = computed(() => {
+    const { color } = unref(props)
     const styles: any = { ..._colorStyles.value }
-
-    const { variant, color } = unref(props)
-
-    if (variant === 'contained' && color) {
+    if (isContained.value && color) {
       styles['--ve-variant-border-width'] = 0
     }
-
     return styles
   })
 

@@ -63,11 +63,16 @@ export const Button = genericComponent<new <T>() => {
   },
 
   setup: function (props, { attrs, slots }) {
-    const computedProps = computed(() => ({
-      ...props,
-      color: props.color ?? (props.variant === 'link' ? 'primary' : undefined),
-      variant: props.icon ? 'icon' : props.variant
-    }))
+    const computedProps = computed(() => {
+      const variant = props.icon ? 'icon' : props.variant
+      const color = props.color ?? (props.variant === 'link' ? 'primary' : undefined)
+      return {
+        ...props,
+        variant,
+        color,
+        contained: variant === 'icon',
+      }
+    })
     const { materialClasses, materialStyles } = useMaterial(computedProps, 've-button')
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-button')
