@@ -41,6 +41,15 @@
     width: var(--ve-button-height);
   }
 
+  &--link {
+    padding: 0;
+    min-width: 0;
+    height: auto;
+    width: auto;
+    text-decoration: underline currentColor;
+    user-select: auto;
+  }
+
   &__overlay {
     @include tools.absolute();
     background-color: currentColor;
@@ -67,7 +76,8 @@
   }
 
   &--disabled {
-    cursor: not-allowed;
+    pointer-events: none;
+    cursor: default;
   }
 
   &--loading {

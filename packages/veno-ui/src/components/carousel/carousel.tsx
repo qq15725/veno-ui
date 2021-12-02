@@ -6,8 +6,12 @@ import { toRef, watch } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { makeGroupProps, useGroup } from '../../composables/group'
+import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeTagProps } from '../../composables/tag'
+import { makeGroupProps, useGroup } from '../../composables/group'
+
+// Components
+import { CarouselActivator } from './carousel-activator'
 
 // Types
 export const CarouselSymbol = Symbol.for('veno-ui:carousel')
@@ -23,11 +27,17 @@ export const Carousel = genericComponent()({
       default: 6000,
       validator: (value: string | number) => value > 0,
     },
+    ...makeMaterialProps({
+      variant: 'text',
+      size: null,
+      density: null,
+    } as const),
     ...makeGroupProps(),
     ...makeTagProps(),
   },
 
   setup (props, { slots }) {
+    const { materialStyles, materialClasses } = useMaterial(props, 've-carousel')
     const { isSelected, select, selected, next, items } = useGroup(props, CarouselSymbol)
 
     let slideTimeout: number | undefined
@@ -60,6 +70,10 @@ export const Carousel = genericComponent()({
       <props.tag
         class={ [
           've-carousel',
+          materialClasses.value,
+        ] }
+        style={ [
+          materialStyles.value,
         ] }
       >
         { slots.default?.() }
@@ -67,13 +81,8 @@ export const Carousel = genericComponent()({
         <div class="ve-carousel__controls">
           {
             items.value.map(id => (
-              <div
-                class={ [
-                  've-carousel__dot',
-                  {
-                    've-carousel__dot--active': isSelected(id),
-                  },
-                ] }
+              <CarouselActivator
+                active={ isSelected(id) }
                 onClick={ () => select(id, true) }
               />
             ))

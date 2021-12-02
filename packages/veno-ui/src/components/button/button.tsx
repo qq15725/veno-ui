@@ -2,6 +2,7 @@
 import './styles/button.scss'
 
 // Utils
+import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
@@ -14,9 +15,16 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { Progress } from '../progress'
 import { Icon } from '../icon'
 
+// Types
+import { MakeSlots } from '../../utils'
+
 export type Button = InstanceType<typeof Button>
 
-export const Button = genericComponent()({
+export const Button = genericComponent<new <T>() => {
+  $slots: MakeSlots<{
+    default: [],
+  }>
+}>()({
   name: 'Button',
 
   props: {
@@ -25,6 +33,7 @@ export const Button = genericComponent()({
       default: 'button',
     },
     icon: [Boolean, String],
+    link: Boolean,
     prependIcon: String,
     appendIcon: String,
     stacked: Boolean,
@@ -39,7 +48,12 @@ export const Button = genericComponent()({
   },
 
   setup: function (props, { attrs, slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-button')
+    const computedProps = computed(() => ({
+      ...props,
+      color: props.color ?? (props.link ? 'primary' : undefined),
+      variant: props.link ? 'text' : props.variant,
+    }))
+    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-button')
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props, 've-button')
     const { disabledClasses } = useDisabled(props, 've-button')
@@ -56,6 +70,7 @@ export const Button = genericComponent()({
               've-button': true,
               've-button--active': link.isExactActive?.value,
               've-button--block': props.block,
+              've-button--link': props.link,
               've-button--icon': !!props.icon,
               've-button--stacked': props.stacked,
             },
@@ -70,7 +85,7 @@ export const Button = genericComponent()({
           href={ link.href.value }
           onClick={ props.disabled || link.navigate }
         >
-          <div class="ve-button__overlay" />
+          { !props.link && (<div class="ve-button__overlay" />) }
 
           { props.loading && (
             <Progress

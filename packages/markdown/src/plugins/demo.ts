@@ -3,9 +3,8 @@ import container from 'markdown-it-container'
 import Token from 'markdown-it/lib/token'
 
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { MarkdownParsedData } from '..'
+import type { PluginSimple } from '../markdown'
 
 export const demoPlugin: PluginSimple = md => {
   const name = 'demo'
@@ -51,19 +50,16 @@ export const demoPlugin: PluginSimple = md => {
 
           props.code += scriptCode
 
-          const hoistedTags = (md as any).__data.hoistedTags || ((md as any).__data.hoistedTags = [])
-          hoistedTags.push(scriptCode)
+          md.__data.hoistedTags.push(scriptCode)
         } else if (!skip) {
           templateTokens.push(cur)
         }
       }
 
-      const mdData = (md as any).__data as MarkdownParsedData
-
       return `<demo 
   title="${ props.title }" 
   code="${ encodeURIComponent(props.code) }" 
-  filename="${ mdData.env.filename }"
+  filename="${ env.filename }"
 >
   ${ self.render(templateTokens, options, env) }
 <!--`

@@ -2,9 +2,8 @@
 import { slugify, deeplyParseHeader } from '../utils'
 
 // Types
-import type { MarkdownParsedData } from '../index'
-import type { PluginSimple } from 'markdown-it/lib'
 import type { RenderRule } from 'markdown-it/lib/renderer'
+import type { PluginSimple } from '../markdown'
 
 export const headerPlugin: PluginSimple = md => {
   const render: RenderRule = (tokens, index) => {
@@ -13,9 +12,7 @@ export const headerPlugin: PluginSimple = md => {
       const title = tokens[index + 1].content
       const idAttr = token.attrs!.find(([name]) => name === 'id')
       const slug = idAttr && idAttr[1]
-      const data = (md as any).__data as MarkdownParsedData
-      const headers = data.headers || (data.headers = [])
-      headers.push({
+      md.__data.headers.push({
         level: parseInt(token.tag.slice(1), 10),
         title: deeplyParseHeader(title),
         slug: slug || slugify(title)

@@ -4,9 +4,9 @@ import { toPascalCase } from '../utils'
 import path from 'path'
 
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
 import type Token from 'markdown-it/lib/token'
 import type { RenderRule } from 'markdown-it/lib/renderer'
+import type { PluginSimple } from '../markdown'
 
 function parseRows (content: string) {
   const rows: string[][] = []
@@ -60,8 +60,7 @@ export const includePlugin: PluginSimple = md => {
         )
       }
 
-      const hoistedTags = (md as any).__data.hoistedTags || ((md as any).__data.hoistedTags = [])
-      hoistedTags.push(`<script setup>\n${ imports.join('\n') }\n</script>`)
+      md.__data.hoistedTags.push(`<script setup>\n${ imports.join('\n') }\n</script>`)
 
       return `<ve-row>\n${ code.join('\n') }\n<!--`
     } else {

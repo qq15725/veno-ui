@@ -1,5 +1,5 @@
 import { createFilter } from '@rollup/pluginutils'
-import { transformMain } from './transform'
+import { transform } from './transform'
 
 // Types
 import type { Plugin, PluginOption } from 'vite'
@@ -40,7 +40,7 @@ export default function VueDocsPlugin (): PluginOption {
 
       return vuePlugin.transform?.call(
         this,
-        transformMain(code, id),
+        transform(code, id),
         getVueId(id)
       )
     },
@@ -58,7 +58,7 @@ export default function VueDocsPlugin (): PluginOption {
       return vuePlugin.handleHotUpdate?.({
         ...ctx,
         file: getVueId(file),
-        read: async () => transformMain(await read(), file)
+        read: async () => transform(await read(), file)
       })
     }
   }

@@ -1,5 +1,5 @@
 // Utils
-import MarkdownIt from 'markdown-it'
+import { createMarkdown as createBaseMarkdown } from './markdown'
 import { highlight } from './highlight'
 import { slugify } from './utils'
 
@@ -17,40 +17,16 @@ import {
   preWrapperPlugin,
 } from './plugins'
 
-import type { Options } from 'markdown-it'
+// Types
+import type { Options as BaseOptions, Markdown } from './markdown'
+export type { MarkdownData, Markdown } from './markdown'
 
-export interface MarkdownOptions extends Options
+export interface Options extends BaseOptions
 {
   anchor?: anchor.AnchorOptions | undefined
 }
 
-export interface Header
-{
-  level: number
-  title: string
-  slug: string
-}
-
-export interface MarkdownEnv
-{
-  filename: string
-}
-
-export interface MarkdownParsedData
-{
-  hoistedTags?: string[]
-  links?: string[]
-  headers?: Header[]
-  env: MarkdownEnv
-}
-
-export interface MarkdownRenderer
-{
-  __data: MarkdownParsedData
-  render: (src: string, env: MarkdownEnv) => { html: string; data: any }
-}
-
-export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
+export function createMarkdown (options?: Options): Markdown {
   options = {
     html: true,
     linkify: true,
@@ -58,8 +34,8 @@ export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
     ...options
   }
 
-  const md = (
-    new MarkdownIt(options)
+  return (
+    createBaseMarkdown(options)
       .use(componentPlugin)
       .use(headerPlugin)
       .use(paragraphPlugin)
@@ -75,19 +51,4 @@ export function createRenderer (options?: MarkdownOptions): MarkdownRenderer {
         ...options.anchor
       })
   )
-
-  const render = md.render
-
-  const wrappedRender: MarkdownRenderer['render'] = (src, env) => {
-    (md as any).__data = (md as any).__data || { env }
-
-    return {
-      html: render.call(md, src),
-      data: (md as any).__data,
-    }
-  }
-
-  (md as any).render = wrappedRender
-
-  return md as any
 }

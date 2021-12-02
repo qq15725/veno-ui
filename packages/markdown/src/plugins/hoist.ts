@@ -1,6 +1,5 @@
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
-import type { MarkdownParsedData } from '..'
+import type { PluginSimple } from '../markdown'
 
 // hoist <script> and <style> tags out of the returned html
 // so that they can be placed outside as SFC blocks.
@@ -9,10 +8,8 @@ export const hoistPlugin: PluginSimple = md => {
 
   md.renderer.rules.html_block = (tokens, index) => {
     const content = tokens[index].content
-    const data = (md as any).__data as MarkdownParsedData
-    const hoistedTags = data.hoistedTags || (data.hoistedTags = [])
     if (RE.test(content.trim())) {
-      hoistedTags.push(content)
+      md.__data.hoistedTags.push(content)
       return ''
     } else {
       return content

@@ -1,0 +1,18 @@
+.ve-carousel-activator {
+  height: 8px;
+  width: 8px;
+  background-color: currentColor;
+  opacity: .3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow, background-color .3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+
+  &--active {
+    opacity: 1;
+  }
+
+  & + & {
+    margin-left: 12px;
+  }
+}

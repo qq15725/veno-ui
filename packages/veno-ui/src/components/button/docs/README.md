@@ -4,7 +4,7 @@ category: 通用
 
 # 按钮 Button
 
-`button` 包装了 `material`，用来触发一些操作。
+按钮（Button）组件是基于[材料（Material）](/component/material.html)组件构建的，这意味着你也可以使用材料组件的属性。
 
 ## 演示
 
@@ -12,13 +12,13 @@ category: 通用
 
 basic.md icon.md
 
-shape.md color.md 
+shape.md color.md
 
 size.md density.md
 
-disabled.md loading.md 
+disabled.md link.md
 
-block.md
+block.md loading.md
 
 :::
 

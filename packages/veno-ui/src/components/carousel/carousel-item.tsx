@@ -1,3 +1,6 @@
+// Styles
+import './styles/carousel-item.scss'
+
 // Utils
 import { watch, ref } from 'vue'
 import { genericComponent } from '../../utils'
@@ -27,9 +30,9 @@ export const CarouselItem = genericComponent()({
 
     watch(group.selected, (newSelected, oldSelected) => {
       if (oldSelected[0] > newSelected[0]) {
-        transitionName.value = 've-carousel-x-reverse-transition'
+        transitionName.value = 've-carousel-item-x-reverse-transition'
       } else {
-        transitionName.value = 've-carousel-x-transition'
+        transitionName.value = 've-carousel-item-x-transition'
       }
     })
 

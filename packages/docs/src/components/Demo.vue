@@ -58,6 +58,7 @@ const focusBtn = () => {
               rounded
               style="opacity: .8;"
               icon="$focus"
+              tabindex="-1"
           />
         </ve-tooltip>
 
@@ -73,6 +74,7 @@ const focusBtn = () => {
               rounded
               style="opacity: .8;"
               :icon="`$${theme || 'light'}`"
+              tabindex="-1"
           />
         </ve-tooltip>
 
@@ -89,6 +91,7 @@ const focusBtn = () => {
               rounded
               style="opacity: .8;"
               icon="$github"
+              tabindex="-1"
           />
         </ve-tooltip>
       </ve-grid>

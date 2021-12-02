@@ -1,6 +1,23 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
 .ve-carousel {
   position: relative;
   overflow: hidden;
+  @include tools.use-material((
+    'borders': (
+      'default': (
+        'color': settings.$border-color,
+        'style': settings.$border-style,
+        'width': 0,
+      ),
+      'existence': (
+        'width': thin,
+      ),
+    ),
+    'use-size': false,
+    'use-density': false,
+  ));
 
   &__controls {
     position: absolute;
@@ -10,80 +27,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  &__dot {
-    height: 8px;
-    width: 8px;
-    background-color: rgba(255, 255, 255, .3);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: box-shadow, background-color .3s cubic-bezier(0.4, 0, 0.2, 1);
-    outline: none;
-
-    &--active {
-      background-color: rgba(255, 255, 255, 1);
-    }
-  }
-
-  &__dot + &__dot {
-    margin-left: 12px;
-  }
-
-  &-x-transition,
-  &-x-reverse-transition,
-  &-y-transition,
-  &-y-reverse-transition {
-    &-enter-active,
-    &-leave-active {
-      transition: .3s cubic-bezier(.25, .8, .50, 1);
-    }
-
-    &-leave-from,
-    &-leave-to {
-      position: absolute !important;
-      top: 0;
-      width: 100%;
-    }
-  }
-
-  &-x-transition {
-    &-enter-from {
-      transform: translateX(100%);
-    }
-
-    &-leave-to {
-      transform: translateX(-100%);
-    }
-  }
-
-  &-x-reverse-transition {
-    &-enter-from {
-      transform: translateX(-100%);
-    }
-
-    &-leave-to {
-      transform: translateX(100%);
-    }
-  }
-
-  &-y-transition {
-    &-enter-from {
-      transform: translateY(100%);
-    }
-
-    &-leave-to {
-      transform: translateY(-100%);
-    }
-  }
-
-  &-y-reverse-transition {
-    &-enter-from {
-      transform: translateY(-100%);
-    }
-
-    &-leave-to {
-      transform: translateY(100%);
-    }
   }
 }

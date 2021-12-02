@@ -1,39 +1,46 @@
-import type { MarkdownParsedData } from '@veno-ui/markdown'
+// Types
+import type { MarkdownData } from '@veno-ui/markdown'
 
+export interface Data extends MarkdownData
+{
+  title?: string
+  category?: string
+}
+
+// Regexs
 const scriptRE = /<\/script>/
 const scriptSetupRE = /<\s*script[^>]*\bsetup\b[^>]*/
 const scriptClientRe = /<\s*script[^>]*\bclient\b[^>]*/
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
 const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
 
-export interface ParsedData extends MarkdownParsedData
-{
-  title?: string
-  category?: string
-}
-
-export default (html: string, data: ParsedData) => {
+export function codegen (html: string, data: Data) {
   const pageData = {
-    title: data.title,
+    title: data.headers.find(v => v.level === 1)?.title ?? data.title,
     category: data.category,
   }
 
-  const tags = data.hoistedTags || []
+  const tags = genTags(
+    data.hoistedTags,
+    `\nexport const __pageData = ${ JSON.stringify(pageData) }`
+  )
 
-  if (data.headers) {
-    const h1 = data.headers.find(v => v.level === 1)
-    if (h1) {
-      pageData.title = h1.title
-    }
-  }
+  return `
+${ tags.join('\n') }
 
-  const code = `\nexport const __pageData = ${ JSON.stringify(pageData) }`
+<template>
+${ genBreadcrumb([pageData.category, pageData.title].filter(Boolean) as string[]) }
+${ html }
+</template>
+`
+}
 
+function genTags (tags: string[], injectCode: string) {
   const existingScriptIndex = tags.findIndex((tag) => {
     return (
-      scriptRE.test(tag) &&
-      !scriptSetupRE.test(tag) &&
-      !scriptClientRe.test(tag)
+      scriptRE.test(tag)
+      && !scriptSetupRE.test(tag)
+      && !scriptClientRe.test(tag)
     )
   })
 
@@ -41,22 +48,31 @@ export default (html: string, data: ParsedData) => {
     const tagSrc = tags[existingScriptIndex]
     // user has <script> tag inside markdown
     // if it doesn't have export default it will error out on build
-    const hasDefaultExport =
-      defaultExportRE.test(tagSrc) || namedDefaultExportRE.test(tagSrc)
+    const hasDefaultExport = (
+      defaultExportRE.test(tagSrc)
+      || namedDefaultExportRE.test(tagSrc)
+    )
     tags[existingScriptIndex] = tagSrc.replace(
       scriptRE,
-      code + (hasDefaultExport ? `` : `\nexport default{}\n`) + `</script>`
+      hasDefaultExport
+        ? `${ injectCode }</script>`
+        : `${ injectCode }\nexport default {}\n</script>`
     )
   } else {
-    tags.unshift(`<script>${ code }\nexport default {}\n</script>`)
+    tags.unshift(`<script>${ injectCode }\nexport default {}\n</script>`)
   }
 
+  return tags
+}
+
+function genBreadcrumb (items: string[]) {
+  if (items.length <= 1) return ''
 
   return `
-${ tags.join('\n') }
-
-<template>
-${ html }
-</template>
+  <ve-breadcrumb>
+    ${ items.map(item => (
+    `<ve-breadcrumb-item>${ item }</ve-breadcrumb-item>`
+  )).join('\n') }  
+  </ve-breadcrumb>
 `
 }
