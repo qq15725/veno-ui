@@ -1,6 +1,6 @@
 :::demo
 
-# 基础
+# 基本用法
 
 ```html
 <div class="mb-3">{{ value }}</div>

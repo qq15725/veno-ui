@@ -1,5 +1,5 @@
 :::demo
-# 基础
+# 基本用法
 
 ```html
 <ve-form-item label="文本输入" label-width="100">

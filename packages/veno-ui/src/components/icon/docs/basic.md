@@ -1,6 +1,10 @@
 :::demo
 
-# 基础
+# 基本用法
+
+图标分为 svg 图标、class 图标、component 图标。
+
+通过配置 aliases，可以通过短别名使用。
 
 ```html
 <ve-grid dense>

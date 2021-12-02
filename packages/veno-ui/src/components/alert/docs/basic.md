@@ -1,6 +1,6 @@
 :::demo
 
-# 基础
+# 基本用法
 
 ```html
 <ve-grid dense :col-props="{ cols: 12 }">

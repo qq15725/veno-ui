@@ -10,6 +10,10 @@ category: 通用
 
 :::include
 
-basic.md svg.md
+basic.md 
+
+svg.md
+
+preset.md
 
 :::

@@ -8,6 +8,7 @@
   <ve-button variant="contained" block>Contained</ve-button>
   <ve-button variant="outlined" block>Outlined</ve-button>
   <ve-button variant="text" block>Text</ve-button>
+  <ve-button variant="link" block>Link</ve-button>
 </ve-grid>
 ```
 

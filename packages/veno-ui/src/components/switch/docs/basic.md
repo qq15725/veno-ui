@@ -1,5 +1,5 @@
 :::demo
-# 基础
+# 基本用法
 
 ```html
 <ve-switch 
