@@ -48,12 +48,15 @@
   &--variant-link {
     padding: 0;
     min-width: 0;
-    text-decoration: underline currentColor;
     user-select: auto;
     height: auto;
     width: auto;
     background: transparent;
     color: inherit;
+
+    &:hover {
+      text-decoration: underline currentColor;
+    }
   }
 
   &--variant-icon {
@@ -69,14 +72,9 @@
   }
 
   &--disabled {
+    --ve-button-overlay-opacity: #{math.div($button-disabled-overlay, $button-disabled-opacity)};
+    --ve-theme-overlay-multiplier: 0;
     color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
-  }
-
-  &--disabled &__overlay {
-    opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
-  }
-
-  &--disabled {
     pointer-events: none;
     cursor: default;
   }
@@ -90,13 +88,11 @@
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;
-    opacity: 0;
+    opacity: var(--ve-button-overlay-opacity, 0);
     transition: opacity .2s ease-in-out;
   }
 
-  &:not(&--disabled) {
-    @include tools.states('.ve-button__overlay', false);
-  }
+  @include tools.states('#{&}__overlay', false);
 
   &__icon {
     width: 1em !important;
@@ -105,8 +101,8 @@
 
     @at-root {
       // Progress
-      .ve-progress#{&} {
-        margin-inline-end: map.get(settings.$grid-gutters, 'md');
+      .ve-progress#{&} + span  {
+        margin-inline-start: map.get(settings.$grid-gutters, 'md');
       }
     }
   }

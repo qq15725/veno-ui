@@ -30,11 +30,12 @@ import type { MakeSlots } from '../../utils'
 
 export type ButtonVariant = typeof allowedVariants[number]
 export type Button = InstanceType<typeof Button>
+export type ButtonSlots = MakeSlots<{
+  default: [],
+}>
 
-export const Button = genericComponent<new <T>() => {
-  $slots: MakeSlots<{
-    default: [],
-  }>
+export const Button = genericComponent<new () => {
+  $slots: ButtonSlots
 }>()({
   name: 'Button',
 
@@ -65,11 +66,9 @@ export const Button = genericComponent<new <T>() => {
   setup: function (props, { attrs, slots }) {
     const computedProps = computed(() => {
       const variant = props.icon ? 'icon' : props.variant
-      const color = props.color ?? (props.variant === 'link' ? 'primary' : undefined)
       return {
         ...props,
         variant,
-        color,
         contained: variant === 'icon',
       }
     })
@@ -87,6 +86,10 @@ export const Button = genericComponent<new <T>() => {
         && computedProps.value.variant !== 'icon'
         && props.prependIcon
       )
+      const hasDefault = (
+        !hasLoding
+        || props.icon === false
+      )
       const hasAppendIcon = (
         !hasLoding
         && computedProps.value.variant !== 'icon'
@@ -94,11 +97,12 @@ export const Button = genericComponent<new <T>() => {
       )
       return (
         <Tag
-          role="button"
-          type={ Tag === 'a' ? undefined : props.type }
+          role={ link.isLink.value ? undefined : 'button' }
+          aria-disabled={ props.disabled || undefined }
+          type={ link.isLink.value ? undefined : props.type }
           class={ [
+            've-button',
             {
-              've-button': true,
               've-button--active': link.isExactActive?.value,
               've-button--block': props.block,
               've-button--stacked': props.stacked,
@@ -132,15 +136,17 @@ export const Button = genericComponent<new <T>() => {
             />
           ) }
 
-          { typeof props.icon === 'boolean'
-            ? slots.default ? slots.default() : props.text
-            : (
-              <Icon
-                class="ve-button__icon"
-                icon={ props.icon }
-                size={ props.size }
-              />
-            ) }
+          { hasDefault && (
+            typeof props.icon === 'boolean'
+              ? <span>{ slots.default ? slots.default() : props.text }</span>
+              : (
+                <Icon
+                  class="ve-button__icon"
+                  icon={ props.icon }
+                  size={ props.size }
+                />
+              )
+          ) }
 
           { hasAppendIcon && (
             <Icon

@@ -15,6 +15,7 @@ import {
   demoPlugin,
   highlightLinePlugin,
   preWrapperPlugin,
+  linkPlugin,
 } from './plugins'
 
 // Types
@@ -45,6 +46,7 @@ export function createMarkdown (options?: Options): Markdown {
       .use(demoPlugin)
       .use(highlightLinePlugin)
       .use(preWrapperPlugin)
+      .use(linkPlugin)
       // 第三方插件
       .use(anchor, {
         slugify,

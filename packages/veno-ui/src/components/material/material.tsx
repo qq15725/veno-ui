@@ -12,7 +12,7 @@ import type { MakeSlots } from '../../utils'
 
 export type Material = InstanceType<typeof Material>
 
-export const Material = genericComponent<new <T>() => {
+export const Material = genericComponent<new () => {
   $slots: MakeSlots<{
     default: []
   }>

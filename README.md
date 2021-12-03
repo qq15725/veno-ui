@@ -17,9 +17,13 @@
 
 ## 特性
 
-### TypeScript 友好
+### 无障碍设计
 
-所有组件都是用 TypeScript 编写。
+所有组件遵循 WAI-ARIA [https://www.w3.org/TR/wai-aria-practices](https://www.w3.org/TR/wai-aria-practices)
+
+### TypeScript
+
+所有组件 TypeScript 编写。
 
 ## 安装
 

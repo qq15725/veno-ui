@@ -16,7 +16,7 @@ import type { MakeSlots } from '../../utils'
 
 export type Breadcrumb = InstanceType<typeof Breadcrumb>
 
-export const Breadcrumb = genericComponent<new <T>() => {
+export const Breadcrumb = genericComponent<new () => {
   $slots: MakeSlots<{
     default: [],
     separator: [],
