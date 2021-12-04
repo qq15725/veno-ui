@@ -14,7 +14,13 @@ export function createSimpleFunctional (
   name?: string
 ) {
   return defineComponent({
-    name: name ?? capitalize(camelize(klass.replace(/__/g, '-'))),
+    name: name ?? capitalize(
+      camelize(
+        klass
+          .replace('ve-', '')
+          .replace(/__/g, '-')
+      )
+    ),
 
     props: {
       tag: {
@@ -24,9 +30,7 @@ export function createSimpleFunctional (
     },
 
     setup (props, { slots }) {
-      return () => h(props.tag, {
-        class: klass,
-      }, slots.default?.())
+      return () => h(props.tag, { class: klass }, slots.default?.())
     },
   })
 }

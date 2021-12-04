@@ -9,11 +9,11 @@ $avatar-border-radius: settings.$border-radius !default;
 
 $avatar-material: (
   'sizes': (
-    'xs': -4,
-    'sm': -2,
-    'md': 0,
-    'lg': 2,
-    'xl': 4
+    'x-small': -4,
+    'small': -2,
+    'medium': 0,
+    'large': 2,
+    'x-large': 4
   ),
   'borders': (
     'default': (

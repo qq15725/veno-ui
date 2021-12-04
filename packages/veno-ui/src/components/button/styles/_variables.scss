@@ -4,8 +4,8 @@
 @use '../../../styles/settings';
 
 // color
-$button-background: rgb(var(--ve-theme-surface)) !default;
-$button-color: rgb(var(--ve-theme-on-surface)) !default;
+$button-background: rgb(var(--ve-theme-secondary)) !default;
+$button-color: rgb(var(--ve-theme-on-secondary)) !default;
 
 // disabled
 $button-disabled-opacity: 0.26 !default;

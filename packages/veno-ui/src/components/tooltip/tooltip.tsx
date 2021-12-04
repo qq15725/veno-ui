@@ -15,12 +15,14 @@ import { ScaleTransition } from '../transition'
 
 // Types
 import type { PropType } from 'vue'
-import type { OverlaySlots } from '../overlay'
+import type { OverlaySlots } from '../overlay/overlay'
 import type { Anchor, Origin } from '../../composables/position-strategy'
 
 export type Tooltip = InstanceType<typeof Tooltip>
 
-export const Tooltip = genericComponent<new () => { $slots: OverlaySlots }>()({
+export const Tooltip = genericComponent<new () => {
+  $slots: OverlaySlots
+}>()({
   name: 'Tooltip',
 
   inheritAttrs: false,

@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import prism from 'prismjs'
+import HighlightCode from './HighlightCode.vue'
+import { ref } from 'vue'
 
 const props = defineProps<{
   title: string,
   code: string,
   filename: string,
 }>()
-
-const highlightedCode = computed(() => {
-  return prism.highlight(
-      decodeURIComponent(props.code),
-      prism.languages['markup'],
-      'markup'
-  )
-})
 
 const isActive = ref(false)
 const btn = ref()
@@ -98,15 +90,15 @@ const focusBtn = () => {
     </template>
 
     <ve-expand-transition>
-      <div class="language-html my-0 rounded-0" v-if="isActive">
-        <pre><code v-html="highlightedCode" /></pre>
-      </div>
+      <highlight-code
+          v-if="isActive"
+          :code="props.code"
+      />
     </ve-expand-transition>
 
-    <ve-material tile :theme="theme" border="0">
+    <ve-material :theme="theme" border="0">
       <ve-button
           ref="btn"
-          class="test-kb-nav"
           absolute
           border="0"
           icon
@@ -122,9 +114,3 @@ const focusBtn = () => {
     </ve-material>
   </ve-card>
 </template>
-
-<style>
-.test-kb-nav {
-
-}
-</style>

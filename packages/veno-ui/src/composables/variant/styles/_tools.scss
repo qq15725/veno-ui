@@ -1,21 +1,20 @@
 @use 'sass:map';
 @use 'variables';
-@use '../../../styles/tools/functions';
+@use '../../../styles/tools/functions' as tools;
 
 @mixin use-variant($props: ()) {
-  $props: functions.map-deep-merge(variables.$variant-props, $props);
+  $props: tools.map-deep-merge(variables.$variant-props, $props);
   $variants: map.get($props, 'variants');
 
-  &--variant-outlined,
-  &--variant-text {
-    background: transparent;
-    color: inherit;
+  &--variant-contained {
+    background: tools.map-deep-get($variants, 'contained', 'background');
+    color: tools.map-deep-get($variants, 'contained', 'color');
   }
 
-  &--variant-contained {
-    background: functions.map-deep-get($variants, 'contained', 'background');
-    color: functions.map-deep-get($variants, 'contained', 'color');
-    border-width: functions.map-deep-get($variants, 'contained', 'border-width');
+  &--variant-text,
+  &--variant-outlined {
+    background: transparent;
+    color: inherit;
   }
 
   &--variant-outlined {

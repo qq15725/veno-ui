@@ -6,7 +6,7 @@ import { genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-import { makeGroupProps, useGroup } from '../../composables/group'
+import { useGroup } from '../../composables/group'
 
 // Symbols
 export const BreadcrumbSymbol = Symbol.for('veno-ui:breadcrumb')
@@ -28,11 +28,10 @@ export const Breadcrumb = genericComponent<new () => {
     ...makeTagProps({
       tag: 'nav',
     }),
-    ...makeGroupProps(),
   },
 
   setup (props, { slots }) {
-    useGroup(props, BreadcrumbSymbol)
+    useGroup({}, BreadcrumbSymbol)
 
     return () => {
       return (

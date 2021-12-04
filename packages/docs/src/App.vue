@@ -9,5 +9,4 @@ export default { name: 'App' }
 <style>
 @import './styles/vars.css';
 @import './styles/layout.css';
-@import './styles/code.css';
 </style>

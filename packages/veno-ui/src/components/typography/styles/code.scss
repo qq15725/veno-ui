@@ -2,6 +2,7 @@
 @use './variables' as *;
 
 .ve-code {
+  color: rgb(var(--ve-code-color));
   background-color: rgb(var(--ve-code-background-color));
   border-radius: $code-border-radius;
   font-size: $code-font-size;

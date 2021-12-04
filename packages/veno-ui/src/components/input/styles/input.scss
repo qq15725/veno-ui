@@ -9,7 +9,13 @@
   max-width: 100%;
   width: 100%;
   padding: $input-padding;
-  @include tools.use-material();
+  @include tools.use-material((
+    'borders': (
+      'default': (
+        'width': thin,
+      ),
+    ),
+  ));
 
   &--autosize {
     width: auto;

@@ -3,7 +3,7 @@
 # 材料形状
 
 ```html
-<ve-grid dense>
+<ve-grid dense class="bg-grey-n2">
   <ve-material text-center size="md" tile>Tile</ve-material>
   <ve-material text-center size="md">Default</ve-material>
   <ve-material text-center size="md" rounded>Rounded</ve-material>

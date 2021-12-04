@@ -64,7 +64,8 @@
     min-width: 0;
     height: var(--ve-button-height);
     width: var(--ve-button-height);
-    border-width: var(--ve-variant-border-width, thin);
+    background: tools.map-deep-get($button-material, 'variants', 'contained', 'background');
+    color: tools.map-deep-get($button-material, 'variants', 'contained', 'color');
   }
 
   &--block {
@@ -73,14 +74,18 @@
 
   &--disabled {
     --ve-button-overlay-opacity: #{math.div($button-disabled-overlay, $button-disabled-opacity)};
-    --ve-theme-overlay-multiplier: 0;
-    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
+    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
     pointer-events: none;
     cursor: default;
   }
 
   &--loading {
     cursor: wait;
+  }
+
+  &--has-next {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &__overlay {
@@ -101,9 +106,24 @@
 
     @at-root {
       // Progress
-      .ve-progress#{&} + span  {
+      .ve-progress#{&} + span {
         margin-inline-start: map.get(settings.$grid-gutters, 'md');
       }
     }
+  }
+
+  &__separator {
+    width: 1px;
+    .ve-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+    }
+  }
+
+  &__separator + & {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }

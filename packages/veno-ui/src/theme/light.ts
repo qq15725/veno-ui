@@ -23,6 +23,7 @@ export default {
     'selected-opacity': 0.08,
     'dragged-opacity': 0.08,
     'pressed-opacity': 0.16,
-    'code-background-color': '#F4F4F8',
+    'code-background-color': '#f2f3f5',
+    'code-color': '#4e5969',
   },
 }

@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { makeGroupItemProps, useGroupItem } from '../../composables/group'
+import { useGroupItem } from '../../composables/group'
 
 // Components
 import { Button } from '../../components/button'
@@ -26,14 +26,15 @@ export const BreadcrumbItem = genericComponent<new () => {
   name: 'BreadcrumbItem',
 
   props: {
-    ...makeGroupItemProps(),
+    //
   },
 
   setup (props, { slots, attrs }) {
-    const { id, group } = useGroupItem(props, BreadcrumbSymbol)
+    const { id, group } = useGroupItem({}, BreadcrumbSymbol)
 
-    const isLast = computed(() => {
-      return group.items.value[group.items.value.length - 1] === id
+    const hasNext = computed(() => {
+      if (!group.items.value.length) return false
+      return group.items.value[group.items.value.length - 1] !== id
     })
 
     // TODO 如果是导航按钮，当前页设置 aria-current="page"
@@ -45,7 +46,7 @@ export const BreadcrumbItem = genericComponent<new () => {
             class={ [
               've-breadcrumb-item',
               {
-                've-breadcrumb-item--last': isLast.value
+                've-breadcrumb-item--has-next': hasNext.value
               }
             ] }
           >
@@ -56,7 +57,7 @@ export const BreadcrumbItem = genericComponent<new () => {
             />
           </li>
 
-          { !isLast.value && (
+          { hasNext.value && (
             <li
               class="ve-breadcrumb-separator"
               aria-hidden="true"

@@ -21,15 +21,16 @@
   }
 
   &-item {
+    opacity: 1;
+
+    &--has-next {
+      opacity: .6;
+    }
+
     > .ve-button {
       padding: 0 4px;
       min-width: auto;
       height: auto;
-      opacity: .6;
-    }
-
-    &--last > .ve-button {
-      opacity: 1;
     }
   }
 

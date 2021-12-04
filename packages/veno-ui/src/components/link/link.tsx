@@ -2,10 +2,10 @@
 import { genericComponent } from '../../utils'
 
 // Components
-import { Button } from './button'
+import { Button } from '../button'
 
 // Types
-import type { ButtonSlots } from './button'
+import type { ButtonSlots } from '../button/button'
 
 export type Link = InstanceType<typeof Link>
 

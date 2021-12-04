@@ -9,7 +9,7 @@ $device-color: rgb(var(--ve-theme-on-surface)) !default;
 // border
 $device-border-color: settings.$border-color !default;
 $device-border-style: settings.$border-style !default;
-$device-border-width: 0 !default;
+$device-border-width: thin !default;
 $device-border-thin-width: thin !default;
 $device-border-radius: settings.$border-radius !default;
 $device-borders: (

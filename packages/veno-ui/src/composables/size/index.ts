@@ -3,11 +3,22 @@ import { computed, unref } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
 
 // Constants
-export const SIZES = [null, 'xs', 'sm', 'md', 'lg', 'xl']
+const sizeAliases = {
+  'xs': 'x-small',
+  'sm': 'small',
+  'md': 'medium',
+  'lg': 'large',
+  'xl': 'x-large',
+}
+
+export const sizes = [
+  'x-small', 'small', 'medium', 'large', 'x-large',
+  'xs', 'sm', 'md', 'lg', 'xl',
+]
 
 // Types
 import type { MaybeRef } from '../../utils'
-type Size = typeof SIZES[number]
+type Size = typeof sizes[number]
 
 export interface SizeProps
 {
@@ -17,15 +28,19 @@ export interface SizeProps
 export const makeSizeProps = propsFactory({
   size: {
     type: [String, Number],
-    default: 'md',
+    default: 'medium',
   },
 }, 'size')
 
 export function useSize (props: MaybeRef<SizeProps>, name?: string) {
   const sizeClasses = computed(() => {
-    const { size } = unref(props)
+    let { size } = unref(props)
 
-    if (!name || !size || !SIZES.includes(size as string)) return null
+    if (!name || !size || !sizes.includes(size as string)) return null
+
+    if (size in sizeAliases) {
+      size = sizeAliases[size as keyof typeof sizeAliases]
+    }
 
     return `${ name }--size-${ size }`
   })
@@ -33,7 +48,7 @@ export function useSize (props: MaybeRef<SizeProps>, name?: string) {
   const sizeStyles = computed(() => {
     const { size } = unref(props)
 
-    if (SIZES.includes(size as string)) return null
+    if (!size || sizes.includes(size as string)) return null
 
     return {
       width: convertToUnit(size),

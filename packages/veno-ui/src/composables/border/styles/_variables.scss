@@ -12,7 +12,7 @@ $border-props: functions.map-deep-merge(
         'default': (
           'color': $border-color,
           'style': $border-style,
-          'width': $border-width,
+          'width': 0,
           'important': false,
         ),
         'existence': (

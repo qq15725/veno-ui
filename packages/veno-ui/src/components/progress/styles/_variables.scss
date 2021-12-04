@@ -5,11 +5,11 @@ $progress-size: 40px !default;
 $progress-sizes: () !default;
 $progress-sizes: tools.map-deep-merge(
     (
-      'xs': -2,
-      'sm': -1,
-      'md': 0,
-      'lg': 2,
-      'xl': 4
+      'x-small': -2,
+      'small': -1,
+      'medium': 0,
+      'large': 2,
+      'x-large': 4
     ),
     $progress-sizes
 );

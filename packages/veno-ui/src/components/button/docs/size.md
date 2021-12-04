@@ -2,16 +2,16 @@
 
 # 按钮尺寸
 
-`size` 有 `xs`、`sm`、`md`、`lg`、`xl` 预设尺寸。
+按钮的尺寸有 `x-small` - 特小、`small` - 小、`medium` - 中等、`large` - 大、`x-large` - 特大。
 
 ```html
 <ve-grid align="center" :col-props="{ cols: 12 }">
   <ve-grid dense align="center">
-    <ve-button color="primary" size="xs">xs</ve-button>
-    <ve-button color="primary" size="sm">sm</ve-button>
-    <ve-button color="primary">md</ve-button>
-    <ve-button color="primary" size="lg">lg</ve-button>
-    <ve-button color="primary" size="xl">xl</ve-button>
+    <ve-button color="primary" size="x-small">XSmall</ve-button>
+    <ve-button color="primary" size="small">Small</ve-button>
+    <ve-button color="primary">Medium</ve-button>
+    <ve-button color="primary" size="large">Large</ve-button>
+    <ve-button color="primary" size="large">XLarge</ve-button>
   </ve-grid>
 
   <ve-grid dense align="center">

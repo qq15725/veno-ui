@@ -2,14 +2,13 @@
 
 # 基本用法
 
-按钮的变体分别为容器（默认）、轮廓、文本、链接、图标。
+按钮有多种变体 `contained` - **实心按钮（默认）**、`outlined` - **描边按钮**、`text` - **文本按钮**、`link` - **链接按钮**、`icon` - **图标按钮**。
 
 ```html
 <ve-grid dense align="center">
-  <ve-button>Default</ve-button>
-  <ve-button variant="contained" color="primary">Contained</ve-button>
-  <ve-button variant="outlined" color="primary">Outlined</ve-button>
-  <ve-button variant="text" color="primary">Text</ve-button>
+  <ve-button variant="contained">Contained</ve-button>
+  <ve-button variant="outlined">Outlined</ve-button>
+  <ve-button variant="text">Text</ve-button>
   <ve-button variant="link">Link</ve-button>
   <ve-button variant="icon">Icon</ve-button>
 </ve-grid>
