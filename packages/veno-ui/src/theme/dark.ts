@@ -4,7 +4,7 @@ export default {
     background: '#101014',
     surface: '#18181C',
     primary: '#296DFF',
-    secondary: '#F2F3F5',
+    secondary: '#27272A',
     success: '#00B42A',
     warning: '#FF7D00',
     error: '#F53F3F',

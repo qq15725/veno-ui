@@ -2,7 +2,7 @@
 category: 通用
 ---
 
-# 过渡动画 Transition
+# 过渡 Transition
 
 ## 演示
 

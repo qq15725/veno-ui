@@ -1,6 +1,11 @@
 @use 'sass:map';
 @use '../../../styles/settings';
 
+// color
+$avatar-background: rgb(var(--ve-theme-secondary)) !default;
+$avatar-color: rgb(var(--ve-theme-on-secondary)) !default;
+
+// border
 $avatar-border-color: settings.$border-color !default;
 $avatar-border-style: settings.$border-style !default;
 $avatar-border-width: 0 !default;
@@ -8,6 +13,12 @@ $avatar-border-thin-width: thin !default;
 $avatar-border-radius: settings.$border-radius !default;
 
 $avatar-material: (
+  'variants': (
+    'contained': (
+      'background': $avatar-background,
+      'color': $avatar-color,
+    ),
+  ),
   'sizes': (
     'x-small': -4,
     'small': -2,

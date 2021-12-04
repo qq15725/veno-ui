@@ -25,11 +25,7 @@ export const Avatar = genericComponent()({
     image: String,
     icon: String,
     text: String,
-    ...makeMaterialProps({
-      color: 'grey',
-      textColor: 'white',
-      variant: 'contained',
-    } as const),
+    ...makeMaterialProps(),
   },
 
   setup (props, { slots }) {

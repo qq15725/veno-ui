@@ -73,7 +73,7 @@
   }
 
   &--disabled {
-    --ve-button-overlay: 255, 255, 255;
+    --ve-button-overlay: var(--ve-theme-surface);
     --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
     color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
     pointer-events: none;
@@ -95,7 +95,7 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--ve-button-overlay-opacity, 0);
-    transition: background-color,opacity .2s ease-in-out;
+    transition: background-color, opacity .2s ease-in-out;
   }
 
   @include tools.states('#{&}__overlay', false);
