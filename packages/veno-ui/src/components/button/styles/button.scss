@@ -16,7 +16,7 @@
   line-height: $button-line-height;
   letter-spacing: $button-text-letter-spacing;
   text-transform: $button-text-transform;
-  transition-property: border-color, transform, opacity, color;
+  transition-property: width, border-color, transform, opacity, color;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
   user-select: none;
@@ -73,7 +73,8 @@
   }
 
   &--disabled {
-    --ve-button-overlay-opacity: #{math.div($button-disabled-overlay, $button-disabled-opacity)};
+    --ve-button-overlay: 255, 255, 255;
+    --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
     color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
     pointer-events: none;
     cursor: default;
@@ -90,11 +91,11 @@
 
   &__overlay {
     @include tools.absolute();
-    background-color: currentColor;
+    background-color: rgb(var(--ve-button-overlay, var(--ve-theme-on-surface)));
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--ve-button-overlay-opacity, 0);
-    transition: opacity .2s ease-in-out;
+    transition: background-color,opacity .2s ease-in-out;
   }
 
   @include tools.states('#{&}__overlay', false);
@@ -113,7 +114,9 @@
   }
 
   &__separator {
+    --ve-border-opacity: .12;
     width: 1px;
+
     .ve-divider {
       position: absolute;
       top: 0;

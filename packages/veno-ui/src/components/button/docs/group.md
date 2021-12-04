@@ -3,7 +3,12 @@
 # 组合按钮
 
 ```html
-<ve-grid align="center" :col-props="{ cols: 12 }">
+<ve-grid dense :col-props="{ cols: 12 }">
+  <ve-button-group>
+    <ve-button text="Submit" />
+    <ve-button icon="veno-ui:$dropdown" />
+  </ve-button-group>
+  
   <ve-button-group>
     <ve-button color="primary" text="Prev" />
     <ve-button color="primary" text="Next" />
