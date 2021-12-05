@@ -2,14 +2,14 @@
 category: 数据输入
 ---
 
-# 文本输入 Input
-
-`input` 包装了 `material` 。
+# 输入框 Input
 
 ## 演示
 
 :::include
 
 basic.md autosize.md
+
+slots.md
 
 :::

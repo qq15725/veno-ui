@@ -60,7 +60,9 @@ export type OverlaySlots = MakeSlots<{
 
 export type Overlay = InstanceType<typeof Overlay>
 
-export const Overlay = genericComponent<new () => { $slots: OverlaySlots }>()({
+export const Overlay = genericComponent<new () => {
+  $slots: OverlaySlots
+}>()({
   name: 'Overlay',
 
   directives: { ClickOutside },

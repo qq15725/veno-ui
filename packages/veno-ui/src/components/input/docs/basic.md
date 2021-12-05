@@ -3,7 +3,11 @@
 # 基本用法
 
 ```html
-<ve-input v-model="value" placeholder="基本的 Input" />
+<ve-input
+  v-model="value" 
+  placeholder="基本的 Input"
+  clearable
+/>
 ```
 
 ```js

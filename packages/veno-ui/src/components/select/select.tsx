@@ -86,10 +86,11 @@ export const Select = genericComponent()({
               readonly
               modelValue={ label.value }
               v-slots={ {
-                suffix: () => (
+                appendInner: () => (
                   <Icon icon="veno-ui:$dropdown" />
                 )
               } }
+              onClick:control={ slotProps.onClick }
               { ...slotProps }
               { ...attrs }
             />

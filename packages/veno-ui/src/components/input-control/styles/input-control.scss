@@ -1,0 +1,50 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-input-control {
+  --ve-input-control-height: 42px;
+  --ve-input-padding-before: 16px;
+  --ve-input-padding-after: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  contain: layout;
+  flex: 1 0;
+  grid-area: control;
+  height: var(--ve-input-control-height);
+  border: 1px solid #{settings.$border-color};
+
+  &--prepended {
+    --ve-input-padding-before: 6px;
+    padding-inline-start: 12px;
+  }
+
+  &--appended {
+    --ve-input-padding-after: 6px;
+    padding-inline-end: 12px;
+  }
+
+  &__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 0;
+    height: 100%;
+  }
+
+  &__clearable {
+    cursor: pointer;
+    opacity: 0;
+    margin-inline-end: 4px;
+    transition: .15s opacity, .15s width settings.$standard-easing;
+    transition-property: opacity, transform, width;
+  }
+
+  &--focused &__clearable,
+  &:hover &__clearable {
+    opacity: 1;
+  }
+}

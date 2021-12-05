@@ -2,18 +2,25 @@
 import './styles/input.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { genericComponent, filterInputAttrs } from '../../utils'
+
+// Components
+import { InputControl, makeInputControlProps, filterInputControlProps } from '../input-control/input-control'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 
 // Types
+import { InputControlSlots } from '../input-control/input-control'
+
 export type Input = InstanceType<typeof Input>
 
-export const Input = genericComponent()({
+export const Input = genericComponent<new () => {
+  $slots: InputControlSlots
+}>()({
   name: 'Input',
+
+  inheritAttrs: false,
 
   props: {
     modelValue: [String, Number],
@@ -25,70 +32,57 @@ export const Input = genericComponent()({
       default: 'text',
     },
     readonly: Boolean,
-    ...makeMaterialProps(),
-    ...makeDisabledProps(),
+    ...makeInputControlProps(),
   },
 
   emits: {
-    'update:modelValue': (value: any) => true,
+    'update:modelValue': (val: string) => true,
+    'click:control': (e: MouseEvent) => true,
   },
 
-  setup (props, { slots }) {
+  setup (props, { attrs, slots, emit }) {
     const model = useProxiedModel(props, 'modelValue')
-    const { materialClasses, materialStyles } = useMaterial(props, 've-input')
-    const { disabledClasses } = useDisabled(props, 've-input')
+    const [inputProps, restAttrs] = filterInputAttrs(attrs)
+    const [inputControlProps] = filterInputControlProps(props)
 
     return () => {
-      const Tag = props.textarea ? 'textarea' : 'input'
-
       return (
-        <div
+        <InputControl
           class={ [
             've-input',
             {
-              've-input--textarea': props.textarea,
-              've-input--autosize': props.autosize,
               've-input--readonly': props.readonly,
             },
-            materialClasses.value,
-            disabledClasses.value,
           ] }
-          style={ [
-            materialStyles.value,
-          ] }
-        >
-          { slots.prefix && (
-            <div class="ve-input__prefix">
-              { slots.prefix?.() }
-            </div>
-          ) }
-
-          <div class="ve-input__wrap">
-            <Tag
-              class="ve-input__el"
-              value={ model.value }
-              onInput={ e => model.value = (e.target as HTMLInputElement).value }
-              type={ props.textarea ? undefined : props.type }
-              rows={ props.textarea ? 3 : undefined }
-              placeholder={ props.placeholder }
-              readonly={ props.readonly }
-              disabled={ props.disabled }
-            />
-
-            { props.autosize && (
-              <div
-                class="ve-input__mirror"
-                v-text={ (model.value || '') + '\r\n' }
-              />
-            ) }
-          </div>
-
-          { slots.suffix && (
-            <div class="ve-input__suffix">
-              { slots.suffix?.() }
-            </div>
-          ) }
-        </div>
+          onClick:clear={ e => {
+            e.stopPropagation()
+            model.value = ''
+          } }
+          onClick:control={ (e: MouseEvent) => {
+            emit('click:control', e)
+          } }
+          { ...inputProps }
+          { ...inputControlProps }
+          v-slots={ {
+            ...slots,
+            default: ({ inputRef, focus, blur }) => {
+              return (
+                <input
+                  ref={ inputRef }
+                  class="ve-input__el"
+                  v-model={ model.value }
+                  type={ props.type }
+                  placeholder={ props.placeholder }
+                  readonly={ props.readonly }
+                  disabled={ props.disabled }
+                  onFocus={ focus }
+                  onBlur={ blur }
+                  { ...restAttrs }
+                />
+              )
+            }
+          } }
+        />
       )
     }
   }
