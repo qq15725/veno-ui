@@ -154,6 +154,7 @@ export const SelectionControl = genericComponent<new <T>() => {
     'onUpdate:modelValue'?: (val: T) => any
   }
   $slots: MakeSlots<{
+    label: [SelectionControlSlot]
     default: [SelectionControlSlot]
   }>
 }>()({
@@ -200,6 +201,13 @@ export const SelectionControl = genericComponent<new <T>() => {
 
     useRender(() => {
       const type = group?.type.value ?? props.type
+      const label = slots.label
+        ? slots.label({
+          label: props.label,
+          props: { for: id.value },
+        })
+        : props.label
+      const hasLabel = !!label
 
       return (
         <div
@@ -219,11 +227,39 @@ export const SelectionControl = genericComponent<new <T>() => {
             class={ [
               've-selection-control__input',
               densityClasses.value,
-              textColorClasses.value,
             ] }
-            style={ textColorStyles.value }
           >
-            { icon.value && <Icon icon={ icon.value } /> }
+            { icon.value && (
+              <Icon
+                icon={ icon.value }
+                class={ [
+                  textColorClasses.value,
+                ] }
+                style={ textColorStyles.value }
+              />
+            ) }
+
+            { slots.default?.({
+              model,
+              textColorClasses,
+              textColorStyles,
+              props: {
+                onFocus,
+                onBlur,
+                id: id.value,
+              },
+            }) }
+
+            { hasLabel && (
+              <label
+                class={ [
+                  've-selection-control__label',
+                ] }
+                for={ id.value }
+              >
+                { label }
+              </label>
+            ) }
 
             <input
               v-model={ model.value }
@@ -239,16 +275,6 @@ export const SelectionControl = genericComponent<new <T>() => {
               aria-checked={ type === 'checkbox' ? model.value : undefined }
               { ...attrs }
             />
-
-            { slots.default?.({
-              model,
-              textColorClasses,
-              props: {
-                onFocus,
-                onBlur,
-                id: id.value,
-              },
-            }) }
           </div>
         </div>
       )

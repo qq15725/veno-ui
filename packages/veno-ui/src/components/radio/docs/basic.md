@@ -3,9 +3,9 @@
 # 基本用法
 
 ```html
-<ve-radio-group>
-  <ve-radio true-value="1111">Radio1</ve-radio>
-  <ve-radio true-value="2222">Radio2</ve-radio>
+<ve-radio-group hide-details>
+  <ve-radio true-value="1">Radio1</ve-radio>
+  <ve-radio true-value="2">Radio2</ve-radio>
 </ve-radio-group>
 ```
 

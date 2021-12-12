@@ -21,7 +21,8 @@ export const Radio = defineComponent({
     ...makeSelectionControlProps({
       falseIcon: 'veno-ui:$radioOff',
       trueIcon: 'veno-ui:$radioOn',
-    }),
+      color: 'primary',
+    } as const),
   },
 
   setup (props, { slots }) {
@@ -31,7 +32,9 @@ export const Radio = defineComponent({
           { ...props }
           class="ve-radio"
           type="radio"
-          v-slots={ slots }
+          v-slots={ {
+            label: slots.default,
+          } }
         />
       )
     }

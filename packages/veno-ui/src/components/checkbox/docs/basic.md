@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-checkbox>Checkbox</ve-checkbox>
+<ve-checkbox hide-details>Checkbox</ve-checkbox>
 ```
 
 :::

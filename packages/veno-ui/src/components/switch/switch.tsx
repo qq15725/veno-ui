@@ -54,6 +54,7 @@ export const Switch = genericComponent()({
             control: () => (
               <SelectionControl
                 { ...selectionInputProps }
+                label={ undefined }
                 role="switch"
                 type="checkbox"
                 onUpdate:modelValue={ onChange }

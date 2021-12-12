@@ -21,6 +21,7 @@ export const Checkbox = genericComponent()({
     ...makeSelectionControlProps({
       falseIcon: 'veno-ui:$checkboxOff',
       trueIcon: 'veno-ui:$checkboxOn',
+      color: 'primary',
     }),
   },
 
@@ -39,11 +40,12 @@ export const Checkbox = genericComponent()({
             control: () => (
               <SelectionControl
                 { ...selectionInputProps }
+                label={ undefined }
                 trueIcon={ props.trueIcon }
                 falseIcon={ props.falseIcon }
                 type="checkbox"
                 v-slots={ {
-                  default: slots.default,
+                  label: slots.default,
                 } }
               />
             ),
