@@ -2,21 +2,37 @@
 import './styles/input.scss'
 
 // Utils
-import { genericComponent, filterInputAttrs } from '../../utils'
+import { genericComponent, filterInputAttrs, MakeSlots } from '../../utils'
 
 // Components
-import { InputControl, makeInputControlProps, filterInputControlProps } from '../input-control/input-control'
+import {
+  FormItem,
+  makeFormItemProps,
+  filterFormItemProps,
+} from '../form/form-item'
+import {
+  InputControl,
+  makeInputControlProps,
+  filterInputControlProps,
+} from '../input-control/input-control'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import { InputControlSlots } from '../input-control/input-control'
+import { InputControlSlot } from '../input-control/input-control'
 
 export type Input = InstanceType<typeof Input>
 
 export const Input = genericComponent<new () => {
-  $slots: InputControlSlots
+  $slots: MakeSlots<{
+    default: [InputControlSlot],
+    prependInner: [],
+    appendInner: [],
+    clear: [],
+    prepend: [],
+    append: [],
+  }>
 }>()({
   name: 'Input',
 
@@ -32,6 +48,7 @@ export const Input = genericComponent<new () => {
       default: 'text',
     },
     readonly: Boolean,
+    ...makeFormItemProps(),
     ...makeInputControlProps(),
   },
 
@@ -42,42 +59,54 @@ export const Input = genericComponent<new () => {
 
   setup (props, { attrs, slots, emit }) {
     const model = useProxiedModel(props, 'modelValue')
-    const [inputProps, restAttrs] = filterInputAttrs(attrs)
-    const [inputControlProps] = filterInputControlProps(props)
 
     return () => {
+      const [formItemProps] = filterFormItemProps(props)
+      const [inputProps, restAttrs] = filterInputAttrs(attrs)
+      const [inputControlProps] = filterInputControlProps(props)
+
       return (
-        <InputControl
-          class={ [
-            've-input',
-            {
-              've-input--readonly': props.readonly,
-            },
-          ] }
-          onClick:clear={ e => {
-            e.stopPropagation()
-            model.value = ''
-          } }
-          onClick:control={ (e: MouseEvent) => {
-            emit('click:control', e)
-          } }
-          { ...inputProps }
-          { ...inputControlProps }
+        <FormItem
+          { ...formItemProps }
           v-slots={ {
-            ...slots,
-            default: ({ inputRef, focus, blur }) => {
+            prepend: slots.prepend,
+            append: slots.append,
+            control: () => {
               return (
-                <input
-                  ref={ inputRef }
-                  class="ve-input__el"
-                  v-model={ model.value }
-                  type={ props.type }
-                  placeholder={ props.placeholder }
-                  readonly={ props.readonly }
-                  disabled={ props.disabled }
-                  onFocus={ focus }
-                  onBlur={ blur }
-                  { ...restAttrs }
+                <InputControl
+                  onClick:clear={ e => {
+                    e.stopPropagation()
+                    model.value = ''
+                  } }
+                  onClick:control={ (e: MouseEvent) => {
+                    emit('click:control', e)
+                  } }
+                  { ...inputProps }
+                  { ...inputControlProps }
+                  v-slots={ {
+                    ...slots,
+                    default: ({ inputRef, focus, blur }) => {
+                      return (
+                        <input
+                          ref={ inputRef }
+                          class={ [
+                            've-input',
+                            {
+                              've-input--readonly': props.readonly,
+                            },
+                          ] }
+                          v-model={ model.value }
+                          type={ props.type }
+                          placeholder={ props.placeholder }
+                          readonly={ props.readonly }
+                          disabled={ props.disabled }
+                          onFocus={ focus }
+                          onBlur={ blur }
+                          { ...restAttrs }
+                        />
+                      )
+                    }
+                  } }
                 />
               )
             }

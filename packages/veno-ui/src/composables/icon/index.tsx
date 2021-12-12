@@ -20,6 +20,11 @@ export interface IconAliases
   menu: IconValue
   dropdown: IconValue
   separator: IconValue
+  radioOn: IconValue
+  radioOff: IconValue
+  checkboxOn: IconValue
+  checkboxOff: IconValue
+  checkboxIndeterminate: IconValue
 }
 
 export interface IconProps

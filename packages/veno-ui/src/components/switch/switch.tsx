@@ -2,12 +2,19 @@
 import './styles/switch.scss'
 
 // Utils
-import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
-// Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
-import { useProxiedModel } from '../../composables/proxied-model'
+// Components
+import {
+  FormItem,
+  makeFormItemProps,
+  filterFormItemProps,
+} from '../form/form-item'
+import {
+  SelectionControl,
+  makeSelectionControlProps,
+  filterSelectionControlProps
+} from '../selection-control/selection-control'
 
 // Types
 export type Switch = InstanceType<typeof Switch>
@@ -15,16 +22,12 @@ export type Switch = InstanceType<typeof Switch>
 export const Switch = genericComponent()({
   name: 'Switch',
 
+  inheritAttrs: false,
+
   props: {
-    modelValue: Boolean,
-    activeColor: {
-      type: String,
-      default: 'primary',
-    },
-    activeClass: String,
-    ...makeMaterialProps({
-      variant: 'contained',
-      rounded: true,
+    ...makeFormItemProps(),
+    ...makeSelectionControlProps({
+      color: 'primary'
     } as const),
   },
 
@@ -32,36 +35,43 @@ export const Switch = genericComponent()({
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props) {
-    const isActive = useProxiedModel(props, 'modelValue')
-    const activeColor = props.activeColor ?? props.color
-    const computedProps = computed(() => ({
-      ...props,
-      color: isActive.value ? activeColor : props.color,
-    }))
-    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-switch')
+  setup (props, { slots, emit }) {
+    function onChange (val: any) {
+      emit('update:modelValue', val)
+    }
 
-    return () => (
-      <props.tag
-        role="switch"
-        aria-checked={ isActive.value }
-        class={ [
-          've-switch',
-          {
-            've-switch--active': isActive.value,
-            [`${ props.activeClass }`]: isActive.value && props.activeClass,
-          },
-          materialClasses.value,
-        ] }
-        style={ [
-          materialStyles.value,
-        ] }
-        onClick={ () => isActive.value = !isActive.value }
-      >
-        <div class="ve-switch__track">
-          <div class="ve-switch__thumb" />
-        </div>
-      </props.tag>
-    )
+    return () => {
+      const [formItemProps] = filterFormItemProps(props)
+      const [selectionInputProps] = filterSelectionControlProps(props)
+
+      return (
+        <FormItem
+          { ...formItemProps }
+          class="ve-switch"
+          v-slots={ {
+            prepend: slots.prepend,
+            append: slots.append,
+            control: () => (
+              <SelectionControl
+                { ...selectionInputProps }
+                role="switch"
+                type="checkbox"
+                onUpdate:modelValue={ onChange }
+                v-slots={ {
+                  default: ({ textColorClasses }) => (
+                    <div class={ [
+                      've-switch__track',
+                      textColorClasses.value,
+                    ] }>
+                      <div class="ve-switch__thumb" />
+                    </div>
+                  )
+                } }
+              />
+            )
+          } }
+        />
+      )
+    }
   }
 })

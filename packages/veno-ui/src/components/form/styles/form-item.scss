@@ -1,40 +1,62 @@
-@use 'variables' as *;
-
 .ve-form-item {
   display: grid;
-  grid-template-areas: "label wrapper" "label message";
-  grid-template-columns: auto 1fr;
-  color: $form-item-color;
-  font-size: $form-item-font-size;
-  font-weight: $form-item-font-weight;
-  letter-spacing: $form-item-text-letter-spacing;
-  text-transform: $form-item-text-transform;
+  grid-template-areas: "prepend control append" "a details b";
+  grid-template-columns: max-content auto max-content;
+  grid-template-rows: auto auto;
 
-  &__label {
-    grid-area: label;
-    color: inherit;
-    align-items: center;
-    text-align: right;
-    padding-right: 12px;
-    height: 40px;
-    line-height: 40px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    flex-shrink: 0;
-    flex-grow: 0;
+  &--disabled {
+    pointer-events: none;
+
+    &,
+    input {
+      color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
+    }
   }
 
-  &__wrap {
-    grid-area: wrapper;
-    box-sizing: border-box;
+  input {
+    color: rgba(var(--ve-theme-on-surface), var(--ve-high-emphasis-opacity));
+  }
+
+  &__prepend,
+  &__append,
+  &__control {
     display: flex;
     align-items: center;
-    position: relative;
-    min-height: 40px;
+    align-self: center;
   }
 
-  &__message {
-    grid-area: message;
-    min-height: 14px;
+  &--label &__prepend {
+    white-space: nowrap;
+    justify-content: end;
+  }
+
+  &__prepend {
+    margin-inline-end: 16px;
+    grid-area: prepend;
+  }
+
+  &__control {
+    grid-area: control;
+  }
+
+  &__append {
+    margin-inline-start: 16px;
+    grid-area: append;
+  }
+
+  &__details {
+    align-items: flex-end;
+    display: flex;
+    font-size: .75rem;
+    font-weight: 400;
+    grid-area: details;
+    letter-spacing: .0333333333em;
+    line-height: normal;
+    min-height: 22px;
+    padding-top: 6px;
+    overflow: hidden;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
+    justify-content: space-between;
   }
 }

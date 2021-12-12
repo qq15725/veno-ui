@@ -6,7 +6,6 @@ import { ref, computed, watchEffect } from 'vue'
 import { genericComponent, propsFactory, pick } from '../../utils'
 
 // Components
-import { InputWrapper, makeInputWrapperProps } from '../input-wrapper/input-wrapper'
 import { ScaleTransition } from '../transition'
 import { Icon } from '../icon'
 
@@ -18,7 +17,6 @@ export const makeInputControlProps = propsFactory({
     type: String,
     default: 'veno-ui:$clear',
   },
-  ...makeInputWrapperProps(),
 }, 'input-control')
 
 // Types
@@ -35,9 +33,7 @@ export interface InputControlSlot {
 }
 
 export type InputControlSlots = MakeSlots<{
-  prepend: [],
   prependInner: [],
-  append: [],
   appendInner: [],
   clear: [],
   default: [InputControlSlot],
@@ -107,66 +103,56 @@ export const InputControl = genericComponent<new () => {
       const hasAppendInner = !!(slots.appendInner || hasClear)
 
       return (
-        <InputWrapper
-          v-slots={ {
-            prepend: slots.prepend,
-            append: slots.append,
-            default: () => {
-              return (
-                <div
-                  class={ [
-                    've-input-control',
-                    {
-                      've-input-control--active': isActive.value,
-                      've-input-control--prepended': hasPrependInner,
-                      've-input-control--appended': hasAppendInner,
-                    },
-                  ] }
-                  onClick={ onClick }
-                >
-                  { hasPrependInner && (
-                    <div
-                      class="ve-input-control__prepend-inner"
-                      onClick={ e => emit('click:prepend-inner', e) }
-                    >
-                      { slots.prependInner?.() }
-                    </div>
-                  ) }
+        <div
+          class={ [
+            've-input-control',
+            {
+              've-input-control--active': isActive.value,
+              've-input-control--prepended': hasPrependInner,
+              've-input-control--appended': hasAppendInner,
+            },
+          ] }
+          onClick={ onClick }
+        >
+          { hasPrependInner && (
+            <div
+              class="ve-input-control__prepend-inner"
+              onClick={ e => emit('click:prepend-inner', e) }
+            >
+              { slots.prependInner?.() }
+            </div>
+          ) }
 
-                  <div class="ve-input-control__input">
-                    { slots.default?.({
-                      ...slotProps.value,
-                    }) }
-                  </div>
+          <div class="ve-input-control__input">
+            { slots.default?.({
+              ...slotProps.value,
+            }) }
+          </div>
 
-                  { hasClear && (
-                    <ScaleTransition>
-                      <div
-                        class="ve-input-control__clearable"
-                        onClick={ (e: Event) => emit('click:clear', e) }
-                        v-show={ isActive.value }
-                      >
-                        { slots.clear
-                          ? slots.clear()
-                          : <Icon icon={ props.clearIcon } />
-                        }
-                      </div>
-                    </ScaleTransition>
-                  ) }
+          { hasClear && (
+            <ScaleTransition>
+              <div
+                class="ve-input-control__clearable"
+                onClick={ (e: Event) => emit('click:clear', e) }
+                v-show={ isActive.value }
+              >
+                { slots.clear
+                  ? slots.clear()
+                  : <Icon icon={ props.clearIcon } />
+                }
+              </div>
+            </ScaleTransition>
+          ) }
 
-                  { hasAppendInner && (
-                    <div
-                      class="ve-input-control__append-inner"
-                      onClick={ e => emit('click:append-inner', e) }
-                    >
-                      { slots.appendInner?.() }
-                    </div>
-                  ) }
-                </div>
-              )
-            }
-          } }
-        />
+          { hasAppendInner && (
+            <div
+              class="ve-input-control__append-inner"
+              onClick={ e => emit('click:append-inner', e) }
+            >
+              { slots.appendInner?.() }
+            </div>
+          ) }
+        </div>
       )
     }
   }

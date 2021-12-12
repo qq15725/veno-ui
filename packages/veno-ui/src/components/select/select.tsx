@@ -49,7 +49,7 @@ export const Select = genericComponent()({
     } as const),
   },
 
-  setup (props, { attrs }) {
+  setup (props, { attrs, slots }) {
     const model = useProxiedModel(props, 'modelValue')
     const isActive = ref(false)
     const id = computed(() => props.id || `ve-select-overlay-${ getUid() }`)
@@ -86,6 +86,8 @@ export const Select = genericComponent()({
               readonly
               modelValue={ label.value }
               v-slots={ {
+                prepend: slots.prepend,
+                append: slots.append,
                 appendInner: () => (
                   <Icon icon="veno-ui:$dropdown" />
                 )

@@ -1,0 +1,39 @@
+@forward './variables';
+@use 'sass:map';
+@use 'sass:list';
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+@use './variables' as *;
+
+.ve-selection-control {
+  position: relative;
+  grid-area: control;
+  display: flex;
+  align-items: center;
+  align-self: center;
+
+  &__input {
+    position: relative;
+    width: var(--ve-selection-control-size);
+    height: var(--ve-selection-control-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  .ve-icon {
+    color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
+  }
+
+  input {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+  }
+}

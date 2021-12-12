@@ -197,8 +197,8 @@ export function pick<
   T extends object,
   U extends Extract<keyof T, string>
   > (obj: T, paths: (U | RegExp)[]): [yes: Partial<T>, no: Partial<T>] {
-  const found = Object.create(null)
-  const rest = Object.create(null)
+  const found = Object.create({})
+  const rest = Object.create({})
 
   for (const key in obj) {
     if (

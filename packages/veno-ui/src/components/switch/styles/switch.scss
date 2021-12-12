@@ -2,46 +2,37 @@
 @use '../../../styles/tools';
 
 .ve-switch {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
-  user-select: none;
-  outline: none;
-  cursor: pointer;
-  transition: .3s settings.$standard-easing;
-  @include tools.use-shape();
-
   &__track,
   &__thumb {
     background-color: currentColor;
-    pointer-events: none;
     transition: inherit;
   }
 
   &__track {
+    cursor: pointer;
+    transition: .3s settings.$standard-easing;
     position: relative;
-    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     height: 22px;
     min-width: 40px;
     color: rgba(var(--ve-theme-on-surface), .2);
-    border-radius: inherit;
+    border-radius: 12px;
   }
 
   &__thumb {
-    position: absolute;
-    content: '';
-    top: 2px;
-    left: 2px;
     height: 18px;
-    width: 24px;
-    max-width: 18px;
+    width: 18px;
     color: #FFF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     border-radius: 50%;
+    transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-10px);
+    position: absolute;
   }
 
-  &--active &__thumb {
-    left: calc(100% - (22px + 18px) / 2);
+  .ve-selection-control--dirty &__thumb {
+    transform: translateX(10px);
   }
 }
