@@ -2,26 +2,21 @@
 @use '../../../styles/tools';
 
 .ve-switch {
-  &__track,
-  &__thumb {
-    background-color: currentColor;
-    transition: inherit;
-  }
-
   &__track {
+    position: relative;
     cursor: pointer;
     transition: .3s settings.$standard-easing;
-    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     height: 22px;
     min-width: 40px;
-    color: rgba(var(--ve-theme-on-surface), .2);
+    background-color: rgba(var(--ve-theme-on-surface), .2);
     border-radius: 12px;
   }
 
   &__thumb {
+    position: absolute;
     height: 18px;
     width: 18px;
     color: #FFF;
@@ -29,7 +24,7 @@
     border-radius: 50%;
     transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(-10px);
-    position: absolute;
+    background-color: currentColor;
   }
 
   .ve-selection-control--dirty &__thumb {

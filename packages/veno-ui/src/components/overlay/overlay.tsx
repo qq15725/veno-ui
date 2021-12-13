@@ -53,9 +53,16 @@ function Scrim (props: ScrimProps) {
   )
 }
 
+export interface OverlaySlot
+{
+  isActive: boolean
+  activatorRef: (ref: Element | ComponentPublicInstance | null) => void
+  props: Dictionary<any>
+}
+
 export type OverlaySlots = MakeSlots<{
-  default: [{ isActive: Ref<boolean> }]
-  activator: [{ isActive: boolean, props: Dictionary<any> }]
+  default: [OverlaySlot]
+  activator: [OverlaySlot]
 }>
 
 export type Overlay = InstanceType<typeof Overlay>
@@ -190,32 +197,35 @@ export const Overlay = genericComponent<new () => {
       })
     }
 
+    const slotProps: OverlaySlot = {
+      isActive: isActive.value,
+      activatorRef: selector => {
+        if (!selector) return
+        let activator
+        if ('$el' in selector) {
+          // Component (ref)
+          activator = selector.$el
+        } else {
+          // HTMLElement | Element
+          activator = selector
+        }
+        if (activator?.nodeType === Node.ELEMENT_NODE) {
+          activatorEl.value = activator
+        }
+      },
+      props: mergeProps(
+        {
+          modelValue: isActive.value,
+          'onUpdate:modelValue': (val: boolean) => isActive.value = val,
+        },
+        toHandlers(activatorEvents.value),
+        props.activatorProps
+      ),
+    }
+
     useRender(() => (
       <>
-        { slots.activator?.({
-          isActive: isActive.value,
-          ref: (selector: HTMLElement | ComponentPublicInstance) => {
-            let activator: HTMLElement
-            if ('$el' in selector) {
-              // Component (ref)
-              activator = selector.$el
-            } else {
-              // HTMLElement | Element
-              activator = selector
-            }
-            if (activator?.nodeType === Node.ELEMENT_NODE) {
-              activatorEl.value = activator
-            }
-          },
-          props: mergeProps(
-            {
-              modelValue: isActive.value,
-              'onUpdate:modelValue': (val: boolean) => isActive.value = val,
-            },
-            toHandlers(activatorEvents.value),
-            props.activatorProps
-          ),
-        }) }
+        { slots.activator?.(slotProps) }
 
         <Teleport
           disabled={ !teleportTarget.value }
@@ -271,7 +281,7 @@ export const Overlay = genericComponent<new () => {
                     props.openOnHover && runCloseDelay()
                   } }
                 >
-                  { slots.default?.({ isActive }) }
+                  { slots.default?.(slotProps) }
                 </div>
               </MaybeTransition>
             </div>

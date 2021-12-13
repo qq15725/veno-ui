@@ -3,27 +3,21 @@ import './styles/input-control.scss'
 
 // Utils
 import { ref, computed, watchEffect } from 'vue'
-import { genericComponent, propsFactory, pick } from '../../utils'
+import { genericComponent, propsFactory, pick, useRender } from '../../utils'
 
 // Components
-import { ScaleTransition } from '../transition'
+import { FadeTransition } from '../transition'
 import { Icon } from '../icon'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
-export const makeInputControlProps = propsFactory({
-  clearable: Boolean,
-  clearIcon: {
-    type: String,
-    default: 'veno-ui:$clear',
-  },
-}, 'input-control')
 
 // Types
 import type { Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export interface InputControlSlot {
+export interface InputControlSlot
+{
   isActive: boolean
   isFocused: boolean
   inputRef: Ref<HTMLInputElement | undefined>
@@ -33,9 +27,9 @@ export interface InputControlSlot {
 }
 
 export type InputControlSlots = MakeSlots<{
-  prependInner: [],
-  appendInner: [],
-  clear: [],
+  prependInner: [InputControlSlot],
+  appendInner: [InputControlSlot],
+  clear: [InputControlSlot],
   default: [InputControlSlot],
 }>
 
@@ -45,15 +39,21 @@ export function filterInputControlProps (attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(InputControl.props))
 }
 
+export const makeInputControlProps = propsFactory({
+  active: Boolean,
+  clearable: Boolean,
+  clearIcon: {
+    type: String,
+    default: 'veno-ui:$clear',
+  },
+}, 'input-control')
+
 export const InputControl = genericComponent<new () => {
   $slots: InputControlSlots
 }>()({
   name: 'InputControl',
 
-  props: {
-    active: Boolean,
-    ...makeInputControlProps(),
-  },
+  props: makeInputControlProps(),
 
   emits: {
     'click:clear': (e: Event) => true,
@@ -66,9 +66,9 @@ export const InputControl = genericComponent<new () => {
 
   setup (props, { slots, emit }) {
     const isActive = useProxiedModel(props, 'active')
+    const isFocused = ref(false)
     const controlRef = ref<HTMLElement>()
     const inputRef = ref<HTMLInputElement>()
-    const isFocused = ref(false)
 
     watchEffect(() => isActive.value = isFocused.value)
 
@@ -83,10 +83,10 @@ export const InputControl = genericComponent<new () => {
     const slotProps = computed<InputControlSlot>(() => ({
       isActive: isActive.value,
       isFocused: isFocused.value,
-      inputRef,
       controlRef,
-      blur,
+      inputRef,
       focus,
+      blur,
     }))
 
     function onClick (e: MouseEvent) {
@@ -97,7 +97,7 @@ export const InputControl = genericComponent<new () => {
       emit('click:control', e)
     }
 
-    return () => {
+    useRender(() => {
       const hasPrependInner = (slots.prependInner)
       const hasClear = !!(props.clearable || slots.clear)
       const hasAppendInner = !!(slots.appendInner || hasClear)
@@ -108,6 +108,7 @@ export const InputControl = genericComponent<new () => {
             've-input-control',
             {
               've-input-control--active': isActive.value,
+              've-input-control--focused': isFocused.value,
               've-input-control--prepended': hasPrependInner,
               've-input-control--appended': hasAppendInner,
             },
@@ -119,29 +120,27 @@ export const InputControl = genericComponent<new () => {
               class="ve-input-control__prepend-inner"
               onClick={ e => emit('click:prepend-inner', e) }
             >
-              { slots.prependInner?.() }
+              { slots.prependInner?.(slotProps.value) }
             </div>
           ) }
 
           <div class="ve-input-control__input">
-            { slots.default?.({
-              ...slotProps.value,
-            }) }
+            { slots.default?.(slotProps.value) }
           </div>
 
           { hasClear && (
-            <ScaleTransition>
+            <FadeTransition>
               <div
                 class="ve-input-control__clearable"
                 onClick={ (e: Event) => emit('click:clear', e) }
                 v-show={ isActive.value }
               >
                 { slots.clear
-                  ? slots.clear()
+                  ? slots.clear(slotProps.value)
                   : <Icon icon={ props.clearIcon } />
                 }
               </div>
-            </ScaleTransition>
+            </FadeTransition>
           ) }
 
           { hasAppendInner && (
@@ -149,11 +148,16 @@ export const InputControl = genericComponent<new () => {
               class="ve-input-control__append-inner"
               onClick={ e => emit('click:append-inner', e) }
             >
-              { slots.appendInner?.() }
+              { slots.appendInner?.(slotProps.value) }
             </div>
           ) }
         </div>
       )
+    })
+
+    return {
+      inputRef,
+      controlRef,
     }
   }
 })

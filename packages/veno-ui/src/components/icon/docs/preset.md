@@ -10,7 +10,7 @@
     v-for="v, k in $venoUi.icons.sets['veno-ui'].aliases"
     :key="k"
     size="100"
-    class="d-flex align-center justify-center flex-column"
+    class="d-flex align-center justify-center flex-column overflow-hidden"
     hover
   >
     <ve-icon

@@ -18,7 +18,7 @@ import { List, ListItem } from '../list'
 import { FadeTransition } from '../transition'
 
 // Types
-import type { PropType } from 'vue'
+import type { PropType, ComponentPublicInstance } from 'vue'
 import type { Anchor, Origin } from '../../composables/position-strategy'
 
 export type Select = InstanceType<typeof Select>
@@ -66,9 +66,7 @@ export const Select = genericComponent()({
     return () => (
       <Overlay
         v-model={ isActive.value }
-        class={ [
-          've-select-overlay',
-        ] }
+        class="ve-select-overlay"
         id={ id.value }
         absolute
         position-strategy="connected"
@@ -78,23 +76,25 @@ export const Select = genericComponent()({
         origin={ props.origin }
         transition={ props.transition }
         v-slots={ {
-          activator: ({ props: { modelValue, ...slotProps } }) => (
+          activator: ({ activatorRef, props: { modelValue, ...slotProps } }) => (
             <Input
-              class={ [
-                've-select'
-              ] }
+              { ...slotProps }
+              { ...attrs }
+              ref={ (ref: any) => {
+                if (ref?.inputControlRef) {
+                  activatorRef(ref?.inputControlRef)
+                }
+              } }
+              class="ve-select"
               readonly
               modelValue={ label.value }
+              v-model:active={ isActive.value }
+              onClick:control={ slotProps.onClick }
               v-slots={ {
                 prepend: slots.prepend,
                 append: slots.append,
-                appendInner: () => (
-                  <Icon icon="veno-ui:$dropdown" />
-                )
+                appendInner: () => <Icon icon="veno-ui:$dropdown" />
               } }
-              onClick:control={ slotProps.onClick }
-              { ...slotProps }
-              { ...attrs }
             />
           ),
           default: () => (
@@ -102,6 +102,11 @@ export const Select = genericComponent()({
               <List>
                 { props.items.map((item: any) => (
                   <ListItem
+                    active={
+                      typeof item === 'object'
+                        ? item.value === model.value
+                        : item === model.value
+                    }
                     onClick={ () => {
                       if (typeof item === 'object') {
                         model.value = item.value

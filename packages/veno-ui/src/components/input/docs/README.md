@@ -8,8 +8,8 @@ category: 数据输入
 
 :::include
 
-basic.md autosize.md
+basic.md case1.md 
 
-slots.md
+autosize.md slots.md
 
 :::

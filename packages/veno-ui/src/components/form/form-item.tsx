@@ -2,6 +2,7 @@
 import './styles/form-item.scss'
 
 // Utils
+import { computed } from 'vue'
 import { genericComponent, propsFactory, pick, convertToUnit } from '../../utils'
 
 // Components
@@ -9,18 +10,30 @@ import { Icon } from '../icon'
 
 // Composables
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
+import { makeValidationProps, useValidation } from '../../composables/validation'
 
 // Types
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, ComputedRef, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
+export type FormItemSlot = {
+  isDisabled: ComputedRef<boolean>
+  isReadonly: ComputedRef<boolean>
+  isPristine: Ref<boolean | null>
+  isValid: ComputedRef<boolean | null>
+  isValidating: Ref<boolean>
+  reset: () => void
+  resetValidation: () => void
+  validate: () => void
+}
+
 export type FormItemSlots = MakeSlots<{
-  prepend: [],
-  control: [],
-  prependInner: [],
-  default: [],
-  appendInner: [],
-  append: [],
+  prepend: [FormItemSlot],
+  control: [FormItemSlot],
+  prependInner: [FormItemSlot],
+  default: [FormItemSlot],
+  appendInner: [FormItemSlot],
+  append: [FormItemSlot],
 }>
 
 export type FormItem = InstanceType<typeof FormItem>
@@ -36,6 +49,7 @@ export const makeFormItemProps = propsFactory({
   label: String,
   labelWidth: [String, Number],
   ...makeDisabledProps(),
+  ...makeValidationProps(),
 }, 'form-item')
 
 export const FormItem = genericComponent<new () => {
@@ -55,6 +69,29 @@ export const FormItem = genericComponent<new () => {
 
   setup (props, { slots, emit }) {
     const { disabledClasses } = useDisabled(props, 've-form-item')
+    const {
+      errorMessages,
+      isDisabled,
+      isReadonly,
+      isPristine,
+      isValid,
+      isValidating,
+      reset,
+      resetValidation,
+      validate,
+      validationClasses,
+    } = useValidation(props, 've-form-item')
+
+    const slotProps = computed<FormItemSlot>(() => ({
+      isDisabled,
+      isReadonly,
+      isPristine,
+      isValid,
+      isValidating,
+      reset,
+      resetValidation,
+      validate,
+    }))
 
     function onClick (e: MouseEvent) {
       if (e.target !== document.activeElement) {
@@ -79,9 +116,7 @@ export const FormItem = genericComponent<new () => {
           class={ [
             've-form-item',
             disabledClasses.value,
-            {
-              've-form-item--label': !!props.label,
-            }
+            validationClasses.value,
           ] }
         >
           { hasPrepend && (
@@ -92,7 +127,7 @@ export const FormItem = genericComponent<new () => {
               } }
               onClick={ e => emit('click:prepend', e) }
             >
-              { slots.prepend?.() }
+              { slots.prepend?.(slotProps.value) }
 
               { props.prependIcon && (
                 <Icon icon={ props.prependIcon } />
@@ -102,7 +137,7 @@ export const FormItem = genericComponent<new () => {
             </div>
           ) }
 
-          { hasControl && slots.control?.() }
+          { hasControl && slots.control?.(slotProps.value) }
 
           { hasDefaultControl && (
             <div
@@ -114,18 +149,18 @@ export const FormItem = genericComponent<new () => {
                   class="ve-form-item__prepend-inner"
                   onClick={ e => emit('click:prepend-inner', e) }
                 >
-                  { slots.prependInner?.() }
+                  { slots.prependInner?.(slotProps.value) }
                 </div>
               ) }
 
-              { hasDefault && slots.default?.() }
+              { hasDefault && slots.default?.(slotProps.value) }
 
               { hasAppendInner && (
                 <div
                   class="ve-form-item__append-inner"
                   onClick={ e => emit('click:append-inner', e) }
                 >
-                  { slots.appendInner?.() }
+                  { slots.appendInner?.(slotProps.value) }
                 </div>
               ) }
             </div>
@@ -136,7 +171,7 @@ export const FormItem = genericComponent<new () => {
               class="ve-form-item__append"
               onClick={ e => emit('click:append', e) }
             >
-              { slots?.append?.() }
+              { slots?.append?.(slotProps.value) }
 
               { props.appendIcon && (
                 <Icon icon={ props.appendIcon } />
@@ -146,7 +181,7 @@ export const FormItem = genericComponent<new () => {
 
           { hasDetails && (
             <div class="ve-form-item__details">
-              { slots.details?.() }
+              { slots.details?.(slotProps.value) }
             </div>
           ) }
         </div>

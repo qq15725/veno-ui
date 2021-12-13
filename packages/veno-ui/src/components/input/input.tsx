@@ -2,7 +2,8 @@
 import './styles/input.scss'
 
 // Utils
-import { genericComponent, filterInputAttrs, MakeSlots } from '../../utils'
+import { ref } from 'vue'
+import { genericComponent, filterInputAttrs, useRender } from '../../utils'
 
 // Components
 import {
@@ -20,7 +21,8 @@ import {
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import { InputControlSlot } from '../input-control/input-control'
+import type { InputControlSlot } from '../input-control/input-control'
+import type { MakeSlots } from '../../utils'
 
 export type Input = InstanceType<typeof Input>
 
@@ -39,28 +41,29 @@ export const Input = genericComponent<new () => {
   inheritAttrs: false,
 
   props: {
-    modelValue: [String, Number],
-    textarea: Boolean,
     autosize: Boolean,
     placeholder: String,
     type: {
       type: String,
       default: 'text',
     },
-    readonly: Boolean,
     ...makeFormItemProps(),
-    ...makeInputControlProps(),
+    ...makeInputControlProps({
+      active: undefined
+    } as const),
   },
 
   emits: {
-    'update:modelValue': (val: string) => true,
     'click:control': (e: MouseEvent) => true,
+    'update:active': (active: boolean) => true,
+    'update:modelValue': (val: string) => true,
   },
 
   setup (props, { attrs, slots, emit }) {
+    const inputControlRef = ref<InputControl>()
     const model = useProxiedModel(props, 'modelValue')
 
-    return () => {
+    useRender(() => {
       const [formItemProps] = filterFormItemProps(props)
       const [inputProps, restAttrs] = filterInputAttrs(attrs)
       const [inputControlProps] = filterInputControlProps(props)
@@ -68,33 +71,31 @@ export const Input = genericComponent<new () => {
       return (
         <FormItem
           { ...formItemProps }
+          class="ve-input"
           v-slots={ {
             prepend: slots.prepend,
             append: slots.append,
             control: () => {
               return (
                 <InputControl
+                  { ...inputProps }
+                  { ...inputControlProps }
+                  ref={ inputControlRef }
                   onClick:clear={ e => {
                     e.stopPropagation()
                     model.value = ''
                   } }
-                  onClick:control={ (e: MouseEvent) => {
-                    emit('click:control', e)
-                  } }
-                  { ...inputProps }
-                  { ...inputControlProps }
+                  onClick:control={ (e: MouseEvent) => emit('click:control', e) }
+                  onUpdate:active={ (active: boolean) => emit('update:active', active) }
                   v-slots={ {
-                    ...slots,
+                    prependInner: slots.prependInner,
+                    appendInner: slots.appendInner,
+                    clear: slots.clear,
                     default: ({ inputRef, focus, blur }) => {
                       return (
                         <input
+                          { ...restAttrs }
                           ref={ inputRef }
-                          class={ [
-                            've-input',
-                            {
-                              've-input--readonly': props.readonly,
-                            },
-                          ] }
                           v-model={ model.value }
                           type={ props.type }
                           placeholder={ props.placeholder }
@@ -102,7 +103,6 @@ export const Input = genericComponent<new () => {
                           disabled={ props.disabled }
                           onFocus={ focus }
                           onBlur={ blur }
-                          { ...restAttrs }
                         />
                       )
                     }
@@ -113,6 +113,10 @@ export const Input = genericComponent<new () => {
           } }
         />
       )
+    })
+
+    return {
+      inputControlRef,
     }
   }
 })
