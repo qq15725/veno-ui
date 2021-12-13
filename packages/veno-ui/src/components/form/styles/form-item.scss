@@ -13,6 +13,10 @@
     }
   }
 
+  &__label {
+    text-align: end;
+  }
+
   &__prepend,
   &__append,
   &__control {

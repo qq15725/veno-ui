@@ -184,7 +184,7 @@ export const SelectionControl = genericComponent<new <T>() => {
     const id = computed(() => props.id || `input-${ uid }`)
     const isFocused = ref(false)
     const isFocusVisible = ref(false)
-    const input = ref<HTMLInputElement>()
+    const inputRef = ref<HTMLInputElement>()
 
     function onFocus (e: FocusEvent) {
       isFocused.value = true
@@ -253,9 +253,7 @@ export const SelectionControl = genericComponent<new <T>() => {
 
             { hasLabel && (
               <label
-                class={ [
-                  've-selection-control__label',
-                ] }
+                class="ve-selection-control__label"
                 for={ id.value }
               >
                 { label }
@@ -263,8 +261,8 @@ export const SelectionControl = genericComponent<new <T>() => {
             ) }
 
             <input
+              ref={ inputRef }
               v-model={ model.value }
-              ref={ input }
               disabled={ props.disabled }
               id={ id.value }
               onBlur={ onBlur }
@@ -283,7 +281,7 @@ export const SelectionControl = genericComponent<new <T>() => {
 
     return {
       isFocused,
-      input,
+      inputRef,
     }
   },
 })

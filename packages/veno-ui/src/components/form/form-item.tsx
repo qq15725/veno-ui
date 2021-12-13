@@ -47,6 +47,7 @@ export const makeFormItemProps = propsFactory({
   prependIcon: String,
   hideDetails: Boolean,
   label: String,
+  labelId: String,
   labelWidth: [String, Number],
   ...makeDisabledProps(),
   ...makeValidationProps(),
@@ -122,9 +123,6 @@ export const FormItem = genericComponent<new () => {
           { hasPrepend && (
             <div
               class="ve-form-item__prepend"
-              style={ {
-                width: convertToUnit(props.labelWidth),
-              } }
               onClick={ e => emit('click:prepend', e) }
             >
               { slots.prepend?.(slotProps.value) }
@@ -133,7 +131,17 @@ export const FormItem = genericComponent<new () => {
                 <Icon icon={ props.prependIcon } />
               ) }
 
-              { props.label && props.label }
+              { props.label && (
+                <label
+                  class="ve-form-item__label"
+                  for={ props.labelId }
+                  style={ {
+                    width: convertToUnit(props.labelWidth),
+                  } }
+                >
+                  { props.label }
+                </label>
+              ) }
             </div>
           ) }
 

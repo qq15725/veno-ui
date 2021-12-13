@@ -2,8 +2,8 @@
 import './styles/input.scss'
 
 // Utils
-import { ref } from 'vue'
-import { genericComponent, filterInputAttrs, useRender } from '../../utils'
+import { ref, computed } from 'vue'
+import { genericComponent, filterInputAttrs, useRender, getUid } from '../../utils'
 
 // Components
 import {
@@ -41,6 +41,7 @@ export const Input = genericComponent<new () => {
   inheritAttrs: false,
 
   props: {
+    id: String,
     autosize: Boolean,
     placeholder: String,
     type: {
@@ -62,6 +63,8 @@ export const Input = genericComponent<new () => {
   setup (props, { attrs, slots, emit }) {
     const inputControlRef = ref<InputControl>()
     const model = useProxiedModel(props, 'modelValue')
+    const uid = getUid()
+    const id = computed(() => props.id || `input-${ uid }`)
 
     useRender(() => {
       const [formItemProps] = filterFormItemProps(props)
@@ -72,6 +75,7 @@ export const Input = genericComponent<new () => {
         <FormItem
           { ...formItemProps }
           class="ve-input"
+          labelId={ id.value }
           v-slots={ {
             prepend: slots.prepend,
             append: slots.append,
@@ -97,6 +101,7 @@ export const Input = genericComponent<new () => {
                           { ...restAttrs }
                           ref={ inputRef }
                           v-model={ model.value }
+                          id={ id.value }
                           type={ props.type }
                           placeholder={ props.placeholder }
                           readonly={ props.readonly }
