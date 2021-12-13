@@ -29,10 +29,12 @@ import type { ComputedRef, ExtractPropTypes, PropType, Ref, WritableComputedRef 
 import type { MakeSlots } from '../../utils'
 
 export type SelectionControlSlot = {
+  label: string | undefined
   model: WritableComputedRef<any>
   isReadonly: ComputedRef<boolean>
   isDisabled: ComputedRef<boolean>
   textColorClasses: Ref<string[]>
+  textColorStyles: Ref<string[]>
   props: {
     onBlur: (e: Event) => void
     onFocus: (e: FocusEvent) => void
@@ -200,12 +202,20 @@ export const SelectionControl = genericComponent<new <T>() => {
     }
 
     useRender(() => {
+      const slotProps = {
+        label: props.label,
+        model,
+        textColorClasses,
+        textColorStyles,
+        props: {
+          onFocus,
+          onBlur,
+          id: id.value,
+        },
+      }
       const type = group?.type.value ?? props.type
       const label = slots.label
-        ? slots.label({
-          label: props.label,
-          props: { for: id.value },
-        })
+        ? slots.label(slotProps)
         : props.label
       const hasLabel = !!label
 
@@ -239,16 +249,7 @@ export const SelectionControl = genericComponent<new <T>() => {
               />
             ) }
 
-            { slots.default?.({
-              model,
-              textColorClasses,
-              textColorStyles,
-              props: {
-                onFocus,
-                onBlur,
-                id: id.value,
-              },
-            }) }
+            { slots.default?.(slotProps) }
 
             { hasLabel && (
               <label

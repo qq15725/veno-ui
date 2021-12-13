@@ -3,13 +3,15 @@
   width: 8px;
   background-color: currentColor;
   opacity: .3;
-  border-radius: 50%;
+  border-radius: 4px;
   cursor: pointer;
-  transition: box-shadow, background-color .3s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: width, opacity, background-color;
 
   &--active {
     opacity: 1;
+    width: 16px;
   }
 
   & + & {

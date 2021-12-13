@@ -11,7 +11,8 @@
     align-items: center;
     height: 22px;
     min-width: 40px;
-    background-color: rgba(var(--ve-theme-on-surface), .2);
+    color: rgba(var(--ve-theme-on-surface), .2);
+    background-color: currentColor;
     border-radius: 12px;
   }
 
@@ -19,12 +20,11 @@
     position: absolute;
     height: 18px;
     width: 18px;
-    color: #FFF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(-10px);
-    background-color: currentColor;
+    background-color: #FFF;
   }
 
   .ve-selection-control--dirty &__thumb {

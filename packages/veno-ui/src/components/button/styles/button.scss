@@ -95,7 +95,8 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--ve-button-overlay-opacity, 0);
-    transition: background-color, opacity .2s ease-in-out;
+    transition: .2s ease-in-out;
+    transition-property: background-color, opacity;
   }
 
   @include tools.states('#{&}__overlay', false);

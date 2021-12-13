@@ -50,7 +50,8 @@
   &--indeterminate > svg {
     animation: progress-circular-rotate 1.4s linear infinite;
     transform-origin: center center;
-    transition: stroke-dashoffset, stroke-dasharray, stroke-width 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+    transition-property: stroke-dashoffset, stroke-dasharray, stroke-width;
   }
 
   &--indeterminate &__overlay {

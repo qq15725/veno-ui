@@ -59,11 +59,16 @@ export const Switch = genericComponent()({
                 type="checkbox"
                 onUpdate:modelValue={ onChange }
                 v-slots={ {
-                  default: ({ textColorClasses }) => (
-                    <div class={ [
-                      've-switch__track',
-                      textColorClasses.value,
-                    ] }>
+                  default: ({ textColorClasses, textColorStyles }) => (
+                    <div
+                      class={ [
+                        've-switch__track',
+                        textColorClasses.value,
+                      ] }
+                      style={ [
+                        textColorStyles.value,
+                      ] }
+                    >
                       <div class="ve-switch__thumb" />
                     </div>
                   )

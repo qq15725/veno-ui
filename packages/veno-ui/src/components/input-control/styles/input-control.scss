@@ -19,7 +19,8 @@
   color: rgb(var(--ve-theme-on-secondary));
   background-color: rgb(var(--ve-theme-secondary));
   border: 1px solid transparent;
-  transition: color, background-color, border-color .1s settings.$decelerated-easing;
+  transition: .1s settings.$decelerated-easing;
+  transition-property: color, background-color, border-color;
 
   &--active {
     color: rgb(var(--ve-theme-on-surface));
