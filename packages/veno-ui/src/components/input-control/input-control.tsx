@@ -28,6 +28,8 @@ export interface InputControlSlot
 
 export type InputControlSlots = MakeSlots<{
   prependInner: [InputControlSlot],
+  prefix: [InputControlSlot],
+  suffix: [InputControlSlot],
   appendInner: [InputControlSlot],
   clear: [InputControlSlot],
   default: [InputControlSlot],
@@ -58,6 +60,8 @@ export const InputControl = genericComponent<new () => {
   emits: {
     'click:clear': (e: Event) => true,
     'click:prepend-inner': (e: MouseEvent) => true,
+    'click:prefix': (e: MouseEvent) => true,
+    'click:suffix': (e: MouseEvent) => true,
     'click:append-inner': (e: MouseEvent) => true,
     'click:control': (e: MouseEvent) => true,
     'update:active': (active: boolean) => true,
@@ -98,9 +102,11 @@ export const InputControl = genericComponent<new () => {
     }
 
     useRender(() => {
-      const hasPrependInner = (slots.prependInner)
+      const hasPrependInner = !!slots.prependInner
+      const hasPrefix = !!slots.prefix
       const hasClear = !!(props.clearable || slots.clear)
-      const hasAppendInner = !!(slots.appendInner || hasClear)
+      const hasSuffix = !!slots.suffix
+      const hasAppendInner = !!slots.appendInner
 
       return (
         <div
@@ -109,8 +115,8 @@ export const InputControl = genericComponent<new () => {
             {
               've-input-control--active': isActive.value,
               've-input-control--focused': isFocused.value,
-              've-input-control--prepended': hasPrependInner,
-              've-input-control--appended': hasAppendInner,
+              've-input-control--prepended': (hasPrependInner || hasPrefix),
+              've-input-control--appended': (hasAppendInner || hasClear || hasSuffix),
             },
           ] }
           onClick={ onClick }
@@ -125,7 +131,25 @@ export const InputControl = genericComponent<new () => {
           ) }
 
           <div class="ve-input-control__input">
+            { hasPrefix && (
+              <div
+                class="ve-input-control__prefix"
+                onClick={ e => emit('click:prefix', e) }
+              >
+                { slots.prefix?.(slotProps.value) }
+              </div>
+            ) }
+
             { slots.default?.(slotProps.value) }
+
+            { hasSuffix && (
+              <div
+                class="ve-input-control__suffix"
+                onClick={ e => emit('click:suffix', e) }
+              >
+                { slots.suffix?.(slotProps.value) }
+              </div>
+            ) }
           </div>
 
           { hasClear && (

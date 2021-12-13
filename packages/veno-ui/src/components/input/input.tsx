@@ -29,10 +29,12 @@ export type Input = InstanceType<typeof Input>
 export const Input = genericComponent<new () => {
   $slots: MakeSlots<{
     default: [InputControlSlot],
+    prepend: [],
     prependInner: [],
+    prefix: [],
+    suffix: [],
     appendInner: [],
     clear: [],
-    prepend: [],
     append: [],
   }>
 }>()({
@@ -93,6 +95,8 @@ export const Input = genericComponent<new () => {
                   onUpdate:active={ (active: boolean) => emit('update:active', active) }
                   v-slots={ {
                     prependInner: slots.prependInner,
+                    prefix: slots.prefix,
+                    suffix: slots.suffix,
                     appendInner: slots.appendInner,
                     clear: slots.clear,
                     default: ({ inputRef, focus, blur }) => {
