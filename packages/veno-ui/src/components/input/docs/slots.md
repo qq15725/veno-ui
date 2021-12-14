@@ -7,12 +7,16 @@
   placeholder="Input..."
   hide-details
 >
-  <template #append>append</template>
-  <template #prefix>prefix</template>
+  <template #append>Append</template>
+  <template #prefix>Prefix</template>
   <template #suffix>
-    <ve-button size="x-small">suffix</ve-button>
+    <ve-button
+      size="x-small"
+      color="primary"
+      text="Suffix"
+    />
   </template>
-  <template #prepend>prepend</template>
+  <template #prepend>Prepend</template>
 </ve-input>
 ```
 

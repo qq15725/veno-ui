@@ -6,6 +6,8 @@
 
 .ve-input-control {
   --ve-input-control-height: 42px;
+  --ve-input-control__input-padding-before: 0;
+  --ve-input-control__input-padding-after: 0;
   --ve-input-padding-before: 16px;
   --ve-input-padding-after: 16px;
   position: relative;
@@ -33,9 +35,29 @@
     padding-inline-start: 12px;
   }
 
+  &--prefixed {
+    --ve-input-padding-before: 6px;
+    --ve-input-control__input-padding-before: 12px;
+  }
+
+  &--suffixed {
+    --ve-input-padding-after: 6px;
+    --ve-input-control__input-padding-after: 12px;
+  }
+
   &--appended {
     --ve-input-padding-after: 6px;
     padding-inline-end: 12px;
+  }
+
+  &__prefix,
+  &__suffix {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    opacity: var(--ve-medium-emphasis-opacity);
+    white-space: nowrap;
   }
 
   &__input {
@@ -44,18 +66,27 @@
     align-items: center;
     flex: 1 0;
     height: 100%;
+    cursor: text;
+    padding-inline-start: var(--ve-input-control__input-padding-before);
+    padding-inline-end: var(--ve-input-control__input-padding-after);
 
     input {
       color: inherit;
+      cursor: inherit;
     }
   }
 
   &__clearable {
-    cursor: pointer;
     opacity: 0;
     margin-inline-end: 4px;
-    transition: .15s opacity, .15s width settings.$standard-easing;
+    transition: .15s settings.$standard-easing;
     transition-property: opacity, transform, width;
+    .ve-button {
+      font-size: 16px;
+      min-width: 28px;
+      min-height: 28px;
+      border-radius: 50%;
+    }
   }
 
   &--focused &__clearable,

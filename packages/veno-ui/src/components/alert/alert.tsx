@@ -116,7 +116,6 @@ export const Alert = genericComponent()({
                     : <Button
                       icon={ props.closeIcon }
                       color="transparent"
-                      rounded
                       onClick={ onCloseClick }
                     />
                   }

@@ -81,9 +81,11 @@ export function useSelectionControl (
   const { densityClasses } = useDensity(props, name)
   const modelValue = useProxiedModel(props, 'modelValue')
   const trueValue = computed(() => (
-    props.trueValue !== undefined ? props.trueValue
-      : props.value !== undefined ? props.value
-      : true
+    props.trueValue !== undefined ? props.trueValue : (
+      props.value !== undefined ? props.value : (
+        props.label !== undefined ? props.label : true
+      )
+    )
   ))
   const falseValue = computed(() => (
     props.falseValue !== undefined ? props.falseValue : false

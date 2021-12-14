@@ -9,8 +9,6 @@
     height: 100%;
     padding-inline-start: var(--ve-input-padding-before);
     padding-inline-end: var(--ve-input-padding-after);
-    display: flex;
-    align-items: center;
     opacity: var(--ve-high-emphasis-opacity);
     flex: 1;
     transition: .15s opacity settings.$standard-easing;

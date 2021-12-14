@@ -7,6 +7,7 @@
 
 .ve-button {
   --ve-button-height: calc(#{map.get($button-sizes, 'height')} + var(--ve-button-size-offset, 0px) + var(--ve-button-density-offset, 0px));
+  --ve-button-font-size: #{map.get($button-sizes, 'font-size')};
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -22,8 +23,8 @@
   user-select: none;
   text-decoration: none;
   cursor: pointer;
-  height: var(--ve-button-height);
-  font-size: var(--ve-button-font-size, #{map.get($button-sizes, 'font-size')});
+  font-size: var(--ve-button-font-size);
+  min-height: var(--ve-button-height);
   min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
   padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
   @include tools.use-material($button-material);
@@ -47,10 +48,9 @@
 
   &--variant-link {
     padding: 0;
-    min-width: 0;
     user-select: auto;
-    height: auto;
-    width: auto;
+    min-height: auto;
+    min-width: auto;
     background: transparent;
     color: inherit;
 
@@ -61,9 +61,8 @@
 
   &--variant-icon {
     padding: 0;
-    min-width: 0;
-    height: var(--ve-button-height);
-    width: var(--ve-button-height);
+    min-height: var(--ve-button-height);
+    min-width: var(--ve-button-height);
     background: tools.map-deep-get($button-material, 'variants', 'contained', 'background');
     color: tools.map-deep-get($button-material, 'variants', 'contained', 'color');
   }

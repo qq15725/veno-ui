@@ -8,6 +8,7 @@ import { genericComponent, propsFactory, pick, useRender } from '../../utils'
 // Components
 import { FadeTransition } from '../transition'
 import { Icon } from '../icon'
+import { Button } from '../button'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -43,6 +44,10 @@ export function filterInputControlProps (attrs: Record<string, unknown>) {
 
 export const makeInputControlProps = propsFactory({
   active: Boolean,
+  prefix: String,
+  prefixIcon: String,
+  suffix: String,
+  suffixIcon: String,
   clearable: Boolean,
   clearIcon: {
     type: String,
@@ -103,9 +108,9 @@ export const InputControl = genericComponent<new () => {
 
     useRender(() => {
       const hasPrependInner = !!slots.prependInner
-      const hasPrefix = !!slots.prefix
+      const hasPrefix = slots.prefix || props.prefix || props.prefixIcon
       const hasClear = !!(props.clearable || slots.clear)
-      const hasSuffix = !!slots.suffix
+      const hasSuffix = slots.suffix || props.suffix || props.suffixIcon
       const hasAppendInner = !!slots.appendInner
 
       return (
@@ -115,8 +120,10 @@ export const InputControl = genericComponent<new () => {
             {
               've-input-control--active': isActive.value,
               've-input-control--focused': isFocused.value,
-              've-input-control--prepended': (hasPrependInner || hasPrefix),
-              've-input-control--appended': (hasAppendInner || hasClear || hasSuffix),
+              've-input-control--prepended': hasPrependInner,
+              've-input-control--prefixed': hasPrefix,
+              've-input-control--suffixed': hasClear || hasSuffix,
+              've-input-control--appended': hasAppendInner,
             },
           ] }
           onClick={ onClick }
@@ -136,36 +143,42 @@ export const InputControl = genericComponent<new () => {
                 class="ve-input-control__prefix"
                 onClick={ e => emit('click:prefix', e) }
               >
-                { slots.prefix?.(slotProps.value) }
+                { slots.prefix?.(slotProps.value) ?? props.prefix ?? (
+                  <Icon icon={ props.prefixIcon } />
+                ) }
               </div>
             ) }
 
             { slots.default?.(slotProps.value) }
+
+            { hasClear && (
+              <FadeTransition>
+                <div
+                  class="ve-input-control__clearable"
+                  onClick={ (e: Event) => emit('click:clear', e) }
+                >
+                  {/*v-show={ isActive.value }*/}
+                  { slots.clear?.(slotProps.value) ?? (
+                    <Button
+                      icon={ props.clearIcon }
+                      color="transparent"
+                    />
+                  ) }
+                </div>
+              </FadeTransition>
+            ) }
 
             { hasSuffix && (
               <div
                 class="ve-input-control__suffix"
                 onClick={ e => emit('click:suffix', e) }
               >
-                { slots.suffix?.(slotProps.value) }
+                { slots.suffix?.(slotProps.value) ?? props.suffix ?? (
+                  <Icon icon={ props.suffixIcon } />
+                ) }
               </div>
             ) }
           </div>
-
-          { hasClear && (
-            <FadeTransition>
-              <div
-                class="ve-input-control__clearable"
-                onClick={ (e: Event) => emit('click:clear', e) }
-                v-show={ isActive.value }
-              >
-                { slots.clear
-                  ? slots.clear(slotProps.value)
-                  : <Icon icon={ props.clearIcon } />
-                }
-              </div>
-            </FadeTransition>
-          ) }
 
           { hasAppendInner && (
             <div
