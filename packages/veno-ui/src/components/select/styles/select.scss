@@ -1,7 +1,13 @@
 .ve-select {
-  cursor: pointer;
+  &.ve-input-control--active &__icon {
+    transform: rotate(180deg);
+  }
 
   input {
     pointer-events: none;
+  }
+
+  .ve-input-control__input {
+    cursor: pointer;
   }
 }

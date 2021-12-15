@@ -25,7 +25,11 @@ export const Checkbox = genericComponent()({
     }),
   },
 
-  setup (props, { slots }) {
+  emits: {
+    'update:modelValue': (val: any) => true,
+  },
+
+  setup (props, { slots, emit }) {
     return () => {
       const [formItemProps] = filterFormItemProps(props)
       const [selectionInputProps] = filterSelectionControlProps(props)
@@ -44,6 +48,7 @@ export const Checkbox = genericComponent()({
                 trueIcon={ props.trueIcon }
                 falseIcon={ props.falseIcon }
                 type="checkbox"
+                onUpdate:modelValue={ val => emit('update:modelValue', val) }
                 v-slots={ {
                   label: slots.default,
                 } }

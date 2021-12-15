@@ -1,8 +1,13 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
 .ve-form-item {
+  --ve-form-item-height: calc(42px + var(--ve-form-item-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend control append" "a details b";
   grid-template-columns: max-content auto max-content;
   grid-template-rows: auto auto;
+  @include tools.use-density();
 
   &--disabled {
     pointer-events: none;

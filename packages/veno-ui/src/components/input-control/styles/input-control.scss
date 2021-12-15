@@ -5,7 +5,6 @@
 @use '../../../styles/settings';
 
 .ve-input-control {
-  --ve-input-control-height: 42px;
   --ve-input-control__input-padding-before: 0;
   --ve-input-control__input-padding-after: 0;
   --ve-input-padding-before: 16px;
@@ -17,7 +16,7 @@
   contain: layout;
   flex: 1 0;
   grid-area: control;
-  height: var(--ve-input-control-height);
+  height: var(--ve-form-item-height, 42px);
   color: rgb(var(--ve-theme-on-secondary));
   background-color: rgb(var(--ve-theme-secondary));
   border: 1px solid transparent;
@@ -81,6 +80,7 @@
     margin-inline-end: 4px;
     transition: .15s settings.$standard-easing;
     transition-property: opacity, transform, width;
+
     .ve-button {
       font-size: 16px;
       min-width: 28px;

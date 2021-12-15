@@ -71,6 +71,7 @@ export const Select = genericComponent()({
         absolute
         position-strategy="connected"
         scroll-strategy="reposition"
+        offset={ 4 }
         scrim={ false }
         anchor={ props.anchor }
         origin={ props.origin }
@@ -93,12 +94,17 @@ export const Select = genericComponent()({
               v-slots={ {
                 prepend: slots.prepend,
                 append: slots.append,
-                appendInner: () => <Icon icon="veno-ui:$dropdown" />
+                appendInner: () => (
+                  <Icon
+                    class="ve-select__icon"
+                    icon="veno-ui:$dropdown"
+                  />
+                )
               } }
             />
           ),
           default: () => (
-            <Card elevation={ 8 } border={ 0 }>
+            <Card elevation={ 8 }>
               <List>
                 { props.items.map((item: any) => (
                   <ListItem

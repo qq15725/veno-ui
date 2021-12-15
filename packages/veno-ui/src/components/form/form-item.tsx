@@ -9,7 +9,7 @@ import { genericComponent, propsFactory, pick, convertToUnit } from '../../utils
 import { Icon } from '../icon'
 
 // Composables
-import { makeDisabledProps, useDisabled } from '../../composables/disabled'
+import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
 
 // Types
@@ -49,7 +49,7 @@ export const makeFormItemProps = propsFactory({
   label: String,
   labelId: String,
   labelWidth: [String, Number],
-  ...makeDisabledProps(),
+  ...makeDensityProps(),
   ...makeValidationProps(),
 }, 'form-item')
 
@@ -69,7 +69,7 @@ export const FormItem = genericComponent<new () => {
   },
 
   setup (props, { slots, emit }) {
-    const { disabledClasses } = useDisabled(props, 've-form-item')
+    const { densityClasses } = useDensity(props, 've-form-item')
     const {
       errorMessages,
       isDisabled,
@@ -103,7 +103,8 @@ export const FormItem = genericComponent<new () => {
     }
 
     return () => {
-      const hasPrepend = (slots.prepend || props.prependIcon || props.label || props.labelWidth)
+      const hasLabel = props.label || props.labelWidth
+      const hasPrepend = (slots.prepend || props.prependIcon || hasLabel)
       const hasControl = !!slots.control
       const hasPrependInner = !!slots.prependInner
       const hasDefault = !!slots.default
@@ -116,7 +117,7 @@ export const FormItem = genericComponent<new () => {
         <div
           class={ [
             've-form-item',
-            disabledClasses.value,
+            densityClasses.value,
             validationClasses.value,
           ] }
         >
@@ -131,7 +132,7 @@ export const FormItem = genericComponent<new () => {
                 <Icon icon={ props.prependIcon } />
               ) }
 
-              { props.label && (
+              { hasLabel && (
                 <label
                   class="ve-form-item__label"
                   for={ props.labelId }

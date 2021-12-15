@@ -5,24 +5,18 @@
 按钮的密度有 `compact`、`comfortable`、`medium`。
 
 ```html
-<ve-grid :col-props="{ cols: 12 }">
-  <ve-radio-group 
-    v-model="size"
-    label="size"
-    hide-details
-  >
-    <ve-radio label="xs" />
-    <ve-radio label="sm" />
-    <ve-radio label="md" />
-    <ve-radio label="lg" />
-    <ve-radio label="xl" />
-  </ve-radio-group>
-  
-  <ve-grid dense align="center">
-    <ve-button density="compact" color="primary" :size="size">Compact</ve-button>
-    <ve-button density="comfortable" color="primary" :size="size">Comfortable</ve-button>
-    <ve-button color="primary" :size="size">Medium</ve-button>
-  </ve-grid>
+<ve-radio-group v-model="size">
+  <ve-radio label="x-small" />
+  <ve-radio label="small" />
+  <ve-radio label="medium" />
+  <ve-radio label="large" />
+  <ve-radio label="x-large" />
+</ve-radio-group>
+
+<ve-grid dense align="center">
+  <ve-button density="compact" color="primary" :size="size">Compact</ve-button>
+  <ve-button density="comfortable" color="primary" :size="size">Comfortable</ve-button>
+  <ve-button color="primary" :size="size">Medium</ve-button>
 </ve-grid>
 ```
 

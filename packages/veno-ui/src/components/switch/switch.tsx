@@ -31,15 +31,11 @@ export const Switch = genericComponent()({
     } as const),
   },
 
-  emit: {
-    'update:modelValue': (value: boolean) => true,
+  emits: {
+    'update:modelValue': (val: any) => true,
   },
 
   setup (props, { slots, emit }) {
-    function onChange (val: any) {
-      emit('update:modelValue', val)
-    }
-
     return () => {
       const [formItemProps] = filterFormItemProps(props)
       const [selectionInputProps] = filterSelectionControlProps(props)
@@ -57,7 +53,7 @@ export const Switch = genericComponent()({
                 label={ undefined }
                 role="switch"
                 type="checkbox"
-                onUpdate:modelValue={ onChange }
+                onUpdate:modelValue={ val => emit('update:modelValue', val) }
                 v-slots={ {
                   default: ({ textColorClasses, textColorStyles }) => (
                     <div
