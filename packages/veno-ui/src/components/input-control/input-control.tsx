@@ -20,6 +20,7 @@ import type { MakeSlots } from '../../utils'
 export interface InputControlSlot
 {
   isActive: boolean
+  isDirty: boolean
   isFocused: boolean
   inputRef: Ref<HTMLInputElement | undefined>
   controlRef: Ref<HTMLElement | undefined>
@@ -43,7 +44,6 @@ export function filterInputControlProps (attrs: Record<string, unknown>) {
 }
 
 export const makeInputControlProps = propsFactory({
-  active: Boolean,
   prefix: String,
   prefixIcon: String,
   suffix: String,
@@ -60,7 +60,11 @@ export const InputControl = genericComponent<new () => {
 }>()({
   name: 'InputControl',
 
-  props: makeInputControlProps(),
+  props: {
+    active: Boolean,
+    dirty: Boolean,
+    ...makeInputControlProps()
+  },
 
   emits: {
     'click:clear': (e: Event) => true,
@@ -69,7 +73,7 @@ export const InputControl = genericComponent<new () => {
     'click:suffix': (e: MouseEvent) => true,
     'click:append-inner': (e: MouseEvent) => true,
     'click:control': (e: MouseEvent) => true,
-    'update:active': (active: boolean) => true,
+    'update:active': (val: boolean) => true,
     'update:modelValue': (val: any) => true,
   },
 
@@ -79,7 +83,7 @@ export const InputControl = genericComponent<new () => {
     const controlRef = ref<HTMLElement>()
     const inputRef = ref<HTMLInputElement>()
 
-    watchEffect(() => isActive.value = isFocused.value)
+    watchEffect(() => isActive.value = isFocused.value || props.dirty)
 
     function focus () {
       isFocused.value = true
@@ -91,6 +95,7 @@ export const InputControl = genericComponent<new () => {
 
     const slotProps = computed<InputControlSlot>(() => ({
       isActive: isActive.value,
+      isDirty: props.dirty,
       isFocused: isFocused.value,
       controlRef,
       inputRef,
@@ -119,6 +124,7 @@ export const InputControl = genericComponent<new () => {
             've-input-control',
             {
               've-input-control--active': isActive.value,
+              've-input-control--dirty': props.dirty,
               've-input-control--focused': isFocused.value,
               've-input-control--prepended': hasPrependInner,
               've-input-control--prefixed': hasPrefix,
@@ -156,8 +162,8 @@ export const InputControl = genericComponent<new () => {
                 <div
                   class="ve-input-control__clearable"
                   onClick={ (e: Event) => emit('click:clear', e) }
+                  v-show={ props.dirty }
                 >
-                  {/*v-show={ isActive.value }*/}
                   { slots.clear?.(slotProps.value) ?? (
                     <Button
                       icon={ props.clearIcon }

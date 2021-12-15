@@ -1,5 +1,5 @@
 .ve-select {
-  &.ve-input-control--active &__icon {
+  .ve-input-control--focused &__icon {
     transform: rotate(180deg);
   }
 

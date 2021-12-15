@@ -26,6 +26,7 @@
   label="Input" 
   label-width="100" 
   placeholder="请输入"
+  clearable
   :hide-details="hideDetails"
   :density="density"
 />
@@ -39,6 +40,7 @@
     { label: '选项2', value: 2 },
     { label: '选项3', value: 3 },
   ]"
+  clearable
   :hide-details="hideDetails"
   :density="density"
 />

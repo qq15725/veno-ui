@@ -23,7 +23,7 @@
   transition: .1s settings.$decelerated-easing;
   transition-property: color, background-color, border-color;
 
-  &--active {
+  &--focused {
     color: rgb(var(--ve-theme-on-surface));
     background-color: rgb(var(--ve-theme-surface));
     border-color: rgb(var(--ve-theme-primary));
@@ -49,14 +49,21 @@
     padding-inline-end: 12px;
   }
 
+  &__prepend-inner,
   &__prefix,
-  &__suffix {
+  &__suffix,
+  &__clearable,
+  &__append-inner {
     position: relative;
     display: inline-flex;
     align-items: center;
     height: 100%;
-    opacity: var(--ve-medium-emphasis-opacity);
     white-space: nowrap;
+  }
+
+  &__prefix,
+  &__suffix {
+    opacity: var(--ve-medium-emphasis-opacity);
   }
 
   &__input {
@@ -75,16 +82,19 @@
     }
   }
 
+  &__clearable + &__suffix {
+    margin-inline-start: 6px;
+  }
+
   &__clearable {
     opacity: 0;
-    margin-inline-end: 4px;
     transition: .15s settings.$standard-easing;
     transition-property: opacity, transform, width;
 
     .ve-button {
       font-size: 16px;
-      min-width: 28px;
-      min-height: 28px;
+      min-width: 21px;
+      min-height: 21px;
       border-radius: 50%;
     }
   }

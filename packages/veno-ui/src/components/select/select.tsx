@@ -71,7 +71,7 @@ export const Select = genericComponent()({
         absolute
         position-strategy="connected"
         scroll-strategy="reposition"
-        offset={ 4 }
+        offset={ 8 }
         scrim={ false }
         anchor={ props.anchor }
         origin={ props.origin }
@@ -89,17 +89,22 @@ export const Select = genericComponent()({
               class="ve-select"
               readonly
               modelValue={ label.value }
-              v-model:active={ isActive.value }
-              onClick:control={ slotProps.onClick }
+              onUpdate:modelValue={ val => model.value = val }
+              onFocus={ () => isActive.value = true }
+              onBlur={ () => isActive.value = false }
               v-slots={ {
                 prepend: slots.prepend,
-                append: slots.append,
+                prependInner: slots.prependInner,
+                prefix: slots.prefix,
+                suffix: slots.suffix,
+                clear: slots.clear,
                 appendInner: () => (
                   <Icon
                     class="ve-select__icon"
                     icon="veno-ui:$dropdown"
                   />
-                )
+                ),
+                append: slots.append,
               } }
             />
           ),

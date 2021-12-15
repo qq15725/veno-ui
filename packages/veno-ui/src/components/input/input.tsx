@@ -24,6 +24,8 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import type { InputControlSlot } from '../input-control/input-control'
 import type { MakeSlots } from '../../utils'
 
+const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'month']
+
 export type Input = InstanceType<typeof Input>
 
 export const Input = genericComponent<new () => {
@@ -51,14 +53,10 @@ export const Input = genericComponent<new () => {
       default: 'text',
     },
     ...makeFormItemProps(),
-    ...makeInputControlProps({
-      active: undefined
-    } as const),
+    ...makeInputControlProps(),
   },
 
   emits: {
-    'click:control': (e: MouseEvent) => true,
-    'update:active': (active: boolean) => true,
     'update:modelValue': (val: string) => true,
   },
 
@@ -67,6 +65,10 @@ export const Input = genericComponent<new () => {
     const model = useProxiedModel(props, 'modelValue')
     const uid = getUid()
     const id = computed(() => props.id || `input-${ uid }`)
+    const internalDirty = ref(false)
+    const isDirty = computed(() => {
+      return internalDirty.value || !!model.value || dirtyTypes.includes(props.type)
+    })
 
     useRender(() => {
       const [formItemProps] = filterFormItemProps(props)
@@ -76,6 +78,7 @@ export const Input = genericComponent<new () => {
       return (
         <FormItem
           { ...formItemProps }
+          { ...inputProps }
           class="ve-input"
           labelId={ id.value }
           v-slots={ {
@@ -84,15 +87,20 @@ export const Input = genericComponent<new () => {
             control: () => {
               return (
                 <InputControl
-                  { ...inputProps }
                   { ...inputControlProps }
                   ref={ inputControlRef }
+                  dirty={ !!model.value }
+                  active={ isDirty.value }
+                  onUpdate:active={ val => {
+                    internalDirty.value = val
+                  } }
                   onClick:clear={ e => {
                     e.stopPropagation()
                     model.value = ''
                   } }
-                  onClick:control={ (e: MouseEvent) => emit('click:control', e) }
-                  onUpdate:active={ (active: boolean) => emit('update:active', active) }
+                  onClick:control={ e => {
+                    inputControlRef.value?.inputRef?.focus()
+                  } }
                   v-slots={ {
                     prependInner: slots.prependInner,
                     prefix: slots.prefix,
