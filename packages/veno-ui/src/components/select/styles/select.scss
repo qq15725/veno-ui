@@ -1,4 +1,11 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
 .ve-select {
+  &__icon {
+    transition: .3s settings.$standard-easing;
+  }
+
   &--active &__icon {
     transform: rotate(180deg);
   }

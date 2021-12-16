@@ -1,5 +1,7 @@
+@forward './variables';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
+@use './variables' as *;
 
 .ve-form-item {
   $root: &;
@@ -8,7 +10,7 @@
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
   grid-template-rows: auto auto;
-  @include tools.use-density();
+  @include tools.use-density((densities: $form-item-density));
 
   &--layout-inline + &--layout-inline {
     margin-inline-start: 16px;

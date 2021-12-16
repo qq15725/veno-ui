@@ -73,9 +73,8 @@
     <ve-radio true-value="2">Radio Two</ve-radio>
   </ve-radio-group>
 
-  <ve-form-item
-    :hide-details="hideDetails"
-  >
+  <ve-form-item :hide-details="hideDetails">
+    <template #prepend><div style="width: 100px;"></div></template>
     <ve-button>提交</ve-button>
   </ve-form-item>
 </ve-form>

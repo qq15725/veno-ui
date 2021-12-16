@@ -2,3 +2,5 @@
 @use 'sass:math';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
+
+$form-item-density: ('medium': 0, 'comfortable': -1, 'compact': -3) !default;
