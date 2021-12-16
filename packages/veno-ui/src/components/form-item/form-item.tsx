@@ -80,6 +80,7 @@ export const FormItem = genericComponent<new () => {
         ...props,
         layout: form?.layout.value ?? props.layout,
         density: form?.density.value ?? props.density,
+        labelWidth: form?.labelWidth.value ?? props.labelWidth,
       }
     })
     const { formItemLayoutClasses } = useFormItemLayoutProps(computedProps, 've-form-item')
@@ -155,7 +156,7 @@ export const FormItem = genericComponent<new () => {
               onClick={ (e: any) => emit('click:label', e) }
               for={ props.labelId }
               style={ {
-                width: convertToUnit(props.labelWidth),
+                width: convertToUnit(computedProps.value.labelWidth),
               } }
             >
               { props.label }

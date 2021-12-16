@@ -6,10 +6,10 @@
 <ve-form
   :density="density"
   :layout="layout"
+  label-width="100"
 >
   <ve-radio-group
     label="Density"
-    label-width="100"
     v-model="density"
     :hide-details="hideDetails"
   >
@@ -20,7 +20,6 @@
 
   <ve-radio-group
     label="Layout"
-    label-width="100"
     v-model="layout"
     :hide-details="hideDetails"
   >
@@ -31,14 +30,12 @@
 
   <ve-switch
     label="HideDetails"
-    label-width="100"
     v-model="hideDetails"
     :hide-details="hideDetails"
   />
 
   <ve-input
     label="Input"
-    label-width="100"
     placeholder="请输入"
     clearable
     :hide-details="hideDetails"
@@ -46,7 +43,6 @@
 
   <ve-select
     label="Select"
-    label-width="100"
     placeholder="请选择"
     :items="[
     { label: '选项1', value: 1 },
@@ -59,13 +55,11 @@
 
   <ve-switch
     label="Switch"
-    label-width="100"
     :hide-details="hideDetails"
   />
 
   <ve-checkbox
     label="Checkbox"
-    label-width="100"
     :hide-details="hideDetails"
   >
     Checkbox One
@@ -73,7 +67,6 @@
 
   <ve-radio-group
     label="Radio"
-    label-width="100"
     :hide-details="hideDetails"
   >
     <ve-radio true-value="1">Radio One</ve-radio>
@@ -81,7 +74,6 @@
   </ve-radio-group>
 
   <ve-form-item
-    label-width="100"
     :hide-details="hideDetails"
   >
     <ve-button>提交</ve-button>

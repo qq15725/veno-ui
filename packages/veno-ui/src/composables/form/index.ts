@@ -24,6 +24,7 @@ export interface FormProvide
   items: Ref<FormField[]>
   density: ComputedRef<undefined | Density>
   layout: ComputedRef<FormItemLayout>
+  labelWidth: ComputedRef<number | string>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isValidating: Ref<boolean>
@@ -52,6 +53,7 @@ export interface FormProps extends DensityProps, FormItemLayoutProps
   lazyValidation: boolean
   readonly: boolean
   modelValue: boolean | null
+  labelWidth: number | string
   'onUpdate:modelValue': ((val: boolean | null) => void) | undefined
 }
 
@@ -64,6 +66,7 @@ export const makeFormProps = propsFactory({
     type: Boolean as PropType<boolean | null>,
     default: null,
   },
+  labelWidth: [Number, String],
   ...makeDensityProps(),
   ...makeFormItemLayoutProps(),
 })
@@ -74,6 +77,7 @@ export function createForm (props: FormProps) {
 
   const layout = computed(() => props.layout)
   const density = computed(() => props.density)
+  const labelWidth = computed(() => props.labelWidth)
   const isDisabled = computed(() => props.disabled)
   const isReadonly = computed(() => props.readonly)
   const isValidating = ref(false)
@@ -145,6 +149,7 @@ export function createForm (props: FormProps) {
     },
     layout,
     density,
+    labelWidth,
     isDisabled,
     isReadonly,
     isValidating,
