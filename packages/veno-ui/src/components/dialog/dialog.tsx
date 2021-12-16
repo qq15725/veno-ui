@@ -14,9 +14,13 @@ import { ModalTransition } from '../transition'
 import { Overlay } from '../overlay'
 
 // Types
+import type { OverlaySlots } from '../overlay/overlay'
+
 export type Dialog = InstanceType<typeof Dialog>
 
-export const Dialog = genericComponent()({
+export const Dialog = genericComponent<new () => {
+  $slots: OverlaySlots
+}>()({
   name: 'Dialog',
 
   props: {
@@ -33,8 +37,8 @@ export const Dialog = genericComponent()({
 
   setup (props, { slots, attrs }) {
     const isActive = useProxiedModel(props, 'modelValue')
-
-    const id = computed(() => props.id || `ve-dialog-${ getUid() }`)
+    const uid = getUid()
+    const id = computed(() => props.id || `ve-dialog-${ uid }`)
 
     return () => (
       <Overlay
@@ -52,10 +56,7 @@ export const Dialog = genericComponent()({
         id={ id.value }
         transition={ props.transition }
         { ...attrs }
-        v-slots={ {
-          activator: slots.activator,
-          default: slots.default,
-        } }
+        v-slots={ slots }
       />
     )
   }

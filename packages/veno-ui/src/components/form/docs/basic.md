@@ -16,6 +16,10 @@
     <ve-radio label="compact" />
     <ve-radio label="comfortable" />
     <ve-radio label="medium" />
+
+    <template #details>
+      Messages
+    </template>
   </ve-radio-group>
 
   <ve-radio-group

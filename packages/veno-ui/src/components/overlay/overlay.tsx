@@ -55,7 +55,7 @@ function Scrim (props: ScrimProps) {
 
 export interface OverlaySlot
 {
-  isActive: boolean
+  isActive: Ref<boolean>
   activatorRef: (ref: Element | ComponentPublicInstance | null) => void
   props: Dictionary<any>
 }
@@ -198,7 +198,7 @@ export const Overlay = genericComponent<new () => {
     }
 
     const slotProps: OverlaySlot = {
-      isActive: isActive.value,
+      isActive,
       activatorRef: selector => {
         if (!selector) return
         let activator
