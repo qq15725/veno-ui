@@ -8,7 +8,7 @@ import { genericComponent } from '../../utils'
 export type CarouselActivator = InstanceType<typeof CarouselActivator>
 
 export const CarouselActivator = genericComponent()({
-  name: 'CarouselActivator',
+  name: 'VeCarouselActivator',
 
   props: {
     // TODO variant: 'dot' | 'line' | 'slider'

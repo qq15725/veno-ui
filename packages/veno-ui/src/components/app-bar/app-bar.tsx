@@ -16,7 +16,7 @@ import type { PropType } from 'vue'
 export type AppBar = InstanceType<typeof AppBar>
 
 export const AppBar = genericComponent()({
-  name: 'AppBar',
+  name: 'VeAppBar',
 
   props: {
     height: {
@@ -39,7 +39,7 @@ export const AppBar = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { borderClasses } = useBorder(props, 've-app-bar')
+    const { borderClasses } = useBorder(props)
     const { themeClasses } = useTheme(props)
 
     const layoutStyles = useLayoutItem(

@@ -67,7 +67,7 @@ export const makeIconProps = propsFactory({
 }, 'icon')
 
 export const ComponentIcon = defineComponent({
-  name: 'ComponentIcon',
+  name: 'VeComponentIcon',
 
   props: makeIconProps(),
 
@@ -85,7 +85,7 @@ export const ComponentIcon = defineComponent({
 })
 
 export const SvgIcon = defineComponent({
-  name: 'SvgIcon',
+  name: 'VeSvgIcon',
 
   inheritAttrs: false,
 
@@ -111,7 +111,7 @@ export const SvgIcon = defineComponent({
 })
 
 export const LigatureIcon = defineComponent({
-  name: 'LigatureIcon',
+  name: 'VeLigatureIcon',
 
   props: makeIconProps(),
 
@@ -123,7 +123,7 @@ export const LigatureIcon = defineComponent({
 })
 
 export const ClassIcon = defineComponent({
-  name: 'ClassIcon',
+  name: 'VeClassIcon',
 
   props: makeIconProps(),
 

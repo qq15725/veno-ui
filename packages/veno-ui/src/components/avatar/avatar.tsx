@@ -17,7 +17,7 @@ import { Icon } from '../icon'
 export type Avatar = InstanceType<typeof Avatar>
 
 export const Avatar = genericComponent()({
-  name: 'Avatar',
+  name: 'VeAvatar',
 
   directives: { Resize },
 
@@ -29,7 +29,7 @@ export const Avatar = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-avatar')
+    const { materialClasses, materialStyles } = useMaterial(props)
     const wrapRef = ref<HTMLElement | null>()
     const selfRef = ref<HTMLElement | null>()
 

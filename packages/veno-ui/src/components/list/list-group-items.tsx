@@ -14,7 +14,7 @@ import type { Prop } from 'vue'
 import type { ListItemProp } from './list'
 
 export const ListGroupItems = defineComponent({
-  name: 'ListGroupItems',
+  name: 'VeListGroupItems',
 
   props: {
     open: Boolean,

@@ -17,7 +17,7 @@ export const Material = genericComponent<new () => {
     default: []
   }>
 }>()({
-  name: 'Material',
+  name: 'VeMaterial',
 
   props: {
     textCenter: Boolean,
@@ -28,7 +28,7 @@ export const Material = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-material')
+    const { materialClasses, materialStyles } = useMaterial(props)
 
     return () => (
       <props.tag

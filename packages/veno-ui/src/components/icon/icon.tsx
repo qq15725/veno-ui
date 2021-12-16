@@ -16,7 +16,7 @@ import type { IconValue } from '../../composables/icon'
 import type { ComputedRef, PropType } from 'vue'
 
 export const Icon = defineComponent({
-  name: 'Icon',
+  name: 'VeIcon',
 
   props: {
     color: String,
@@ -44,7 +44,7 @@ export const Icon = defineComponent({
     }
 
     const { iconData } = useIcon(slotIcon || props)
-    const { sizeClasses } = useSize(props, 've-icon')
+    const { sizeClasses } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
 
     return () => {

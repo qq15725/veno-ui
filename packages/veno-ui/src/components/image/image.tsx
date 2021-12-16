@@ -8,7 +8,7 @@ import { convertToUnit } from '../../utils'
 import { Responsive } from '../responsive'
 
 export const Image = defineComponent({
-  name: 'Image',
+  name: 'VeImage',
 
   props: {
     aspectRatio: [String, Number],

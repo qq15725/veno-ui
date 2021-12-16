@@ -10,7 +10,7 @@ import { makeTagProps } from '../../composables/tag'
 export type Container = InstanceType<typeof Container>
 
 export const Container = genericComponent()({
-  name: 'Container',
+  name: 'VeContainer',
 
   props: {
     fluid: {

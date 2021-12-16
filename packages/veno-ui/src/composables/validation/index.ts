@@ -1,6 +1,6 @@
 // Utils
 import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue'
-import { getCurrentInstance, getUid, propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstance, getCurrentInstanceName, getUid } from '../../utils'
 
 // Composables
 import { useForm } from '../form'
@@ -47,7 +47,10 @@ export const makeValidationProps = propsFactory({
   modelValue: null,
 })
 
-export function useValidation (props: ValidationProps, name: string) {
+export function useValidation (
+  props: ValidationProps,
+  name = getCurrentInstanceName()
+) {
   const form = useForm()
   const errorMessages = ref<string[]>([])
   const isPristine = ref(true)

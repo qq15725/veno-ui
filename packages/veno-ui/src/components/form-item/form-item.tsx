@@ -60,7 +60,7 @@ export const makeFormItemProps = propsFactory({
 export const FormItem = genericComponent<new () => {
   $slots: FormItemSlots
 }>()({
-  name: 'FormItem',
+  name: 'VeFormItem',
 
   props: makeFormItemProps(),
 
@@ -83,8 +83,8 @@ export const FormItem = genericComponent<new () => {
         labelWidth: form?.labelWidth.value ?? props.labelWidth,
       }
     })
-    const { formItemLayoutClasses } = useFormItemLayoutProps(computedProps, 've-form-item')
-    const { densityClasses } = useDensity(computedProps, 've-form-item')
+    const { formItemLayoutClasses } = useFormItemLayoutProps(computedProps)
+    const { densityClasses } = useDensity(computedProps)
     const {
       errorMessages,
       isDisabled,
@@ -96,7 +96,7 @@ export const FormItem = genericComponent<new () => {
       resetValidation,
       validate,
       validationClasses,
-    } = useValidation(props, 've-form-item')
+    } = useValidation(props)
 
     const slotProps = computed<FormItemSlot>(() => ({
       isDisabled,

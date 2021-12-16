@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Constants
 const LAYOUTS = ['horizontal', 'vertical', 'inline'] as const
@@ -25,7 +25,10 @@ export const makeFormItemLayoutProps = propsFactory({
   },
 }, 'form-item-layout')
 
-export function useFormItemLayoutProps (props: MaybeRef<FormItemLayoutProps>, name: string) {
+export function useFormItemLayoutProps (
+  props: MaybeRef<FormItemLayoutProps>,
+  name = getCurrentInstanceName()
+) {
   const formItemLayoutClasses = computed(() => {
     const { layout } = unref(props)
 

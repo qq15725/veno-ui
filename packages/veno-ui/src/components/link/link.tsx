@@ -12,7 +12,7 @@ export type Link = InstanceType<typeof Link>
 export const Link = genericComponent<new () => {
   $slots: ButtonSlots
 }>()({
-  name: 'Link',
+  name: 'VeLink',
 
   props: {
     //

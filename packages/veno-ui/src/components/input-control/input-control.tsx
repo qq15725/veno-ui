@@ -58,7 +58,7 @@ export const makeInputControlProps = propsFactory({
 export const InputControl = genericComponent<new () => {
   $slots: InputControlSlots
 }>()({
-  name: 'InputControl',
+  name: 'VeInputControl',
 
   props: {
     active: Boolean,

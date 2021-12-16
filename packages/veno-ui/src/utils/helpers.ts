@@ -467,7 +467,12 @@ export const randomHexColor = () => {
   return '#' + n.slice(0, 6)
 }
 
-export const toKebabCase = (str: string) => str.replace(/([A-Z])/g, match => `-${ match.toLowerCase() }`)
+export const toKebabCase = (str: string) => {
+  return str
+    .replace(/[^a-z]/gi, '-')
+    .replace(/\B([A-Z])/g, '-$1')
+    .toLowerCase()
+}
 
 export type MaybeRef<T> = T | Ref<T>
 

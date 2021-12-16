@@ -18,7 +18,7 @@ import {
 } from '../selection-control/selection-control'
 
 export const RadioGroup = defineComponent({
-  name: 'RadioGroup',
+  name: 'VeRadioGroup',
 
   inheritAttrs: false,
 

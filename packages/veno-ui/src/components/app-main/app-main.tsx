@@ -14,7 +14,7 @@ import { makeColorProps, useColor } from '../../composables/color'
 export type AppMain = InstanceType<typeof AppMain>
 
 export const AppMain = genericComponent()({
-  name: 'AppMain',
+  name: 'VeAppMain',
 
   props: {
     ...makeTagProps({ tag: 'main' }),

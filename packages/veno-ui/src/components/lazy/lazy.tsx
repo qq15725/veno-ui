@@ -19,7 +19,7 @@ import type { PropType } from 'vue'
 export type Lazy = InstanceType<typeof Lazy>
 
 export const Lazy = genericComponent()({
-  name: 'Lazy',
+  name: 'VeLazy',
 
   directives: { intersect },
 

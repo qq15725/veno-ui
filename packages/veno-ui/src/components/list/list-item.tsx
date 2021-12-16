@@ -21,7 +21,7 @@ import { ListItemSubtitle } from './list-item-subtitle'
 export type ListItem = InstanceType<typeof ListItem>
 
 export const ListItem = genericComponent()({
-  name: 'ListItem',
+  name: 'VeListItem',
 
   props: {
     active: Boolean,
@@ -54,8 +54,8 @@ export const ListItem = genericComponent()({
       ...props,
       color: isActive.value ? props.activeColor ?? props.color : props.color,
     }))
-    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-list-item')
-    const { disabledClasses } = useDisabled(props, 've-list-item')
+    const { materialClasses, materialStyles } = useMaterial(computedProps)
+    const { disabledClasses } = useDisabled(props)
 
     return () => {
       const Tag = link.isLink.value ? 'a' : props.tag

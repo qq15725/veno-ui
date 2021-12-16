@@ -26,7 +26,7 @@ export interface DragModel
 const defaultModel = { left: 0, top: 0, width: 0, height: 0 }
 
 export const Drag = defineComponent({
-  name: 'Drag',
+  name: 'VeDrag',
 
   props: {
     moveable: {
@@ -62,9 +62,9 @@ export const Drag = defineComponent({
       height: model.value.height ?? defaultModel.height,
     })
 
-    const { positionClasses, positionStyles } = usePosition(props, 've-drag')
+    const { positionClasses, positionStyles } = usePosition(props)
     const { moveOn, moveState, movingOffsetPosition } = useMove(props)
-    const { resizeHandles, resizeState, resizingOffsetPositionDimension } = useResize(props, 've-drag')
+    const { resizeHandles, resizeState, resizingOffsetPositionDimension } = useResize(props)
 
     watch(dragRef, el => {
       if (!el) return

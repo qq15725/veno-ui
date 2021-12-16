@@ -13,7 +13,7 @@ import { makeColorProps, useColor } from '../../composables/color'
 export type DeviceStatusBar = InstanceType<typeof DeviceStatusBar>
 
 export const DeviceStatusBar = genericComponent()({
-  name: 'DeviceStatusBar',
+  name: 'VeDeviceStatusBar',
 
   props: {
     height: {

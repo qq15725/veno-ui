@@ -39,7 +39,7 @@ export const Select = genericComponent<new () => {
     append: [FormItemSlot],
   }>
 }>()({
-  name: 'Select',
+  name: 'VeSelect',
 
   props: {
     anchor: {

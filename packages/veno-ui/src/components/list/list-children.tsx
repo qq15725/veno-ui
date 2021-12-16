@@ -22,7 +22,7 @@ type VeListChildrenGenerator = new <T extends ListItemProp>() => {
 }
 
 export const ListChildren = genericComponent<VeListChildrenGenerator>()({
-  name: 'ListChildren',
+  name: 'VeListChildren',
 
   props: {
     items: Array as Prop<ListItemProp[]>,

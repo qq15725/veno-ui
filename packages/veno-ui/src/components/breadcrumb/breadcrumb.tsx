@@ -22,7 +22,7 @@ export const Breadcrumb = genericComponent<new () => {
     separator: [],
   }>
 }>()({
-  name: 'Breadcrumb',
+  name: 'VeBreadcrumb',
 
   props: {
     ...makeTagProps({

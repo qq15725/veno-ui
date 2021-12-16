@@ -77,7 +77,7 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: boolean
 export type Col = InstanceType<typeof Col>
 
 export const Col = genericComponent()({
-  name: 'Col',
+  name: 'VeCol',
 
   props: {
     cols: {

@@ -11,7 +11,7 @@ import { genericComponent } from '../../utils'
 export type ListItemAvatar = InstanceType<typeof ListItemAvatar>
 
 export const ListItemAvatar = genericComponent()({
-  name: 'ListItemAvatar',
+  name: 'VeListItemAvatar',
 
   props: {
     left: Boolean,

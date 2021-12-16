@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 export interface DisabledProps
 {
@@ -11,7 +11,10 @@ export const makeDisabledProps = propsFactory({
   disabled: Boolean,
 }, 'disabled')
 
-export function useDisabled (props: DisabledProps, name: string) {
+export function useDisabled (
+  props: DisabledProps,
+  name = getCurrentInstanceName()
+) {
   return {
     disabledClasses: computed(() => ({
       [`${ name }--disabled`]: props.disabled,

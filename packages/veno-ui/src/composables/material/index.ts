@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../tag'
@@ -55,7 +55,10 @@ export const makeMaterialProps = propsFactory({
   ...makeElevationProps(),
 }, 'material')
 
-export function useMaterial (props: MaybeRef<MaterialProps>, name: string) {
+export function useMaterial (
+  props: MaybeRef<MaterialProps>,
+  name = getCurrentInstanceName()
+) {
   const { themeClasses } = useTheme(props)
   const { colorClasses, variantClasses, colorStyles } = useVariant(props, name)
   const { positionClasses, positionStyles } = usePosition(props, name)

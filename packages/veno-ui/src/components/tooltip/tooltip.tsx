@@ -23,7 +23,7 @@ export type Tooltip = InstanceType<typeof Tooltip>
 export const Tooltip = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
-  name: 'Tooltip',
+  name: 'VeTooltip',
 
   inheritAttrs: false,
 

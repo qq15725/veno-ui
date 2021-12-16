@@ -8,7 +8,7 @@ import { makeFormProps, createForm } from '../../composables/form'
 export type Form = InstanceType<typeof Form>
 
 export const Form = defineComponent({
-  name: 'Form',
+  name: 'VeForm',
 
   props: {
     ...makeFormProps()

@@ -17,7 +17,7 @@ import {
 } from '../selection-control/selection-control'
 
 export const Checkbox = genericComponent()({
-  name: 'Checkbox',
+  name: 'VeCheckbox',
 
   props: {
     ...makeFormItemProps(),

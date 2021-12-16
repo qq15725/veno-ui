@@ -20,7 +20,7 @@ type VeDividerTextAlign = typeof VeDividerTextAligns[number]
 export type Divider = InstanceType<typeof Divider>
 
 export const Divider = genericComponent()({
-  name: 'Divider',
+  name: 'VeDivider',
 
   props: {
     textAlign: {

@@ -17,7 +17,7 @@ import type { PropType } from 'vue'
 export type Progress = InstanceType<typeof Progress>
 
 export const Progress = genericComponent()({
-  name: 'Progress',
+  name: 'VeProgress',
 
   props: {
     bgColor: String,
@@ -45,7 +45,7 @@ export const Progress = genericComponent()({
     const CIRCUMFERENCE = 2 * Math.PI * MAGIC_RADIUS_CONSTANT
 
     const { themeClasses } = useTheme(props)
-    const { sizeClasses, sizeStyles } = useSize(props, 've-progress')
+    const { sizeClasses, sizeStyles } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
     const { textColorClasses: underlayColorClasses, textColorStyles: underlayColorStyles } = useTextColor(
       toRef(props, 'bgColor')

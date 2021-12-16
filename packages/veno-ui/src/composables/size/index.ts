@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { convertToUnit, propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName, convertToUnit } from '../../utils'
 
 // Constants
 const sizeAliases = {
@@ -32,7 +32,10 @@ export const makeSizeProps = propsFactory({
   },
 }, 'size')
 
-export function useSize (props: MaybeRef<SizeProps>, name?: string) {
+export function useSize (
+  props: MaybeRef<SizeProps>,
+  name = getCurrentInstanceName()
+) {
   const sizeClasses = computed(() => {
     let { size } = unref(props)
 

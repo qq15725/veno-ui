@@ -8,7 +8,7 @@ import { defineComponent } from '../../utils'
 import { makeTagProps } from '../../composables/tag'
 
 export const AppBarTitle = defineComponent({
-  name: 'AppBarTitle',
+  name: 'VeAppBarTitle',
 
   props: {
     ...makeTagProps({ tag: 'header' }),

@@ -42,7 +42,7 @@ export type ButtonSlots = MakeSlots<{
 export const Button = genericComponent<new () => {
   $slots: ButtonSlots
 }>()({
-  name: 'Button',
+  name: 'VeButton',
 
   props: {
     type: {
@@ -94,10 +94,10 @@ export const Button = genericComponent<new () => {
         variant,
       }
     })
-    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-button')
+    const { materialClasses, materialStyles } = useMaterial(computedProps)
     const link = useLink(props, attrs)
-    const { loadingClasses } = useLoading(props, 've-button')
-    const { disabledClasses } = useDisabled(props, 've-button')
+    const { loadingClasses } = useLoading(props)
+    const { disabledClasses } = useDisabled(props)
 
     let hasNext: ComputedRef<Boolean>
     {

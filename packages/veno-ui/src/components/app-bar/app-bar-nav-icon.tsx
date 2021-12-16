@@ -5,7 +5,7 @@ import { genericComponent } from '../../utils'
 import { Button } from '../../components/button'
 
 export const AppBarNavIcon = genericComponent()({
-  name: 'AppBarNavIcon',
+  name: 'VeAppBarNavIcon',
 
   props: {
     icon: {

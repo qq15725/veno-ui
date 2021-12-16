@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 export interface LoadingProps
 {
@@ -11,7 +11,10 @@ export const makeLoadingProps = propsFactory({
   loading: Boolean,
 }, 'loading')
 
-export function useLoading (props: LoadingProps, name: string) {
+export function useLoading (
+  props: LoadingProps,
+  name = getCurrentInstanceName()
+) {
   return {
     loadingClasses: computed(() => ({
       [`${ name }--loading`]: props.loading,

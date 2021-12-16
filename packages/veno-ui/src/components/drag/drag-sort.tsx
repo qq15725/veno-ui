@@ -3,7 +3,7 @@ import { defineComponent, computed } from 'vue'
 import { makeDragSortProps, useDragSort } from '../../composables/drag-sort'
 
 export const DragSort = defineComponent({
-  name: 'DragSort',
+  name: 'VeDragSort',
 
   props: {
     itemKey: [String, Function],

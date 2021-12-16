@@ -76,7 +76,7 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: string)
 export type Row = InstanceType<typeof Row>
 
 export const Row = genericComponent()({
-  name: 'Row',
+  name: 'VeRow',
 
   props: {
     dense: Boolean,

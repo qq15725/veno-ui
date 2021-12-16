@@ -24,7 +24,7 @@ import { CardText } from './card-text'
 import { CardActions } from './card-actions'
 
 export const Card = defineComponent({
-  name: 'Card',
+  name: 'VeCard',
 
   props: {
     link: Boolean,
@@ -47,10 +47,10 @@ export const Card = defineComponent({
   },
 
   setup (props, { attrs, slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-card')
+    const { materialClasses, materialStyles } = useMaterial(props)
     const link = useLink(props, attrs)
-    const { loadingClasses } = useLoading(props, 've-card')
-    const { disabledClasses } = useDisabled(props, 've-card')
+    const { loadingClasses } = useLoading(props)
+    const { disabledClasses } = useDisabled(props)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag

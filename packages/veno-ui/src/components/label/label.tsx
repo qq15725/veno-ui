@@ -11,7 +11,7 @@ import { makeThemeProps } from '../../composables/theme'
 export type Label = InstanceType<typeof Label>
 
 export const Label = defineComponent({
-  name: 'Label',
+  name: 'VeLabel',
 
   props: {
     disabled: Boolean,

@@ -23,7 +23,7 @@ export const BreadcrumbItem = genericComponent<new () => {
     separator: [],
   }>
 }>()({
-  name: 'BreadcrumbItem',
+  name: 'VeBreadcrumbItem',
 
   props: {
     //

@@ -1,6 +1,6 @@
 // Utils
 import { ref, computed, watch } from 'vue'
-import { propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Composables
 import { useMove } from '../move'
@@ -39,7 +39,10 @@ export const makeResizeProps = propsFactory({
   resizeHandlePoint: Boolean,
 }, 'resize')
 
-export function useResize (props: ResizeProps, name: string) {
+export function useResize (
+  props: ResizeProps,
+  name = getCurrentInstanceName()
+) {
   const resizeState = ref<ResizeStates>('resized')
   const selectedResizeHandle = ref<ResizeHandle | null>(null)
 

@@ -1,5 +1,6 @@
 // Utils
-import { camelize, capitalize, h, defineComponent } from 'vue'
+import { h, defineComponent } from 'vue'
+import { toKebabCase } from './helpers'
 
 /**
  * 创建简单函数组件
@@ -14,13 +15,7 @@ export function createSimpleFunctional (
   name?: string
 ) {
   return defineComponent({
-    name: name ?? capitalize(
-      camelize(
-        klass
-          .replace('ve-', '')
-          .replace(/__/g, '-')
-      )
-    ),
+    name: name ?? toKebabCase(klass.replace(/__/g, '-')),
 
     props: {
       tag: {

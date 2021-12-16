@@ -1,5 +1,6 @@
 // Utils
 import { getCurrentInstance as _getCurrentInstance } from 'vue'
+import { toKebabCase } from './helpers'
 
 export function getCurrentInstance (name: string, message?: string) {
   const vm = _getCurrentInstance()
@@ -11,4 +12,8 @@ export function getCurrentInstance (name: string, message?: string) {
   }
 
   return vm
+}
+
+export function getCurrentInstanceName (name = 'getCurrentInstanceName') {
+  return toKebabCase(getCurrentInstance(name).type?.name ?? '')
 }

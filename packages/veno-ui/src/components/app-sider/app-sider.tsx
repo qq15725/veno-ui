@@ -20,7 +20,7 @@ import type { PropType } from 'vue'
 export type AppSider = InstanceType<typeof AppSider>
 
 export const AppSider = genericComponent()({
-  name: 'AppSider',
+  name: 'VeAppSider',
 
   props: {
     modelValue: {
@@ -45,7 +45,7 @@ export const AppSider = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { borderClasses } = useBorder(props, 've-app-sider')
+    const { borderClasses } = useBorder(props)
     const isActive = useProxiedModel(props, 'modelValue')
     const { mobile } = useDisplay()
     const width = computed(() => {

@@ -28,7 +28,7 @@ export const SelectionControlGroupSymbol: InjectionKey<SelectionGroupContext> = 
 export type SelectionControlGroup = InstanceType<typeof SelectionControlGroup>
 
 export const SelectionControlGroup = defineComponent({
-  name: 'SelectionControlGroup',
+  name: 'VeSelectionControlGroup',
 
   inheritAttrs: false,
 

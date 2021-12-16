@@ -11,7 +11,7 @@ import { useGroup } from '../../composables/group'
 export const ButtonGroupSymbol = Symbol.for('veno-ui:button-group')
 
 export const ButtonGroup = defineComponent({
-  name: 'ButtonGroup',
+  name: 'VeButtonGroup',
 
   props: {
     //

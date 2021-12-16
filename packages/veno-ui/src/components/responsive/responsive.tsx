@@ -25,7 +25,7 @@ export function useAspectStyles (props: { aspectRatio?: string | number }) {
 export type Responsive = InstanceType<typeof Responsive>
 
 export const Responsive = genericComponent()({
-  name: 'Responsive',
+  name: 'VeResponsive',
 
   props: {
     aspectRatio: [String, Number],

@@ -9,7 +9,7 @@ import { makeLayoutProps, createLayout } from '../../composables/layout'
 import { createDragSortProvider } from '../../composables/drag-sort'
 
 export const App = defineComponent({
-  name: 'App',
+  name: 'VeApp',
 
   props: {
     ...makeThemeProps(),

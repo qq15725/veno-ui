@@ -21,7 +21,7 @@ import {
 export type Switch = InstanceType<typeof Switch>
 
 export const Switch = genericComponent()({
-  name: 'Switch',
+  name: 'VeSwitch',
 
   inheritAttrs: false,
 

@@ -25,7 +25,7 @@ export type AlertType = typeof AlertTypes[number]
 export type Alert = InstanceType<typeof Alert>
 
 export const Alert = genericComponent()({
-  name: 'Alert',
+  name: 'VeAlert',
 
   props: {
     modelValue: {
@@ -61,7 +61,7 @@ export const Alert = genericComponent()({
       ...props,
       textColor: props.textColor ?? props.type,
     }))
-    const { materialClasses, materialStyles } = useMaterial(computedProps, 've-alert')
+    const { materialClasses, materialStyles } = useMaterial(computedProps)
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (props.icon === false) return undefined

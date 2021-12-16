@@ -18,7 +18,7 @@ export const CarouselSymbol = Symbol.for('veno-ui:carousel')
 export type Carousel = InstanceType<typeof Carousel>
 
 export const Carousel = genericComponent()({
-  name: 'Carousel',
+  name: 'VeCarousel',
 
   props: {
     autoplay: Boolean,
@@ -37,7 +37,7 @@ export const Carousel = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { materialStyles, materialClasses } = useMaterial(props, 've-carousel')
+    const { materialStyles, materialClasses } = useMaterial(props)
     const { isSelected, select, selected, next, items } = useGroup(props, CarouselSymbol)
 
     let slideTimeout: number | undefined

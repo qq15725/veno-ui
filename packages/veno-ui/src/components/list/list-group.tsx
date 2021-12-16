@@ -31,7 +31,7 @@ type ListGroupGenerator = new <T extends ListItemProp>() => {
 }
 
 export const ListGroup = genericComponent<ListGroupGenerator>()({
-  name: 'ListGroup',
+  name: 'VeListGroup',
 
   props: {
     value: null,

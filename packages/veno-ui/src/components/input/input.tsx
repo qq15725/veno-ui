@@ -57,7 +57,7 @@ export const Input = genericComponent<new () => {
     append: [FormItemSlot],
   }>
 }>()({
-  name: 'Input',
+  name: 'VeInput',
 
   inheritAttrs: false,
 

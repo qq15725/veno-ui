@@ -10,7 +10,7 @@ import { toRef } from 'vue'
 import { defineComponent } from '../../utils'
 
 export const ListSubheader = defineComponent({
-  name: 'ListSubheader',
+  name: 'VeListSubheader',
 
   props: {
     color: String,

@@ -21,7 +21,7 @@ export type Dialog = InstanceType<typeof Dialog>
 export const Dialog = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
-  name: 'Dialog',
+  name: 'VeDialog',
 
   props: {
     id: String,

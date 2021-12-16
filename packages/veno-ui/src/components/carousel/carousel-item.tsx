@@ -17,7 +17,7 @@ import { CarouselSymbol } from './carousel'
 export type CarouselItem = InstanceType<typeof CarouselItem>
 
 export const CarouselItem = genericComponent()({
-  name: 'CarouselItem',
+  name: 'VeCarouselItem',
 
   props: {
     ...makeGroupItemProps(),

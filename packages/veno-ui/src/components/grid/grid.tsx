@@ -9,7 +9,7 @@ import { Col } from './col'
 export type Grid = InstanceType<typeof Grid>
 
 export const Grid = genericComponent()({
-  name: 'Grid',
+  name: 'VeGrid',
 
   props: {
     container: Boolean,

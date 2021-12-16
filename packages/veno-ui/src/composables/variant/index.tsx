@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Composables
 import { useColor } from '../color'
@@ -33,7 +33,10 @@ export const makeVariantProps = propsFactory({
   },
 }, 'variant')
 
-export function useVariant (props: MaybeRef<VariantProps>, name: string) {
+export function useVariant (
+  props: MaybeRef<VariantProps>,
+  name = getCurrentInstanceName()
+) {
   const variantClasses = computed(() => {
     const { variant } = unref(props)
     return [

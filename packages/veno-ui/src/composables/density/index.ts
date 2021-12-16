@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Constants
 const DENSITIES = [null, 'medium', 'comfortable', 'compact'] as const
@@ -25,7 +25,10 @@ export const makeDensityProps = propsFactory({
   },
 }, 'density')
 
-export function useDensity (props: MaybeRef<DensityProps>, name: string) {
+export function useDensity (
+  props: MaybeRef<DensityProps>,
+  name = getCurrentInstanceName()
+) {
   const densityClasses = computed(() => {
     const { density } = unref(props)
 

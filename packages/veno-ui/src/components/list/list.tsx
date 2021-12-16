@@ -25,7 +25,7 @@ export type ListItemProp = {
 }
 
 export const List = genericComponent()({
-  name: 'List',
+  name: 'VeList',
 
   props: {
     nav: Boolean,
@@ -52,8 +52,8 @@ export const List = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-list')
-    const { disabledClasses } = useDisabled(props, 've-list')
+    const { materialClasses, materialStyles } = useMaterial(props)
+    const { disabledClasses } = useDisabled(props)
     useNested(props)
     useDepth()
     createList()

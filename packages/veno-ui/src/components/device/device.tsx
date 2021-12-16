@@ -17,7 +17,7 @@ import { DeviceStatusBar } from './device-status-bar'
 export type Device = InstanceType<typeof Device>
 
 export const Device = genericComponent()({
-  name: 'Device',
+  name: 'VeDevice',
 
   props: {
     battery: {
@@ -35,7 +35,7 @@ export const Device = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { colorClasses, colorStyles, variantClasses } = useVariant(props, 've-device')
+    const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { deviceModel, deviceStyles } = useDevice(props)
 
     return () => {

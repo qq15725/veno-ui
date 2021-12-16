@@ -9,7 +9,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 export type Hover = InstanceType<typeof Hover>
 
 export const Hover = genericComponent()({
-  name: 'Hover',
+  name: 'VeHover',
 
   props: {
     disabled: Boolean,

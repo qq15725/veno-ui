@@ -13,7 +13,7 @@ import {
 export type Radio = InstanceType<typeof Radio>
 
 export const Radio = defineComponent({
-  name: 'Radio',
+  name: 'VeRadio',
 
   inheritAttrs: false,
 

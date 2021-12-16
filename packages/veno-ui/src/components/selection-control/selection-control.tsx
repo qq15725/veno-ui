@@ -12,7 +12,8 @@ import {
   SUPPORT_FOCUS_VISIBLE,
   useRender,
   wrapInArray,
-  filterInputAttrs
+  filterInputAttrs,
+  getCurrentInstanceName
 } from '../../utils'
 
 // Components
@@ -77,7 +78,7 @@ export function useSelectionControl (
   props: ExtractPropTypes<ReturnType<typeof makeSelectionControlProps>> & {
     'onUpdate:modelValue': ((val: any) => void) | undefined
   },
-  name: string
+  name = getCurrentInstanceName()
 ) {
   const group = inject(SelectionControlGroupSymbol, undefined)
   const { densityClasses } = useDensity(props, name)
@@ -165,7 +166,7 @@ export const SelectionControl = genericComponent<new <T>() => {
     default: [SelectionControlSlot]
   }>
 }>()({
-  name: 'SelectionControl',
+  name: 'VeSelectionControl',
 
   inheritAttrs: false,
 
@@ -184,7 +185,7 @@ export const SelectionControl = genericComponent<new <T>() => {
       textColorClasses,
       textColorStyles,
       trueValue,
-    } = useSelectionControl(props, 've-selection-control')
+    } = useSelectionControl(props)
     const uid = getUid()
     const id = computed(() => props.id || `input-${ uid }`)
     const isFocused = ref(false)
