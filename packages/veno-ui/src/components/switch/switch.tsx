@@ -2,6 +2,7 @@
 import './styles/switch.scss'
 
 // Utils
+import { ref } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Components
@@ -36,6 +37,12 @@ export const Switch = genericComponent()({
   },
 
   setup (props, { slots, emit }) {
+    const control = ref<SelectionControl>()
+
+    function onClick () {
+      control.value?.inputRef?.click()
+    }
+
     return () => {
       const [formItemProps] = filterFormItemProps(props)
       const [selectionInputProps] = filterSelectionControlProps(props)
@@ -47,13 +54,15 @@ export const Switch = genericComponent()({
           v-slots={ {
             prepend: slots.prepend,
             append: slots.append,
-            control: () => (
+            control: ({ isDisabled, isReadonly }) => (
               <SelectionControl
                 { ...selectionInputProps }
+                ref={ control }
                 label={ undefined }
-                role="switch"
                 type="checkbox"
                 onUpdate:modelValue={ val => emit('update:modelValue', val) }
+                disabled={ isDisabled.value }
+                readonly={ isReadonly.value }
                 v-slots={ {
                   default: ({ textColorClasses, textColorStyles }) => (
                     <div
@@ -64,10 +73,14 @@ export const Switch = genericComponent()({
                       style={ [
                         textColorStyles.value,
                       ] }
-                    >
+                      onClick={ onClick }
+                    />
+                  ),
+                  input: () => {
+                    return (
                       <div class="ve-switch__thumb" />
-                    </div>
-                  )
+                    )
+                  }
                 } }
               />
             )

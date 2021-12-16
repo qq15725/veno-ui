@@ -6,34 +6,93 @@
 @use './variables' as *;
 
 .ve-selection-control {
+  --ve-selection-control-size-offset: var(--ve-form-item-density-offset, --ve-selection-control-density-offset);
+  --ve-selection-control-size: calc(#{$selection-control-size} + var(--ve-selection-control-size-offset));
   position: relative;
   grid-area: control;
   display: flex;
   align-items: center;
   align-self: center;
-  color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
+  user-select: none;
 
-  &__input {
+  @at-root {
+    @include tools.density('ve-selection-control', $selection-control-density) using($modifier) {
+      --ve-selection-control-density-offset: #{$modifier};
+    }
+  }
+
+  .ve-icon {
+    opacity: var(--ve-medium-emphasis-opacity);
+  }
+
+  .ve-label {
+    height: 100%;
+    width: 100%;
+  }
+
+  &--dirty {
+    .v-icon {
+      color: inherit;
+    }
+  }
+
+  &--disabled {
+    opacity: var(--ve-disabled-opacity);
+    pointer-events: none;
+  }
+
+  &--error {
+    color: rgb(var(--ve-theme-error));
+
+    .v-icon {
+      color: inherit;
+    }
+  }
+
+  &__wrapper {
     position: relative;
-    width: var(--ve-selection-control-size);
-    height: var(--ve-selection-control-size);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: var(--ve-selection-control-size);
+    height: var(--ve-selection-control-size);
     flex: none;
   }
 
-  &__label {
-    margin-inline-start: 8px;
-  }
+  &__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ve-selection-control-size);
+    height: var(--ve-selection-control-size);
+    flex: none;
 
-  input {
-    cursor: pointer;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+    input {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    &::before {
+      @include tools.absolute();
+      content: '';
+      border-radius: 100%;
+      background-color: currentColor;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:hover::before {
+      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
+    }
+
+    .ve-selection-control--focus-visible &::before {
+      opacity: calc(#{map.get(settings.$states, 'focus')} * var(--ve-theme-overlay-multiplier));
+    }
   }
 }

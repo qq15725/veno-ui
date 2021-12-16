@@ -1,3 +1,6 @@
+// Styles
+import './styles/checkbox.scss'
+
 // Utils
 import { genericComponent } from '../../utils'
 

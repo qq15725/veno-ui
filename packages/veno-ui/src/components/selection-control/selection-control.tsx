@@ -1,17 +1,6 @@
 // Styles
 import './styles/selection-control.scss'
 
-// Components
-import { Icon } from '../icon'
-import { Label } from '../label'
-import { SelectionControlGroupSymbol } from './selection-control-group'
-
-// Composables
-import { makeDensityProps, useDensity } from '../../composables/density'
-import { makeThemeProps } from '../../composables/theme'
-import { useProxiedModel } from '../../composables/proxied-model'
-import { useTextColor } from '../../composables/color'
-
 // Utils
 import { computed, inject, ref } from 'vue'
 import {
@@ -23,7 +12,19 @@ import {
   SUPPORT_FOCUS_VISIBLE,
   useRender,
   wrapInArray,
+  filterInputAttrs
 } from '../../utils'
+
+// Components
+import { Icon } from '../icon'
+import { Label } from '../label'
+import { SelectionControlGroupSymbol } from './selection-control-group'
+
+// Composables
+import { makeDensityProps, useDensity } from '../../composables/density'
+import { makeThemeProps } from '../../composables/theme'
+import { useProxiedModel } from '../../composables/proxied-model'
+import { useTextColor } from '../../composables/color'
 
 // Types
 import type { ComputedRef, ExtractPropTypes, PropType, Ref, WritableComputedRef } from 'vue'
@@ -160,6 +161,7 @@ export const SelectionControl = genericComponent<new <T>() => {
   }
   $slots: MakeSlots<{
     label: [SelectionControlSlot]
+    input: [SelectionControlSlot]
     default: [SelectionControlSlot]
   }>
 }>()({
@@ -218,9 +220,11 @@ export const SelectionControl = genericComponent<new <T>() => {
       }
       const type = group?.type.value ?? props.type
       const hasLabel = !!(slots.label || props.label)
+      const [selectionControlAttrs, restAttrs] = filterInputAttrs(attrs)
 
       return (
         <div
+          { ...selectionControlAttrs }
           class={ [
             've-selection-control',
             {
@@ -231,52 +235,45 @@ export const SelectionControl = genericComponent<new <T>() => {
               've-selection-control--focus-visible': isFocusVisible.value,
               've-selection-control--inline': group?.inline.value || props.inline,
             },
+            densityClasses.value,
+            textColorClasses.value,
           ] }
         >
-          <div
-            class={ [
-              've-selection-control__input',
-              densityClasses.value,
-            ] }
-          >
-            { icon.value && (
-              <Icon
-                icon={ icon.value }
-                class={ [
-                  textColorClasses.value,
-                ] }
-                style={ textColorStyles.value }
-              />
-            ) }
-
+          <div class="ve-selection-control__wrapper">
             { slots.default?.(slotProps) }
 
-            { hasLabel && (
-              <Label
-                class="ve-selection-control__label"
-                for={ id.value }
-              >
-                { props.label }
+            <div
+              class="ve-selection-control__input"
+              style={ textColorStyles.value }
+            >
+              { icon.value && <Icon icon={ icon.value } /> }
 
-                { slots.label?.(slotProps) }
-              </Label>
-            ) }
+              { slots.input?.(slotProps) }
 
-            <input
-              ref={ inputRef }
-              v-model={ model.value }
-              disabled={ props.disabled }
-              id={ id.value }
-              onBlur={ onBlur }
-              onFocus={ onFocus }
-              readonly={ props.readonly }
-              type={ type }
-              value={ trueValue.value }
-              name={ group?.name.value ?? props.name }
-              aria-checked={ type === 'checkbox' ? model.value : undefined }
-              { ...attrs }
-            />
+              <input
+                ref={ inputRef }
+                v-model={ model.value }
+                disabled={ props.disabled }
+                id={ id.value }
+                onBlur={ onBlur }
+                onFocus={ onFocus }
+                readonly={ props.readonly }
+                type={ type }
+                value={ trueValue.value }
+                name={ group?.name.value ?? props.name }
+                aria-checked={ type === 'checkbox' ? model.value : undefined }
+                { ...restAttrs }
+              />
+            </div>
           </div>
+
+          { hasLabel && (
+            <Label for={ id.value }>
+              { props.label }
+
+              { slots.label?.(slotProps) }
+            </Label>
+          ) }
         </div>
       )
     })

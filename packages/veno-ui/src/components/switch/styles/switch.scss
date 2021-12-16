@@ -2,6 +2,10 @@
 @use '../../../styles/tools';
 
 .ve-switch {
+  .ve-selection-control {
+    height: var(--ve-form-item-height);
+  }
+
   &__track {
     position: relative;
     cursor: pointer;
@@ -14,6 +18,7 @@
     color: rgba(var(--ve-theme-on-surface), .2);
     background-color: currentColor;
     border-radius: 12px;
+    opacity: var(--ve-medium-emphasis-opacity);
   }
 
   &__thumb {
@@ -23,11 +28,17 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(-10px);
     background-color: #FFF;
   }
 
-  .ve-selection-control--dirty &__thumb {
+  .ve-selection-control__input {
+    position: absolute;
+    border-radius: 50%;
+    transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-10px);
+  }
+
+  .ve-selection-control--dirty .ve-selection-control__input {
     transform: translateX(10px);
   }
 }

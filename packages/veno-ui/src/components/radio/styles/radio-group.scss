@@ -4,15 +4,20 @@
 @use '../../../styles/settings';
 
 .ve-radio-group {
+  .ve-form-item__label {
+    margin-inline-end: 8px;
+  }
+
   > .ve-selection-control-group {
     display: flex;
     flex-direction: row;
+    height: var(--ve-form-item-height);
     > .ve-selection-control {
       display: inline-flex;
       flex: none;
     }
     > .ve-selection-control + .ve-selection-control {
-      margin-inline-start: 16px;
+      margin-inline-start: 8px;
     }
   }
 }

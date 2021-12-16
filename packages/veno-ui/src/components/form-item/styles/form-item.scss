@@ -3,7 +3,7 @@
 
 .ve-form-item {
   $root: &;
-  --ve-form-item-height: calc(42px + var(--ve-form-item-density-offset, 0px));
+  --ve-form-item-height: calc(40px + var(--ve-form-item-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
