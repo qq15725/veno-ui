@@ -46,9 +46,9 @@ export function createMarkdown (options: Options): Markdown {
   }
 
   const render = mdIt.render
-  mdIt.render = (src: string) => {
+  mdIt.render = (src: string, env?: any) => {
     resetData()
-    return render.call(mdIt, src)
+    return render.call(mdIt, src, env)
   }
   resetData()
   return mdIt
