@@ -45,7 +45,7 @@ export const Switch = genericComponent()({
 
     return () => {
       const [formItemProps] = filterFormItemProps(props)
-      const [selectionInputProps] = filterSelectionControlProps(props)
+      const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
 
       return (
         <FormItem
@@ -58,7 +58,6 @@ export const Switch = genericComponent()({
               <SelectionControl
                 { ...selectionInputProps }
                 ref={ control }
-                label={ undefined }
                 type="checkbox"
                 onUpdate:modelValue={ val => emit('update:modelValue', val) }
                 disabled={ isDisabled.value }

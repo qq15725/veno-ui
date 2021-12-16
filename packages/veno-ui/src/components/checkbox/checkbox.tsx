@@ -35,7 +35,7 @@ export const Checkbox = genericComponent()({
   setup (props, { slots, emit }) {
     return () => {
       const [formItemProps] = filterFormItemProps(props)
-      const [selectionInputProps] = filterSelectionControlProps(props)
+      const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
 
       return (
         <FormItem
@@ -44,14 +44,15 @@ export const Checkbox = genericComponent()({
           v-slots={ {
             prepend: slots.prepend,
             append: slots.append,
-            control: () => (
+            control: ({ isDisabled, isReadonly }) => (
               <SelectionControl
                 { ...selectionInputProps }
-                label={ undefined }
                 trueIcon={ props.trueIcon }
                 falseIcon={ props.falseIcon }
                 type="checkbox"
                 onUpdate:modelValue={ val => emit('update:modelValue', val) }
+                disabled={ isDisabled.value }
+                readonly={ isReadonly.value }
                 v-slots={ {
                   label: slots.default,
                 } }

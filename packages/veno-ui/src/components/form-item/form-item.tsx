@@ -153,6 +153,8 @@ export const FormItem = genericComponent<new () => {
           { hasLabel && (
             <Label
               class="ve-form-item__label"
+              disabled={ isDisabled.value }
+              error={ isValid.value === false }
               onClick={ (e: any) => emit('click:label', e) }
               for={ props.labelId }
               style={ {

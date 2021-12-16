@@ -33,7 +33,6 @@ export const SelectionControlGroup = defineComponent({
   inheritAttrs: false,
 
   props: {
-    disabled: Boolean,
     id: String,
     inline: Boolean,
     name: String,
@@ -43,6 +42,7 @@ export const SelectionControlGroup = defineComponent({
       type: Boolean as PropType<boolean | null>,
       default: null,
     },
+    disabled: Boolean,
     readonly: Boolean,
     type: String,
     modelValue: null,

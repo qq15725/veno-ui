@@ -90,7 +90,7 @@ export const Input = genericComponent<new () => {
           label-id={ id.value }
           v-slots={ {
             prepend: slots.prepend,
-            control: () => (
+            control: ({ isDisabled, isReadonly }) => (
               <InputControl
                 { ...inputControlProps }
                 ref={ inputControlRef }
@@ -117,8 +117,8 @@ export const Input = genericComponent<new () => {
                       id={ id.value }
                       type={ props.type }
                       placeholder={ props.placeholder }
-                      readonly={ props.readonly }
-                      disabled={ props.disabled }
+                      readonly={ isReadonly.value }
+                      disabled={ isDisabled.value }
                       onFocus={ focus }
                       onBlur={ blur }
                     />

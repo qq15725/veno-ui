@@ -61,13 +61,15 @@ export const RadioGroup = defineComponent({
           class="ve-radio-group"
           v-slots={ {
             ...slots,
-            control: () => (
+            control: ({ isDisabled, isReadonly }) => (
               <SelectionControlGroup
                 { ...controlProps }
                 id={ id.value }
                 trueIcon={ props.trueIcon }
                 falseIcon={ props.falseIcon }
                 type={ props.type }
+                disabled={ isDisabled.value }
+                readonly={ isReadonly.value }
                 { ...controlAttrs }
                 v-slots={ slots }
               />
