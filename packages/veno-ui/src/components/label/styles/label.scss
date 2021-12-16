@@ -1,0 +1,25 @@
+@forward './variables';
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+@use './variables' as *;
+
+.ve-label {
+  align-items: center;
+  color: $label-color;
+  display: $label-display;
+  font-size: $label-font-size;
+  letter-spacing: $label-letter-spacing;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--disabled {
+    color: $label-disabled-color;
+  }
+
+  &--error {
+    color: $label-error-color;
+  }
+}
+

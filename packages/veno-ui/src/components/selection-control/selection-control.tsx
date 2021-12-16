@@ -3,6 +3,7 @@ import './styles/selection-control.scss'
 
 // Components
 import { Icon } from '../icon'
+import { Label } from '../label'
 import { SelectionControlGroupSymbol } from './selection-control-group'
 
 // Composables
@@ -216,10 +217,7 @@ export const SelectionControl = genericComponent<new <T>() => {
         },
       }
       const type = group?.type.value ?? props.type
-      const label = slots.label
-        ? slots.label(slotProps)
-        : props.label
-      const hasLabel = !!label
+      const hasLabel = !!(slots.label || props.label)
 
       return (
         <div
@@ -254,12 +252,14 @@ export const SelectionControl = genericComponent<new <T>() => {
             { slots.default?.(slotProps) }
 
             { hasLabel && (
-              <label
+              <Label
                 class="ve-selection-control__label"
                 for={ id.value }
               >
-                { label }
-              </label>
+                { props.label }
+
+                { slots.label?.(slotProps) }
+              </Label>
             ) }
 
             <input

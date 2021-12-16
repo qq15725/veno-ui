@@ -47,10 +47,7 @@ export const makeValidationProps = propsFactory({
   modelValue: null,
 })
 
-export function useValidation (
-  props: ValidationProps,
-  name: string,
-) {
+export function useValidation (props: ValidationProps, name: string) {
   const form = useForm()
   const errorMessages = ref<string[]>([])
   const isPristine = ref(true)

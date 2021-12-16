@@ -2,12 +2,39 @@
 @use '../../../styles/settings';
 
 .ve-form-item {
+  $root: &;
   --ve-form-item-height: calc(42px + var(--ve-form-item-density-offset, 0px));
   display: grid;
-  grid-template-areas: "prepend control append" "a details b";
-  grid-template-columns: max-content auto max-content;
+  grid-template-areas: "prepend label control append" "a b details c";
+  grid-template-columns: max-content max-content auto max-content;
   grid-template-rows: auto auto;
   @include tools.use-density();
+
+  &--layout-inline + &--layout-inline {
+    margin-inline-start: 16px;
+  }
+
+  &--layout-inline,
+  &--layout-horizontal {
+    #{$root}__label {
+      margin-inline-end: 16px;
+      justify-content: end;
+    }
+  }
+
+  &--layout-vertical {
+    grid-template-areas: "a label b" "prepend control append" "c details d";
+    grid-template-columns: max-content auto max-content;
+    grid-template-rows: auto auto;
+
+    #{$root}__label {
+      margin-block-end: 8px;
+    }
+  }
+
+  &--layout-inline {
+    display: inline-grid;
+  }
 
   &--disabled {
     pointer-events: none;
@@ -18,10 +45,6 @@
     }
   }
 
-  &__label {
-    text-align: end;
-  }
-
   &__prepend,
   &__append,
   &__control {
@@ -30,14 +53,13 @@
     align-self: center;
   }
 
-  &--label &__prepend {
-    white-space: nowrap;
-    justify-content: end;
+  &__prepend {
+    grid-area: prepend;
+    margin-inline-end: 16px;
   }
 
-  &__prepend {
-    margin-inline-end: 16px;
-    grid-area: prepend;
+  &__label {
+    grid-area: label;
   }
 
   &__control {
@@ -45,8 +67,8 @@
   }
 
   &__append {
-    margin-inline-start: 16px;
     grid-area: append;
+    margin-inline-start: 16px;
   }
 
   &__details {

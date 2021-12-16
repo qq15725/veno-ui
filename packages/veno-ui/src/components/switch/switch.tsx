@@ -9,7 +9,7 @@ import {
   FormItem,
   makeFormItemProps,
   filterFormItemProps,
-} from '../form/form-item'
+} from '../form-item/form-item'
 import {
   SelectionControl,
   makeSelectionControlProps,

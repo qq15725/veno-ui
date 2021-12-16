@@ -10,7 +10,7 @@ import {
   filterFormItemProps,
   makeFormItemProps,
   FormItem
-} from '../form/form-item'
+} from '../form-item/form-item'
 import { SelectionControlGroup } from '../selection-control'
 import {
   filterSelectionControlProps,

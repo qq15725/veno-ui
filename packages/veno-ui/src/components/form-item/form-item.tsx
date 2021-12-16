@@ -6,11 +6,14 @@ import { computed } from 'vue'
 import { genericComponent, propsFactory, pick, convertToUnit } from '../../utils'
 
 // Components
+import { Label } from '../label'
 import { Icon } from '../icon'
 
 // Composables
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
+import { makeFormItemLayoutProps, useFormItemLayoutProps } from '../../composables/form-item-layout'
+import { useForm } from '../../composables/form'
 
 // Types
 import type { ExtractPropTypes, ComputedRef, Ref } from 'vue'
@@ -45,10 +48,11 @@ export function filterFormItemProps (props: ExtractPropTypes<ReturnType<typeof m
 export const makeFormItemProps = propsFactory({
   appendIcon: String,
   prependIcon: String,
-  hideDetails: Boolean,
   label: String,
   labelId: String,
   labelWidth: [String, Number],
+  hideDetails: Boolean,
+  ...makeFormItemLayoutProps(),
   ...makeDensityProps(),
   ...makeValidationProps(),
 }, 'form-item')
@@ -62,6 +66,7 @@ export const FormItem = genericComponent<new () => {
 
   emits: {
     'click:prepend': (e: MouseEvent) => true,
+    'click:label': (e: MouseEvent) => true,
     'click:prepend-inner': (e: MouseEvent) => true,
     'click:control': (e: MouseEvent) => true,
     'click:append-inner': (e: MouseEvent) => true,
@@ -69,7 +74,16 @@ export const FormItem = genericComponent<new () => {
   },
 
   setup (props, { slots, emit }) {
-    const { densityClasses } = useDensity(props, 've-form-item')
+    const form = useForm()
+    const computedProps = computed(() => {
+      return {
+        ...props,
+        layout: form?.layout.value ?? props.layout,
+        density: form?.density.value ?? props.density,
+      }
+    })
+    const { formItemLayoutClasses } = useFormItemLayoutProps(computedProps, 've-form-item')
+    const { densityClasses } = useDensity(computedProps, 've-form-item')
     const {
       errorMessages,
       isDisabled,
@@ -103,20 +117,21 @@ export const FormItem = genericComponent<new () => {
     }
 
     return () => {
-      const hasLabel = props.label || props.labelWidth
-      const hasPrepend = (slots.prepend || props.prependIcon || hasLabel)
+      const hasPrepend = !!(slots.prepend || props.prependIcon)
+      const hasLabel = !!(slots.label || props.label)
       const hasControl = !!slots.control
       const hasPrependInner = !!slots.prependInner
       const hasDefault = !!slots.default
       const hasAppendInner = !!slots.appendInner
       const hasDefaultControl = !hasControl && (hasPrependInner || hasDefault || hasAppendInner)
-      const hasAppend = (slots.append || props.appendIcon)
+      const hasAppend = !!(slots.append || props.appendIcon)
       const hasDetails = !props.hideDetails
 
       return (
         <div
           class={ [
             've-form-item',
+            formItemLayoutClasses.value,
             densityClasses.value,
             validationClasses.value,
           ] }
@@ -126,24 +141,27 @@ export const FormItem = genericComponent<new () => {
               class="ve-form-item__prepend"
               onClick={ e => emit('click:prepend', e) }
             >
-              { slots.prepend?.(slotProps.value) }
-
               { props.prependIcon && (
                 <Icon icon={ props.prependIcon } />
               ) }
 
-              { hasLabel && (
-                <label
-                  class="ve-form-item__label"
-                  for={ props.labelId }
-                  style={ {
-                    width: convertToUnit(props.labelWidth),
-                  } }
-                >
-                  { props.label }
-                </label>
-              ) }
+              { slots.prepend?.(slotProps.value) }
             </div>
+          ) }
+
+          { hasLabel && (
+            <Label
+              class="ve-form-item__label"
+              onClick={ (e: any) => emit('click:label', e) }
+              for={ props.labelId }
+              style={ {
+                width: convertToUnit(props.labelWidth),
+              } }
+            >
+              { props.label }
+
+              { slots.label?.(slotProps.value) }
+            </Label>
           ) }
 
           { hasControl && slots.control?.(slotProps.value) }
@@ -180,11 +198,11 @@ export const FormItem = genericComponent<new () => {
               class="ve-form-item__append"
               onClick={ e => emit('click:append', e) }
             >
-              { slots?.append?.(slotProps.value) }
-
               { props.appendIcon && (
                 <Icon icon={ props.appendIcon } />
               ) }
+
+              { slots?.append?.(slotProps.value) }
             </div>
           ) }
 

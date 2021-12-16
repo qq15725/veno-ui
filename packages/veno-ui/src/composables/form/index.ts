@@ -3,8 +3,14 @@ import { computed, inject, provide, ref } from 'vue'
 import { getCurrentInstance, propsFactory } from '../../utils'
 import { useProxiedModel } from '../proxied-model'
 
+// Composables
+import { makeDensityProps } from '../density'
+import { makeFormItemLayoutProps } from '../form-item-layout'
+
 // Types
 import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
+import type { DensityProps, Density } from '../density'
+import type { FormItemLayoutProps, FormItemLayout } from '../form-item-layout'
 
 export interface FormProvide
 {
@@ -16,6 +22,8 @@ export interface FormProvide
   ) => void
   unregister: (id: number | string) => void
   items: Ref<FormField[]>
+  density: ComputedRef<undefined | Density>
+  layout: ComputedRef<FormItemLayout>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isValidating: Ref<boolean>
@@ -37,7 +45,7 @@ interface FormValidationResult
 
 export const FormKey: InjectionKey<FormProvide> = Symbol.for('veno-ui:form')
 
-export interface FormProps
+export interface FormProps extends DensityProps, FormItemLayoutProps
 {
   disabled: boolean
   fastFail: boolean
@@ -56,12 +64,16 @@ export const makeFormProps = propsFactory({
     type: Boolean as PropType<boolean | null>,
     default: null,
   },
+  ...makeDensityProps(),
+  ...makeFormItemLayoutProps(),
 })
 
 export function createForm (props: FormProps) {
   const vm = getCurrentInstance('createForm')
   const model = useProxiedModel(props, 'modelValue')
 
+  const layout = computed(() => props.layout)
+  const density = computed(() => props.density)
   const isDisabled = computed(() => props.disabled)
   const isReadonly = computed(() => props.readonly)
   const isValidating = ref(false)
@@ -131,6 +143,8 @@ export function createForm (props: FormProps) {
         return item.id !== id
       })
     },
+    layout,
+    density,
     isDisabled,
     isReadonly,
     isValidating,

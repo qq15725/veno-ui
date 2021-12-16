@@ -1,0 +1,8 @@
+@use '../../../styles/settings';
+
+$label-color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity)) !default;
+$label-disabled-color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity)) !default;
+$label-display: inline-flex !default;
+$label-error-color: rgb(var(--ve-theme-error)) !default;
+$label-font-size: 1rem !default;
+$label-letter-spacing: .009375em !default;

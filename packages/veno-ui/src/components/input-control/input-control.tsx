@@ -31,10 +31,10 @@ export interface InputControlSlot
 export type InputControlSlots = MakeSlots<{
   prependInner: [InputControlSlot],
   prefix: [InputControlSlot],
+  default: [InputControlSlot],
   suffix: [InputControlSlot],
   appendInner: [InputControlSlot],
   clear: [InputControlSlot],
-  default: [InputControlSlot],
 }>
 
 export type InputControl = InstanceType<typeof InputControl>

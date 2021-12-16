@@ -4,6 +4,10 @@
 @use '../../../styles/settings';
 
 .ve-input {
+  &__label {
+    justify-content: end;
+  }
+
   input {
     width: 100%;
     height: 100%;

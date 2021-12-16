@@ -1,10 +1,6 @@
 .ve-select {
-  .ve-input-control--focused &__icon {
+  &--active &__icon {
     transform: rotate(180deg);
-  }
-
-  input {
-    pointer-events: none;
   }
 
   .ve-input-control__input {

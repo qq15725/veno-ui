@@ -5,7 +5,7 @@ import {
   FormItem,
   filterFormItemProps,
   makeFormItemProps
-} from '../form/form-item'
+} from '../form-item/form-item'
 
 import {
   SelectionControl,
