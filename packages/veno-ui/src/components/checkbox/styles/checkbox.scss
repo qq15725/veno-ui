@@ -1,9 +1,9 @@
 .ve-checkbox {
-  .ve-form-item__label {
+  .ve-form-control__label {
      margin-inline-end: 8px;
   }
 
   .ve-selection-control {
-    height: var(--ve-form-item-height);
+    height: var(--ve-form-control-height);
   }
 }

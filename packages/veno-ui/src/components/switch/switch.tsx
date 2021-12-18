@@ -6,16 +6,10 @@ import { ref } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Components
-import {
-  FormItem,
-  makeFormItemProps,
-  filterFormItemProps,
-} from '../form-item/form-item'
-import {
-  SelectionControl,
-  makeSelectionControlProps,
-  filterSelectionControlProps
-} from '../selection-control/selection-control'
+import { FormControl } from '../form-control'
+import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
+import { SelectionControl } from '../selection-control'
+import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
 
 // Types
 export type Switch = InstanceType<typeof Switch>
@@ -26,7 +20,7 @@ export const Switch = genericComponent()({
   inheritAttrs: false,
 
   props: {
-    ...makeFormItemProps(),
+    ...makeFormControlProps(),
     ...makeSelectionControlProps({
       color: 'primary'
     } as const),
@@ -44,45 +38,48 @@ export const Switch = genericComponent()({
     }
 
     return () => {
-      const [formItemProps] = filterFormItemProps(props)
+      const [formControlProps] = filterFormControlProps(props)
       const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
 
       return (
-        <FormItem
-          { ...formItemProps }
+        <FormControl
+          { ...formControlProps }
           class="ve-switch"
           v-slots={ {
             prepend: slots.prepend,
+            default: ({ isDisabled, isReadonly, props: formControlProps }) => {
+              return (
+                <SelectionControl
+                  { ...selectionInputProps }
+                  ref={ control }
+                  type="checkbox"
+                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
+                  disabled={ isDisabled.value }
+                  readonly={ isReadonly.value }
+                  { ...formControlProps }
+                  v-slots={ {
+                    default: ({ textColorClasses, textColorStyles }) => (
+                      <div
+                        class={ [
+                          've-switch__track',
+                          textColorClasses.value,
+                        ] }
+                        style={ [
+                          textColorStyles.value,
+                        ] }
+                        onClick={ onClick }
+                      />
+                    ),
+                    input: () => {
+                      return (
+                        <div class="ve-switch__thumb" />
+                      )
+                    }
+                  } }
+                />
+              )
+            },
             append: slots.append,
-            control: ({ isDisabled, isReadonly }) => (
-              <SelectionControl
-                { ...selectionInputProps }
-                ref={ control }
-                type="checkbox"
-                onUpdate:modelValue={ val => emit('update:modelValue', val) }
-                disabled={ isDisabled.value }
-                readonly={ isReadonly.value }
-                v-slots={ {
-                  default: ({ textColorClasses, textColorStyles }) => (
-                    <div
-                      class={ [
-                        've-switch__track',
-                        textColorClasses.value,
-                      ] }
-                      style={ [
-                        textColorStyles.value,
-                      ] }
-                      onClick={ onClick }
-                    />
-                  ),
-                  input: () => {
-                    return (
-                      <div class="ve-switch__thumb" />
-                    )
-                  }
-                } }
-              />
-            )
           } }
         />
       )

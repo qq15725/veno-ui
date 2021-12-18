@@ -19,7 +19,7 @@ import { FadeTransition } from '../transition'
 // Types
 import type { PropType } from 'vue'
 import type { Anchor, Origin } from '../../composables/position-strategy'
-import type { FormItemSlot } from '../form-item/form-item'
+import type { FormControlSlot } from '../form-control/form-control'
 import type { InputControlSlot } from '../input-control/input-control'
 
 export type Select = InstanceType<typeof Select>
@@ -30,13 +30,13 @@ type SelectItem = string | NormaledSelectItem
 export const Select = genericComponent<new () => {
   $slots: MakeSlots<{
     default: [InputControlSlot],
-    prepend: [FormItemSlot],
+    prepend: [FormControlSlot],
     prependInner: [InputControlSlot],
     prefix: [InputControlSlot],
     suffix: [InputControlSlot],
     appendInner: [InputControlSlot],
     clear: [InputControlSlot],
-    append: [FormItemSlot],
+    append: [FormControlSlot],
   }>
 }>()({
   name: 'VeSelect',

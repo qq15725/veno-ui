@@ -5,10 +5,8 @@ import './styles/radio.scss'
 import { defineComponent } from 'vue'
 
 // Components
-import {
-  SelectionControl,
-  makeSelectionControlProps
-} from '../selection-control/selection-control'
+import { SelectionControl } from '../selection-control'
+import { makeSelectionControlProps } from '../selection-control/selection-control'
 
 export type Radio = InstanceType<typeof Radio>
 

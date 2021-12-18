@@ -6,16 +6,10 @@ import { computed, defineComponent } from 'vue'
 import { filterInputAttrs, getUid, useRender } from '../../utils'
 
 // Components
-import {
-  filterFormItemProps,
-  makeFormItemProps,
-  FormItem
-} from '../form-item/form-item'
+import { FormControl } from '../form-control'
+import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { SelectionControlGroup } from '../selection-control'
-import {
-  filterSelectionControlProps,
-  makeSelectionControlProps
-} from '../selection-control/selection-control'
+import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
 
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
@@ -28,7 +22,7 @@ export const RadioGroup = defineComponent({
       default: 'auto',
     },
 
-    ...makeFormItemProps(),
+    ...makeFormControlProps(),
     ...makeSelectionControlProps(),
 
     trueIcon: {
@@ -51,17 +45,17 @@ export const RadioGroup = defineComponent({
 
     useRender(() => {
       const [formItemAttrs, controlAttrs] = filterInputAttrs(attrs)
-      const [formItemProps, _1] = filterFormItemProps(props)
+      const [formItemProps, _1] = filterFormControlProps(props)
       const [controlProps, _2] = filterSelectionControlProps(props)
 
       return (
-        <FormItem
+        <FormControl
           { ...formItemAttrs }
           { ...formItemProps }
           class="ve-radio-group"
           v-slots={ {
             ...slots,
-            control: ({ isDisabled, isReadonly }) => (
+            default: ({ isDisabled, isReadonly }) => (
               <SelectionControlGroup
                 { ...controlProps }
                 id={ id.value }

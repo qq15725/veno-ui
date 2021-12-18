@@ -4,23 +4,17 @@ import './styles/checkbox.scss'
 // Utils
 import { genericComponent } from '../../utils'
 
-import {
-  FormItem,
-  filterFormItemProps,
-  makeFormItemProps
-} from '../form-item/form-item'
-
-import {
-  SelectionControl,
-  filterSelectionControlProps,
-  makeSelectionControlProps
-} from '../selection-control/selection-control'
+// Components
+import { FormControl } from '../form-control'
+import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
+import { SelectionControl } from '../selection-control'
+import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
 
 export const Checkbox = genericComponent()({
   name: 'VeCheckbox',
 
   props: {
-    ...makeFormItemProps(),
+    ...makeFormControlProps(),
     ...makeSelectionControlProps({
       falseIcon: 'veno-ui:$checkboxOff',
       trueIcon: 'veno-ui:$checkboxOn',
@@ -34,30 +28,32 @@ export const Checkbox = genericComponent()({
 
   setup (props, { slots, emit }) {
     return () => {
-      const [formItemProps] = filterFormItemProps(props)
+      const [formItemProps] = filterFormControlProps(props)
       const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
 
       return (
-        <FormItem
+        <FormControl
           { ...formItemProps }
           class="ve-checkbox"
           v-slots={ {
             prepend: slots.prepend,
+            default: ({ isDisabled, isReadonly }) => {
+              return (
+                <SelectionControl
+                  { ...selectionInputProps }
+                  trueIcon={ props.trueIcon }
+                  falseIcon={ props.falseIcon }
+                  type="checkbox"
+                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
+                  disabled={ isDisabled.value }
+                  readonly={ isReadonly.value }
+                  v-slots={ {
+                    label: slots.default,
+                  } }
+                />
+              )
+            },
             append: slots.append,
-            control: ({ isDisabled, isReadonly }) => (
-              <SelectionControl
-                { ...selectionInputProps }
-                trueIcon={ props.trueIcon }
-                falseIcon={ props.falseIcon }
-                type="checkbox"
-                onUpdate:modelValue={ val => emit('update:modelValue', val) }
-                disabled={ isDisabled.value }
-                readonly={ isReadonly.value }
-                v-slots={ {
-                  label: slots.default,
-                } }
-              />
-            ),
           } }
         />
       )

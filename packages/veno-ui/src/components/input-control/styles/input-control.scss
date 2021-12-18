@@ -5,18 +5,19 @@
 @use '../../../styles/settings';
 
 .ve-input-control {
-  --ve-input-control__input-padding-before: 0;
-  --ve-input-control__input-padding-after: 0;
-  --ve-input-padding-before: 16px;
-  --ve-input-padding-after: 16px;
+  --ve-input-control-padding-before: 0;
+  --ve-input-control-padding-after: 0;
+  --ve-native-control-padding-before: 16px;
+  --ve-native-control-padding-after: 16px;
+  --ve-native-control-padding-top: 6px;
+  --ve-native-control-padding-bottom: 6px;
   position: relative;
   display: flex;
   align-items: center;
   border-radius: 4px;
-  contain: layout;
   flex: 1 0;
   grid-area: control;
-  height: var(--ve-form-item-height, 42px);
+  height: var(--ve-form-control-height, 42px);
   color: rgb(var(--ve-theme-on-secondary));
   background-color: rgb(var(--ve-theme-secondary));
   border: 1px solid transparent;
@@ -30,22 +31,22 @@
   }
 
   &--prepended {
-    --ve-input-padding-before: 6px;
+    --ve-native-control-padding-before: 6px;
     padding-inline-start: 12px;
   }
 
   &--prefixed {
-    --ve-input-padding-before: 6px;
-    --ve-input-control__input-padding-before: 12px;
+    --ve-native-control-padding-before: 6px;
+    --ve-input-control-padding-before: 12px;
   }
 
   &--suffixed {
-    --ve-input-padding-after: 6px;
-    --ve-input-control__input-padding-after: 12px;
+    --ve-native-control-padding-after: 6px;
+    --ve-input-control-padding-after: 12px;
   }
 
   &--appended {
-    --ve-input-padding-after: 6px;
+    --ve-native-control-padding-after: 6px;
     padding-inline-end: 12px;
   }
 
@@ -73,12 +74,29 @@
     flex: 1 0;
     height: 100%;
     cursor: text;
-    padding-inline-start: var(--ve-input-control__input-padding-before);
-    padding-inline-end: var(--ve-input-control__input-padding-after);
+    padding-inline-start: var(--ve-input-control-padding-before);
+    padding-inline-end: var(--ve-input-control-padding-after);
+  }
 
-    input {
-      color: inherit;
-      cursor: inherit;
+  .ve-native-control {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-inline-start: var(--ve-native-control-padding-before, 0);
+    padding-inline-end: var(--ve-native-control-padding-after, 0);
+    padding-block-start: var(--ve-native-control-padding-top, 0);
+    padding-block-end: var(--ve-native-control-padding-bottom, 0);
+    opacity: var(--ve-high-emphasis-opacity);
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    // Remove Firefox red outline
+    &:invalid {
+      box-shadow: none;
     }
   }
 

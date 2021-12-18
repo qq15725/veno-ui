@@ -6,22 +6,16 @@ import { ref, computed } from 'vue'
 import { genericComponent, filterInputAttrs, useRender, getUid, propsFactory, pick } from '../../utils'
 
 // Components
-import {
-  FormItem,
-  makeFormItemProps,
-  filterFormItemProps,
-} from '../form-item/form-item'
-import {
-  InputControl,
-  makeInputControlProps,
-  filterInputControlProps,
-} from '../input-control/input-control'
+import { FormControl } from '../form-control'
+import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
+import { InputControl } from '../input-control'
+import { makeInputControlProps, filterInputControlProps } from '../input-control/input-control'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import type { FormItemSlot } from '../form-item/form-item'
+import type { FormControlSlot } from '../form-control/form-control'
 import type { InputControlSlot } from '../input-control/input-control'
 import type { MakeSlots } from '../../utils'
 
@@ -35,7 +29,7 @@ export const makeInputProps = propsFactory({
     type: String,
     default: 'text',
   },
-  ...makeFormItemProps(),
+  ...makeFormControlProps(),
   ...makeInputControlProps(),
 }, 'input')
 
@@ -48,13 +42,13 @@ export type Input = InstanceType<typeof Input>
 export const Input = genericComponent<new () => {
   $slots: MakeSlots<{
     default: [InputControlSlot],
-    prepend: [FormItemSlot],
+    prepend: [FormControlSlot],
     prependInner: [InputControlSlot],
     prefix: [InputControlSlot],
     suffix: [InputControlSlot],
     appendInner: [InputControlSlot],
     clear: [InputControlSlot],
-    append: [FormItemSlot],
+    append: [FormControlSlot],
   }>
 }>()({
   name: 'VeInput',
@@ -78,21 +72,20 @@ export const Input = genericComponent<new () => {
     })
 
     useRender(() => {
-      const [formItemProps] = filterFormItemProps(props)
-      const [formItemAttrs, restAttrs] = filterInputAttrs(attrs)
+      const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
+      const [formControlProps] = filterFormControlProps(props)
       const [inputControlProps] = filterInputControlProps(props)
 
       return (
-        <FormItem
-          { ...formItemProps }
-          { ...formItemAttrs }
+        <FormControl
           class="ve-input"
           label-id={ id.value }
+          { ...formControlProps }
+          { ...formControlAttrs }
           v-slots={ {
             prepend: slots.prepend,
-            control: ({ isDisabled, isReadonly }) => (
+            default: ({ isDisabled, isReadonly, props: formControlProps }) => (
               <InputControl
-                { ...inputControlProps }
                 ref={ inputControlRef }
                 dirty={ !!model.value }
                 active={ isDirty.value }
@@ -106,12 +99,13 @@ export const Input = genericComponent<new () => {
                 onClick:control={ e => {
                   inputControlRef.value?.inputRef?.focus()
                 } }
+                { ...formControlProps }
+                { ...inputControlProps }
                 v-slots={ {
                   prependInner: slots.prependInner,
                   prefix: slots.prefix,
-                  default: ({ inputRef, focus, blur }) => (
+                  default: ({ inputRef, focus, blur, props: nativeControlProps }) => (
                     <input
-                      { ...restAttrs }
                       ref={ inputRef }
                       v-model={ model.value }
                       id={ id.value }
@@ -121,6 +115,8 @@ export const Input = genericComponent<new () => {
                       disabled={ isDisabled.value }
                       onFocus={ focus }
                       onBlur={ blur }
+                      { ...nativeControlProps }
+                      { ...restAttrs }
                     />
                   ),
                   suffix: slots.suffix,

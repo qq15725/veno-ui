@@ -45,6 +45,14 @@
     :hide-details="hideDetails"
   />
 
+  <ve-textarea
+    label="Textarea"
+    placeholder="请输入"
+    clearable
+    auto-grow
+    :hide-details="hideDetails"
+  />
+
   <ve-select
     label="Select"
     placeholder="请选择"
@@ -77,10 +85,10 @@
     <ve-radio true-value="2">Radio Two</ve-radio>
   </ve-radio-group>
 
-  <ve-form-item :hide-details="hideDetails">
+  <ve-form-control :hide-details="hideDetails">
     <template #prepend><div style="width: 100px;"></div></template>
     <ve-button>提交</ve-button>
-  </ve-form-item>
+  </ve-form-control>
 </ve-form>
 ```
 

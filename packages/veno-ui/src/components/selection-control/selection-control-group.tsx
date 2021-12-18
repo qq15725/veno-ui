@@ -2,14 +2,14 @@
 import './styles/selection-control-group.scss'
 
 // Utils
-import { computed, defineComponent, provide, toRef } from 'vue'
-import { getUid, useRender } from '../../utils'
+import { defineComponent } from 'vue'
+import { useRender } from '../../utils'
 
 // Composables
-import { useProxiedModel } from '../../composables/proxied-model'
+import { makeSelectionControlGroupProps, useSelectionControlGroup } from '../../composables/selection-control-group'
 
 // Types
-import type { InjectionKey, PropType, Ref } from 'vue'
+import type { Ref } from 'vue'
 
 export interface SelectionGroupContext {
   disabled: Ref<boolean>
@@ -23,8 +23,6 @@ export interface SelectionGroupContext {
   type: Ref<string | undefined>
 }
 
-export const SelectionControlGroupSymbol: InjectionKey<SelectionGroupContext> = Symbol.for('veno-ui:selection-control-group')
-
 export type SelectionControlGroup = InstanceType<typeof SelectionControlGroup>
 
 export const SelectionControlGroup = defineComponent({
@@ -32,49 +30,20 @@ export const SelectionControlGroup = defineComponent({
 
   inheritAttrs: false,
 
-  props: {
-    id: String,
-    inline: Boolean,
-    name: String,
-    falseIcon: String,
-    trueIcon: String,
-    multiple: {
-      type: Boolean as PropType<boolean | null>,
-      default: null,
-    },
-    disabled: Boolean,
-    readonly: Boolean,
-    type: String,
-    modelValue: null,
-  },
+  props: makeSelectionControlGroupProps(),
 
   emits: {
     'update:modelValue': (val: any) => true,
   },
 
   setup (props, { slots }) {
-    const modelValue = useProxiedModel(props, 'modelValue')
-    const uid = getUid()
-    const id = computed(() => props.id || `selection-control-group-${uid}`)
-    const name = computed(() => props.name || id.value)
-
-    provide(SelectionControlGroupSymbol, {
-      disabled: toRef(props, 'disabled'),
-      inline: toRef(props, 'inline'),
-      modelValue,
-      multiple: computed(() => !!props.multiple || (props.multiple == null && Array.isArray(modelValue.value))),
-      name,
-      falseIcon: toRef(props, 'falseIcon'),
-      trueIcon: toRef(props, 'trueIcon'),
-      readonly: toRef(props, 'readonly'),
-      type: toRef(props, 'type'),
-    })
+    const group = useSelectionControlGroup(props)
 
     useRender(() => {
       return (
         <div
           class="ve-selection-control-group"
-          aria-labelled-by={ props.type === 'radio' ? id.value : undefined }
+          aria-labelled-by={ props.type === 'radio' ? group.id.value : undefined }
           role={ props.type === 'radio' ? 'radiogroup' : undefined }
         >
           { slots?.default?.() }

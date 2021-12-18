@@ -3,14 +3,14 @@
 @use '../../../styles/settings';
 @use './variables' as *;
 
-.ve-form-item {
+.ve-form-control {
   $root: &;
-  --ve-form-item-height: calc(40px + var(--ve-form-item-density-offset, 0px));
+  --ve-form-control-height: calc(40px + var(--ve-form-control-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
   grid-template-rows: auto auto;
-  @include tools.use-density((densities: $form-item-density));
+  @include tools.use-density((densities: $form-control-density));
 
   &--layout-inline + &--layout-inline {
     margin-inline-start: 16px;

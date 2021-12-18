@@ -1,5 +1,5 @@
 // Styles
-import './styles/form-item.scss'
+import './styles/form-control.scss'
 
 // Utils
 import { computed } from 'vue'
@@ -19,7 +19,7 @@ import { useForm } from '../../composables/form'
 import type { ExtractPropTypes, ComputedRef, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export type FormItemSlot = {
+export type FormControlSlot = {
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isPristine: Ref<boolean | null>
@@ -30,22 +30,19 @@ export type FormItemSlot = {
   validate: () => void
 }
 
-export type FormItemSlots = MakeSlots<{
-  prepend: [FormItemSlot],
-  control: [FormItemSlot],
-  prependInner: [FormItemSlot],
-  default: [FormItemSlot],
-  appendInner: [FormItemSlot],
-  append: [FormItemSlot],
+export type FormControlSlots = MakeSlots<{
+  prepend: [FormControlSlot],
+  default: [FormControlSlot & { props: Record<string, unknown> }],
+  append: [FormControlSlot],
 }>
 
-export type FormItem = InstanceType<typeof FormItem>
+export type FormControl = InstanceType<typeof FormControl>
 
-export function filterFormItemProps (props: ExtractPropTypes<ReturnType<typeof makeFormItemProps>>) {
-  return pick(props, Object.keys(FormItem.props) as any)
+export function filterFormControlProps (props: ExtractPropTypes<ReturnType<typeof makeFormControlProps>>) {
+  return pick(props, Object.keys(FormControl.props) as any)
 }
 
-export const makeFormItemProps = propsFactory({
+export const makeFormControlProps = propsFactory({
   appendIcon: String,
   prependIcon: String,
   label: String,
@@ -55,21 +52,18 @@ export const makeFormItemProps = propsFactory({
   ...makeFormItemLayoutProps(),
   ...makeDensityProps(),
   ...makeValidationProps(),
-}, 'form-item')
+}, 'form-control')
 
-export const FormItem = genericComponent<new () => {
-  $slots: FormItemSlots
+export const FormControl = genericComponent<new () => {
+  $slots: FormControlSlots
 }>()({
-  name: 'VeFormItem',
+  name: 'VeFormControl',
 
-  props: makeFormItemProps(),
+  props: makeFormControlProps(),
 
   emits: {
     'click:prepend': (e: MouseEvent) => true,
     'click:label': (e: MouseEvent) => true,
-    'click:prepend-inner': (e: MouseEvent) => true,
-    'click:control': (e: MouseEvent) => true,
-    'click:append-inner': (e: MouseEvent) => true,
     'click:append': (e: MouseEvent) => true,
   },
 
@@ -98,7 +92,7 @@ export const FormItem = genericComponent<new () => {
       validationClasses,
     } = useValidation(props)
 
-    const slotProps = computed<FormItemSlot>(() => ({
+    const slotProps = computed<FormControlSlot>(() => ({
       isDisabled,
       isReadonly,
       isPristine,
@@ -109,29 +103,16 @@ export const FormItem = genericComponent<new () => {
       validate,
     }))
 
-    function onClick (e: MouseEvent) {
-      if (e.target !== document.activeElement) {
-        e.preventDefault()
-      }
-
-      emit('click:control', e)
-    }
-
     return () => {
       const hasPrepend = !!(slots.prepend || props.prependIcon)
       const hasLabel = !!(slots.label || props.label)
-      const hasControl = !!slots.control
-      const hasPrependInner = !!slots.prependInner
-      const hasDefault = !!slots.default
-      const hasAppendInner = !!slots.appendInner
-      const hasDefaultControl = !hasControl && (hasPrependInner || hasDefault || hasAppendInner)
       const hasAppend = !!(slots.append || props.appendIcon)
       const hasDetails = !props.hideDetails
 
       return (
         <div
           class={ [
-            've-form-item',
+            've-form-control',
             formItemLayoutClasses.value,
             densityClasses.value,
             validationClasses.value,
@@ -139,7 +120,7 @@ export const FormItem = genericComponent<new () => {
         >
           { hasPrepend && (
             <div
-              class="ve-form-item__prepend"
+              class="ve-form-control__prepend"
               onClick={ e => emit('click:prepend', e) }
             >
               { props.prependIcon && (
@@ -152,7 +133,7 @@ export const FormItem = genericComponent<new () => {
 
           { hasLabel && (
             <Label
-              class="ve-form-item__label"
+              class="ve-form-control__label"
               disabled={ isDisabled.value }
               error={ isValid.value === false }
               onClick={ (e: any) => emit('click:label', e) }
@@ -167,38 +148,16 @@ export const FormItem = genericComponent<new () => {
             </Label>
           ) }
 
-          { hasControl && slots.control?.(slotProps.value) }
-
-          { hasDefaultControl && (
-            <div
-              class="ve-form-item__control"
-              onClick={ onClick }
-            >
-              { hasPrependInner && (
-                <div
-                  class="ve-form-item__prepend-inner"
-                  onClick={ e => emit('click:prepend-inner', e) }
-                >
-                  { slots.prependInner?.(slotProps.value) }
-                </div>
-              ) }
-
-              { hasDefault && slots.default?.(slotProps.value) }
-
-              { hasAppendInner && (
-                <div
-                  class="ve-form-item__append-inner"
-                  onClick={ e => emit('click:append-inner', e) }
-                >
-                  { slots.appendInner?.(slotProps.value) }
-                </div>
-              ) }
-            </div>
-          ) }
+          { slots.default?.({
+            ...slotProps.value,
+            props: {
+              class: 've-form-control__control',
+            }
+          }) }
 
           { hasAppend && (
             <div
-              class="ve-form-item__append"
+              class="ve-form-control__append"
               onClick={ e => emit('click:append', e) }
             >
               { props.appendIcon && (
@@ -210,7 +169,7 @@ export const FormItem = genericComponent<new () => {
           ) }
 
           { hasDetails && (
-            <div class="ve-form-item__details">
+            <div class="ve-form-control__details">
               { slots.details?.(slotProps.value) }
             </div>
           ) }

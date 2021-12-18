@@ -31,7 +31,7 @@ export interface InputControlSlot
 export type InputControlSlots = MakeSlots<{
   prependInner: [InputControlSlot],
   prefix: [InputControlSlot],
-  default: [InputControlSlot],
+  default: [InputControlSlot & { props: Record<string, unknown> }],
   suffix: [InputControlSlot],
   appendInner: [InputControlSlot],
   clear: [InputControlSlot],
@@ -145,17 +145,22 @@ export const InputControl = genericComponent<new () => {
 
           <div class="ve-input-control__input">
             { hasPrefix && (
-              <div
+              <span
                 class="ve-input-control__prefix"
                 onClick={ e => emit('click:prefix', e) }
               >
                 { slots.prefix?.(slotProps.value) ?? props.prefix ?? (
                   <Icon icon={ props.prefixIcon } />
                 ) }
-              </div>
+              </span>
             ) }
 
-            { slots.default?.(slotProps.value) }
+            { slots.default?.({
+              ...slotProps.value,
+              props: {
+                class: 've-native-control',
+              }
+            }) }
 
             { hasClear && (
               <FadeTransition>
@@ -175,14 +180,14 @@ export const InputControl = genericComponent<new () => {
             ) }
 
             { hasSuffix && (
-              <div
+              <span
                 class="ve-input-control__suffix"
                 onClick={ e => emit('click:suffix', e) }
               >
                 { slots.suffix?.(slotProps.value) ?? props.suffix ?? (
                   <Icon icon={ props.suffixIcon } />
                 ) }
-              </div>
+              </span>
             ) }
           </div>
 

@@ -6,7 +6,7 @@
 @use './variables' as *;
 
 .ve-selection-control {
-  --ve-selection-control-size-offset: var(--ve-form-item-density-offset, --ve-selection-control-density-offset);
+  --ve-selection-control-size-offset: var(--ve-form-control-density-offset, --ve-selection-control-density-offset);
   --ve-selection-control-size: calc(#{$selection-control-size} + var(--ve-selection-control-size-offset));
   position: relative;
   grid-area: control;
