@@ -11,15 +11,12 @@
   <ve-radio-group
     label="Density"
     v-model="density"
+    messages="Messages"
     :hide-details="hideDetails"
   >
     <ve-radio label="compact" />
     <ve-radio label="comfortable" />
     <ve-radio label="medium" />
-
-    <template #details>
-      Messages
-    </template>
   </ve-radio-group>
 
   <ve-radio-group
@@ -42,14 +39,18 @@
     label="Input"
     placeholder="请输入"
     clearable
+    counter="48"
     :hide-details="hideDetails"
   />
 
-  <ve-textarea
+  <ve-input
     label="Textarea"
+    type="textarea"
     placeholder="请输入"
     clearable
+    rows="3"
     auto-grow
+    counter="255"
     :hide-details="hideDetails"
   />
 

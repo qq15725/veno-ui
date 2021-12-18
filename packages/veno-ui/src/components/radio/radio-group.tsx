@@ -21,22 +21,12 @@ export const RadioGroup = defineComponent({
       type: [Number, String],
       default: 'auto',
     },
-
     ...makeFormControlProps(),
-    ...makeSelectionControlProps(),
-
-    trueIcon: {
-      type: String,
-      default: 'veno-ui:$radioOn',
-    },
-    falseIcon: {
-      type: String,
-      default: 'veno-ui:$radioOff',
-    },
-    type: {
-      type: String,
-      default: 'radio',
-    },
+    ...makeSelectionControlProps({
+      type: 'radio',
+      trueIcon: 'veno-ui:$radioOn',
+      falseIcon: 'veno-ui:$radioOff',
+    }),
   },
 
   setup (props, { attrs, slots }) {
@@ -44,30 +34,30 @@ export const RadioGroup = defineComponent({
     const id = computed(() => props.id || `radio-group-${ uid }`)
 
     useRender(() => {
-      const [formItemAttrs, controlAttrs] = filterInputAttrs(attrs)
-      const [formItemProps, _1] = filterFormControlProps(props)
-      const [controlProps, _2] = filterSelectionControlProps(props)
+      const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
+      const [formControlProps] = filterFormControlProps(props)
+      const [selectionControlProps] = filterSelectionControlProps(props)
 
       return (
         <FormControl
-          { ...formItemAttrs }
-          { ...formItemProps }
+          { ...formControlProps }
           class="ve-radio-group"
+          { ...formControlAttrs }
           v-slots={ {
-            ...slots,
+            prepend: slots.prepend,
+            label: slots.label,
             default: ({ isDisabled, isReadonly }) => (
               <SelectionControlGroup
-                { ...controlProps }
+                { ...selectionControlProps }
                 id={ id.value }
-                trueIcon={ props.trueIcon }
-                falseIcon={ props.falseIcon }
-                type={ props.type }
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }
-                { ...controlAttrs }
+                { ...restAttrs }
                 v-slots={ slots }
               />
             ),
+            append: slots.append,
+            details: slots.details,
           } }
         />
       )

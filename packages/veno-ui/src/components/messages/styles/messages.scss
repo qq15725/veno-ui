@@ -1,0 +1,17 @@
+.ve-messages {
+  color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
+  flex: 1 1 auto;
+  font-size: 12px;
+  min-height: 14px;
+  min-width: 1px; // Ensure takes up space with no messages and inside of flex
+  position: relative;
+
+  &__message {
+    line-height: 12px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    transition-duration: 150ms;
+  }
+}

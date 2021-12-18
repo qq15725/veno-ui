@@ -1,12 +1,56 @@
 @forward 'variables';
-@use 'variables' as *;
+@use 'sass:math';
+@use 'sass:selector';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
+@use 'variables' as *;
 
 .ve-input {
   .ve-native-control {
     flex: 1;
     opacity: 1;
     transition: .15s opacity settings.$standard-easing;
+  }
+
+  &--textarea {
+    $root: &;
+
+    @at-root {
+      @include tools.density('ve-form-control', ('medium': 0, 'comfortable': -2, 'compact': -4)) using($modifier) {
+        @at-root #{selector.append(&, $root)} {
+          --ve-input--textarea-line-height: #{1.75 + math.div($modifier * .125, settings.$spacer) * 1.5};
+        }
+      }
+    }
+
+    .ve-native-control {
+      align-self: stretch;
+      flex: 1 1 auto;
+      outline: none;
+      line-height: var(--ve-input--textarea-line-height, 1.75);
+    }
+
+    &.ve-form-control--layout-horizontal .ve-form-control__label {
+      align-items: start;
+      line-height: var(--ve-input--textarea-line-height, 1.75);
+      padding-block-start: 6px;
+    }
+  }
+
+  &--no-resize .ve-native-control {
+    resize: none;
+  }
+
+  &--auto-grow .ve-native-control {
+    overflow: hidden;
+  }
+
+  &__sizer {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0 !important;
+    pointer-events: none;
   }
 }

@@ -9,31 +9,31 @@ const LAYOUTS = ['horizontal', 'vertical', 'inline'] as const
 import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export type FormItemLayout = typeof LAYOUTS[number]
+export type FormControlLayout = typeof LAYOUTS[number]
 
-export interface FormItemLayoutProps
+export interface FormControlLayoutProps
 {
-  layout: FormItemLayout
+  layout: FormControlLayout
 }
 
 // Composables
-export const makeFormItemLayoutProps = propsFactory({
+export const makeFormControlLayoutProps = propsFactory({
   layout: {
-    type: String as PropType<FormItemLayout>,
+    type: String as PropType<FormControlLayout>,
     default: 'horizontal',
     validator: (v: any) => LAYOUTS.includes(v),
   },
-}, 'form-item-layout')
+}, 'form-control-layout')
 
-export function useFormItemLayoutProps (
-  props: MaybeRef<FormItemLayoutProps>,
+export function useFormControlLayoutProps (
+  props: MaybeRef<FormControlLayoutProps>,
   name = getCurrentInstanceName()
 ) {
-  const formItemLayoutClasses = computed(() => {
+  const formControlLayoutClasses = computed(() => {
     const { layout } = unref(props)
 
     return `${ name }--layout-${ layout }`
   })
 
-  return { formItemLayoutClasses }
+  return { formControlLayoutClasses }
 }

@@ -47,6 +47,7 @@ export const Switch = genericComponent()({
           class="ve-switch"
           v-slots={ {
             prepend: slots.prepend,
+            label: slots.label,
             default: ({ isDisabled, isReadonly, props: formControlProps }) => {
               return (
                 <SelectionControl
@@ -80,6 +81,7 @@ export const Switch = genericComponent()({
               )
             },
             append: slots.append,
+            details: slots.details,
           } }
         />
       )

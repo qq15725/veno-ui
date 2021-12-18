@@ -5,12 +5,12 @@ import { useProxiedModel } from '../proxied-model'
 
 // Composables
 import { makeDensityProps } from '../density'
-import { makeFormItemLayoutProps } from '../form-item-layout'
+import { makeFormControlLayoutProps } from '../form-control-layout'
 
 // Types
 import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
 import type { DensityProps, Density } from '../density'
-import type { FormItemLayoutProps, FormItemLayout } from '../form-item-layout'
+import type { FormControlLayoutProps, FormControlLayout } from '../form-control-layout'
 
 export interface FormProvide
 {
@@ -23,7 +23,7 @@ export interface FormProvide
   unregister: (id: number | string) => void
   items: Ref<FormField[]>
   density: ComputedRef<undefined | Density>
-  layout: ComputedRef<FormItemLayout>
+  layout: ComputedRef<FormControlLayout>
   labelWidth: ComputedRef<number | string>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
@@ -46,7 +46,7 @@ interface FormValidationResult
 
 export const FormKey: InjectionKey<FormProvide> = Symbol.for('veno-ui:form')
 
-export interface FormProps extends DensityProps, FormItemLayoutProps
+export interface FormProps extends DensityProps, FormControlLayoutProps
 {
   disabled: boolean
   fastFail: boolean
@@ -68,7 +68,7 @@ export const makeFormProps = propsFactory({
   },
   labelWidth: [Number, String],
   ...makeDensityProps(),
-  ...makeFormItemLayoutProps(),
+  ...makeFormControlLayoutProps(),
 })
 
 export function createForm (props: FormProps) {

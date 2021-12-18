@@ -18,6 +18,7 @@ import { FadeTransition } from '../transition'
 
 // Types
 import type { PropType } from 'vue'
+import type { InputSlots } from '../input/input'
 import type { Anchor, Origin } from '../../composables/position-strategy'
 import type { FormControlSlot } from '../form-control/form-control'
 import type { InputControlSlot } from '../input-control/input-control'
@@ -28,16 +29,7 @@ type NormaledSelectItem = { label: string, value: string }
 type SelectItem = string | NormaledSelectItem
 
 export const Select = genericComponent<new () => {
-  $slots: MakeSlots<{
-    default: [InputControlSlot],
-    prepend: [FormControlSlot],
-    prependInner: [InputControlSlot],
-    prefix: [InputControlSlot],
-    suffix: [InputControlSlot],
-    appendInner: [InputControlSlot],
-    clear: [InputControlSlot],
-    append: [FormControlSlot],
-  }>
+  $slots: InputSlots
 }>()({
   name: 'VeSelect',
 
@@ -97,9 +89,8 @@ export const Select = genericComponent<new () => {
           v-slots={ {
             activator: ({ props: activatorProps }) => (
               <Input
-                { ...activatorProps }
                 { ...inputProps }
-                { ...attrs }
+                { ...activatorProps }
                 id={ id.value }
                 class={ [
                   've-select',
@@ -110,19 +101,15 @@ export const Select = genericComponent<new () => {
                 readonly
                 modelValue={ current.value?.label }
                 onUpdate:modelValue={ val => model.value = val }
+                { ...attrs }
                 v-slots={ {
-                  prepend: slots.prepend,
-                  prependInner: slots.prependInner,
-                  prefix: slots.prefix,
-                  suffix: slots.suffix,
-                  clear: slots.clear,
+                  ...slots,
                   appendInner: () => (
                     <Icon
                       class="ve-select__icon"
                       icon="veno-ui:$dropdown"
                     />
                   ),
-                  append: slots.append,
                 } }
               />
             ),

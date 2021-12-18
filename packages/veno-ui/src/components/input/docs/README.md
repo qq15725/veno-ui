@@ -10,6 +10,6 @@ category: 数据输入
 
 basic.md case1.md 
 
-slots.md
+autogrow.md slots.md
 
 :::

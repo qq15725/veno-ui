@@ -3,20 +3,21 @@ import './styles/form-control.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, propsFactory, pick, convertToUnit } from '../../utils'
+import { genericComponent, propsFactory, pick, convertToUnit, useRender } from '../../utils'
 
 // Components
 import { Label } from '../label'
+import { Messages } from '../messages'
 import { Icon } from '../icon'
 
 // Composables
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
-import { makeFormItemLayoutProps, useFormItemLayoutProps } from '../../composables/form-item-layout'
+import { makeFormControlLayoutProps, useFormControlLayoutProps } from '../../composables/form-control-layout'
 import { useForm } from '../../composables/form'
 
 // Types
-import type { ExtractPropTypes, ComputedRef, Ref } from 'vue'
+import type { ExtractPropTypes, ComputedRef, PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type FormControlSlot = {
@@ -32,8 +33,10 @@ export type FormControlSlot = {
 
 export type FormControlSlots = MakeSlots<{
   prepend: [FormControlSlot],
+  label: [FormControlSlot],
   default: [FormControlSlot & { props: Record<string, unknown> }],
   append: [FormControlSlot],
+  details: [FormControlSlot],
 }>
 
 export type FormControl = InstanceType<typeof FormControl>
@@ -48,8 +51,14 @@ export const makeFormControlProps = propsFactory({
   label: String,
   labelId: String,
   labelWidth: [String, Number],
-  hideDetails: Boolean,
-  ...makeFormItemLayoutProps(),
+  hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
+  hint: String,
+  messages: {
+    type: [Array, String],
+    default: () => ([]),
+  },
+  persistentHint: Boolean,
+  ...makeFormControlLayoutProps(),
   ...makeDensityProps(),
   ...makeValidationProps(),
 }, 'form-control')
@@ -59,7 +68,10 @@ export const FormControl = genericComponent<new () => {
 }>()({
   name: 'VeFormControl',
 
-  props: makeFormControlProps(),
+  props: {
+    focused: Boolean,
+    ...makeFormControlProps(),
+  },
 
   emits: {
     'click:prepend': (e: MouseEvent) => true,
@@ -77,7 +89,7 @@ export const FormControl = genericComponent<new () => {
         labelWidth: form?.labelWidth.value ?? props.labelWidth,
       }
     })
-    const { formItemLayoutClasses } = useFormItemLayoutProps(computedProps)
+    const { formControlLayoutClasses } = useFormControlLayoutProps(computedProps)
     const { densityClasses } = useDensity(computedProps)
     const {
       errorMessages,
@@ -103,17 +115,30 @@ export const FormControl = genericComponent<new () => {
       validate,
     }))
 
-    return () => {
+    useRender(() => {
       const hasPrepend = !!(slots.prepend || props.prependIcon)
       const hasLabel = !!(slots.label || props.label)
       const hasAppend = !!(slots.append || props.appendIcon)
-      const hasDetails = !props.hideDetails
+      const hasHint = !!(slots.hint || props.hint)
+      const hasMessages = !!(
+        slots.messages ||
+        props.messages?.length ||
+        errorMessages.value.length
+      )
+      const hasDetails = !props.hideDetails || (
+        props.hideDetails === 'auto' &&
+        (hasMessages || hasHint)
+      )
+      const showMessages = hasMessages || (
+        hasHint &&
+        (props.persistentHint || props.focused)
+      )
 
       return (
         <div
           class={ [
             've-form-control',
-            formItemLayoutClasses.value,
+            formControlLayoutClasses.value,
             densityClasses.value,
             validationClasses.value,
           ] }
@@ -170,11 +195,21 @@ export const FormControl = genericComponent<new () => {
 
           { hasDetails && (
             <div class="ve-form-control__details">
+              <Messages
+                active={ showMessages }
+                value={ hasMessages ? props.messages : [props.hint] }
+                v-slots={ { default: slots.messages } }
+              />
+
               { slots.details?.(slotProps.value) }
             </div>
           ) }
         </div>
       )
+    })
+
+    return {
+      computedProps
     }
   }
 })

@@ -5,13 +5,10 @@
 ```html
 <ve-row>
   <ve-col cols="12">
-    <ve-input autosize placeholder="自动调整尺寸" />    
-  </ve-col>
-  
-  <ve-col cols="12">
     <ve-input
-      textarea
-      autosize
+      type="textarea"
+      auto-grow
+      rows="1"
       placeholder="自动调整尺寸"
     />
   </ve-col>

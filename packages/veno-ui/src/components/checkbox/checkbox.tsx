@@ -37,6 +37,7 @@ export const Checkbox = genericComponent()({
           class="ve-checkbox"
           v-slots={ {
             prepend: slots.prepend,
+            label: slots.label,
             default: ({ isDisabled, isReadonly }) => {
               return (
                 <SelectionControl
@@ -54,6 +55,7 @@ export const Checkbox = genericComponent()({
               )
             },
             append: slots.append,
+            details: slots.details,
           } }
         />
       )
