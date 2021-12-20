@@ -33,7 +33,7 @@ $ npm install veno-ui
 
 ## 例子
 
-```typescript{4-9}
+```typescript
 import { createApp } from 'vue'
 import App from './App.vue'
 
@@ -61,4 +61,4 @@ app.mount('#app')
 
 ## License
 
-[MIT 协议](./LICENSE)
+[MIT 协议](https://github.com/qq15725/veno-ui/blob/master/LICENSE)
