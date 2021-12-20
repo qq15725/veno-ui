@@ -7,12 +7,12 @@
   :density="density"
   :direction="direction"
   label-width="100"
+  :hide-details="hideDetails"
 >
   <ve-radio-group
     label="Density"
     v-model="density"
     messages="Messages"
-    :hide-details="hideDetails"
   >
     <ve-radio label="compact" />
     <ve-radio label="comfortable" />
@@ -22,7 +22,6 @@
   <ve-radio-group
     label="Direction"
     v-model="direction"
-    :hide-details="hideDetails"
   >
     <ve-radio label="horizontal" />
     <ve-radio label="vertical" />
@@ -31,7 +30,6 @@
   <ve-switch
     label="HideDetails"
     v-model="hideDetails"
-    :hide-details="hideDetails"
   />
 
   <ve-input
@@ -39,7 +37,6 @@
     placeholder="请输入"
     clearable
     counter="48"
-    :hide-details="hideDetails"
   />
 
   <ve-input
@@ -50,7 +47,6 @@
     rows="3"
     auto-grow
     counter="255"
-    :hide-details="hideDetails"
   />
 
   <ve-select
@@ -62,30 +58,26 @@
     { label: '选项3', value: 3 },
   ]"
     clearable
-    :hide-details="hideDetails"
   />
 
   <ve-switch
     label="Switch"
-    :hide-details="hideDetails"
   />
 
   <ve-checkbox
     label="Checkbox"
-    :hide-details="hideDetails"
   >
     Checkbox One
   </ve-checkbox>
 
   <ve-radio-group
     label="Radio"
-    :hide-details="hideDetails"
   >
     <ve-radio true-value="1">Radio One</ve-radio>
     <ve-radio true-value="2">Radio Two</ve-radio>
   </ve-radio-group>
 
-  <ve-form-control :hide-details="hideDetails">
+  <ve-form-control>
     <template #prepend><div style="width: 100px;"></div></template>
     <ve-button>提交</ve-button>
   </ve-form-control>

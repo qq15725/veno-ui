@@ -9,6 +9,8 @@ import { provideDefaults } from '../../composables/defaults'
 import { makeDensityProps } from '../../composables/density'
 
 // Types
+import type { PropType } from 'vue'
+
 export type Form = InstanceType<typeof Form>
 
 export const Form = defineComponent({
@@ -16,6 +18,7 @@ export const Form = defineComponent({
 
   props: {
     labelWidth: [Number, String],
+    hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
     ...makeFormControlDirectionProps(),
     ...makeDensityProps(),
     ...makeFormProps()
@@ -35,6 +38,7 @@ export const Form = defineComponent({
       density: computed(() => props.density),
       direction: computed(() => props.direction),
       labelWidth: computed(() => props.labelWidth),
+      hideDetails: computed(() => props.hideDetails),
     })
 
     provideDefaults(reactive({
