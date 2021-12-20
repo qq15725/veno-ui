@@ -13,9 +13,7 @@ import { Icon } from '../icon'
 // Composables
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
-import { makeFormControlLayoutProps, useFormControlLayoutProps } from '../../composables/form-control-layout'
-import { useForm } from '../../composables/form'
-
+import { makeFormControlDirectionProps, useFormControlDirectionProps } from '../../composables/form-control-direction'
 // Types
 import type { ExtractPropTypes, ComputedRef, PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
@@ -58,7 +56,7 @@ export const makeFormControlProps = propsFactory({
     default: () => ([]),
   },
   persistentHint: Boolean,
-  ...makeFormControlLayoutProps(),
+  ...makeFormControlDirectionProps(),
   ...makeDensityProps(),
   ...makeValidationProps(),
 }, 'form-control')
@@ -80,17 +78,8 @@ export const FormControl = genericComponent<new () => {
   },
 
   setup (props, { slots, emit }) {
-    const form = useForm()
-    const computedProps = computed(() => {
-      return {
-        ...props,
-        layout: form?.layout.value ?? props.layout,
-        density: form?.density.value ?? props.density,
-        labelWidth: form?.labelWidth.value ?? props.labelWidth,
-      }
-    })
-    const { formControlLayoutClasses } = useFormControlLayoutProps(computedProps)
-    const { densityClasses } = useDensity(computedProps)
+    const { formControlDirectionClasses } = useFormControlDirectionProps(props)
+    const { densityClasses } = useDensity(props)
     const {
       errorMessages,
       isDisabled,
@@ -138,7 +127,7 @@ export const FormControl = genericComponent<new () => {
         <div
           class={ [
             've-form-control',
-            formControlLayoutClasses.value,
+            formControlDirectionClasses.value,
             densityClasses.value,
             validationClasses.value,
           ] }
@@ -164,7 +153,7 @@ export const FormControl = genericComponent<new () => {
               onClick={ (e: any) => emit('click:label', e) }
               for={ props.labelId }
               style={ {
-                width: convertToUnit(computedProps.value.labelWidth),
+                width: convertToUnit(props.labelWidth),
               } }
             >
               { props.label }
@@ -208,8 +197,6 @@ export const FormControl = genericComponent<new () => {
       )
     })
 
-    return {
-      computedProps
-    }
+    return {}
   }
 })

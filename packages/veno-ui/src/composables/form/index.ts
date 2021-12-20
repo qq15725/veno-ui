@@ -3,14 +3,8 @@ import { computed, inject, provide, ref } from 'vue'
 import { getCurrentInstance, propsFactory } from '../../utils'
 import { useProxiedModel } from '../proxied-model'
 
-// Composables
-import { makeDensityProps } from '../density'
-import { makeFormControlLayoutProps } from '../form-control-layout'
-
 // Types
 import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
-import type { DensityProps, Density } from '../density'
-import type { FormControlLayoutProps, FormControlLayout } from '../form-control-layout'
 
 export interface FormProvide
 {
@@ -22,9 +16,6 @@ export interface FormProvide
   ) => void
   unregister: (id: number | string) => void
   items: Ref<FormField[]>
-  density: ComputedRef<undefined | Density>
-  layout: ComputedRef<FormControlLayout>
-  labelWidth: ComputedRef<number | string>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isValidating: Ref<boolean>
@@ -46,14 +37,13 @@ interface FormValidationResult
 
 export const FormKey: InjectionKey<FormProvide> = Symbol.for('veno-ui:form')
 
-export interface FormProps extends DensityProps, FormControlLayoutProps
+export interface FormProps
 {
   disabled: boolean
   fastFail: boolean
   lazyValidation: boolean
   readonly: boolean
   modelValue: boolean | null
-  labelWidth: number | string
   'onUpdate:modelValue': ((val: boolean | null) => void) | undefined
 }
 
@@ -66,18 +56,12 @@ export const makeFormProps = propsFactory({
     type: Boolean as PropType<boolean | null>,
     default: null,
   },
-  labelWidth: [Number, String],
-  ...makeDensityProps(),
-  ...makeFormControlLayoutProps(),
 })
 
 export function createForm (props: FormProps) {
   const vm = getCurrentInstance('createForm')
   const model = useProxiedModel(props, 'modelValue')
 
-  const layout = computed(() => props.layout)
-  const density = computed(() => props.density)
-  const labelWidth = computed(() => props.labelWidth)
   const isDisabled = computed(() => props.disabled)
   const isReadonly = computed(() => props.readonly)
   const isValidating = ref(false)
@@ -147,9 +131,6 @@ export function createForm (props: FormProps) {
         return item.id !== id
       })
     },
-    layout,
-    density,
-    labelWidth,
     isDisabled,
     isReadonly,
     isValidating,

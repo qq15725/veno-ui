@@ -5,7 +5,7 @@
 ```html
 <ve-form
   :density="density"
-  :layout="layout"
+  :direction="direction"
   label-width="100"
 >
   <ve-radio-group
@@ -20,13 +20,12 @@
   </ve-radio-group>
 
   <ve-radio-group
-    label="Layout"
-    v-model="layout"
+    label="Direction"
+    v-model="direction"
     :hide-details="hideDetails"
   >
     <ve-radio label="horizontal" />
     <ve-radio label="vertical" />
-    <ve-radio label="inline" />
   </ve-radio-group>
 
   <ve-switch
@@ -100,7 +99,7 @@ export default defineComponent({
   setup () {
     return {
       density: ref('medium'),
-      layout: ref('horizontal'),
+      direction: ref('horizontal'),
       hideDetails: ref(false),
     }
   }

@@ -1,8 +1,12 @@
 // Utils
+import { reactive, computed } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
 import { makeFormProps, createForm } from '../../composables/form'
+import { makeFormControlDirectionProps } from '../../composables/form-control-direction'
+import { provideDefaults } from '../../composables/defaults'
+import { makeDensityProps } from '../../composables/density'
 
 // Types
 export type Form = InstanceType<typeof Form>
@@ -11,6 +15,9 @@ export const Form = defineComponent({
   name: 'VeForm',
 
   props: {
+    labelWidth: [Number, String],
+    ...makeFormControlDirectionProps(),
+    ...makeDensityProps(),
     ...makeFormProps()
   },
 
@@ -23,6 +30,23 @@ export const Form = defineComponent({
 
   setup (props, { slots }) {
     const form = createForm(props)
+
+    const DefaultProps = reactive({
+      density: computed(() => props.density),
+      direction: computed(() => props.direction),
+      labelWidth: computed(() => props.labelWidth),
+    })
+
+    provideDefaults(reactive({
+      defaults: {
+        VeInput: DefaultProps,
+        VeSelect: DefaultProps,
+        VeRadioGroup: DefaultProps,
+        VeSwitch: DefaultProps,
+        VeCheckbox: DefaultProps,
+        VeFormControl: DefaultProps,
+      }
+    }))
 
     useRender(() => {
       return (

@@ -147,7 +147,7 @@ export const Input = genericComponent<new () => {
 
     onMounted(calculateInputHeight)
     watch(model, calculateInputHeight)
-    watch(() => formControlRef.value?.computedProps, calculateInputHeight)
+    watch(() => props.density, calculateInputHeight)
     watch(() => props.rows, calculateInputHeight)
     watch(() => props.maxRows, calculateInputHeight)
 

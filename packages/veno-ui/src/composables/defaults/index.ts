@@ -29,7 +29,9 @@ export function useDefaults () {
 export function provideDefaults (props?: { defaults?: DefaultsInstance }) {
   const defaults = useDefaults()
 
-  const newDefaults = computed(() => mergeDeep(defaults.value, props?.defaults) as any as DefaultsInstance)
+  const newDefaults = computed(() => {
+    return mergeDeep(defaults.value, props?.defaults) as any as DefaultsInstance
+  })
 
   provide(DefaultsSymbol, newDefaults)
 

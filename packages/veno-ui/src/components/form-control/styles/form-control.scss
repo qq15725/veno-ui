@@ -12,19 +12,14 @@
   grid-template-rows: auto auto;
   @include tools.use-density((densities: $form-control-density));
 
-  &--layout-inline + &--layout-inline {
-    margin-inline-start: 16px;
-  }
-
-  &--layout-inline,
-  &--layout-horizontal {
+  &--horizontal {
     #{$root}__label {
       margin-inline-end: 16px;
       justify-content: end;
     }
   }
 
-  &--layout-vertical {
+  &--vertical {
     grid-template-areas: "a label b" "prepend control append" "c details d";
     grid-template-columns: max-content auto max-content;
     grid-template-rows: auto auto;
@@ -32,10 +27,6 @@
     #{$root}__label {
       margin-block-end: 8px;
     }
-  }
-
-  &--layout-inline {
-    display: inline-grid;
   }
 
   &--disabled {

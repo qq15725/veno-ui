@@ -2,8 +2,8 @@
 import './styles/radio-group.scss'
 
 // Utils
-import { computed, defineComponent } from 'vue'
-import { filterInputAttrs, getUid, useRender } from '../../utils'
+import { computed } from 'vue'
+import { defineComponent, filterInputAttrs, getUid, useRender } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
