@@ -70,7 +70,7 @@ export const Code = defineComponent({
       const el = codeRef.value
       if (!el) return
       el.innerHTML = await highlighter.value?.highlight(
-        decodeURIComponent(code.value),
+        code.value,
         props.language
       )
     }
@@ -114,7 +114,7 @@ export const Code = defineComponent({
           ) }
 
           { hasPreformatted && (
-            <pre class="ve-code__preformatted"><code ref={ codeRef } /></pre>
+            <pre class="ve-code__preformatted"><code ref={ codeRef }>{ code.value }</code></pre>
           ) }
 
           { hasLanguage && (
