@@ -4,6 +4,7 @@ import { mergeDeep } from './utils'
 
 // Composables
 import { createTheme, ThemeSymbol } from './composables/theme'
+import { createHighlighter, HighlighterSymbol } from './composables/highlighter'
 import { defaultSets, IconSymbol } from './composables/icon'
 import { createDisplay, DisplaySymbol } from './composables/display'
 import { createDefaults, DefaultsSymbol } from './composables/defaults'
@@ -13,6 +14,7 @@ import { venoUiSvg } from './iconsets/veno-ui-svg'
 
 // Types
 import type { App, ComponentPublicInstance, InjectionKey } from 'vue'
+import type { HighlighterOptions } from './composables/highlighter'
 import type { ThemeOptions } from './composables/theme'
 import type { IconOptions } from './composables/icon'
 import type { DisplayOptions } from './composables/display'
@@ -23,6 +25,7 @@ export interface VenoUiOptions
   componentPrefix?: string,
   components?: Record<string, any>
   directives?: Record<string, any>
+  highlighter?: HighlighterOptions
   defaults?: DefaultsOptions
   theme?: ThemeOptions
   icons?: IconOptions
@@ -49,6 +52,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     app.provide(DefaultsSymbol, createDefaults(options.defaults))
     app.provide(ThemeSymbol, createTheme(options.theme))
     app.provide(DisplaySymbol, createDisplay(options.display))
+    app.provide(HighlighterSymbol, createHighlighter(options.highlighter))
     app.provide(IconSymbol, mergeDeep({
       defaultSet: 'class',
       sets: {

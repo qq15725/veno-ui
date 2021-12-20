@@ -7,6 +7,5 @@ export default { name: 'App' }
 </template>
 
 <style>
-@import './styles/vars.css';
 @import './styles/layout.css';
 </style>

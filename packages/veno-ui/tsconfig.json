@@ -12,7 +12,8 @@
     "jsx": "preserve",
     "types": [
       "node",
-      "vue-router"
+      "vue-router",
+      "prismjs"
     ]
   },
   "include": [

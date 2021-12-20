@@ -1,7 +1,7 @@
 <h1 align="center">Veno UI</h1>
 
 <p align="center">
-  <a href="https://github.com/qq15725/veno-ui/blob/master/LICENSE">
+  <a href="https://github.com/qq15725/veno-ui/blob/master/LICENSE" class="mr-3">
     <img src="https://img.shields.io/npm/l/veno-ui.svg" alt="License">
   </a>
   <a href="https://www.npmjs.com/package/veno-ui">
@@ -28,24 +28,24 @@
 ## 安装
 
 ```shell
-npm i veno-ui
+$ npm install veno-ui
 ```
 
 ## 例子
 
-```typescript
+```typescript{4-9}
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// VenoUI
 import 'veno-ui/styles'
 import { createVenoUi } from 'veno-ui'
 import * as components from 'veno-ui/components'
+const venoUi = createVenoUi({
+  components
+})
 
 const app = createApp(App)
-app.use(createVenoUi({
-  components
-}))
+app.use(venoUi)
 app.mount('#app')
 ```
 

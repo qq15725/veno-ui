@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HighlightCode from './HighlightCode.vue'
 import { ref } from 'vue'
 
 const props = defineProps<{
@@ -89,14 +88,16 @@ const focusBtn = () => {
       </ve-grid>
     </template>
 
-    <ve-expand-transition>
-      <highlight-code
-          v-if="isActive"
-          :code="props.code"
-      />
-    </ve-expand-transition>
-
     <ve-material :theme="theme" border="0">
+      <ve-expand-transition>
+        <ve-code
+            v-if="isActive"
+            :value="props.code"
+            language="vue"
+            style="border-radius: 0;"
+        />
+      </ve-expand-transition>
+
       <ve-button
           ref="btn"
           absolute

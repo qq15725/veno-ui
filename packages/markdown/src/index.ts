@@ -6,6 +6,7 @@ import { slugify } from './utils'
 // Plugins
 import anchor from 'markdown-it-anchor'
 import {
+  fencePlugin,
   componentPlugin,
   paragraphPlugin,
   headerPlugin,
@@ -13,8 +14,6 @@ import {
   hoistPlugin,
   includePlugin,
   demoPlugin,
-  highlightLinePlugin,
-  preWrapperPlugin,
   linkPlugin,
 } from './plugins'
 
@@ -37,6 +36,7 @@ export function createMarkdown (options?: Options): Markdown {
 
   return (
     createBaseMarkdown(options)
+      .use(fencePlugin)
       .use(componentPlugin)
       .use(headerPlugin)
       .use(paragraphPlugin)
@@ -44,8 +44,6 @@ export function createMarkdown (options?: Options): Markdown {
       .use(hoistPlugin)
       .use(includePlugin)
       .use(demoPlugin)
-      .use(highlightLinePlugin)
-      .use(preWrapperPlugin)
       .use(linkPlugin)
       // 第三方插件
       .use(anchor, {
