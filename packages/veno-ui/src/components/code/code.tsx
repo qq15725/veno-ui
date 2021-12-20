@@ -29,6 +29,14 @@ export const Code = defineComponent({
     },
 
     /**
+     * @zh: 显示代码语言
+     */
+    showLanguage: {
+      type: Boolean,
+      default: true,
+    },
+
+    /**
      * @zh: 显示行号
      */
     showLineNumbers: Boolean,
@@ -45,6 +53,7 @@ export const Code = defineComponent({
     const code = computed(() => {
       return decodeURIComponent(props.value ?? '')
         .replace(/\n$/, '')
+        .replace(/^\n/, '')
     })
     const lineNumbers = computed(() => {
       return code.value.split('\n').map((v, i) => i + 1)
@@ -82,7 +91,7 @@ export const Code = defineComponent({
     return () => {
       const hasHighlightedCode = !!code.value
       const hasLineNumbers = hasHighlightedCode && props.showLineNumbers
-      const hasLanguage = hasHighlightedCode && props.language
+      const hasLanguage = hasHighlightedCode && props.showLanguage && props.language
       const hasPreformatted = hasHighlightedCode
       const Tag = hasHighlightedCode ? 'div' : 'code'
 
