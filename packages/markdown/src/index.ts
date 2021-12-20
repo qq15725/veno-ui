@@ -8,6 +8,7 @@ import anchor from 'markdown-it-anchor'
 import {
   fencePlugin,
   componentPlugin,
+  containerPlugin,
   paragraphPlugin,
   headerPlugin,
   codePlugin,
@@ -38,6 +39,7 @@ export function createMarkdown (options?: Options): Markdown {
     createBaseMarkdown(options)
       .use(fencePlugin)
       .use(componentPlugin)
+      .use(containerPlugin)
       .use(headerPlugin)
       .use(paragraphPlugin)
       .use(codePlugin)

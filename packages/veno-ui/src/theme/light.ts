@@ -6,7 +6,7 @@ export default {
     primary: '#165DFF',
     secondary: '#F2F3F5',
     success: '#00B42A',
-    warning: '#FF7D00',
+    warning: '#f0a020',
     error: '#F53F3F',
     info: '#2080F0',
   },

@@ -1,4 +1,5 @@
 export * from './component'
+export * from './containers'
 export * from './header'
 export * from './paragraph'
 export * from './code'

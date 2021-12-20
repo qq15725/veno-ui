@@ -1,5 +1,5 @@
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
+import type { PluginSimple } from '../markdown'
 
 export const fencePlugin: PluginSimple = md => {
   const escapeHtml = md.utils.escapeHtml
