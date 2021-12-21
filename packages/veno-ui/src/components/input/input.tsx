@@ -15,6 +15,9 @@ import { Counter } from '../counter'
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
+// Directives
+import intersect from '../../directives/intersect'
+
 // Types
 import type { PropType } from 'vue'
 import type { FormControlSlot } from '../form-control/form-control'
@@ -77,6 +80,8 @@ export const Input = genericComponent<new () => {
   name: 'VeInput',
 
   inheritAttrs: false,
+
+  directives: { intersect },
 
   props: makeInputProps(),
 
