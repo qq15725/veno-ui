@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/markdown",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A VenoUI Markdown Renderer",
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/markdown",
   "license": "MIT",
