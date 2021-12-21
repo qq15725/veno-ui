@@ -46,8 +46,8 @@ export const Form = defineComponent({
         VeInput: DefaultProps,
         VeSelect: DefaultProps,
         VeRadioGroup: DefaultProps,
+        VeCheckboxGroup: DefaultProps,
         VeSwitch: DefaultProps,
-        VeCheckbox: DefaultProps,
         VeFormControl: DefaultProps,
       }
     }))

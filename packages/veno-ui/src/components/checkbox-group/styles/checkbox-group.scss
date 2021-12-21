@@ -3,12 +3,12 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-radio-group {
+.ve-checkbox-group {
   .ve-form-control__label {
     margin-inline-end: 8px;
   }
 
-  > .ve-selection-control-group {
+  > .ve-selection-group-control {
     display: flex;
     flex-direction: row;
     height: var(--ve-form-control-height);

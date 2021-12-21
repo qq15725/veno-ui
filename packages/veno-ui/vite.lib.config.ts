@@ -18,7 +18,7 @@ export default defineConfig(async ({ mode }) => {
       minify: false,
       brotliSize: false,
       sourcemap: true,
-      emptyOutDir: false,
+      emptyOutDir: true,
       lib: {
         entry: 'src/entry.ts',
         name: 'VenoUi',

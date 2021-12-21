@@ -60,17 +60,19 @@ export function useSelectionControl (
     props.falseValue !== undefined ? props.falseValue : false
   ))
   const isMultiple = computed(() => (
-    group?.multiple.value ||
-    !!props.multiple ||
-    (props.multiple == null && Array.isArray(modelValue.value))
+    group?.multiple.value
+    || !!props.multiple
+    || (props.multiple == null && Array.isArray(modelValue.value))
   ))
   const model = computed({
     get () {
       const val = group ? group.modelValue.value : modelValue.value
 
-      return isMultiple.value
-        ? val.some((v: any) => props.valueComparator(v, trueValue.value))
-        : props.valueComparator(val, trueValue.value)
+      if (isMultiple.value) {
+        return (val || []).some((v: any) => props.valueComparator(v, trueValue.value))
+      }
+
+      return props.valueComparator(val, trueValue.value)
     },
     set (val: boolean) {
       const currentValue = val ? trueValue.value : falseValue.value
@@ -78,9 +80,14 @@ export function useSelectionControl (
       let newVal = currentValue
 
       if (isMultiple.value) {
-        newVal = val
-          ? [...wrapInArray(modelValue.value), currentValue]
-          : wrapInArray(modelValue.value).filter((item: any) => !props.valueComparator(item, trueValue.value))
+        const oldVal = group ? group.modelValue.value : modelValue.value
+
+        if (val) {
+          newVal = [...wrapInArray(oldVal), currentValue]
+        } else {
+          newVal = wrapInArray(oldVal)
+              .filter((v: any) => !props.valueComparator(v, trueValue.value))
+        }
       }
 
       if (group) {

@@ -12,7 +12,7 @@ export default defineConfig(async ({ mode }) => {
     build: {
       target: 'modules',
       outDir: 'dist',
-      emptyOutDir: false,
+      emptyOutDir: true,
       minify: false,
       brotliSize: false,
       sourcemap: true,

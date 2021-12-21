@@ -48,12 +48,16 @@ export const useSelectionGroupControl = (
   const uid = getUid()
   const id = computed(() => props.id || `selection-control-group-${uid}`)
   const name = computed(() => props.name || id.value)
+  const multiple = computed(() => {
+    return !!props.multiple
+      || (props.multiple == null && Array.isArray(modelValue.value))
+  })
 
   const group = {
     disabled: toRef(props, 'disabled'),
     inline: toRef(props, 'inline'),
     modelValue,
-    multiple: computed(() => !!props.multiple || (props.multiple == null && Array.isArray(modelValue.value))),
+    multiple,
     id,
     name,
     falseIcon: toRef(props, 'falseIcon'),

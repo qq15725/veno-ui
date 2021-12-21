@@ -3,13 +3,16 @@ import './styles/radio-group.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent, filterInputAttrs, getUid, useRender } from '../../utils'
+import { defineComponent, filterInputAttrs, getUid } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
 import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { SelectionGroupControl } from '../selection-group-control'
-import { makeSelectionGroupControlProps, filterSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
+import {
+  makeSelectionGroupControlProps,
+  filterSelectionGroupControlProps
+} from '../selection-group-control/selection-group-control'
 
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
@@ -33,19 +36,20 @@ export const RadioGroup = defineComponent({
     const uid = getUid()
     const id = computed(() => props.id || `ve-radio-group-${ uid }`)
 
-    useRender(() => {
+    return () => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
       const [formControlProps] = filterFormControlProps(props)
       const [selectionGroupControlProps] = filterSelectionGroupControlProps(props)
+      const { default: defaultSlot, ...restSlots } = slots
 
       return (
         <FormControl
           { ...formControlProps }
           class="ve-radio-group"
           { ...formControlAttrs }
-          v-slots={ {
-            prepend: slots.prepend,
-            label: slots.label,
+        >
+          { {
+            ...restSlots,
             default: ({ isDisabled, isReadonly }) => (
               <SelectionGroupControl
                 { ...selectionGroupControlProps }
@@ -53,16 +57,13 @@ export const RadioGroup = defineComponent({
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }
                 { ...restAttrs }
-                v-slots={ slots }
-              />
+              >
+                { { default: defaultSlot } }
+              </SelectionGroupControl>
             ),
-            append: slots.append,
-            details: slots.details,
           } }
-        />
+        </FormControl>
       )
-    })
-
-    return {}
-  },
+    }
+  }
 })

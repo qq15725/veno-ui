@@ -43,6 +43,6 @@ export const SelectionGroupControl = defineComponent({
       )
     })
 
-    return {}
+    return group
   },
 })

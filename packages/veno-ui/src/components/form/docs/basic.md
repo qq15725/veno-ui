@@ -64,11 +64,13 @@
     label="Switch"
   />
 
-  <ve-checkbox
+  <ve-checkbox-group
     label="Checkbox"
   >
-    Checkbox One
-  </ve-checkbox>
+    <ve-checkbox label="Checkbox 1"/>
+    <ve-checkbox label="Checkbox 2"/>
+    <ve-checkbox label="Checkbox 3"/>
+  </ve-checkbox-group>
 
   <ve-radio-group
     label="Radio"

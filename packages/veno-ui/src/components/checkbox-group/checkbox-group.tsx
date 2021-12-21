@@ -1,3 +1,6 @@
+// Styles
+import './styles/checkbox-group.scss'
+
 // Utils
 import { computed } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
@@ -20,6 +23,7 @@ export const CheckboxGroup = defineComponent({
       type: 'checkbox',
       falseIcon: 'veno-ui:$checkboxOff',
       trueIcon: 'veno-ui:$checkboxOn',
+      multiple: true,
     }),
   },
 
@@ -35,6 +39,7 @@ export const CheckboxGroup = defineComponent({
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
       const [formControlProps] = filterFormControlProps(props)
       const [selectionGroupControlProps] = filterSelectionGroupControlProps(props)
+      const { default: defaultSlot, ...restSlots } = slots
 
       return (
         <FormControl
@@ -43,8 +48,7 @@ export const CheckboxGroup = defineComponent({
           { ...formControlAttrs }
         >
           { {
-            prepend: slots.prepend,
-            label: slots.label,
+            ...restSlots,
             default: ({ isDisabled, isReadonly }) => {
               return (
                 <SelectionGroupControl
@@ -54,12 +58,10 @@ export const CheckboxGroup = defineComponent({
                   readonly={ isReadonly.value }
                   { ...restAttrs }
                 >
-                  { slots }
+                  { { default: defaultSlot } }
                 </SelectionGroupControl>
               )
-            },
-            append: slots.append,
-            details: slots.details,
+            }
           } }
         </FormControl>
       )

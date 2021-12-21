@@ -31,7 +31,7 @@ export const Checkbox = defineComponent({
           class="ve-checkbox"
           { ...props }
         >
-          { { ...slots } }
+          { slots }
         </SelectionControl>
       )
     }
