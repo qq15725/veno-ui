@@ -49,7 +49,7 @@ export default defineConfig(async ({ mode }) => {
     },
     plugins: [
       vue(),
-      vueJsx(),
+      vueJsx({ optimize: true, enableObjectSlots: true }),
     ],
     define: {
       __VENO_UI_VERSION__: JSON.stringify(venoUiPackage.version)

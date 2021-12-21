@@ -2,7 +2,7 @@
 import './styles/radio.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { defineComponent } from '../../utils'
 
 // Components
 import { SelectionControl } from '../selection-control'

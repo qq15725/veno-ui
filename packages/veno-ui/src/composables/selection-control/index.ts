@@ -3,7 +3,7 @@ import { computed, inject } from 'vue'
 import { deepEqual, propsFactory, wrapInArray, getCurrentInstanceName } from '../../utils'
 
 // Composables
-import { SelectionControlGroupSymbol } from '../selection-control-group'
+import { SelectionGroupControlSymbol } from '../selection-group-control'
 import { makeDensityProps, useDensity } from '../density'
 import { makeThemeProps } from '../theme'
 import { useProxiedModel } from '../proxied-model'
@@ -46,7 +46,7 @@ export function useSelectionControl (
   },
   name = getCurrentInstanceName()
 ) {
-  const group = inject(SelectionControlGroupSymbol, undefined)
+  const group = inject(SelectionGroupControlSymbol, undefined)
   const { densityClasses } = useDensity(props, name)
   const modelValue = useProxiedModel(props, 'modelValue')
   const trueValue = computed(() => (

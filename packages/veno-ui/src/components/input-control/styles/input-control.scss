@@ -88,6 +88,7 @@
     padding-block-start: var(--ve-native-control-padding-top, 0);
     padding-block-end: var(--ve-native-control-padding-bottom, 0);
     opacity: var(--ve-high-emphasis-opacity);
+    cursor: inherit;
 
     &:focus,
     &:active {

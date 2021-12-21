@@ -128,6 +128,9 @@ export const FormControl = genericComponent<new () => {
         <div
           class={ [
             've-form-control',
+            {
+              've-form-control--hide-details': props.hideDetails,
+            },
             formControlDirectionClasses.value,
             densityClasses.value,
             validationClasses.value,

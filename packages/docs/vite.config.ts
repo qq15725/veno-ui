@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       vueDocs(),
-      vueJsx(),
+      vueJsx({ optimize: true, enableObjectSlots: true }),
       legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']

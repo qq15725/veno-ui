@@ -1,25 +1,17 @@
 {
-  "compilerOptions": {
-    "outDir": "lib",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "strict": true,
-    "allowJs": true,
-    // "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
-    "types": [
-      "node",
-      "vue-router",
-      "prismjs"
-    ]
-  },
+  "extends": "../../tsconfig.json",
   "include": [
     "src"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "paths": {
+      "types": [
+        "node",
+        "vue-router",
+        "prismjs"
+      ]
+    }
+  }
 }

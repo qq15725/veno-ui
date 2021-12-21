@@ -8,8 +8,8 @@ import { defineComponent, filterInputAttrs, getUid, useRender } from '../../util
 // Components
 import { FormControl } from '../form-control'
 import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
-import { SelectionControlGroup } from '../selection-control'
-import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
+import { SelectionGroupControl } from '../selection-group-control'
+import { makeSelectionGroupControlProps, filterSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
 
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
@@ -22,7 +22,7 @@ export const RadioGroup = defineComponent({
       default: 'auto',
     },
     ...makeFormControlProps(),
-    ...makeSelectionControlProps({
+    ...makeSelectionGroupControlProps({
       type: 'radio',
       trueIcon: 'veno-ui:$radioOn',
       falseIcon: 'veno-ui:$radioOff',
@@ -31,12 +31,12 @@ export const RadioGroup = defineComponent({
 
   setup (props, { attrs, slots }) {
     const uid = getUid()
-    const id = computed(() => props.id || `radio-group-${ uid }`)
+    const id = computed(() => props.id || `ve-radio-group-${ uid }`)
 
     useRender(() => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
       const [formControlProps] = filterFormControlProps(props)
-      const [selectionControlProps] = filterSelectionControlProps(props)
+      const [selectionGroupControlProps] = filterSelectionGroupControlProps(props)
 
       return (
         <FormControl
@@ -47,8 +47,8 @@ export const RadioGroup = defineComponent({
             prepend: slots.prepend,
             label: slots.label,
             default: ({ isDisabled, isReadonly }) => (
-              <SelectionControlGroup
-                { ...selectionControlProps }
+              <SelectionGroupControl
+                { ...selectionGroupControlProps }
                 id={ id.value }
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }

@@ -2,20 +2,18 @@
 import './styles/checkbox.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Components
-import { FormControl } from '../form-control'
-import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { SelectionControl } from '../selection-control'
-import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
+import { makeSelectionControlProps } from '../selection-control/selection-control'
 
-export const Checkbox = genericComponent()({
+export const Checkbox = defineComponent({
   name: 'VeCheckbox',
 
   props: {
-    ...makeFormControlProps(),
     ...makeSelectionControlProps({
+      type: 'checkbox',
       falseIcon: 'veno-ui:$checkboxOff',
       trueIcon: 'veno-ui:$checkboxOn',
       color: 'primary',
@@ -26,38 +24,15 @@ export const Checkbox = genericComponent()({
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots, emit }) {
+  setup (props, { slots }) {
     return () => {
-      const [formItemProps] = filterFormControlProps(props)
-      const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
-
       return (
-        <FormControl
-          { ...formItemProps }
+        <SelectionControl
           class="ve-checkbox"
-          v-slots={ {
-            prepend: slots.prepend,
-            label: slots.label,
-            default: ({ isDisabled, isReadonly }) => {
-              return (
-                <SelectionControl
-                  { ...selectionInputProps }
-                  trueIcon={ props.trueIcon }
-                  falseIcon={ props.falseIcon }
-                  type="checkbox"
-                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
-                  disabled={ isDisabled.value }
-                  readonly={ isReadonly.value }
-                  v-slots={ {
-                    label: slots.default,
-                  } }
-                />
-              )
-            },
-            append: slots.append,
-            details: slots.details,
-          } }
-        />
+          { ...props }
+        >
+          { { ...slots } }
+        </SelectionControl>
       )
     }
   }

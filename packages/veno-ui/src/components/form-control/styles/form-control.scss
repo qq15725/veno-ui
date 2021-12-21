@@ -38,6 +38,12 @@
     }
   }
 
+  @at-root {
+    &--hide-details + &--hide-details {
+      margin-top: 8px;
+    }
+  }
+
   &__prepend,
   &__append,
   &__control {

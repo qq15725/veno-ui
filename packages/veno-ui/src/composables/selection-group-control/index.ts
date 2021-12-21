@@ -21,9 +21,9 @@ export interface SelectionGroupContext {
   type: Ref<string | undefined>
 }
 
-export const SelectionControlGroupSymbol: InjectionKey<SelectionGroupContext> = Symbol.for('veno-ui:selection-control-group')
+export const SelectionGroupControlSymbol: InjectionKey<SelectionGroupContext> = Symbol.for('veno-ui:selection-control-group')
 
-export const makeSelectionControlGroupProps = propsFactory({
+export const makeSelectionGroupControlProps = propsFactory({
   id: String,
   inline: Boolean,
   name: String,
@@ -39,8 +39,8 @@ export const makeSelectionControlGroupProps = propsFactory({
   modelValue: null,
 }, 'selection-control-group')
 
-export const useSelectionControlGroup = (
-  props: ExtractPropTypes<ReturnType<typeof makeSelectionControlGroupProps>> & {
+export const useSelectionGroupControl = (
+  props: ExtractPropTypes<ReturnType<typeof makeSelectionGroupControlProps>> & {
     'onUpdate:modelValue': ((val: any) => void) | undefined
   }
 ) => {
@@ -62,7 +62,7 @@ export const useSelectionControlGroup = (
     type: toRef(props, 'type'),
   }
 
-  provide(SelectionControlGroupSymbol, group)
+  provide(SelectionGroupControlSymbol, group)
 
   return group
 }
