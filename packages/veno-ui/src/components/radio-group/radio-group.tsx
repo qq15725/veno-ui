@@ -1,6 +1,3 @@
-// Styles
-import './styles/radio-group.scss'
-
 // Utils
 import { computed, reactive } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
@@ -42,6 +39,7 @@ export const RadioGroup = defineComponent({
     provideDefaults(reactive({
       defaults: {
         VeRadio: {
+          density: computed(() => props.density),
           readonly: computed(() => props.readonly),
           disabled: computed(() => props.disabled),
         },
@@ -62,9 +60,10 @@ export const RadioGroup = defineComponent({
         >
           { {
             ...restSlots,
-            default: ({ isDisabled, isReadonly }) => (
+            default: ({ isDisabled, isReadonly, props: controlProps }) => (
               <SelectionGroupControl
                 { ...selectionGroupControlProps }
+                { ...controlProps }
                 id={ id.value }
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }

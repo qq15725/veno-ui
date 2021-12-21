@@ -7,10 +7,12 @@ import { pick, useRender } from '../../utils'
 
 // Composables
 import { makeSelectionGroupControlProps, useSelectionGroupControl } from '../../composables/selection-group-control'
+
 export { makeSelectionGroupControlProps } from '../../composables/selection-group-control'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
+
 export type SelectionGroupControl = InstanceType<typeof SelectionGroupControl>
 
 export function filterSelectionGroupControlProps (props: ExtractPropTypes<ReturnType<typeof makeSelectionGroupControlProps>>) {
@@ -20,15 +22,13 @@ export function filterSelectionGroupControlProps (props: ExtractPropTypes<Return
 export const SelectionGroupControl = defineComponent({
   name: 'VeSelectionGroupControl',
 
-  inheritAttrs: false,
-
   props: makeSelectionGroupControlProps(),
 
   emits: {
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup (props, { attrs, slots }) {
     const group = useSelectionGroupControl(props)
 
     useRender(() => {
@@ -44,5 +44,5 @@ export const SelectionGroupControl = defineComponent({
     })
 
     return group
-  },
+  }
 })

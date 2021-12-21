@@ -6,20 +6,14 @@
 @use './variables' as *;
 
 .ve-selection-control {
-  --ve-selection-control-size-offset: var(--ve-selection-control-density-offset, var(--ve-form-control-density-offset, 0px));
-  --ve-selection-control-size: calc(#{$selection-control-size} + var(--ve-selection-control-size-offset));
+  --ve-selection-control-height: calc(#{$selection-control-height} + var(--ve-selection-control-density-offset, 0px));
   position: relative;
-  grid-area: control;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   align-self: center;
   user-select: none;
-
-  @at-root {
-    @include tools.density('ve-selection-control', $selection-control-density) using($modifier) {
-      --ve-selection-control-density-offset: #{$modifier};
-    }
-  }
+  height: var(--ve-selection-control-height);
+  @include tools.use-density((densities: $selection-control-density));
 
   &--dirty {
     .v-icon {
@@ -42,11 +36,13 @@
 
   .ve-icon {
     opacity: var(--ve-medium-emphasis-opacity);
+    width: 100%;
+    height: 100%;
   }
 
   .ve-label {
-    height: 100%;
-    width: 100%;
+    padding-inline-start: 6px;
+    padding-inline-end: 6px;
   }
 
   &__wrapper {
@@ -54,8 +50,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--ve-selection-control-size);
-    height: var(--ve-selection-control-size);
+    width: var(--ve-selection-control-height);
+    height: var(--ve-selection-control-height);
     flex: none;
   }
 
@@ -64,8 +60,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--ve-selection-control-size);
-    height: var(--ve-selection-control-size);
+    width: 100%;
+    height: 100%;
     flex: none;
 
     input {

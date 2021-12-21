@@ -1,3 +1,8 @@
 .ve-selection-group-control {
-  grid-area: control;
+  display: flex;
+  height: var(--ve-form-control-height);
+
+  > .ve-selection-control + .ve-selection-control {
+    margin-inline-start: 6px;
+  }
 }

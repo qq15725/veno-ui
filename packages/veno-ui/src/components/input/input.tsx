@@ -184,13 +184,13 @@ export const Input = genericComponent<new () => {
           { ...formControlProps }
           ref={ formControlRef }
           class={ [
+            attrs.class,
             've-input',
             {
               've-input--textarea': isTextarea,
               've-input--auto-grow': props.autoGrow,
               've-input--no-resize': props.noResize || props.autoGrow,
             },
-            attrs.class,
           ] }
           label-id={ id.value }
           style={ styles }

@@ -1,6 +1,3 @@
-// Styles
-import './styles/checkbox.scss'
-
 // Utils
 import { defineComponent } from '../../utils'
 

@@ -21,10 +21,7 @@
     <ve-radio label="medium" />
   </ve-radio-group>
 
-  <ve-radio-group
-    label="Direction"
-    v-model="direction"
-  >
+  <ve-radio-group label="Direction" v-model="direction">
     <ve-radio label="horizontal" />
     <ve-radio label="vertical" />
   </ve-radio-group>
@@ -41,10 +38,7 @@
     :readonly="false"
   />
 
-  <ve-switch
-    label="HideDetails"
-    v-model="hideDetails"
-  />
+  <ve-switch label="HideDetails" v-model="hideDetails" />
 
   <ve-input
     label="Input"
@@ -74,23 +68,17 @@
     clearable
   />
 
-  <ve-switch
-    label="Switch"
-  />
+  <ve-switch label="Switch" />
 
-  <ve-checkbox-group
-    label="Checkbox"
-  >
-    <ve-checkbox label="Checkbox 1"/>
-    <ve-checkbox label="Checkbox 2"/>
-    <ve-checkbox label="Checkbox 3"/>
+  <ve-checkbox-group label="Checkbox">
+    <ve-checkbox label="Checkbox 1" />
+    <ve-checkbox label="Checkbox 2" />
+    <ve-checkbox label="Checkbox 3" />
   </ve-checkbox-group>
 
-  <ve-radio-group
-    label="Radio"
-  >
-    <ve-radio true-value="1">Radio One</ve-radio>
-    <ve-radio true-value="2">Radio Two</ve-radio>
+  <ve-radio-group label="Radio">
+    <ve-radio label="Radio1" />
+    <ve-radio label="Radio2" />
   </ve-radio-group>
 
   <ve-form-control>

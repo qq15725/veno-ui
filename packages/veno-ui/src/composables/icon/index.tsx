@@ -73,11 +73,9 @@ export const ComponentIcon = defineComponent({
 
   setup (props) {
     return () => {
-      const icon = props.icon as any
-
       return (
         <props.tag>
-          <icon />
+          <props.icon />
         </props.tag>
       )
     }

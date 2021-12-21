@@ -1,6 +1,3 @@
-// Styles
-import './styles/checkbox-group.scss'
-
 // Utils
 import { computed, reactive } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
@@ -41,6 +38,7 @@ export const CheckboxGroup = defineComponent({
     provideDefaults(reactive({
       defaults: {
         VeCheckbox: {
+          density: computed(() => props.density),
           readonly: computed(() => props.readonly),
           disabled: computed(() => props.disabled),
         },
@@ -61,10 +59,11 @@ export const CheckboxGroup = defineComponent({
         >
           { {
             ...restSlots,
-            default: ({ isDisabled, isReadonly }) => {
+            default: ({ isDisabled, isReadonly, props: controlProps }) => {
               return (
                 <SelectionGroupControl
                   { ...selectionGroupControlProps }
+                  { ...controlProps }
                   id={ id.value }
                   disabled={ isDisabled.value }
                   readonly={ isReadonly.value }

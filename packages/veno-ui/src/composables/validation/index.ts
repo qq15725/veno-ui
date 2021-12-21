@@ -54,8 +54,8 @@ export function useValidation (
   const form = useForm()
   const errorMessages = ref<string[]>([])
   const isPristine = ref(true)
-  const isDisabled = computed(() => props.disabled)
-  const isReadonly = computed(() => props.readonly)
+  const isDisabled = computed(() => !!props.disabled)
+  const isReadonly = computed(() => !!props.readonly)
   const isValid = computed(() => {
     if (
       props.error ||

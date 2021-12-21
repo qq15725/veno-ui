@@ -1,6 +1,3 @@
-// Styles
-import './styles/radio.scss'
-
 // Utils
 import { defineComponent } from '../../utils'
 
@@ -30,10 +27,9 @@ export const Radio = defineComponent({
         <SelectionControl
           class="ve-radio"
           { ...props }
-          v-slots={ {
-            label: slots.default,
-          } }
-        />
+        >
+          { slots }
+        </SelectionControl>
       )
     }
   }

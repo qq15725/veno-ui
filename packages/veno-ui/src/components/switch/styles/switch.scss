@@ -3,7 +3,25 @@
 
 .ve-switch {
   .ve-selection-control {
+    display: flex;
     height: var(--ve-form-control-height);
+  }
+
+  .ve-selection-control__wrapper {
+    width: auto;
+  }
+
+  .ve-selection-control__input {
+    position: absolute;
+    width: var(--ve-selection-control-height);
+    height: var(--ve-selection-control-height);
+    border-radius: 50%;
+    transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-8px);
+  }
+
+  .ve-selection-control--dirty .ve-selection-control__input {
+    transform: translateX(8px);
   }
 
   &__track {
@@ -13,7 +31,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: 22px;
+    height: 100%;
     min-width: 40px;
     color: rgba(var(--ve-theme-on-surface), .2);
     background-color: currentColor;
@@ -23,22 +41,11 @@
 
   &__thumb {
     position: absolute;
-    height: 18px;
-    width: 18px;
+    height: calc(.75 * var(--ve-selection-control-height));
+    width: calc(.75 * var(--ve-selection-control-height));
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #FFF;
-  }
-
-  .ve-selection-control__input {
-    position: absolute;
-    border-radius: 50%;
-    transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(-10px);
-  }
-
-  .ve-selection-control--dirty .ve-selection-control__input {
-    transform: translateX(10px);
   }
 }
