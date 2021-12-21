@@ -4,5 +4,6 @@
 @use '../../../styles/settings';
 
 .ve-radio {
+  display: inline-flex;
   height: var(--ve-form-control-height);
 }

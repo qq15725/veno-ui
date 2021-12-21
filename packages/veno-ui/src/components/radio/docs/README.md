@@ -8,6 +8,6 @@ category: 数据输入
 
 :::include
 
-basic.md
+basic.md group.md
 
 :::

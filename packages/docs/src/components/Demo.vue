@@ -13,7 +13,7 @@ const theme = ref()
 const github = ref('https://github.com/qq15725/veno-ui/blob/master')
 const focusBtn = () => {
   setTimeout(() => {
-    btn.value?.$el?.focus()
+    btn.value?.$el?.focus?.()
   }, 0)
 }
 </script>
