@@ -2,5 +2,14 @@
   "extends": "../../tsconfig.json",
   "include": [
     "src"
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "ES2015",
+    "lib": [
+      "ES2020"
+    ]
+  }
 }

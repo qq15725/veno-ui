@@ -5,6 +5,7 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"],
       "veno-ui": ["../veno-ui/src/entry.ts"]

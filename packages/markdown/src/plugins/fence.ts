@@ -5,12 +5,12 @@ export const fencePlugin: PluginSimple = md => {
   const escapeHtml = md.utils.escapeHtml
   const unescapeAll = md.utils.unescapeAll
 
-  md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
+  md.renderer.rules.fence = (tokens, idx, options) => {
     let token = tokens[idx],
       info = token.info ? unescapeAll(token.info).trim() : '',
       langName = '',
       langAttrs = '',
-      highlighted, i, arr, tmpAttrs, tmpToken;
+      highlighted, arr
 
     if (info) {
       arr = info.split(/(\s+)/g);
