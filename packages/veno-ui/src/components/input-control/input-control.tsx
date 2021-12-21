@@ -53,6 +53,7 @@ export const makeInputControlProps = propsFactory({
     type: String,
     default: 'veno-ui:$clear',
   },
+  disabled: Boolean,
 }, 'input-control')
 
 export const InputControl = genericComponent<new () => {
@@ -124,6 +125,7 @@ export const InputControl = genericComponent<new () => {
             've-input-control',
             {
               've-input-control--active': isActive.value,
+              've-input-control--disabled': props.disabled,
               've-input-control--dirty': props.dirty,
               've-input-control--focused': isFocused.value,
               've-input-control--prepended': hasPrependInner,

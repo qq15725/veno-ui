@@ -3,7 +3,7 @@ import './styles/switch.scss'
 
 // Utils
 import { ref } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
@@ -14,7 +14,7 @@ import { makeSelectionControlProps, filterSelectionControlProps } from '../selec
 // Types
 export type Switch = InstanceType<typeof Switch>
 
-export const Switch = genericComponent()({
+export const Switch = defineComponent({
   name: 'VeSwitch',
 
   inheritAttrs: false,
@@ -45,9 +45,9 @@ export const Switch = genericComponent()({
         <FormControl
           { ...formControlProps }
           class="ve-switch"
-          v-slots={ {
-            prepend: slots.prepend,
-            label: slots.label,
+        >
+          { {
+            ...slots,
             default: ({ isDisabled, isReadonly, props: formControlProps }) => {
               return (
                 <SelectionControl
@@ -58,7 +58,8 @@ export const Switch = genericComponent()({
                   disabled={ isDisabled.value }
                   readonly={ isReadonly.value }
                   { ...formControlProps }
-                  v-slots={ {
+                >
+                  { {
                     default: ({ textColorClasses, textColorStyles }) => (
                       <div
                         class={ [
@@ -77,13 +78,11 @@ export const Switch = genericComponent()({
                       )
                     }
                   } }
-                />
+                </SelectionControl>
               )
-            },
-            append: slots.append,
-            details: slots.details,
+            }
           } }
-        />
+        </FormControl>
       )
     }
   }

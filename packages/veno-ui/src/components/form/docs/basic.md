@@ -7,6 +7,8 @@
   :density="density"
   :direction="direction"
   label-width="100"
+  :disabled="disabled"
+  :readonly="readonly"
   :hide-details="hideDetails"
 >
   <ve-radio-group
@@ -26,6 +28,18 @@
     <ve-radio label="horizontal" />
     <ve-radio label="vertical" />
   </ve-radio-group>
+
+  <ve-switch
+    label="Disabled"
+    v-model="disabled"
+    :disabled="false"
+  />
+
+  <ve-switch
+    label="Readonly"
+    v-model="readonly"
+    :readonly="false"
+  />
 
   <ve-switch
     label="HideDetails"
@@ -95,6 +109,8 @@ export default defineComponent({
       density: ref('medium'),
       direction: ref('horizontal'),
       hideDetails: ref(false),
+      disabled: ref(false),
+      readonly: ref(false),
     }
   }
 })

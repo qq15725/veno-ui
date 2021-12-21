@@ -39,6 +39,8 @@ export const Form = defineComponent({
       direction: computed(() => props.direction),
       labelWidth: computed(() => props.labelWidth),
       hideDetails: computed(() => props.hideDetails),
+      readonly: computed(() => props.readonly),
+      disabled: computed(() => props.disabled),
     })
 
     provideDefaults(reactive({

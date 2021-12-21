@@ -2,7 +2,7 @@
 import './styles/checkbox-group.scss'
 
 // Utils
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
 
 // Components
@@ -13,6 +13,9 @@ import {
   makeSelectionGroupControlProps,
   filterSelectionGroupControlProps
 } from '../selection-group-control/selection-group-control'
+
+// Composables
+import { provideDefaults } from '../../composables/defaults'
 
 export const CheckboxGroup = defineComponent({
   name: 'VeCheckboxGroup',
@@ -34,6 +37,15 @@ export const CheckboxGroup = defineComponent({
   setup (props, { slots, attrs }) {
     const uid = getUid()
     const id = computed(() => props.id || `ve-checkbox-group-${ uid }`)
+
+    provideDefaults(reactive({
+      defaults: {
+        VeCheckbox: {
+          readonly: computed(() => props.readonly),
+          disabled: computed(() => props.disabled),
+        },
+      }
+    }))
 
     return () => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)

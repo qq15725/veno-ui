@@ -38,7 +38,7 @@ export const SelectionGroupControl = defineComponent({
           aria-labelled-by={ props.type === 'radio' ? group.id.value : undefined }
           role={ props.type === 'radio' ? 'radiogroup' : undefined }
         >
-          { slots?.default?.() }
+          { slots.default?.() }
         </div>
       )
     })

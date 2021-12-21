@@ -2,7 +2,7 @@
 import './styles/radio-group.scss'
 
 // Utils
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
 
 // Components
@@ -13,6 +13,9 @@ import {
   makeSelectionGroupControlProps,
   filterSelectionGroupControlProps
 } from '../selection-group-control/selection-group-control'
+
+// Composables
+import { provideDefaults } from '../../composables/defaults'
 
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
@@ -35,6 +38,15 @@ export const RadioGroup = defineComponent({
   setup (props, { attrs, slots }) {
     const uid = getUid()
     const id = computed(() => props.id || `ve-radio-group-${ uid }`)
+
+    provideDefaults(reactive({
+      defaults: {
+        VeRadio: {
+          readonly: computed(() => props.readonly),
+          disabled: computed(() => props.disabled),
+        },
+      }
+    }))
 
     return () => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)

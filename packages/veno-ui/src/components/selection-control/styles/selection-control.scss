@@ -21,15 +21,6 @@
     }
   }
 
-  .ve-icon {
-    opacity: var(--ve-medium-emphasis-opacity);
-  }
-
-  .ve-label {
-    height: 100%;
-    width: 100%;
-  }
-
   &--dirty {
     .v-icon {
       color: inherit;
@@ -47,6 +38,15 @@
     .v-icon {
       color: inherit;
     }
+  }
+
+  .ve-icon {
+    opacity: var(--ve-medium-emphasis-opacity);
+  }
+
+  .ve-label {
+    height: 100%;
+    width: 100%;
   }
 
   &__wrapper {

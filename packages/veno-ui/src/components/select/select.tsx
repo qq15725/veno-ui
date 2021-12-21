@@ -3,7 +3,7 @@ import './styles/select.scss'
 
 // Utils
 import { computed, ref } from 'vue'
-import { genericComponent, getUid, MakeSlots } from '../../utils'
+import { genericComponent, getUid } from '../../utils'
 
 // Composables
 import { makeTransitionProps } from '../../composables/transition'
@@ -20,8 +20,6 @@ import { FadeTransition } from '../transition'
 import type { PropType } from 'vue'
 import type { InputSlots } from '../input/input'
 import type { Anchor, Origin } from '../../composables/position-strategy'
-import type { FormControlSlot } from '../form-control/form-control'
-import type { InputControlSlot } from '../input-control/input-control'
 
 export type Select = InstanceType<typeof Select>
 

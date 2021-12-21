@@ -24,6 +24,11 @@
   transition: .1s settings.$decelerated-easing;
   transition-property: color, background-color, border-color;
 
+  &--disabled {
+    opacity: var(--ve-disabled-opacity);
+    pointer-events: none;
+  }
+
   &--focused {
     color: rgb(var(--ve-theme-on-surface));
     background-color: rgb(var(--ve-theme-surface));
