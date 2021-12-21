@@ -16,7 +16,8 @@
     width: var(--ve-selection-control-height);
     height: var(--ve-selection-control-height);
     border-radius: 50%;
-    transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
+    transition: .15s settings.$standard-easing;
+    transition-property: transform;
     transform: translateX(-8px);
   }
 

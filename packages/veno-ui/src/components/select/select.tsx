@@ -14,7 +14,6 @@ import { Input, makeInputProps, filterInputProps } from '../input/input'
 import { Icon } from '../icon'
 import { Overlay } from '../overlay'
 import { List, ListItem } from '../list'
-import { FadeTransition } from '../transition'
 
 // Types
 import type { PropType } from 'vue'
@@ -31,6 +30,8 @@ export const Select = genericComponent<new () => {
 }>()({
   name: 'VeSelect',
 
+  inheritAttrs: false,
+
   props: {
     anchor: {
       type: String as PropType<Anchor>,
@@ -45,7 +46,7 @@ export const Select = genericComponent<new () => {
       default: () => [],
     },
     ...makeTransitionProps({
-      transition: { component: FadeTransition },
+      transition: false,
     } as const),
     ...makeInputProps(),
   },
@@ -88,7 +89,6 @@ export const Select = genericComponent<new () => {
             activator: ({ props: activatorProps }) => (
               <Input
                 { ...inputProps }
-                { ...activatorProps }
                 id={ id.value }
                 class={ [
                   've-select',
@@ -99,6 +99,7 @@ export const Select = genericComponent<new () => {
                 readonly
                 modelValue={ current.value?.label }
                 onUpdate:modelValue={ val => model.value = val }
+                onClick:control={ activatorProps?.onClick }
                 { ...attrs }
                 v-slots={ {
                   ...slots,

@@ -74,9 +74,12 @@
   &--disabled {
     --ve-button-overlay: var(--ve-theme-surface);
     --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
-    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
     pointer-events: none;
     cursor: default;
+  }
+
+  &--disabled#{&}--variant-outlined {
+    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
   }
 
   &--loading {

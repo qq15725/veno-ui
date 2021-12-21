@@ -39,7 +39,7 @@ export const Messages = defineComponent({
         class="ve-messages"
       >
         { (messages.value.length > 0 && props.active) && (
-          messages.value.map((message, i) => (
+          messages.value.map((message: any, i) => (
             <div class="ve-messages__message" key={ i }>
               { message }
             </div>

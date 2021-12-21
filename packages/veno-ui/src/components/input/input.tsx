@@ -87,9 +87,10 @@ export const Input = genericComponent<new () => {
 
   emits: {
     'update:modelValue': (val: string) => true,
+    'click:control': (e: MouseEvent) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { attrs, slots, emit }) {
     const inputControlRef = ref<InputControl>()
     const formControlRef = ref<FormControl>()
     const controlHeight = ref('auto')
@@ -184,7 +185,6 @@ export const Input = genericComponent<new () => {
           { ...formControlProps }
           ref={ formControlRef }
           class={ [
-            attrs.class,
             've-input',
             {
               've-input--textarea': isTextarea,
@@ -196,7 +196,8 @@ export const Input = genericComponent<new () => {
           style={ styles }
           role="textbox"
           { ...formControlAttrs }
-          v-slots={ {
+        >
+          { {
             prepend: slots.prepend,
             label: slots.label,
             default: ({ isDisabled, isReadonly, props: formControlProps }) => {
@@ -213,9 +214,13 @@ export const Input = genericComponent<new () => {
                     e.stopPropagation()
                     model.value = ''
                   } }
-                  onClick:control={ focus }
+                  onClick:control={ e => {
+                    focus()
+                    emit('click:control', e)
+                  } }
                   { ...formControlProps }
-                  v-slots={ {
+                >
+                  { {
                     prependInner: slots.prependInner,
                     prefix: slots.prefix,
                     default: ({ inputRef, focus, blur, props: nativeControlProps }) => {
@@ -282,7 +287,7 @@ export const Input = genericComponent<new () => {
                     appendInner: slots.appendInner,
                     clear: slots.clear,
                   } }
-                />
+                </InputControl>
               )
             },
             append: slots.append,
@@ -301,11 +306,12 @@ export const Input = genericComponent<new () => {
               )
             } : undefined,
           } }
-        />
+        </FormControl>
       )
     })
 
     return {
+      formControlRef,
       inputControlRef,
       blur,
       focus,

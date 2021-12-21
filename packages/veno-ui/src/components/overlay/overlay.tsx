@@ -5,6 +5,9 @@ import './styles/overlay.scss'
 import { computed, mergeProps, ref, toHandlers, toRef, watch, Teleport, Transition } from 'vue'
 import { convertToUnit, genericComponent, getScrollParent, standardEasing, useRender } from '../../utils'
 
+// Components
+import { FadeTransition } from '../transition'
+
 // Composables
 import { makeActivatorProps, useActivator } from '../../composables/activator'
 import { makePositionStrategyProps, usePositionStrategy } from '../../composables/position-strategy'
@@ -96,7 +99,9 @@ export const Overlay = genericComponent<new () => {
     ...makePositionStrategyProps(),
     ...makeScrollStrategyProps(),
     ...makeThemeProps(),
-    ...makeTransitionProps(),
+    ...makeTransitionProps({
+      transition: { component: FadeTransition },
+    } as const),
     ...makeLazyProps(),
   },
 

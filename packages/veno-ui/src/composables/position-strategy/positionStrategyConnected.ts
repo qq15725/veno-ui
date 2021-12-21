@@ -57,7 +57,9 @@ export function positionStrategyConnected (
 
   let observe = false
   const observer = new ResizeObserver(() => {
-    if (observe) updatePosition()
+    if (observe) {
+      updatePosition()
+    }
   })
   observer.observe(data.activatorEl.value!)
   observer.observe(data.contentEl.value!)
@@ -75,7 +77,9 @@ export function positionStrategyConnected (
   if (activatorFixed) nextTick(() => updatePosition())
 
   requestAnimationFrame(() => {
-    if (contentStyles.value.maxHeight) updatePosition()
+    if (contentStyles.value.maxHeight) {
+      updatePosition()
+    }
   })
 
   // eslint-disable-next-line max-statements
