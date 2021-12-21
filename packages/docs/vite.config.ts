@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'es2015',
     },
+    css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
       vue(),
       vueDocs(),
