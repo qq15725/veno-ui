@@ -33,9 +33,9 @@ export const demoPlugin: PluginSimple = md => {
           state = 'title'
         } else if (current && current.type === 'heading_close' && current.level === 1) {
           state = null
-        } else if (prev && prev.type === 'heading_close' && prev.level === 1) {
+        } else if (state === null) {
           state = 'prepend'
-        } else if (state === 'script') {
+        } else if (state !== 'prepend') {
           state = 'append'
         }
         if (state) {

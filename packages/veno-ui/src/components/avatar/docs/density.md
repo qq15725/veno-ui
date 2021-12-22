@@ -5,12 +5,12 @@
 头像的密度有 `compact`、`comfortable`、`medium`。
 
 ```html
-<ve-radio-group v-model="size">
-  <ve-radio label="x-small" />
-  <ve-radio label="small" />
-  <ve-radio label="medium" />
-  <ve-radio label="large" />
-  <ve-radio label="x-large" />
+<ve-radio-group label="size" v-model="size">
+  <ve-radio label="xs" />
+  <ve-radio label="sm" />
+  <ve-radio label="md" />
+  <ve-radio label="lg" />
+  <ve-radio label="xl" />
 </ve-radio-group>
 
 <ve-grid dense align="center">
