@@ -1,4 +1,6 @@
+import 'veno-ui/styles'
 import { createVenoUi } from 'veno-ui'
+import * as components from 'veno-ui/components'
 import { docsSvg } from '../../iconsets/docs-svg'
 import prismjs from 'prismjs'
 
@@ -32,4 +34,5 @@ export default createVenoUi({
       'docs-svg': docsSvg,
     }
   },
+  components,
 })

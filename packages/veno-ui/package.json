@@ -64,7 +64,13 @@
     "vue-router": "^4.0.12"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^3.2.26",
+    "prismjs": "^1.25.0"
+  },
+  "peerDependenciesMeta": {
+    "prismjs": {
+      "optional": true
+    }
   },
   "sideEffects": [
     "*.sass",

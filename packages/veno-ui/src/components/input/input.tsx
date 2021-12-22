@@ -16,7 +16,7 @@ import { Counter } from '../counter'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Directives
-import intersect from '../../directives/intersect'
+import Intersect from '../../directives/intersect'
 
 // Types
 import type { PropType } from 'vue'
@@ -81,7 +81,7 @@ export const Input = genericComponent<new () => {
 
   inheritAttrs: false,
 
-  directives: { intersect },
+  directives: { Intersect },
 
   props: makeInputProps(),
 
@@ -196,8 +196,7 @@ export const Input = genericComponent<new () => {
           style={ styles }
           role="textbox"
           { ...formControlAttrs }
-        >
-          { {
+          v-slots={ {
             prepend: slots.prepend,
             label: slots.label,
             default: ({ isDisabled, isReadonly, props: formControlProps }) => {
@@ -219,8 +218,7 @@ export const Input = genericComponent<new () => {
                     emit('click:control', e)
                   } }
                   { ...formControlProps }
-                >
-                  { {
+                  v-slots={ {
                     prependInner: slots.prependInner,
                     prefix: slots.prefix,
                     default: ({ inputRef, focus, blur, props: nativeControlProps }) => {
@@ -287,7 +285,7 @@ export const Input = genericComponent<new () => {
                     appendInner: slots.appendInner,
                     clear: slots.clear,
                   } }
-                </InputControl>
+                />
               )
             },
             append: slots.append,
@@ -306,7 +304,7 @@ export const Input = genericComponent<new () => {
               )
             } : undefined,
           } }
-        </FormControl>
+        />
       )
     })
 

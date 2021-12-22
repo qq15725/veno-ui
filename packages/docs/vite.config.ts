@@ -21,7 +21,9 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: [
-        { find: /^veno-ui$/, replacement: resolve('../veno-ui/src/entry.ts') },
+        { find: /^veno-ui$/, replacement: resolve('../veno-ui/src/framework.ts') },
+        { find: /^veno-ui\/styles$/, replacement: resolve('../veno-ui/src/styles/main.scss') },
+        { find: /^veno-ui\/components$/, replacement: resolve('../veno-ui/src/components') },
         { find: /^@root\/(.*)/, replacement: resolve('../../$1') },
         { find: /^@\/(.*)/, replacement: resolve('./src/$1') },
       ]

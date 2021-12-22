@@ -80,7 +80,7 @@ export const Select = genericComponent<new () => {
           absolute
           position-strategy="connected"
           scroll-strategy="reposition"
-          offset={ 8 }
+          offset={ 4 }
           scrim={ false }
           anchor={ props.anchor }
           origin={ props.origin }
@@ -116,7 +116,7 @@ export const Select = genericComponent<new () => {
               <List
                 max-height={ 200 }
                 elevation={ 8 }
-                density={ props.density }
+                density="compact"
               >
                 { normaledItems.value.map((item: any) => (
                   <ListItem

@@ -86,7 +86,7 @@ export function useSelectionControl (
           newVal = [...wrapInArray(oldVal), currentValue]
         } else {
           newVal = wrapInArray(oldVal)
-              .filter((v: any) => !props.valueComparator(v, trueValue.value))
+            .filter((v: any) => !props.valueComparator(v, trueValue.value))
         }
       }
 
@@ -95,14 +95,10 @@ export function useSelectionControl (
       } else {
         modelValue.value = newVal
       }
-    },
+    }
   })
   const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
-    return (
-      model.value
-      && !props.error
-      && !props.disabled
-    ) ? props.color : undefined
+    return model.value ? props.color : undefined
   }))
   const icon = computed(() => {
     return model.value

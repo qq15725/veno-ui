@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 // Components
-import { SvgIcon } from 'veno-ui'
+import { SvgIcon } from 'veno-ui/components'
 
 // Types
 import type { IconSet, IconValue } from 'veno-ui'

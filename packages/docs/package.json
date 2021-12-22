@@ -10,7 +10,7 @@
   "dependencies": {
     "prismjs": "^1.25.0",
     "veno-ui": "^0.0.17",
-    "vue": "^3.0.0",
+    "vue": "^3.2.26",
     "vue-router": "^4.0.10"
   },
   "devDependencies": {

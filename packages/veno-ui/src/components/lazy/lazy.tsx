@@ -11,7 +11,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { FadeTransition } from '../transition'
 
 // Directives
-import intersect from '../../directives/intersect'
+import Intersect from '../../directives/intersect'
 
 // Types
 import type { PropType } from 'vue'
@@ -21,7 +21,7 @@ export type Lazy = InstanceType<typeof Lazy>
 export const Lazy = genericComponent()({
   name: 'VeLazy',
 
-  directives: { intersect },
+  directives: { Intersect },
 
   props: {
     modelValue: Boolean,
