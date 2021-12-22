@@ -1,0 +1,6 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+.ve-h {
+  opacity: var(--ve-high-emphasis-opacity);
+}

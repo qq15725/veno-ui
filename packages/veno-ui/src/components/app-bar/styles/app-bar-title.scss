@@ -4,6 +4,7 @@
 .ve-app-bar-title {
   font-size: $app-bar-title-font-size;
   padding: $app-bar-title-padding;
+  line-height: 1.6;
 
   &__wrap {
     overflow: hidden;

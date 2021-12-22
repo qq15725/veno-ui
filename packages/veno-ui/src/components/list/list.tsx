@@ -2,7 +2,7 @@
 import './styles/list.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -24,7 +24,7 @@ export type ListItemProp = {
   value?: string
 }
 
-export const List = genericComponent()({
+export const List = defineComponent({
   name: 'VeList',
 
   props: {

@@ -9,11 +9,10 @@
   @include tools.use-material($list-material);
 
   &--nav {
-    padding-inline-end: 12px;
-    padding-inline-start: 12px;
-
+    .ve-list-group + .ve-list-group,
+    .ve-list-subheader + .ve-list-group__items,
     .ve-list-item + .ve-list-item {
-      margin-block-start: 4px;
+      margin-block-start: 6px;
     }
   }
 }

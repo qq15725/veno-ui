@@ -20,12 +20,7 @@ const active = ref()
           text-color="primary"
       />
 
-      <ve-app-bar-title
-          class="hidden-sm-and-down"
-          style="font-weight: 700;"
-      >
-        Veno UI
-      </ve-app-bar-title>
+      <ve-app-bar-title class="hidden-sm-and-down">Veno UI</ve-app-bar-title>
 
       <ve-spacer />
 

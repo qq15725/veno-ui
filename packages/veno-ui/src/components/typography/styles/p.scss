@@ -6,7 +6,8 @@
 .ve-p {
   font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size');
   font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight');
-  letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing');
   line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height');
-  margin-bottom: settings.$spacer * 4;
+  letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin-bottom: 16px;
 }

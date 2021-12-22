@@ -2,7 +2,7 @@
 
 # 基本用法
 
-按钮有多种变体 `contained` - **实心按钮（默认）**、`outlined` - **描边按钮**、`text` - **文本按钮**、`link` - **链接按钮**、`icon` - **图标按钮**。
+按钮有多种变体 `contained` - 实心按钮（默认）、`outlined` - 描边按钮、`text` - 文本按钮、`link` - 链接按钮、`icon` - 图标按钮。
 
 ```html
 <ve-grid dense align="center">

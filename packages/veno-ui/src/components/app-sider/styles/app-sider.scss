@@ -35,8 +35,34 @@
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;
+    padding-inline-start: 12px;
+    padding-inline-end: 12px;
     overflow-x: hidden;
     overflow-y: auto;
+
+    &:hover {
+      padding-inline-end: 2px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 10px;
+      background: transparent;
+    }
+
+    &:hover::-webkit-scrollbar {
+      display: block;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(var(--ve-theme-on-surface), var(--ve-hover-opacity)) content-box;
+      border: 2px solid transparent;
+      border-radius: 5px;
+
+      &:hover {
+        background: rgba(var(--ve-theme-on-surface), var(--ve-activated-opacity)) content-box;
+      }
+    }
   }
 }
 

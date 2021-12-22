@@ -97,10 +97,10 @@ $list-item-title-typography: (
 );
 
 // Nav ListItemTitle
-$list-item-nav-title-font-size: .8125rem !default;
-$list-item-nav-title-font-weight: 500 !default;
+$list-item-nav-title-font-size: 14px !default;
+$list-item-nav-title-font-weight: 400 !default;
 $list-item-nav-title-letter-spacing: normal !default;
-$list-item-nav-title-line-height: 1rem !default;
+$list-item-nav-title-line-height: 1.5 !default;
 
 $list-item-nav-title-typography: (
   $list-item-nav-title-font-size,
