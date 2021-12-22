@@ -1,7 +1,7 @@
 {
   "name": "venojs.com",
   "private": true,
-  "version": "0.0.17",
+  "version": "0.0.18",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "prismjs": "^1.25.0",
-    "veno-ui": "^0.0.17",
+    "veno-ui": "^0.0.18",
     "vue": "^3.2.26",
     "vue-router": "^4.0.10"
   },
   "devDependencies": {
-    "@veno-ui/vite-plugin-vue-docs": "^0.0.17",
+    "@veno-ui/vite-plugin-vue-docs": "^0.0.18",
     "@vitejs/plugin-legacy": "^1.6.4",
     "@vue/compiler-sfc": "^3.0.5"
   }

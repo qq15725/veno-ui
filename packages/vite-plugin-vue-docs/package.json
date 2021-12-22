@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/vite-plugin-vue-docs",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "A Vite Docs Plugin",
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-vue-docs",
   "license": "MIT",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
-    "@veno-ui/markdown": "^0.0.17",
+    "@veno-ui/markdown": "^0.0.18",
     "gray-matter": "^4.0.3"
   },
   "publishConfig": {
