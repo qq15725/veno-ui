@@ -4,7 +4,7 @@ category: 通用
 
 # 按钮 Button
 
-按钮（Button）组件是基于[材料（Material）](/component/material.html)组件构建的，这意味着你也可以使用材料组件的属性。
+按钮用来触发一些即时操作。
 
 ## 演示
 

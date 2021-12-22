@@ -11,57 +11,76 @@ export const demoPlugin: PluginSimple = md => {
 
   const demoRender: RenderRule = (tokens, index, options, env, self) => {
     const token = tokens[index]
-
-    const props = {
-      title: '',
-      code: '',
+    let state: null | string = null
+    const data: Record<string, Token[]> = {
+      title: [],
+      prepend: [],
+      template: [],
+      script: [],
+      append: [],
     }
-
     if (token.nesting === 1) {
-      let skip = false
-      const templateTokens: Token[] = []
       while (tokens[++index].type !== `container_${ name }_close`) {
-        const cur = tokens[index]
-        if (cur.type === 'heading_open' && cur.level === 1) {
-          props.title = tokens[index + 1].content
-          skip = true
-        } else if (cur.type === 'heading_close' && cur.level === 1) {
-          skip = false
-        } else if (cur.type === 'fence' && cur.info === 'html') {
-          const templateToken = new Token('html_block', '', 0)
-          templateToken.content = cur.content
-          templateTokens.push(templateToken)
-
-          let templateCode = cur.content
-            .split('\n')
-            .map((line) => (line.length ? '  ' + line : line))
-            .join('\n')
-
-          templateCode = `<template>\n${ templateCode }</template>`
-
-          props.code += templateCode
-        } else if (cur.type === 'fence' && cur.info === 'js') {
-          let scriptCode = cur.content
-            .split('\n')
-            .map((line) => (line.length ? '  ' + line : line))
-            .join('\n')
-
-          scriptCode = `\n\n<script>\n${ scriptCode }</script>`
-
-          props.code += scriptCode
-
-          md.__data.hoistedTags.push(scriptCode)
-        } else if (!skip) {
-          templateTokens.push(cur)
+        const prev = tokens[index - 1]
+        const current = tokens[index]
+        if (current.type === 'fence' && current.info === 'html') {
+          state = 'template'
+        } else if (current.type === 'fence' && current.info === 'js') {
+          state = 'script'
+        } else if (current && current.type === 'heading_open' && current.level === 1) {
+          state = null
+        } else if (prev && prev.type === 'heading_open' && prev.level === 1) {
+          state = 'title'
+        } else if (current && current.type === 'heading_close' && current.level === 1) {
+          state = null
+        } else if (prev && prev.type === 'heading_close' && prev.level === 1) {
+          state = 'prepend'
+        } else if (state === 'script') {
+          state = 'append'
+        }
+        if (state) {
+          data[state].push(current)
         }
       }
 
+      const props = {
+        template: data.template.map(v => {
+          return `<template>\n${ v.content
+            .split('\n')
+            .map((line) => (line.length ? '  ' + line : line))
+            .join('\n') }</template>`
+        }).join(),
+        script: data.script.map(v => {
+          return `\n\n<script>\n${ v.content
+            .split('\n')
+            .map((line) => (line.length ? '  ' + line : line))
+            .join('\n') }</script>`
+        }).join(),
+      }
+
+      const slots = {
+        title: self.render(data.title, options, env),
+        prepend: self.render(data.prepend, options, env),
+        default: self.render(data.template.map(v => {
+          const htmlToken = new Token('html_block', '', 0)
+          htmlToken.content = v.content
+          return htmlToken
+        }), options, env),
+        append: self.render(data.append, options, env),
+      }
+
+      if (props.script) {
+        md.__data.hoistedTags.push(props.script)
+      }
+
       return `<demo 
-  title="${ props.title }" 
-  code="${ encodeURIComponent(props.code) }" 
+  code="${ encodeURIComponent([props.template, props.script].join()) }" 
   filename="${ env.filename }"
 >
-  ${ self.render(templateTokens, options, env) }
+  <template #title>${ slots.title }</template>
+  <template #prepend>${ slots.prepend }</template>
+  <template #default>${ slots.default }</template>
+  <template #append>${ slots.append }</template>
 <!--`
     } else {
       return `-->\n</demo>\n`

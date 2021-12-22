@@ -6,11 +6,10 @@
 
 ```html
 <ve-grid dense align="center">
-  <ve-button variant="contained">Contained</ve-button>
+  <ve-button color="primary">Primary</ve-button>
+  <ve-button variant="contained">Secondary</ve-button>
   <ve-button variant="outlined">Outlined</ve-button>
   <ve-button variant="text">Text</ve-button>
-  <ve-button variant="link">Link</ve-button>
-  <ve-button variant="icon">Icon</ve-button>
 </ve-grid>
 ```
 

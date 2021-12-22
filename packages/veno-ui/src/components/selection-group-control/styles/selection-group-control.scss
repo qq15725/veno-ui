@@ -1,5 +1,6 @@
 .ve-selection-group-control {
   display: flex;
+  flex-wrap: wrap;
   height: var(--ve-form-control-height);
 
   > .ve-selection-control + .ve-selection-control {

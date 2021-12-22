@@ -16,6 +16,7 @@ import {
   includePlugin,
   demoPlugin,
   linkPlugin,
+  hrPlugin,
 } from './plugins'
 
 // Types
@@ -47,6 +48,7 @@ export function createMarkdown (options?: Options): Markdown {
       .use(includePlugin)
       .use(demoPlugin)
       .use(linkPlugin)
+      .use(hrPlugin)
       // 第三方插件
       .use(anchor, {
         slugify,
