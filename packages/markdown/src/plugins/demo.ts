@@ -9,85 +9,111 @@ import type { PluginSimple } from '../markdown'
 export const demoPlugin: PluginSimple = md => {
   const name = 'demo'
 
-  const demoRender: RenderRule = (tokens, index, options, env, self) => {
-    const token = tokens[index]
-    let state: null | string = null
-    const data: Record<string, Token[]> = {
-      title: [],
-      prepend: [],
-      template: [],
-      script: [],
-      append: [],
-    }
-    if (token.nesting === 1) {
-      while (tokens[++index].type !== `container_${ name }_close`) {
-        const prev = tokens[index - 1]
-        const current = tokens[index]
-        if (current.type === 'fence' && current.info === 'html') {
-          state = 'template'
-        } else if (current.type === 'fence' && current.info === 'js') {
-          state = 'script'
-        } else if (current && current.type === 'heading_open' && current.level === 1) {
+  const render: RenderRule = (tokens, index, options, env, self) => {
+    if (tokens[index].nesting === 1) {
+      const endType = tokens[index].type.replace('open', 'close')
+      let state: null | string = null
+      const subTokens: { state: string, token: Token }[] = []
+      while (tokens[++index].type !== endType) {
+        const token = tokens[index]
+        if (token.type === 'heading_open' && token.level === 1) {
+          state = 'title_open'
+        } else if (token.type === 'heading_close' && token.level === 1) {
           state = null
-        } else if (prev && prev.type === 'heading_open' && prev.level === 1) {
+        } else if (state === 'title_open') {
           state = 'title'
-        } else if (current && current.type === 'heading_close' && current.level === 1) {
-          state = null
-        } else if (state === null) {
+        } else if (token.type === 'fence' && token.info === 'html') {
+          state = 'template'
+        } else if (token.type === 'fence' && token.info === 'js') {
+          state = 'script'
+        } else if (state === null || state === 'prepend') {
           state = 'prepend'
-        } else if (state !== 'prepend') {
+        } else {
           state = 'append'
         }
         if (state) {
-          data[state].push(current)
+          subTokens.push({ state, token: { ...token } as Token })
         }
+        token.type = '__hidden__'
+        token.hidden = true
       }
 
       const props = {
-        template: data.template.map(v => {
-          return `<template>\n${ v.content
+        template: subTokens.filter(v => v.state === 'template').map(v => {
+          return `<template>\n${ v.token.content
             .split('\n')
             .map((line) => (line.length ? '  ' + line : line))
             .join('\n') }</template>`
-        }).join(),
-        script: data.script.map(v => {
-          return `\n\n<script>\n${ v.content
+        }).join(''),
+        script: subTokens.filter(v => v.state === 'script').map(v => {
+          return `\n\n<script>\n${ v.token.content
             .split('\n')
             .map((line) => (line.length ? '  ' + line : line))
             .join('\n') }</script>`
-        }).join(),
-      }
-
-      const slots = {
-        title: self.render(data.title, options, env),
-        prepend: self.render(data.prepend, options, env),
-        default: self.render(data.template.map(v => {
-          const htmlToken = new Token('html_block', '', 0)
-          htmlToken.content = v.content
-          return htmlToken
-        }), options, env),
-        append: self.render(data.append, options, env),
+        }).join(''),
       }
 
       if (props.script) {
         md.__data.hoistedTags.push(props.script)
       }
 
-      return `<demo 
-  code="${ encodeURIComponent([props.template, props.script].join()) }" 
-  filename="${ env.filename }"
->
-  <template #title>${ slots.title }</template>
-  <template #prepend>${ slots.prepend }</template>
-  <template #default>${ slots.default }</template>
-  <template #append>${ slots.append }</template>
-<!--`
+      const slots = {
+        title: self.render(
+          subTokens.filter(v => v.state === 'title').map(v => v.token),
+          options,
+          env
+        ),
+        prepend: self.render(
+          subTokens.filter(v => v.state === 'prepend').map(v => v.token),
+          options,
+          env
+        ),
+        default: self.render(
+          subTokens.filter(v => v.state === 'template').map(v => {
+            const htmlToken = new Token('html_block', '', 0)
+            htmlToken.content = v.token.content
+            return htmlToken
+          }),
+          options,
+          env
+        ),
+        append: self.render(
+          subTokens.filter(v => v.state === 'append').map(v => v.token),
+          options,
+          env
+        ),
+      }
+
+      function genSlot (name: keyof typeof slots) {
+        return slots[name]
+          ? `  <template #${ name }>\n${ slots[name].replace(/\n$/, '') }\n  </template>`
+          : `  <!--${ name }-->`
+      }
+
+      function genFilename () {
+        return env.filename
+      }
+
+      function genCode () {
+        return encodeURIComponent(
+          [props.template, props.script]
+            .filter(Boolean)
+            .join('')
+        )
+      }
+
+      return `<demo filename="${ genFilename() }" code="${ genCode() }">
+${ genSlot('title') }
+${ genSlot('prepend') }
+${ genSlot('default') }
+${ genSlot('append') }
+`
     } else {
-      return `-->\n</demo>\n`
+      return `</demo>\n`
     }
   }
 
   md.use(container, name, {
-    render: demoRender
+    render
   })
 }

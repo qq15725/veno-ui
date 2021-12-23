@@ -18,7 +18,7 @@ const focusBtn = () => {
 </script>
 
 <template>
-  <ve-card-title v-if="$slots.title().length" class="px-0 pt-0">
+  <ve-card-title v-if="$slots.title" class="px-0 pt-0">
     <slot name="title" />
   </ve-card-title>
 

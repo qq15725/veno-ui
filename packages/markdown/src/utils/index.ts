@@ -1,7 +1,7 @@
 export * from './parse-header'
 export * from './slugify'
 
-export const toPascalCase = (string: string): string => {
+export function toPascalCase (string: string): string {
   return (
     string.trim()
       .replace(/^[a-z]/, (match: string) => match.toLocaleUpperCase())
