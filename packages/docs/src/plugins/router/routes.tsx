@@ -1,8 +1,8 @@
 // Utils
-import { loadDocsRoutes, convertRoutesToMenus } from '../../utils'
+import { loadDocsRoutes, wrapDocsComponent, convertRoutesToMenus } from '../../utils'
 
 // Components
-import Layout from '@/views/Layout.vue'
+import MainLayout from '@/views/layouts/MainLayout.vue'
 // @ts-ignore
 import Readme from '@root/README.md'
 
@@ -21,10 +21,10 @@ const routes: RouteRecordRaw[] = [
     props: {
       menus: convertRoutesToMenus(docsRoutes),
     },
-    component: Layout,
+    component: MainLayout,
     children: [
       ...docsRoutes,
-      { name: 'Readme', path: '/readme.html', component: Readme },
+      { name: 'Readme', path: '/readme.html', component: wrapDocsComponent(Readme) },
       { path: '', redirect: '/readme.html' }
     ],
   },
