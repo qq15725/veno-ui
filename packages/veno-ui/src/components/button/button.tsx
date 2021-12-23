@@ -10,15 +10,14 @@ import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { useGroupItem } from '../../composables/group'
+import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 
 // Components
 import { Progress } from '../progress'
 import { Icon } from '../icon'
-import { Divider } from '../divider'
 
 // Symbols
-import { ButtonGroupSymbol } from './button-group'
+import { ButtonToggleSymbol } from '../button-toggle/button-toggle'
 
 // Constants
 export const allowedVariants = [
@@ -30,7 +29,7 @@ export const allowedVariants = [
 ] as const
 
 // Types
-import type { PropType, ComputedRef } from 'vue'
+import type { PropType } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type ButtonVariant = typeof allowedVariants[number]
@@ -61,6 +60,7 @@ export const Button = genericComponent<new () => {
     ...makeDisabledProps(),
     ...makeLoadingProps(),
     ...makeRouterProps(),
+    ...makeGroupItemProps(),
     variant: {
       type: String as PropType<ButtonVariant>,
       default: 'contained',
@@ -95,24 +95,12 @@ export const Button = genericComponent<new () => {
       }
     })
     const { materialClasses, materialStyles } = useMaterial(computedProps)
-    const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props)
-    const { disabledClasses } = useDisabled(props)
-
-    let hasNext: ComputedRef<Boolean>
-    {
-      try {
-        const { id, group } = useGroupItem({}, ButtonGroupSymbol)
-        hasNext = computed(() => {
-          if (!group.items.value.length) return false
-          return group.items.value[group.items.value.length - 1] !== id
-        })
-      } catch (e) {
-        hasNext = computed(() => {
-          return false
-        })
-      }
-    }
+    const { disabledClasses } = useDisabled(computed(() => ({
+      disabled: group?.disabled.value || props.disabled
+    })))
+    const group = useGroupItem(props, ButtonToggleSymbol, false)
+    const link = useLink(props, attrs)
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
@@ -133,76 +121,68 @@ export const Button = genericComponent<new () => {
         && props.appendIcon
       )
       return (
-        <>
-          <Tag
-            role={ link.isLink.value ? undefined : 'button' }
-            aria-disabled={ props.disabled || undefined }
-            type={ link.isLink.value ? undefined : props.type }
-            class={ [
-              've-button',
-              {
-                've-button--active': link.isExactActive?.value,
-                've-button--block': props.block,
-                've-button--stacked': props.stacked,
-                've-button--has-next': hasNext.value,
-              },
-              materialClasses.value,
-              disabledClasses.value,
-              loadingClasses.value,
-            ] }
-            style={ [
-              materialStyles.value,
-            ] }
-            disabled={ props.disabled || undefined }
-            href={ link.href.value }
-            onClick={ props.disabled || link.navigate }
-            { ...attrs }
-          >
-            { hasOverlay && <div class="ve-button__overlay" /> }
+        <Tag
+          role={ link.isLink.value ? undefined : 'button' }
+          aria-disabled={ props.disabled || undefined }
+          type={ link.isLink.value ? undefined : props.type }
+          class={ [
+            've-button',
+            group?.selectedClass.value,
+            {
+              've-button--active': link.isExactActive?.value,
+              've-button--block': props.block,
+              've-button--stacked': props.stacked,
+            },
+            materialClasses.value,
+            disabledClasses.value,
+            loadingClasses.value,
+          ] }
+          style={ [
+            materialStyles.value,
+          ] }
+          disabled={ props.disabled || undefined }
+          href={ link.href.value }
+          onClick={ props.disabled || link.navigate || group?.toggle }
+          { ...attrs }
+        >
+          { hasOverlay && <div class="ve-button__overlay" /> }
 
-            { hasLoding && (
-              <Progress
-                class="ve-button__icon"
-                indeterminate
-                width={ 2 }
-              />
-            ) }
-
-            { hasPrependIcon && (
-              <Icon
-                class="ve-button__icon"
-                icon={ props.prependIcon }
-                left={ !props.stacked }
-              />
-            ) }
-
-            { hasDefault && (
-              typeof props.icon === 'boolean'
-                ? <span>{ slots.default ? slots.default() : props.text }</span>
-                : (
-                  <Icon
-                    class="ve-button__icon"
-                    icon={ props.icon }
-                    size={ props.size }
-                  />
-                )
-            ) }
-
-            { hasAppendIcon && (
-              <Icon
-                class="ve-button__icon"
-                icon={ props.appendIcon }
-                right={ !props.stacked }
-              />
-            ) }
-          </Tag>
-
-          { hasNext.value && (
-            <div class="ve-button__separator">
-              <Divider vertical />
-            </div>
+          { hasLoding && (
+            <Progress
+              class="ve-button__icon"
+              indeterminate
+              width={ 2 }
+            />
           ) }
-        </>
+
+          { hasPrependIcon && (
+            <Icon
+              class="ve-button__icon"
+              icon={ props.prependIcon }
+              left={ !props.stacked }
+            />
+          ) }
+
+          { hasDefault && (
+            typeof props.icon === 'boolean'
+              ? <span>{ slots.default ? slots.default() : props.text }</span>
+              : (
+                <Icon
+                  class="ve-button__icon"
+                  icon={ props.icon }
+                  size={ props.size }
+                />
+              )
+          ) }
+
+          { hasAppendIcon && (
+            <Icon
+              class="ve-button__icon"
+              icon={ props.appendIcon }
+              right={ !props.stacked }
+            />
+          ) }
+        </Tag>
       )
     }
   }

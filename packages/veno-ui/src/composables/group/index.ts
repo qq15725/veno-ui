@@ -1,5 +1,5 @@
 // Utils
-import { getCurrentInstance, computed, inject, onBeforeUnmount, onMounted, provide, reactive, toRef } from 'vue'
+import { getCurrentInstance, computed, inject, onBeforeUnmount, onMounted, provide, reactive, toRef, ExtractPropTypes } from 'vue'
 import { consoleWarn, deepEqual, findChildren, getUid, propsFactory, wrapInArray } from '../../utils'
 
 // Composables
@@ -65,23 +65,29 @@ export const makeGroupProps = propsFactory({
 }, 'group')
 
 export const makeGroupItemProps = propsFactory({
-  value: {
-    type: [Number, Boolean, String, Object],
-    default: undefined,
-  },
+  value: null,
   disabled: Boolean,
   selectedClass: String,
 }, 'group-item')
 
+type GroupItemProps = ExtractPropTypes<ReturnType<typeof makeGroupItemProps>>
+
 // Composables
 export function useGroupItem (
-  props: {
-    value?: unknown,
-    disabled?: boolean,
-    selectedClass?: string
-  },
+  props: GroupItemProps,
   injectKey: InjectionKey<GroupProvide>,
-): GroupItemProvide {
+  required?: true,
+): GroupItemProvide
+export function useGroupItem (
+  props: GroupItemProps,
+  injectKey: InjectionKey<GroupProvide>,
+  required: false,
+): GroupItemProvide | null
+export function useGroupItem (
+  props: GroupItemProps,
+  injectKey: InjectionKey<GroupProvide>,
+  required = true
+): GroupItemProvide | null {
   const vm = getCurrentInstance()
 
   if (!vm) {
@@ -93,6 +99,8 @@ export function useGroupItem (
   const group = inject(injectKey, null)
 
   if (!group) {
+    if (!required) return group
+
     throw new Error(`[VenoUi] Could not find useGroup injection with symbol ${ injectKey.description }`)
   }
 

@@ -17,7 +17,7 @@
   line-height: $button-line-height;
   letter-spacing: $button-text-letter-spacing;
   text-transform: $button-text-transform;
-  transition-property: width, border-color, transform, opacity, color;
+  transition-property: width, transform, opacity;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
   user-select: none;
@@ -86,11 +86,6 @@
     cursor: wait;
   }
 
-  &--has-next {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
   &__overlay {
     @include tools.absolute();
     background-color: rgb(var(--ve-button-overlay, var(--ve-theme-on-surface)));
@@ -114,22 +109,5 @@
         margin-inline-start: map.get(settings.$grid-gutters, 'md');
       }
     }
-  }
-
-  &__separator {
-    --ve-border-opacity: .12;
-    width: 1px;
-
-    .ve-divider {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-    }
-  }
-
-  &__separator + & {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
   }
 }

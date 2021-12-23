@@ -35,9 +35,9 @@ function createAlert (type: string, defaultTitle: string): ContainerArgs {
         const info = token.info.trim().slice(type.length).trim()
         if (token.nesting === 1) {
           if (type === 'tip') {
-            return `<ve-alert title="${ info || defaultTitle }">\n`
+            return `<ve-alert title="${ info || defaultTitle }" class="mb-3">\n`
           }
-          return `<ve-alert type="${ type }" title="${ info || defaultTitle }">\n`
+          return `<ve-alert type="${ type }" title="${ info || defaultTitle }" class="mb-3">\n`
         } else {
           return `</ve-alert>\n`
         }

@@ -1,0 +1,49 @@
+@forward 'variables';
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+@use 'variables' as *;
+
+.ve-button-group {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex: 1 1;
+  max-width: 100%;
+  min-width: 0;
+  @include tools.use-material();
+
+  .ve-button.ve-button--selected:not(.ve-button--disabled) {
+    .ve-button__overlay {
+      opacity: var(--ve-activated-opacity);
+    }
+  }
+
+  .ve-button {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: inherit;
+      border-bottom-left-radius: inherit;
+    }
+
+    &:last-child {
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    &:not(:last-child) {
+      border-right: none;
+    }
+
+    &:not(:first-child) {
+      border-left: none;
+    }
+  }
+
+  &--divided {
+    .ve-button:not(:last-child) {
+      border-right-width: $button-group-border-thin-width;
+      border-right-style: $button-group-border-style;
+      border-right-color: $button-group-border-color;
+    }
+  }
+}

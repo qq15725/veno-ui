@@ -69,9 +69,11 @@ const active = ref()
     </ve-app-sider>
 
     <ve-app-main>
-      <ve-container class="px-md-10 py-md-8">
-        <router-view />
-      </ve-container>
+      <router-view #default="{ Component }">
+        <ve-fade-transition>
+          <component :is="Component" />
+        </ve-fade-transition>
+      </router-view>
     </ve-app-main>
   </ve-app>
 </template>

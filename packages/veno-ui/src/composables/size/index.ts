@@ -18,7 +18,6 @@ export const sizes = [
 
 // Types
 import type { MaybeRef } from '../../utils'
-type Size = typeof sizes[number]
 
 export interface SizeProps
 {

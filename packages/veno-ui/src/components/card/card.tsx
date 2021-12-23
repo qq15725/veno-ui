@@ -36,7 +36,7 @@ export const Card = defineComponent({
     appendIcon: String,
     title: String,
     subtitle: String,
-    divider: Boolean,
+    divided: Boolean,
     text: String,
     ...makeMaterialProps({
       size: null,
@@ -141,7 +141,7 @@ export const Card = defineComponent({
             </CardHeader>
           ) }
 
-          { props.divider && <Divider /> }
+          { props.divided && <Divider /> }
 
           { hasText && (
             <CardText>
@@ -151,7 +151,7 @@ export const Card = defineComponent({
 
           { slots.default?.() }
 
-          { slots.actions && props.divider && <Divider /> }
+          { slots.actions && props.divided && <Divider /> }
 
           { slots.actions && (
             <CardActions>{ slots.actions() }</CardActions>

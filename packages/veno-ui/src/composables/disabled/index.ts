@@ -1,6 +1,9 @@
 // Utils
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName } from '../../utils'
+
+// Types
+import type { MaybeRef } from '../../utils'
 
 export interface DisabledProps
 {
@@ -12,12 +15,16 @@ export const makeDisabledProps = propsFactory({
 }, 'disabled')
 
 export function useDisabled (
-  props: DisabledProps,
+  props: MaybeRef<DisabledProps>,
   name = getCurrentInstanceName()
 ) {
   return {
-    disabledClasses: computed(() => ({
-      [`${ name }--disabled`]: props.disabled,
-    })),
+    disabledClasses: computed(() => {
+      let { disabled } = unref(props)
+
+      return {
+        [`${ name }--disabled`]: disabled,
+      }
+    }),
   }
 }

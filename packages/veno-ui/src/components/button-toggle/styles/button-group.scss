@@ -1,0 +1,7 @@
+.ve-button-toggle {
+  .ve-button.ve-button--selected:not(.ve-button--disabled) {
+    .ve-button__overlay {
+      opacity: var(--ve-activated-opacity);
+    }
+  }
+}

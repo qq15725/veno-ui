@@ -34,7 +34,15 @@ export function loadDocsRoutes (type: DocType): RouteRecordRaw[] {
       return {
         name: `${ capitalize(camelize(name)) }${ capitalize(camelize(type)) }`,
         path: `/${ type }/${ name }.html`,
-        component: module.default,
+        component: {
+          setup () {
+            return () => (
+              <ve-container class="px-md-10 py-md-8">
+                <module.default />
+              </ve-container>
+            )
+          }
+        },
         meta: module.__pageData ?? {},
       }
     })
