@@ -2,12 +2,14 @@
 
 # 基本用法
 
-```html
-<ve-progress :model-value="value">{{ value }}</ve-progress>
+进度条有2种变体 `circle` - 圆形进度条（默认）、`line` - 线性精度条。
 
-<div class="mt-3">
-  <ve-input v-model="value" type="number" />
-</div>
+```html
+<ve-progress :percent="value" variant="line" class="mb-3">{{ value }}</ve-progress>
+
+<ve-progress :percent="value" variant="circle" class="mb-3">{{ value }}</ve-progress>
+
+<ve-input v-model="value" type="number" hide-details />
 ```
 
 ```js

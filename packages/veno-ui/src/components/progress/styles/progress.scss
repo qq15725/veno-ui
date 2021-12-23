@@ -4,10 +4,8 @@
 @use '../../../styles/settings';
 
 .ve-progress {
+  $root: &;
   --ve-progress-size: calc(#{$progress-size} + var(--ve-progress-size-offset, 0px));
-  align-items: center;
-  display: inline-flex;
-  justify-content: center;
   position: relative;
   vertical-align: middle;
   height: var(--ve-progress-size);
@@ -17,45 +15,43 @@
     'sizes': $progress-sizes,
   ));
 
-  > svg {
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 0;
-  }
-
-  &__underlay {
-    color: rgba(var(--ve-border-color), var(--ve-border-opacity));
-    stroke: currentColor;
-    z-index: 1;
-  }
-
-  &__overlay {
-    stroke: currentColor;
-    transition: stroke-dasharray 0.6s ease-in-out, stroke-width 0s;
-    z-index: 2;
-  }
-
-  &__wrap {
+  &--variant-circle {
+    display: inline-flex;
     align-items: center;
-    display: flex;
     justify-content: center;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+
+    #{$root}__underlay {
+      stroke: currentColor;
+      color: rgba(var(--ve-border-color), var(--ve-border-opacity));
+    }
+
+    #{$root}__overlay {
+      stroke: currentColor;
+      transition: stroke-dasharray 0.6s ease-in-out, stroke-width 0s;
+    }
   }
 
   &--indeterminate > svg {
-    animation: progress-circular-rotate 1.4s linear infinite;
+    animation: progress-circle-rotate 1.4s linear infinite;
     transform-origin: center center;
     transition: 0.2s ease-in-out;
     transition-property: stroke-dashoffset, stroke-dasharray, stroke-width;
   }
 
   &--indeterminate &__overlay {
-    animation: progress-circular-dash 1.4s ease-in-out infinite;
+    animation: progress-circle-dash 1.4s ease-in-out infinite;
     stroke-dasharray: 25, 200;
     stroke-dashoffset: 0;
     stroke-linecap: round;
@@ -65,9 +61,56 @@
   &--indeterminate:not(&--visible) &__overlay {
     animation-play-state: paused !important;
   }
+
+  &--variant-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    #{$root}__bar {
+      position: relative;
+      flex: 1 0 auto;
+      border-radius: 100px;
+      height: inherit;
+      overflow: hidden;
+    }
+
+    #{$root}__underlay {
+      background: currentColor;
+      height: inherit;
+      left: 0;
+      position: absolute;
+      transition: inherit;
+      transition-property: width, left, right;
+      border-radius: inherit;
+    }
+
+    #{$root}__overlay {
+      background: currentColor;
+      bottom: 0;
+      left: 0;
+      opacity: var(--ve-border-opacity);
+      position: absolute;
+      top: 0;
+      width: 100%;
+      transition: inherit;
+      transition-property: width, left, right;
+      border-radius: inherit;
+    }
+
+    #{$root}__wrap {
+      margin-inline-start: 16px
+    }
+  }
+
+  &__wrap {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
 }
 
-@keyframes progress-circular-dash {
+@keyframes progress-circle-dash {
   0% {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
@@ -84,7 +127,7 @@
   }
 }
 
-@keyframes progress-circular-rotate {
+@keyframes progress-circle-rotate {
   100% {
     transform: rotate(270deg);
   }
