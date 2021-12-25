@@ -23,7 +23,7 @@
 
 ### 样式帮助类
 
-提供大量样式帮助类，
+提供大量样式帮助类。
 
 ### 自定义主题
 
@@ -31,7 +31,7 @@
 
 ### 无障碍设计
 
-所有组件遵循 WAI-ARIA [https://www.w3.org/TR/wai-aria-practices](https://www.w3.org/TR/wai-aria-practices)
+所有组件遵循 WAI-ARIA [https://www.w3.org/TR/wai-aria-practices](https://www.w3.org/TR/wai-aria-practices) 。
 
 ### TypeScript
 
