@@ -77,7 +77,7 @@ const store = useRouterStore()
 
     <ve-app-main>
       <router-view #default="{ Component }">
-        <ve-fade-transition>
+        <ve-fade-transition hide-on-leave>
           <component :is="Component" />
         </ve-fade-transition>
       </router-view>
