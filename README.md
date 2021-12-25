@@ -17,13 +17,25 @@
 
 ## 特性
 
+### 响应式设计
+
+适配移动端与 PC 端，不再需要切换两套 UI 库。
+
+### 样式帮助类
+
+提供大量样式帮助类，
+
+### 自定义主题
+
+组件默认属性值，风格色皆可调。
+
 ### 无障碍设计
 
 所有组件遵循 WAI-ARIA [https://www.w3.org/TR/wai-aria-practices](https://www.w3.org/TR/wai-aria-practices)
 
 ### TypeScript
 
-所有组件 TypeScript 编写。
+所有组件 TypeScript 编写，类型安全。
 
 ## 安装
 
