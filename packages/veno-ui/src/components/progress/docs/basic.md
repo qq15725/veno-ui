@@ -2,14 +2,29 @@
 
 # 基本用法
 
-进度条有2种变体 `circle` - 圆形进度条（默认）、`line` - 线性精度条。
+进度条有2种变体 `linear` - 线性进度条（默认）、`circular` - 圆形进度条。
 
 ```html
-<ve-progress :percent="value" variant="line" class="mb-3">{{ value }}</ve-progress>
+<ve-progress
+  :model-value="value"
+  :stroke-width="strokeWidth"
+  variant="circular"
+  class="mb-3"
+>
+  {{ value }}
+</ve-progress>
 
-<ve-progress :percent="value" variant="circle" class="mb-3">{{ value }}</ve-progress>
+<ve-progress
+  :model-value="value"
+  :stroke-width="strokeWidth"
+  variant="linear"
+  class="mb-3"
+>
+  {{ value }}
+</ve-progress>
 
-<ve-input v-model="value" type="number" hide-details />
+<ve-input label="进度比" v-model="value" type="number" hide-details />
+<ve-input label="描线宽" v-model="strokeWidth" type="number" hide-details />
 ```
 
 ```js
@@ -19,6 +34,7 @@ export default defineComponent({
   setup () {
     return {
       value: ref(30),
+      strokeWidth: ref(3),
     }
   }
 })

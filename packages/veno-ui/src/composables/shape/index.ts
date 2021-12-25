@@ -7,7 +7,6 @@ export const SHAPES = ['tile', 'default', 'rounded'] as const
 
 // Types
 import type { MaybeRef } from '../../utils'
-type Shape = typeof SHAPES[number]
 
 export interface ShapeProps
 {

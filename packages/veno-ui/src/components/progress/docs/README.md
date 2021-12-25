@@ -4,8 +4,6 @@ category: 反馈
 
 # 进度条 Progress
 
-`progress` 组件。
-
 ## 演示
 
 :::include

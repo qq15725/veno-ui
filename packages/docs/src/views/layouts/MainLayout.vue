@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouterStore } from '../../plugins/store'
 import { version } from 'veno-ui'
 
 const props = defineProps<{
@@ -7,12 +8,18 @@ const props = defineProps<{
 }>()
 
 const theme = ref()
-
 const active = ref()
+const store = useRouterStore()
 </script>
 
 <template>
   <ve-app :theme="theme">
+    <ve-progress
+        v-if="store.loading"
+        indeterminate
+        style="position: fixed; top: 0; z-index: 10;"
+    />
+
     <ve-app-bar border>
       <ve-app-bar-nav-icon
           @click="active = !active"

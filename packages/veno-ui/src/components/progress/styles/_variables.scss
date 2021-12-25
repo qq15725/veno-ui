@@ -1,6 +1,7 @@
 @use '../../../styles/tools';
 
-$progress-size: 40px !default;
+$progress-circular-size: 40px !default;
+$progress-linear-size: 3px !default;
 
 $progress-sizes: () !default;
 $progress-sizes: tools.map-deep-merge(

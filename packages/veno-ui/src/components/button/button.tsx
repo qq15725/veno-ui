@@ -21,8 +21,8 @@ import { ButtonToggleSymbol } from '../button-toggle/button-toggle'
 
 // Constants
 export const allowedVariants = [
-  'outlined', // 轮廓按钮
   'contained', // 容器按钮
+  'outlined', // 轮廓按钮
   'text', // 文本按钮
   'link', // 链接按钮
   'icon', // 图标按钮
@@ -150,8 +150,10 @@ export const Button = genericComponent<new () => {
           { hasLoding && (
             <Progress
               class="ve-button__icon"
+              color="currentColor"
               indeterminate
-              width={ 2 }
+              variant="circular"
+              stroke-width={ 1 }
             />
           ) }
 

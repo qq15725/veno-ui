@@ -8,6 +8,7 @@
     "dev": "vite"
   },
   "dependencies": {
+    "pinia": "^2.0.9",
     "prismjs": "^1.25.0",
     "veno-ui": "^0.0.18",
     "vue": "^3.2.26",
