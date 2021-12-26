@@ -34,10 +34,13 @@ export const Table = defineComponent({
     }),
   },
 
-  setup (props) {
+  setup (props, { slots }) {
     const { materialClasses, materialStyles } = useMaterial(props)
 
     return () => {
+      const hasThead = !props.hideHeaders && props.headers.length > 0
+      const hasTbody = props.items.length > 0
+
       return (
         <props.tag
           class={ [
@@ -49,26 +52,31 @@ export const Table = defineComponent({
           ] }
         >
           <table>
-            { !props.hideHeaders && (
+            { hasThead && (
               <thead>
-              <tr class="ve-table__tr">
-                { props.headers.map(header => {
-                  return (
-                    <th class="ve-table__th">{ header.label }</th>
-                  )
-                }) }
-              </tr>
+                <tr>
+                  { props.headers.map(header => {
+                    return (
+                      <th>{ header.label }</th>
+                    )
+                  }) }
+                </tr>
               </thead>
             ) }
-            <tbody>
-            { props.items.map(item => (
-              <tr class="ve-table__tr">
-                { props.headers.map(header => (
-                  <td class="ve-table__td">{ item[header.name] }</td>
-                )) }
-              </tr>
-            )) }
-            </tbody>
+
+            { hasTbody && (
+              <tbody>
+              { props.items.map(item => (
+                <tr>
+                  { props.headers.map(header => (
+                    <td>{ item[header.name] }</td>
+                  )) }
+                </tr>
+              )) }
+              </tbody>
+            ) }
+
+            { slots.default?.() }
           </table>
         </props.tag>
       )

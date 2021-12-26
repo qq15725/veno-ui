@@ -18,29 +18,29 @@
     border-spacing: 0;
   }
 
-  &--border &__th,
-  &--border &__td, {
+  &--border th,
+  &--border td, {
     border-bottom: 1px solid rgba(var(--ve-border-color), var(--ve-border-opacity));
   }
 
-  &__th,
-  &__td {
+  th,
+  td {
     line-height: 1.5715;
     padding: 8px 16px;
     text-align: left;
   }
 
-  &__th {
+  th {
     position: relative;
     font-weight: 500;
     background: rgb(var(--ve-theme-secondary));
   }
 
-  &__td {
+  td {
     word-break: break-all;
   }
 
-  &__tr:hover &__td {
+  tr:hover td {
     background: rgba(var(--ve-theme-secondary), var(--ve-medium-emphasis-opacity));
   }
 }
