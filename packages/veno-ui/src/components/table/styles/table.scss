@@ -1,0 +1,46 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+.ve-table {
+  @include tools.use-material();
+
+  &--border {
+    border-top-width: thin;
+    border-left-width: thin;
+    border-right-width: thin;
+    border-bottom-width: 0;
+  }
+
+  table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  &--border &__th,
+  &--border &__td, {
+    border-bottom: 1px solid rgba(var(--ve-border-color), var(--ve-border-opacity));
+  }
+
+  &__th,
+  &__td {
+    line-height: 1.5715;
+    padding: 8px 16px;
+    text-align: left;
+  }
+
+  &__th {
+    position: relative;
+    font-weight: 500;
+    background: rgb(var(--ve-theme-secondary));
+  }
+
+  &__td {
+    word-break: break-all;
+  }
+
+  &__tr:hover &__td {
+    background: rgba(var(--ve-theme-secondary), var(--ve-medium-emphasis-opacity));
+  }
+}

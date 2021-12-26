@@ -5,7 +5,3 @@ export default { name: 'App' }
 <template>
   <router-view />
 </template>
-
-<style>
-@import './styles/layout.css';
-</style>
