@@ -2,10 +2,11 @@
 import './styles/overlay.scss'
 
 // Utils
-import { computed, mergeProps, ref, toHandlers, toRef, watch, Teleport, Transition } from 'vue'
+import { computed, mergeProps, ref, toHandlers, toRef, watch } from 'vue'
 import { convertToUnit, genericComponent, getScrollParent, standardEasing, useRender } from '../../utils'
 
 // Components
+import { Teleport, Transition } from 'vue'
 import { FadeTransition } from '../transition'
 
 // Composables

@@ -3,7 +3,7 @@ import './styles/app-bar.scss'
 
 // Utils
 import { toRef } from 'vue'
-import { genericComponent, convertToUnit } from '../../utils'
+import { defineComponent, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -15,7 +15,7 @@ import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 import type { PropType } from 'vue'
 export type AppBar = InstanceType<typeof AppBar>
 
-export const AppBar = genericComponent()({
+export const AppBar = defineComponent({
   name: 'VeAppBar',
 
   props: {

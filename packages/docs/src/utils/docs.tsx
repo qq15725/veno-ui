@@ -9,7 +9,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export type DocType = typeof docTypes[number]
 
-export function wrapDocsComponent (Component) {
+export function wrapDocsComponent (Component: any) {
   return {
     setup () {
       return () => (

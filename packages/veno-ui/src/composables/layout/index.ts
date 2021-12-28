@@ -233,7 +233,7 @@ export function createLayout (props: {
           marginTop: position.value !== 'bottom' ? `${ item.top }px` : undefined,
           marginBottom: position.value !== 'top' ? `${ item.bottom }px` : undefined,
           width: !isHorizontal ? `calc(100% - ${ item.left }px - ${ item.right }px)` : `${ elementSize.value }px`,
-          zIndex: layers.value.length - index,
+          zIndex: 10 + layers.value.length - index,
           transform: `translate${ isHorizontal ? 'X' : 'Y' }(${ (active.value ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1) }%)`,
         }
       })

@@ -49,6 +49,7 @@ export function usePosition (
     } else if (!!position) {
       return `position-${ position }`
     }
+    return null
   })
 
   const positionStyles = computed(() => {

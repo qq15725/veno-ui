@@ -1,0 +1,8 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+.ve-table-th {
+  &.ve-table-cell--fixed {
+    z-index: 3 !important;
+  }
+}

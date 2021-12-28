@@ -4,17 +4,40 @@
 
 ```html
 <ve-grid :col-props="{ cols: 'auto' }">
-  <ve-switch label="边框" v-model="border" />
-
-  <ve-switch label="表头" v-model="showHeaders" />  
+  <ve-switch label="显示边框" v-model="border" />
+  <ve-switch label="隐藏表头" v-model="hideHeader" />  
+  <ve-switch label="固定表头" v-model="fixedHeader" />  
 </ve-grid>
 
 <ve-table
   :border="border"
-  :hide-headers="!showHeaders"
+  :hide-header="hideHeader"
+  :fixed-header="fixedHeader"
+  :height="fixedHeader ? 200 : undefined"
   :headers="headers" 
   :items="items"
-/>
+>
+  <template #item.operation>
+    <ve-dialog>
+      <template #activator="{ props }">
+        <ve-button v-bind="props">查看</ve-button>
+      </template>
+
+      <template #default="{ isActive }">
+        <ve-card
+          title="确认"
+          text="一些例子文本内容"
+          #actions
+          width="400"
+        >
+          <ve-spacer />
+          <ve-button class="mr-3" @click="isActive.value = false">取消</ve-button>
+          <ve-button color="primary" @click="isActive.value = false">确认</ve-button>
+        </ve-card>
+      </template>
+    </ve-dialog>
+  </template>
+</ve-table>
 ```
 
 ```js
@@ -24,12 +47,14 @@ export default defineComponent({
   setup () {
     return {
       border: ref(true),
-      showHeaders: ref(true),
+      hideHeader: ref(false),
+      fixedHeader: ref(false),
       headers: ref([
-        { label: 'Name', name: 'name' },
-        { label: 'Salary', name: 'salary' },
-        { label: 'Address', name: 'address' },
-        { label: 'Email', name: 'email' }
+        { text: 'Name', width: 200, value: 'name', fixed: true },
+        { text: 'Salary', width: 200, value: 'salary' },
+        { text: 'Address', width: 600, value: 'address' },
+        { text: 'Email', width: 300, value: 'email' },
+        { value: 'operation', width: 100, align: 'center', fixed: true },
       ]),
       items: ref([
         {

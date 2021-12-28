@@ -1,0 +1,22 @@
+@mixin scrollbar($size: 10px) {
+  &::-webkit-scrollbar {
+    width: #{$size};
+    height: #{$size};
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+    background: rgba(var(--ve-theme-on-surface), var(--ve-hover-opacity)) content-box;
+    border: 2px solid transparent;
+    border-radius: 5px;
+
+    &:hover {
+      background: rgba(var(--ve-theme-on-surface), var(--ve-activated-opacity)) content-box;
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    display: block;
+  }
+}
