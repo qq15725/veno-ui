@@ -1,5 +1,5 @@
 ---
-category: 其他
+category: Others 其他组件
 ---
 
 # 长宽比 Responsive

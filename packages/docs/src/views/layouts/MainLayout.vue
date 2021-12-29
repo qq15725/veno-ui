@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouterStore } from '../../plugins/store'
-import { version } from 'veno-ui'
 
 const props = defineProps<{
   menus?: any[]

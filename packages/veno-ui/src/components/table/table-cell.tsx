@@ -19,6 +19,10 @@ export const TableCell = defineComponent({
     colIndex: Number,
     cols: Number,
     fixed: [Boolean, String] as PropType<boolean | 'start' | 'end'>,
+    align: {
+      type: String as PropType<boolean | 'start' | 'center' | 'end'>,
+      default: 'start'
+    },
     ...makeTagProps({
       tag: 'td'
     }),
@@ -38,6 +42,7 @@ export const TableCell = defineComponent({
         <props.tag
           class={ [
             've-table-cell',
+            `text-${ props.align }`,
             {
               've-table-cell--fixed': !!fixed.value,
               've-table-cell--fixed-start': fixed.value === 'start',
@@ -49,6 +54,8 @@ export const TableCell = defineComponent({
             right: fixed.value === 'end' ? 0 : undefined,
           } }
         >
+          { <div class="ve-table-cell__overlay" /> }
+
           { slots.default?.() }
         </props.tag>
       )

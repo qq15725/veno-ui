@@ -1,5 +1,5 @@
 ---
-category: 通用
+category: Basic 通用组件
 ---
 
 # 图标 Icon

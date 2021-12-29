@@ -6,6 +6,9 @@ import { useRouterStore } from '../store'
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  scrollBehavior (to, from, savedPosition) {
+    return { top: 0 }
+  },
 })
 
 router.beforeEach(function (to, from, next) {

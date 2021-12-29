@@ -5,11 +5,13 @@ import * as plugins from './plugins'
 
 // Components
 import App from './App.vue'
-import Demo from './components/Demo.vue'
+import components from './components'
 
 const app = createApp(App)
 
-app.component('Demo', Demo)
+for (const key in components) {
+  app.component(key, components[key])
+}
 
 for (const key in plugins) {
   app.use((plugins as Record<string, any>)[key])

@@ -1,5 +1,5 @@
 ---
-category: 数据输入
+category: Form 表单组件
 ---
 
 # 复选框 Checkbox

@@ -1,5 +1,5 @@
 ---
-category: 反馈
+category: Feedback 反馈组件
 ---
 
 # 进度条 Progress

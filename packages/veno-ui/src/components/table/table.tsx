@@ -3,10 +3,11 @@ import './styles/table.scss'
 
 // Utils
 import { ref, computed } from 'vue'
-import { defineComponent, convertToUnit } from '../../utils'
+import { defineComponent, convertToUnit, wrapInArray } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
 import { TableTd } from './table-td'
@@ -56,14 +57,7 @@ export const Table = defineComponent({
       default: () => []
     },
 
-    /**
-     * @zh 数据
-     */
-    items: {
-      type: Array as PropType<Record<string, any>[]>,
-      default: () => [],
-    },
-
+    ...makeDataIteratorProps(),
     ...makeMaterialProps({
       border: true,
     }),
@@ -71,6 +65,7 @@ export const Table = defineComponent({
 
   setup (props, { slots }) {
     const { materialClasses, materialStyles } = useMaterial(props)
+    const { items, sortBy, sortDesc } = useDataIterator(props)
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
@@ -144,18 +139,32 @@ export const Table = defineComponent({
               { hasThead && (
                 <thead>
                 <tr>
-                  { props.headers.map((header, colIndex) => (
-                    <TableTh
-                      { ...header }
-                      row-index={ 0 }
-                      col-index={ colIndex }
-                      cols={ props.headers.length }
-                    >
-                      { header.text }
+                  { props.headers.map((header, colIndex) => {
+                    const sortIndex = wrapInArray(sortBy.value)
+                      .findIndex(v => v === header.value)
+                    const desc = sortIndex === -1
+                      ? undefined
+                      : wrapInArray(sortDesc.value)[sortIndex]
+                    return (
+                      <TableTh
+                        { ...header }
+                        row-index={ 0 }
+                        col-index={ colIndex }
+                        cols={ props.headers.length }
+                        sort-desc={ desc }
+                        onClick={ () => {
+                          if (header.sortable) {
+                            sortBy.value = header.value
+                            sortDesc.value = !sortDesc.value
+                          }
+                        } }
+                      >
+                        { header.text }
 
-                      { slots[`header.${ header.value }`]?.() }
-                    </TableTh>
-                  )) }
+                        { slots[`header.${ header.value }`]?.() }
+                      </TableTh>
+                    )
+                  }) }
                 </tr>
                 </thead>
               ) }
@@ -164,7 +173,7 @@ export const Table = defineComponent({
 
               { hasTbody && (
                 <tbody>
-                { props.items.map((item, rowIndex) => (
+                { items.value.map((item, rowIndex) => (
                   <tr>
                     { props.headers.map((header, colIndex) => (
                       <TableTd

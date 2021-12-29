@@ -1,5 +1,5 @@
 // Utils
-import { camelize, capitalize } from 'vue'
+import { toKebabCase } from './helpers'
 
 // Constants
 export const docTypes = ['component', 'composable'] as const
@@ -8,18 +8,6 @@ export const docTypes = ['component', 'composable'] as const
 import type { RouteRecordRaw } from 'vue-router'
 
 export type DocType = typeof docTypes[number]
-
-export function wrapDocsComponent (Component: any) {
-  return {
-    setup () {
-      return () => (
-        <ve-container class="px-md-10 py-md-8">
-          <Component />
-        </ve-container>
-      )
-    }
-  }
-}
 
 export function loadDocsModules (type: DocType) {
   switch (type) {
@@ -44,9 +32,9 @@ export function loadDocsRoutes (type: DocType): RouteRecordRaw[] {
       let name = (path.match(nameRE) as string[])[1]
       const module = modules[path]
       return {
-        name: `${ capitalize(camelize(name)) }${ capitalize(camelize(type)) }`,
+        name: toKebabCase(`${ type }-${ name }`),
         path: `/${ type }/${ name }.html`,
-        component: wrapDocsComponent(module.default),
+        component: module.default,
         meta: module.__pageData ?? {},
       }
     })

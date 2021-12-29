@@ -1,5 +1,5 @@
 ---
-category: 数据输入
+category: Form 表单组件
 ---
 
 # 输入框 Input

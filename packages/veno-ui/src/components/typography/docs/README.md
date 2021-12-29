@@ -1,5 +1,5 @@
 ---
-category: 通用
+category: Basic 通用组件
 ---
 
 # 排版 Typography

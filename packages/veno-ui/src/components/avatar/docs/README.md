@@ -1,5 +1,5 @@
 ---
-category: 数据展示
+category: Data 数据展示
 ---
 
 # 头像 Avatar

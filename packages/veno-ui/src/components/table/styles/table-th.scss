@@ -2,7 +2,42 @@
 @use '../../../styles/tools';
 
 .ve-table-th {
+  &--sortable {
+    cursor: pointer;
+  }
+
+  &--sort-desc .ve-icon:first-child,
+  &--sort-asc .ve-icon:last-child {
+    opacity: .8;
+  }
+
   &.ve-table-cell--fixed {
     z-index: 3 !important;
+  }
+
+  &__wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  &__sortable {
+    display: flex;
+    flex-direction: column;
+    margin-inline-start: 8px;
+
+    .ve-icon {
+      position: relative;
+      width: 20px;
+      height: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      opacity: .2;
+
+      .ve-icon__svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }

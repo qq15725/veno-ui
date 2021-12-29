@@ -1,49 +1,75 @@
 // Types
 import type { RouteRecordRaw, RouteLocationRaw } from 'vue-router'
 
+// 菜单项
 interface MenuItem
 {
-  title: string
-  category?: string
-  to?: RouteLocationRaw
-  value?: string
-  children?: MenuItem[]
+  title: string // 标题
+  value: any // 唯一值
+
+  // 可选
+  to?: RouteLocationRaw // 页面路由
+  children?: MenuItem[] // 子菜单项
 }
 
-export function convertRoutesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
+function createStringCollator (locale = 'en-US'): Intl.Collator {
+  return new Intl.Collator(
+    locale,
+    { sensitivity: 'accent', usage: 'sort' }
+  )
+}
+
+const defaultStringCollator = createStringCollator()
+
+// 路由转化成菜单项
+export function routeToMenuItem (route: RouteRecordRaw): MenuItem {
+  return {
+    title: (route.meta?.title ?? route.name) as string,
+    value: route.name,
+    to: {
+      name: route.name
+    },
+  }
+}
+
+// 创建菜单组
+export function createMenuGroup (title: string): MenuItem {
+  return {
+    title,
+    value: `group-${ title }`,
+  }
+}
+
+// 路由组转化成菜单列表
+export function routesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
   return routes
-    .map<MenuItem>(({ name, meta = {} }) => {
-      const { title, category } = meta
-      return {
-        category: category as string | undefined,
-        title: title as string,
-        to: { name },
+    .reduce<MenuItem[]>((menus, route) => {
+      function initMenuGroup (title: string) {
+        const menuGroup = createMenuGroup(title)
+        menus.push(menuGroup)
+        return menuGroup
       }
-    })
-    .reduce<MenuItem[]>((items, item) => {
-      if (item.category) {
-        let parent = items.find(v => item.category === v.value)
-        if (!parent) {
-          parent = {
-            title: item.category,
-            value: item.category,
-            children: [],
-          }
-          items.push(parent)
-        }
-        if (parent.children) {
-          parent.children.push(item)
-          parent.title = `${ item.category }(${ parent.children.length })`
-        }
+
+      const menuItem = routeToMenuItem(route)
+      const title = (route.meta?.category || '') as string
+      if (title) {
+        const menuGroup = menus.find(v => `group-${ title }` === v.value)
+          || initMenuGroup(title)
+        menuGroup.children = menuGroup.children || []
+        menuGroup.children.push(menuItem)
       } else {
-        items.push(item)
+        menus.push(menuItem)
       }
-      return items
-    }, [])
+
+      return menus
+    }, [] as MenuItem[])
     .sort((a, b) => {
-      if (a.value === '通用') {
+      if (!a.children && b.children) {
         return -1
+      } else if (a.children && !b.children) {
+        return 1
+      } else {
+        return defaultStringCollator.compare(a.title, b.title)
       }
-      return (b.children as any[]).length - (a.children as any[]).length
     })
 }

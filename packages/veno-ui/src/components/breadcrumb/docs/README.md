@@ -1,5 +1,5 @@
 ---
-category: 导航
+category: Navigation 导航
 WAI-ARIA: breadcrumb
 ---
 

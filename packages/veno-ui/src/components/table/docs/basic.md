@@ -13,7 +13,7 @@
   :border="border"
   :hide-header="hideHeader"
   :fixed-header="fixedHeader"
-  :height="fixedHeader ? 200 : undefined"
+  :height="fixedHeader ? 250 : undefined"
   :headers="headers" 
   :items="items"
 >
@@ -50,8 +50,8 @@ export default defineComponent({
       hideHeader: ref(false),
       fixedHeader: ref(false),
       headers: ref([
-        { text: 'Name', width: 200, value: 'name', fixed: true },
-        { text: 'Salary', width: 200, value: 'salary' },
+        { text: 'Name', width: 200, value: 'name' },
+        { text: 'Salary', width: 200, value: 'salary', sortable: true },
         { text: 'Address', width: 600, value: 'address' },
         { text: 'Email', width: 300, value: 'email' },
         { value: 'operation', width: 100, align: 'center', fixed: true },

@@ -1,5 +1,5 @@
 ---
-category: 布局
+category: Layouts 布局组件
 ---
 
 # 栅格 Grid
