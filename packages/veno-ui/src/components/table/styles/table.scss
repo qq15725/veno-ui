@@ -44,8 +44,8 @@
     border-bottom-width: 0;
   }
 
-  th,
-  td {
+  th:not(.ve-table-cell),
+  td:not(.ve-table-cell) {
     line-height: 1.5715;
     padding: 8px 16px;
   }
@@ -59,19 +59,9 @@
     position: relative;
     word-break: break-all;
     background: rgb(var(--ve-theme-background));
-
-    &:before {
-      content: '';
-      display: none;
-      @include tools.absolute();
-      background-color: rgb(var(--ve-theme-on-background));
-      border-radius: inherit;
-      opacity: var(--ve-hover-opacity);
-      pointer-events: none;
-    }
   }
 
-  tr:hover td:before {
-    display: block;
+  tr:hover td {
+    --ve-table-cell-overlay-opacity: .02;
   }
 }

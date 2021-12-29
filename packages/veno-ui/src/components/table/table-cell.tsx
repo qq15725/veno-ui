@@ -54,9 +54,19 @@ export const TableCell = defineComponent({
             right: fixed.value === 'end' ? 0 : undefined,
           } }
         >
-          { <div class="ve-table-cell__overlay" /> }
+          <div class="ve-table-cell__overlay" />
 
-          { slots.default?.() }
+          <div class="ve-table-cell__wrap">
+            <div class="ve-table-cell__text">
+              { slots.default?.() }
+            </div>
+
+            { slots.append && (
+              <div class="ve-table-cell__append">
+                { slots.append?.() }
+              </div>
+            ) }
+          </div>
         </props.tag>
       )
     }

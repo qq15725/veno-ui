@@ -38,4 +38,28 @@
   .ve-table--scroll-position-center &--fixed-start:after {
     display: block;
   }
+
+  &__overlay {
+    @include tools.absolute();
+    background-color: rgb(var(--ve-theme-on-background));
+    border-radius: inherit;
+    opacity: var(--ve-table-cell-overlay-opacity, 0);
+    pointer-events: none;
+  }
+
+  &__wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 100%;
+    line-height: 1.5715;
+    padding: 8px 16px;
+  }
 }

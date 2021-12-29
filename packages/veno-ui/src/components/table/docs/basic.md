@@ -51,7 +51,7 @@ export default defineComponent({
       fixedHeader: ref(false),
       headers: ref([
         { text: 'Name', width: 200, value: 'name' },
-        { text: 'Salary', width: 200, value: 'salary', sortable: true },
+        { text: 'Salary', width: 120, value: 'salary', sortable: true, filters: [23000] },
         { text: 'Address', width: 600, value: 'address' },
         { text: 'Email', width: 300, value: 'email' },
         { value: 'operation', width: 100, align: 'center', fixed: true },

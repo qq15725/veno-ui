@@ -26,6 +26,7 @@ export interface IconAliases
   checkboxOff: IconValue
   checkboxIndeterminate: IconValue
   sort: IconValue
+  filter: IconValue
 }
 
 export interface IconProps

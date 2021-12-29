@@ -16,7 +16,7 @@ const store = useRouterStore()
     <ve-progress
         v-if="store.loading"
         indeterminate
-        style="position: fixed; top: 0; z-index: 10;"
+        style="position: fixed; top: 0; z-index: 20;"
     />
 
     <ve-app-bar border>

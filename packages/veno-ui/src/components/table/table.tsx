@@ -57,15 +57,37 @@ export const Table = defineComponent({
       default: () => []
     },
 
+    /**
+     * @zh 排序的图标
+     */
+    sortIcon: {
+      type: String,
+      default: 'veno-ui:$sort',
+    },
+
+    /**
+     * @zh 排序激活时的颜色
+     */
+    sortActiveColor: {
+      type: String,
+      default: 'primary',
+    },
+
     ...makeDataIteratorProps(),
     ...makeMaterialProps({
       border: true,
     }),
   },
 
+  emits: {
+    'update:page': (val: number) => true,
+    'update:sortBy': (val: string | string[]) => true,
+    'update:sortDesc': (val: boolean | boolean[]) => true,
+  },
+
   setup (props, { slots }) {
     const { materialClasses, materialStyles } = useMaterial(props)
-    const { items, sortBy, sortDesc } = useDataIterator(props)
+    const { items, sortBy, sortDesc, sort } = useDataIterator(props)
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
@@ -140,24 +162,18 @@ export const Table = defineComponent({
                 <thead>
                 <tr>
                   { props.headers.map((header, colIndex) => {
-                    const sortIndex = wrapInArray(sortBy.value)
-                      .findIndex(v => v === header.value)
-                    const desc = sortIndex === -1
-                      ? undefined
-                      : wrapInArray(sortDesc.value)[sortIndex]
+                    const sortIndex = wrapInArray(sortBy.value).findIndex(v => v === header.value)
+                    const isDesc = wrapInArray(sortDesc.value)[sortIndex]
                     return (
                       <TableTh
                         { ...header }
                         row-index={ 0 }
                         col-index={ colIndex }
                         cols={ props.headers.length }
-                        sort-desc={ desc }
-                        onClick={ () => {
-                          if (header.sortable) {
-                            sortBy.value = header.value
-                            sortDesc.value = !sortDesc.value
-                          }
-                        } }
+                        sort-icon={ props.sortIcon }
+                        sort-active-color={ props.sortActiveColor }
+                        sort-desc={ isDesc }
+                        onClick={ () => header.sortable && sort(header.value) }
                       >
                         { header.text }
 

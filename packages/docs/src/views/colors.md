@@ -13,4 +13,4 @@ TODO
 
 ## Sass 颜色包
 
-<palette />
+<color-palette />
