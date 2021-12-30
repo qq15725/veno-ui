@@ -1,3 +1,4 @@
-export { default as VenoUi } from './veno-ui'
-export { default as Router } from './router'
-export { default as Pinia } from './store'
+export * from './veno-ui'
+export * from './router'
+export * from './pinia'
+export * from './global-components'

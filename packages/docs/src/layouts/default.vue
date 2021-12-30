@@ -1,20 +1,7 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useRouterStore } from '../../plugins/store'
-
-const props = defineProps<{
-  menus?: any[]
-}>()
-
-const theme = ref()
-const active = ref()
-const store = useRouterStore()
-</script>
-
 <template>
   <ve-app :theme="theme">
     <ve-progress
-        v-if="store.loading"
+        v-if="appStore.loading"
         indeterminate
         style="position: fixed; top: 0; z-index: 20;"
     />
@@ -65,8 +52,8 @@ const store = useRouterStore()
       <ve-list
           nav
           density="compact"
-          :items="props.menus"
-          :opened="props.menus.map(item => item.value)"
+          :items="menus"
+          :opened="menus.map(item => item.value)"
       >
         <template #header="{ title }">
           <ve-list-subheader>{{ title }}</ve-list-subheader>
@@ -83,3 +70,26 @@ const store = useRouterStore()
     </ve-app-main>
   </ve-app>
 </template>
+
+<script lang="ts">
+import { ref, defineComponent } from 'vue'
+import { useAppStore } from '@/store/app'
+
+export default defineComponent({
+  props: {
+    menus: Array,
+  },
+
+  setup (props) {
+    const theme = ref()
+    const active = ref()
+
+    return {
+      theme,
+      active,
+      menus: props.menus,
+      appStore: useAppStore()
+    }
+  }
+})
+</script>
