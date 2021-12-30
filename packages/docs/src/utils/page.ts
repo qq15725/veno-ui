@@ -1,16 +1,17 @@
 import { toKebabCase } from './helpers'
 
 // Types
-import type { RouteRecordRaw } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 
 export function loadPageRoutes (language: 'zh' = 'zh'): RouteRecordRaw[] {
-  let modules, nameRE
+  let modules: Record<string, any>, nameRE: string | RegExp
   {
     if (language === 'zh') {
       modules = import.meta.globEager('../pages/zh/**/*.md')
       nameRE = /zh\/(.+)\.md$/
     } else {
       modules = {}
+      nameRE = ''
     }
   }
 

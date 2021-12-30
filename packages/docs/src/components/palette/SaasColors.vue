@@ -1,7 +1,8 @@
 <template>
-  <ve-row>
-    <ve-col
-        v-for="(item, index) in [
+  <ve-container>
+    <ve-row>
+      <ve-col
+          v-for="(item, index) in [
             { title: 'Red / 浪漫红', color: 'red' },
             { title: 'Pink', color: 'pink' },
             { title: 'Purple / 青春紫', color: 'purple' },
@@ -22,26 +23,28 @@
             { title: 'Blue-Grey', color: 'blue-grey' },
             { title: 'Gray / 中性灰', color: 'grey' },
         ]"
-        :key="index"
-        cols="4"
-    >
-      <ve-list dense>
-        <ve-list-subheader class="justify-center text-h4">{{ item.title }}</ve-list-subheader>
-        <ve-list-item
-            v-for="i in 4" :key="i"
-            :class="`bg-${item.color}-n${5 - i}`"
-            :title="`${item.color}-n${5 - i}`"
-        />
-        <ve-list-item
-            :class="`bg-${item.color}`"
-            :title="`${item.color}`"
-        />
-        <ve-list-item
-            v-for="i in 4" :key="i"
-            :class="`bg-${item.color}-${i}`"
-            :title="`${item.color}-${i}`"
-        />
-      </ve-list>
-    </ve-col>
-  </ve-row>
+          :key="index"
+          cols="4"
+      >
+        <ve-list style="overflow: initial;">
+          <ve-list-subheader class="justify-center text-h4">{{ item.title }}</ve-list-subheader>
+          <ve-list-item
+              v-for="i in 4" :key="i"
+              :class="`bg-${item.color}-n${5 - i}`"
+              :title="`${item.color}-n${5 - i}`"
+          />
+          <ve-list-item
+              :class="`bg-${item.color}`"
+              :title="`${item.color}`"
+              style="transform: scale(1.05);"
+          />
+          <ve-list-item
+              v-for="i in 4" :key="i"
+              :class="`bg-${item.color}-${i}`"
+              :title="`${item.color}-${i}`"
+          />
+        </ve-list>
+      </ve-col>
+    </ve-row>
+  </ve-container>
 </template>

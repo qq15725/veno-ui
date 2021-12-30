@@ -10,7 +10,7 @@
   <ve-button color="warning">Warning</ve-button>
   <ve-button color="error">Error</ve-button>
   <ve-button color="info">Info</ve-button>
-  <ve-button color="#8a2be2" text-color="white">#8a2be2</ve-button>
+  <ve-button color="#8a2be2">#8a2be2</ve-button>
 </ve-grid>
 ```
 

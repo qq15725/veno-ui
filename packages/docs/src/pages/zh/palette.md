@@ -5,7 +5,9 @@ meta:
 
 # 颜色
 
-每种颜色都存在 `bg-颜色`、`text-颜色` class。
+每种颜色都存在 `bg-颜色`、`text-颜色` 的 class，`-n1` 到 `-n4` 越浅，`-1` 到 `-4` 越深。
+
+例如：
 
 ```html
 <span class="bg-red">红色背景</span>
@@ -14,8 +16,10 @@ meta:
 
 ## Javascript 颜色包
 
-TODO
+组件库内置了一套基于动态梯度的色彩算法。
+
+<palette-javascript-colors />
 
 ## Sass 颜色包
 
-<color-palette />
+<palette-saas-colors />

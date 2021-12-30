@@ -1,11 +1,12 @@
-// Utilities
-import { consoleWarn } from './console'
-import { chunk, padEnd } from './helpers'
-import * as sRGB from './color/transform-srgb'
-import * as CIELAB from './color/transform-cielab'
+// Utils
+import { consoleWarn } from '../console'
+import { chunk, padEnd } from '../helpers'
+import { APCAcontrast } from './apca'
+import * as sRGB from './transform-srgb'
+import * as CIELAB from './transform-cielab'
 
 // Types
-import type { ThemeDefinition } from '../composables/theme'
+import type { ThemeDefinition } from '../../composables/theme'
 
 export type ColorInt = number
 export type XYZ = [number, number, number]
@@ -19,6 +20,15 @@ export type HSLA = HSL & { a: number }
 export type Hex = string
 export type Hexa = string
 export type Color = string | number | {}
+
+export function colorToOnColorHex (color: Color): Hex {
+  const intColor = colorToInt(color)
+  const blackContrast = Math.abs(APCAcontrast(0x000000, intColor))
+  const whiteContrast = Math.abs(APCAcontrast(0xffffff, intColor))
+  return whiteContrast > Math.min(blackContrast, 50)
+    ? '#FFF'
+    : '#000'
+}
 
 export function isCssColor (color?: string | null | false): boolean {
   return !!color && /^(#|var\(--|(rgb|hsl)a?\()/.test(color)
@@ -35,18 +45,18 @@ export function colorToInt (color: Color): ColorInt {
       c = c.split('').map(char => char + char).join('')
     }
     if (c.length !== 6) {
-      consoleWarn(`'${color}' is not a valid rgb color`)
+      consoleWarn(`'${ color }' is not a valid rgb color`)
     }
     rgb = parseInt(c, 16)
   } else {
-    throw new TypeError(`Colors can only be numbers or strings, recieved ${color == null ? color : color.constructor.name} instead`)
+    throw new TypeError(`Colors can only be numbers or strings, recieved ${ color == null ? color : color.constructor.name } instead`)
   }
 
   if (rgb < 0) {
-    consoleWarn(`Colors cannot be negative: '${color}'`)
+    consoleWarn(`Colors cannot be negative: '${ color }'`)
     rgb = 0
   } else if (rgb > 0xffffff || isNaN(rgb)) {
-    consoleWarn(`'${color}' is not a valid rgb color`)
+    consoleWarn(`'${ color }' is not a valid rgb color`)
     rgb = 0xffffff
   }
 
@@ -59,7 +69,10 @@ export function classToHex (
   currentTheme: Partial<ThemeDefinition['colors']>,
 ): string {
   const [colorName, colorModifier] = color
-    .toString().trim().replace('-', '').split(' ', 2) as (string | undefined)[]
+    .toString()
+    .trim()
+    .replace('-', '')
+    .split(' ', 2) as (string | undefined)[]
 
   let hexColor = ''
   if (colorName && colorName in colors) {
@@ -159,7 +172,7 @@ export function HSLAtoHSVA (hsl: HSLA): HSVA {
 }
 
 export function RGBAtoCSS (rgba: RGBA): string {
-  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`
+  return `rgba(${ rgba.r }, ${ rgba.g }, ${ rgba.b }, ${ rgba.a })`
 }
 
 export function RGBtoCSS (rgba: RGBA): string {
@@ -172,12 +185,12 @@ export function RGBAtoHex (rgba: RGBA): Hex {
     return ('00'.substr(0, 2 - h.length) + h).toUpperCase()
   }
 
-  return `#${[
+  return `#${ [
     toHex(rgba.r),
     toHex(rgba.g),
     toHex(rgba.b),
     toHex(Math.round(rgba.a * 255)),
-  ].join('')}`
+  ].join('') }`
 }
 
 export function HexToRGBA (hex: Hex): RGBA {
@@ -217,7 +230,7 @@ export function parseHex (hex: string): Hex {
     hex = padEnd(padEnd(hex, 6), 8, 'F')
   }
 
-  return `#${hex}`.toUpperCase().substr(0, 9)
+  return `#${ hex }`.toUpperCase().substr(0, 9)
 }
 
 export function parseGradient (

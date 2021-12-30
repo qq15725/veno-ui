@@ -14,7 +14,7 @@ import {
 } from '../../utils'
 // @ts-ignore
 import { APCAcontrast } from '../../utils/color/apca'
-import defaultThemeOptions from '../../theme'
+import defaultOptions from './default-options'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
@@ -105,12 +105,12 @@ export const makeThemeProps = propsFactory({
   theme: String,
 }, 'theme')
 
-const parseThemeOptions = (options: ThemeOptions = defaultThemeOptions): InternalThemeOptions => {
+const parseThemeOptions = (options: ThemeOptions = defaultOptions): InternalThemeOptions => {
   if (!options) {
-    return { ...defaultThemeOptions, isDisabled: true } as InternalThemeOptions
+    return { ...defaultOptions, isDisabled: true } as InternalThemeOptions
   }
 
-  return mergeDeep(defaultThemeOptions, options) as InternalThemeOptions
+  return mergeDeep(defaultOptions, options) as InternalThemeOptions
 }
 
 // Composables
@@ -142,10 +142,12 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
         const onColor = `on-${ color }` as keyof OnColors
         const colorVal = colorToInt(theme.colors[color]!)
 
-        const blackContrast = Math.abs(APCAcontrast(0, colorVal))
+        const blackContrast = Math.abs(APCAcontrast(0x000000, colorVal))
         const whiteContrast = Math.abs(APCAcontrast(0xffffff, colorVal))
 
-        theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50) ? '#FFF' : '#000'
+        theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50)
+          ? '#FFF'
+          : '#000'
       }
 
       obj[key] = theme as InternalThemeDefinition
@@ -162,18 +164,14 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
         obj[`${ name }${ variation === 'lighten' ? '-n' : '-' }${ amount }`] = intToHex(fn(colorToInt(color), amount))
       }
     }
-
     return obj
   }
 
   function genCssVariables (name: string) {
     const theme = computedThemes.value[name]
-
     if (!theme) throw new Error(`Could not find theme ${ name }`)
-
     const lightOverlay = theme.dark ? 2 : 1
     const darkOverlay = theme.dark ? 1 : 2
-
     const variables: string[] = []
     for (const [key, value] of Object.entries(theme.colors)) {
       const rgb = colorToRGB(value!)
@@ -182,17 +180,14 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
         variables.push(`--ve-theme-${ key }-overlay-multiplier: ${ getLuma(value) > 0.18 ? lightOverlay : darkOverlay }`)
       }
     }
-
     return variables
   }
 
   function genStyleElement () {
     if (typeof document === 'undefined' || styleEl.value) return
-
     const el = document.createElement('style')
     el.type = 'text/css'
     el.id = 'veno-ui-theme-stylesheet'
-
     styleEl.value = el
     document.head.appendChild(styleEl.value)
   }

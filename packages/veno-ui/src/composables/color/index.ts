@@ -1,6 +1,6 @@
 // Utils
 import { computed, isRef } from 'vue'
-import { isCssColor, propsFactory } from '../../utils'
+import { propsFactory, isCssColor, colorToOnColorHex } from '../../utils'
 
 // Types
 import type { CSSProperties, Ref } from 'vue'
@@ -35,6 +35,7 @@ export function useColor (colors: Ref<{ background?: ColorValue, text?: ColorVal
 
     if (colors.value.background && backgroundIsCssColor.value) {
       styles.backgroundColor = colors.value.background
+      styles.color = colorToOnColorHex(styles.backgroundColor)
     }
 
     if (colors.value.text && textIsCssColor.value) {

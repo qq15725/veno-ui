@@ -1,4 +1,4 @@
-import type { LAB, XYZ } from '../colorUtils'
+import type { LAB, XYZ } from '../index'
 
 const delta = 0.20689655172413793 // 6÷29
 
@@ -17,7 +17,6 @@ const cielabReverseTransform = (t: number): number => (
 export function fromXYZ (xyz: XYZ): LAB {
   const transform = cielabForwardTransform
   const transformedY = transform(xyz[1])
-
   return [
     116 * transformedY - 16,
     500 * (transform(xyz[0] / 0.95047) - transformedY),

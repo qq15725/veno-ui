@@ -3,7 +3,7 @@ import './styles/list-item.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -20,7 +20,7 @@ import { ListItemSubtitle } from './list-item-subtitle'
 // Types
 export type ListItem = InstanceType<typeof ListItem>
 
-export const ListItem = genericComponent()({
+export const ListItem = defineComponent({
   name: 'VeListItem',
 
   props: {
