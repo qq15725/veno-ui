@@ -21,7 +21,7 @@ import type { MaybeRef } from '../../utils'
 
 export interface SizeProps
 {
-  size?: string | number | null
+  size?: string | number
 }
 
 export const makeSizeProps = propsFactory({
@@ -50,7 +50,7 @@ export function useSize (
   const sizeStyles = computed(() => {
     const { size } = unref(props)
 
-    if (!size || sizes.includes(size as string)) return null
+    if (!size || sizes.includes(size as string)) return {}
 
     return {
       width: convertToUnit(size),

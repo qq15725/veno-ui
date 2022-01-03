@@ -66,10 +66,10 @@ export function useMaterial (
   const { sizeClasses, sizeStyles } = useSize(props, name)
   const { densityClasses } = useDensity(props, name)
   const { borderClasses } = useBorder(props, name)
-  const { shapeClasses } = useShape(props, name)
+  const { shapeClasses } = useShape(props)
   const { elevationClasses } = useElevation(props)
 
-  const materialClasses = computed(() => ([
+  const materialClasses = computed(() => [
     themeClasses.value,
     colorClasses.value,
     variantClasses.value,
@@ -79,14 +79,14 @@ export function useMaterial (
     borderClasses.value,
     shapeClasses.value,
     elevationClasses.value,
-  ]))
+  ])
 
-  const materialStyles = computed(() => ([
+  const materialStyles = computed(() => [
     colorStyles.value,
     positionStyles.value,
     dimensionStyles.value,
     sizeStyles.value,
-  ]))
+  ])
 
   return {
     materialClasses,

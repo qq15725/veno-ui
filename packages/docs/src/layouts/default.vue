@@ -27,8 +27,6 @@
               class="mr-3"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
               :icon="`$${theme || 'light'}`"
-              size="xl"
-              text-color="primary"
           />
         </ve-tooltip>
 
@@ -41,8 +39,6 @@
               href="https://github.com/qq15725/veno-ui"
               target="_blank"
               icon="$github"
-              size="xl"
-              text-color="primary"
           />
         </ve-tooltip>
       </ve-app-bar-items>

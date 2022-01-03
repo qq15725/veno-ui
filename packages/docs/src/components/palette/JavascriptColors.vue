@@ -15,24 +15,26 @@
       >
         <ve-list style="overflow: initial;">
           <ve-list-subheader class="justify-center text-h4">{{ item.title }}</ve-list-subheader>
-          <ve-list-item
-              v-for="i in 4" :key="i"
-              :class="`bg-${item.color}-n${5 - i}`"
-              :title="`${item.color}-n${5 - i}`"
-          />
-          <ve-list-item
-              :class="`bg-${item.color}`"
-              :title="`${item.color}`"
-              style="transform: scale(1.05);"
-              #append
+          <template
+              v-for="hue in [
+                null,
+                '50', '100', '200', '300', '400',
+                '500', '600', '700', '800', '900',
+              ]"
           >
-            {{ colors[item.color] }}
-          </ve-list-item>
-          <ve-list-item
-              v-for="i in 4" :key="i"
-              :class="`bg-${item.color}-${i}`"
-              :title="`${item.color}-${i}`"
-          />
+            <ve-hover #default="{ props, hover }">
+              <ve-list-item
+                  v-bind="props"
+                  @click=""
+                  :class="hue ? `bg-${item.color}-${hue}` : `bg-${item.color}`"
+                  :title="hue ? `${item.color}-${hue}` : item.color"
+                  :style="hover ? 'transform: scale(1.05); z-index: 100;' : undefined"
+                  #append
+              >
+                <div class="text-caption">{{ colors[hue ? `${item.color}-${hue}` : item.color] }}</div>
+              </ve-list-item>
+            </ve-hover>
+          </template>
         </ve-list>
       </ve-col>
     </ve-row>

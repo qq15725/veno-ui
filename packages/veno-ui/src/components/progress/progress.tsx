@@ -69,7 +69,7 @@ export const Progress = defineComponent({
     const strokeWidth = computed(() => Number(props.strokeWidth))
 
     const size = computed(() => {
-      return sizeStyles.value
+      return sizeStyles.value.width
         ? Number(props.size)
         : intersectionRef.value
           ? intersectionRef.value.getBoundingClientRect().width

@@ -27,6 +27,10 @@ export interface IconAliases
   checkboxIndeterminate: IconValue
   sort: IconValue
   filter: IconValue
+  prev: IconValue
+  next: IconValue
+  first: IconValue
+  last: IconValue
 }
 
 export interface IconProps

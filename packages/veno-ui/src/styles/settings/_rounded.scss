@@ -7,8 +7,10 @@ $rounded: () !default;
 $rounded: functions.map-deep-merge(
     (
       0: 0,
-      'sm': math.div($border-radius, 2),
       null: $border-radius,
+      'xs': 0,
+      'sm': math.div($border-radius, 2),
+      'md': $border-radius,
       'lg': $border-radius * 2,
       'xl': $border-radius * 6,
       'pill': 9999px,

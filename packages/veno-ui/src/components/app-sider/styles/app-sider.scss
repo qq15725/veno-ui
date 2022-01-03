@@ -36,14 +36,10 @@
     height: 100%;
     max-width: 100%;
     padding-inline-start: 12px;
-    padding-inline-end: 12px;
+    padding-inline-end: 2px;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     @include tools.scrollbar();
-
-    &:hover {
-      padding-inline-end: 2px;
-    }
   }
 }
 

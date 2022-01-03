@@ -14,7 +14,7 @@ function createMessage (message: string, vm?: any, parent?: any): string | void 
     vm.$_alreadyWarned.push(message)
   }
 
-  return `[Veno] ${ message }` + (
+  return `[VenoUi] ${ message }` + (
     vm ? generateComponentTrace(vm) : ''
   )
 }

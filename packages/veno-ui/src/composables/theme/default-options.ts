@@ -26,8 +26,6 @@ export default {
         'selected-opacity': 0.08,
         'dragged-opacity': 0.08,
         'pressed-opacity': 0.16,
-        'code-background-color': '#2e2e30',
-        'code-color': '#c1c1c1',
       },
     },
     light: {
@@ -55,21 +53,7 @@ export default {
         'selected-opacity': 0.08,
         'dragged-opacity': 0.08,
         'pressed-opacity': 0.16,
-        'code-background-color': '#f6f6f6',
-        'code-color': '#2c3e50',
       },
     },
-  },
-  variations: {
-    colors: [
-      'primary',
-      'secondary',
-      'success',
-      'warning',
-      'error',
-      'info',
-    ],
-    lighten: 4,
-    darken: 4
   }
 }

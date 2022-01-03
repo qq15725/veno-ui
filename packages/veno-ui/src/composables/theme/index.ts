@@ -4,16 +4,15 @@ import {
   colorToInt,
   colorToRGB,
   createRange,
-  darken,
   getLuma,
   intToHex,
   lighten,
+  darken,
   mergeDeep,
   propsFactory,
   consoleError,
 } from '../../utils'
-// @ts-ignore
-import { APCAcontrast } from '../../utils/color/apca'
+import { colorToOnColorHex } from '../../utils/color'
 import defaultOptions from './default-options'
 
 // Types
@@ -68,24 +67,15 @@ export interface ThemeDefinition
   variables: Record<string, string | number>
 }
 
-interface VariationsOptions
-{
-  colors: string[]
-  lighten: number
-  darken: number
-}
-
 interface InternalThemeOptions
 {
   isDisabled: boolean
   defaultTheme: string
-  variations: VariationsOptions
   themes: Record<string, ThemeDefinition>
 }
 
 export type ThemeOptions = false | {
   defaultTheme?: string
-  variations?: false | VariationsOptions
   themes?: Record<string, ThemeDefinition>
 }
 
@@ -119,18 +109,19 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
   const styleEl = ref<HTMLStyleElement>()
   const current = ref(parsedOptions.defaultTheme)
   const themes = ref(parsedOptions.themes)
-  const variations = ref(parsedOptions.variations)
 
   const computedThemes = computed(() => {
     return Object.keys(themes.value).reduce((obj, key) => {
+      const themeOption = themes.value[key]
+
       const theme: ThemeDefinition = {
-        ...themes.value[key],
+        ...themeOption,
         colors: {
-          ...themes.value[key].colors,
-          ...(variations.value.colors ?? []).reduce((obj, color) => {
+          ...themeOption.colors,
+          ...Object.keys(themeOption.colors).reduce((obj, color) => {
             return {
               ...obj,
-              ...genColorVariations(color, themes.value[key].colors[color]!)
+              ...genColorVariations(color, themeOption.colors[color]!)
             }
           }, {}),
         },
@@ -138,16 +129,8 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
 
       for (const color of Object.keys(theme.colors)) {
         if (/on-[a-z]/.test(color) || theme.colors[`on-${ color }`]) continue
-
         const onColor = `on-${ color }` as keyof OnColors
-        const colorVal = colorToInt(theme.colors[color]!)
-
-        const blackContrast = Math.abs(APCAcontrast(0x000000, colorVal))
-        const whiteContrast = Math.abs(APCAcontrast(0xffffff, colorVal))
-
-        theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50)
-          ? '#FFF'
-          : '#000'
+        theme.colors[onColor] = colorToOnColorHex(theme.colors[color]!)
       }
 
       obj[key] = theme as InternalThemeDefinition
@@ -157,30 +140,17 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
   })
 
   function genColorVariations (name: string, color: string) {
+    const colorInt = colorToInt(color)
     const obj: Record<string, string> = {}
     for (const variation of (['lighten', 'darken'] as const)) {
       const fn = variation === 'lighten' ? lighten : darken
-      for (const amount of createRange(variations.value[variation], 1)) {
-        obj[`${ name }${ variation === 'lighten' ? '-n' : '-' }${ amount }`] = intToHex(fn(colorToInt(color), amount))
+      for (const amount of createRange(4, 1)) {
+        obj[`${ name }-${ variation === 'lighten' ? (5 - amount) : (amount + 5) }00`] = intToHex(fn(colorInt, amount))
       }
     }
+    obj[`${ name }-50`] = intToHex(lighten(colorInt, 4.5))
+    obj[`${ name }-500`] = color
     return obj
-  }
-
-  function genCssVariables (name: string) {
-    const theme = computedThemes.value[name]
-    if (!theme) throw new Error(`Could not find theme ${ name }`)
-    const lightOverlay = theme.dark ? 2 : 1
-    const darkOverlay = theme.dark ? 1 : 2
-    const variables: string[] = []
-    for (const [key, value] of Object.entries(theme.colors)) {
-      const rgb = colorToRGB(value!)
-      variables.push(`--ve-theme-${ key }: ${ rgb.r },${ rgb.g },${ rgb.b }`)
-      if (!key.startsWith('on-')) {
-        variables.push(`--ve-theme-${ key }-overlay-multiplier: ${ getLuma(value) > 0.18 ? lightOverlay : darkOverlay }`)
-      }
-    }
-    return variables
   }
 
   function genStyleElement () {
@@ -198,6 +168,22 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
       ...content.map(line => `  ${ line };\n`),
       '}\n',
     ]
+  }
+
+  function genCssVariables (name: string) {
+    const theme = computedThemes.value[name]
+    if (!theme) throw new Error(`Could not find theme ${ name }`)
+    const lightOverlay = theme.dark ? 2 : 1
+    const darkOverlay = theme.dark ? 1 : 2
+    const variables: string[] = []
+    for (const [key, value] of Object.entries(theme.colors)) {
+      const rgb = colorToRGB(value!)
+      variables.push(`--ve-theme-${ key }: ${ rgb.r },${ rgb.g },${ rgb.b }`)
+      if (!key.startsWith('on-')) {
+        variables.push(`--ve-theme-${ key }-overlay-multiplier: ${ getLuma(value) > 0.18 ? lightOverlay : darkOverlay }`)
+      }
+    }
+    return variables
   }
 
   function updateStyles () {

@@ -7,6 +7,7 @@ import { defineComponent } from '../../utils'
 
 // Composables
 import { useHighlighter } from '../../composables/highlighter'
+import { useBackgroundColor } from '../../composables/color'
 
 // Types
 import type { PropType } from 'vue'
@@ -45,10 +46,35 @@ export const Code = defineComponent({
      * @zh: 高亮的行号
      */
     highlightedLineNumbers: Array as PropType<number[] | number[][]>,
+
+    /**
+     * @zh: 高亮的行的背景颜色
+     */
+    highlightedLineBgColor: {
+      type: String,
+      default: 'warning',
+    },
+
+    /**
+     * @zh: 背景颜色
+     */
+    color: {
+      type: String,
+      default: 'secondary',
+    },
   },
 
   setup (props, { slots }) {
     const highlighter = useHighlighter()
+    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
+      props, 'color'
+    )
+    const {
+      backgroundColorClasses: highlightedLineBackgroundColorClasses,
+      backgroundColorStyles: highlightedLineBackgroundColorStyles
+    } = useBackgroundColor(
+      props, 'highlightedLineBgColor'
+    )
     const codeRef = ref<HTMLElement | null>(null)
     const code = computed(() => {
       return decodeURIComponent(props.value ?? '')
@@ -102,8 +128,10 @@ export const Code = defineComponent({
             {
               've-code--highlighted': hasHighlightedCode,
               've-code--show-line-numbers': hasLineNumbers,
-            }
+            },
+            backgroundColorClasses.value
           ] }
+          style={ backgroundColorStyles.value }
         >
           { hasLineNumbers && (
             <div class="ve-code__lines">
@@ -116,6 +144,16 @@ export const Code = defineComponent({
                     }
                   ] }
                 >
+                  <div
+                    class={ [
+                      've-code__line-overlay',
+                      highlightedLineBackgroundColorClasses.value,
+                    ] }
+                    style={ highlightedLineBackgroundColorStyles.value }
+                  >
+                    #
+                  </div>
+
                   <span class="ve-code__line-number">{ number }</span>
                 </div>
               )) }

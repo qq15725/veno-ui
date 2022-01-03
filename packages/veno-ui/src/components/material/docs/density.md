@@ -5,7 +5,7 @@
 `density` 有 `compact`、`comfortable`、`default`。
 
 ```html
-<div class="p-3 bg-grey-n2">
+<div class="p-3 bg-grey-300">
   <div class="text-grey">xs size</div>
 
   <ve-grid dense align="center" class="text-caption">

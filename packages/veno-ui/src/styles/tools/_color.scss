@@ -1,19 +1,26 @@
-@mixin background-color($color-value) {
-  background-color: $color-value !important;
-  border-color: $color-value !important;
+@mixin background-color($color) {
+  @if (type-of($color) == list) {
+    color: nth($color, 2) !important;
+    $color: nth($color, 1);
+  }
+  background-color: $color !important;
+  border-color: $color !important;
 }
 
-@mixin text-color($color-value) {
-  color: $color-value !important;
-  caret-color: $color-value !important;
+@mixin text-color($color) {
+  @if (type-of($color) == list) {
+    $color: nth($color, 1);
+  }
+  color: $color !important;
+  caret-color: $color !important;
 }
 
-@mixin color($color-name, $color-value) {
-  .bg-#{$color-name} {
-    @include background-color($color-value);
+@mixin color($name, $color) {
+  .bg-#{$name} {
+    @include background-color($color);
   }
 
-  .text-#{$color-name} {
-    @include text-color($color-value);
+  .text-#{$name} {
+    @include text-color($color);
   }
 }

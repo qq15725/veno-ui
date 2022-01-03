@@ -4,9 +4,11 @@ import { propsFactory, wrapInArray, deepEqual, sortItems } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'
+import { makePaginationProps } from '../pagination'
 
 // Types
 import type { PropType } from 'vue'
+import type { PaginationProps } from '../pagination'
 
 export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
   items: T[],
@@ -16,11 +18,10 @@ export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
   customSorters?: Record<K, (a: T[K], b: T[K]) => number>
 ) => T[]
 
-interface DataIteratorProps
+interface DataIteratorProps extends PaginationProps
 {
+  remote: boolean
   items: Record<string, any>[]
-  page: number
-  perPage: number
   mustSort: boolean
   multiSort: boolean
   sortBy: string | string[]
@@ -30,17 +31,10 @@ interface DataIteratorProps
 }
 
 export const makeDataIteratorProps = propsFactory({
+  remote: Boolean,
   items: {
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
-  },
-  page: {
-    type: Number,
-    default: 1,
-  },
-  perPage: {
-    type: Number,
-    default: 10,
   },
   mustSort: Boolean,
   multiSort: Boolean,
@@ -60,6 +54,7 @@ export const makeDataIteratorProps = propsFactory({
     type: String,
     default: 'en-US',
   },
+  ...makePaginationProps(),
 }, 'data-iterator')
 
 
@@ -99,26 +94,36 @@ function toggle (
 }
 
 export function useDataIterator (props: DataIteratorProps) {
-  const page = useProxiedModel(props, 'page')
+  const page = useProxiedModel(props, 'page',  props.page,v => Number(v))
+  const perPage = useProxiedModel(props, 'perPage',props.perPage, v => Number(v))
+  const total = useProxiedModel(props, 'total', props.total, v => v === undefined ? props.items.length : Number(v))
   const mustSort = useProxiedModel(props, 'mustSort')
   const multiSort = useProxiedModel(props, 'multiSort')
   const sortBy = useProxiedModel(props, 'sortBy')
   const sortDesc = useProxiedModel(props, 'sortDesc')
-  const items = computed(() => props.customSort(
-    props.items,
-    wrapInArray(sortBy.value),
-    wrapInArray(sortDesc.value),
-    props.locale
-  ))
-  const pagination = computed(() => {
-    return {
-      page: page.value,
-      perPage: props.perPage,
-      from: (page.value - 1) * props.perPage,
-      to: Math.min(props.items.length, page.value * props.perPage),
-      lastPage: Math.ceil(props.items.length / props.perPage),
-      total: props.items.length,
-    }
+
+  function sortItems (items: any[]): any[] {
+    return props.customSort(
+      items,
+      wrapInArray(sortBy.value),
+      wrapInArray(sortDesc.value),
+      props.locale
+    )
+  }
+
+  function paginateItems (items: any[]): any[] {
+    return items.slice(
+      (page.value - 1) * perPage.value,
+      Math.min(total.value, page.value * perPage.value)
+    )
+  }
+
+  const items = computed(() => {
+    if (props.remote) return props.items
+    let items = props.items.slice()
+    items = sortItems(items)
+    items = paginateItems(items)
+    return items
   })
 
   function sort (key: string | string[]) {
@@ -144,10 +149,12 @@ export function useDataIterator (props: DataIteratorProps) {
   }
 
   return {
+    items,
+    page,
+    perPage,
+    total,
     sortBy,
     sortDesc,
-    items,
-    pagination,
     sort,
   }
 }

@@ -3,8 +3,6 @@
 
 .ve-code {
   position: relative;
-  color: rgb(var(--ve-code-color));
-  background-color: rgb(var(--ve-code-background-color));
   border-radius: $code-border-radius;
   font-size: $code-font-size;
   font-weight: $code-font-weight;
@@ -47,14 +45,18 @@
     line-height: 1.6470588235294117;
     user-select: none;
 
-    &--highlighted:before {
-      content: '#';
-      color: transparent;
+    &-overlay {
+      display: none;
+      color: transparent !important;
       position: absolute;
       left: 0;
       width: 100%;
       line-height: inherit;
-      background-color: #f3edd1;
+      opacity: .12;
+    }
+
+    &--highlighted &-overlay {
+      display: block;
     }
 
     &-number {

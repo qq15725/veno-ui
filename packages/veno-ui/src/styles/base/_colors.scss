@@ -4,12 +4,17 @@
 
 // 需要颜色包则生成颜色帮助类
 @if ($color-pack) {
-  @each $color-name, $color-type-values in $colors {
-    @each $color-type, $color-value in $color-type-values {
-      @if ($color-type == 'base') {
-        @include color($color-name, $color-value);
-      } @else {
-        @include color(#{$color-name}-#{$color-type}, $color-value);
+  @each $name, $hues in $colors {
+    @each $hue, $value in $hues {
+      @include color(#{$name}-#{$hue}, $value);
+      @if ($hue == '400') {
+        .ve-theme--dark {
+          @include color($name, $value);
+        }
+      } @else if($hue == '600') {
+        .ve-theme--light {
+          @include color($name, $value);
+        }
       }
     }
   }

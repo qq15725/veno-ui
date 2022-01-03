@@ -1,0 +1,18 @@
+.ve-pagination {
+  display: flex;
+  align-items: center;
+
+  &__list {
+    display: inline-flex;
+    list-style-type: none;
+    justify-content: center;
+  }
+
+  &__item,
+  &__first,
+  &__prev,
+  &__next,
+  &__last {
+    margin: .3rem;
+  }
+}

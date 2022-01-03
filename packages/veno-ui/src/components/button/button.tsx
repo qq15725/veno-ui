@@ -68,7 +68,11 @@ export const Button = genericComponent<new () => {
     },
   },
 
-  setup: function (props, { attrs, slots }) {
+  emits: {
+    click: (e: Event) => true
+  },
+
+  setup: function (props, { attrs, slots, emit }) {
     const computedProps = computed(() => {
       const variant = props.icon ? 'icon' : props.variant
       let colors
@@ -95,16 +99,24 @@ export const Button = genericComponent<new () => {
       }
     })
     const { materialClasses, materialStyles } = useMaterial(computedProps)
+    const isDisabled = computed(() => group?.disabled.value || props.disabled)
     const { loadingClasses } = useLoading(props)
     const { disabledClasses } = useDisabled(computed(() => ({
       disabled: group?.disabled.value || props.disabled
     })))
     const group = useGroupItem(props, ButtonToggleSymbol, false)
     const link = useLink(props, attrs)
+    const handleClick = (e: Event) => {
+      if (isDisabled.value || props.loading) {
+        e.preventDefault()
+        return
+      }
+      link.navigate ? link.navigate() : group?.toggle
+      emit('click', e)
+    }
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
-      const hasOverlay = computedProps.value.variant !== 'link'
       const hasLoding = props.loading
       const hasPrependIcon = (
         !hasLoding
@@ -142,11 +154,8 @@ export const Button = genericComponent<new () => {
           ] }
           disabled={ props.disabled || undefined }
           href={ link.href.value }
-          onClick={ props.disabled || link.navigate || group?.toggle }
-          { ...attrs }
+          onClick={ handleClick }
         >
-          { hasOverlay && <div class="ve-button__overlay" /> }
-
           { hasLoding && (
             <Progress
               class="ve-button__icon"
@@ -184,6 +193,8 @@ export const Button = genericComponent<new () => {
               right={ !props.stacked }
             />
           ) }
+
+          <div class="ve-button__overlay" />
         </Tag>
       )
     }

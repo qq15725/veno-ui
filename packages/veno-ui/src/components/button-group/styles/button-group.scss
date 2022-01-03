@@ -4,12 +4,35 @@
 @use 'variables' as *;
 
 .ve-button-group {
+  --ve-button-group-height: calc(32px + var(--ve-button-group-size-offset, 0px) + var(--ve-button-group-density-offset, 0px));
   display: inline-flex;
   flex-wrap: nowrap;
   flex: 1 1;
   max-width: 100%;
   min-width: 0;
-  @include tools.use-material();
+  height: var(--ve-button-group-height);
+  @include tools.use-material((
+    'variants': (
+      'contained': (
+        'background': rgb(var(--ve-theme-secondary)),
+        'color': rgb(var(--ve-theme-on-secondary)),
+      ),
+    ),
+    'positions': absolute fixed,
+    'borders': (
+      'default': (
+        'color': settings.$border-color,
+        'style': settings.$border-style,
+        'width': 0,
+      ),
+      'existence': (
+        'width': thin,
+      )
+    ),
+    'shapes': (
+      'default': settings.$border-radius,
+    ),
+  ));
 
   .ve-button.ve-button--selected:not(.ve-button--disabled) {
     .ve-button__overlay {
@@ -18,16 +41,16 @@
   }
 
   .ve-button {
-    border-radius: 0;
+    border-radius: 0 !important;
 
     &:first-child {
-      border-top-left-radius: inherit;
-      border-bottom-left-radius: inherit;
+      border-top-left-radius: inherit !important;
+      border-bottom-left-radius: inherit !important;
     }
 
     &:last-child {
-      border-top-right-radius: inherit;
-      border-bottom-right-radius: inherit;
+      border-top-right-radius: inherit !important;
+      border-bottom-right-radius: inherit !important;
     }
 
     &:not(:last-child) {

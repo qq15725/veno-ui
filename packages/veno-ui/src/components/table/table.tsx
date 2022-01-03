@@ -12,6 +12,7 @@ import { makeDataIteratorProps, useDataIterator } from '../../composables/data-i
 // Components
 import { TableTd } from './table-td'
 import { TableTh } from './table-th'
+import { Pagination } from '../pagination'
 
 // Types
 import type { PropType } from 'vue'
@@ -86,8 +87,8 @@ export const Table = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
-    const { items, sortBy, sortDesc, sort } = useDataIterator(props)
+    const { materialClasses, materialStyles } = useMaterial(props, 've-table__body')
+    const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
@@ -127,6 +128,7 @@ export const Table = defineComponent({
       const hasColgroup = props.headers.length > 0
       const hasThead = !props.hideHeader || !hasColgroup
       const hasTbody = props.items.length > 0
+      const hasPagination = hasTbody
 
       return (
         <props.tag
@@ -136,16 +138,18 @@ export const Table = defineComponent({
               've-table--fixed-header': props.fixedHeader,
             },
             scrollPositionClasses.value,
-            materialClasses.value,
-          ] }
-          style={ [
-            materialStyles.value,
           ] }
         >
           <div
-            class="ve-table__body"
             ref={ containerRef }
             onScroll={ handleScroll }
+            class={ [
+              've-table__body',
+              materialClasses.value,
+            ] }
+            style={ [
+              materialStyles.value
+            ] }
           >
             <table>
               { hasColgroup && (
@@ -175,9 +179,7 @@ export const Table = defineComponent({
                         sort-desc={ isDesc }
                         onClick={ () => header.sortable && sort(header.value) }
                       >
-                        { header.text }
-
-                        { slots[`header.${ header.value }`]?.() }
+                        { slots[`header.${ header.value }`]?.({ header }) ?? header.text }
                       </TableTh>
                     )
                   }) }
@@ -198,19 +200,26 @@ export const Table = defineComponent({
                         col-index={ colIndex }
                         cols={ props.headers.length }
                       >
-                        { item[header.value] }
-
-                        { slots[`item.${ header.value }`]?.() }
+                        { slots[`item.${ header.value }`]?.({ item }) ?? item[header.value] }
                       </TableTd>
                     )) }
                   </tr>
                 )) }
                 </tbody>
               ) }
-
               { slots.default?.() }
             </table>
           </div>
+
+          { hasPagination && (
+            <Pagination
+              class="ve-table__pagination"
+              v-model:page={ page.value }
+              per-page={ perPage.value }
+              last-page={ props.lastPage }
+              total={ total.value }
+            />
+          ) }
         </props.tag>
       )
     }

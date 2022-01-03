@@ -4,7 +4,6 @@
 .ve-table {
   display: flex;
   flex-direction: column;
-  @include tools.use-material();
 
   &--fixed-header th {
     position: sticky;
@@ -25,22 +24,22 @@
     overflow-y: hidden;
     overflow-x: auto;
     @include tools.scrollbar();
+    @include tools.use-material();
   }
 
   table {
     width: 100%;
-    height: 100%;
     min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
   }
 
-  &--border th,
-  &--border td, {
+  &__body--border th,
+  &__body--border td, {
     border-bottom: 1px solid rgba(var(--ve-border-color), var(--ve-border-opacity));
   }
 
-  &--border tr:last-child td {
+  &__body--border tr:last-child td {
     border-bottom-width: 0;
   }
 
@@ -63,5 +62,10 @@
 
   tr:hover td {
     --ve-table-cell-overlay-opacity: .02;
+  }
+
+  &__pagination {
+    margin-top: 12px;
+    justify-content: end;
   }
 }

@@ -12,10 +12,6 @@
   @each $name, $prop in map.get($props, 'shapes') {
     @if ($name == 'default') {
       @include generate-shape($prop, $name);
-    } @else {
-      &--#{$name} {
-        @include generate-shape($prop, $name);
-      }
     }
   }
 }

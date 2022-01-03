@@ -20,29 +20,41 @@
             { title: 'Orange / 活力橙', color: 'orange' },
             { title: 'Deep-Orange', color: 'deep-orange' },
             { title: 'Brown', color: 'brown' },
-            { title: 'Blue-Grey', color: 'blue-grey' },
             { title: 'Gray / 中性灰', color: 'grey' },
-        ]"
+            { title: 'Blue-Grey', color: 'blue-grey' },
+          ]"
           :key="index"
           cols="4"
       >
         <ve-list style="overflow: initial;">
           <ve-list-subheader class="justify-center text-h4">{{ item.title }}</ve-list-subheader>
-          <ve-list-item
-              v-for="i in 4" :key="i"
-              :class="`bg-${item.color}-n${5 - i}`"
-              :title="`${item.color}-n${5 - i}`"
-          />
-          <ve-list-item
-              :class="`bg-${item.color}`"
-              :title="`${item.color}`"
-              style="transform: scale(1.05);"
-          />
-          <ve-list-item
-              v-for="i in 4" :key="i"
-              :class="`bg-${item.color}-${i}`"
-              :title="`${item.color}-${i}`"
-          />
+          <template
+              v-for="hue in [
+                null,
+                '50', '100', '200', '300', '400',
+                '500', '600', '700', '800', '900',
+                'a100', 'a200', 'a400', 'a700'
+              ]"
+          >
+            <template v-if="hue === 'a100'">
+              <div class="mt-1" />
+            </template>
+
+            <ve-hover #default="{ props, hover }">
+              <ve-list-item
+                  v-bind="props"
+                  @click=""
+                  :class="hue ? `bg-${item.color}-${hue}` : `bg-${item.color}`"
+                  :title="hue ? `${item.color}-${hue}` : `${item.color}`"
+                  :style="hover ? 'transform: scale(1.05); z-index: 100;' : undefined"
+                  #append
+              >
+                <template v-if="!hue">
+                  <div class="text-caption">light(400) dark(600)</div>
+                </template>
+              </ve-list-item>
+            </ve-hover>
+          </template>
         </ve-list>
       </ve-col>
     </ve-row>

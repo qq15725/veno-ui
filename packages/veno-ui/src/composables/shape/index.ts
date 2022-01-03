@@ -2,40 +2,31 @@
 import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
-// Constants
-export const SHAPES = ['tile', 'default', 'rounded'] as const
-
 // Types
+import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
+
+export const SHAPES = [
+  'rounded-0',
+  'rounded-xs', 'rounded-sm', 'rounded-md', 'rounded-lg', 'rounded-xl',
+  'rounded-pill', 'rounded-circle',
+] as const
+
+type ShapeValue = undefined | typeof SHAPES[number]
 
 export interface ShapeProps
 {
-  rounded?: boolean | string | number | null
-  tile?: boolean
+  shape: ShapeValue
 }
 
 export const makeShapeProps = propsFactory({
-  rounded: {
-    type: [Boolean, Number, String],
-    default: undefined,
-  },
-  tile: Boolean,
-}, 'rounded')
+  shape: String as PropType<ShapeValue>,
+}, 'shape')
 
-export function useShape (props: MaybeRef<ShapeProps>, name: string) {
+export function useShape (props: MaybeRef<ShapeProps>) {
   const shapeClasses = computed(() => {
-    const { tile, rounded } = unref(props)
-    const classes: string[] = []
-    if (tile) {
-      classes.push(`${ name }--tile`)
-    } else if (rounded === true || rounded === '') {
-      classes.push(`${ name }--rounded`)
-    } else if (typeof rounded === 'string' || rounded === 0) {
-      for (const value of String(rounded).split(' ')) {
-        classes.push(`rounded-${ value }`)
-      }
-    }
-    return classes
+    const { shape } = unref(props)
+    return shape
   })
 
   return {

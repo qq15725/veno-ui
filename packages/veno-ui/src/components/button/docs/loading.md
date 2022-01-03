@@ -24,6 +24,9 @@ export default defineComponent({
       loading,
       toggle: () => {
         loading.value = !loading.value
+        setTimeout(() => {
+          loading.value = !loading.value
+        }, 2000)
       }
     }
   }

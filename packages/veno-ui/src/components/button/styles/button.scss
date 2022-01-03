@@ -6,6 +6,7 @@
 @use '../../../styles/settings';
 
 .ve-button {
+  $root: &;
   --ve-button-height: calc(#{map.get($button-sizes, 'height')} + var(--ve-button-size-offset, 0px) + var(--ve-button-density-offset, 0px));
   --ve-button-font-size: #{map.get($button-sizes, 'font-size')};
   position: relative;
@@ -24,7 +25,7 @@
   text-decoration: none;
   cursor: pointer;
   font-size: var(--ve-button-font-size);
-  min-height: var(--ve-button-height);
+  height: var(--ve-button-height);
   min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
   padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
   @include tools.use-material($button-material);
@@ -49,21 +50,20 @@
   &--variant-link {
     padding: 0;
     user-select: auto;
-    min-height: auto;
+    height: auto;
     min-width: auto;
     background: transparent;
     color: inherit;
 
-    &:hover {
+    &:not(#{$root}--disabled):not(#{$root}--loading):hover {
       text-decoration: underline currentColor;
     }
   }
 
   &--variant-icon {
     padding: 0;
-    min-height: var(--ve-button-height);
+    height: var(--ve-button-height);
     min-width: var(--ve-button-height);
-    background: tools.map-deep-get($button-material, 'variants', 'contained', 'background');
     color: tools.map-deep-get($button-material, 'variants', 'contained', 'color');
   }
 
@@ -71,15 +71,21 @@
     min-width: 100%;
   }
 
+  &--loading,
   &--disabled {
-    --ve-button-overlay: var(--ve-theme-surface);
-    --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
-    pointer-events: none;
-    cursor: default;
+    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
+
+    &#{$root}--variant-contained {
+      --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
+    }
+
+    &#{$root}--variant-contained {
+      background: rgb(var(--ve-theme-surface)) !important;
+    }
   }
 
-  &--disabled#{&}--variant-outlined {
-    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
+  &--disabled {
+    cursor: not-allowed;
   }
 
   &--loading {
@@ -88,26 +94,25 @@
 
   &__overlay {
     @include tools.absolute();
-    background-color: rgb(var(--ve-button-overlay, var(--ve-theme-on-surface)));
+    background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--ve-button-overlay-opacity, 0);
-    transition: .2s ease-in-out;
-    transition-property: background-color, opacity;
+    transition: opacity .2s ease-in-out;
   }
 
-  @include tools.states('#{&}__overlay', false);
+  &:not(&--disabled):not(&--loading) {
+    @include tools.states('#{$root}__overlay', false);
+  }
 
-  &__icon {
+  // Progress
+  .ve-progress {
     width: 1em !important;
     height: 1em !important;
     font-size: 1em !important;
 
-    @at-root {
-      // Progress
-      .ve-progress#{&} + span {
-        margin-inline-start: map.get(settings.$grid-gutters, 'md');
-      }
+    & + span {
+      margin-inline-start: map.get(settings.$grid-gutters, 'md');
     }
   }
 }

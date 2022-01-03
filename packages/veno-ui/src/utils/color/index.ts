@@ -175,7 +175,7 @@ export function RGBAtoCSS (rgba: RGBA): string {
   return `rgba(${ rgba.r }, ${ rgba.g }, ${ rgba.b }, ${ rgba.a })`
 }
 
-export function RGBtoCSS (rgba: RGBA): string {
+export function RGBtoCSS (rgba: RGB): string {
   return RGBAtoCSS({ ...rgba, a: 1 })
 }
 
@@ -193,6 +193,19 @@ export function RGBAtoHex (rgba: RGBA): Hex {
   ].join('') }`
 }
 
+export function RGBtoHex (rgba: RGBA): Hex {
+  const toHex = (v: number) => {
+    const h = Math.round(v).toString(16)
+    return ('00'.substr(0, 2 - h.length) + h).toUpperCase()
+  }
+
+  return `#${ [
+    toHex(rgba.r),
+    toHex(rgba.g),
+    toHex(rgba.b),
+  ].join('') }`
+}
+
 export function HexToRGBA (hex: Hex): RGBA {
   const rgba = chunk(hex.slice(1), 2).map((c: string) => parseInt(c, 16))
 
@@ -200,7 +213,7 @@ export function HexToRGBA (hex: Hex): RGBA {
     r: rgba[0],
     g: rgba[1],
     b: rgba[2],
-    a: Math.round((rgba[3] / 255) * 100) / 100,
+    a: rgba[3] === undefined ? 1 : Math.round((rgba[3] / 255) * 100) / 100,
   }
 }
 
@@ -261,18 +274,12 @@ export function colorToRGB (color: string) {
 
 export function lighten (value: ColorInt, amount: number): ColorInt {
   const lab = CIELAB.fromXYZ(sRGB.toXYZ(value))
-  // TODO: why this false positive?
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   lab[0] = lab[0] + amount * 10
-
   return sRGB.fromXYZ(CIELAB.toXYZ(lab))
 }
 
 export function darken (value: ColorInt, amount: number): ColorInt {
-  const lab = CIELAB.fromXYZ(sRGB.toXYZ(value))
-  lab[0] = lab[0] - amount * 10
-
-  return sRGB.fromXYZ(CIELAB.toXYZ(lab))
+  return lighten(value, -amount)
 }
 
 /**

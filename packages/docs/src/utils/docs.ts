@@ -1,35 +1,26 @@
 // Utils
 import { toKebabCase } from './helpers'
 
-// Constants
-export const docTypes = ['component', 'composable'] as const
-
 // Types
 import type { RouteRecordRaw } from 'vue-router'
 
-export type DocType = typeof docTypes[number]
-
-export function loadDocsModules (type: DocType) {
-  switch (type) {
-    case 'component':
-      return {
-        nameRE: /components\/(\w+)(.|\/)*README\.md/,
-        modules: import.meta.globEager('../../../veno-ui/src/components/**/README.md'),
-      }
-    case 'composable':
-      return {
-        nameRE: /composables\/(\w+)(.|\/)*README\.md/,
-        modules: import.meta.globEager('../../../veno-ui/src/composables/**/README.md'),
-      }
+const typesModules = {
+  component: {
+    RE: /components\/(\w+)(.|\/)*README\.md/,
+    modules: import.meta.globEager('../../../veno-ui/src/components/**/README.md')
+  },
+  composable: {
+    RE: /composables\/(\w+)(.|\/)*README\.md/,
+    modules: import.meta.globEager('../../../veno-ui/src/composables/**/README.md')
   }
 }
 
-export function loadDocsRoutes (type: DocType): RouteRecordRaw[] {
-  const { nameRE, modules } = loadDocsModules(type)
+export function loadDocsRoutes (type: keyof typeof typesModules): RouteRecordRaw[] {
+  const { RE, modules } = typesModules[type]
   return Object.keys(modules)
-    .filter(path => nameRE.test(path))
+    .filter(path => RE.test(path))
     .map(path => {
-      let name = (path.match(nameRE) as string[])[1]
+      let name = (path.match(RE) as string[])[1]
       const module = modules[path]
       return {
         name: toKebabCase(`${ type }-${ name }`),

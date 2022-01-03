@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<div class="p-10 bg-grey-n2">
+<div class="p-10 bg-grey-300">
   <ve-list dense>
     <ve-list-subheader>Subtitle</ve-list-subheader>
     
