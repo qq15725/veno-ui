@@ -10,7 +10,7 @@
       <ve-app-bar-nav-icon
           @click="active = !active"
           class="hidden-sm-and-up"
-          text-color="primary"
+          color="secondary"
       />
 
       <ve-app-bar-title class="hidden-sm-and-down">Veno UI</ve-app-bar-title>

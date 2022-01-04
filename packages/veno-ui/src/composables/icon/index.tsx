@@ -63,7 +63,7 @@ export const IconSymbol: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
 
 export const makeIconProps = propsFactory({
   icon: {
-    type: [String, Object] as PropType<IconValue>,
+    type: [String, Object, Function] as PropType<IconValue>,
     required: true,
   },
   // Could not remove this and use makeTagProps, types complained because it is not required

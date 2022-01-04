@@ -14,18 +14,17 @@ export const AppBarNavIcon = genericComponent()({
     },
     size: {
       type: String,
-      default: 'xl',
+      default: 'md',
     }
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { slots }) {
     return () => (
       <Button
         class="ve-app-bar-nav-icon"
         icon={ props.icon }
         size={ props.size }
-        slots={ slots }
-        { ...attrs }
+        v-slots={ slots }
       />
     )
   },
