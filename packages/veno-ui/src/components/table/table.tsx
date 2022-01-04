@@ -12,6 +12,7 @@ import { makeDataIteratorProps, useDataIterator } from '../../composables/data-i
 // Components
 import { TableTd } from './table-td'
 import { TableTh } from './table-th'
+import { TableNoData } from './table-no-data'
 import { Pagination } from '../pagination'
 
 // Types
@@ -125,9 +126,9 @@ export const Table = defineComponent({
     }
 
     return () => {
-      const hasColgroup = props.headers.length > 0
-      const hasThead = !props.hideHeader || !hasColgroup
-      const hasTbody = props.items.length > 0
+      const hasColgroup = !slots.colgroup && props.headers.length > 0
+      const hasThead = !slots.header && !props.hideHeader || !hasColgroup
+      const hasTbody = !slots.default
       const hasPagination = hasTbody
 
       return (
@@ -205,8 +206,17 @@ export const Table = defineComponent({
                     )) }
                   </tr>
                 )) }
+
+                { !items.value.length && (
+                  <tr>
+                    <td colspan={ props.headers.length }>
+                      { slots.nodata?.() ?? <TableNoData /> }
+                    </td>
+                  </tr>
+                ) }
                 </tbody>
               ) }
+
               { slots.default?.() }
             </table>
           </div>

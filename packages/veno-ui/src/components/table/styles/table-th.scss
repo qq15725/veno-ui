@@ -47,11 +47,8 @@
 
   &__filter {
     color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
-    font-size: 18px;
     min-width: auto;
-    min-height: auto;
     height: 100%;
-    width: 24px;
     border-radius: 0;
   }
 }

@@ -7,6 +7,7 @@
   <ve-switch label="显示边框" v-model="border" />
   <ve-switch label="隐藏表头" v-model="hideHeader" />  
   <ve-switch label="固定表头" v-model="fixedHeader" />  
+  <ve-switch label="暂无数据" v-model="noData" />  
 </ve-grid>
 
 <ve-table
@@ -15,7 +16,7 @@
   :fixed-header="fixedHeader"
   :height="fixedHeader ? 250 : undefined"
   :headers="headers" 
-  :items="items"
+  :items="noData ? [] : items"
 >
   <template #item.operation>
     <ve-dialog>
@@ -49,6 +50,7 @@ export default defineComponent({
       border: ref(true),
       hideHeader: ref(false),
       fixedHeader: ref(false),
+      noData: ref(false),
       headers: ref([
         { text: 'Name', width: 200, value: 'name' },
         { text: 'Salary', width: 120, value: 'salary', sortable: true, filters: [23000] },

@@ -56,6 +56,7 @@ export default defineComponent({
     const pagination = ref({
       page: 1,
       perPage: 10,
+      lastPage: 0,
     })
     const items = ref([])
 
@@ -101,20 +102,24 @@ export default defineComponent({
         },
         {
           text: '标题',
+          minWidth: 200,
           value: 'short_title'
         },
         {
           text: '原价',
+          width: 120,
           value: 'original_price'
         },
         {
           text: '券后价',
+          width: 120,
           value: 'price'
         },
         {
           text: '销量',
           width: 120,
           value: 'sales_count',
+          sortable: true,
         },
         {
           text: '分类',
@@ -123,6 +128,7 @@ export default defineComponent({
         },
         {
           text: '商家地址',
+          width: 120,
           value: 'provcity'
         },
       ]),

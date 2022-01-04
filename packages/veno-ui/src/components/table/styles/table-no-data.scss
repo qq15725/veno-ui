@@ -1,0 +1,12 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+.ve-table-no-data {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  opacity: var(--ve-disabled-opacity);
+  line-height: 40px;
+  padding: 20px;
+}

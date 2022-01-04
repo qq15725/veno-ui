@@ -31,6 +31,7 @@ export interface IconAliases
   next: IconValue
   first: IconValue
   last: IconValue
+  nodata: IconValue
 }
 
 export interface IconProps
@@ -97,17 +98,31 @@ export const SvgIcon = defineComponent({
 
   setup (props, { attrs }) {
     return () => {
+      const isString = typeof props.icon === 'string'
+
       return (
         <props.tag { ...attrs } style={ null }>
-          <svg
-            class="ve-icon__svg"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            role="img"
-            aria-hidden="true"
-          >
-            <path d={ props.icon as string } />
-          </svg>
+          { isString && (
+            <svg
+              class="ve-icon__svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              role="img"
+              aria-hidden="true"
+            >
+              <path d={ props.icon as string } />
+            </svg>
+          ) }
+
+          { !isString && (
+            <props.icon
+              class="ve-icon__svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              role="img"
+              aria-hidden="true"
+            />
+          ) }
         </props.tag>
       )
     }

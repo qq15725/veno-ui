@@ -23,7 +23,6 @@
     min-height: 40px;
     overflow-y: hidden;
     overflow-x: auto;
-    @include tools.scrollbar();
     @include tools.use-material();
   }
 

@@ -92,7 +92,7 @@ export const TableTh = defineComponent({
                 <Button
                   class="ve-table-th__filter"
                   icon={ props.filterIcon }
-                  onClick={ (e: MouseEvent) => {
+                  onClick={ (e: Event) => {
                     e.stopPropagation()
                   } }
                 />
