@@ -1,54 +1,55 @@
+@use 'sass:map';
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
 .ve-table-th {
   &--sortable {
     cursor: pointer;
-
-    .ve-table-cell__text {
-      padding-inline-end: 28px;
-    }
+    padding-inline-end: 28px !important;
   }
 
-  &.ve-table-cell--fixed {
-    z-index: 3 !important;
-  }
-
-  &__sortable {
+  &__wrap {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+  }
+
+  &__sorter {
     margin-inline-start: 8px;
     color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
+    transition: transform .3s settings.$standard-easing;
+    transform: rotate(0deg);
 
-    .ve-icon {
-      position: relative;
-      width: 20px;
-      height: 8px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-
-      .ve-icon__svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-    .ve-icon + .ve-icon {
+    &--desc {
       transform: rotate(180deg);
     }
   }
 
-  .ve-table-cell__append {
-    position: absolute;
-    right: 0;
-    height: 100%;
-  }
-
   &__filter {
+    position: absolute;
+    top: 0;
+    right: 0;
     color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
-    min-width: auto;
     height: 100%;
     border-radius: 0;
+  }
+
+  // Table
+  .ve-table--fixed-header & {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  // Table Cell
+  &--sortable:hover {
+    .ve-table-cell__overlay {
+      opacity: calc(#{map.get(settings.$states, 'focus')} * var(--ve-theme-overlay-multiplier));
+    }
+  }
+
+  &--sorted {
+    .ve-table-cell__overlay {
+      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
+    }
   }
 }

@@ -2,22 +2,34 @@
 import './styles/table-th.scss'
 
 // Utils
-import { defineComponent } from '../../utils'
+import { defineComponent, pick } from '../../utils'
 
 // Components
-import { TableCell } from './table-cell'
+import { TableCell, makeTableCellProps, filterTableCellProps } from './table-cell'
 import { Button } from '../button'
 import { Icon } from '../icon'
 
+// Types
 import type { PropType } from 'vue'
+
+export type TableTh = InstanceType<typeof TableTh>
+
+export function filterTableThProps (attrs: Record<string, unknown>) {
+  return pick(attrs, Object.keys(TableTh.props))
+}
 
 export const TableTh = defineComponent({
   name: 'VeTableTh',
 
-  inheritAttrs: false,
-
   props: {
+    /**
+     * @zh 可排序
+     */
     sortable: Boolean,
+
+    /**
+     * @zh 倒序是否倒序
+     */
     sortDesc: Boolean as PropType<boolean | undefined>,
 
     /**
@@ -50,54 +62,50 @@ export const TableTh = defineComponent({
     filters: {
       type: Array,
       default: () => [],
-    }
+    },
+
+    ...makeTableCellProps(),
   },
 
-  setup (props, { slots, attrs }) {
+  setup (props, { slots }) {
     return () => {
+      const [tableCellProps] = filterTableCellProps(props)
+
       return (
         <TableCell
-          { ...attrs }
+          { ...tableCellProps }
           tag="th"
-          class={ [
-            've-table-th',
-            {
-              've-table-th--sortable': props.sortable,
-            }
-          ] }
-        >
-          { {
-            default: () => (
-              <>
-                { slots.default?.() }
-
-                { props.sortable && (
-                  <div class="ve-table-th__sortable">
-                    <Icon
-                      icon={ props.sortIcon }
-                      color={ props.sortDesc === false ? props.sortActiveColor : undefined }
-                    />
-
-                    <Icon
-                      icon={ props.sortIcon }
-                      color={ props.sortDesc === true ? props.sortActiveColor : undefined }
-                    />
-                  </div>
-                ) }
-              </>
-            ),
-            append: props.filters.length === 0
-              ? undefined
-              : () => (
-                <Button
-                  class="ve-table-th__filter"
-                  icon={ props.filterIcon }
-                  onClick={ (e: Event) => {
-                    e.stopPropagation()
-                  } }
-                />
-              )
+          class={ {
+            've-table-th': true,
+            've-table-th--sortable': props.sortable,
+            've-table-th--sorted': props.sortDesc !== undefined
           } }
+        >
+          <div class="ve-table-th__wrap">
+            { slots.default?.() }
+
+            { props.sortable && (
+              <Icon
+                class={ {
+                  've-table-th__sorter': true,
+                  've-table-th__sorter--desc': props.sortDesc === true
+                } }
+                size="1em"
+                icon={ props.sortIcon }
+                color={ props.sortDesc !== undefined ? props.sortActiveColor : undefined }
+              />
+            ) }
+          </div>
+
+          { props.filters.length > 0 && (
+            <Button
+              class="ve-table-th__filter"
+              icon={ props.filterIcon }
+              onClick={ (e: Event) => {
+                e.stopPropagation()
+              } }
+            />
+          ) }
         </TableCell>
       )
     }

@@ -10,8 +10,8 @@ import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
-import { TableTd } from './table-td'
-import { TableTh } from './table-th'
+import { TableTd, filterTableTdProps } from './table-td'
+import { TableTh, filterTableThProps } from './table-th'
 import { TableNoData } from './table-no-data'
 import { Pagination } from '../pagination'
 
@@ -88,7 +88,7 @@ export const Table = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-table__body')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrap')
     const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
@@ -127,7 +127,7 @@ export const Table = defineComponent({
 
     return () => {
       const hasColgroup = !slots.colgroup && props.headers.length > 0
-      const hasThead = !slots.header && !props.hideHeader || !hasColgroup
+      const hasThead = !slots.header && !props.hideHeader && props.headers.length > 0
       const hasTbody = !slots.default
       const hasPagination = hasTbody
 
@@ -145,7 +145,7 @@ export const Table = defineComponent({
             ref={ containerRef }
             onScroll={ handleScroll }
             class={ [
-              've-table__body',
+              've-table__wrap',
               materialClasses.value,
             ] }
             style={ [
@@ -171,7 +171,7 @@ export const Table = defineComponent({
                     const isDesc = wrapInArray(sortDesc.value)[sortIndex]
                     return (
                       <TableTh
-                        { ...header }
+                        { ...filterTableThProps(header)[0] }
                         row-index={ 0 }
                         col-index={ colIndex }
                         cols={ props.headers.length }
@@ -194,16 +194,21 @@ export const Table = defineComponent({
                 <tbody>
                 { items.value.map((item, rowIndex) => (
                   <tr>
-                    { props.headers.map((header, colIndex) => (
-                      <TableTd
-                        { ...header }
-                        row-index={ rowIndex }
-                        col-index={ colIndex }
-                        cols={ props.headers.length }
-                      >
-                        { slots[`item.${ header.value }`]?.({ item }) ?? item[header.value] }
-                      </TableTd>
-                    )) }
+                    { props.headers.map((header, colIndex) => {
+                      const sortIndex = wrapInArray(sortBy.value).findIndex(v => v === header.value)
+                      const isDesc = wrapInArray(sortDesc.value)[sortIndex]
+                      return (
+                        <TableTd
+                          { ...filterTableTdProps(header)[0] }
+                          row-index={ rowIndex }
+                          col-index={ colIndex }
+                          cols={ props.headers.length }
+                          sorted={ isDesc !== undefined }
+                        >
+                          { slots[`item.${ header.value }`]?.({ item }) ?? item[header.value] }
+                        </TableTd>
+                      )
+                    }) }
                   </tr>
                 )) }
 
