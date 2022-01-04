@@ -13,6 +13,7 @@ import { makeDataIteratorProps, useDataIterator } from '../../composables/data-i
 import { TableTd, filterTableTdProps } from './table-td'
 import { TableTh, filterTableThProps } from './table-th'
 import { TableNoData } from './table-no-data'
+import { Progress } from '../progress'
 import { Pagination } from '../pagination'
 
 // Types
@@ -75,6 +76,19 @@ export const Table = defineComponent({
       default: 'primary',
     },
 
+    /**
+     * @zh 加载中
+     */
+    loading: Boolean,
+
+    /**
+     * @zh 唯一键
+     */
+    itemKey: {
+      type: String,
+      default: 'id',
+    },
+
     ...makeDataIteratorProps(),
     ...makeMaterialProps({
       border: true,
@@ -92,7 +106,7 @@ export const Table = defineComponent({
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
-    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrap')
+    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrapper')
     const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
     const arraySortBy = computed(() => wrapInArray(sortBy.value))
     const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
@@ -167,7 +181,7 @@ export const Table = defineComponent({
             ref={ containerRef }
             onScroll={ handleScroll }
             class={ [
-              've-table__wrap',
+              've-table__wrapper',
               materialClasses.value,
             ] }
             style={ [
@@ -187,6 +201,21 @@ export const Table = defineComponent({
 
               { hasThead && (
                 <thead>
+
+                { props.loading && (
+                  <tr class="ve-table__progress">
+                    <th
+                      colspan={ props.headers.length }
+                    >
+                      <Progress
+                        color="currentColor"
+                        indeterminate
+                        stroke-width={ 3 }
+                      />
+                    </th>
+                  </tr>
+                ) }
+
                 <tr>
                   { props.headers.map((header, colIndex) => {
                     return (
@@ -216,7 +245,7 @@ export const Table = defineComponent({
               { hasTbody && (
                 <tbody>
                 { items.value.map((item, rowIndex) => (
-                  <tr>
+                  <tr key={ item[props.itemKey] ?? rowIndex }>
                     { props.headers.map((header, colIndex) => {
                       return (
                         <TableTd

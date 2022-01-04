@@ -10,6 +10,7 @@
     height="400"
     :headers="headers"
     :items="items"
+    :loading="loading"
     v-bind="pagination"
     @update:options="options => {
       pagination = { 
@@ -38,7 +39,7 @@
     </template>
 
     <template #item.cover="{ item }">
-      <ve-image :src="item.cover" />
+      <ve-image :src="item.cover" width="50" :aspect-ratio="1" />
     </template>
   </ve-table>
 </ve-lazy>
@@ -54,6 +55,7 @@ export default defineComponent({
       perPage: 10,
       lastPage: 0,
     })
+    const loading = ref(false)
     const items = ref([])
 
     function apiFetch (query = {}) {
@@ -74,6 +76,7 @@ export default defineComponent({
     }
 
     async function fetch () {
+      loading.value = true
       const {
         data,
         meta
@@ -85,11 +88,13 @@ export default defineComponent({
           [v.replace(/_([a-z])/, (_, v) => `${ v.toUpperCase() }`)]: meta[v],
         }
       }, {})
+      loading.value = false
     }
 
     fetch()
 
     return {
+      loading,
       headers: ref([
         {
           text: '封面',

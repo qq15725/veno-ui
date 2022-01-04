@@ -33,13 +33,6 @@
     border-radius: 0;
   }
 
-  // Table
-  .ve-table--fixed-header & {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
   // Table Cell
   &--sortable:hover {
     .ve-table-cell__overlay {
