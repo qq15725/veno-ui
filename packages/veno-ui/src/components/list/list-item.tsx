@@ -39,7 +39,7 @@ export const ListItem = defineComponent({
     appendIcon: String,
     ...makeMaterialProps({
       variant: 'text',
-      size: null,
+      size: undefined,
     } as const),
     ...makeDisabledProps(),
     ...makeRouterProps(),

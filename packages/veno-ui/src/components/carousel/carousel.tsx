@@ -29,8 +29,8 @@ export const Carousel = genericComponent()({
     },
     ...makeMaterialProps({
       variant: 'text',
-      size: null,
-      density: null,
+      size: undefined,
+      density: undefined,
     } as const),
     ...makeGroupProps(),
     ...makeTagProps(),

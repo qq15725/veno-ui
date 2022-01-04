@@ -22,8 +22,8 @@ export const Material = genericComponent<new () => {
   props: {
     textCenter: Boolean,
     ...makeMaterialProps({
-      size: null,
-      density: null,
+      size: undefined,
+      density: undefined,
     }),
   },
 

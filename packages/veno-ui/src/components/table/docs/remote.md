@@ -11,8 +11,12 @@
     :headers="headers"
     :items="items"
     v-bind="pagination"
-    @update:page="v => {
-      pagination.page = v
+    @update:options="options => {
+      pagination = { 
+        ...pagination,
+        descending: options.sortDesc[0] ? 'desc' : 'asc',
+        ...options,
+      }
       fetch()
     }"
   >
@@ -31,14 +35,6 @@
           {{ item.short_title }}
         </ve-link>
       </ve-tooltip>
-    </template>
-
-    <template #item.original_price="{ item }">
-      {{ item.coupons[0].coupon_product.original_price }}
-    </template>
-
-    <template #item.price="{ item }">
-      {{ item.coupons[0].coupon_product.price }}
     </template>
 
     <template #item.cover="{ item }">
@@ -108,12 +104,12 @@ export default defineComponent({
         {
           text: '原价',
           width: 120,
-          value: 'original_price'
+          value: 'coupons.0.coupon_product.original_price'
         },
         {
           text: '券后价',
           width: 120,
-          value: 'price'
+          value: 'coupons.0.coupon_product.price'
         },
         {
           text: '销量',
@@ -125,6 +121,11 @@ export default defineComponent({
           text: '分类',
           width: 120,
           value: 'category_unionid'
+        },
+        {
+          text: '商家',
+          width: 150,
+          value: 'shop.name'
         },
         {
           text: '商家地址',

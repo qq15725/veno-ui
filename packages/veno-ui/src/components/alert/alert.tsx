@@ -69,7 +69,7 @@ export const Alert = genericComponent()({
       return props.icon ?? `veno-ui:$${ props.type }`
     })
 
-    function onCloseClick (e: MouseEvent) {
+    function onCloseClick (e: Event) {
       isActive.value = false
     }
 

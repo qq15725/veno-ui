@@ -3,7 +3,7 @@ import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Constants
-const DENSITIES = [null, 'medium', 'comfortable', 'compact'] as const
+const DENSITIES = ['medium', 'comfortable', 'compact'] as const
 
 // Types
 import type { PropType } from 'vue'

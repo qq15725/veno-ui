@@ -35,7 +35,7 @@ export const List = defineComponent({
     },
     items: Array as Prop<ListItemProp[]>,
     ...makeMaterialProps({
-      size: null,
+      size: undefined,
     } as const),
     ...makeDisabledProps(),
     ...makeNestedProps({

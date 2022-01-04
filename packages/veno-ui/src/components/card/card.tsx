@@ -39,7 +39,7 @@ export const Card = defineComponent({
     divided: Boolean,
     text: String,
     ...makeMaterialProps({
-      size: null,
+      size: undefined,
     }),
     ...makeRouterProps(),
     ...makeLoadingProps(),

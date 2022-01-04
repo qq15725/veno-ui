@@ -2,8 +2,8 @@
 import './styles/table.scss'
 
 // Utils
-import { ref, computed } from 'vue'
-import { defineComponent, convertToUnit, wrapInArray } from '../../utils'
+import { ref, computed, watch } from 'vue'
+import { defineComponent, convertToUnit, wrapInArray, getObjectValueByPath } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -85,14 +85,17 @@ export const Table = defineComponent({
     'update:page': (val: number) => true,
     'update:sortBy': (val: string | string[]) => true,
     'update:sortDesc': (val: boolean | boolean[]) => true,
+    'update:options': (val: Record<string, any>) => true,
   },
 
-  setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrap')
-    const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
+  setup (props, { slots, emit }) {
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
+    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrap')
+    const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
+    const arraySortBy = computed(() => wrapInArray(sortBy.value))
+    const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
     const scrollPositionClasses = computed(() => {
       if (containerRef.value && containerScrollLeft.value === 0) {
         return 've-table--scroll-position-start'
@@ -105,6 +108,21 @@ export const Table = defineComponent({
       } else {
         return 've-table--scroll-position-center'
       }
+    })
+
+    // TODO
+    watch([
+      page,
+      perPage,
+      arraySortBy,
+      arraySortDesc
+    ], ([page, perPage, sortBy, sortDesc]) => {
+      emit('update:options', {
+        page,
+        perPage,
+        sortBy,
+        sortDesc
+      })
     })
 
     function handleScroll (e: Event) {
@@ -123,6 +141,10 @@ export const Table = defineComponent({
       return {
         style: styles
       }
+    }
+
+    function getSortDesc (header: TableHeaderProp) {
+      return arraySortDesc.value[arraySortBy.value.findIndex(v => v === header.value)]
     }
 
     return () => {
@@ -167,8 +189,6 @@ export const Table = defineComponent({
                 <thead>
                 <tr>
                   { props.headers.map((header, colIndex) => {
-                    const sortIndex = wrapInArray(sortBy.value).findIndex(v => v === header.value)
-                    const isDesc = wrapInArray(sortDesc.value)[sortIndex]
                     return (
                       <TableTh
                         { ...filterTableThProps(header)[0] }
@@ -177,10 +197,13 @@ export const Table = defineComponent({
                         cols={ props.headers.length }
                         sort-icon={ props.sortIcon }
                         sort-active-color={ props.sortActiveColor }
-                        sort-desc={ isDesc }
+                        sort-desc={ getSortDesc(header) }
                         onClick={ () => header.sortable && sort(header.value) }
                       >
-                        { slots[`header.${ header.value }`]?.({ header }) ?? header.text }
+                        {
+                          slots[`header.${ header.value }`]?.({ header })
+                          ?? header.text
+                        }
                       </TableTh>
                     )
                   }) }
@@ -195,17 +218,18 @@ export const Table = defineComponent({
                 { items.value.map((item, rowIndex) => (
                   <tr>
                     { props.headers.map((header, colIndex) => {
-                      const sortIndex = wrapInArray(sortBy.value).findIndex(v => v === header.value)
-                      const isDesc = wrapInArray(sortDesc.value)[sortIndex]
                       return (
                         <TableTd
                           { ...filterTableTdProps(header)[0] }
                           row-index={ rowIndex }
                           col-index={ colIndex }
                           cols={ props.headers.length }
-                          sorted={ isDesc !== undefined }
+                          sorted={ getSortDesc(header) !== undefined }
                         >
-                          { slots[`item.${ header.value }`]?.({ item }) ?? item[header.value] }
+                          {
+                            slots[`item.${ header.value }`]?.({ item })
+                            ?? getObjectValueByPath(item, header.value)
+                          }
                         </TableTd>
                       )
                     }) }
