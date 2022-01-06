@@ -10,7 +10,6 @@
       <ve-app-bar-nav-icon
           @click="active = !active"
           class="hidden-sm-and-up"
-          color="secondary"
       />
 
       <ve-app-bar-title class="hidden-sm-and-down">Veno UI</ve-app-bar-title>
@@ -27,6 +26,7 @@
               class="mr-3"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
               :icon="`$${theme || 'light'}`"
+              variant="text"
           />
         </ve-tooltip>
 
@@ -39,6 +39,7 @@
               href="https://github.com/qq15725/veno-ui"
               target="_blank"
               icon="$github"
+              variant="text"
           />
         </ve-tooltip>
       </ve-app-bar-items>
