@@ -4,7 +4,7 @@ import './styles/app.scss'
 // Utilities
 import { defineComponent } from 'vue'
 
-import { makeThemeProps, useTheme } from '../../composables/theme'
+import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeLayoutProps, createLayout } from '../../composables/layout'
 import { createDragSortProvider } from '../../composables/drag-sort'
 
@@ -17,7 +17,7 @@ export const App = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { themeClasses } = useTheme(props)
+    const { themeClasses } = provideTheme(props)
     const { layoutClasses } = createLayout(props)
     createDragSortProvider()
 

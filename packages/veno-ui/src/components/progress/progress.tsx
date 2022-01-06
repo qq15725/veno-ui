@@ -7,7 +7,7 @@ import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-import { makeThemeProps, useTheme } from '../../composables/theme'
+import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeSizeProps, useSize } from '../../composables/size'
 import { useTextColor } from '../../composables/color'
 import { useVariant } from '../../composables/variant'
@@ -48,6 +48,8 @@ export const Progress = defineComponent({
       type: [String, Boolean] as PropType<string | false | null>,
       default: 'primary',
     },
+    left: Boolean,
+    right: Boolean,
     ...makeProgressCircularProps(),
     ...makeProgressLinearProps(),
     ...makeThemeProps(),
@@ -56,7 +58,7 @@ export const Progress = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { themeClasses } = useTheme(props)
+    const { themeClasses } = provideTheme(props)
     const { variantClasses } = useVariant(props)
     const { sizeClasses, sizeStyles } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(
@@ -89,14 +91,16 @@ export const Progress = defineComponent({
           ref={ intersectionRef }
           class={ [
             've-progress',
-            {
-              've-progress--indeterminate': !!props.indeterminate,
-              've-progress--visible': isIntersecting.value,
-            },
             variantClasses.value,
             themeClasses.value,
             sizeClasses.value,
             textColorClasses.value,
+            {
+              've-progress--indeterminate': !!props.indeterminate,
+              've-progress--visible': isIntersecting.value,
+              've-progress--left': props.left,
+              've-progress--right': props.right,
+            },
           ] }
           style={ [
             sizeStyles.value,

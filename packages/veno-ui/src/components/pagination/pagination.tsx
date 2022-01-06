@@ -77,11 +77,14 @@ export const Pagination = defineComponent({
       default: '...',
     },
     showFirstLastPage: Boolean,
+    activeColor: {
+      type: String,
+      default: 'primary',
+    },
 
     ...makePaginationProps(),
     ...makeMaterialProps({
       tag: 'nav',
-      color: 'primary',
     } as const),
     variant: {
       type: String as PropType<ButtonVariant>,
@@ -216,7 +219,7 @@ export const Pagination = defineComponent({
               elevation: props.elevation,
               variant: props.variant,
               border: props.border,
-              color: isActive ? props.color : undefined,
+              color: isActive ? props.activeColor : undefined,
               ariaCurrent: isActive,
               ariaLabel: isActive ? props.currentPageAriaLabel : props.pageAriaLabel,
               onClick: (e: Event) => setValue(e, item),

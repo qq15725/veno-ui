@@ -7,7 +7,7 @@ import { defineComponent, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-import { makeThemeProps, useTheme } from '../../composables/theme'
+import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 
@@ -40,7 +40,7 @@ export const AppBar = defineComponent({
 
   setup (props, { slots }) {
     const { borderClasses } = useBorder(props)
-    const { themeClasses } = useTheme(props)
+    const { themeClasses } = provideTheme(props)
 
     const layoutStyles = useLayoutItem(
       props.name,
@@ -58,9 +58,7 @@ export const AppBar = defineComponent({
           themeClasses.value,
           borderClasses.value,
         ] }
-        style={ [
-          layoutStyles.value,
-        ] }
+        style={ layoutStyles.value }
       >
         <div
           class="ve-app-bar__wrap"

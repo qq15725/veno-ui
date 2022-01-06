@@ -1,16 +1,11 @@
 // Utils
-import { computed, getCurrentInstance, inject, provide, ref, unref, watch } from 'vue'
+import { computed, inject, provide, ref, unref, watch } from 'vue'
 import {
-  colorToInt,
   colorToRGB,
-  createRange,
   getLuma,
-  intToHex,
-  lighten,
-  darken,
   mergeDeep,
   propsFactory,
-  consoleError,
+  getCurrentInstance,
 } from '../../utils'
 import { colorToOnColorHex } from '../../utils/color'
 import defaultOptions from './default-options'
@@ -18,35 +13,7 @@ import defaultOptions from './default-options'
 // Types
 import type { InjectionKey, Ref } from 'vue'
 import type { MaybeRef } from '../../utils'
-
-interface BaseColors
-{
-  background: string
-  surface: string
-  primary: string
-  secondary: string
-  success: string
-  warning: string
-  error: string
-  info: string
-}
-
-interface OnColors
-{
-  'on-background': string
-  'on-surface': string
-  'on-primary': string
-  'on-secondary': string
-  'on-success': string
-  'on-warning': string
-  'on-error': string
-  'on-info': string
-}
-
-interface Colors extends BaseColors, OnColors
-{
-  [key: string]: string
-}
+import type { Colors, BaseColors, BaseOnColors } from './colors'
 
 interface InternalThemeDefinition
 {
@@ -55,7 +22,7 @@ interface InternalThemeDefinition
   variables: Record<string, string | number>
 }
 
-interface ThemeDefinitionColors extends BaseColors, Partial<OnColors>
+interface ThemeDefinitionColors extends BaseColors, Partial<BaseOnColors>
 {
   [key: string]: string | undefined
 }
@@ -79,7 +46,7 @@ export type ThemeOptions = false | {
   themes?: Record<string, ThemeDefinition>
 }
 
-export interface ThemeInstance
+export interface Theme
 {
   isDisabled: boolean
   themes: Ref<Record<string, InternalThemeDefinition>>
@@ -89,7 +56,7 @@ export interface ThemeInstance
   getTheme: (key: string) => InternalThemeDefinition
 }
 
-export const ThemeSymbol: InjectionKey<ThemeInstance> = Symbol.for('veno-ui:theme')
+export const ThemeSymbol: InjectionKey<Theme> = Symbol.for('veno-ui:theme')
 
 export const makeThemeProps = propsFactory({
   theme: String,
@@ -97,14 +64,21 @@ export const makeThemeProps = propsFactory({
 
 const parseThemeOptions = (options: ThemeOptions = defaultOptions): InternalThemeOptions => {
   if (!options) {
-    return { ...defaultOptions, isDisabled: true } as InternalThemeOptions
+    return { ...defaultOptions, isDisabled: true }
   }
 
   return mergeDeep(defaultOptions, options) as InternalThemeOptions
 }
 
-// Composables
-export function createTheme (options?: ThemeOptions): ThemeInstance {
+function createCssClass (selector: string, content: string[]) {
+  return [
+    `${ selector } {\n`,
+    ...content.map(line => `  ${ line };\n`),
+    '}\n',
+  ]
+}
+
+export function createTheme (options?: ThemeOptions): Theme {
   const parsedOptions = parseThemeOptions(options)
   const styleEl = ref<HTMLStyleElement>()
   const current = ref(parsedOptions.defaultTheme)
@@ -112,63 +86,67 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
 
   const computedThemes = computed(() => {
     return Object.keys(themes.value).reduce((obj, key) => {
-      const themeOption = themes.value[key]
-
-      const theme: ThemeDefinition = {
-        ...themeOption,
-        colors: {
-          ...themeOption.colors,
-          ...Object.keys(themeOption.colors).reduce((obj, color) => {
-            return {
-              ...obj,
-              ...genColorVariations(color, themeOption.colors[color]!)
-            }
-          }, {}),
-        },
-      }
-
+      const theme = themes.value[key]
       for (const color of Object.keys(theme.colors)) {
         if (/on-[a-z]/.test(color) || theme.colors[`on-${ color }`]) continue
-        const onColor = `on-${ color }` as keyof OnColors
-        theme.colors[onColor] = colorToOnColorHex(theme.colors[color]!)
+        theme.colors[`on-${ color }`] = colorToOnColorHex(theme.colors[color]!)
       }
-
       obj[key] = theme as InternalThemeDefinition
-
       return obj
     }, {} as Record<string, InternalThemeDefinition>)
   })
 
-  function genColorVariations (name: string, color: string) {
-    const colorInt = colorToInt(color)
-    const obj: Record<string, string> = {}
-    for (const variation of (['lighten', 'darken'] as const)) {
-      const fn = variation === 'lighten' ? lighten : darken
-      for (const amount of createRange(4, 1)) {
-        obj[`${ name }-${ variation === 'lighten' ? (5 - amount) : (amount + 5) }00`] = intToHex(fn(colorInt, amount))
+  const styles = computed(() => {
+    const lines = []
+
+    for (const themeName of Object.keys(computedThemes.value)) {
+      const theme = computedThemes.value[themeName]
+
+      lines.push(
+        ...createCssClass(`.ve-theme--${ themeName }`, [
+          ...genCssVariables(themeName),
+          ...Object.keys(theme.variables).map(key => {
+            const value = theme.variables[key]
+            const color = typeof value === 'string' && value.startsWith('#')
+              ? colorToRGB(value)
+              : undefined
+            const rgb = color
+              ? `${ color.r }, ${ color.g }, ${ color.b }`
+              : undefined
+            return `--ve-${ key }: ${ rgb ?? value }`
+          }),
+        ])
+      )
+
+      if (theme.dark) {
+        for (const key of Object.keys(theme.colors)) {
+          if (/on-[a-z]/.test(key)) {
+            lines.push(
+              ...createCssClass(`.${ key }`, [
+                `color: rgb(var(--ve-theme-${ key }))`
+              ])
+            )
+          } else {
+            lines.push(
+              ...createCssClass(`.bg-${ key }`, [
+                `--ve-theme-overlay-multiplier: var(--ve-theme-${ key }-overlay-multiplier)`,
+                `background: rgb(var(--ve-theme-${ key }))`,
+                `color: rgb(var(--ve-theme-on-${ key }))`,
+              ]),
+              ...createCssClass(`.text-${ key }`, [
+                `color: rgb(var(--ve-theme-${ key }))`
+              ]),
+              ...createCssClass(`.border-${ key }`, [
+                `--ve-border-color: var(--ve-theme-${ key })`
+              ]),
+            )
+          }
+        }
       }
     }
-    obj[`${ name }-50`] = intToHex(lighten(colorInt, 4.5))
-    obj[`${ name }-500`] = color
-    return obj
-  }
 
-  function genStyleElement () {
-    if (typeof document === 'undefined' || styleEl.value) return
-    const el = document.createElement('style')
-    el.type = 'text/css'
-    el.id = 'veno-ui-theme-stylesheet'
-    styleEl.value = el
-    document.head.appendChild(styleEl.value)
-  }
-
-  function createCssClass (selector: string, content: string[]) {
-    return [
-      `${ selector } {\n`,
-      ...content.map(line => `  ${ line };\n`),
-      '}\n',
-    ]
-  }
+    return lines.map((str, i) => i === 0 ? str : `    ${str}`).join('')
+  })
 
   function genCssVariables (name: string) {
     const theme = computedThemes.value[name]
@@ -186,74 +164,22 @@ export function createTheme (options?: ThemeOptions): ThemeInstance {
     return variables
   }
 
+  watch(themes, updateStyles, { deep: true, immediate: true })
+
   function updateStyles () {
     if (parsedOptions.isDisabled) return
-
     genStyleElement()
-
-    const lines = []
-
-    // 主题类
-    for (const themeName of Object.keys(computedThemes.value)) {
-      const variables = computedThemes.value[themeName].variables
-
-      lines.push(
-        ...createCssClass(`.ve-theme--${ themeName }`, [
-          // 颜色变量
-          ...genCssVariables(themeName),
-          // 自定义变量
-          ...Object.keys(variables).map(key => {
-            const value = variables[key]
-
-            const color = typeof value === 'string' && value.startsWith('#')
-              ? colorToRGB(value)
-              : undefined
-
-            const rgb = color
-              ? `${ color.r }, ${ color.g }, ${ color.b }`
-              : undefined
-
-            return `--ve-${ key }: ${ rgb ?? value }`
-          }),
-        ])
-      )
-    }
-
-    // 颜色类
-    const firstTheme = Object.keys(computedThemes.value)[0]
-    for (const key of Object.keys(computedThemes.value[firstTheme].colors)) {
-      if (/on-[a-z]/.test(key)) {
-        lines.push(
-          ...createCssClass(`.${ key }`, [
-            `color: rgb(var(--ve-theme-${ key }))`
-          ])
-        )
-      } else {
-        lines.push(
-          // 背景颜色
-          ...createCssClass(`.bg-${ key }`, [
-            `--ve-theme-overlay-multiplier: var(--ve-theme-${ key }-overlay-multiplier)`,
-            `background: rgb(var(--ve-theme-${ key }))`,
-            `color: rgb(var(--ve-theme-on-${ key }))`,
-          ]),
-          // 文字颜色
-          ...createCssClass(`.text-${ key }`, [
-            `color: rgb(var(--ve-theme-${ key }))`
-          ]),
-          // 边框颜色
-          ...createCssClass(`.border-${ key }`, [
-            `--ve-border-color: var(--ve-theme-${ key })`
-          ]),
-        )
-      }
-    }
-
-    if (styleEl.value) {
-      styleEl.value.innerHTML = lines.join('')
-    }
+    if (styleEl.value) styleEl.value.innerHTML = styles.value
   }
 
-  watch(themes, updateStyles, { deep: true, immediate: true })
+  function genStyleElement () {
+    if (typeof document === 'undefined' || styleEl.value) return
+    const el = document.createElement('style')
+    el.type = 'text/css'
+    el.id = 'veno-ui-theme-stylesheet'
+    styleEl.value = el
+    document.head.appendChild(styleEl.value)
+  }
 
   return {
     isDisabled: parsedOptions.isDisabled,
@@ -274,16 +200,12 @@ export interface ThemeProps
   theme?: string
 }
 
-/**
- * Used to either set up and provide a new theme instance, or to pass
- * along the closest available already provided instance.
- */
-export function useTheme (props: MaybeRef<ThemeProps>) {
-  const vm = getCurrentInstance()
+export function provideTheme (props: MaybeRef<ThemeProps>) {
+  getCurrentInstance('provideTheme')
+
   const theme = inject(ThemeSymbol, null)
 
-  if (!vm) consoleError('provideTheme must be called from inside a setup function')
-  if (!theme) throw new Error('Could not find theme injection')
+  if (!theme) throw new Error('Could not find VenoUi theme injection')
 
   const current = computed<string>(() => {
     const { theme: propTheme } = unref(props)
@@ -292,12 +214,10 @@ export function useTheme (props: MaybeRef<ThemeProps>) {
   })
 
   const themeClasses = computed(() => {
-    return theme.isDisabled
-      ? undefined
-      : `ve-theme--${ current.value }`
+    return theme.isDisabled ? undefined : `ve-theme--${current.value}`
   })
 
-  const newTheme: ThemeInstance = {
+  const newTheme: Theme = {
     ...theme,
     current,
     themeClasses,
@@ -306,4 +226,14 @@ export function useTheme (props: MaybeRef<ThemeProps>) {
   provide(ThemeSymbol, newTheme)
 
   return newTheme
+}
+
+export function useTheme () {
+  getCurrentInstance('useTheme')
+
+  const theme = inject(ThemeSymbol, null)
+
+  if (!theme) throw new Error('Could not find VenoUi theme injection')
+
+  return theme
 }

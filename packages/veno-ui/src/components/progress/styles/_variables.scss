@@ -1,7 +1,11 @@
+@use 'sass:map';
+@use '../../../styles/settings';
 @use '../../../styles/tools';
 
 $progress-circular-size: 40px !default;
 $progress-linear-size: 3px !default;
+$progress-margin-end: map.get(settings.$grid-gutters, 'md') !default;
+$progress-margin-start: map.get(settings.$grid-gutters, 'md') !default;
 
 $progress-sizes: () !default;
 $progress-sizes: tools.map-deep-merge(

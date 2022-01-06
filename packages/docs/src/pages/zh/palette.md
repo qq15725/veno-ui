@@ -14,7 +14,7 @@ meta:
 
 组件库内置了一套基于动态梯度的色彩算法。
 
-<palette-javascript-colors />
+TODO
 
 ## Sass 颜色包
 

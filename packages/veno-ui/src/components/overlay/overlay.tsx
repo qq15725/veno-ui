@@ -13,7 +13,7 @@ import { FadeTransition } from '../transition'
 import { makeActivatorProps, useActivator } from '../../composables/activator'
 import { makePositionStrategyProps, usePositionStrategy } from '../../composables/position-strategy'
 import { makeScrollStrategyProps, useScrollStrategy } from '../../composables/scroll-strategy'
-import { makeThemeProps, useTheme } from '../../composables/theme'
+import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useBackButton } from '../../composables/router'
 import { useBackgroundColor } from '../../composables/color'
@@ -114,7 +114,7 @@ export const Overlay = genericComponent<new () => {
   setup (props, { slots, attrs, emit }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const { teleportTarget } = useTeleport(toRef(props, 'attach'))
-    const { themeClasses } = useTheme(props)
+    const { themeClasses } = provideTheme(props)
     const { hasContent, onAfterLeave } = useLazy(props, isActive)
     const scrimColor = useBackgroundColor(computed(() => {
       return typeof props.scrim === 'string' ? props.scrim : null

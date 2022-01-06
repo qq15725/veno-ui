@@ -4,7 +4,7 @@ import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../tag'
-import { makeThemeProps, useTheme } from '../theme'
+import { makeThemeProps, provideTheme } from '../theme'
 import { makeVariantProps, useVariant } from '../variant'
 import { makePositionProps, usePosition } from '../position'
 import { makeDimensionProps, useDimension } from '../dimension'
@@ -59,7 +59,7 @@ export function useMaterial (
   props: MaybeRef<MaterialProps>,
   name = getCurrentInstanceName()
 ) {
-  const { themeClasses } = useTheme(props)
+  const { themeClasses } = provideTheme(props)
   const { colorClasses, variantClasses, colorStyles } = useVariant(props, name)
   const { positionClasses, positionStyles } = usePosition(props, name)
   const { dimensionStyles } = useDimension(props)

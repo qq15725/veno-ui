@@ -1,6 +1,6 @@
+@forward 'variables';
 @use 'sass:map';
 @use 'sass:math';
-@forward 'variables';
 @use 'variables' as *;
 @use '../../../styles/tools';
 @use '../../../styles/settings';
@@ -14,36 +14,27 @@
   justify-content: center;
   align-items: center;
   outline: none;
+  font-size: var(--ve-button-font-size);
   font-weight: $button-font-weight;
   line-height: $button-line-height;
   letter-spacing: $button-text-letter-spacing;
   text-transform: $button-text-transform;
-  transition-property: width, transform, opacity;
+  height: var(--ve-button-height);
+  min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
+  padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
+  transition-property: box-shadow, transform, opacity, color;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
   user-select: none;
   text-decoration: none;
-  cursor: pointer;
-  font-size: var(--ve-button-font-size);
-  height: var(--ve-button-height);
-  min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
-  padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
+  vertical-align: $button-vertical-align;
+  flex-shrink: 0;
   @include tools.use-material($button-material);
+  @include tools.states('#{&}__overlay', false);
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
       --ve-button-font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
-    }
-  }
-
-  &--variant-text {
-    @at-root {
-      // AppBarItems
-      .ve-app-bar-items & {
-        border-radius: 0;
-        height: 100% !important;
-        border-width: 0;
-      }
     }
   }
 
@@ -60,28 +51,15 @@
     }
   }
 
-  &--variant-icon {
+  &--icon {
     padding: 0;
     height: var(--ve-button-height);
     min-width: var(--ve-button-height);
-    color: tools.map-deep-get($button-material, 'variants', 'contained', 'color');
+    width: var(--ve-button-height);
   }
 
   &--block {
     min-width: 100%;
-  }
-
-  &--loading,
-  &--disabled {
-    color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity) !important;
-
-    &#{$root}--variant-contained {
-      --ve-button-overlay-opacity: #{$button-disabled-overlay-opacity};
-    }
-
-    &#{$root}--variant-contained {
-      background: rgb(var(--ve-theme-surface)) !important;
-    }
   }
 
   &--disabled {
@@ -92,27 +70,41 @@
     cursor: wait;
   }
 
+  &--loading,
+  &--disabled {
+    &#{$root}--loading,
+    &#{$root}--disabled {
+      background: rgba(var(--ve-theme-surface), $button-disabled-opacity);
+      color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
+      opacity: 1;
+    }
+
+    &#{$root}--variant-contained {
+      #{$root}__overlay {
+        opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
+      }
+    }
+  }
+
+  &__icon {
+    width: 1em !important;
+    height: 1em !important;
+    font-size: 1.5em !important;
+  }
+
   &__overlay {
     @include tools.absolute();
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;
-    opacity: var(--ve-button-overlay-opacity, 0);
+    opacity: 0;
     transition: opacity .2s ease-in-out;
   }
 
-  &:not(&--disabled):not(&--loading) {
-    @include tools.states('#{$root}__overlay', false);
-  }
-
-  // Progress
-  .ve-progress {
-    width: 1em !important;
-    height: 1em !important;
-    font-size: 1em !important;
-
-    & + span {
-      margin-inline-start: map.get(settings.$grid-gutters, 'md');
-    }
+  // AppBarItems
+  .ve-app-bar-items &--variant-text {
+    border-radius: 0;
+    height: 100% !important;
+    border-width: 0;
   }
 }

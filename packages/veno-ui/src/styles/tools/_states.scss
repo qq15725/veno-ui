@@ -3,16 +3,18 @@
 
 @mixin states($selector: '&::before', $active: true) {
   &:hover #{$selector} {
-    opacity: calc(#{map.get($states, 'hover')} * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
   &:focus-visible #{$selector} {
-    opacity: calc(#{map.get($states, 'focus')} * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
-  &:active #{$selector} {
-    opacity: calc(#{map.get($states, 'pressed')} * var(--ve-theme-overlay-multiplier));
-  }
+  // @supports not selector(:focus-visible) {
+  // &:focus #{$selector} {
+  //   opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
+  // }
+  // }
 
   @if ($active) {
     &--active {
@@ -24,10 +26,10 @@
 @mixin active-states($selector: '::before') {
   &:hover #{$selector},
   #{$selector} {
-    opacity: calc(#{map.get($states, 'activated')} * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
-  &:active #{$selector} {
-    opacity: calc(#{map.get($states, 'pressed')} * var(--ve-theme-overlay-multiplier));
+  &:focus #{$selector} {
+    opacity: calc(var(--ve-pressed-opacity) * var(--ve-theme-overlay-multiplier));
   }
 }

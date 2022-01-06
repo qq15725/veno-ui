@@ -30,6 +30,7 @@ const focusBtn = () => {
         absolute
         border="0"
         icon
+        variant="text"
         rounded
         tabindex="-1"
         aria-label="此容器仅用于测试组件键盘导航功能。"
@@ -59,6 +60,7 @@ const focusBtn = () => {
             rounded
             style="opacity: .8;"
             icon="$code"
+            variant="text"
         />
       </ve-tooltip>
 
@@ -74,6 +76,7 @@ const focusBtn = () => {
             rounded
             style="opacity: .8;"
             icon="$focus"
+            variant="text"
             tabindex="-1"
         />
       </ve-tooltip>
@@ -90,6 +93,7 @@ const focusBtn = () => {
             rounded
             style="opacity: .8;"
             :icon="`$${theme || 'light'}`"
+            variant="text"
             tabindex="-1"
         />
       </ve-tooltip>
@@ -107,6 +111,7 @@ const focusBtn = () => {
             rounded
             style="opacity: .8;"
             icon="$github"
+            variant="text"
             tabindex="-1"
         />
       </ve-tooltip>

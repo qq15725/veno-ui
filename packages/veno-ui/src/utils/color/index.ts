@@ -19,15 +19,16 @@ export type HSL = { h: number, s: number, l: number }
 export type HSLA = HSL & { a: number }
 export type Hex = string
 export type Hexa = string
-export type Color = string | number | {}
+export type Color = string | number
+
+export function isDarkColor (int: ColorInt): boolean {
+  const blackContrast = Math.abs(APCAcontrast(0x000000, int))
+  const whiteContrast = Math.abs(APCAcontrast(0xffffff, int))
+  return whiteContrast > Math.min(blackContrast, 50)
+}
 
 export function colorToOnColorHex (color: Color): Hex {
-  const intColor = colorToInt(color)
-  const blackContrast = Math.abs(APCAcontrast(0x000000, intColor))
-  const whiteContrast = Math.abs(APCAcontrast(0xffffff, intColor))
-  return whiteContrast > Math.min(blackContrast, 50)
-    ? '#FFF'
-    : '#000'
+  return isDarkColor(colorToInt(color)) ? '#FFF' : '#000'
 }
 
 export function isCssColor (color?: string | null | false): boolean {
@@ -49,7 +50,7 @@ export function colorToInt (color: Color): ColorInt {
     }
     rgb = parseInt(c, 16)
   } else {
-    throw new TypeError(`Colors can only be numbers or strings, recieved ${ color == null ? color : color.constructor.name } instead`)
+    throw new TypeError(`Colors can only be numbers or strings, recieved ${ color } instead`)
   }
 
   if (rgb < 0) {
@@ -262,14 +263,22 @@ export function RGBtoInt (rgba: RGBA): ColorInt {
   return (rgba.r << 16) + (rgba.g << 8) + rgba.b
 }
 
-export function colorToRGB (color: string) {
-  const int = colorToInt(color)
+export function colorIntToRGBString(int: ColorInt) {
+  const rgb = colorIntToRGB(int)
 
+  return `${ rgb.r },${ rgb.g },${ rgb.b }`
+}
+
+export function colorIntToRGB (int: ColorInt) {
   return {
     r: (int & 0xFF0000) >> 16,
     g: (int & 0xFF00) >> 8,
     b: (int & 0xFF),
   }
+}
+
+export function colorToRGB (color: string) {
+  return colorIntToRGB(colorToInt(color))
 }
 
 export function lighten (value: ColorInt, amount: number): ColorInt {
