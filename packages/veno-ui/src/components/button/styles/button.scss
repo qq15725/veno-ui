@@ -100,11 +100,4 @@
     opacity: 0;
     transition: opacity .2s ease-in-out;
   }
-
-  // AppBarItems
-  .ve-app-bar-items &--variant-text {
-    border-radius: 0;
-    height: 100% !important;
-    border-width: 0;
-  }
 }
