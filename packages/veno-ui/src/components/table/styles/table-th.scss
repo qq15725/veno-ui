@@ -6,6 +6,11 @@
   &--sortable {
     cursor: pointer;
     padding-inline-end: 28px !important;
+    @include tools.states('.ve-table-cell__overlay', false);
+  }
+
+  &--sorted {
+    @include tools.active-states('.ve-table-cell__overlay');
   }
 
   &__wrap {
@@ -31,18 +36,5 @@
     color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
     height: 100%;
     border-radius: 0;
-  }
-
-  // Table Cell
-  &--sortable:hover {
-    .ve-table-cell__overlay {
-      opacity: calc(#{map.get(settings.$states, 'focus')} * var(--ve-theme-overlay-multiplier));
-    }
-  }
-
-  &--sorted {
-    .ve-table-cell__overlay {
-      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
-    }
   }
 }

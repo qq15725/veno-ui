@@ -427,8 +427,8 @@ $colors: map-deep-merge(
       'deep-orange': $deep-orange,
       'brown': $brown,
       'grey': $grey,
-      'blue-grey': $blue-grey,
-      'shades': $shades
+      'blue-grey': $blue-grey
     ),
+    $shades,
     $colors
 );

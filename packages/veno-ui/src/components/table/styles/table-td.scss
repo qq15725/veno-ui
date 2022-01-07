@@ -1,18 +1,3 @@
 @use 'sass:map';
 @use '../../../styles/settings';
 @use '../../../styles/tools';
-
-.ve-table-td {
-  // Table Cell
-  tr:hover & {
-    .ve-table-cell__overlay {
-      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
-    }
-  }
-
-  &--sorted {
-    .ve-table-cell__overlay {
-      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
-    }
-  }
-}

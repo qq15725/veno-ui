@@ -127,7 +127,7 @@ export const Pagination = defineComponent({
       } else if (maxButtons.value >= 0) {
         return maxButtons.value
       }
-      return Math.min(6, lastPage.value)
+      return Math.min(7, lastPage.value)
     })
 
     const range = computed(() => {

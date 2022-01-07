@@ -4,24 +4,17 @@
 @use '../../../styles/settings';
 
 .ve-card {
+  $root: &;
   position: relative;
   display: block;
   color: $card-color;
   text-decoration: none;
   @include tools.use-material($card-material);
-
-  &__overlay {
-    @include tools.absolute();
-    background-color: currentColor;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .2s ease-in-out;
-  }
+  @include tools.overlay(#{&}__overlay);
 
   &--link {
     cursor: pointer;
-    @include tools.states('.ve-card__overlay', false);
+    @include tools.states(#{$root}__overlay, false);
   }
 
   &--hover {
@@ -29,15 +22,15 @@
 
     &::before,
     &::after {
-      border-radius: inherit;
-      bottom: 0;
       content: '';
-      display: block;
-      left: 0;
-      pointer-events: none;
       position: absolute;
+      bottom: 0;
+      left: 0;
       right: 0;
       top: 0;
+      display: block;
+      border-radius: inherit;
+      pointer-events: none;
       transition: inherit;
     }
 
@@ -60,8 +53,6 @@
     &:hover::before {
       opacity: 0;
     }
-
-    @include tools.elevation(0);
   }
 
   &--disabled {

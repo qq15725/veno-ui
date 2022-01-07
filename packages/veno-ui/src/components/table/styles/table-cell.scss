@@ -2,6 +2,8 @@
 @use '../../../styles/tools';
 
 .ve-table-cell {
+  @include tools.overlay(#{&}__overlay);
+
   &--fixed-start,
   &--fixed-end {
     position: sticky !important;
@@ -44,14 +46,6 @@
       transform: translate(-100%);
       box-shadow: inset -6px 0 8px -3px rgba(var(--ve-theme-on-surface), var(--ve-activated-opacity));
     }
-  }
-
-  &__overlay {
-    @include tools.absolute();
-    background-color: rgb(var(--ve-theme-on-background));
-    border-radius: inherit;
-    opacity: 0;
-    pointer-events: none;
   }
 
   // Table

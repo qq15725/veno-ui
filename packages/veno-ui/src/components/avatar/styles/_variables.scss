@@ -2,8 +2,8 @@
 @use '../../../styles/settings';
 
 // color
-$avatar-background: rgb(var(--ve-theme-secondary)) !default;
-$avatar-color: rgb(var(--ve-theme-on-secondary)) !default;
+$avatar-background: rgb(var(--ve-theme-surface)) !default;
+$avatar-color: rgb(var(--ve-theme-on-surface)) !default;
 
 // border
 $avatar-border-color: settings.$border-color !default;

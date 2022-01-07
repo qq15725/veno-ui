@@ -9,6 +9,7 @@ import { genericComponent } from '../../utils'
 import { makeMaterialProps, useMaterial } from '../../composables/material'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { useTextColor } from '../../composables/color'
 
 // Components
 import { Button } from '../button'
@@ -57,11 +58,10 @@ export const Alert = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const computedProps = computed(() => ({
-      ...props,
-      textColor: props.textColor ?? props.type,
+    const { materialClasses, materialStyles } = useMaterial(props)
+    const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
+      return props.textColor ?? props.type
     }))
-    const { materialClasses, materialStyles } = useMaterial(computedProps)
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (props.icon === false) return undefined
@@ -74,7 +74,7 @@ export const Alert = genericComponent()({
     }
 
     return () => {
-      const hasClose = slots.close || props.closable
+      const hasAction = slots.action || props.closable
 
       return (
         <MaybeTransition transition={ props.transition }>
@@ -85,21 +85,26 @@ export const Alert = genericComponent()({
                 've-alert',
                 materialClasses.value,
               ] }
-              style={ [
-                materialStyles.value,
-              ] }
+              style={ materialStyles.value }
             >
+              <div
+                class={ [
+                  've-alert__overlay',
+                  textColorClasses.value
+                ] }
+                style={ textColorStyles.value }
+              />
+
               { props.type && (
-                <div class="ve-alert__avatar">
-                  <Avatar
-                    icon={ icon.value }
-                    color="transparent"
-                    text-color={ computedProps.value.textColor }
-                  />
-                </div>
+                <Avatar
+                  class="ve-alert__avatar"
+                  icon={ icon.value }
+                  color="transparent"
+                  text-color={ props.textColor ?? props.type }
+                />
               ) }
 
-              <div class="ve-alert__wrap">
+              <div class="ve-alert__wrapper">
                 { props.title && (
                   <div class="ve-alert__title">{ props.title }</div>
                 ) }
@@ -109,16 +114,15 @@ export const Alert = genericComponent()({
                 ) }
               </div>
 
-              { hasClose && (
-                <div class="ve-alert__close">
-                  { slots.close
-                    ? slots.close({ props: { onClick: onCloseClick } })
-                    : <Button
+              { hasAction && (
+                <div class="ve-alert__action">
+                  { slots.action?.({ props: { onClick: onCloseClick } }) ?? (
+                    <Button
                       icon={ props.closeIcon }
                       color="transparent"
                       onClick={ onCloseClick }
                     />
-                  }
+                  ) }
                 </div>
               ) }
             </props.tag>

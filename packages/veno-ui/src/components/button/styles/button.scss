@@ -8,13 +8,11 @@
 .ve-button {
   $root: &;
   --ve-button-height: calc(#{map.get($button-sizes, 'height')} + var(--ve-button-size-offset, 0px) + var(--ve-button-density-offset, 0px));
-  --ve-button-font-size: #{map.get($button-sizes, 'font-size')};
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   outline: none;
-  font-size: var(--ve-button-font-size);
   font-weight: $button-font-weight;
   line-height: $button-line-height;
   letter-spacing: $button-text-letter-spacing;
@@ -30,11 +28,12 @@
   vertical-align: $button-vertical-align;
   flex-shrink: 0;
   @include tools.use-material($button-material);
-  @include tools.states('#{&}__overlay', false);
+  @include tools.overlay(#{&}__overlay);
+  @include tools.states(#{&}__overlay, false);
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
-      --ve-button-font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
+      font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
     }
   }
 
@@ -70,16 +69,19 @@
     cursor: wait;
   }
 
-  &--loading,
   &--disabled {
-    &#{$root}--loading,
     &#{$root}--disabled {
-      background: rgba(var(--ve-theme-surface), $button-disabled-opacity);
       color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
       opacity: 1;
+
+      #{$root}__overlay {
+        opacity: 0;
+      }
     }
 
     &#{$root}--variant-contained {
+      background: rgb(var(--ve-theme-surface));
+
       #{$root}__overlay {
         opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
       }
@@ -92,12 +94,8 @@
     font-size: 1.5em !important;
   }
 
-  &__overlay {
-    @include tools.absolute();
-    background-color: currentColor;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .2s ease-in-out;
+  // Pagination
+  .ve-pagination & {
+    width: auto;
   }
 }

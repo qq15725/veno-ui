@@ -25,20 +25,22 @@ export const Avatar = genericComponent()({
     image: String,
     icon: String,
     text: String,
-    ...makeMaterialProps(),
+    ...makeMaterialProps({
+      color: 'secondary',
+    }),
   },
 
   setup (props, { slots }) {
     const { materialClasses, materialStyles } = useMaterial(props)
     const wrapRef = ref<HTMLElement | null>()
-    const selfRef = ref<HTMLElement | null>()
+    const avatarRef = ref<HTMLElement | null>()
 
     const fitSizeTransform = (): void => {
-      if (selfRef.value && wrapRef.value) {
+      if (avatarRef.value && wrapRef.value) {
         const radix = 0.9
         const ratio = Math.min(
-          (selfRef.value!.offsetWidth / wrapRef.value!.offsetWidth) * radix,
-          (selfRef.value!.offsetHeight / wrapRef.value!.offsetHeight) * radix,
+          (avatarRef.value!.offsetWidth / wrapRef.value!.offsetWidth) * radix,
+          (avatarRef.value!.offsetHeight / wrapRef.value!.offsetHeight) * radix,
           1
         )
         wrapRef.value.style.transform = `translateX(-50%) translateY(-50%) scale(${ ratio })`
@@ -58,10 +60,8 @@ export const Avatar = genericComponent()({
             've-avatar',
             materialClasses.value,
           ] }
-          style={ [
-            materialStyles.value,
-          ] }
-          ref={ selfRef }
+          style={ materialStyles.value }
+          ref={ avatarRef }
         >
           { hasImage && <Image src={ props.image } /> }
 
@@ -69,13 +69,11 @@ export const Avatar = genericComponent()({
 
           { hasText && (
             <div
-              class="ve-avatar__wrap"
+              class="ve-avatar__wrapper"
               ref={ wrapRef }
               v-resize={ fitSizeTransform }
             >
-              { props.text && props.text }
-
-              { slots.default?.() }
+              { slots.default?.() ?? props.text }
             </div>
           ) }
         </props.tag>

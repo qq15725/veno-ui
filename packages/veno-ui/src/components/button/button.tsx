@@ -82,12 +82,11 @@ export const Button = genericComponent<new () => {
 
   setup: function (props, { attrs, slots, emit }) {
     const computedProps = computed(() => {
-      const variant = props.variant
       let colors
       {
-        if (variant === 'link') {
+        if (props.variant === 'link') {
           colors = { textColor: props.color ?? 'primary', color: undefined }
-        } else if (variant === 'contained') {
+        } else if (props.variant === 'contained') {
           colors = { color: props.color ?? 'secondary' }
         } else {
           colors = { color: props.color }
@@ -96,11 +95,12 @@ export const Button = genericComponent<new () => {
       return {
         ...props,
         ...colors,
-        variant,
       }
     })
     const { materialClasses, materialStyles } = useMaterial(computedProps)
-    const isDisabled = computed(() => group?.disabled.value || props.disabled || props.loading)
+    const isDisabled = computed(() => {
+      return group?.disabled.value || props.disabled || props.loading
+    })
     const { loadingClasses } = useLoading(props)
     const { disabledClasses } = useDisabled(computed(() => ({
       disabled: group?.disabled.value || props.disabled
@@ -160,7 +160,7 @@ export const Button = genericComponent<new () => {
               color="currentColor"
               indeterminate
               variant="circular"
-              stroke-width={ 1 }
+              stroke-width={ 2 }
               left={ !props.stacked && props.icon === false }
             />
           ) }

@@ -2,7 +2,7 @@
 import './styles/card.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -23,8 +23,13 @@ import { CardSubtitle } from './card-subtitle'
 import { CardText } from './card-text'
 import { CardActions } from './card-actions'
 
+// Directives
+import { Ripple } from '../../directives'
+
 export const Card = defineComponent({
   name: 'VeCard',
+
+  directives: { Ripple },
 
   props: {
     link: Boolean,
@@ -38,6 +43,10 @@ export const Card = defineComponent({
     subtitle: String,
     divided: Boolean,
     text: String,
+    ripple: {
+      type: Boolean,
+      default: true,
+    },
     ...makeMaterialProps({
       size: undefined,
     }),
@@ -76,11 +85,12 @@ export const Card = defineComponent({
             loadingClasses.value,
             disabledClasses.value,
           ] }
-          style={ [
-            materialStyles.value,
-          ] }
+          style={ materialStyles.value }
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
+          v-ripple={ [
+            isClickable && props.ripple,
+          ] }
         >
           { isClickable && <div class="ve-card__overlay" /> }
 

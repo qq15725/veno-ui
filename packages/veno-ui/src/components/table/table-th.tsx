@@ -101,6 +101,7 @@ export const TableTh = defineComponent({
             <Button
               class="ve-table-th__filter"
               icon={ props.filterIcon }
+              variant="text"
               onClick={ (e: Event) => {
                 e.stopPropagation()
               } }

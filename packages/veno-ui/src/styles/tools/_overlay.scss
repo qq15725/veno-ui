@@ -1,0 +1,12 @@
+@use './absolute' as *;
+
+@mixin overlay($name, $opacity: 0) {
+  #{$name} {
+    @include absolute();
+    background-color: currentColor;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: $opacity;
+    transition: opacity .2s ease-in-out;
+  }
+}

@@ -10,7 +10,7 @@
     v-for="v, k in $venoUi.icons.sets['veno-ui'].aliases"
     :key="k"
     size="100"
-    class="d-flex align-center justify-center flex-column overflow-hidden"
+    class="d-flex align-center justify-center flex-column"
     hover
   >
     <ve-icon
@@ -18,8 +18,8 @@
       size="36"
       class="mb-3"
     />
-
-    <div>{{ k }}</div>
+    
+    <div style="width: 100%;" class="text-center text-truncate">{{ k }}</div>
   </ve-card>
 </ve-grid>
 ```

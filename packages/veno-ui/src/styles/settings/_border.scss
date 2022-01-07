@@ -1,7 +1,11 @@
-@use '../../styles/tools/functions';
+@use '../../styles/tools/functions' as tools;
+
+$border-color: rgba(var(--ve-border-color), var(--ve-border-opacity)) !default;
+$border-style: solid !default;
+$border-width: thin !default;
 
 $borders: () !default;
-$borders: functions.map-deep-merge(
+$borders: tools.map-deep-merge(
     (
       0: 0,
       null: thin,
@@ -13,8 +17,15 @@ $borders: functions.map-deep-merge(
     $borders
 );
 
+@each $key, $border in $borders {
+  $borders: tools.map-deep-merge(
+    $borders,
+    ($key: $border $border-style $border-color)
+  )
+}
+
 $border-opacities: () !default;
-$border-opacities: functions.map-deep-merge(
+$border-opacities: tools.map-deep-merge(
     (
       0: 0,
       null: .12,

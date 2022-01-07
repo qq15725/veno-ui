@@ -4,44 +4,32 @@
 
 .ve-alert {
   position: relative;
-  padding: 16px;
   display: flex;
+  padding: 16px;
   @include tools.use-material();
+  @include tools.overlay('#{&}__overlay', .08);
 
   &__avatar {
     margin-inline-end: 8px;
-    max-height: 24px;
-    max-width: 24px;
-
-    .ve-avatar {
-      height: auto;
-      width: auto;
-      max-width: inherit;
-      max-height: inherit;
-    }
+    height: 24px;
+    width: 24px;
   }
 
-  &__close {
+  &__action {
     margin-inline-start: 8px;
+
     .ve-button {
-      opacity: var(--ve-medium-emphasis-opacity);
+      height: 24px;
+      width: 24px;
+      min-width: 24px;
     }
   }
 
-  &:before {
-    content: '';
-    @include tools.absolute();
-    background-color: currentColor;
-    border-radius: inherit;
-    opacity: .04;
-    pointer-events: none;
-  }
-
-  &__wrap {
+  &__wrapper {
     flex: 1 1 auto;
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    line-height: 24px;
   }
 
   &__title {
@@ -50,10 +38,7 @@
   }
 
   &__title + &__content {
-    margin-top: 8px;
+    opacity: var(--ve-medium-emphasis-opacity);
+    margin-top: 4px;
   }
 }
-
-
-
-

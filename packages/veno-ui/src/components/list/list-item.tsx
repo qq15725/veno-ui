@@ -17,11 +17,16 @@ import { ListItemHeader } from './list-item-header'
 import { ListItemTitle } from './list-item-title'
 import { ListItemSubtitle } from './list-item-subtitle'
 
+// Directives
+import { Ripple } from '../../directives'
+
 // Types
 export type ListItem = InstanceType<typeof ListItem>
 
 export const ListItem = defineComponent({
   name: 'VeListItem',
+
+  directives: { Ripple },
 
   props: {
     active: Boolean,
@@ -37,6 +42,10 @@ export const ListItem = defineComponent({
     prependIcon: String,
     appendAvatar: String,
     appendIcon: String,
+    ripple: {
+      type: Boolean,
+      default: true,
+    },
     ...makeMaterialProps({
       variant: 'text',
       size: undefined,
@@ -84,6 +93,9 @@ export const ListItem = defineComponent({
           href={ link.href.value }
           tabindex={ isClickable ? 0 : undefined }
           onClick={ isClickable && link.navigate }
+          v-ripple={ [
+            isClickable && props.ripple,
+          ] }
         >
           { isClickable && <div class="ve-list-item__overlay" /> }
 

@@ -11,9 +11,9 @@
   }
 
   // @supports not selector(:focus-visible) {
-  // &:focus #{$selector} {
-  //   opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
-  // }
+  //   &:focus #{$selector} {
+  //     opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
+  //   }
   // }
 
   @if ($active) {

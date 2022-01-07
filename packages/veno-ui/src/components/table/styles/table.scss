@@ -32,11 +32,24 @@
     }
   }
 
+  &__pagination {
+    margin-top: 12px;
+    justify-content: end;
+  }
+
   table {
     width: 100%;
     min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+  }
+
+  tbody tr {
+    @include tools.states('.ve-table-cell__overlay', false);
+  }
+
+  tbody tr .ve-table-td--sorted {
+    @include tools.active-states('.ve-table-cell__overlay');
   }
 
   th,
@@ -74,10 +87,5 @@
       top: 0;
       left: 0;
     }
-  }
-
-  &__pagination {
-    margin-top: 12px;
-    justify-content: end;
   }
 }

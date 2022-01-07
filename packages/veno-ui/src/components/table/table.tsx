@@ -3,7 +3,10 @@ import './styles/table.scss'
 
 // Utils
 import { ref, computed, watch } from 'vue'
-import { defineComponent, convertToUnit, wrapInArray, getObjectValueByPath } from '../../utils'
+import {
+  defineComponent, convertToUnit, wrapInArray, getObjectValueByPath,
+  useRender, downloadCSV
+} from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -161,7 +164,7 @@ export const Table = defineComponent({
       return arraySortDesc.value[arraySortBy.value.findIndex(v => v === header.value)]
     }
 
-    return () => {
+    useRender(() => {
       const hasColgroup = !slots.colgroup && props.headers.length > 0
       const hasThead = !slots.header && !props.hideHeader && props.headers.length > 0
       const hasTbody = !slots.default
@@ -208,7 +211,7 @@ export const Table = defineComponent({
                       colspan={ props.headers.length }
                     >
                       <Progress
-                        color="currentColor"
+                        color="primary"
                         indeterminate
                         stroke-width={ 3 }
                       />
@@ -283,6 +286,7 @@ export const Table = defineComponent({
             <Pagination
               class="ve-table__pagination"
               v-model:page={ page.value }
+              total-visible={ 7 }
               per-page={ perPage.value }
               last-page={ props.lastPage }
               total={ total.value }
@@ -290,6 +294,12 @@ export const Table = defineComponent({
           ) }
         </props.tag>
       )
+    })
+
+    return {
+      exportCSV: function (name: string) {
+        downloadCSV(name, props.headers, items.value)
+      }
     }
   }
 })
