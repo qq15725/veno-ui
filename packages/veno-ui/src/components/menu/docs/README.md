@@ -2,12 +2,12 @@
 category: Navigation 导航
 ---
 
-# 分页 Pagination
+# 菜单 Menu
 
 ## 演示
 
 :::include
 
-basic.md
+basic.md case1.md
 
 :::

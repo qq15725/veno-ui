@@ -3,7 +3,7 @@ import './styles/tooltip.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, getUid } from '../../utils'
+import { genericComponent, getUid, convertToUnit } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -37,11 +37,15 @@ export const Tooltip = genericComponent<new () => {
     },
     anchor: {
       type: String as PropType<Anchor>,
-      default: 'bottom',
+      default: 'top',
     },
     origin: {
       type: String as PropType<Origin>,
       default: 'auto',
+    },
+    maxWidth: {
+      type: [String, Number],
+      default: 300,
     },
     ...makeTransitionProps({
       transition: { component: ScaleTransition },
@@ -99,7 +103,12 @@ export const Tooltip = genericComponent<new () => {
             activator: slots.activator,
           } }
         >
-          <div class="ve-tooltip__wrap">
+          <div
+            class="ve-tooltip__wrapper"
+            style={ {
+              maxWidth: convertToUnit(props.maxWidth),
+            } }
+          >
             { slots.default?.() ?? props.text }
 
             { props.arrow && <div class="ve-tooltip__arrow" /> }

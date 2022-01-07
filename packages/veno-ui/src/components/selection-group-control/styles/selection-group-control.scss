@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   height: var(--ve-form-control-height);
 
-  > .ve-selection-control + .ve-selection-control {
-    margin-inline-start: 6px;
+  > .ve-selection-control:not(:last-child) {
+    margin-inline-end: 6px;
   }
 }

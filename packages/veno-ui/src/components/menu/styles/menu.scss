@@ -1,0 +1,14 @@
+@use '../../../styles/tools';
+
+.ve-menu {
+  z-index: 800;
+
+  .ve-overlay__content {
+    display: flex;
+    flex-direction: column;
+
+    .ve-card {
+      @include tools.elevation(8);
+    }
+  }
+}

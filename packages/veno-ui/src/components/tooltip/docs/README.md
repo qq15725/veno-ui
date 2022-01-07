@@ -10,6 +10,8 @@ category: Data 数据展示
 
 :::include
 
-anchor.md arrow.md
+basic.md arrow.md
+
+anchor.md
 
 :::
