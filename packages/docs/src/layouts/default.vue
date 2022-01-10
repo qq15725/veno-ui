@@ -75,7 +75,11 @@
       </ve-container>
     </ve-app-main>
 
-    <ve-app-sider v-if="$route.meta.headers" width="180" position="right">
+    <ve-app-sider
+        :model-value="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
+        width="180"
+        position="right"
+    >
       <ve-list density="compact">
         <ve-list-item
             v-for="header in $route.meta.headers.filter(v => v.level === 3)"

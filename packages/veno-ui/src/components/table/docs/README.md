@@ -19,3 +19,5 @@ remote.md
 ## API
 
 <<<API table
+
+<<<API pagination

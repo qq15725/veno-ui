@@ -97,6 +97,11 @@ export const Table = defineComponent({
       default: 'id',
     },
 
+    pagination: {
+      type: [Object, Boolean],
+      default: true
+    },
+
     ...makeDataIteratorProps(),
     ...makeMaterialProps({
       border: true,
@@ -173,7 +178,7 @@ export const Table = defineComponent({
       const hasColgroup = !slots.colgroup && props.headers.length > 0
       const hasThead = !slots.header && !props.hideHeader && props.headers.length > 0
       const hasTbody = !slots.default
-      const hasPagination = hasTbody
+      const hasPagination = hasTbody && !!props.pagination
 
       return (
         <props.tag

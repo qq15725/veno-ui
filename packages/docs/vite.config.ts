@@ -104,19 +104,19 @@ export default defineConfig(({ mode }) => {
                     }
                   })
                   const headersProp = JSON.stringify([
-                    { text: '名称', value: 'name' },
+                    { text: '属性名', value: 'name' },
                     { text: '类型', value: 'type' },
                     { text: '默认值', value: 'default' }
                   ])
                   const itemsProp = JSON.stringify(props).replace(/'/g, '')
-                  str += `### ${ name } Props\n<ve-table :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
+                  str += `### ${ name } Props\n<ve-table :pagination="false" :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
                 }
                 if (component.events.length) {
                   const headersProp = JSON.stringify([
-                    { text: '名称', value: 'name' },
+                    { text: '事件名', value: 'name' },
                   ])
                   const itemsProp = JSON.stringify(component.events)
-                  str += `### ${ name } Events\n<ve-table :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
+                  str += `### ${ name } Events\n<ve-table :pagination="false" :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
                 }
                 return str
               })
