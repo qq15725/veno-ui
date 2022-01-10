@@ -21,3 +21,7 @@ slot.md icon.md
 fit-size.md
 
 :::
+
+## API
+
+<<<API avatar

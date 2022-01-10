@@ -2,7 +2,7 @@ import Token from 'markdown-it/lib/token'
 import container from 'markdown-it-container'
 
 // Types
-import type { PluginSimple } from '../markdown'
+import type { PluginSimple } from '../types'
 
 export const containerPlugin: PluginSimple = md => {
   md.use(...createAlert('tip', 'TIP'))

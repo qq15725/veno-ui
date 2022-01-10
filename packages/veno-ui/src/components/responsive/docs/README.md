@@ -13,3 +13,7 @@ category: Others 其他组件
 basic.md
 
 :::
+
+## API
+
+<<<API responsive

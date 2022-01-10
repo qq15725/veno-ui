@@ -15,3 +15,7 @@ basic.md arrow.md
 anchor.md
 
 :::
+
+## API
+
+<<<API tooltip

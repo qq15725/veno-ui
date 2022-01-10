@@ -18,3 +18,11 @@ category: Layouts 布局组件
   <ve-app-sider position="right">右侧</ve-app-sider>
 </ve-app>
 ```
+
+## API
+
+<<<API app-bar
+
+<<<API app-sider
+
+<<<API app-main

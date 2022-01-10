@@ -43,6 +43,7 @@ export function createMenuGroup (title: string): MenuItem {
 // 路由组转化成菜单列表
 export function routesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
   return routes
+    .filter(route => !!route.meta?.isNav)
     .reduce<MenuItem[]>((menus, route) => {
       function initMenuGroup (title: string) {
         const menuGroup = createMenuGroup(title)

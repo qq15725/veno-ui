@@ -1,7 +1,9 @@
 // Utils
-import { createMarkdown as createBaseMarkdown } from './markdown'
+import MarkdownIt from 'markdown-it'
+import matter from 'gray-matter'
 import { highlight } from './highlight'
 import { slugify } from './utils'
+import { relative } from 'path'
 
 // Plugins
 import anchor from 'markdown-it-anchor'
@@ -21,13 +23,7 @@ import {
 } from './plugins'
 
 // Types
-import type { Options as BaseOptions, Markdown } from './markdown'
-export type { MarkdownData, Markdown } from './markdown'
-
-export interface Options extends BaseOptions
-{
-  anchor?: anchor.AnchorOptions | undefined
-}
+import type { Options, Markdown } from './types'
 
 export function createMarkdown (options?: Options): Markdown {
   options = {
@@ -37,8 +33,31 @@ export function createMarkdown (options?: Options): Markdown {
     ...options
   }
 
+  const md = new MarkdownIt(options) as Markdown
+
+  const render = md.render
+
+  md.render = (src: string, env?: any) => {
+    const { content, data: frontmatter } = matter(src)
+
+    const root = env?.root
+    const path = env?.file
+    const relativePath = path && root ? relative(root, path) : undefined
+
+    md._context = {
+      path,
+      relativePath,
+      hoistedTags: [],
+      headers: [],
+      title: content.match?.(/# ([^\n]+)/)?.[1],
+      frontmatter,
+    }
+
+    return render.call(md, content, env)
+  }
+
   return (
-    createBaseMarkdown(options)
+    md
       .use(fencePlugin)
       .use(componentPlugin)
       .use(containerPlugin)
@@ -58,3 +77,13 @@ export function createMarkdown (options?: Options): Markdown {
       })
   )
 }
+
+export type {
+  Options,
+  MarkdownContext,
+  Markdown,
+  Plugin,
+  PluginSimple,
+  PluginWithOptions,
+  PluginWithParams,
+} from './types'

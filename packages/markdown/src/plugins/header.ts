@@ -3,7 +3,7 @@ import { slugify, deeplyParseHeader } from '../utils'
 
 // Types
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { PluginSimple } from '../markdown'
+import type { PluginSimple } from '../types'
 
 export const headerPlugin: PluginSimple = md => {
   const render: RenderRule = (tokens, index) => {
@@ -12,7 +12,7 @@ export const headerPlugin: PluginSimple = md => {
       const title = tokens[index + 1].content
       const idAttr = token.attrs!.find(([name]) => name === 'id')
       const slug = idAttr && idAttr[1]
-      md.__data.headers.push({
+      md._context.headers.push({
         level: parseInt(token.tag.slice(1), 10),
         title: deeplyParseHeader(title),
         slug: slug || slugify(title)

@@ -4,8 +4,13 @@ import './styles/table.scss'
 // Utils
 import { ref, computed, watch } from 'vue'
 import {
-  defineComponent, convertToUnit, wrapInArray, getObjectValueByPath,
-  useRender, downloadCSV
+  defineComponent, 
+  convertToUnit,
+  wrapInArray,
+  getObjectValueByPath,
+  useRender, 
+  downloadCSV,
+  throttle
 } from '../../utils'
 
 // Composables
@@ -182,7 +187,7 @@ export const Table = defineComponent({
         >
           <div
             ref={ containerRef }
-            onScroll={ handleScroll }
+            onScroll={ throttle(handleScroll, 128) }
             class={ [
               've-table__wrapper',
               materialClasses.value,
@@ -235,6 +240,7 @@ export const Table = defineComponent({
                         {
                           slots[`header.${ header.value }`]?.({ header })
                           ?? header.text
+                          ?? header.value
                         }
                       </TableTh>
                     )
@@ -258,10 +264,8 @@ export const Table = defineComponent({
                           cols={ props.headers.length }
                           sorted={ getSortDesc(header) !== undefined }
                         >
-                          {
-                            slots[`item.${ header.value }`]?.({ item })
-                            ?? getObjectValueByPath(item, header.value)
-                          }
+                          { slots[`item.${ header.value }`]?.({ item })
+                          ?? getObjectValueByPath(item, header.value) }
                         </TableTd>
                       )
                     }) }

@@ -1,17 +1,17 @@
-# @veno-ui/vite-plugin-vue-docs
+# @veno-ui/vite-plugin-markdown
 
-Markdown 生成由 VenoUI 组件渲染的文档
+markdown to vue
 
 ## 使用
 
 ```tsx
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueDocs from '@veno-ui/vite-plugin-vue-docs'
+import markdown from '@veno-ui/vite-plugin-markdown'
 
 export default defineConfig({
   plugins: [
-    vueDocs(), 
+    markdown(), 
     vue()
   ],
 })

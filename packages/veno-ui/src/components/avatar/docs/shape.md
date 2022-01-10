@@ -6,9 +6,9 @@
 
 ```html
 <ve-grid dense>
-  <ve-avatar tile text="Tile" />
+  <ve-avatar text="Tile" shape="tile" />
   <ve-avatar text="Default" />
-  <ve-avatar rounded text="Rounded" />  
+  <ve-avatar text="Round" shape="round" />  
 </ve-grid>
 ```
 

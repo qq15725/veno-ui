@@ -32,6 +32,8 @@ export interface VenoUiOptions
   display?: DisplayOptions
 }
 
+export const version = __VENO_UI_VERSION__
+
 export const createVenoUi = (options: VenoUiOptions = {}) => {
   const install = (app: App) => {
     const {
@@ -85,5 +87,5 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     })
   }
 
-  return { install }
+  return { install, version }
 }

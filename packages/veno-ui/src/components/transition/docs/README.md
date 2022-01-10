@@ -13,3 +13,11 @@ fade.md expand.md
 scale.md
 
 :::
+
+## API
+
+<<<API expand-transition
+
+<<<API fade-transition
+
+<<<API scale-transition

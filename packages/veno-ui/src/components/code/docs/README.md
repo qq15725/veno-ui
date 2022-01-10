@@ -44,3 +44,7 @@ hide-language.md line-numbers.md
 highlighted-line-numbers.md
 
 :::
+
+## API
+
+<<<API code

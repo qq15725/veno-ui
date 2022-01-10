@@ -1,8 +1,8 @@
 // Utils
 import { nextTick } from 'vue'
-import { loadDocsRoutes, loadPageRoutes, routesToMenus } from '@/utils'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAppStore } from '@/store/app'
+import pages from '~pages'
 
 // Loyouts
 import DefaultLayout from '@/layouts/default.vue'
@@ -11,42 +11,13 @@ import DefaultLayout from '@/layouts/default.vue'
 import type { RouteRecordRaw } from 'vue-router'
 import type { UsePlugin } from '@/types'
 
-// Routes
-const menuRoutes: RouteRecordRaw[] = [
-  ...loadPageRoutes('zh'),
-  ...loadDocsRoutes('component'),
-  ...loadDocsRoutes('composable'),
-]
-
-function wrapComponent (Component: any) {
-  return {
-    setup () {
-      return () => (
-        <ve-container class="px-md-10 py-md-8">
-          <Component />
-        </ve-container>
-      )
-    }
-  }
-}
-
-function wrapRoutesComponent (routes: RouteRecordRaw[]) {
-  return routes.map(route => {
-    route.component = wrapComponent(route.component)
-    return route
-  })
-}
-
 const routes: RouteRecordRaw[] = [
   {
     path: '',
-    props: {
-      menus: routesToMenus(menuRoutes),
-    },
     component: DefaultLayout,
     children: [
-      ...wrapRoutesComponent(menuRoutes),
-      { path: '', redirect: '/zh/start.html' }
+      ...pages,
+      { path: '', redirect: '/zh/start' },
     ],
   },
 ]

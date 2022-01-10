@@ -11,3 +11,9 @@ category: Form 表单组件
 basic.md group.md
 
 :::
+
+## API
+
+<<<API radio
+
+<<<API radio-group

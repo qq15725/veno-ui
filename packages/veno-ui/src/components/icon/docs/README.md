@@ -17,3 +17,7 @@ svg.md
 preset.md
 
 :::
+
+## API
+
+<<<API icon

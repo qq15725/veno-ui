@@ -13,3 +13,7 @@ category: Data 数据展示
 basic.md autoplay.md
 
 :::
+
+## API
+
+<<<API carousel

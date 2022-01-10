@@ -8,8 +8,6 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
   return _createVenoUi({ components, directives, ...options })
 }
 
-export const version = __VENO_UI_VERSION__
-
 export { components, directives }
 
 export * from './composables'

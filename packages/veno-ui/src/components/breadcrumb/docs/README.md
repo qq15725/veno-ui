@@ -18,3 +18,7 @@ basic.md separator.md
 route.md icon.md
 
 :::
+
+## API
+
+<<<API breadcrumb

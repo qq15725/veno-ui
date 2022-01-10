@@ -19,8 +19,8 @@
     <ve-divider />
     
     <ve-card-actions class="justify-center">
-      <ve-button class="mr-3">重置</ve-button>
-      <ve-button color="primary">确认</ve-button>
+      <ve-button size="sm" class="mr-3">重置</ve-button>
+      <ve-button size="sm" color="primary">确认</ve-button>
     </ve-card-actions>
   </ve-card>
 </ve-menu>

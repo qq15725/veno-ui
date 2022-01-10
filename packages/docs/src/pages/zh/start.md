@@ -11,9 +11,9 @@ meta:
 $ npm install veno-ui
 ```
 
-## 例子
+## 使用
 
-```typescript
+```js{4-9,12}
 import { createApp } from 'vue'
 import App from './App.vue'
 

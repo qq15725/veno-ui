@@ -9,5 +9,11 @@ category: Others 其他组件
 ## 演示
 
 :::include
+
 basic.md status-bar.md
+
 :::
+
+## API
+
+<<<API device

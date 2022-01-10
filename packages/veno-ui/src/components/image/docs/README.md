@@ -15,3 +15,7 @@ basic.md aspect-ratio.md
 cover.md
 
 :::
+
+## API
+
+<<<API image

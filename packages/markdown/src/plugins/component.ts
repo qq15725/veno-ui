@@ -2,7 +2,7 @@ import blockNames from 'markdown-it/lib/common/html_blocks'
 import { HTML_OPEN_CLOSE_TAG_RE } from 'markdown-it/lib/common/html_re'
 
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
+import type { PluginSimple } from '../types'
 import type { RuleBlock } from 'markdown-it/lib/parser_block'
 
 // Replacing the default htmlBlock rule to allow using custom components at

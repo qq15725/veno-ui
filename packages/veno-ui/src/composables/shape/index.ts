@@ -6,13 +6,17 @@ import { propsFactory } from '../../utils'
 import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export const SHAPES = [
-  'rounded-0',
-  'rounded-xs', 'rounded-sm', 'rounded-md', 'rounded-lg', 'rounded-xl',
-  'rounded-pill', 'rounded-circle',
-] as const
+// Constants
+export const SHAPES = ['tile', 'round', 'pill', 'circle'] as const
 
-type ShapeValue = undefined | typeof SHAPES[number]
+const ALIASES = {
+  'tile': 'rounded-0',
+  'round': 'rounded-xl',
+  'pill': 'rounded-pill',
+  'circle': 'rounded-circle',
+}
+
+type ShapeValue = undefined | typeof SHAPES[number] | string
 
 export interface ShapeProps
 {
@@ -25,7 +29,12 @@ export const makeShapeProps = propsFactory({
 
 export function useShape (props: MaybeRef<ShapeProps>) {
   const shapeClasses = computed(() => {
-    const { shape } = unref(props)
+    let { shape } = unref(props)
+
+    if (shape && shape in ALIASES) {
+      shape = ALIASES[shape as keyof typeof ALIASES]
+    }
+
     return shape
   })
 

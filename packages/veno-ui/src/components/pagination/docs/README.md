@@ -11,3 +11,7 @@ category: Navigation 导航
 basic.md
 
 :::
+
+## API
+
+<<<API pagination

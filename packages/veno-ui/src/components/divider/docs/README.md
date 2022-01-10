@@ -15,3 +15,7 @@ basic.md default-slot.md
 dashed.md vertical.md
 
 :::
+
+## API
+
+<<<API divider

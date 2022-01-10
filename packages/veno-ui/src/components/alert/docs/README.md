@@ -13,3 +13,7 @@ category: Feedback 反馈组件
 basic.md closable.md
 
 :::
+
+## API
+
+<<<API alert

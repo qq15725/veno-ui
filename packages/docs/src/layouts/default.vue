@@ -1,5 +1,5 @@
 <template>
-  <ve-app :theme="theme">
+  <ve-app>
     <ve-progress
         v-if="appStore.loading"
         indeterminate
@@ -23,9 +23,8 @@
         >
           <ve-button
               v-bind="props"
-              class="mr-3"
-              @click="theme = theme === 'dark' ? 'light' : 'dark'"
-              :icon="`$${theme || 'light'}`"
+              @click="$venoUi.theme.current = $venoUi.theme.current === 'dark' ? 'light' : 'dark'"
+              :icon="'$' + $venoUi.theme.current"
               variant="text"
           />
         </ve-tooltip>
@@ -40,8 +39,11 @@
               target="_blank"
               icon="$github"
               variant="text"
+              class="ml-3"
           />
         </ve-tooltip>
+
+        <ve-button variant="text" class="ml-3">{{ version }}</ve-button>
       </ve-app-bar-items>
     </ve-app-bar>
 
@@ -59,33 +61,48 @@
     </ve-app-sider>
 
     <ve-app-main>
-      <router-view #default="{ Component }">
-        <ve-fade-transition hide-on-leave>
-          <component :is="Component" />
-        </ve-fade-transition>
-      </router-view>
+      <ve-container class="px-md-10 py-8">
+        <ve-breadcrumb v-if="$route.meta.category">
+          <ve-breadcrumb-item>组件</ve-breadcrumb-item>
+          <ve-breadcrumb-item>{{ $route.meta.category }}</ve-breadcrumb-item>
+        </ve-breadcrumb>
+
+        <router-view #default="{ Component }">
+          <ve-fade-transition hide-on-leave>
+            <component :is="Component" />
+          </ve-fade-transition>
+        </router-view>
+      </ve-container>
     </ve-app-main>
+
+    <ve-app-sider v-if="$route.meta.headers" width="180" position="right">
+      <ve-list density="compact">
+        <ve-list-item
+            v-for="header in $route.meta.headers.filter(v => v.level === 3)"
+            :subtitle="header.title"
+            @click=""
+        />
+      </ve-list>
+    </ve-app-sider>
   </ve-app>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
+import { version } from 'veno-ui'
 import { useAppStore } from '@/store/app'
+import { routesToMenus } from '@/utils'
+import pages from '~pages'
 
 export default defineComponent({
-  props: {
-    menus: Array,
-  },
-
   setup (props) {
-    const theme = ref()
     const active = ref()
 
     return {
-      theme,
       active,
-      menus: props.menus,
-      appStore: useAppStore()
+      menus: routesToMenus(pages),
+      appStore: useAppStore(),
+      version
     }
   }
 })

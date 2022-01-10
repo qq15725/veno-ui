@@ -15,3 +15,7 @@ export.md
 remote.md
 
 :::
+
+## API
+
+<<<API table

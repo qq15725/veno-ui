@@ -4,7 +4,7 @@ import Token from 'markdown-it/lib/token'
 
 // Types
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { PluginSimple } from '../markdown'
+import type { PluginSimple } from '../types'
 
 export const demoPlugin: PluginSimple = md => {
   const name = 'demo'
@@ -54,7 +54,7 @@ export const demoPlugin: PluginSimple = md => {
       }
 
       if (props.script) {
-        md.__data.hoistedTags.push(props.script)
+        md._context.hoistedTags.push(props.script)
       }
 
       const slots = {
@@ -90,19 +90,24 @@ export const demoPlugin: PluginSimple = md => {
           : `  <!--${ name }-->`
       }
 
-      function genFilename () {
-        return env.filename
+      function genFileProp () {
+        if (!md._context.path) return ''
+        return `file="${
+          md._context.path.replace(/.*?veno-ui(.*)/, (_: any, v: any) => v)
+        }"`
       }
 
-      function genCode () {
-        return encodeURIComponent(
-          [props.template, props.script]
-            .filter(Boolean)
-            .join('')
-        )
+      function genCodeProp () {
+        return `code="${
+          encodeURIComponent(
+            [props.template, props.script]
+              .filter(Boolean)
+              .join('')
+          )
+        }"`
       }
 
-      return `<demo filename="${ genFilename() }" code="${ genCode() }">
+      return `<demo ${ genFileProp() } ${ genCodeProp() }>
 ${ genSlot('title') }
 ${ genSlot('prepend') }
 ${ genSlot('default') }

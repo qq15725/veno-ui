@@ -8,7 +8,13 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"],
-      "veno-ui": ["../veno-ui/src/entry.ts"]
-    }
+      "veno-ui": ["../veno-ui/src/framework.ts"]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "vite/client",
+      "vite-plugin-pages/client",
+      "vue-router"
+    ]
   }
 }

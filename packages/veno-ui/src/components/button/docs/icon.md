@@ -17,9 +17,9 @@
   </ve-grid>
 
   <ve-grid dense>
-    <ve-button icon="veno-ui:$close" shape="rounded-pill" />
-    <ve-button icon="veno-ui:$close" shape="rounded-pill" color="primary" />
-    <ve-button icon="veno-ui:$close" shape="rounded-pill" disabled />
+    <ve-button icon="veno-ui:$close" shape="circle" />
+    <ve-button icon="veno-ui:$close" shape="circle" color="primary" />
+    <ve-button icon="veno-ui:$close" shape="circle" disabled />
   </ve-grid>
 
   <ve-grid dense>

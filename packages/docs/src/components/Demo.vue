@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 
 const props = defineProps<{
+  file: string,
   code: string,
-  filename: string,
 }>()
 
 const isActive = ref(false)
@@ -31,7 +31,6 @@ const focusBtn = () => {
         border="0"
         icon
         variant="text"
-        rounded
         tabindex="-1"
         aria-label="此容器仅用于测试组件键盘导航功能。"
         color="transparent"
@@ -57,7 +56,6 @@ const focusBtn = () => {
             v-bind="props"
             @click="isActive = !isActive"
             :color="isActive ? 'primary' : undefined"
-            rounded
             style="opacity: .8;"
             icon="$code"
             variant="text"
@@ -73,7 +71,6 @@ const focusBtn = () => {
         <ve-button
             v-bind="props"
             @click="focusBtn"
-            rounded
             style="opacity: .8;"
             icon="$focus"
             variant="text"
@@ -90,7 +87,6 @@ const focusBtn = () => {
         <ve-button
             v-bind="props"
             @click="theme = theme === 'dark' ? 'light' : 'dark'"
-            rounded
             style="opacity: .8;"
             :icon="`$${theme || 'light'}`"
             variant="text"
@@ -106,9 +102,8 @@ const focusBtn = () => {
       >
         <ve-button
             v-bind="tooltipProps"
-            :href="`${ github }${ props.filename }`"
+            :href="`${ github }${ props.file }`"
             target="_blank"
-            rounded
             style="opacity: .8;"
             icon="$github"
             variant="text"

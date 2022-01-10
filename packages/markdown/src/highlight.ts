@@ -1,6 +1,6 @@
 const RE = /{([\d,-]+)}/
 
-export const highlight = (str: string, rawLang: string) => {
+export const highlight = (raw: string, rawLang: string) => {
   let lang = rawLang, highlightedLineNumbers: number[][] = []
   {
     if (RE.test(rawLang)) {
@@ -18,6 +18,6 @@ export const highlight = (str: string, rawLang: string) => {
   show-line-numbers
   :highlighted-line-numbers="${ JSON.stringify(highlightedLineNumbers) }" 
   language="${ lang }" 
-  value="${ encodeURIComponent(str) }"
+  value="${ encodeURIComponent(raw) }"
 />`
 }

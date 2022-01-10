@@ -15,3 +15,7 @@ category: Feedback 反馈组件
 basic.md
 
 :::
+
+## API
+
+<<<API dialog

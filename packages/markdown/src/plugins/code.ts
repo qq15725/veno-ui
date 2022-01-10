@@ -1,5 +1,5 @@
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
+import type { PluginSimple } from '../types'
 
 export const codePlugin: PluginSimple = md => {
   md.renderer.rules.code_inline = (tokens, index) => {

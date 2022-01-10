@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "markdown:dev": "npm run dev -w @veno-ui/markdown",
-    "docs-plugin:dev": "npm run dev -w @veno-ui/vite-plugin-vue-docs",
+    "markdown-plugin:dev": "npm run dev -w @veno-ui/vite-plugin-markdown",
     "docs:dev": "npm run dev -w venojs.com",
     "docs:build": "npm run build -w venojs.com",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",

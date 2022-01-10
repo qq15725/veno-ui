@@ -1,5 +1,5 @@
 // Types
-import type { PluginSimple } from 'markdown-it/lib'
+import type { PluginSimple } from '../types'
 import type { RenderRule } from 'markdown-it/lib/renderer'
 
 export const paragraphPlugin: PluginSimple = function (md) {

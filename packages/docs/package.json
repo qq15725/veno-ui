@@ -15,8 +15,11 @@
     "vue-router": "^4.0.10"
   },
   "devDependencies": {
-    "@veno-ui/vite-plugin-vue-docs": "^0.0.18",
+    "@veno-ui/api-generator": "^0.0.18",
+    "@veno-ui/markdown": "^0.0.18",
+    "@veno-ui/vite-plugin-markdown": "^0.0.18",
     "@vitejs/plugin-legacy": "^1.6.4",
-    "@vue/compiler-sfc": "^3.0.5"
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite-plugin-pages": "^0.19.9"
   }
 }

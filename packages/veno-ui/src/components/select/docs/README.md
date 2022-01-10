@@ -13,3 +13,7 @@ category: Form 表单组件
 basic.md
 
 :::
+
+## API
+
+<<<API select

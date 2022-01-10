@@ -4,9 +4,9 @@
 
 ```html
 <ve-grid dense align="center">
-  <ve-card tile text="Tile" />
+  <ve-card text="Tile" shape="tile" />
   <ve-card text="Default" />
-  <ve-card rounded text="Rounded" />  
+  <ve-card text="Round" shape="round" />  
 </ve-grid>
 ```
 

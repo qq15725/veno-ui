@@ -1,5 +1,5 @@
 // Utils
-import { toKebabCase } from '@/utils'
+import { kebabCase } from '@/utils'
 
 // Types
 import type { Component } from 'vue'
@@ -10,7 +10,7 @@ const modules = import.meta.globEager('../components/**/*.vue')
 const components: Record<string, Component> = {}
 
 Object.keys(modules).forEach(key => {
-  const name = toKebabCase(
+  const name = kebabCase(
     key
       .replace('../components/', '')
       .match(/(.*)\.vue$/)

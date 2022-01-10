@@ -1,12 +1,12 @@
 // Utils
 import container from 'markdown-it-container'
-import { toPascalCase } from '../utils'
-import path from 'path'
+import { slugify, toPascalCase } from '../utils'
+import { basename, dirname, join } from 'path'
+import { readFileSync } from 'fs'
 
 // Types
-import type Token from 'markdown-it/lib/token'
 import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { PluginSimple } from '../markdown'
+import type { PluginSimple } from '../types'
 
 function parseRows (content: string) {
   const rows: string[][] = []
@@ -27,7 +27,7 @@ function parseRows (content: string) {
 }
 
 export const includePlugin: PluginSimple = md => {
-  const render: RenderRule = (tokens: Token[], index: number) => {
+  const render: RenderRule = (tokens, index, _, env) => {
     const token = tokens[index]
 
     if (token.nesting === 1) {
@@ -50,12 +50,24 @@ export const includePlugin: PluginSimple = md => {
         )
         rows.forEach(cols => {
           if (!cols[i]) return
-          const filename = `./${ cols[i] }`
-          const basename = path.basename(filename, '.md')
-          const componentName = toPascalCase(`ve-include-${ basename }`)
-          imports.push(`import ${ componentName } from '${ filename }'`)
+          const file = `./${ cols[i] }`
+          if (md._context.path) {
+            const title = readFileSync(
+              join(dirname(md._context.path), file),
+              'utf-8'
+            ).match?.(/# ([^\n]+)/)?.[1]
+            if (title) {
+              md._context.headers.push({
+                level: 3,
+                title,
+                slug: slugify(title)
+              })
+            }
+          }
+          const component = toPascalCase(`ve-include-${ basename(file, '.md') }`)
+          imports.push(`import ${ component } from '${ file }?included'`)
           codes.push(
-            `      <ve-col cols="12"><${ componentName } /></ve-col>`
+            `      <ve-col cols="12"><${ component } /></ve-col>`
           )
         })
         codes.push(
@@ -64,7 +76,7 @@ export const includePlugin: PluginSimple = md => {
         )
       }
 
-      md.__data.hoistedTags.push(`<script setup>\n${ imports.join('\n') }\n</script>`)
+      md._context.hoistedTags.push(`<script setup>\n${ imports.join('\n') }\n</script>`)
 
       return `<ve-row>\n${ codes.join('\n') }\n`
     } else {
