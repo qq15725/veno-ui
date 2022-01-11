@@ -1,13 +1,20 @@
+// Utils
 import path from 'path'
 import fs from 'fs'
 import { defineConfig, loadEnv } from 'vite'
-import legacy from '@vitejs/plugin-legacy'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import markdown from '@veno-ui/vite-plugin-markdown'
-import pages from 'vite-plugin-pages'
 import { getCompleteApi } from '@veno-ui/api-generator'
 import { createMarkdown } from '@veno-ui/markdown'
+
+// Plugins
+import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
+import Legacy from '@vitejs/plugin-legacy'
+import Pages from 'vite-plugin-pages'
+import Markdown from '@veno-ui/vite-plugin-markdown'
+import Components from 'unplugin-vue-components/vite'
+
+// Types
+import type { ComponentResolver } from 'unplugin-vue-components'
 
 const resolve = (...args: string[]) => path.resolve(__dirname, ...args)
 
@@ -19,6 +26,19 @@ function toPascalCase (string: string): string {
   )
 }
 
+function VenoUiResolver (): ComponentResolver {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (!name.match(/^Ve[A-Z]/)) return
+      return {
+        importName: name.replace('Ve', ''),
+        path: 'veno-ui/components'
+      }
+    }
+  }
+}
+
 export default defineConfig(({ mode }) => {
   const root = process.cwd()
   Object.assign(process.env, loadEnv(mode, root))
@@ -28,16 +48,21 @@ export default defineConfig(({ mode }) => {
   return {
     base: './',
     server: {
-      // open: true,
       host: '0.0.0.0',
     },
     resolve: {
       alias: [
-        { find: /^veno-ui$/, replacement: resolve('../veno-ui/src/framework.ts') },
-        { find: /^veno-ui\/styles$/, replacement: resolve('../veno-ui/src/styles/main.scss') },
-        { find: /^veno-ui\/components$/, replacement: resolve('../veno-ui/src/components') },
         { find: /^@root\/(.*)/, replacement: resolve('../../$1') },
         { find: /^@\/(.*)/, replacement: resolve('./src/$1') },
+        ...(
+          mode === 'development'
+            ? [
+              { find: /^veno-ui$/, replacement: resolve('../veno-ui/src/framework.ts') },
+              { find: /^veno-ui\/styles$/, replacement: resolve('../veno-ui/src/styles/main.scss') },
+              { find: /^veno-ui\/components$/, replacement: resolve('../veno-ui/src/components') },
+            ]
+            : []
+        ),
       ]
     },
     build: {
@@ -46,7 +71,7 @@ export default defineConfig(({ mode }) => {
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
       // https://github.com/hannoeru/vite-plugin-pages
-      pages({
+      Pages({
         extensions: ['vue', 'md'],
         pagesDir: [
           { dir: 'src/pages', baseRoute: '' },
@@ -83,10 +108,11 @@ export default defineConfig(({ mode }) => {
           }
         }
       }),
-      vue(),
-      markdown({
+
+      // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
+      Markdown({
         transforms: {
-          before: (code, id) => {
+          before: (code) => {
             return code
               .replace(/<<<API (.+)/g, (_, name) => {
                 const component = completedApi.find(v => v.name === name)
@@ -123,8 +149,18 @@ export default defineConfig(({ mode }) => {
           }
         }
       }),
-      vueJsx({ optimize: true, enableObjectSlots: true }),
-      legacy({
+
+      // https://github.com/antfu/unplugin-vue-components
+      Components({
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [
+          VenoUiResolver(),
+        ]
+      }),
+
+      Vue(),
+      VueJsx(),
+      Legacy({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),

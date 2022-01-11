@@ -3,7 +3,6 @@ import 'veno-ui/styles'
 
 // Utils
 import { createVenoUi } from 'veno-ui'
-import * as components from 'veno-ui/components'
 import { docsSvg } from '@/iconsets/docs-svg'
 import prismjs from 'prismjs'
 
@@ -12,9 +11,6 @@ import type { UsePlugin } from '@/types'
 
 export const useVenoUi: UsePlugin = app => {
   const venoUi = createVenoUi({
-    // 组件
-    components,
-
     // 图标
     icons: {
       defaultSet: 'docs-svg',

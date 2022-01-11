@@ -11,12 +11,12 @@ export default function markdownPlugin (userOptions?: Options): PluginOption {
   const options = resolveOptions(userOptions)
 
   const filter = createFilter(
-    options.include || /\.md(\?included)?$/,
+    options.include || /\.md$/,
     options.exclude,
   )
 
   function getVueId (id: string) {
-    return id.replace(/\.md(\?included)?$/, '.vue')
+    return id.replace('md', 'vue')
   }
 
   let markdownToVue: MarkdownToVue

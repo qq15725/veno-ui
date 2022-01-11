@@ -6,10 +6,11 @@
   "scripts": {
     "markdown:dev": "npm run dev -w @veno-ui/markdown",
     "markdown-plugin:dev": "npm run dev -w @veno-ui/vite-plugin-markdown",
-    "docs:dev": "npm run dev -w venojs.com",
-    "docs:build": "npm run build -w venojs.com",
+    "docs:dev": "npm run dev -w @veno-ui/docs",
+    "docs:build": "npm run build -w @veno-ui/docs",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
-    "docs:update": "npm run docs:build && npm run docs:publish"
+    "docs:update": "npm run docs:build && npm run docs:publish",
+    "build:lib": "npm run build:lib -w veno-ui"
   },
   "engines": {
     "node": ">=12"

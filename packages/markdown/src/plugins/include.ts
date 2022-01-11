@@ -65,7 +65,7 @@ export const includePlugin: PluginSimple = md => {
             }
           }
           const component = toPascalCase(`ve-include-${ basename(file, '.md') }`)
-          imports.push(`import ${ component } from '${ file }?included'`)
+          imports.push(`import ${ component } from '${ file }'`)
           codes.push(
             `      <ve-col cols="12"><${ component } /></ve-col>`
           )

@@ -1,5 +1,5 @@
 {
-  "name": "venojs.com",
+  "name": "@veno-ui/docs",
   "private": true,
   "version": "0.0.19",
   "scripts": {
@@ -20,6 +20,7 @@
     "@veno-ui/vite-plugin-markdown": "^0.0.19",
     "@vitejs/plugin-legacy": "^1.6.4",
     "@vue/compiler-sfc": "^3.0.5",
+    "unplugin-vue-components": "^0.17.11",
     "vite-plugin-pages": "^0.19.9"
   }
 }
