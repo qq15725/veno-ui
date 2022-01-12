@@ -1,9 +1,16 @@
 // Utils
 import { computed, nextTick, onScopeDispose, watch } from 'vue'
 import {
-  convertToUnit, getScrollParent, isFixedPosition, nullifyTransforms, Box,
-  oppositeAnchor, parseAnchor, physicalAnchor,
-  anchorToPoint, getOffset
+  Box,
+  convertToUnit,
+  getScrollParent,
+  isFixedPosition,
+  nullifyTransforms,
+  oppositeAnchor,
+  parseAnchor,
+  physicalAnchor,
+  anchorToPoint,
+  getOffset
 } from '../../utils'
 
 // Types
@@ -62,7 +69,7 @@ export function positionStrategyConnected (
     }
   })
   observer.observe(data.activatorEl.value!)
-  observer.observe(data.contentEl.value!)
+  // observer.observe(data.contentEl.value!)
 
   onScopeDispose(() => {
     observer.disconnect()

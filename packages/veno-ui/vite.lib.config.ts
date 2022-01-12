@@ -6,37 +6,31 @@ import path from 'path'
 // @ts-ignore
 import mkdirp from 'mkdirp'
 import dts from 'vite-plugin-dts'
+import { version } from './package.json'
 
 export default defineConfig(async ({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
-  const venoUiPackage = JSON.parse(await promises.readFile('./package.json', 'utf-8'))
 
   return {
     build: {
-      target: 'modules',
       outDir: 'lib',
       minify: false,
-      brotliSize: false,
       sourcemap: true,
-      emptyOutDir: true,
       lib: {
         entry: 'src/entry.ts',
         name: 'VenoUi',
       },
       rollupOptions: {
-        external: [
-          'vue',
-          /\.scss$/,
-        ],
+        external: ['vue', /\.scss$/],
         output: [
           {
             format: 'es',
             entryFileNames: '[name].js',
             preserveModules: true,
             preserveModulesRoot: 'src',
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
     plugins: [
       vue(),
@@ -83,7 +77,7 @@ export default defineConfig(async ({ mode }) => {
       },
     ],
     define: {
-      __VENO_UI_VERSION__: JSON.stringify(venoUiPackage.version)
+      __VENO_UI_VERSION__: JSON.stringify(version)
     }
   }
 })

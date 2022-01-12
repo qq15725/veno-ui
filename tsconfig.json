@@ -16,6 +16,7 @@
     "sourceMap": true,              /* 生成相应的 '.map' 文件。 */
     "outDir": "./dist",             /* 将输出重定向到目录。 */
     "downlevelIteration": true,     /* 当目标为 'ES5' 或 'ES3' 时，为 'for-of' 、'spread' 和 'destructuring' 中的可迭代对象提供全面支持。 */
+    "resolveJsonModule": true,      /* 解析 json 模块。 */
 
     /* 严格类型检查选项 */
     "strict": true,                 /* 启用所有严格的类型检查选项。 */

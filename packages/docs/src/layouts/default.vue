@@ -76,7 +76,7 @@
     </ve-app-main>
 
     <ve-app-sider
-        :model-value="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
+        v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
         width="180"
         position="right"
     >

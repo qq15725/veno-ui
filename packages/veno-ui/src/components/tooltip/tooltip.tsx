@@ -16,7 +16,8 @@ import { ScaleTransition } from '../transition'
 // Types
 import type { PropType } from 'vue'
 import type { OverlaySlots } from '../overlay/overlay'
-import type { Anchor, Origin } from '../../composables/position-strategy'
+import type { Origin } from '../../composables/position-strategy'
+import type { Anchor } from '../../utils'
 
 export type Tooltip = InstanceType<typeof Tooltip>
 

@@ -11,7 +11,7 @@ import { makeTransitionProps } from '../../composables/transition'
 
 // Components
 import { Overlay } from '../overlay'
-import { DialogTransition } from '../transition'
+import { MenuTransition } from '../transition'
 
 // Types
 import type { OverlaySlots } from '../overlay/overlay'
@@ -29,7 +29,7 @@ export const Menu = genericComponent<new () => {
     modelValue: Boolean,
     id: String,
     ...makeTransitionProps({
-      transition: { component: DialogTransition },
+      transition: { component: MenuTransition },
     } as const),
   },
 
@@ -50,8 +50,10 @@ export const Menu = genericComponent<new () => {
           ] }
           transition={ props.transition }
           absolute
-          positionStrategy="connected"
-          scrollStrategy="reposition"
+          position-strategy="connected"
+          scroll-strategy="reposition"
+          min-width={ 0 }
+          offset={ 4 }
           scrim={ false }
           activatorProps={ {
             'aria-haspopup': 'menu',

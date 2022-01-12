@@ -10,29 +10,20 @@ export default defineConfig(async ({ mode }) => {
     css: { preprocessorOptions: { scss: { charset: false } } },
     build: {
       emptyOutDir: false,
-      minify: false,
       sourcemap: true,
       lib: {
         entry: 'src/entry.ts',
         name: 'VenoUi',
+        formats: ['umd'],
+        fileName: () => 'veno-ui.min.js'
       },
       rollupOptions: {
         external: ['vue'],
-        output: [
-          {
-            assetFileNames: 'veno-ui.css',
-          },
-          {
-            format: 'es',
-            entryFileNames: 'veno-ui.es.js',
-          },
-          {
-            format: 'umd',
-            entryFileNames: 'veno-ui.js',
-            globals: { vue: 'Vue' },
-          },
-        ],
-      },
+        output: {
+          assetFileNames: 'veno-ui.min.css',
+          globals: { vue: 'Vue' }
+        }
+      }
     },
     plugins: [
       vue(),

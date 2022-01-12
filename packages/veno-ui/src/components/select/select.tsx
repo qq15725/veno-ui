@@ -6,19 +6,19 @@ import { computed, ref } from 'vue'
 import { genericComponent, getUid } from '../../utils'
 
 // Composables
-import { makeTransitionProps } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
 import { Input, makeInputProps, filterInputProps } from '../input/input'
 import { Icon } from '../icon'
-import { Overlay } from '../overlay'
+import { Menu } from '../menu'
 import { List, ListItem } from '../list'
 
 // Types
 import type { PropType } from 'vue'
 import type { InputSlots } from '../input/input'
-import type { Anchor, Origin } from '../../composables/position-strategy'
+import type { Origin } from '../../composables/position-strategy'
+import type { Anchor } from '../../utils'
 
 export type Select = InstanceType<typeof Select>
 
@@ -45,9 +45,6 @@ export const Select = genericComponent<new () => {
       type: Array as PropType<SelectItem[]>,
       default: () => [],
     },
-    ...makeTransitionProps({
-      transition: false,
-    } as const),
     ...makeInputProps(),
   },
 
@@ -73,18 +70,13 @@ export const Select = genericComponent<new () => {
       const [inputProps] = filterInputProps(props)
 
       return (
-        <Overlay
+        <Menu
           class="ve-select-overlay"
           id={ id.value }
           v-model={ isActive.value }
-          absolute
-          position-strategy="connected"
-          scroll-strategy="reposition"
-          offset={ 4 }
-          scrim={ false }
           anchor={ props.anchor }
           origin={ props.origin }
-          transition={ props.transition }
+          min-width={ undefined }
           v-slots={ {
             activator: ({ props: activatorProps }) => (
               <Input

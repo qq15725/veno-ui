@@ -30,8 +30,6 @@ export type PositionStrategy = keyof typeof positionStrategies | ((
   anchorClasses: Ref<string[]>
 ) => undefined | { updatePosition: (e: Event) => void })
 
-
-export type { Anchor } from '../../utils'
 export type Origin = Anchor | 'auto' | 'overlap'
 
 export interface PositionStrategyProps
@@ -79,10 +77,10 @@ export function usePositionStrategy (props: PositionStrategyProps, data: Positio
     scope = effectScope()
     await nextTick()
     scope.run(() => {
-      const positionStrategy = typeof props.positionStrategy === 'function'
+      const strategy = typeof props.positionStrategy === 'function'
         ? props.positionStrategy
         : positionStrategies[props.positionStrategy]
-      updatePosition.value = positionStrategy(data, props, contentStyles, anchorClasses)?.updatePosition
+      updatePosition.value = strategy(data, props, contentStyles, anchorClasses)?.updatePosition
     })
   })
 

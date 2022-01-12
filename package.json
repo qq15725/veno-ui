@@ -10,7 +10,8 @@
     "docs:build": "npm run build -w @veno-ui/docs",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "npm run docs:build && npm run docs:publish",
-    "build:lib": "npm run build:lib -w veno-ui"
+    "build:lib": "npm run build:lib -w veno-ui",
+    "build:dist": "npm run build:dist -w veno-ui"
   },
   "engines": {
     "node": ">=12"
@@ -24,7 +25,7 @@
     "sass": "^1.39.0",
     "sass-loader": "^10.0.0",
     "typescript": "^4.5.4",
-    "vite": "^2.7.4",
+    "vite": "^2.7.10",
     "vue": "^3.2.26"
   }
 }

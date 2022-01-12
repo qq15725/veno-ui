@@ -1,4 +1,7 @@
+// Utils
 import { attachedRoot } from '../../utils'
+
+// Types
 import type { DirectiveBinding } from 'vue'
 
 interface ClickOutsideBindingArgs

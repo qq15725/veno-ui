@@ -53,13 +53,12 @@
     }
   },
   "scripts": {
-    "build:dist": "vite build -c vite.dist.config.ts",
+    "build:dist": "vite build -c vite.dist.config.ts && vite build -c vite.dist-min.config.ts",
     "build:lib": "vite build -c vite.lib.config.ts",
     "build": "npm run build:lib && npm run build:dist"
   },
   "devDependencies": {
     "@types/prismjs": "^1.16.6",
-    "rollup-plugin-terser": "^7.0.2",
     "vite-plugin-dts": "^0.9.6",
     "vue-router": "^4.0.12"
   },

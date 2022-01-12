@@ -6,7 +6,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
-    "resolveJsonModule": true,
     "module": "CommonJS",
     "target": "ES2015",
     "lib": [
