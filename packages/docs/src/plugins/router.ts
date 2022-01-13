@@ -27,6 +27,7 @@ export const useRouter: UsePlugin = app => {
     history: createWebHashHistory(),
     routes,
     scrollBehavior (to, from, savedPosition) {
+      if (to.path === from.path) return savedPosition
       return { top: 0 }
     },
   })
@@ -41,13 +42,6 @@ export const useRouter: UsePlugin = app => {
   router.afterEach(function (to, from) {
     if (!from || to.path !== from.path) {
       useAppStore().loading = false
-
-      if (to.hash && to.hash !== from.hash) {
-        nextTick(() => {
-          const el = document.querySelector(to.hash)
-          if (el) el.scrollIntoView()
-        })
-      }
     }
   })
 

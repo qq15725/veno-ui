@@ -2,6 +2,9 @@
 import { ref, computed, onMounted, provide, inject, onBeforeUnmount, InjectionKey } from 'vue'
 import { throttle, propsFactory, getUid } from '../../utils'
 
+// Composables
+import { useRouter } from '../router'
+
 // Types
 import type { PropType, Ref } from 'vue'
 
@@ -10,6 +13,7 @@ export interface NamedAnchorProvider
   items: Ref<NamedAnchorItem[]>
   current: Ref<string | null>
   setCurrent: (name: string) => void
+  isHashMode: Ref<boolean>
   register: (id: string, name: string) => void
   unregister: (id: string) => void
 }
@@ -40,6 +44,7 @@ export const makeNamedAnchor = propsFactory({
 }, 'named-anchor')
 
 export function useNamedAnchor (props: NamedAnchorProps) {
+  const router = useRouter()
   const items = ref<NamedAnchorItem[]>([])
   const current = ref<string | null>(null)
   const scrollContainer = computed(() => {
@@ -47,13 +52,15 @@ export function useNamedAnchor (props: NamedAnchorProps) {
       ? document.querySelector(props.scrollContainer)
       : props.scrollContainer
   })
+  const isHashMode = computed(() => !!router?.options?.history?.base?.includes?.('#'))
 
   const provider = {
     items,
     current,
+    isHashMode,
     setCurrent: (name: string) => {
       current.value = name
-      document.getElementById(name)?.scrollIntoView()
+      document.getElementById(name)?.scrollIntoView({ behavior: 'smooth' })
     },
     register: (id: string, name: string) => {
       items.value.push({ id, name })
@@ -65,49 +72,49 @@ export function useNamedAnchor (props: NamedAnchorProps) {
 
   const handleScroll = () => {
     current.value = items.value
-      .reduce<{ name: string, top: number, height: number }[]>((pos, item) => {
-        const el = document.getElementById(item.name)
-        if (!el) return pos
-        const { top, height } = el.getBoundingClientRect()
-        return [
-          ...pos,
-          {
-            name: item.name,
-            top: top - (scrollContainer.value?.getBoundingClientRect?.()?.top ?? 0),
-            height
+        .reduce<{ name: string, top: number, height: number }[]>((pos, item) => {
+          const el = document.getElementById(item.name)
+          if (!el) return pos
+          const { top, height } = el.getBoundingClientRect()
+          return [
+            ...pos,
+            {
+              name: item.name,
+              top: top - (scrollContainer.value?.getBoundingClientRect?.()?.top ?? 0),
+              height
+            }
+          ]
+        }, [])
+        .sort((a, b) => {
+          if (a.top > b.top) {
+            return 1
+          } else if (a.top === b.top && a.height < b.height) {
+            return -1
           }
-        ]
-      }, [])
-      .sort((a, b) => {
-        if (a.top > b.top) {
-          return 1
-        } else if (a.top === b.top && a.height < b.height) {
           return -1
-        }
-        return -1
-      })
-      .reduce<{ name: string, top: number, height: number } | null>((prev, item) => {
-        if (item.top + item.height < 0) {
-          return prev
-        }
-        if (item.top <= props.offset) {
-          if (prev === null) {
-            return item
-          } else if (item.top === prev.top) {
-            if (item.name === current.value) {
+        })
+        .reduce<{ name: string, top: number, height: number } | null>((prev, item) => {
+          if (item.top + item.height < 0) {
+            return prev
+          }
+          if (item.top <= props.offset) {
+            if (prev === null) {
+              return item
+            } else if (item.top === prev.top) {
+              if (item.name === current.value) {
+                return item
+              } else {
+                return prev
+              }
+            } else if (item.top > prev.top) {
               return item
             } else {
               return prev
             }
-          } else if (item.top > prev.top) {
-            return item
-          } else {
-            return prev
           }
-        }
-        return prev
-      }, null)
-      ?.name
+          return prev
+        }, null)
+        ?.name
       ?? null
   }
 
@@ -150,6 +157,13 @@ export function useNamedAnchorItem (props: NamedAnchorItemProps) {
   })
   return {
     ...namedAnchor,
+    to: computed(() => {
+      if (namedAnchor.isHashMode.value) {
+        return { query: { anchor: props.name }, replace: true }
+      } else {
+        return { hash: props.name, replace: true }
+      }
+    }),
     isActive: computed(() => {
       return namedAnchor.current.value === props.name
     })

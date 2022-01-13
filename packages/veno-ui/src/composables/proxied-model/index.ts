@@ -1,6 +1,6 @@
 // Utils
 import { computed, getCurrentInstance, ref } from 'vue'
-import { consoleError, toKebabCase } from '../../utils'
+import { consoleError, propIsDefined as _propIsDefined } from '../../utils'
 
 // Types
 import type { Ref } from 'vue'
@@ -18,11 +18,9 @@ export function useProxiedModel<Props extends object, Prop extends Extract<keyof
   if (!vm) consoleError('useProxiedModel must be called from inside a setup function')
 
   const propIsDefined = computed(() => {
-    return !!(
-      typeof props[prop] !== 'undefined' &&
-      (vm?.vnode.props?.hasOwnProperty(prop)
-        || vm?.vnode.props?.hasOwnProperty(toKebabCase(prop)))
-    )
+    return typeof props[prop] !== 'undefined'
+      && vm?.vnode
+      && _propIsDefined(vm?.vnode, prop)
   })
 
   const internal = ref(transformIn(

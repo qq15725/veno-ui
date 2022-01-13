@@ -2,8 +2,8 @@
 import './styles/list-item.scss'
 
 // Utils
-import { computed } from 'vue'
-import { defineComponent } from '../../utils'
+import { computed, getCurrentInstance } from 'vue'
+import { defineComponent, propIsDefined } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -56,7 +56,9 @@ export const ListItem = defineComponent({
 
   setup (props, { slots, attrs }) {
     const link = useLink(props, attrs)
+    const vm = getCurrentInstance()!
     const isActive = computed(() => {
+      if (propIsDefined(vm.vnode, 'active')) return props.active
       return props.active || link.isExactActive?.value
     })
     const computedProps = computed(() => ({

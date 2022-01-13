@@ -15,7 +15,7 @@ export const AnchorItem = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { setCurrent, isActive } = useNamedAnchorItem(props)
+    const { to, setCurrent, isActive } = useNamedAnchorItem(props)
 
     return () => {
       return (
@@ -23,6 +23,7 @@ export const AnchorItem = defineComponent({
           class={ [
             've-anchor-item',
           ] }
+          to={ to.value }
           active={ isActive.value }
           onClick={ () => props.name && setCurrent(props.name) }
           v-slots={ slots }

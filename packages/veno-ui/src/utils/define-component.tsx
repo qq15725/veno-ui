@@ -24,9 +24,9 @@ import type {
   VNodeChild,
 } from 'vue'
 
-function propIsDefined (vnode: VNode, prop: string) {
-  return vnode.props?.hasOwnProperty(prop) ||
-    vnode.props?.hasOwnProperty(toKebabCase(prop))
+export function propIsDefined (vnode: VNode, prop: string) {
+  return (vnode.props?.hasOwnProperty(prop)
+    || vnode.props?.hasOwnProperty(toKebabCase(prop)))
 }
 
 export const defineComponent = (function defineComponent (options: ComponentOptions) {

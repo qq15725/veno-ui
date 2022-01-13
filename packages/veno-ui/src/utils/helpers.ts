@@ -2,7 +2,14 @@
 import { camelize, Fragment, isRef, ref } from 'vue'
 
 // Types
-import type { ComponentInternalInstance, ComponentPublicInstance, Ref, Slots, VNode, VNodeChild } from 'vue'
+import type {
+  ComponentInternalInstance,
+  ComponentPublicInstance,
+  Ref,
+  Slots,
+  VNode,
+  VNodeChild
+} from 'vue'
 
 export function getNestedValue (obj: any, path: (string | number)[], fallback?: any): any {
   const last = path.length - 1
