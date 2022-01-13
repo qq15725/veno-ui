@@ -80,13 +80,14 @@
         width="180"
         position="right"
     >
-      <ve-list density="compact">
-        <ve-list-item
+      <ve-anchor offset="64" density="compact">
+        <ve-anchor-item
             v-for="header in $route.meta.headers.filter(v => v.level === 3)"
+            :key="header.slug"
             :subtitle="header.title"
-            @click=""
+            :name="header.slug"
         />
-      </ve-list>
+      </ve-anchor>
     </ve-app-sider>
   </ve-app>
 </template>

@@ -1,6 +1,7 @@
 // Utils
 import container from 'markdown-it-container'
 import Token from 'markdown-it/lib/token'
+import { slugify } from '../utils'
 
 // Types
 import type { RenderRule } from 'markdown-it/lib/renderer'
@@ -39,6 +40,7 @@ export const demoPlugin: PluginSimple = md => {
       }
 
       const props = {
+        title: subTokens.find(v => v.state === 'title')?.token?.content,
         template: subTokens.filter(v => v.state === 'template').map(v => {
           return `<template>\n${ v.token.content
             .split('\n')
@@ -58,11 +60,6 @@ export const demoPlugin: PluginSimple = md => {
       }
 
       const slots = {
-        title: self.render(
-          subTokens.filter(v => v.state === 'title').map(v => v.token),
-          options,
-          env
-        ),
         prepend: self.render(
           subTokens.filter(v => v.state === 'prepend').map(v => v.token),
           options,
@@ -84,10 +81,12 @@ export const demoPlugin: PluginSimple = md => {
         ),
       }
 
-      function genSlot (name: keyof typeof slots) {
-        return slots[name]
-          ? `  <template #${ name }>\n${ slots[name].replace(/\n$/, '') }\n  </template>`
-          : `  <!--${ name }-->`
+      function genTitleProp () {
+        return props.title ? `title="${ props.title }"` : ''
+      }
+
+      function genSlugProp () {
+        return props.title ? `slug="${ slugify(props.title) }"` : ''
       }
 
       function genFileProp () {
@@ -107,8 +106,13 @@ export const demoPlugin: PluginSimple = md => {
         }"`
       }
 
-      return `<demo ${ genFileProp() } ${ genCodeProp() }>
-${ genSlot('title') }
+      function genSlot (name: keyof typeof slots) {
+        return slots[name]
+          ? `  <template #${ name }>\n${ slots[name].replace(/\n$/, '') }\n  </template>`
+          : `  <!--${ name }-->`
+      }
+
+      return `<demo ${ genTitleProp() } ${ genSlugProp() } ${ genFileProp() } ${ genCodeProp() }>
 ${ genSlot('prepend') }
 ${ genSlot('default') }
 ${ genSlot('append') }

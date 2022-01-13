@@ -38,16 +38,13 @@ export const ListChildren = genericComponent<VeListChildrenGenerator>()({
             items={ children }
             v-slots={ {
               ...slots,
-              header: headerProps => slots.header
-                ? slots.header({ ...rest, ...headerProps })
-                : <ListItem { ...rest } { ...headerProps } />,
+              header: headerProps => slots.header?.({ ...rest, ...headerProps })
+                ?? <ListItem { ...rest } { ...headerProps } />,
             } }
           />
         )
         : (
-          slots.item
-            ? slots.item(item)
-            : <ListItem { ...item } v-slots={ slots } />
+          slots.item?.(item) ?? <ListItem { ...item } v-slots={ slots } />
         )
     })
   },

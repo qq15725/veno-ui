@@ -51,19 +51,6 @@ export const includePlugin: PluginSimple = md => {
         rows.forEach(cols => {
           if (!cols[i]) return
           const file = `./${ cols[i] }`
-          if (md._context.path) {
-            const title = readFileSync(
-              join(dirname(md._context.path), file),
-              'utf-8'
-            ).match?.(/# ([^\n]+)/)?.[1]
-            if (title) {
-              md._context.headers.push({
-                level: 3,
-                title,
-                slug: slugify(title)
-              })
-            }
-          }
           const component = toPascalCase(`ve-include-${ basename(file, '.md') }`)
           imports.push(`import ${ component } from '${ file }'`)
           codes.push(
@@ -74,6 +61,23 @@ export const includePlugin: PluginSimple = md => {
           `    </ve-row>`,
           `  </ve-col>`
         )
+      }
+
+      if (md._context.path) {
+        const dir = dirname(md._context.path)
+        rows.forEach(cols => {
+          cols.forEach(file => {
+            const filepath = join(dir, `./${ file }`)
+            const title = readFileSync(filepath, 'utf-8').match?.(/# ([^\n]+)/)?.[1]
+            if (title) {
+              md._context.headers.push({
+                level: 3,
+                title,
+                slug: slugify(title)
+              })
+            }
+          })
+        })
       }
 
       md._context.hoistedTags.push(`<script setup>\n${ imports.join('\n') }\n</script>`)
