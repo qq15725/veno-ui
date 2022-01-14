@@ -13,13 +13,7 @@ export type Paper = InstanceType<typeof Paper>
 export const Paper = defineComponent({
   name: 'VePaper',
 
-  props: {
-    textCenter: Boolean,
-    ...makePaperProps({
-      size: undefined,
-      density: undefined,
-    }),
-  },
+  props: makePaperProps(),
 
   setup (props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
@@ -28,9 +22,6 @@ export const Paper = defineComponent({
       <props.tag
         class={ [
           've-paper',
-          {
-            've-paper--text-center': props.textCenter,
-          },
           paperClasses.value
         ] }
         style={ [

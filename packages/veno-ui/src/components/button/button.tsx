@@ -175,7 +175,7 @@ export const Button = genericComponent<new () => {
 
           { hasDefault && (
             typeof props.icon === 'boolean'
-              ? slots.default?.() ?? props.text
+              ? props.text ?? slots.default?.()
               : <Icon
                 class="ve-button__icon"
                 icon={ props.icon }

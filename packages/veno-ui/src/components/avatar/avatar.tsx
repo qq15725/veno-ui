@@ -3,7 +3,7 @@ import './styles/avatar.scss'
 
 // Utils
 import { ref, toRef, watch } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 import { Resize } from '../../directives/resize'
 
 // Composables
@@ -16,7 +16,7 @@ import { Icon } from '../icon'
 // Types
 export type Avatar = InstanceType<typeof Avatar>
 
-export const Avatar = genericComponent()({
+export const Avatar = defineComponent({
   name: 'VeAvatar',
 
   directives: { Resize },

@@ -8,6 +8,7 @@ export default {
         surface: '#FFF',
         primary: '#165DFF',
         secondary: '#F2F3F5',
+        'on-secondary': '#4e5969',
         success: '#00B42A',
         warning: '#f0a020',
         error: '#F53F3F',

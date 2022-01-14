@@ -5,7 +5,7 @@
 按钮的密度有 `compact`、`comfortable`、`medium`。
 
 ```html
-<ve-radio-group label="size" v-model="size">
+<ve-radio-group v-model="size">
   <ve-radio label="xs" />
   <ve-radio label="sm" />
   <ve-radio label="md" />

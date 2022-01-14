@@ -2,13 +2,7 @@
 @use '../../../styles/tools';
 
 .ve-paper {
-  position: relative;
-  display: block;
-
-  @include tools.use-paper((
-    'use-size': false,
-    'use-density': false,
-  ));
+  @include tools.use-paper();
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
@@ -23,11 +17,5 @@
     &--density-#{$name} {
       height: calc(var(--ve-paper-height) + #{$multiplier * settings.$spacer * 2});
     }
-  }
-
-  &--text-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
