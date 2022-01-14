@@ -1,18 +1,29 @@
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, computed } from 'vue'
 import { version } from 'veno-ui'
 import { useAppStore } from '@/store/app'
 import { routesToMenus } from '@/utils'
+import { useRoute } from 'vue-router'
 // @ts-ignore
 import pages from '~pages'
 
 export default defineComponent({
   setup () {
+    const app = useAppStore()
+    const route = useRoute()
+
     return {
       active: ref(),
       menus: routesToMenus(pages),
-      app: useAppStore(),
-      version
+      app,
+      version,
+      url: computed(() => {
+        const { relativePath } = route.meta
+        if (relativePath.includes('../')) {
+          return `${app.repository}/${relativePath.replace('../', 'packages/')}`
+        }
+        return `${app.repository}/packages/docs/${relativePath}`
+      })
     }
   }
 })
@@ -92,7 +103,7 @@ export default defineComponent({
               class="text-caption"
               variant="link"
               target="_blank"
-              :href="`${app.repository}/${$route.meta.relativePath.replace('../', 'packages/')}`"
+              :href="url"
               append-icon="$edit"
           >
             编辑此页面
