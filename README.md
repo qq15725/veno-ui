@@ -13,7 +13,9 @@
 
 ## 文档
 
-[venoui.fdota.com](http://venoui.fdota.com)
+[venojs.com](http://venojs.com) 
+
+[国内镜像](http://venoui.fdota.com)
 
 ## 特性
 
