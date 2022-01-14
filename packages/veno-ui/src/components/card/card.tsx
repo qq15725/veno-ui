@@ -5,7 +5,7 @@ import './styles/card.scss'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -47,7 +47,7 @@ export const Card = defineComponent({
       type: Boolean,
       default: true,
     },
-    ...makeMaterialProps({
+    ...makePaperProps({
       size: undefined,
     }),
     ...makeRouterProps(),
@@ -56,7 +56,7 @@ export const Card = defineComponent({
   },
 
   setup (props, { attrs, slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props)
     const { disabledClasses } = useDisabled(props)
@@ -81,11 +81,11 @@ export const Card = defineComponent({
               've-card--hover': props.hover && !props.disabled,
               've-card--link': isClickable,
             },
-            materialClasses.value,
+            paperClasses.value,
             loadingClasses.value,
             disabledClasses.value,
           ] }
-          style={ materialStyles.value }
+          style={ paperStyles.value }
           href={ link.href.value }
           onClick={ isClickable && link.navigate }
           v-ripple={ [

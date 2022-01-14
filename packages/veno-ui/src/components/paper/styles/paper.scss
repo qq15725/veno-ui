@@ -1,11 +1,11 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-.ve-material {
+.ve-paper {
   position: relative;
   display: block;
 
-  @include tools.use-material((
+  @include tools.use-paper((
     'use-size': false,
     'use-density': false,
   ));
@@ -13,7 +13,7 @@
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
       $height: 80px + $multiplier * settings.$spacer * 2;
-      --ve-material-height: #{$height};
+      --ve-paper-height: #{$height};
       width: $height;
       height: $height;
     }
@@ -21,7 +21,7 @@
 
   @each $name, $multiplier in settings.$densities {
     &--density-#{$name} {
-      height: calc(var(--ve-material-height) + #{$multiplier * settings.$spacer * 2});
+      height: calc(var(--ve-paper-height) + #{$multiplier * settings.$spacer * 2});
     }
   }
 

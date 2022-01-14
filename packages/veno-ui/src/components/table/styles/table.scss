@@ -14,7 +14,7 @@
     min-height: 40px;
     overflow-y: hidden;
     overflow-x: auto;
-    @include tools.use-material();
+    @include tools.use-paper();
 
     #{$root}--fixed-header & {
       overflow-y: auto;

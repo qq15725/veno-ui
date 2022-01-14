@@ -5,7 +5,7 @@ import './styles/list.scss'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeNestedProps, useNested } from '../../composables/nested'
 import { useDepth } from './composables/depth'
@@ -34,7 +34,7 @@ export const List = defineComponent({
       default: false,
     },
     items: Array as Prop<ListItemProp[]>,
-    ...makeMaterialProps({
+    ...makePaperProps({
       size: undefined,
     } as const),
     ...makeDisabledProps(),
@@ -52,7 +52,7 @@ export const List = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
     const { disabledClasses } = useDisabled(props)
     useNested(props)
     useDepth()
@@ -68,11 +68,11 @@ export const List = defineComponent({
             {
               've-list--nav': props.nav,
             },
-            materialClasses.value,
+            paperClasses.value,
             disabledClasses.value,
           ] }
           style={ [
-            materialStyles.value,
+            paperStyles.value,
           ] }
         >
           { hasHeader && (

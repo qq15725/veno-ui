@@ -4,8 +4,6 @@ category: Data 数据展示
 
 # 卡片 Card
 
-`card` 包装了 `material`。
-
 ## 演示
 
 :::include

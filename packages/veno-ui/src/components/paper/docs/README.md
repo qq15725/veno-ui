@@ -1,10 +1,9 @@
 ---
-category: Data 数据展示
+meta:
+  category: Data 数据展示
 ---
 
-# 材料 Material
-
-`material` 是一个基础组件，很多组件都组合了它。
+# 纸张 Paper
 
 ## 演示
 
@@ -22,4 +21,4 @@ elevation.md position.md
 
 ## API
 
-<<<API material
+<<<API paper

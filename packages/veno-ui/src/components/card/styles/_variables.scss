@@ -48,9 +48,8 @@ $card-border-width: thin !default;
 $card-border-thin-width: thin !default;
 $card-border-radius: settings.$border-radius !default;
 
-// material
-$card-material: () !default;
-$card-material: tools.map-deep-merge(
+$card-paper: () !default;
+$card-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
@@ -74,5 +73,5 @@ $card-material: tools.map-deep-merge(
         'default': $card-border-radius,
       ),
     ),
-    $card-material
+    $card-paper
 );

@@ -6,7 +6,7 @@ import { computed, getCurrentInstance } from 'vue'
 import { defineComponent, propIsDefined } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeRouterProps, useLink } from '../../composables/router'
 
@@ -46,7 +46,7 @@ export const ListItem = defineComponent({
       type: Boolean,
       default: true,
     },
-    ...makeMaterialProps({
+    ...makePaperProps({
       variant: 'text',
       size: undefined,
     } as const),
@@ -65,7 +65,7 @@ export const ListItem = defineComponent({
       ...props,
       color: isActive.value ? props.activeColor ?? props.color : props.color,
     }))
-    const { materialClasses, materialStyles } = useMaterial(computedProps)
+    const { paperClasses, paperStyles } = usePaper(computedProps)
     const { disabledClasses } = useDisabled(props)
 
     return () => {
@@ -86,11 +86,11 @@ export const ListItem = defineComponent({
               've-list-item--link': isClickable,
               [`${ props.activeClass }`]: isActive.value && props.activeClass,
             },
-            materialClasses.value,
+            paperClasses.value,
             disabledClasses.value,
           ] }
           style={ [
-            materialStyles.value,
+            paperStyles.value,
           ] }
           href={ link.href.value }
           tabindex={ isClickable ? 0 : undefined }

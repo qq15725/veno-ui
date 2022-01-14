@@ -10,7 +10,7 @@ import { Button } from '../button'
 import { allowedVariants } from '../button/button'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { useResizeObserver } from '../../composables/resize-observer'
 import { useRefs } from '../../composables/refs'
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -83,7 +83,7 @@ export const Pagination = defineComponent({
     },
 
     ...makePaginationProps(),
-    ...makeMaterialProps({
+    ...makePaperProps({
       tag: 'nav',
     } as const),
     variant: {
@@ -108,7 +108,7 @@ export const Pagination = defineComponent({
     )
     const firstPage = computed(() => Number(props.firstPage))
     const lastPage = computed(() => Number(props.lastPage))
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
     const maxButtons = ref(-1)
 
     const { resizeRef } = useResizeObserver((entries: ResizeObserverEntry[]) => {
@@ -298,10 +298,10 @@ export const Pagination = defineComponent({
         ref={ resizeRef }
         class={ [
           've-pagination',
-          materialClasses.value,
+          paperClasses.value,
         ] }
         style={ [
-          materialStyles.value
+          paperStyles.value
         ] }
         role="navigation"
         aria-label={ props.ariaLabel }

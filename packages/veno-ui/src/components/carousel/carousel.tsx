@@ -6,7 +6,7 @@ import { toRef, watch } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeTagProps } from '../../composables/tag'
 import { makeGroupProps, useGroup } from '../../composables/group'
 
@@ -27,7 +27,7 @@ export const Carousel = genericComponent()({
       default: 6000,
       validator: (value: string | number) => value > 0,
     },
-    ...makeMaterialProps({
+    ...makePaperProps({
       variant: 'text',
       size: undefined,
       density: undefined,
@@ -37,7 +37,7 @@ export const Carousel = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { materialStyles, materialClasses } = useMaterial(props)
+    const { paperStyles, paperClasses } = usePaper(props)
     const { isSelected, select, selected, next, items } = useGroup(props, CarouselSymbol)
 
     let slideTimeout: number | undefined
@@ -70,10 +70,10 @@ export const Carousel = genericComponent()({
       <props.tag
         class={ [
           've-carousel',
-          materialClasses.value,
+          paperClasses.value,
         ] }
         style={ [
-          materialStyles.value,
+          paperStyles.value,
         ] }
       >
         { slots.default?.() }

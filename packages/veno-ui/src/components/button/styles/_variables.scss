@@ -40,8 +40,8 @@ $button-border-width: 0 !default;
 $button-border-thin-width: thin !default;
 $button-border-radius: settings.$border-radius !default;
 
-$button-material: () !default;
-$button-material: tools.map-deep-merge(
+$button-paper: () !default;
+$button-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
@@ -64,5 +64,5 @@ $button-material: tools.map-deep-merge(
         'default': $button-border-radius,
       ),
     ),
-    $button-material
+    $button-paper
 );

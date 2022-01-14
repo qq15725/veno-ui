@@ -15,7 +15,7 @@
   font-size: 16px;
   width: var(--ve-avatar-size);
   height: var(--ve-avatar-size);
-  @include tools.use-material($avatar-material);
+  @include tools.use-paper($avatar-paper);
 
   > .ve-image {
     border-radius: inherit;

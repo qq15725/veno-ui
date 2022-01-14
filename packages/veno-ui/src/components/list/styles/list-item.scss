@@ -9,7 +9,7 @@
   position: relative;
   outline: none;
   text-decoration: none;
-  @include tools.use-material($list-item-material);
+  @include tools.use-paper($list-item-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay);
 

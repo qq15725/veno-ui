@@ -13,7 +13,7 @@
       :key="index"
       :cols="cols"
     >
-      <ve-material width="100%" size="md" color="grey" />
+      <ve-paper width="100%" size="md" color="grey" />
     </ve-col>
   </ve-row>
 </ve-container>

@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { genericComponent, MakeSlots } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useTextColor } from '../../composables/color'
@@ -56,7 +56,7 @@ export const Alert = genericComponent<new () => {
       default: 'veno-ui:$close',
     },
     overlayColor: String,
-    ...makeMaterialProps(),
+    ...makePaperProps(),
     ...makeTransitionProps({
       transition: { component: FadeTransition },
     } as const),
@@ -67,7 +67,7 @@ export const Alert = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
     const iconColor = computed(() => props.textColor ?? props.type)
     const {
       textColorClasses: overlayColorClasses,
@@ -92,9 +92,9 @@ export const Alert = genericComponent<new () => {
               role="alert"
               class={ [
                 've-alert',
-                materialClasses.value,
+                paperClasses.value,
               ] }
-              style={ materialStyles.value }
+              style={ paperStyles.value }
             >
               <div
                 class={ [

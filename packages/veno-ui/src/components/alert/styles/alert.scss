@@ -6,7 +6,7 @@
   position: relative;
   display: flex;
   padding: 16px;
-  @include tools.use-material();
+  @include tools.use-paper();
   @include tools.overlay('#{&}__overlay', .08);
 
   &__icon {

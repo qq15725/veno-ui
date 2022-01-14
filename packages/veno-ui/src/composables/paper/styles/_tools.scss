@@ -7,7 +7,7 @@
 @use '../../border/styles/tools' as *;
 @use '../../shape/styles/tools' as *;
 
-@mixin use-material($props: ()) {
+@mixin use-paper($props: ()) {
   @include use-variant($props);
   @include use-position($props);
   @include use-size($props);

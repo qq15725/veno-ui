@@ -11,7 +11,7 @@
   max-width: 100%;
   min-width: 0;
   height: var(--ve-button-group-height);
-  @include tools.use-material((
+  @include tools.use-paper((
     'variants': (
       'contained': (
         'background': rgb(var(--ve-theme-secondary)),

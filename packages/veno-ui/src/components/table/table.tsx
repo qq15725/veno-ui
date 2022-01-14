@@ -14,7 +14,7 @@ import {
 } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
@@ -103,7 +103,7 @@ export const Table = defineComponent({
     },
 
     ...makeDataIteratorProps(),
-    ...makeMaterialProps({
+    ...makePaperProps({
       border: true,
     }),
   },
@@ -119,7 +119,7 @@ export const Table = defineComponent({
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 
-    const { materialClasses, materialStyles } = useMaterial(props, 've-table__wrapper')
+    const { paperClasses, paperStyles } = usePaper(props, 've-table__wrapper')
     const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
     const arraySortBy = computed(() => wrapInArray(sortBy.value))
     const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
@@ -195,10 +195,10 @@ export const Table = defineComponent({
             onScroll={ throttle(handleScroll, 128) }
             class={ [
               've-table__wrapper',
-              materialClasses.value,
+              paperClasses.value,
             ] }
             style={ [
-              materialStyles.value
+              paperStyles.value
             ] }
           >
             <table>

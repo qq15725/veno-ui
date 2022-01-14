@@ -28,7 +28,7 @@
   vertical-align: $button-vertical-align;
   flex-shrink: 0;
   white-space: nowrap;
-  @include tools.use-material($button-material);
+  @include tools.use-paper($button-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay, false);
 

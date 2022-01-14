@@ -7,7 +7,7 @@ import { genericComponent } from '../../utils'
 import { Resize } from '../../directives/resize'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 
 // Components
 import { Image } from '../image'
@@ -25,13 +25,13 @@ export const Avatar = genericComponent()({
     image: String,
     icon: String,
     text: String,
-    ...makeMaterialProps({
+    ...makePaperProps({
       color: 'secondary',
     }),
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
     const wrapRef = ref<HTMLElement | null>()
     const avatarRef = ref<HTMLElement | null>()
 
@@ -58,9 +58,9 @@ export const Avatar = genericComponent()({
         <props.tag
           class={ [
             've-avatar',
-            materialClasses.value,
+            paperClasses.value,
           ] }
-          style={ materialStyles.value }
+          style={ paperStyles.value }
           ref={ avatarRef }
         >
           { hasImage && <Image src={ props.image } /> }

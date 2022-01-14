@@ -4,7 +4,7 @@
 .ve-carousel {
   position: relative;
   overflow: hidden;
-  @include tools.use-material((
+  @include tools.use-paper((
     'borders': (
       'default': (
         'color': settings.$border-color,

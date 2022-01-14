@@ -6,7 +6,7 @@ import { defineComponent } from '../../utils'
 import { reactive, computed } from 'vue'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { provideDefaults } from '../../composables/defaults'
 
 export const ButtonGroup = defineComponent({
@@ -14,11 +14,11 @@ export const ButtonGroup = defineComponent({
 
   props: {
     divided: Boolean,
-    ...makeMaterialProps(),
+    ...makePaperProps(),
   },
 
   setup (props, { slots }) {
-    const { materialClasses, materialStyles } = useMaterial(props)
+    const { paperClasses, paperStyles } = usePaper(props)
 
     provideDefaults(reactive({
       defaults: {
@@ -38,10 +38,10 @@ export const ButtonGroup = defineComponent({
             {
               've-button-group--divided': props.divided,
             },
-            materialClasses.value,
+            paperClasses.value,
           ] }
           style={ [
-            materialStyles.value,
+            paperStyles.value,
           ] }
           v-slots={ slots }
         />

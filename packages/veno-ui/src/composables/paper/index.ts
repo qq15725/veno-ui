@@ -27,7 +27,7 @@ import type { ShapeProps } from '../shape'
 import type { ElevationProps } from '../elevation'
 import type { MaybeRef } from '../../utils'
 
-export interface MaterialProps
+export interface PaperProps
   extends TagProps,
     ThemeProps,
     VariantProps,
@@ -42,7 +42,7 @@ export interface MaterialProps
   //
 }
 
-export const makeMaterialProps = propsFactory({
+export const makePaperProps = propsFactory({
   ...makeTagProps(),
   ...makeThemeProps(),
   ...makeVariantProps(),
@@ -53,10 +53,10 @@ export const makeMaterialProps = propsFactory({
   ...makeBorderProps(),
   ...makeShapeProps(),
   ...makeElevationProps(),
-}, 'material')
+}, 'paper')
 
-export function useMaterial (
-  props: MaybeRef<MaterialProps>,
+export function usePaper (
+  props: MaybeRef<PaperProps>,
   name = getCurrentInstanceName()
 ) {
   const { themeClasses } = provideTheme(props)
@@ -69,7 +69,7 @@ export function useMaterial (
   const { shapeClasses } = useShape(props)
   const { elevationClasses } = useElevation(props)
 
-  const materialClasses = computed(() => [
+  const paperClasses = computed(() => [
     themeClasses.value,
     colorClasses.value,
     variantClasses.value,
@@ -81,7 +81,7 @@ export function useMaterial (
     elevationClasses.value,
   ])
 
-  const materialStyles = computed(() => [
+  const paperStyles = computed(() => [
     colorStyles.value,
     positionStyles.value,
     dimensionStyles.value,
@@ -89,7 +89,7 @@ export function useMaterial (
   ])
 
   return {
-    materialClasses,
-    materialStyles,
+    paperClasses,
+    paperStyles,
   }
 }

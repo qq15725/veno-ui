@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { makeMaterialProps, useMaterial } from '../../composables/material'
+import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -66,7 +66,7 @@ export const Button = genericComponent<new () => {
     ...makeLoadingProps(),
     ...makeRouterProps(),
     ...makeGroupItemProps(),
-    ...makeMaterialProps({
+    ...makePaperProps({
       tag: 'button',
     }),
     variant: {
@@ -97,7 +97,7 @@ export const Button = genericComponent<new () => {
         ...colors,
       }
     })
-    const { materialClasses, materialStyles } = useMaterial(computedProps)
+    const { paperClasses, paperStyles } = usePaper(computedProps)
     const isDisabled = computed(() => {
       return group?.disabled.value || props.disabled || props.loading
     })
@@ -130,7 +130,7 @@ export const Button = genericComponent<new () => {
           class={ [
             've-button',
             group?.selectedClass.value,
-            materialClasses.value,
+            paperClasses.value,
             disabledClasses.value,
             loadingClasses.value,
             {
@@ -141,7 +141,7 @@ export const Button = genericComponent<new () => {
             },
           ] }
           style={ [
-            materialStyles.value,
+            paperStyles.value,
           ] }
           disabled={ props.disabled || undefined }
           href={ link.href.value }

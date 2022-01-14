@@ -9,7 +9,7 @@
   display: block;
   color: $card-color;
   text-decoration: none;
-  @include tools.use-material($card-material);
+  @include tools.use-paper($card-paper);
   @include tools.overlay(#{&}__overlay);
 
   &--link {

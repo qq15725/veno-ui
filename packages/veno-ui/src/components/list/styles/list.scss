@@ -6,7 +6,7 @@
   overflow: auto;
   position: relative;
   padding: 8px 0;
-  @include tools.use-material($list-material);
+  @include tools.use-paper($list-paper);
 
   &--nav {
     .ve-list-group + .ve-list-group,

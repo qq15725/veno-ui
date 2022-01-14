@@ -11,8 +11,8 @@ $list-border-width: 0 !default;
 $list-border-thin-width: thin !default;
 $list-border-radius: settings.$border-radius !default;
 
-$list-material: () !default;
-$list-material: tools.map-deep-merge(
+$list-paper: () !default;
+$list-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
@@ -37,7 +37,7 @@ $list-material: tools.map-deep-merge(
         'default': $list-border-radius,
       )
     ),
-    $list-material
+    $list-paper
 );
 
 // ListItem
@@ -47,8 +47,8 @@ $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
 $list-item-border-radius: 0 !default;
 
-$list-item-material: () !default;
-$list-item-material: tools.map-deep-merge(
+$list-item-paper: () !default;
+$list-item-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
@@ -73,7 +73,7 @@ $list-item-material: tools.map-deep-merge(
         'default': $list-item-border-radius,
       ),
     ),
-    $list-item-material
+    $list-item-paper
 );
 
 // Nav ListItem
