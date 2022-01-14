@@ -7,6 +7,9 @@ import { ListItem } from '../../components/list'
 // Composables
 import { makeNamedAnchorItem, useNamedAnchorItem } from '../../composables/named-anchor'
 
+// Types
+export type AnchorItem = InstanceType<typeof AnchorItem>
+
 export const AnchorItem = defineComponent({
   name: 'VeAnchorItem',
 

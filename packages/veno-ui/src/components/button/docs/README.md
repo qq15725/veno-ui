@@ -8,8 +8,6 @@ meta:
 
 按钮用来触发一些即时操作。
 
-## 演示
-
 :::demo
 
 # 基本用法
@@ -31,17 +29,29 @@ meta:
 
 :::include
 
-contained.md outlined.md 
+contained.md 
 
-text.md icon.md 
+outlined.md 
 
-link.md shape.md 
+text.md 
 
-color.md size.md 
+icon.md 
 
-density.md block.md 
+link.md 
 
-loading.md group.md
+shape.md 
+
+color.md 
+
+size.md 
+
+density.md 
+
+block.md 
+
+loading.md 
+
+group.md
 
 :::
 

@@ -6,9 +6,9 @@
 
 ```html
 <ve-grid dense>
-  <ve-avatar text="Tile" shape="tile" />
-  <ve-avatar text="Default" />
-  <ve-avatar text="Round" shape="round" />  
+  <ve-avatar shape="tile" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar shape="round" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />  
 </ve-grid>
 ```
 

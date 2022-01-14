@@ -9,13 +9,17 @@ meta:
 
 :::include
 
-basic.md shape.md
+basic.md 
 
-size.md density.md
+shape.md
 
-dimension.md color.md 
+dimension.md 
 
-elevation.md position.md
+color.md 
+
+elevation.md 
+
+position.md
 
 :::
 

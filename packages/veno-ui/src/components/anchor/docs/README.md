@@ -1,8 +1,9 @@
 ---
-category: Others 其他组件
+meta:
+  category: Navigation 导航
 ---
 
-# 锚点 Anchor
+# 命名锚点 Anchor
 
 ## 演示
 

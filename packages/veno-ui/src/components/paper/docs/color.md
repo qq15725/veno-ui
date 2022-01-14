@@ -1,6 +1,6 @@
 :::demo
 
-# 纸张颜色
+# 颜色
 
 ```html
 <ve-grid dense>

@@ -10,7 +10,9 @@ category: Others 其他组件
 
 :::include
 
-basic.md status-bar.md
+status-bar.md
+
+basic.md 
 
 :::
 

@@ -1,6 +1,7 @@
 ---
-category: Navigation 导航
-WAI-ARIA: breadcrumb
+meta:
+  category: Navigation 导航
+  wai-aria: https://www.w3.org/TR/wai-aria-practices/#breadcrumb
 ---
 
 # 面包屑 Breadcrumb

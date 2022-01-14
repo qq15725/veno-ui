@@ -20,9 +20,9 @@ export default defineComponent({
       url: computed(() => {
         const { relativePath } = route.meta
         if (relativePath.includes('../')) {
-          return `${app.repository}/${relativePath.replace('../', 'packages/')}`
+          return `${ app.repository }/${ relativePath.replace('../', 'packages/') }`
         }
-        return `${app.repository}/packages/docs/${relativePath}`
+        return `${ app.repository }/packages/docs/${ relativePath }`
       })
     }
   }
@@ -32,8 +32,8 @@ export default defineComponent({
 <template>
   <ve-app>
     <ve-progress
-        v-if="app.loading"
-        indeterminate
+        stroke-width="2"
+        :indeterminate="app.loading"
         style="position: fixed; top: 0; z-index: 20;"
     />
 
@@ -95,8 +95,12 @@ export default defineComponent({
       <ve-container class="px-md-10 py-8">
         <div class="d-flex">
           <ve-breadcrumb v-if="$route.meta.category">
-            <ve-breadcrumb-item>组件</ve-breadcrumb-item>
-            <ve-breadcrumb-item>{{ $route.meta.category }}</ve-breadcrumb-item>
+            <ve-breadcrumb-item
+                v-for="name in ['组件', $route.meta.category]"
+                :key="name"
+            >
+              {{ name }}
+            </ve-breadcrumb-item>
           </ve-breadcrumb>
           <ve-spacer />
           <ve-button

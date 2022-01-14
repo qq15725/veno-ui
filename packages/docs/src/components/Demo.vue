@@ -57,7 +57,7 @@ export default defineComponent({
 
     <slot name="append" />
 
-    <div class="mt-3">
+    <div class="mt-2">
       <ve-grid dense justify="end">
         <ve-tooltip
             #activator="{ props }"
@@ -68,10 +68,10 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="isActive = !isActive"
-              :color="isActive ? 'primary' : undefined"
-              style="opacity: .8;"
+              :color="isActive ? 'primary' : 'grey-800'"
               icon="$code"
               variant="text"
+              size="xs"
           />
         </ve-tooltip>
 
@@ -84,10 +84,11 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="focusBtn"
-              style="opacity: .8;"
+              color="grey-800"
               icon="$focus"
               variant="text"
               tabindex="-1"
+              size="xs"
           />
         </ve-tooltip>
 
@@ -100,10 +101,11 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
-              style="opacity: .8;"
+              color="grey-800"
               :icon="`$${theme || 'light'}`"
               variant="text"
               tabindex="-1"
+              size="xs"
           />
         </ve-tooltip>
 
@@ -117,10 +119,11 @@ export default defineComponent({
               v-bind="tooltipProps"
               :href="`${ repository }${ file }`"
               target="_blank"
-              style="opacity: .8;"
+              color="grey-800"
               icon="$github"
               variant="text"
               tabindex="-1"
+              size="xs"
           />
         </ve-tooltip>
       </ve-grid>

@@ -24,9 +24,7 @@ export const Paper = defineComponent({
           've-paper',
           paperClasses.value
         ] }
-        style={ [
-          paperStyles.value
-        ] }
+        style={ paperStyles.value }
         v-slots={ slots }
       />
     )

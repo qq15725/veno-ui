@@ -5,7 +5,7 @@
 头像的密度有 `compact`、`comfortable`、`medium`。
 
 ```html
-<ve-radio-group label="size" v-model="size">
+<ve-radio-group v-model="size">
   <ve-radio label="xs" />
   <ve-radio label="sm" />
   <ve-radio label="md" />
@@ -14,9 +14,9 @@
 </ve-radio-group>
 
 <ve-grid dense align="center">
-  <ve-avatar density="compact" :size="size">Compact</ve-avatar>
-  <ve-avatar density="comfortable" :size="size">Comfortable</ve-avatar>
-  <ve-avatar :size="size">Medium</ve-avatar>
+  <ve-avatar density="compact" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar density="comfortable" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
 </ve-grid>
 ```
 

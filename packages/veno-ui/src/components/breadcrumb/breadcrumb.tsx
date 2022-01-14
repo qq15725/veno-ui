@@ -41,7 +41,9 @@ export const Breadcrumb = genericComponent<new () => {
             've-breadcrumb',
           ] }
         >
-          <ol>{ slots.default?.() }</ol>
+          <ol>
+            { slots.default?.() }
+          </ol>
         </props.tag>
       )
     }

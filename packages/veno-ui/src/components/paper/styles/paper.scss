@@ -3,19 +3,4 @@
 
 .ve-paper {
   @include tools.use-paper();
-
-  @each $name, $multiplier in settings.$sizes {
-    &--size-#{$name} {
-      $height: 80px + $multiplier * settings.$spacer * 2;
-      --ve-paper-height: #{$height};
-      width: $height;
-      height: $height;
-    }
-  }
-
-  @each $name, $multiplier in settings.$densities {
-    &--density-#{$name} {
-      height: calc(var(--ve-paper-height) + #{$multiplier * settings.$spacer * 2});
-    }
-  }
 }
