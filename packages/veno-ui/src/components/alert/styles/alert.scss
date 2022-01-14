@@ -9,7 +9,7 @@
   @include tools.use-material();
   @include tools.overlay('#{&}__overlay', .08);
 
-  &__avatar {
+  &__icon {
     margin-inline-end: 8px;
     height: 24px;
     width: 24px;

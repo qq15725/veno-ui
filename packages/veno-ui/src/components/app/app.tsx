@@ -1,9 +1,10 @@
 // Styles
 import './styles/app.scss'
 
-// Utilities
+// Utils
 import { defineComponent } from 'vue'
 
+// Composables
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeLayoutProps, createLayout } from '../../composables/layout'
 import { createDragSortProvider } from '../../composables/drag-sort'

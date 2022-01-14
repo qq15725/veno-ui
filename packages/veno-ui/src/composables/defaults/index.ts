@@ -12,28 +12,23 @@ export interface DefaultsInstance
 
 export type DefaultsOptions = Partial<DefaultsInstance>
 
-export const DefaultsSymbol: InjectionKey<Ref<DefaultsInstance>> = Symbol.for('veno-ui:defaults')
+export const DefaultsKey: InjectionKey<Ref<DefaultsInstance>> = Symbol.for('veno-ui:defaults')
 
 export function createDefaults (options?: DefaultsInstance): Ref<DefaultsInstance> {
   return ref(options ?? {})
 }
 
 export function useDefaults () {
-  const defaults = inject(DefaultsSymbol)
-
-  if (!defaults) throw new Error('[VenoUi] Could not find defaults instance')
-
-  return defaults
+  const provider = inject(DefaultsKey)
+  if (!provider) throw new Error('[VenoUi] Could not find defaults instance')
+  return provider
 }
 
 export function provideDefaults (props?: { defaults?: DefaultsInstance }) {
-  const defaults = useDefaults()
-
-  const newDefaults = computed(() => {
-    return mergeDeep(defaults.value, props?.defaults) as any as DefaultsInstance
+  const provider = useDefaults()
+  const newProvider = computed(() => {
+    return mergeDeep(provider.value, props?.defaults) as any as DefaultsInstance
   })
-
-  provide(DefaultsSymbol, newDefaults)
-
-  return newDefaults
+  provide(DefaultsKey, newProvider)
+  return newProvider
 }

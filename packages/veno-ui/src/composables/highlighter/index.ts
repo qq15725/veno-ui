@@ -24,7 +24,7 @@ export interface Highlighter
   highlight (text: string, language: string): Promise<string>
 }
 
-export const HighlighterSymbol: InjectionKey<Ref<Highlighter>> = Symbol.for('veno-ui:highlighter')
+export const HighlighterKey: InjectionKey<Ref<Highlighter>> = Symbol.for('veno-ui:highlighter')
 
 export function createHighlighter (options?: HighlighterOptions): Ref<Highlighter> {
   const type = options?.type ?? 'prismjs'
@@ -81,7 +81,7 @@ export function createHighlighter (options?: HighlighterOptions): Ref<Highlighte
 }
 
 export function useHighlighter () {
-  const provider = inject(HighlighterSymbol)
+  const provider = inject(HighlighterKey)
 
   if (!provider) throw new Error('[VenoUi] Could not find highlighter instance')
 

@@ -4,10 +4,10 @@ import { mergeDeep } from './utils'
 
 // Composables
 import { createTheme, ThemeSymbol } from './composables/theme'
-import { createHighlighter, HighlighterSymbol } from './composables/highlighter'
-import { defaultSets, IconSymbol } from './composables/icon'
-import { createDisplay, DisplaySymbol } from './composables/display'
-import { createDefaults, DefaultsSymbol } from './composables/defaults'
+import { createHighlighter, HighlighterKey } from './composables/highlighter'
+import { defaultSets, IconKey } from './composables/icon'
+import { createDisplay, DisplayKey } from './composables/display'
+import { createDefaults, DefaultsKey } from './composables/defaults'
 
 // Iconsets
 import { venoUiSvg } from './iconsets/veno-ui-svg'
@@ -51,11 +51,11 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       app.directive(key, directives[key])
     }
 
-    app.provide(DefaultsSymbol, createDefaults(options.defaults))
+    app.provide(DefaultsKey, createDefaults(options.defaults))
     app.provide(ThemeSymbol, createTheme(options.theme))
-    app.provide(DisplaySymbol, createDisplay(options.display))
-    app.provide(HighlighterSymbol, createHighlighter(options.highlighter))
-    app.provide(IconSymbol, mergeDeep({
+    app.provide(DisplayKey, createDisplay(options.display))
+    app.provide(HighlighterKey, createHighlighter(options.highlighter))
+    app.provide(IconKey, mergeDeep({
       defaultSet: 'class',
       sets: {
         ...defaultSets,
@@ -66,9 +66,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     // Vue's inject() can only be used in setup
     function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
       const vm = this.$
-
       const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
-
       if (provides && (key as any) in provides) {
         return provides[(key as string)]
       }
@@ -78,12 +76,12 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       computed: {
         $venoUi () {
           return reactive({
-            display: inject.call(this, DisplaySymbol),
             theme: inject.call(this, ThemeSymbol),
-            icons: inject.call(this, IconSymbol),
+            display: inject.call(this, DisplayKey),
+            icons: inject.call(this, IconKey),
           })
-        },
-      },
+        }
+      }
     })
   }
 

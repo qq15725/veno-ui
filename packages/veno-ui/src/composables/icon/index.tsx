@@ -59,7 +59,7 @@ type IconInstance = {
   icon: IconValue
 }
 
-export const IconSymbol: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
+export const IconKey: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
 
 export const makeIconProps = propsFactory({
   icon: {
@@ -164,7 +164,7 @@ export const defaultSets: Record<string, IconSet> = {
 
 // Composables
 export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) => {
-  const icons = inject(IconSymbol)
+  const icons = inject(IconKey)
 
   if (!icons) throw new Error('Missing VenoUi Icons provide!')
 

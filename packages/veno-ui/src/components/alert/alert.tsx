@@ -3,7 +3,7 @@ import './styles/alert.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent } from '../../utils'
+import { genericComponent, MakeSlots } from '../../utils'
 
 // Composables
 import { makeMaterialProps, useMaterial } from '../../composables/material'
@@ -25,7 +25,14 @@ import type { PropType } from 'vue'
 export type AlertType = typeof AlertTypes[number]
 export type Alert = InstanceType<typeof Alert>
 
-export const Alert = genericComponent()({
+export type AlertSlots = MakeSlots<{
+  action: []
+  default: []
+}>
+
+export const Alert = genericComponent<new () => {
+  $slots: AlertSlots
+}>()({
   name: 'VeAlert',
 
   props: {
@@ -34,6 +41,7 @@ export const Alert = genericComponent()({
       default: true,
     },
     title: String,
+    text: String,
     type: {
       type: String as PropType<AlertType>,
       validator: (val: AlertType) => AlertTypes.includes(val),
@@ -47,6 +55,7 @@ export const Alert = genericComponent()({
       type: String,
       default: 'veno-ui:$close',
     },
+    overlayColor: String,
     ...makeMaterialProps(),
     ...makeTransitionProps({
       transition: { component: FadeTransition },
@@ -59,22 +68,22 @@ export const Alert = genericComponent()({
 
   setup (props, { slots }) {
     const { materialClasses, materialStyles } = useMaterial(props)
-    const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
-      return props.textColor ?? props.type
-    }))
+    const iconColor = computed(() => props.textColor ?? props.type)
+    const {
+      textColorClasses: overlayColorClasses,
+      textColorStyles: overlayColorStyles
+    } = useTextColor(computed(() => props.overlayColor ?? iconColor.value))
     const isActive = useProxiedModel(props, 'modelValue')
-    const icon = computed(() => {
-      if (props.icon === false) return undefined
-      if (!props.type) return props.icon
-      return props.icon ?? `veno-ui:$${ props.type }`
-    })
+    const icon = computed(() => props.icon ? props.icon : `veno-ui:$${ props.type }`)
 
     function onCloseClick (e: Event) {
       isActive.value = false
     }
 
     return () => {
-      const hasAction = slots.action || props.closable
+      const hasIcon = props.icon !== false && (props.type || props.icon)
+      const hasAction = props.closable || slots.action
+      const hasText = props.text || slots.default
 
       return (
         <MaybeTransition transition={ props.transition }>
@@ -90,17 +99,17 @@ export const Alert = genericComponent()({
               <div
                 class={ [
                   've-alert__overlay',
-                  textColorClasses.value
+                  overlayColorClasses.value
                 ] }
-                style={ textColorStyles.value }
+                style={ overlayColorStyles.value }
               />
 
-              { props.type && (
+              { hasIcon && (
                 <Avatar
-                  class="ve-alert__avatar"
+                  class="ve-alert__icon"
                   icon={ icon.value }
                   color="transparent"
-                  text-color={ props.textColor ?? props.type }
+                  text-color={ iconColor.value }
                 />
               ) }
 
@@ -109,8 +118,8 @@ export const Alert = genericComponent()({
                   <div class="ve-alert__title">{ props.title }</div>
                 ) }
 
-                { slots.default && (
-                  <div class="ve-alert__content">{ slots.default?.() }</div>
+                { hasText && (
+                  <div class="ve-alert__content">{ props.text ?? slots.default?.() }</div>
                 ) }
               </div>
 

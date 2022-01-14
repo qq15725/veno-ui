@@ -69,7 +69,7 @@ export interface DisplayInstance {
   thresholds: DisplayThresholds
 }
 
-export const DisplaySymbol: InjectionKey<ToRefs<DisplayInstance>> = Symbol.for('veno-ui:display')
+export const DisplayKey: InjectionKey<ToRefs<DisplayInstance>> = Symbol.for('veno-ui:display')
 
 const defaultDisplayOptions: DisplayOptions = {
   mobileBreakpoint: 'lg',
@@ -204,9 +204,7 @@ export function createDisplay (options?: DisplayOptions): ToRefs<DisplayInstance
 }
 
 export function useDisplay () {
-  const display = inject(DisplaySymbol)
-
-  if (!display) throw new Error('Could not find VenoUi display injection')
-
-  return display
+  const provider = inject(DisplayKey)
+  if (!provider) throw new Error('Could not find VenoUi display injection')
+  return provider
 }

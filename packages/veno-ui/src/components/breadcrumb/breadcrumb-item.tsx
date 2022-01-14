@@ -30,6 +30,7 @@ export const BreadcrumbItem = genericComponent<new () => {
   },
 
   setup (props, { slots, attrs }) {
+    // @ts-ignore
     const { id, group } = useGroupItem({}, BreadcrumbSymbol)
 
     const hasNext = computed(() => {
