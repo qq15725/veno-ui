@@ -1,1 +1,0 @@
-import{g as s,B as a}from"./index.d8ace403.js";import{a as o,m as r}from"./vendor.4e3c54b7.js";const t=s()({name:"VeLink",props:{},setup:(s,{slots:t,attrs:e})=>()=>o(a,r({variant:"link"},e),t,16)});export{t as L};
