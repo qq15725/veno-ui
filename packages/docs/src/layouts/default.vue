@@ -1,7 +1,27 @@
+<script lang="ts">
+import { ref, defineComponent } from 'vue'
+import { version } from 'veno-ui'
+import { useAppStore } from '@/store/app'
+import { routesToMenus } from '@/utils'
+// @ts-ignore
+import pages from '~pages'
+
+export default defineComponent({
+  setup () {
+    return {
+      active: ref(),
+      menus: routesToMenus(pages),
+      app: useAppStore(),
+      version
+    }
+  }
+})
+</script>
+
 <template>
   <ve-app>
     <ve-progress
-        v-if="appStore.loading"
+        v-if="app.loading"
         indeterminate
         style="position: fixed; top: 0; z-index: 20;"
     />
@@ -62,10 +82,22 @@
 
     <ve-app-main>
       <ve-container class="px-md-10 py-8">
-        <ve-breadcrumb v-if="$route.meta.category">
-          <ve-breadcrumb-item>组件</ve-breadcrumb-item>
-          <ve-breadcrumb-item>{{ $route.meta.category }}</ve-breadcrumb-item>
-        </ve-breadcrumb>
+        <div class="d-flex">
+          <ve-breadcrumb v-if="$route.meta.category">
+            <ve-breadcrumb-item>组件</ve-breadcrumb-item>
+            <ve-breadcrumb-item>{{ $route.meta.category }}</ve-breadcrumb-item>
+          </ve-breadcrumb>
+          <ve-spacer />
+          <ve-button
+              class="text-caption"
+              variant="link"
+              target="_blank"
+              :href="`${app.repository}/${$route.meta.relativePath.replace('../', 'packages/')}`"
+              append-icon="$edit"
+          >
+            编辑此页面
+          </ve-button>
+        </div>
 
         <router-view #default="{ Component }">
           <ve-fade-transition hide-on-leave>
@@ -91,24 +123,3 @@
     </ve-app-sider>
   </ve-app>
 </template>
-
-<script lang="ts">
-import { ref, defineComponent } from 'vue'
-import { version } from 'veno-ui'
-import { useAppStore } from '@/store/app'
-import { routesToMenus } from '@/utils'
-import pages from '~pages'
-
-export default defineComponent({
-  setup (props) {
-    const active = ref()
-
-    return {
-      active,
-      menus: routesToMenus(pages),
-      appStore: useAppStore(),
-      version
-    }
-  }
-})
-</script>

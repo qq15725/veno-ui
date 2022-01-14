@@ -1,27 +1,39 @@
-<script setup lang="ts">
-import { ref } from 'vue'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { useAppStore } from '@/store/app'
 
-const props = defineProps<{
-  title?: string,
-  slug?: string,
-  file: string,
-  code: string,
-}>()
-
-const isActive = ref(false)
 const btn = ref()
-const theme = ref()
-const github = ref('https://github.com/qq15725/veno-ui/blob/master')
-const focusBtn = () => {
-  setTimeout(() => {
-    btn.value?.$el?.focus?.()
-  }, 0)
-}
+
+export default defineComponent({
+  name: 'Demo',
+
+  props: {
+    title: String,
+    slug: String,
+    file: String,
+    code: String,
+  },
+
+  setup (props) {
+    const { repository } = useAppStore()
+
+    return {
+      ...props,
+      repository,
+      theme: ref(),
+      isActive: ref(false),
+      btn,
+      focusBtn: () => {
+        setTimeout(() => btn.value?.$el?.focus?.(), 0)
+      }
+    }
+  }
+})
 </script>
 
 <template>
-  <div :id="props.slug">
-    <ve-card-title v-if="props.title" class="px-0 pt-0">{{ props.title }}</ve-card-title>
+  <div :id="slug">
+    <ve-card-title v-if="title" class="px-0 pt-0">{{ title }}</ve-card-title>
 
     <slot name="prepend" />
 
@@ -97,13 +109,13 @@ const focusBtn = () => {
 
         <ve-tooltip
             #activator="{ props: tooltipProps }"
-            text="在 GitHub 中编辑"
+            text="在 GitHub 中查看源代码"
             :open-delay="300"
             anchor="top"
         >
           <ve-button
               v-bind="tooltipProps"
-              :href="`${ github }${ props.file }`"
+              :href="`${ repository }${ file }`"
               target="_blank"
               style="opacity: .8;"
               icon="$github"
@@ -117,7 +129,7 @@ const focusBtn = () => {
     <ve-expand-transition>
       <ve-code
           v-if="isActive"
-          :value="props.code"
+          :value="code"
           language="vue"
           :show-language="false"
           class="mt-3"

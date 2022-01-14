@@ -1,5 +1,4 @@
 // Utils
-import { nextTick } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAppStore } from '@/store/app'
 import pages from '~pages'
@@ -26,6 +25,7 @@ export const useRouter: UsePlugin = app => {
   const router = createRouter({
     history: createWebHashHistory(),
     routes,
+    // @ts-ignore
     scrollBehavior (to, from, savedPosition) {
       if (to.path === from.path) return savedPosition
       return { top: 0 }

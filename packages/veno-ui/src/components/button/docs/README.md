@@ -1,5 +1,7 @@
 ---
-category: Basic 通用组件
+meta:
+  category: Basic 通用组件
+  wai-aria: https://www.w3.org/TR/wai-aria-practices/#button
 ---
 
 # 按钮 Button
