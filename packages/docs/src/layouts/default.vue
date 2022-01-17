@@ -38,20 +38,11 @@ export default defineComponent({
     />
 
     <ve-header border>
-      <ve-header-nav-icon
-          @click="active = !active"
-          class="hidden-sm-and-up"
-      />
-
+      <ve-header-nav-icon class="hidden-sm-and-up" @click="active = !active" />
       <ve-header-title class="hidden-sm-and-down">Veno UI</ve-header-title>
-
       <ve-spacer />
-
       <ve-header-items>
-        <ve-tooltip
-            #activator="{ props }"
-            text="反转示例颜色"
-        >
+        <ve-tooltip text="反转示例颜色" #activator="{ props }">
           <ve-button
               v-bind="props"
               @click="$venoUi.theme.current = $venoUi.theme.current === 'dark' ? 'light' : 'dark'"
@@ -59,11 +50,7 @@ export default defineComponent({
               variant="text"
           />
         </ve-tooltip>
-
-        <ve-tooltip
-            #activator="{ props }"
-            text="在 Github 中查看"
-        >
+        <ve-tooltip text="在 Github 中查看" #activator="{ props }">
           <ve-button
               v-bind="props"
               href="https://github.com/qq15725/veno-ui"
@@ -73,7 +60,6 @@ export default defineComponent({
               class="ml-3"
           />
         </ve-tooltip>
-
         <ve-button variant="text" class="ml-3">{{ version }}</ve-button>
       </ve-header-items>
     </ve-header>
@@ -91,37 +77,6 @@ export default defineComponent({
       </ve-list>
     </ve-sider>
 
-    <ve-main>
-      <ve-container class="px-md-10 py-8">
-        <div class="d-flex">
-          <ve-breadcrumb v-if="$route.meta.category">
-            <ve-breadcrumb-item
-                v-for="name in ['组件', $route.meta.category]"
-                :key="name"
-            >
-              {{ name }}
-            </ve-breadcrumb-item>
-          </ve-breadcrumb>
-          <ve-spacer />
-          <ve-button
-              class="text-caption"
-              variant="link"
-              target="_blank"
-              :href="url"
-              append-icon="$edit"
-          >
-            编辑此页面
-          </ve-button>
-        </div>
-
-        <router-view #default="{ Component }">
-          <ve-fade-transition hide-on-leave>
-            <component :is="Component" />
-          </ve-fade-transition>
-        </router-view>
-      </ve-container>
-    </ve-main>
-
     <ve-sider
         v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
         width="180"
@@ -137,5 +92,36 @@ export default defineComponent({
         />
       </ve-anchor>
     </ve-sider>
+
+    <ve-layout-item side="top" size="45" class="d-flex align-center px-md-10">
+      <ve-breadcrumb v-if="$route.meta.category">
+        <ve-breadcrumb-item
+            v-for="name in ['组件', $route.meta.category]"
+            :key="name"
+        >
+          {{ name }}
+        </ve-breadcrumb-item>
+      </ve-breadcrumb>
+      <ve-spacer />
+      <ve-button
+          class="text-caption"
+          variant="link"
+          target="_blank"
+          :href="url"
+          append-icon="$edit"
+      >
+        编辑此页面
+      </ve-button>
+    </ve-layout-item>
+
+    <ve-main>
+      <ve-container class="px-md-10">
+        <router-view #default="{ Component }">
+          <ve-fade-transition hide-on-leave>
+            <component :is="Component" />
+          </ve-fade-transition>
+        </router-view>
+      </ve-container>
+    </ve-main>
   </ve-app>
 </template>
