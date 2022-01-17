@@ -2,17 +2,25 @@
 @use 'variables' as *;
 
 .ve-app {
+  --ve-scrollbar-offset: 0px;
+  position: relative;
   display: flex;
+  flex: 1 1 auto;
   background: rgb(var(--ve-theme-background));
   color: rgb(var(--ve-theme-on-background));
 
-  &__wrap {
+  &--full-height {
+    --ve-scrollbar-offset: inherit;
+    height: 100%;
+  }
+
+  &__wrapper {
+    position: relative;
+    display: flex;
     flex: 1 1 auto;
     backface-visibility: hidden;
-    display: flex;
     flex-direction: column;
     max-width: 100%;
-    position: relative;
   }
 }
 

@@ -1,6 +1,6 @@
 // Utils
 import { computed, inject, provide, reactive } from 'vue'
-import { convertToUnit, propsFactory } from '../../utils'
+import { convertToUnit, propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Types
 import type { InjectionKey, Prop, Ref, ExtractPropTypes } from 'vue'
@@ -28,7 +28,10 @@ export const makeLayoutProps = propsFactory({
 
 export type LayoutProps = ExtractPropTypes<ReturnType<typeof makeLayoutProps>>
 
-export function provideLayout (props: LayoutProps) {
+export function provideLayout (
+  props: LayoutProps,
+  name = getCurrentInstanceName()
+) {
   const itemIds = reactive<string[]>([])
   const itemMap = new Map<string, Ref<LayoutItemProps>>()
   const handled = computed(() => (
@@ -126,10 +129,9 @@ export function provideLayout (props: LayoutProps) {
   })
 
   return {
-    layoutClasses: computed(() => [
-      've-layout',
-      { 've-layout--full-height': props.fullHeight },
-    ]),
+    layoutClasses: computed(() => ({
+      [`${ name }--full-height`]: props.fullHeight
+    })),
     getLayoutItem,
     items,
   }

@@ -34,7 +34,7 @@ export const App = defineComponent({
         ] }
         data-app="true"
       >
-        <div class="ve-app__wrap">
+        <div class="ve-app__wrapper">
           { slots.default?.() }
         </div>
       </div>
