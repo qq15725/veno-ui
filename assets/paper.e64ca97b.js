@@ -1,0 +1,1 @@
+import{k as s,b as a,u as e}from"./index.1caa3696.js";import{a as p}from"./vendor.4e3c54b7.js";const r=s({name:"VePaper",props:a(),setup(s,{slots:a}){const{paperClasses:r,paperStyles:t}=e(s);return()=>p(s.tag,{class:["ve-paper",r.value],style:t.value},a,8,["class","style"])}});export{r as P};

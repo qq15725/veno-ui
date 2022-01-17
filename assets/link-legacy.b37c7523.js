@@ -1,1 +1,0 @@
-System.register(["./index-legacy.71c9fd65.js","./vendor-legacy.56354abd.js"],(function(n){"use strict";var t,e,r,s;return{setters:[function(n){t=n.g,e=n.B},function(n){r=n.a,s=n.m}],execute:function(){n("L",t()({name:"VeLink",props:{},setup:function(n,t){var i=t.slots,u=t.attrs;return function(){return r(e,s({variant:"link"},u),i,16)}}}))}}}));
