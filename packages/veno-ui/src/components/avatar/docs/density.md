@@ -13,11 +13,11 @@
   <ve-radio label="xl" />
 </ve-radio-group>
 
-<ve-grid dense align="center">
+<ve-spacer dense align="center">
   <ve-avatar density="compact" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
   <ve-avatar density="comfortable" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
   <ve-avatar :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-</ve-grid>
+</ve-spacer>
 ```
 
 ```js

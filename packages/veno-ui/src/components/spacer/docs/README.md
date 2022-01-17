@@ -2,7 +2,7 @@
 category: Layouts 布局组件
 ---
 
-# 栅格 Grid
+# 间距 Spacer
 
 ## 演示
 
@@ -14,8 +14,4 @@ basic.md
 
 ## API
 
-<<<API container
-
-<<<API row
-
-<<<API col
+<<<API spacer

@@ -2,15 +2,22 @@
 
 # 基本用法
 
+flexbox 构建的 12 等分网格系统。
+
 ```html
-<ve-grid container dense :col-props="{ cols: 3 }">
-  <ve-paper 
-    v-for="i in 20" :key="i"
-    color="grey"
-    width="100%"
-    size="md"
-  />
-</ve-grid>
+<ve-row>
+  <ve-col
+    v-for="(cols, index) in [
+      3, 4, 5,
+      2, 6, 4,
+      7, 4, 1,
+    ]"
+    :key="index"
+    :cols="cols"
+  >
+    <ve-paper width="100%" height="30" color="grey-300" />
+  </ve-col>
+</ve-row>
 ```
 
 :::

@@ -13,11 +13,11 @@
   <ve-radio label="xl" />
 </ve-radio-group>
 
-<ve-grid dense align="center">
+<ve-spacer align="center">
   <ve-button density="compact" color="primary" :size="size">Compact</ve-button>
   <ve-button density="comfortable" color="primary" :size="size">Comfortable</ve-button>
   <ve-button color="primary" :size="size">Medium</ve-button>
-</ve-grid>
+</ve-spacer>
 ```
 
 ```js

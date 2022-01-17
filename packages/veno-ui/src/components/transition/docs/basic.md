@@ -6,7 +6,7 @@
 <ve-paper height="130">
   <ve-button @click="show = !show" class="mb-3">点我</ve-button>
 
-  <ve-grid>
+  <ve-spacer>
     <ve-expand-transition>
       <ve-paper v-show="show" color="primary" size="100" />
     </ve-expand-transition>
@@ -18,7 +18,7 @@
     <ve-scale-transition>
       <ve-paper v-show="show" color="primary" size="100" />
     </ve-scale-transition>
-  </ve-grid>
+  </ve-spacer>
 </ve-paper>
 ```
 

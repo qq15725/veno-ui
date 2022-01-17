@@ -58,7 +58,7 @@ export default defineComponent({
     <slot name="append" />
 
     <div class="mt-2">
-      <ve-grid dense justify="end">
+      <ve-spacer dense justify="end">
         <ve-tooltip
             #activator="{ props }"
             :text="isActive ? '隐藏源代码' : '查看源代码'"
@@ -126,7 +126,7 @@ export default defineComponent({
               size="xs"
           />
         </ve-tooltip>
-      </ve-grid>
+      </ve-spacer>
     </div>
 
     <ve-expand-transition>

@@ -5,7 +5,7 @@
 进度条的尺寸有 `x-small` - 特小、`small` - 小、`medium` - 中等、`large` - 大、`x-large` - 特大。
 
 ```html
-<ve-grid dense align="center">
+<ve-spacer dense align="center">
   <ve-progress
     size="x-small"
     color="primary"
@@ -35,7 +35,7 @@
     variant="circular"
     :model-value="30"
   />
-</ve-grid>
+</ve-spacer>
 ```
 
 :::

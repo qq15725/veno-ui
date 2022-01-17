@@ -2,8 +2,8 @@
 import './styles/col.scss'
 
 // Utils
-import { capitalize, computed, h } from 'vue'
-import { genericComponent } from '../../utils'
+import { capitalize, computed } from 'vue'
+import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -74,33 +74,37 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: boolean
   return className.toLowerCase()
 }
 
+export const makeColProps = propsFactory({
+  cols: {
+    type: [Boolean, String, Number],
+    default: false,
+  },
+  ...breakpointProps,
+  offset: {
+    type: [String, Number],
+    default: null,
+  },
+  ...offsetProps,
+  order: {
+    type: [String, Number],
+    default: null,
+  },
+  ...orderProps,
+  alignSelf: {
+    type: String,
+    default: null,
+    validator: (str: any) => ['auto', 'start', 'end', 'center', 'baseline', 'stretch'].includes(str),
+  },
+}, 'col')
+
 export type Col = InstanceType<typeof Col>
 
-export const Col = genericComponent()({
+export const Col = defineComponent({
   name: 'VeCol',
 
   props: {
-    cols: {
-      type: [Boolean, String, Number],
-      default: false,
-    },
-    ...breakpointProps,
-    offset: {
-      type: [String, Number],
-      default: null,
-    },
-    ...offsetProps,
-    order: {
-      type: [String, Number],
-      default: null,
-    },
-    ...orderProps,
-    alignSelf: {
-      type: String,
-      default: null,
-      validator: (str: any) => ['auto', 'start', 'end', 'center', 'baseline', 'stretch'].includes(str),
-    },
     ...makeTagProps(),
+    ...makeColProps(),
   },
 
   setup (props, { slots }) {
@@ -131,8 +135,10 @@ export const Col = genericComponent()({
       return classList
     })
 
-    return () => h(props.tag, {
-      class: classes.value,
-    }, slots.default?.())
+    return () => (
+      <props.tag class={ classes.value }>
+        { slots }
+      </props.tag>
+    )
   },
 })

@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-grid>
+<ve-spacer>
   <ve-tooltip
     #activator="{ props }"
     text="提示"
@@ -17,7 +17,7 @@
   >
     <ve-button v-bind="props">提示</ve-button>
   </ve-tooltip>
-</ve-grid>
+</ve-spacer>
 ```
 
 :::

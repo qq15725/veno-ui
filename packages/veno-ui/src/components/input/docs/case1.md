@@ -3,7 +3,7 @@
 # 例子1
 
 ```html
-<ve-grid :col-props="{ cols: 12 }">
+<ve-spacer cols="12">
   <ve-input
     label="背景色"
     prefix="Color"
@@ -21,13 +21,13 @@
     </ve-tooltip>
   </ve-input>
 
-  <ve-grid :col-props="{ cols: 6 }">
+  <ve-spacer cols="6">
     <ve-input label="上边距" disabled placeholder="Disabled" type="number" hide-details />
     <ve-input label="右边距" type="number" hide-details />
     <ve-input label="下边距" type="number" hide-details />
     <ve-input label="左边距" type="number" hide-details />
-  </ve-grid>
-</ve-grid>
+  </ve-spacer>
+</ve-spacer>
 ```
 
 :::

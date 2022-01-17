@@ -2,8 +2,8 @@
 import './styles/row.scss'
 
 // Utils
-import { capitalize, computed, h } from 'vue'
-import { genericComponent } from '../../utils'
+import { capitalize, computed } from 'vue'
+import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -15,7 +15,7 @@ const alignments = ['start', 'end', 'center'] as const
 // Types
 import type { Prop } from 'vue'
 
-function makeRowProps (prefix: string, def: () => Prop<string, null>) {
+function makeProps (prefix: string, def: () => Prop<string, null>) {
   return breakpoints.reduce((props, val) => {
     props[prefix + capitalize(val)] = def()
     return props
@@ -24,7 +24,7 @@ function makeRowProps (prefix: string, def: () => Prop<string, null>) {
 
 // align
 const alignValidator = (str: any) => [...alignments, 'baseline', 'stretch'].includes(str)
-const alignProps = makeRowProps('align', () => ({
+const alignProps = makeProps('align', () => ({
   type: String,
   default: null,
   validator: alignValidator,
@@ -32,7 +32,7 @@ const alignProps = makeRowProps('align', () => ({
 
 // justify
 const justifyValidator = (str: any) => [...alignments, 'space-between', 'space-around'].includes(str)
-const justifyProps = makeRowProps('justify', () => ({
+const justifyProps = makeProps('justify', () => ({
   type: String,
   default: null,
   validator: justifyValidator,
@@ -40,7 +40,7 @@ const justifyProps = makeRowProps('justify', () => ({
 
 // alignContent
 const alignContentValidator = (str: any) => [...alignments, 'space-between', 'space-around', 'stretch'].includes(str)
-const alignContentProps = makeRowProps('alignContent', () => ({
+const alignContentProps = makeProps('alignContent', () => ({
   type: String,
   default: null,
   validator: alignContentValidator,
@@ -73,33 +73,37 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: string)
   return className.toLowerCase()
 }
 
+export const makeRowProps = propsFactory({
+  dense: Boolean,
+  noGutters: Boolean,
+  align: {
+    type: String,
+    default: null,
+    validator: alignValidator,
+  },
+  ...alignProps,
+  justify: {
+    type: String,
+    default: null,
+    validator: justifyValidator,
+  },
+  ...justifyProps,
+  alignContent: {
+    type: String,
+    default: null,
+    validator: alignContentValidator,
+  },
+  ...alignContentProps,
+}, 'row')
+
 export type Row = InstanceType<typeof Row>
 
-export const Row = genericComponent()({
+export const Row = defineComponent({
   name: 'VeRow',
 
   props: {
-    dense: Boolean,
-    noGutters: Boolean,
-    align: {
-      type: String,
-      default: null,
-      validator: alignValidator,
-    },
-    ...alignProps,
-    justify: {
-      type: String,
-      default: null,
-      validator: justifyValidator,
-    },
-    ...justifyProps,
-    alignContent: {
-      type: String,
-      default: null,
-      validator: alignContentValidator,
-    },
-    ...alignContentProps,
     ...makeTagProps(),
+    ...makeRowProps(),
   },
 
   setup (props, { slots }) {
@@ -127,8 +131,15 @@ export const Row = genericComponent()({
       return classList
     })
 
-    return () => h(props.tag, {
-      class: ['ve-row', classes.value],
-    }, slots.default?.())
-  },
+    return () => (
+      <props.tag
+        class={ [
+          've-row',
+          classes.value
+        ] }
+      >
+        { slots }
+      </props.tag>
+    )
+  }
 })

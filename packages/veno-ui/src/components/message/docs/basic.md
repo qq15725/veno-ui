@@ -5,7 +5,7 @@
 ```html
 <ve-message ref="message" />
 
-<ve-grid>
+<ve-spacer>
   <ve-button
     @click="message.info('This is an info message!')"
   >
@@ -32,7 +32,7 @@
   >
     Error
   </ve-button>
-</ve-grid>
+</ve-spacer>
 ```
 
 ```js

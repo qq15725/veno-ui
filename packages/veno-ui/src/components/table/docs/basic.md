@@ -3,12 +3,12 @@
 # 基本用法
 
 ```html
-<ve-grid :col-props="{ cols: 'auto' }">
+<ve-spacer>
   <ve-switch label="显示边框" v-model="border" />
   <ve-switch label="隐藏表头" v-model="hideHeader" />  
   <ve-switch label="固定表头" v-model="fixedHeader" />  
   <ve-switch label="暂无数据" v-model="noData" />  
-</ve-grid>
+</ve-spacer>
 
 <ve-table
   :border="border"
