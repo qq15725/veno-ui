@@ -33,6 +33,7 @@ export const Sider = defineComponent({
     ...makeLayoutItemProps({
       position: 'fixed',
       side: 'left',
+      modelValue: null,
     } as const),
   },
 
@@ -48,7 +49,7 @@ export const Sider = defineComponent({
       size: width.value,
       layoutSize: isTemporary.value ? 0 : width.value,
       priority: props.priority,
-      active: isActive.value,
+      active: !!isActive.value,
     })))
 
     if (!props.disableResizeWatcher) {
@@ -61,7 +62,6 @@ export const Sider = defineComponent({
 
     onBeforeMount(() => {
       if (props.modelValue != null) return
-
       isActive.value = props.permanent || !mobile.value
     })
 
