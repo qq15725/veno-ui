@@ -39,7 +39,7 @@ export const LayoutItem = defineComponent({
         ] }
         style={ layoutItemStyles.value }
       >
-        { slots.default?.() }
+        { slots }
       </props.tag>
     )
   },
