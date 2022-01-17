@@ -8,10 +8,10 @@
 
 ```html
 <ve-app layer-z-index="0" style="height: 400px;">
-  <ve-header position="absolute" priority="-1" class="bg-grey-400" />
-  <ve-sider position="absolute" priority="-1" class="bg-grey-300" />
+  <ve-header position="absolute" class="bg-grey-400" />
+  <ve-sider position="absolute" class="bg-grey-300" />
   <ve-main class="bg-grey-200" />
-  <ve-sider side="right" position="absolute" priority="-1" class="bg-grey-300" />
+  <ve-sider side="right" position="absolute" class="bg-grey-300" />
 </ve-app>
 ```
 
