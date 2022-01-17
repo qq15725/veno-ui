@@ -34,7 +34,7 @@ export default defineComponent({
     <ve-progress
         stroke-width="2"
         :indeterminate="app.loading"
-        style="position: fixed; top: 0; z-index: 20;"
+        style="position: fixed; top: 0; z-index: 800;"
     />
 
     <ve-header border>
