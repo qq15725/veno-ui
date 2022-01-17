@@ -1,5 +1,6 @@
 ---
-category: Data 数据展示
+meta:
+  category: Data 数据展示
 ---
 
 # 卡片 Card

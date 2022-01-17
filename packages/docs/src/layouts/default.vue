@@ -93,7 +93,7 @@ export default defineComponent({
       </ve-anchor>
     </ve-sider>
 
-    <ve-layout-item side="top" size="45" class="d-flex align-center px-3 px-md-10">
+    <ve-layout-item side="top" size="45" priority="-1" class="d-flex align-center px-3 px-md-10">
       <ve-breadcrumb v-if="$route.meta.category">
         <ve-breadcrumb-item
             v-for="name in ['组件', $route.meta.category]"

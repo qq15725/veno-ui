@@ -9,6 +9,8 @@ import { Row, Col } from '../grid'
 import { makeRowProps } from '../grid/row'
 import { makeColProps } from '../grid/col'
 
+export type Spacer = InstanceType<typeof Spacer>
+
 export const Spacer = defineComponent({
   name: 'VeSpacer',
 
