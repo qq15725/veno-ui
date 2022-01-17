@@ -1,0 +1,8 @@
+@use '../../../styles/settings';
+
+.ve-layout-item {
+  transition: 0.2s settings.$standard-easing;
+}
+
+
+

@@ -37,17 +37,17 @@ export default defineComponent({
         style="position: fixed; top: 0; z-index: 20;"
     />
 
-    <ve-app-bar border>
-      <ve-app-bar-nav-icon
+    <ve-header border>
+      <ve-header-nav-icon
           @click="active = !active"
           class="hidden-sm-and-up"
       />
 
-      <ve-app-bar-title class="hidden-sm-and-down">Veno UI</ve-app-bar-title>
+      <ve-header-title class="hidden-sm-and-down">Veno UI</ve-header-title>
 
       <ve-spacer />
 
-      <ve-app-bar-items>
+      <ve-header-items>
         <ve-tooltip
             #activator="{ props }"
             text="反转示例颜色"
@@ -75,10 +75,10 @@ export default defineComponent({
         </ve-tooltip>
 
         <ve-button variant="text" class="ml-3">{{ version }}</ve-button>
-      </ve-app-bar-items>
-    </ve-app-bar>
+      </ve-header-items>
+    </ve-header>
 
-    <ve-app-sider v-model="active">
+    <ve-sider v-model="active">
       <ve-list
           nav
           density="compact"
@@ -89,9 +89,9 @@ export default defineComponent({
           <ve-list-subheader>{{ title }}</ve-list-subheader>
         </template>
       </ve-list>
-    </ve-app-sider>
+    </ve-sider>
 
-    <ve-app-main>
+    <ve-main>
       <ve-container class="px-md-10 py-8">
         <div class="d-flex">
           <ve-breadcrumb v-if="$route.meta.category">
@@ -120,14 +120,15 @@ export default defineComponent({
           </ve-fade-transition>
         </router-view>
       </ve-container>
-    </ve-app-main>
+    </ve-main>
 
-    <ve-app-sider
+    <ve-sider
         v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
         width="180"
-        position="right"
+        side="right"
     >
       <ve-anchor offset="64" density="compact">
+        <ve-list-subheader>目录</ve-list-subheader>
         <ve-anchor-item
             v-for="header in $route.meta.headers.filter(v => v.level === 3)"
             :key="header.slug"
@@ -135,6 +136,6 @@ export default defineComponent({
             :name="header.slug"
         />
       </ve-anchor>
-    </ve-app-sider>
+    </ve-sider>
   </ve-app>
 </template>

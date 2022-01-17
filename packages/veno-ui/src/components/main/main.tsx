@@ -1,20 +1,20 @@
 // Styles
-import './styles/app-main.scss'
+import './styles/main.scss'
 
 // Utils
 import { computed, unref } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-import { useMain } from '../../composables/layout'
+import { useLayoutMain } from '../../composables/layout'
 import { makeColorProps, useColor } from '../../composables/color'
 
 // Types
-export type AppMain = InstanceType<typeof AppMain>
+export type Main = InstanceType<typeof Main>
 
-export const AppMain = genericComponent()({
-  name: 'VeAppMain',
+export const Main = defineComponent({
+  name: 'VeMain',
 
   props: {
     ...makeTagProps({ tag: 'main' }),
@@ -22,7 +22,7 @@ export const AppMain = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { mainStyles } = useMain()
+    const { mainStyles } = useLayoutMain()
     const { colorClasses, colorStyles } = useColor(computed(() => {
       const { textColor, color } = unref(props)
       return {
@@ -34,7 +34,7 @@ export const AppMain = genericComponent()({
     return () => (
       <props.tag
         class={ [
-          've-app-main',
+          've-main',
           colorClasses.value,
         ] }
         style={ [
@@ -42,7 +42,7 @@ export const AppMain = genericComponent()({
           colorStyles.value,
         ] }
       >
-        <div class="ve-app-main__wrap">
+        <div class="ve-main__wrap">
           { slots.default?.() }
         </div>
       </props.tag>

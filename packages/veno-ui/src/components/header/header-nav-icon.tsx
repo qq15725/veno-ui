@@ -1,11 +1,11 @@
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Button } from '../../components/button'
 
-export const AppBarNavIcon = genericComponent()({
-  name: 'VeAppBarNavIcon',
+export const HeaderNavIcon = defineComponent({
+  name: 'VeHeaderNavIcon',
 
   props: {
     icon: {
@@ -21,7 +21,7 @@ export const AppBarNavIcon = genericComponent()({
   setup (props, { slots }) {
     return () => (
       <Button
-        class="ve-app-bar-nav-icon"
+        class="ve-header-nav-icon"
         icon={ props.icon }
         size={ props.size }
         v-slots={ slots }

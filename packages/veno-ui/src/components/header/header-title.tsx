@@ -1,0 +1,26 @@
+// Styles
+import './styles/header-title.scss'
+
+// Utils
+import { defineComponent } from '../../utils'
+
+// Composables
+import { makeTagProps } from '../../composables/tag'
+
+export const HeaderTitle = defineComponent({
+  name: 'VeHeaderTitle',
+
+  props: {
+    ...makeTagProps({ tag: 'header' }),
+  },
+
+  setup (props, { slots }) {
+    return () => (
+      <props.tag class="ve-header-title">
+        <div class="ve-header-title__wrapper">
+          { slots.default?.() }
+        </div>
+      </props.tag>
+    )
+  },
+})

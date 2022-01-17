@@ -3,23 +3,22 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-app-bar {
+.ve-header {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   max-width: 100%;
   overflow: hidden;
-  padding-left: $app-bar-padding-start;
-  padding-right: calc(#{$app-bar-padding-end} + var(--ve-scrollbar-offset));
-  position: fixed;
+  padding-left: $header-padding-start;
+  padding-right: calc(#{$header-padding-end} + var(--ve-scrollbar-offset));
   transition: .2s settings.$standard-easing;
   transition-property: height, transform;
-  color: $app-bar-color;
-  background: $app-bar-background;
-  @include tools.use-border(('borders': $app-bar-borders));
+  color: $header-color;
+  background: $header-background;
+  @include tools.use-border(('borders': $header-borders));
 
-  &__wrap {
+  &__wrapper {
     align-items: center;
     display: flex;
     flex: 0 0 auto;

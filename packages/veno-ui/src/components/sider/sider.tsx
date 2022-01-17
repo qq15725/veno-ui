@@ -1,9 +1,9 @@
 // Styles
-import './styles/app-sider.scss'
+import './styles/sider.scss'
 
 // Utils
-import { computed, toRef, onBeforeMount, watch } from 'vue'
-import { genericComponent } from '../../utils'
+import { computed, onBeforeMount, watch } from 'vue'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -15,18 +15,12 @@ import { useDisplay } from '../../composables/display'
 // Components
 import { Overlay } from '../overlay'
 
-// Types
-import type { PropType } from 'vue'
-export type AppSider = InstanceType<typeof AppSider>
+export type Sider = InstanceType<typeof Sider>
 
-export const AppSider = genericComponent()({
-  name: 'VeAppSider',
+export const Sider = defineComponent({
+  name: 'VeSider',
 
   props: {
-    modelValue: {
-      type: Boolean,
-      default: null,
-    },
     disableResizeWatcher: Boolean,
     permanent: Boolean,
     temporary: Boolean,
@@ -34,32 +28,28 @@ export const AppSider = genericComponent()({
       type: [Number, String],
       default: 256,
     },
-    position: {
-      type: String as PropType<'left' | 'right'>,
-      default: 'left',
-      validator: (value: any) => ['left', 'right'].includes(value),
-    },
     ...makeTagProps({ tag: 'nav' }),
     ...makeBorderProps(),
-    ...makeLayoutItemProps(),
+    ...makeLayoutItemProps({
+      position: 'fixed',
+      side: 'left',
+    } as const),
   },
 
   setup (props, { slots }) {
     const { borderClasses } = useBorder(props)
     const isActive = useProxiedModel(props, 'modelValue')
     const { mobile } = useDisplay()
-    const width = computed(() => {
-      return props.width
-    })
+    const width = computed(() => Number(props.width))
     const isTemporary = computed(() => !props.permanent && (mobile.value || props.temporary))
-    const layoutStyles = useLayoutItem(
-      props.name,
-      toRef(props, 'priority'),
-      toRef(props, 'position'),
-      computed(() => isTemporary.value ? 0 : width.value),
-      width,
-      isActive,
-    )
+    const { layoutItemStyles } = useLayoutItem(computed(() => ({
+      position: props.position,
+      side: props.side,
+      size: width.value,
+      layoutSize: isTemporary.value ? 0 : width.value,
+      priority: props.priority,
+      active: isActive.value,
+    })))
 
     if (!props.disableResizeWatcher) {
       watch(mobile, val => !props.permanent && (isActive.value = !val))
@@ -78,26 +68,24 @@ export const AppSider = genericComponent()({
     return () => (
       <props.tag
         class={ [
-          've-app-sider',
+          've-sider',
           {
-            've-app-sider--start': props.position === 'left',
-            've-app-sider--end': props.position === 'right',
-            've-app-sider--temporary': isTemporary.value,
+            've-sider--start': props.side === 'left',
+            've-sider--end': props.side === 'right',
+            've-sider--temporary': isTemporary.value,
           },
           borderClasses.value,
         ] }
-        style={ [
-          layoutStyles.value,
-        ] }
+        style={ layoutItemStyles.value }
       >
         { isTemporary.value && (
           <Overlay v-model={ isActive.value } style="z-index: 0;" />
         ) }
 
-        <div class="ve-app-sider__wrap">
+        <div class="ve-sider__wrapper">
           { slots.default?.() }
         </div>
       </props.tag>
     )
-  },
+  }
 })

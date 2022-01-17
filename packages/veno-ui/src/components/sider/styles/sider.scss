@@ -3,9 +3,9 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-app-sider {
+.ve-sider {
   -webkit-overflow-scrolling: touch;
-  background: $app-sider-background;
+  background: $sider-background;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -16,22 +16,21 @@
   transition-property: box-shadow, transform, visibility, width;
   transition-timing-function: settings.$standard-easing;
   will-change: transform;
-  position: fixed;
-  @include tools.use-border(('borders': $app-sider-borders));
+  @include tools.use-border(('borders': $sider-borders));
 
   &--start {
-    border-inline-end-width: $app-sider-border-thin-width;
+    border-inline-end-width: $sider-border-thin-width;
   }
 
   &--end {
-    border-inline-start-width: $app-sider-border-thin-width;
+    border-inline-start-width: $sider-border-thin-width;
   }
 
   &--temporary {
     @include tools.elevation(16);
   }
 
-  &__wrap {
+  &__wrapper {
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;

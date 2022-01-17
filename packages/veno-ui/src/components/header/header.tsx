@@ -1,8 +1,8 @@
 // Styles
-import './styles/app-bar.scss'
+import './styles/header.scss'
 
 // Utils
-import { toRef } from 'vue'
+import { computed } from 'vue'
 import { defineComponent, convertToUnit } from '../../utils'
 
 // Composables
@@ -12,56 +12,47 @@ import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 
 // Types
-import type { PropType } from 'vue'
-export type AppBar = InstanceType<typeof AppBar>
+export type Header = InstanceType<typeof Header>
 
-export const AppBar = defineComponent({
-  name: 'VeAppBar',
+export const Header = defineComponent({
+  name: 'VeHeader',
 
   props: {
     height: {
       type: [Number, String],
       default: 64,
     },
-    modelValue: {
-      type: Boolean,
-      default: true,
-    },
-    position: {
-      type: String as PropType<'top' | 'bottom'>,
-      default: 'top',
-      validator: (value: any) => ['top', 'bottom'].includes(value),
-    },
     ...makeTagProps({ tag: 'header' }),
     ...makeThemeProps(),
     ...makeBorderProps(),
-    ...makeLayoutItemProps({ name: 'app-bar' }),
+    ...makeLayoutItemProps({
+      position: 'fixed',
+      side: 'top',
+    } as const),
   },
 
   setup (props, { slots }) {
     const { borderClasses } = useBorder(props)
     const { themeClasses } = provideTheme(props)
-
-    const layoutStyles = useLayoutItem(
-      props.name,
-      toRef(props, 'priority'),
-      toRef(props, 'position'),
-      toRef(props, 'height'),
-      toRef(props, 'height'),
-      toRef(props, 'modelValue'),
-    )
+    const { layoutItemStyles } = useLayoutItem(computed(() => ({
+      position: props.position,
+      side: props.side,
+      size: props.height,
+      active: props.modelValue,
+      priority: props.priority,
+    })))
 
     return () => (
       <props.tag
         class={ [
-          've-app-bar',
+          've-header',
           themeClasses.value,
           borderClasses.value,
         ] }
-        style={ layoutStyles.value }
+        style={ layoutItemStyles.value }
       >
         <div
-          class="ve-app-bar__wrap"
+          class="ve-header__wrapper"
           style={ { height: convertToUnit(props.height) } }
         >
           { slots.default?.() }

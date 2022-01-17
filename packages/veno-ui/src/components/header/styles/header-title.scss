@@ -1,10 +1,10 @@
 @forward 'variables';
 @use 'variables' as *;
 
-.ve-app-bar-title {
-  font-size: $app-bar-title-font-size;
-  font-weight: $app-bar-title-font-weight;
-  padding: $app-bar-title-padding;
+.ve-header-title {
+  font-size: $header-title-font-size;
+  font-weight: $header-title-font-weight;
+  padding: $header-title-padding;
   line-height: 1.6;
 
   &__wrap {

@@ -6,7 +6,7 @@ import { defineComponent } from 'vue'
 
 // Composables
 import { makeThemeProps, provideTheme } from '../../composables/theme'
-import { makeLayoutProps, createLayout } from '../../composables/layout'
+import { makeLayoutProps, provideLayout } from '../../composables/layout'
 import { createDragSortProvider } from '../../composables/drag-sort'
 
 export const App = defineComponent({
@@ -14,12 +14,15 @@ export const App = defineComponent({
 
   props: {
     ...makeThemeProps(),
-    ...makeLayoutProps({ fullHeight: true }),
+    ...makeLayoutProps({
+      fullHeight: true,
+      layerZIndex: 700,
+    }),
   },
 
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
-    const { layoutClasses } = createLayout(props)
+    const { layoutClasses } = provideLayout(props)
     createDragSortProvider()
 
     return () => (

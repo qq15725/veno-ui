@@ -1,15 +1,15 @@
 // Styles
 import './styles/messages.scss'
 
+// Utils
+import { defineComponent, wrapInArray } from '../../utils'
+import { computed } from 'vue'
+
 // Components
 import { FadeTransition } from '../transition'
 
 // Composables
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
-
-// Utilities
-import { defineComponent, wrapInArray } from '../../utils'
-import { computed } from 'vue'
 
 export const Messages = defineComponent({
   name: 'VeMessages',
@@ -32,22 +32,26 @@ export const Messages = defineComponent({
   setup (props, { slots }) {
     const messages = computed(() => wrapInArray(props.value))
 
-    return () => (
-      <MaybeTransition
-        transition={ props.transition }
-        tag="div"
-        class="ve-messages"
-      >
-        { (messages.value.length > 0 && props.active) && (
-          messages.value.map((message: any, i) => (
-            <div class="ve-messages__message" key={ i }>
-              { message }
-            </div>
-          ))
-        ) }
+    return () => {
+      const hasMessages = messages.value.length > 0 && props.active
 
-        { slots?.default?.() }
-      </MaybeTransition>
-    )
+      return (
+        <MaybeTransition
+          transition={ props.transition }
+          tag="div"
+          class="ve-messages"
+        >
+          { hasMessages && (
+            messages.value.map((message: any, i) => (
+              <div class="ve-messages__message" key={ i }>
+                { message }
+              </div>
+            ))
+          ) }
+
+          { slots?.default?.() }
+        </MaybeTransition>
+      )
+    }
   },
 })
