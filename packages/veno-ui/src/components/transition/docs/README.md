@@ -8,9 +8,7 @@ category: Basic 通用组件
 
 :::include
 
-fade.md expand.md
-
-scale.md
+basic.md
 
 :::
 
