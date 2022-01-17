@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/vite-plugin-markdown",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "A Vite Markdown Plugin",
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown",
   "license": "MIT",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
-    "@veno-ui/markdown": "^0.0.21"
+    "@veno-ui/markdown": "^0.0.22"
   },
   "publishConfig": {
     "access": "public"
