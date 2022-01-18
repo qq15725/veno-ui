@@ -81,23 +81,7 @@ export const Button = genericComponent<new () => {
   },
 
   setup: function (props, { attrs, slots, emit }) {
-    const computedProps = computed(() => {
-      let colors
-      {
-        if (props.variant === 'link') {
-          colors = { textColor: props.color ?? 'primary', color: undefined }
-        } else if (props.variant === 'contained') {
-          colors = { color: props.color ?? 'secondary' }
-        } else {
-          colors = { color: props.color }
-        }
-      }
-      return {
-        ...props,
-        ...colors,
-      }
-    })
-    const { paperClasses, paperStyles } = usePaper(computedProps)
+    const { paperClasses, paperStyles } = usePaper(props)
     const isDisabled = computed(() => {
       return group?.disabled.value || props.disabled || props.loading
     })

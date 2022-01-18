@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+// color
+$tag-background: rgb(var(--ve-theme-secondary)) !default;
+$tag-color: rgb(var(--ve-theme-on-secondary)) !default;
+
+// border
+$tag-border-color: settings.$border-color !default;
+$tag-border-style: settings.$border-style !default;
+$tag-border-width: 0 !default;
+$tag-border-thin-width: thin !default;
+$tag-border-radius: settings.$border-radius !default;
+
+$tag-paper: () !default;
+$tag-paper: tools.map-deep-merge(
+    (
+      'variants': (
+        'contained': (
+          'background': $tag-background,
+          'color': $tag-color,
+        ),
+      ),
+      'positions': absolute fixed,
+      'borders': (
+        'default': (
+          'color': $tag-border-color,
+          'style': $tag-border-style,
+          'width': $tag-border-width,
+        ),
+        'existence': (
+          'width': $tag-border-thin-width,
+        )
+      ),
+      'shapes': (
+        'default': $tag-border-radius,
+      ),
+    ),
+    $tag-paper
+);

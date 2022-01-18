@@ -8,6 +8,8 @@
   <ve-tag>Tag2</ve-tag>
   <ve-tag>Tag3</ve-tag>
   <ve-tag>Complete</ve-tag>
+  <ve-tag icon="veno-ui:$nodata">Complete</ve-tag>
+  <ve-tag color="red-100" text-color="red">Complete</ve-tag>
 </ve-spacer>
 ```
 

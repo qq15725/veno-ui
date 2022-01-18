@@ -44,7 +44,7 @@
     height: auto;
     min-width: auto;
     background: transparent;
-    color: inherit;
+    color: rgb(var(--ve-theme-primary));
 
     &:not(#{$root}--disabled):not(#{$root}--loading):hover {
       text-decoration: underline currentColor;

@@ -32,7 +32,7 @@ export function colorToOnColorHex (color: Color): Hex {
 }
 
 export function isCssColor (color?: string | null | false): boolean {
-  return !!color && /^(#|var\(--|(rgb|hsl)a?\()/.test(color)
+  return !!color && /^(#|inherit|var\(--|(rgb|hsl)a?\()/.test(color)
 }
 
 export function colorToInt (color: Color): ColorInt {

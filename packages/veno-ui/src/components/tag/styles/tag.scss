@@ -1,16 +1,16 @@
-@use '../../../styles/settings';
+@forward 'variables';
+@use 'variables' as *;
 @use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-tag {
   display: inline-block;
   padding: 0 8px;
   font-size: 12px;
-  height: 24px;
-  line-height: 24px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle;
   font-weight: 500;
-  @include tools.use-paper();
+  @include tools.use-paper($tag-paper);
 }
