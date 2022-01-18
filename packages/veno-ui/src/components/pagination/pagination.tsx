@@ -7,7 +7,6 @@ import { createRange, defineComponent, keyValues } from '../../utils'
 
 // Components
 import { Button } from '../button'
-import { allowedVariants } from '../button/button'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -17,8 +16,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { makePaginationProps } from '../../composables/pagination'
 
 // Types
-import type { ComponentPublicInstance, PropType } from 'vue'
-import type { ButtonVariant } from '../button/button'
+import type { ComponentPublicInstance, } from 'vue'
 
 export type Pagination = InstanceType<typeof Pagination>
 
@@ -86,11 +84,6 @@ export const Pagination = defineComponent({
     ...makePaperProps({
       tag: 'nav',
     } as const),
-    variant: {
-      type: String as PropType<ButtonVariant>,
-      default: 'text',
-      validator: (v: any) => allowedVariants.includes(v),
-    },
   },
 
   emits: {

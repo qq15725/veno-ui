@@ -38,23 +38,6 @@
     }
   }
 
-  &--variant-link {
-    padding: 0;
-    user-select: auto;
-    height: auto;
-    min-width: auto;
-    background: transparent;
-    color: rgb(var(--ve-theme-primary));
-
-    &:not(#{$root}--disabled):not(#{$root}--loading):hover {
-      text-decoration: underline currentColor;
-    }
-
-    #{$root}__icon {
-      font-size: 1em !important;
-    }
-  }
-
   &--icon {
     padding: 0;
     height: var(--ve-button-height);

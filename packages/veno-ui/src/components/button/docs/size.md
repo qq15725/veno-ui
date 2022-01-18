@@ -6,11 +6,11 @@
 
 ```html
 <ve-spacer align="center">
-  <ve-button size="x-small" color="primary">特小</ve-button>
-  <ve-button size="small" color="primary">小的</ve-button>
-  <ve-button size="medium" color="primary">默认</ve-button>
-  <ve-button size="large" color="primary">大的</ve-button>
-  <ve-button size="x-large" color="primary">特大</ve-button>
+  <ve-button size="x-small" color="primary">XSmall</ve-button>
+  <ve-button size="small" color="primary">Small</ve-button>
+  <ve-button size="medium" color="primary">Medium</ve-button>
+  <ve-button size="large" color="primary">Large</ve-button>
+  <ve-button size="x-large" color="primary">XLarge</ve-button>
 </ve-spacer>
 ```
 

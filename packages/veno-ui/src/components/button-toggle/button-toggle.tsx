@@ -5,7 +5,7 @@ import { defineComponent, useRender } from '../../utils'
 import { makeGroupProps, useGroup } from '../../composables/group'
 
 // Symbols
-export const ButtonToggleSymbol = Symbol.for('veno-ui:button-toggle')
+export const ButtonToggleKey = Symbol.for('veno-ui:button-toggle')
 
 import { ButtonGroup } from '../button-group'
 
@@ -23,7 +23,7 @@ export const ButtonToggle = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { isSelected, next, prev, select, selected } = useGroup(props, ButtonToggleSymbol)
+    const { isSelected, next, prev, select, selected } = useGroup(props, ButtonToggleKey)
 
     useRender(() => {
       return (

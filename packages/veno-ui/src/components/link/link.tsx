@@ -1,31 +1,44 @@
+// Styles
+import './styles/link.scss'
+
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Button } from '../button'
 
 // Types
-import type { ButtonSlots } from '../button/button'
+import type { PropType } from 'vue'
 
 export type Link = InstanceType<typeof Link>
 
-export const Link = genericComponent<new () => {
-  $slots: ButtonSlots
-}>()({
+export const Link = defineComponent({
   name: 'VeLink',
 
   props: {
-    //
+    underline: {
+      type: [Boolean, String] as PropType<boolean | 'hover'>,
+      default: false
+    },
   },
 
-  setup (props, { slots, attrs }) {
+  setup (props, { slots }) {
     return () => {
       return (
         <Button
-          variant="link"
-          { ...attrs }
-          v-slots={ slots }
-        />
+          class={ [
+            've-link',
+            {
+              've-link--underline': props.underline === true,
+              've-link--underline-hover': props.underline === 'hover',
+            }
+          ] }
+          variant="text"
+          ripple={ false }
+          overlay={ false }
+        >
+          { slots.default?.() }
+        </Button>
       )
     }
   }

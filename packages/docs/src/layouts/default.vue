@@ -103,15 +103,14 @@ export default defineComponent({
         </ve-breadcrumb-item>
       </ve-breadcrumb>
       <ve-spacer />
-      <ve-button
+      <ve-link
           class="text-caption"
-          variant="link"
           target="_blank"
           :href="url"
           append-icon="$edit"
       >
         编辑此页面
-      </ve-button>
+      </ve-link>
     </ve-layout-item>
 
     <ve-main>

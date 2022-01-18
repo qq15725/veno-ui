@@ -3,7 +3,7 @@ import './styles/button.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -20,29 +20,12 @@ import { Icon } from '../icon'
 import { Ripple } from '../../directives/ripple'
 
 // Symbols
-import { ButtonToggleSymbol } from '../button-toggle/button-toggle'
-
-// Constants
-export const allowedVariants = [
-  'contained', // 容器按钮
-  'outlined', // 轮廓按钮
-  'text', // 文本按钮
-  'link', // 链接按钮
-] as const
+import { ButtonToggleKey } from '../button-toggle/button-toggle'
 
 // Types
-import type { PropType } from 'vue'
-import type { MakeSlots } from '../../utils'
-
-export type ButtonVariant = typeof allowedVariants[number]
 export type Button = InstanceType<typeof Button>
-export type ButtonSlots = MakeSlots<{
-  default: [],
-}>
 
-export const Button = genericComponent<new () => {
-  $slots: ButtonSlots
-}>()({
+export const Button = defineComponent({
   name: 'VeButton',
 
   directives: { Ripple },
@@ -62,6 +45,10 @@ export const Button = genericComponent<new () => {
       type: Boolean,
       default: true,
     },
+    overlay: {
+      type: Boolean,
+      default: true,
+    },
     ...makeDisabledProps(),
     ...makeLoadingProps(),
     ...makeRouterProps(),
@@ -69,11 +56,6 @@ export const Button = genericComponent<new () => {
     ...makePaperProps({
       tag: 'button',
     }),
-    variant: {
-      type: String as PropType<ButtonVariant>,
-      default: 'contained',
-      validator: (v: any) => allowedVariants.includes(v),
-    },
   },
 
   emits: {
@@ -89,7 +71,7 @@ export const Button = genericComponent<new () => {
     const { disabledClasses } = useDisabled(computed(() => ({
       disabled: group?.disabled.value || props.disabled
     })))
-    const group = useGroupItem(props, ButtonToggleSymbol, false)
+    const group = useGroupItem(props, ButtonToggleKey, false)
     const link = useLink(props, attrs)
     const handleClick = (e: Event) => {
       if (isDisabled.value) {
@@ -136,7 +118,7 @@ export const Button = genericComponent<new () => {
             props.icon ? ['center'] : null,
           ] }
         >
-          <div class="ve-button__overlay" />
+          { props.overlay && <div class="ve-button__overlay" /> }
 
           { hasLoding && (
             <Progress

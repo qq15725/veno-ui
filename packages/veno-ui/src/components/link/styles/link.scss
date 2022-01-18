@@ -1,0 +1,22 @@
+.ve-link {
+  padding: 0;
+  user-select: auto;
+  height: auto;
+  min-width: auto;
+
+  &--underline {
+    text-decoration: underline currentColor;
+  }
+
+  &--underline-hover:hover {
+    text-decoration: underline currentColor;
+  }
+
+  &:not(.ve-button--disabled):not(.ve-button--loading):hover {
+    color: rgb(var(--ve-theme-primary));
+  }
+
+  .ve-button__icon {
+    font-size: 1em !important;
+  }
+}
