@@ -48,6 +48,9 @@ $button-paper: tools.map-deep-merge(
           'background': $button-background,
           'color': $button-color,
         ),
+        'text': (
+          'color': $button-color,
+        )
       ),
       'positions': absolute fixed,
       'borders': (

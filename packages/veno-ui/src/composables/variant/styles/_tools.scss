@@ -14,7 +14,7 @@
   &--variant-text,
   &--variant-outlined {
     background: transparent;
-    color: inherit;
+    color: tools.map-deep-get($variants, 'text', 'color');
   }
 
   &--variant-outlined {

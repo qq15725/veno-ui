@@ -7,6 +7,9 @@ $variants: functions.map-deep-merge(
         'background': rgb(var(--ve-theme-surface)),
         'color': rgb(var(--ve-theme-on-surface))
       ),
+      'text': (
+        'color': inherit
+      )
     ),
     $variants
 );
