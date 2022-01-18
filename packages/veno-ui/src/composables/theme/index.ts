@@ -123,18 +123,18 @@ export function createTheme (options?: ThemeOptions): Theme {
           if (/on-[a-z]/.test(key)) {
             lines.push(
               ...createCssClass(`.${ key }`, [
-                `color: rgb(var(--ve-theme-${ key }))`
+                `color: rgb(var(--ve-theme-${ key })) !important`
               ])
             )
           } else {
             lines.push(
               ...createCssClass(`.bg-${ key }`, [
                 `--ve-theme-overlay-multiplier: var(--ve-theme-${ key }-overlay-multiplier)`,
-                `background: rgb(var(--ve-theme-${ key }))`,
-                `color: rgb(var(--ve-theme-on-${ key }))`,
+                `background: rgb(var(--ve-theme-${ key })) !important`,
+                `color: rgb(var(--ve-theme-on-${ key })) !important`,
               ]),
               ...createCssClass(`.text-${ key }`, [
-                `color: rgb(var(--ve-theme-${ key }))`
+                `color: rgb(var(--ve-theme-${ key })) !important`
               ]),
               ...createCssClass(`.border-${ key }`, [
                 `--ve-border-color: var(--ve-theme-${ key })`
