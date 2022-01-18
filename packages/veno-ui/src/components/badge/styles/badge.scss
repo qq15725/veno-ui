@@ -1,0 +1,87 @@
+@forward './variables';
+@use '../../../styles/tools';
+@use './variables' as *;
+
+.ve-badge {
+  display: inline-block;
+  line-height: $badge-line-height;
+
+  &__badge {
+    align-items: center;
+    border-radius: $badge-border-radius;
+    display: flex;
+    font-size: $badge-font-size;
+    font-weight: $badge-font-weight;
+    height: $badge-height;
+    justify-content: center;
+    min-width: $badge-min-width;
+    padding: $badge-padding;
+    pointer-events: auto;
+    position: absolute;
+    text-align: center;
+    text-indent: 0;
+    transition: $badge-transition;
+    white-space: nowrap;
+
+    .ve-badge--bordered & {
+      &::after {
+        border-radius: inherit;
+        border-style: $badge-border-style;
+        border-width: $badge-border-width;
+        bottom: 0;
+        color: $badge-border-color;
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: $badge-border-transform;
+      }
+    }
+
+    .ve-badge--dot & {
+      border-radius: $badge-dot-border-radius;
+      height: $badge-dot-height;
+      min-width: 0;
+      padding: 0;
+      width: $badge-dot-width;
+      background: $badge-background;
+      color: $badge-color;
+
+      &::after {
+        border-width: $badge-dot-border-width;
+      }
+    }
+
+    .ve-badge--inline & {
+      position: relative;
+      vertical-align: $badge-inline-vertical-align;
+    }
+
+    .ve-icon {
+      color: inherit;
+    }
+
+    img,
+    .ve-img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__content {
+    padding: $badge-content-padding;
+  }
+
+  &__wrapper {
+    display: flex;
+    position: relative;
+
+    .ve-badge--inline & {
+      align-items: center;
+      display: inline-flex;
+      justify-content: center;
+      margin: $badge-wrapper-margin;
+    }
+  }
+}

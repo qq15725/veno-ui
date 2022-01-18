@@ -11,6 +11,8 @@ category: Data 数据展示
 
 basic.md
 
+github-tags.md
+
 :::
 
 ## API

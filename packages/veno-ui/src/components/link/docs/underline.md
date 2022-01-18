@@ -5,7 +5,7 @@
 ```html
 <ve-spacer align="center">
   <ve-link>Link</ve-link>
-  <ve-link underline="hover">underline="hover"</ve-link>
+  <ve-link :underline="false">:underline="false"</ve-link>
   <ve-link underline>underline</ve-link>
 </ve-spacer>
 ```

@@ -32,6 +32,7 @@ export interface IconAliases
   first: IconValue
   last: IconValue
   nodata: IconValue
+  link: IconValue
 }
 
 export interface IconProps

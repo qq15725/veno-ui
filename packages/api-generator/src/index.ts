@@ -73,7 +73,7 @@ const getComponentsApi = () => {
       const type = getPropType(typeof prop === 'function' ? prop : prop.type)
       component.props.push({
         name,
-        source: prop.source || name,
+        source: prop.source,
         default: getPropDefault(prop.default, type),
         type,
       })

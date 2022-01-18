@@ -126,7 +126,7 @@ export const Button = defineComponent({
               color="currentColor"
               indeterminate
               variant="circular"
-              stroke-width={ 2 }
+              stroke-width={ 1 }
               left={ !props.stacked && props.icon === false }
             />
           ) }
@@ -141,7 +141,7 @@ export const Button = defineComponent({
 
           { hasDefault && (
             typeof props.icon === 'boolean'
-              ? props.text ?? slots.default?.()
+              ? <span>{ props.text ?? slots.default?.() }</span>
               : <Icon
                 class="ve-button__icon"
                 icon={ props.icon }

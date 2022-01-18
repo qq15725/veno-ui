@@ -12,8 +12,12 @@ basic.md
 
 underline.md
 
+icon.md
+
 :::
 
 ## API
+
+继承 `Button`。
 
 <<<API link

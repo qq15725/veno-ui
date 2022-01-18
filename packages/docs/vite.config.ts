@@ -123,6 +123,7 @@ export default defineConfig(({ mode }) => {
                   const props = component.props.map((prop: any) => {
                     return {
                       name: prop.name,
+                      source: prop.source,
                       type: typeof prop.type === 'object'
                         ? prop.type.join(' | ')
                         : prop.type,
@@ -130,9 +131,10 @@ export default defineConfig(({ mode }) => {
                     }
                   })
                   const headersProp = JSON.stringify([
-                    { text: '属性名', value: 'name' },
-                    { text: '类型', value: 'type' },
-                    { text: '默认值', value: 'default' }
+                    { text: '属性名', value: 'name', minWidth: '120', },
+                    { text: '类型', value: 'type', minWidth: '120', },
+                    { text: '默认值', value: 'default', minWidth: '200', },
+                    { text: '组合', value: 'source', minWidth: '120', }
                   ])
                   const itemsProp = JSON.stringify(props).replace(/'/g, '')
                   str += `### ${ name } Props\n<ve-table per-page="999" :pagination="false" :headers='${ headersProp }' :items='${ itemsProp }'/>\n`

@@ -6,9 +6,9 @@ export default {
       colors: {
         background: '#FFF',
         surface: '#FFF',
-        primary: '#165DFF',
+        primary: '#0969da',
         secondary: '#F2F3F5',
-        'on-secondary': '#4e5969',
+        'on-secondary': '#20262d',
         success: '#00B42A',
         warning: '#f0a020',
         error: '#F53F3F',

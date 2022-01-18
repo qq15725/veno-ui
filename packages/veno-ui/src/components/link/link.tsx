@@ -18,8 +18,14 @@ export const Link = defineComponent({
   props: {
     underline: {
       type: [Boolean, String] as PropType<boolean | 'hover'>,
-      default: false
+      default: 'hover'
     },
+    linkIcon: {
+      type: String,
+      default: 'veno-ui:$link',
+    },
+    prependIcon: [Boolean, String],
+    appendIcon: [Boolean, String],
   },
 
   setup (props, { slots }) {
@@ -36,8 +42,18 @@ export const Link = defineComponent({
           variant="text"
           ripple={ false }
           overlay={ false }
+          prepend-icon={
+            props.prependIcon === true
+              ? props.linkIcon
+              : typeof props.prependIcon === 'string' ? props.prependIcon : undefined
+          }
+          append-icon={
+            props.appendIcon === true
+              ? props.linkIcon
+              : typeof props.appendIcon === 'string' ? props.appendIcon : undefined
+          }
         >
-          { slots.default?.() }
+          { slots }
         </Button>
       )
     }
