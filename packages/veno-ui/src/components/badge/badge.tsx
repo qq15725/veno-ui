@@ -32,10 +32,6 @@ export const Badge = defineComponent({
     floating: Boolean,
     icon: String,
     inline: Boolean,
-    label: {
-      type: String,
-      default: '$vuetify.badge',
-    },
     location: {
       type: String,
       default: 'top-right',

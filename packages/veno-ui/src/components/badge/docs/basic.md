@@ -4,8 +4,12 @@
 
 ```html
 <ve-spacer>
-  <ve-badge bordered color="error" icon="veno-ui:$nodata">
-    <ve-button color="error">Account</ve-button>
+  <ve-badge color="error">
+    <ve-button color="primary">Badge</ve-button>
+  </ve-badge>
+  
+  <ve-badge color="error" icon="veno-ui:$close">
+    <ve-button color="primary">Badge</ve-button>
   </ve-badge>
 </ve-spacer>
 ```

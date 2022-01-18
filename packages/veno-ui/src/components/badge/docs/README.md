@@ -5,8 +5,6 @@ meta:
 
 # 标记 Badge
 
-按钮用来触发一些即时操作。
-
 :::include
 
 basic.md
