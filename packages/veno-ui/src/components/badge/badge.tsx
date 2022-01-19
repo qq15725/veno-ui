@@ -22,10 +22,13 @@ export const Badge = defineComponent({
   inheritAttrs: false,
 
   props: {
-    bordered: Boolean,
+    bordered: {
+      type: Boolean,
+      default: true,
+    },
     color: {
       type: String,
-      default: 'primary',
+      default: 'error',
     },
     content: [Number, String],
     dot: Boolean,
@@ -62,11 +65,11 @@ export const Badge = defineComponent({
     const { shapeClasses } = useShape(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'textColor'))
 
-    const position = computed(() => {
-      return props.floating
+    const position = computed(() => (
+      props.floating
         ? (props.dot ? 2 : 4)
         : (props.dot ? 8 : 12)
-    })
+    ))
 
     function calculatePosition (offset?: number | string) {
       return `calc(100% - ${ convertToUnit(position.value + Number(offset ?? 0)) })`
@@ -74,21 +77,17 @@ export const Badge = defineComponent({
 
     const locationStyles = computed(() => {
       const [vertical, horizontal] = (props.location ?? '').split('-')
-
       // TODO: RTL support
-
       const styles = {
         bottom: 'auto',
         left: 'auto',
         right: 'auto',
         top: 'auto',
       }
-
       if (!props.inline) {
         styles[horizontal === 'left' ? 'right' : 'left'] = calculatePosition(props.offsetX)
         styles[vertical === 'top' ? 'bottom' : 'top'] = calculatePosition(props.offsetY)
       }
-
       return styles
     })
 
@@ -121,14 +120,13 @@ export const Badge = defineComponent({
           ] }
           { ...restAttrs }
         >
-          <div class="ve-badge__wrapper">
-            { slots.default?.() }
+          { slots.default?.() }
 
-            <MaybeTransition transition={ props.transition }>
+          <MaybeTransition transition={ props.transition }>
               <span
                 v-show={ props.modelValue }
                 class={ [
-                  've-badge__badge',
+                  've-badge__content',
                   backgroundColorClasses.value,
                   shapeClasses.value,
                   textColorClasses.value,
@@ -145,16 +143,14 @@ export const Badge = defineComponent({
                 { ...badgeAttrs }
               >
                 {
-                  props.dot
-                    ? undefined
-                    : slots.badge?.()
-                    ?? props.icon
-                    ? <Icon icon={ props.icon } />
-                    : <span class="ve-badge__content">{ content }</span>
+                  !props.dot && (
+                    slots.badge?.() ?? props.icon
+                      ? <Icon icon={ props.icon } />
+                      : content
+                  )
                 }
               </span>
-            </MaybeTransition>
-          </div>
+          </MaybeTransition>
         </props.tag>
       )
     }
