@@ -171,10 +171,10 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/antfu/vite-plugin-pwa
       VitePWA({
-        includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt'],
+        includeAssets: ['favicon.ico', 'robots.txt'],
         manifest: {
-          name: 'VenoUI',
-          short_name: 'VenoUI',
+          name: 'Veno UI',
+          short_name: 'Veno UI',
           description: 'A Vue 3 UI Library. Uses Composable. Uses TypeScript.',
           theme_color: '#ffffff',
           icons: [

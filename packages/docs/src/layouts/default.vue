@@ -38,8 +38,8 @@ export default defineComponent({
     />
 
     <ve-header border>
-      <ve-header-nav-icon class="hidden-sm-and-up" @click="active = !active" />
-      <ve-header-title class="hidden-sm-and-down">Veno UI</ve-header-title>
+      <ve-header-nav-icon v-if="$venoUi.display.mobile" @click="active = !active" />
+      <ve-header-title>Veno UI</ve-header-title>
       <ve-spacer />
       <ve-header-items>
         <ve-tooltip text="反转示例颜色" #activator="{ props }">

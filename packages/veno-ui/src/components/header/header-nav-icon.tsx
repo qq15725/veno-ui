@@ -11,10 +11,6 @@ export const HeaderNavIcon = defineComponent({
     icon: {
       type: String,
       default: 'veno-ui:$menu',
-    },
-    size: {
-      type: String,
-      default: 'md',
     }
   },
 
@@ -23,7 +19,6 @@ export const HeaderNavIcon = defineComponent({
       <Button
         class="ve-header-nav-icon"
         icon={ props.icon }
-        size={ props.size }
         v-slots={ slots }
       />
     )
