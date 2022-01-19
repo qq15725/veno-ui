@@ -3,7 +3,7 @@ import './styles/badge.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { convertToUnit, defineComponent, pick } from '../../utils'
+import { defineComponent, convertToUnit, pick } from '../../utils'
 
 // Components
 import { Icon } from '../../components/icon'
@@ -27,7 +27,7 @@ export const Badge = defineComponent({
       type: String,
       default: 'primary',
     },
-    content: String,
+    content: [Number, String],
     dot: Boolean,
     floating: Boolean,
     icon: String,
@@ -57,7 +57,7 @@ export const Badge = defineComponent({
     ...makeTransitionProps({ transition: 'scale-rotate-transition' }),
   },
 
-  setup (props, ctx) {
+  setup (props, { slots, attrs }) {
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
     const { shapeClasses } = useShape(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'textColor'))
@@ -94,11 +94,13 @@ export const Badge = defineComponent({
 
     return () => {
       const value = Number(props.content)
-      const content = (!props.max || isNaN(value)) ? props.content
-        : value <= props.max ? value
+      const content = (!props.max || isNaN(value))
+        ? props.content
+        : value <= props.max
+          ? value
           : `${ props.max }+`
 
-      const [badgeAttrs, attrs] = pick(ctx.attrs as Record<string, any>, [
+      const [badgeAttrs, restAttrs] = pick(attrs as Record<string, any>, [
         'aria-atomic',
         'aria-label',
         'aria-live',
@@ -117,10 +119,10 @@ export const Badge = defineComponent({
               've-badge--inline': props.inline,
             },
           ] }
-          { ...attrs }
+          { ...restAttrs }
         >
           <div class="ve-badge__wrapper">
-            { ctx.slots.default?.() }
+            { slots.default?.() }
 
             <MaybeTransition transition={ props.transition }>
               <span
@@ -143,10 +145,12 @@ export const Badge = defineComponent({
                 { ...badgeAttrs }
               >
                 {
-                  props.dot ? undefined
-                    : ctx.slots.badge ? ctx.slots.badge?.()
-                    : props.icon ? <Icon icon={ props.icon } />
-                      : <span class="ve-badge__content">{ content }</span>
+                  props.dot
+                    ? undefined
+                    : slots.badge?.()
+                    ?? props.icon
+                    ? <Icon icon={ props.icon } />
+                    : <span class="ve-badge__content">{ content }</span>
                 }
               </span>
             </MaybeTransition>

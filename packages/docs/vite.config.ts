@@ -12,6 +12,8 @@ import Legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
 import Markdown from '@veno-ui/vite-plugin-markdown'
 import Components from 'unplugin-vue-components/vite'
+// @ts-ignore
+import { VitePWA } from 'vite-plugin-pwa'
 
 // Types
 import type { ComponentResolver } from 'unplugin-vue-components'
@@ -70,6 +72,13 @@ export default defineConfig(({ mode }) => {
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
+      Vue(),
+      VueJsx(),
+      Legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      }),
+
       // https://github.com/hannoeru/vite-plugin-pages
       Pages({
         extensions: ['vue', 'md'],
@@ -160,11 +169,33 @@ export default defineConfig(({ mode }) => {
         ]
       }),
 
-      Vue(),
-      VueJsx(),
-      Legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      // https://github.com/antfu/vite-plugin-pwa
+      VitePWA({
+        includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt'],
+        manifest: {
+          name: 'VenoUI',
+          short_name: 'VenoUI',
+          description: 'A Vue 3 UI Library. Uses Composable. Uses TypeScript.',
+          theme_color: '#ffffff',
+          icons: [
+            {
+              src: 'pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: 'pwa-256x256.png',
+              sizes: '256x256',
+              type: 'image/png',
+            },
+            {
+              src: 'pwa-256x256.png',
+              sizes: '256x256',
+              type: 'image/png',
+              purpose: 'any maskable',
+            }
+          ]
+        }
       }),
     ],
     define: {
