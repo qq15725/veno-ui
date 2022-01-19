@@ -65,7 +65,7 @@ export default defineComponent({
 
       return new Promise(resolve => {
         const xhr = new XMLHttpRequest()
-        xhr.open('GET', `http://cps.fdota.com/products?${ query }`)
+        xhr.open('GET', `https://cps.fdota.com/products?${ query }`)
         xhr.onreadystatechange = function () {
           if (xhr.readyState == 4) {
             resolve(JSON.parse(xhr.responseText))
