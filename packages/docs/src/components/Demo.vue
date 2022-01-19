@@ -68,7 +68,7 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="isActive = !isActive"
-              :color="isActive ? 'primary' : 'grey-800'"
+              :color="isActive ? 'primary' : undefined"
               icon="$code"
               variant="text"
               size="xs"
@@ -84,7 +84,6 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="focusBtn"
-              color="grey-800"
               icon="$focus"
               variant="text"
               tabindex="-1"
@@ -101,7 +100,6 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
-              color="grey-800"
               :icon="`$${theme || 'light'}`"
               variant="text"
               tabindex="-1"
@@ -119,7 +117,6 @@ export default defineComponent({
               v-bind="tooltipProps"
               :href="`${ repository }${ file }`"
               target="_blank"
-              color="grey-800"
               icon="$github"
               variant="text"
               tabindex="-1"

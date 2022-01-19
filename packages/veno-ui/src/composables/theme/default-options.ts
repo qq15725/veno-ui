@@ -32,10 +32,11 @@ export default {
     dark: {
       dark: true,
       colors: {
-        background: '#101014',
-        surface: '#18181C',
+        background: '#22272e',
+        surface: '#2d333b',
         primary: '#296DFF',
-        secondary: '#27272A',
+        secondary: '#20262d',
+        'on-secondary': '#F2F3F5',
         success: '#00B42A',
         warning: '#FF7D00',
         error: '#F53F3F',
