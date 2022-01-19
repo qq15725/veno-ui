@@ -171,6 +171,7 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/antfu/vite-plugin-pwa
       VitePWA({
+        registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'robots.txt'],
         manifest: {
           name: 'Veno UI',
