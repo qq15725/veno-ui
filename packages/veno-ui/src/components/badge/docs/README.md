@@ -11,6 +11,8 @@ basic.md
 
 dot.md
 
+hover.md
+
 location.md
 
 max.md

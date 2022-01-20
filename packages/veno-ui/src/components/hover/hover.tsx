@@ -1,5 +1,5 @@
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeDelayProps, useDelay } from '../../composables/delay'
@@ -8,7 +8,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 // Types
 export type Hover = InstanceType<typeof Hover>
 
-export const Hover = genericComponent()({
+export const Hover = defineComponent({
   name: 'VeHover',
 
   props: {

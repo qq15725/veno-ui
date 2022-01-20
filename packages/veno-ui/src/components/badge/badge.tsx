@@ -6,7 +6,8 @@ import { computed, toRef } from 'vue'
 import { defineComponent, convertToUnit, pick } from '../../utils'
 
 // Components
-import { Icon } from '../../components/icon'
+import { Icon } from '../icon'
+import { FadeTransition } from '../transition'
 
 // Composables
 import { makeShapeProps, useShape } from '../../composables/shape'
@@ -57,7 +58,9 @@ export const Badge = defineComponent({
     textColor: String,
     ...makeShapeProps(),
     ...makeTagProps(),
-    ...makeTransitionProps({ transition: 'scale-rotate-transition' }),
+    ...makeTransitionProps({
+      transition: { component: FadeTransition },
+    }),
   },
 
   setup (props, { slots, attrs }) {
