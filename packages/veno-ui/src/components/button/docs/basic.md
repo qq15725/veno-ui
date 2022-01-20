@@ -6,10 +6,9 @@
 
 ```html
 <ve-spacer>
-  <ve-button color="primary">Primary</ve-button>
-  <ve-button>Secondary</ve-button>
-  <ve-button variant="outlined" color="primary">Outlined</ve-button>
-  <ve-button variant="text" color="primary">Text</ve-button>
+  <ve-button>Contained</ve-button>
+  <ve-button variant="outlined">Outlined</ve-button>
+  <ve-button variant="text">Text</ve-button>
 </ve-spacer>
 ```
 

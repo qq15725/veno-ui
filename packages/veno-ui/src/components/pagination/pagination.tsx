@@ -83,6 +83,7 @@ export const Pagination = defineComponent({
     ...makePaginationProps(),
     ...makePaperProps({
       tag: 'nav',
+      variant: 'text',
     } as const),
   },
 
@@ -208,7 +209,7 @@ export const Pagination = defineComponent({
               ref,
               ellipsis: false,
               icon: true,
-              disabled: !!props.disabled || lastPage.value < 2,
+              disabled: props.disabled || lastPage.value < 2,
               elevation: props.elevation,
               variant: props.variant,
               border: props.border,
@@ -232,8 +233,8 @@ export const Pagination = defineComponent({
         border: props.border,
       }
 
-      const prevDisabled = !!props.disabled || page.value <= firstPage.value
-      const nextDisabled = !!props.disabled || page.value >= firstPage.value + lastPage.value - 1
+      const prevDisabled = props.disabled || page.value <= firstPage.value
+      const nextDisabled = props.disabled || page.value >= firstPage.value + lastPage.value - 1
 
       return {
         first: props.showFirstLastPage ? {

@@ -44,13 +44,24 @@ export function useVariant (
     ]
   })
 
+  const variantStyles = computed(() => {
+    const { textColor, color, variant } = unref(props)
+    if (variant === 'outlined'
+      && (color !== undefined || textColor !== undefined)) {
+      return {
+        borderColor: 'currentColor',
+      }
+    }
+    return {}
+  })
+
   const { colorClasses, colorStyles } = useColor(computed(() => {
     const { textColor, color, variant } = unref(props)
     switch (variant) {
       case 'outlined':
       case 'text':
         return {
-          text: color,
+          text: color ?? textColor,
         }
       case 'contained':
       default:
@@ -61,5 +72,5 @@ export function useVariant (
     }
   }))
 
-  return { colorClasses, colorStyles, variantClasses }
+  return { colorClasses, colorStyles, variantClasses, variantStyles }
 }

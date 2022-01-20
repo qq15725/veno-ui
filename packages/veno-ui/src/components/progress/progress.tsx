@@ -59,7 +59,7 @@ export const Progress = defineComponent({
 
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
-    const { variantClasses } = useVariant(props)
+    const { variantClasses, variantStyles } = useVariant(props)
     const { sizeClasses, sizeStyles } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(
       toRef(props, 'color')
@@ -104,6 +104,7 @@ export const Progress = defineComponent({
           ] }
           style={ [
             sizeStyles.value,
+            variantStyles.value,
             textColorStyles.value,
           ] }
         >
