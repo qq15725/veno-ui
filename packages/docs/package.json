@@ -1,7 +1,7 @@
 {
   "name": "@veno-ui/docs",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
@@ -10,14 +10,14 @@
   "dependencies": {
     "pinia": "^2.0.9",
     "prismjs": "^1.25.0",
-    "veno-ui": "^0.1.1",
+    "veno-ui": "^0.1.2",
     "vue": "^3.2.26",
     "vue-router": "^4.0.10"
   },
   "devDependencies": {
-    "@veno-ui/api-generator": "^0.1.1",
-    "@veno-ui/markdown": "^0.1.1",
-    "@veno-ui/vite-plugin-markdown": "^0.1.1",
+    "@veno-ui/api-generator": "^0.1.2",
+    "@veno-ui/markdown": "^0.1.2",
+    "@veno-ui/vite-plugin-markdown": "^0.1.2",
     "@veno-ui/vite-plugin-svg": "^0.1.1",
     "@vitejs/plugin-legacy": "^1.6.4",
     "@vue/compiler-sfc": "^3.0.5",
