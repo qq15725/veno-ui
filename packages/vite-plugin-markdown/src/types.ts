@@ -1,4 +1,3 @@
-// Types
 import type {
   Options as MarkdownOptions,
   Markdown,

@@ -1,15 +1,15 @@
 // Styles
 import './styles/icon.scss'
 
+// Utils
+import { defineComponent, computed, toRef } from 'vue'
+import { convertToUnit, flattenFragments } from '../../utils'
+
 // Composables
 import { makeSizeProps, useSize } from '../../composables/size'
 import { makeTagProps } from '../../composables/tag'
 import { useIcon } from '../../composables/icon'
 import { useTextColor } from '../../composables/color'
-
-// Utils
-import { defineComponent, computed, toRef } from 'vue'
-import { convertToUnit, flattenFragments } from '../../utils'
 
 // Types
 import type { IconValue } from '../../composables/icon'

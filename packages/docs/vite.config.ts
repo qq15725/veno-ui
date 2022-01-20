@@ -10,8 +10,9 @@ import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
-import Markdown from '@veno-ui/vite-plugin-markdown'
 import Components from 'unplugin-vue-components/vite'
+import Markdown from '@veno-ui/vite-plugin-markdown'
+import Svg from '@veno-ui/vite-plugin-svg'
 // @ts-ignore
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -54,14 +55,14 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: [
-        { find: /^@root\/(.*)/, replacement: resolve('../../$1') },
-        { find: /^@\/(.*)/, replacement: resolve('./src/$1') },
+        { find: '@root', replacement: resolve('../..') },
+        { find: '@', replacement: resolve('./src') },
         ...(
           mode === 'development'
             ? [
-              { find: /^veno-ui$/, replacement: resolve('../veno-ui/src/framework.ts') },
-              { find: /^veno-ui\/styles$/, replacement: resolve('../veno-ui/src/styles/main.scss') },
-              { find: /^veno-ui\/components$/, replacement: resolve('../veno-ui/src/components') },
+              { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
+              { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
+              { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
             ]
             : []
         ),
@@ -72,13 +73,6 @@ export default defineConfig(({ mode }) => {
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
-      Vue(),
-      VueJsx(),
-      Legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-      }),
-
       // https://github.com/hannoeru/vite-plugin-pages
       Pages({
         extensions: ['vue', 'md'],
@@ -161,6 +155,9 @@ export default defineConfig(({ mode }) => {
         }
       }),
 
+      // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-svg
+      Svg(),
+
       // https://github.com/antfu/unplugin-vue-components
       Components({
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
@@ -197,6 +194,13 @@ export default defineConfig(({ mode }) => {
             }
           ]
         }
+      }),
+
+      Vue(),
+      VueJsx(),
+      Legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),
     ],
     define: {

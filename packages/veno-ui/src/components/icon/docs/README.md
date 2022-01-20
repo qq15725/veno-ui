@@ -4,15 +4,17 @@ category: Basic 通用组件
 
 # 图标 Icon
 
-`icon` 组件。
-
 ## 演示
 
 :::include
 
-basic.md 
+basic.md
 
 svg.md
+
+iconfont.md
+
+custom-preset.md
 
 preset.md
 

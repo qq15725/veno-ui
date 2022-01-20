@@ -15,6 +15,7 @@ export const highlight = (raw: string, rawLang: string) => {
   }
 
   return `<ve-code 
+  class="mb-4"
   show-line-numbers
   :highlighted-line-numbers="${ JSON.stringify(highlightedLineNumbers) }" 
   language="${ lang }" 

@@ -7,6 +7,10 @@ import { resolveOptions } from './options'
 import type { Options, MarkdownToVue } from './types'
 import type { Plugin, PluginOption } from 'vite'
 
+function getVueId (id: string) {
+  return id.replace('.md', '.vue')
+}
+
 export default function markdownPlugin (userOptions?: Options): PluginOption {
   const options = resolveOptions(userOptions)
 
@@ -15,37 +19,20 @@ export default function markdownPlugin (userOptions?: Options): PluginOption {
     options.exclude,
   )
 
-  function getVueId (id: string) {
-    return id.replace('md', 'vue')
-  }
-
   let markdownToVue: MarkdownToVue
   let vuePlugin: Plugin | undefined
 
   return {
     name: '@veno-ui/vite-plugin-md',
 
-    /**
-     * 配置解析完后
-     *
-     * @param config
-     */
     async configResolved (config) {
       vuePlugin = config.plugins.find(p => p.name === 'vite:vue')
       markdownToVue = createMarkdownToVue(config, options)
     },
 
-    /**
-     * 内容变换
-     *
-     * @param raw
-     * @param id
-     */
     transform (raw, id) {
       if (!filter(id)) return
-
       if (!vuePlugin) return this.error('Not found plugin [vite:vue]')
-
       try {
         return vuePlugin.transform?.call(this, markdownToVue(raw, id), getVueId(id))
       } catch (e: any) {
@@ -53,14 +40,8 @@ export default function markdownPlugin (userOptions?: Options): PluginOption {
       }
     },
 
-    /**
-     * 处理热更新
-     *
-     * @param ctx
-     */
     async handleHotUpdate (ctx) {
       if (!vuePlugin || !filter(ctx.file)) return
-
       return vuePlugin.handleHotUpdate?.call(this, {
         ...ctx,
         file: getVueId(ctx.file),

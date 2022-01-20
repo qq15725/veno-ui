@@ -6,13 +6,13 @@ markdown to vue
 
 ```tsx
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import markdown from '@veno-ui/vite-plugin-markdown'
+import Vue from '@vitejs/plugin-vue'
+import Markdown from '@veno-ui/vite-plugin-markdown'
 
 export default defineConfig({
   plugins: [
-    markdown(), 
-    vue()
+    Markdown(),
+    Vue()
   ],
 })
 ```

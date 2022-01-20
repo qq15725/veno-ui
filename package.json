@@ -4,12 +4,15 @@
     "packages/**"
   ],
   "scripts": {
-    "markdown:dev": "npm run dev -w @veno-ui/markdown",
-    "markdown-plugin:dev": "npm run dev -w @veno-ui/vite-plugin-markdown",
     "docs:dev": "npm run dev -w @veno-ui/docs",
     "docs:build": "npm run build -w @veno-ui/docs",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "npm run docs:build && npm run docs:publish",
+    "build:api-generator": "npm run build -w @veno-ui/api-generator",
+    "build:markdown": "npm run build -w @veno-ui/markdown",
+    "build:vite-plugin-svg": "npm run build -w @veno-ui/vite-plugin-svg",
+    "build:vite-plugin-markdown": "npm run build -w @veno-ui/vite-plugin-markdown",
+    "build:plugins": "npm run build:api-generator && npm run build:markdown && npm run build:vite-plugin-svg && npm run build:vite-plugin-markdown",
     "build:lib": "npm run build:lib -w veno-ui",
     "build:dist": "npm run build:dist -w veno-ui",
     "build": "npm run build:lib && npm run build:dist"

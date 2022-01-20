@@ -1,6 +1,6 @@
-// Utilities
-import { defineComponent, computed, inject, isRef } from 'vue'
-import { propsFactory } from '../../utils'
+// Utils
+import { computed, inject, isRef } from 'vue'
+import { propsFactory, defineComponent } from '../../utils'
 
 // Types
 import type { InjectionKey, JSXComponent, PropType, Ref } from 'vue'
@@ -64,10 +64,9 @@ export const IconKey: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
 
 export const makeIconProps = propsFactory({
   icon: {
-    type: [String, Object, Function] as PropType<IconValue>,
+    type: [String, Object] as PropType<IconValue>,
     required: true,
   },
-  // Could not remove this and use makeTagProps, types complained because it is not required
   tag: {
     type: String,
     required: true,
@@ -95,35 +94,43 @@ export const SvgIcon = defineComponent({
 
   inheritAttrs: false,
 
-  props: makeIconProps(),
+  props: {
+    viewBox: {
+      type: String,
+      default: '0 0 24 24'
+    },
+    ...makeIconProps()
+  },
 
   setup (props, { attrs }) {
     return () => {
+      let Svg
+      let viewBox = props.viewBox
+      let html
       const isString = typeof props.icon === 'string'
+      if (isString) {
+        Svg = 'svg'
+        if (/<svg/.test(props.icon)) {
+          const matched = props.icon.match(/<svg(.*?)>(.*)<\/svg>/)
+          viewBox = matched?.[1]?.match(/viewBox="(.*?)"/)?.[1] ?? props.viewBox
+          html = matched?.[2]
+        } else {
+          html = `<path d="${ props.icon as string }" />`
+        }
+      } else {
+        Svg = props.icon
+      }
 
       return (
         <props.tag { ...attrs } style={ null }>
-          { isString && (
-            <svg
-              class="ve-icon__svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              role="img"
-              aria-hidden="true"
-            >
-              <path d={ props.icon as string } />
-            </svg>
-          ) }
-
-          { !isString && (
-            <props.icon
-              class="ve-icon__svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              role="img"
-              aria-hidden="true"
-            />
-          ) }
+          <Svg
+            class="ve-icon__svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox={ viewBox }
+            role="img"
+            aria-hidden="true"
+            v-html={ html }
+          />
         </props.tag>
       )
     }
@@ -151,7 +158,7 @@ export const ClassIcon = defineComponent({
     return () => {
       return <props.tag class={ props.icon } />
     }
-  },
+  }
 })
 
 export const defaultSets: Record<string, IconSet> = {
@@ -167,7 +174,7 @@ export const defaultSets: Record<string, IconSet> = {
 export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) => {
   const icons = inject(IconKey)
 
-  if (!icons) throw new Error('Missing VenoUi Icons provide!')
+  if (!icons) throw new Error('[VenoUi] Missing Icons provide!')
 
   const iconData: Ref<IconInstance> = computed(() => {
     let iconAlias = isRef(props) ? props.value : props.icon

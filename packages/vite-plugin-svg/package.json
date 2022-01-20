@@ -1,8 +1,8 @@
 {
-  "name": "@veno-ui/vite-plugin-markdown",
+  "name": "@veno-ui/vite-plugin-svg",
   "version": "0.1.0",
-  "description": "A Vite Markdown Plugin",
-  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown",
+  "description": "A Vite Svg Plugin",
+  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
@@ -14,8 +14,8 @@
   },
   "keywords": [
     "vite-plugin",
-    "vite-plugin-markdown",
-    "veno-ui md"
+    "vite-plugin-svg",
+    "veno-ui svg"
   ],
   "scripts": {
     "dev": "tsc --watch",
@@ -26,8 +26,11 @@
     "vite": "^2.4.0"
   },
   "dependencies": {
+    "svgo": "^2.8.0"
+  },
+  "devDependencies": {
     "@rollup/pluginutils": "^4.1.2",
-    "@veno-ui/markdown": "^0.1.0"
+    "@types/svgo": "^2.6.1"
   },
   "publishConfig": {
     "access": "public"
