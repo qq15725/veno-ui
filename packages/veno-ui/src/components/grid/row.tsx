@@ -3,7 +3,7 @@ import './styles/row.scss'
 
 // Utils
 import { capitalize, computed } from 'vue'
-import { defineComponent, propsFactory } from '../../utils'
+import { defineComponent, propsFactory, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -73,9 +73,25 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: string)
   return className.toLowerCase()
 }
 
+const GUTTERS = [
+  'xs', 'sm', 'md', 'lg', 'xl', 'xxl',
+  'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large',
+]
+
+const GUTTERS_ALIASES = {
+  'x-small': 'xs',
+  'small': 'sm',
+  'medium': 'md',
+  'large': 'lg',
+  'x-large': 'xl',
+  'xx-large': 'xxl',
+}
+
 export const makeRowProps = propsFactory({
-  dense: Boolean,
-  noGutters: Boolean,
+  gutter: {
+    type: [Number, String],
+    default: 'xl',
+  },
   align: {
     type: String,
     default: null,
@@ -120,9 +136,16 @@ export const Row = defineComponent({
         })
       }
 
+      // Gutter
+      if (GUTTERS.includes(props.gutter as string)) {
+        let gutter = props.gutter
+        if (props.gutter in GUTTERS_ALIASES) {
+          gutter = GUTTERS_ALIASES[gutter as keyof typeof GUTTERS_ALIASES]
+        }
+        classList.push(`ve-row--gutter-${ gutter }`)
+      }
+
       classList.push({
-        've-row--no-gutters': props.noGutters,
-        've-row--dense': props.dense,
         [`align-${ props.align }`]: props.align,
         [`justify-${ props.justify }`]: props.justify,
         [`align-content-${ props.alignContent }`]: props.alignContent,
@@ -131,12 +154,20 @@ export const Row = defineComponent({
       return classList
     })
 
+    const styles = computed(() => {
+      if (GUTTERS.includes(props.gutter as string)) return {}
+      return {
+        '--ve-row-gutter': convertToUnit(props.gutter),
+      }
+    })
+
     return () => (
       <props.tag
         class={ [
           've-row',
           classes.value
         ] }
+        style={ styles.value }
       >
         { slots }
       </props.tag>

@@ -3,7 +3,7 @@
 # 纸张形状
 
 ```html
-<ve-spacer dense class="bg-grey-300 p-3">
+<ve-spacer gutter="md" class="bg-grey-300 p-3">
   <ve-paper size="40" shape="tile" />
   <ve-paper size="40" />
   <ve-paper size="40" shape="round" />

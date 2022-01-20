@@ -1,8 +1,8 @@
-@use 'sass:math';
 @forward 'variables';
 @use 'variables' as *;
-@use '../../../styles/settings/grid' as *;
 @use 'mixins' as *;
+@use '../../../styles/settings';
+@use '../../../styles/tools';
 
 // Row
 //
@@ -11,33 +11,20 @@
   display: flex;
   flex-wrap: wrap;
   flex: 1 1 auto;
-  margin: -($grid-gutter) * .5;
+  margin: calc(var(--ve-row-gutter, 0px) * -.5);
+
+  @each $name, $value in settings.$grid-gutters {
+    &--gutter-#{$name} {
+      --ve-row-gutter: #{$value};
+    }
+  }
 
   & + .row {
-    margin-top: $grid-gutter * .5;
-
-    &--dense {
-      margin-top: $grid-gutter-dense * .5;
-    }
+    margin-top: calc(var(--ve-row-gutter) * .5);
   }
 
-  &--dense {
-    margin: -($grid-gutter-dense) * .5;
-
-    > .ve-col,
-    > [class*="ve-col-"] {
-      padding: $grid-gutter-dense * .5;
-    }
-  }
-
-  // Remove the negative margin from default .v-row, then the horizontal padding
-  // from all immediate children columns (to prevent runaway style inheritance).
-  &--no-gutters {
-    margin: 0;
-
-    > .ve-col,
-    > [class*="ve-col-"] {
-      padding: 0;
-    }
+  > .ve-col,
+  > [class*="ve-col-"] {
+    padding: calc(var(--ve-row-gutter) * .5);
   }
 }

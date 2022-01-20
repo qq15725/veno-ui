@@ -3,7 +3,7 @@
 # 文本内容
 
 ```html
-<ve-spacer>
+<ve-spacer gutter="xxl">
   <ve-badge content="NEW">
     <ve-avatar color="grey-300" />
   </ve-badge>

@@ -4,16 +4,16 @@ import { propsFactory, getCurrentInstanceName, convertToUnit } from '../../utils
 
 // Constants
 export const SIZES = [
-  'x-small', 'small', 'medium', 'large', 'x-large',
   'xs', 'sm', 'md', 'lg', 'xl',
+  'x-small', 'small', 'medium', 'large', 'x-large',
 ]
 
 const ALIASES = {
-  'xs': 'x-small',
-  'sm': 'small',
-  'md': 'medium',
-  'lg': 'large',
-  'xl': 'x-large',
+  'x-small': 'xs',
+  'small': 'sm',
+  'medium': 'md',
+  'large': 'lg',
+  'x-large': 'xl',
 }
 
 // Types
@@ -27,7 +27,7 @@ export interface SizeProps
 export const makeSizeProps = propsFactory({
   size: {
     type: [String, Number],
-    default: 'medium',
+    default: 'md',
   },
 }, 'size')
 

@@ -5,7 +5,7 @@
 预设图标使用需要加上前缀 `veno-ui:$`，例如 `icon="veno-ui:$close"`。
 
 ```html
-<ve-spacer dense>
+<ve-spacer gutter="md">
   <ve-card 
     v-for="v, k in $venoUi.icons.sets['veno-ui'].aliases"
     :key="k"

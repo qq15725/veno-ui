@@ -3,7 +3,7 @@
 # GitHub Tags
 
 ```html
-<ve-spacer dense>
+<ve-spacer gutter="md">
   <ve-tag
     v-for="tag in [
       'components', 'typescript', 'ui',

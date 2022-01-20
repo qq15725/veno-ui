@@ -3,7 +3,7 @@
 # 位置
 
 ```html
-<ve-spacer>
+<ve-spacer gutter="xxl">
   <ve-badge location="top-left">
     <ve-avatar color="grey-300" />
   </ve-badge>

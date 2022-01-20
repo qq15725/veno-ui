@@ -5,7 +5,7 @@
 进度条的尺寸有 `x-small` - 特小、`small` - 小、`medium` - 中等、`large` - 大、`x-large` - 特大。
 
 ```html
-<ve-spacer dense align="center">
+<ve-spacer gutter="md" align="center">
   <ve-progress
     size="x-small"
     color="primary"

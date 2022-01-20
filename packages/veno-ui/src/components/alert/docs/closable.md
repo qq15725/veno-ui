@@ -3,7 +3,7 @@
 # 可关闭的
 
 ```html
-<ve-spacer dense cols="12">
+<ve-spacer gutter="md" cols="12">
   <ve-alert type="info" closable>这是一个提示</ve-alert>
   <ve-alert title="提示" closable>这是一个提示</ve-alert>
   <ve-alert title="信息" type="info" closable>这是一个信息警告</ve-alert>

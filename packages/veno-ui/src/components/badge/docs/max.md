@@ -3,7 +3,7 @@
 # 最大值
 
 ```html
-<ve-spacer>
+<ve-spacer gutter="xxl">
   <ve-badge dot>
     <ve-avatar color="grey-300" />
   </ve-badge>

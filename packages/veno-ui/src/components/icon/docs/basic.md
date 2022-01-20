@@ -7,7 +7,7 @@
 通过配置 aliases，可以通过短别名使用。
 
 ```html
-<ve-spacer dense>
+<ve-spacer gutter="md">
   <ve-icon icon="veno-ui:$success" color="success" />
   <ve-icon icon="veno-ui:$info" color="info" />
   <ve-icon icon="veno-ui:$warning" color="warning" />

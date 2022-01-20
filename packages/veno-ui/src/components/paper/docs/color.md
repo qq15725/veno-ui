@@ -3,7 +3,7 @@
 # 颜色
 
 ```html
-<ve-spacer dense>
+<ve-spacer gutter="md">
   <ve-paper size="40" color="primary" />
   <ve-paper size="40" color="secondary" />
   <ve-paper size="40" color="success" />
