@@ -82,7 +82,11 @@ export const ComponentIcon = defineComponent({
     return () => {
       return (
         <props.tag>
-          <props.icon />
+          <props.icon
+            class="ve-icon__svg"
+            role="img"
+            aria-hidden="true"
+          />
         </props.tag>
       )
     }
