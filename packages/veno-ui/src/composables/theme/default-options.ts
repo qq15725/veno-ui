@@ -34,8 +34,8 @@ export default {
       colors: {
         background: '#22272e',
         surface: '#2d333b',
-        primary: '#296DFF',
-        secondary: '#20262d',
+        primary: '#539bf5',
+        secondary: '#444c56',
         'on-secondary': '#F2F3F5',
         success: '#00B42A',
         warning: '#ff7d00',

@@ -93,11 +93,14 @@
     color: #a8a9cc;
   }
 
+  .token.attr-name {
+    color: #a6e22e;
+  }
+
   .token.tag,
-  .token.attr-name,
   .token.namespace,
   .token.deleted {
-    color: #b2085f;
+    color: #dd4a68;
   }
 
   .token.function-name {
@@ -122,15 +125,18 @@
   .token.atrule,
   .token.keyword,
   .token.builtin {
-    color: #b92dbc;
+    color: #07a;
   }
 
   .token.string,
-  .token.char,
-  .token.attr-value,
+  .token.char {
+    color: #690;
+  }
+
   .token.regex,
+  .token.attr-value,
   .token.variable {
-    color: #0a7a34;
+    color: #07a;
   }
 
   .token.operator,
