@@ -64,7 +64,7 @@ export const IconKey: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
 
 export const makeIconProps = propsFactory({
   icon: {
-    type: [String, Object] as PropType<IconValue>,
+    type: [String, Object, Function] as PropType<IconValue>,
     required: true,
   },
   tag: {

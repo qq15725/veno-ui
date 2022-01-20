@@ -8,6 +8,9 @@ export const linkPlugin: PluginSimple = function (md) {
     token.tag = 've-link'
     if (token.type === 'link_open') {
       const href = token.attrGet('href')
+      token.attrSet('underline', '')
+      token.attrSet('color', 'primary')
+      token.attrSet('target', '_blank')
       if (href && href.indexOf('http') !== 0) {
         // @ts-ignore
         token.attrs[token.attrIndex('href')][0] = 'to'
