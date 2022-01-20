@@ -104,33 +104,20 @@ export const SvgIcon = defineComponent({
 
   setup (props, { attrs }) {
     return () => {
-      let Svg
-      let viewBox = props.viewBox
-      let html
       const isString = typeof props.icon === 'string'
-      if (isString) {
-        Svg = 'svg'
-        if (/<svg/.test(props.icon)) {
-          const matched = props.icon.match(/<svg(.*?)>(.*)<\/svg>/)
-          viewBox = matched?.[1]?.match(/viewBox="(.*?)"/)?.[1] ?? props.viewBox
-          html = matched?.[2]
-        } else {
-          html = `<path d="${ props.icon as string }" />`
-        }
-      } else {
-        Svg = props.icon
-      }
+      let Svg = isString ? 'svg' : props.icon
 
       return (
         <props.tag { ...attrs } style={ null }>
           <Svg
             class="ve-icon__svg"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox={ viewBox }
+            viewBox={ props.viewBox }
             role="img"
             aria-hidden="true"
-            v-html={ html }
-          />
+          >
+            { isString && <path d={ props.icon as string } /> }
+          </Svg>
         </props.tag>
       )
     }
