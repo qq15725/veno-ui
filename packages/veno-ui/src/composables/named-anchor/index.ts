@@ -12,6 +12,7 @@ export interface NamedAnchorProvider
 {
   items: Ref<NamedAnchorItem[]>
   current: Ref<string | null>
+  activeColor: Ref<string>
   setCurrent: (name: string) => void
   isHashMode: Ref<boolean>
   register: (id: string, name: string) => void
@@ -31,6 +32,7 @@ export interface NamedAnchorProps
 {
   offset: string | number
   scrollContainer?: string | HTMLElement
+  activeColor: string
 }
 
 export const makeNamedAnchor = propsFactory({
@@ -41,6 +43,10 @@ export const makeNamedAnchor = propsFactory({
   scrollContainer: {
     type: [String, Object] as PropType<NamedAnchorProps['scrollContainer']>
   },
+  activeColor: {
+    type: String,
+    default: 'primary'
+  }
 }, 'named-anchor')
 
 export function useNamedAnchor (props: NamedAnchorProps) {
@@ -53,13 +59,17 @@ export function useNamedAnchor (props: NamedAnchorProps) {
       : props.scrollContainer
   })
   const isHashMode = computed(() => !!router?.options?.history?.base?.includes?.('#'))
+  const disabled = ref(false)
 
   const provider = {
     items,
+    activeColor: computed(() => props.activeColor),
     current,
     isHashMode,
     setCurrent: (name: string) => {
+      disabled.value = true
       current.value = name
+      setTimeout(() => disabled.value = false, 500)
       document.getElementById(name)?.scrollIntoView({ behavior: 'smooth' })
     },
     register: (id: string, name: string) => {
@@ -71,6 +81,7 @@ export function useNamedAnchor (props: NamedAnchorProps) {
   }
 
   const handleScroll = () => {
+    if (disabled.value) return
     current.value = items.value
         .reduce<{ name: string, top: number, height: number }[]>((pos, item) => {
           const el = document.getElementById(item.name)

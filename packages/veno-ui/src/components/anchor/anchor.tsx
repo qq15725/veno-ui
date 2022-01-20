@@ -1,8 +1,8 @@
+// Styles
+import './styles/anchor.scss'
+
 // Utils
 import { defineComponent } from '../../utils'
-
-// Components
-import { List } from '../../components/list'
 
 // Composables
 import { makeNamedAnchor, useNamedAnchor } from '../../composables/named-anchor'
@@ -21,12 +21,13 @@ export const Anchor = defineComponent({
     useNamedAnchor(props)
 
     return () => (
-      <List
+      <ul
         class={ [
           've-anchor',
         ] }
-        v-slots={ slots }
-      />
+      >
+        { slots.default?.() }
+      </ul>
     )
   }
 })

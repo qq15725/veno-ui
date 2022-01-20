@@ -1,0 +1,16 @@
+.ve-anchor-item {
+  list-style: none;
+
+  .ve-link {
+    display: flex;
+    justify-content: start;
+    padding-left: 16px;
+    margin-bottom: 8px;
+    border-radius: 0;
+  }
+
+  &--active .ve-link {
+    margin-left: -1px;
+    border-left: 1px solid currentColor;
+  }
+}

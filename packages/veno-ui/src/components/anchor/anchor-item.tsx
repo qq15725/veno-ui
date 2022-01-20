@@ -1,8 +1,11 @@
+// Styles
+import './styles/anchor-item.scss'
+
 // Utils
 import { defineComponent } from '../../utils'
 
 // Components
-import { ListItem } from '../../components/list'
+import { Link } from '../link'
 
 // Composables
 import { makeNamedAnchorItem, useNamedAnchorItem } from '../../composables/named-anchor'
@@ -18,19 +21,26 @@ export const AnchorItem = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { to, setCurrent, isActive } = useNamedAnchorItem(props)
+    const { to, setCurrent, isActive, activeColor } = useNamedAnchorItem(props)
 
     return () => {
       return (
-        <ListItem
+        <li
           class={ [
             've-anchor-item',
+            {
+              've-anchor-item--active': isActive.value,
+            }
           ] }
-          to={ to.value }
-          active={ isActive.value }
-          onClick={ () => props.name && setCurrent(props.name) }
-          v-slots={ slots }
-        />
+        >
+          <Link
+            to={ to.value }
+            underline={ false }
+            color={ isActive.value ? activeColor.value : undefined }
+            onClick={ () => props.name && setCurrent(props.name) }
+            v-slots={ slots }
+          />
+        </li>
       )
     }
   }
