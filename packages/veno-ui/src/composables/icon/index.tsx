@@ -47,12 +47,12 @@ type IconComponent = JSXComponent<IconProps>
 export interface IconSet
 {
   component: IconComponent
-  aliases?: Partial<IconAliases>
 }
 
 export type IconOptions = {
-  defaultSet: string
-  sets: Record<string, IconSet>
+  defaultSet?: string
+  aliases?: Partial<IconAliases>
+  sets?: Record<string, IconSet>
 }
 
 type IconInstance = {
@@ -60,7 +60,7 @@ type IconInstance = {
   icon: IconValue
 }
 
-export const IconKey: InjectionKey<IconOptions> = Symbol.for('veno-ui:icon')
+export const IconKey: InjectionKey<Required<IconOptions>> = Symbol.for('veno-ui:icon')
 
 export const makeIconProps = propsFactory({
   icon: {
@@ -161,7 +161,7 @@ export const defaultSets: Record<string, IconSet> = {
   },
 }
 
-// Composables
+// $info mdi:info svg:xxx class:xxx
 export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) => {
   const icons = inject(IconKey)
 
@@ -174,34 +174,24 @@ export const useIcon = (props: Ref<string | undefined> | { icon?: IconValue }) =
 
     let icon: IconValue | undefined = iconAlias
 
-    if (typeof icon !== 'string') {
-      return {
-        component: ComponentIcon,
-        icon,
-      }
-    }
-
-    const iconSetName = Object.keys(icons.sets).find(
-      setName => typeof icon === 'string' && icon.startsWith(`${ setName }:`)
-    )
-
-    const iconSet = icons.sets[iconSetName ?? icons.defaultSet]
-
-    if (typeof iconAlias === 'string') {
-      if (iconSetName) {
-        icon = iconAlias = iconAlias.slice(iconSetName.length + 1)
-      }
-
-      if (iconAlias.includes('$')) {
-        icon = iconSet.aliases?.[iconAlias.slice(iconAlias.indexOf('$') + 1)]
-      }
+    if (typeof iconAlias === 'string' && iconAlias.includes('$')) {
+      icon = icons.aliases?.[iconAlias.slice(iconAlias.indexOf('$') + 1)]
     }
 
     if (!icon) throw new Error(`Could not find aliased icon "${ iconAlias }"`)
 
+    if (typeof icon !== 'string') return { component: ComponentIcon, icon }
+
+    const iconSetName = Object.keys(icons.sets).find(
+      setName => typeof icon === 'string' && icon.startsWith(`${setName}:`)
+    )
+
+    const iconName = iconSetName ? icon.slice(iconSetName.length + 1) : icon
+    const iconSet = icons.sets[iconSetName ?? icons.defaultSet]
+
     return {
       component: iconSet.component,
-      icon,
+      icon: iconName,
     }
   })
 

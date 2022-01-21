@@ -69,7 +69,7 @@ export default defineComponent({
               v-bind="props"
               @click="isActive = !isActive"
               :color="isActive ? 'primary' : undefined"
-              icon="$code"
+              icon="mdi-code-tags"
               variant="text"
               size="xs"
           />
@@ -84,7 +84,7 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="focusBtn"
-              icon="$focus"
+              icon="mdi-image-filter-center-focus-strong-outline"
               variant="text"
               tabindex="-1"
               size="xs"
@@ -100,7 +100,7 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
-              :icon="`$${theme || 'light'}`"
+              :icon="theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
               tabindex="-1"
               size="xs"
@@ -117,7 +117,7 @@ export default defineComponent({
               v-bind="tooltipProps"
               :href="`${ repository }${ file }`"
               target="_blank"
-              icon="$github"
+              icon="mdi-github"
               variant="text"
               tabindex="-1"
               size="xs"

@@ -4,19 +4,12 @@
 
 ```ts
 import { createVenoUi } from 'veno-ui'
-import { SvgIcon } from 'veno-ui/components'
 
 const venoUi = createVenoUi({
   // 自定义预设图标集合
   icons: {
-    defaultSet: 'my-svg-icon',
-    sets: {
-      'my-svg': {
-        component: SvgIcon,
-        aliases: {
-          light: 'M12,18V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z'
-        }
-      }
+    aliases: {
+      light: 'M12,18V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z'
     }
   },
   // ...其他选项
@@ -51,20 +44,11 @@ import Sunny from '@/svgs/sunny.svg'
 const venoUi = createVenoUi({
   // 自定义预设图标集合
   icons: {
-    defaultSet: 'my-svg-icon',
     sets: {
-      'my-svg': {
-        component: SvgIcon,
-        aliases: {
-          light: 'M12,18V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z'
-        }
-      },
-      'my-svg-file': {
-        component: ComponentIcon,
-        aliases: {
-          // 可以自己通过 import.meta.glob 导入 svg 生成 aliases 
-          sunny: Sunny
-        }
+      aliases: {
+        light: 'M12,18V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z',
+        // 可以自己通过 import.meta.globEager 导入 svg 生成 aliases 
+        sunny: Sunny
       }
     }
   },
@@ -72,16 +56,6 @@ const venoUi = createVenoUi({
 })
 
 export default venoUi
-```
-
-<ve-p />
-
-```html
-<ve-spacer>
-  <ve-icon size="32" icon="$light" />
-
-  <ve-icon size="32" icon="my-svg-file:$sunny" />
-</ve-spacer>
 ```
 
 :::

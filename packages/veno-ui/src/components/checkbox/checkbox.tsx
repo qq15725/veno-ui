@@ -11,8 +11,8 @@ export const Checkbox = defineComponent({
   props: {
     ...makeSelectionControlProps({
       type: 'checkbox',
-      falseIcon: 'veno-ui:$checkboxOff',
-      trueIcon: 'veno-ui:$checkboxOn',
+      falseIcon: '$checkboxOff',
+      trueIcon: '$checkboxOn',
       color: 'primary',
     }),
   },

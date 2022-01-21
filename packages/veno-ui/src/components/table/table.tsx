@@ -73,7 +73,7 @@ export const Table = defineComponent({
      */
     sortIcon: {
       type: String,
-      default: 'veno-ui:$sort',
+      default: '$sort',
     },
 
     /**

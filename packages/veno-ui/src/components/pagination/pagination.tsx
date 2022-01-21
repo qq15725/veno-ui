@@ -28,19 +28,19 @@ export const Pagination = defineComponent({
     totalVisible: [Number, String],
     firstIcon: {
       type: String,
-      default: 'veno-ui:$first',
+      default: '$first',
     },
     prevIcon: {
       type: String,
-      default: 'veno-ui:$prev',
+      default: '$prev',
     },
     nextIcon: {
       type: String,
-      default: 'veno-ui:$next',
+      default: '$next',
     },
     lastIcon: {
       type: String,
-      default: 'veno-ui:$last',
+      default: '$last',
     },
     ariaLabel: {
       type: String,

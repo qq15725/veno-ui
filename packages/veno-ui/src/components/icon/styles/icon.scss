@@ -3,11 +3,13 @@
 @use 'sass:map';
 
 .ve-icon {
-  display: inline-block;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-feature-settings: 'liga';
   letter-spacing: $icon-letter-spacing;
   line-height: $icon-line-height;
-  position: relative;
   text-indent: $icon-text-indent;
   user-select: none;
   vertical-align: $icon-vertical-align;

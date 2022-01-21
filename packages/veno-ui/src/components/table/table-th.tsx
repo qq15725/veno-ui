@@ -37,7 +37,7 @@ export const TableTh = defineComponent({
      */
     sortIcon: {
       type: String,
-      default: 'veno-ui:$sort',
+      default: '$sort',
     },
 
     /**
@@ -53,7 +53,7 @@ export const TableTh = defineComponent({
      */
     filterIcon: {
       type: String,
-      default: 'veno-ui:$filter',
+      default: '$filter',
     },
 
     /**

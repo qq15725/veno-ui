@@ -46,7 +46,7 @@ export default defineComponent({
           <ve-button
               v-bind="props"
               @click="$venoUi.theme.current = $venoUi.theme.current === 'dark' ? 'light' : 'dark'"
-              :icon="'$' + $venoUi.theme.current"
+              :icon="$venoUi.theme.current === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
           />
         </ve-tooltip>
@@ -55,7 +55,7 @@ export default defineComponent({
               v-bind="props"
               href="https://github.com/qq15725/veno-ui"
               target="_blank"
-              icon="$github"
+              icon="mdi-github"
               variant="text"
               class="ml-3"
           />
@@ -109,7 +109,7 @@ export default defineComponent({
           class="text-caption"
           target="_blank"
           :href="url"
-          append-icon="$edit"
+          append-icon="mdi-pencil"
       >
         编辑此页面
       </ve-link>

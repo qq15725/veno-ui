@@ -21,8 +21,8 @@ export const CheckboxGroup = defineComponent({
     ...makeFormControlProps(),
     ...makeSelectionGroupControlProps({
       type: 'checkbox',
-      falseIcon: 'veno-ui:$checkboxOff',
-      trueIcon: 'veno-ui:$checkboxOn',
+      falseIcon: '$checkboxOff',
+      trueIcon: '$checkboxOn',
       multiple: true,
     }),
   },

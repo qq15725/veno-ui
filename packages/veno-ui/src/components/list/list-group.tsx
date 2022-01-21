@@ -37,11 +37,11 @@ export const ListGroup = genericComponent<ListGroupGenerator>()({
     value: null,
     collapseIcon: {
       type: String,
-      default: 'veno-ui:$dropdown',
+      default: '$dropdown',
     },
     expandIcon: {
       type: String,
-      default: 'veno-ui:$dropdown',
+      default: '$dropdown',
     },
     items: Array as Prop<ListItemProp[]>,
 

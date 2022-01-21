@@ -53,7 +53,7 @@ export const Alert = genericComponent<new () => {
     closable: Boolean,
     closeIcon: {
       type: String,
-      default: 'veno-ui:$close',
+      default: '$close',
     },
     overlayColor: String,
     ...makePaperProps(),
@@ -74,7 +74,7 @@ export const Alert = genericComponent<new () => {
       textColorStyles: overlayColorStyles
     } = useTextColor(computed(() => props.overlayColor ?? iconColor.value))
     const isActive = useProxiedModel(props, 'modelValue')
-    const icon = computed(() => props.icon ? props.icon : `veno-ui:$${ props.type }`)
+    const icon = computed(() => props.icon ? props.icon : `$${ props.type }`)
 
     function onCloseClick (e: Event) {
       isActive.value = false

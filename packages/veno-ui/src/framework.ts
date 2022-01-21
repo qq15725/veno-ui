@@ -10,7 +10,7 @@ import { createDisplay, DisplayKey } from './composables/display'
 import { createDefaults, DefaultsKey } from './composables/defaults'
 
 // Iconsets
-import { venoUiSvg } from './iconsets/veno-ui-svg'
+import { mdi, aliases } from './iconsets/mdi'
 
 // Types
 import type { App, ComponentPublicInstance, InjectionKey } from 'vue'
@@ -56,11 +56,12 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     app.provide(DisplayKey, createDisplay(options.display))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconKey, mergeDeep({
-      defaultSet: 'class',
+      defaultSet: 'mdi',
       sets: {
         ...defaultSets,
-        'veno-ui': venoUiSvg,
+        mdi
       },
+      aliases
     }, icons))
 
     // Vue's inject() can only be used in setup

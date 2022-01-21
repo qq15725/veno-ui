@@ -13,7 +13,7 @@ export const TableNoData = defineComponent({
   props: {
     icon: {
       type: String,
-      default: 'veno-ui:$nodata',
+      default: '$nodata',
     },
     text: {
       type: String,

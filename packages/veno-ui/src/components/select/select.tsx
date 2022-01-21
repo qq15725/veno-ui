@@ -98,7 +98,7 @@ export const Select = genericComponent<new () => {
                   appendInner: () => (
                     <Icon
                       class="ve-select__icon"
-                      icon="veno-ui:$dropdown"
+                      icon="$dropdown"
                     />
                   ),
                 } }

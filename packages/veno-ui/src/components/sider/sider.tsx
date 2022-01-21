@@ -79,7 +79,7 @@ export const Sider = defineComponent({
         style={ layoutItemStyles.value }
       >
         { isTemporary.value && (
-          <Overlay v-model={ isActive.value } style="z-index: 0;" />
+          <Overlay v-model={ isActive.value } />
         ) }
 
         <div class="ve-sider__wrapper">

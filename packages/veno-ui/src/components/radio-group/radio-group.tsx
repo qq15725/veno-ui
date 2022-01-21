@@ -27,8 +27,8 @@ export const RadioGroup = defineComponent({
     ...makeFormControlProps(),
     ...makeSelectionGroupControlProps({
       type: 'radio',
-      trueIcon: 'veno-ui:$radioOn',
-      falseIcon: 'veno-ui:$radioOff',
+      trueIcon: '$radioOn',
+      falseIcon: '$radioOff',
     }),
   },
 

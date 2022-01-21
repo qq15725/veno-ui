@@ -6,7 +6,7 @@
 <ve-spacer cols="12">
   <ve-button-group divided>
     <ve-button text="Submit" />
-    <ve-button icon="veno-ui:$dropdown" />
+    <ve-button icon="$dropdown" />
   </ve-button-group>
   
   <ve-button-group divided>

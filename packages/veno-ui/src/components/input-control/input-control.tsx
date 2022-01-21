@@ -51,7 +51,7 @@ export const makeInputControlProps = propsFactory({
   clearable: Boolean,
   clearIcon: {
     type: String,
-    default: 'veno-ui:$clear',
+    default: '$clear',
   },
   disabled: Boolean,
 }, 'input-control')

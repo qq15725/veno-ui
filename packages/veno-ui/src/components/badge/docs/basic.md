@@ -10,7 +10,7 @@
     <ve-avatar shape="circle" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
   </ve-badge>
   
-  <ve-badge color="error" icon="veno-ui:$close" bordered>
+  <ve-badge color="error" icon="$close" bordered>
     <ve-avatar color="grey-300" />
   </ve-badge>
   

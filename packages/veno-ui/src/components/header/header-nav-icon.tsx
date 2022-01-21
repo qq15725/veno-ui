@@ -10,7 +10,7 @@ export const HeaderNavIcon = defineComponent({
   props: {
     icon: {
       type: String,
-      default: 'veno-ui:$menu',
+      default: '$menu',
     }
   },
 

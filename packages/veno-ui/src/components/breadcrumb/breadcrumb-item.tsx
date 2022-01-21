@@ -66,7 +66,7 @@ export const BreadcrumbItem = genericComponent<new () => {
               {
                 slots.separator?.()
                 ?? group.vm?.slots.separator?.()
-                ?? <Icon icon="veno-ui:$separator" />
+                ?? <Icon icon="$separator" />
               }
             </li>
           ) }

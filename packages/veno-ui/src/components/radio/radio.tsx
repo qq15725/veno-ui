@@ -15,8 +15,8 @@ export const Radio = defineComponent({
   props: {
     ...makeSelectionControlProps({
       type: 'radio',
-      falseIcon: 'veno-ui:$radioOff',
-      trueIcon: 'veno-ui:$radioOn',
+      falseIcon: '$radioOff',
+      trueIcon: '$radioOn',
       color: 'primary',
     } as const),
   },

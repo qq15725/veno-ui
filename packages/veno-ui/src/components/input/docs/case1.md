@@ -17,7 +17,7 @@
       anchor="top"
       #activator="{ props }"
     >
-      <ve-icon v-bind="props" icon="veno-ui:$info" />
+      <ve-icon v-bind="props" icon="$info" />
     </ve-tooltip>
   </ve-input>
 

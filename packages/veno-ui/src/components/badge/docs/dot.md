@@ -9,7 +9,7 @@
   </ve-badge>
   
   <ve-badge dot>
-    <ve-icon icon="veno-ui:$nodata" />
+    <ve-icon icon="$nodata" />
   </ve-badge>
 </ve-spacer>
 ```

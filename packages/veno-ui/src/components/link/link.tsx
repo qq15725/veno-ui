@@ -22,7 +22,7 @@ export const Link = defineComponent({
     },
     linkIcon: {
       type: String,
-      default: 'veno-ui:$link',
+      default: '$link',
     },
     prependIcon: [Boolean, String],
     appendIcon: [Boolean, String],
