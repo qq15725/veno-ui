@@ -26,7 +26,7 @@ export interface PositionStrategyData
 export type PositionStrategy = keyof typeof positionStrategies | ((
   data: PositionStrategyData,
   props: PositionStrategyProps,
-  contentStyles: Ref<Dictionary<string>>,
+  contentStyles: Ref<Record<string, string>>,
   anchorClasses: Ref<string[]>
 ) => undefined | { updatePosition: (e: Event) => void })
 

@@ -28,7 +28,7 @@ import type { PositionStrategyData, PositionStrategyProps } from './positionStra
 export function positionStrategyConnected (
   data: PositionStrategyData,
   props: PositionStrategyProps,
-  contentStyles: Ref<Dictionary<string>>,
+  contentStyles: Ref<Record<string, string>>,
   anchorClasses: Ref<string[]>
 ) {
   if (!data.activatorEl.value) return

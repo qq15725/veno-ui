@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { promises } from 'fs'
+import fs, { promises } from 'fs'
 import path from 'path'
 // @ts-ignore
 import mkdirp from 'mkdirp'
@@ -40,8 +40,19 @@ export default defineConfig(async ({ mode }) => {
         staticImport: true,
         logDiagnostics: true,
         beforeWriteFile: (filePath: string, content: string) => {
+          filePath = filePath.replace('lib/src', 'lib')
+          if (filePath.endsWith('framework.d.ts')) {
+            const shims = fs.readFileSync(
+              filePath.replace(
+                'lib/framework.d.ts',
+                'src/shims.d.ts'
+              ),
+              'utf-8'
+            )
+            content += '\n\n' + shims
+          }
           return {
-            filePath: filePath.replace('lib/src', 'lib'),
+            filePath,
             content
           }
         }

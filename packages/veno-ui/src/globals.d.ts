@@ -1,6 +1,5 @@
-export {}
-
-import type { ComponentPublicInstance, FunctionalComponent, VNode } from 'vue'
+import type { VNode } from 'vue'
+import type { Events } from '@vue/runtime-dom'
 
 declare global
 {
@@ -44,12 +43,6 @@ declare global
     }
   }
 
-  export type Dictionary<T> = Record<string, T>
-
-  export type Writable<T> = {
-    -readonly [P in keyof T]: T[P];
-  }
-
   namespace JSX
   {
     interface Element extends VNode
@@ -60,19 +53,7 @@ declare global
     {
       [name: string]: any
     }
-
-    interface ElementChildrenAttribute
-    {
-      $children
-    }
   }
-}
-
-declare module 'vue'
-{
-  export type JSXComponent<Props = any> = {
-    new (): ComponentPublicInstance<Props>
-  } | FunctionalComponent<Props>
 }
 
 declare module '@vue/runtime-core'
@@ -86,9 +67,6 @@ declare module '@vue/runtime-core'
 
 declare module '@vue/runtime-dom'
 {
-  import type { Events } from '@vue/runtime-dom'
-  import type { VNodeChild } from '@vue/runtime-core'
-
   type UnionToIntersection<U> =
     (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
@@ -110,12 +88,6 @@ declare module '@vue/runtime-dom'
 
   export interface HTMLAttributes extends EventHandlers<ModifiedEvents>
   {
-    $children?: VNodeChild
-  }
-
-  export interface SVGAttributes
-  {
-    $children?: VNodeChild
   }
 
   type CustomProperties = {

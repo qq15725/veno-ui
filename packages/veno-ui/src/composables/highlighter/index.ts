@@ -3,13 +3,12 @@ import { inject, ref } from 'vue'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
-import type { Grammar, Languages } from 'prismjs'
 
 export interface Prismjs
 {
-  languages: Languages
+  languages: Record<string, any>
 
-  highlight (text: string, grammar: Grammar, language: string): string
+  highlight (text: string, grammar: any, language: string): string
 }
 
 export interface HighlighterOptions

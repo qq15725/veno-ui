@@ -10,7 +10,7 @@ import type { ComponentPublicInstance, EffectScope, PropType, Ref } from 'vue'
 import type { DelayProps } from '../delay'
 
 type Activator = 'parent' | string | Element | ComponentPublicInstance
-type activatorProps = Dictionary<any>
+type activatorProps = Record<string, any>
 
 interface ActivatorProps extends DelayProps
 {

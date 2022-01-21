@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { propsFactory, convertToUnit } from '../../utils'
 
-export const deviceModels: Dictionary<DeviceModel> = {
+export const deviceModels: Record<string, DeviceModel> = {
   iphonex: {
     width: 375,
     height: 812,

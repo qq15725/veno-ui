@@ -67,7 +67,7 @@ export interface OverlaySlot
 {
   isActive: Ref<boolean>
   activatorRef: (ref: Element | ComponentPublicInstance | null) => void
-  props: Dictionary<any>
+  props: Record<string, any>
 }
 
 export type OverlaySlots = MakeSlots<{
