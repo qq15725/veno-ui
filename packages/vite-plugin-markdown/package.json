@@ -22,7 +22,6 @@
     "build": "tsc"
   },
   "peerDependencies": {
-    "@vitejs/plugin-vue": "^1.2.3",
     "vite": "^2.4.0"
   },
   "dependencies": {

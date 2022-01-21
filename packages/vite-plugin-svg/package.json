@@ -22,13 +22,10 @@
     "build": "tsc"
   },
   "peerDependencies": {
-    "@vitejs/plugin-vue": "^1.2.3",
     "vite": "^2.4.0"
   },
   "dependencies": {
-    "svgo": "^2.8.0"
-  },
-  "devDependencies": {
+    "svgo": "^2.8.0",
     "@rollup/pluginutils": "^4.1.2",
     "@types/svgo": "^2.6.1"
   },
