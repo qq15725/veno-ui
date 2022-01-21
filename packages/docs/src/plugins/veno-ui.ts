@@ -4,7 +4,6 @@ import 'veno-ui/styles'
 
 // Utils
 import { createVenoUi } from 'veno-ui'
-// @ts-ignore
 import prismjs from 'prismjs'
 
 // Types

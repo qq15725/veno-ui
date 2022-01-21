@@ -12,7 +12,7 @@ import type {
 
 const rippleStop = Symbol('rippleStop')
 
-type VuetifyRippleEvent = (MouseEvent | TouchEvent | KeyboardEvent) & { [rippleStop]?: boolean }
+type RippleEvent = (MouseEvent | TouchEvent | KeyboardEvent) & { [rippleStop]?: boolean }
 
 const DELAY_RIPPLE = 80
 
@@ -39,16 +39,16 @@ export interface RippleDirectiveBinding extends Omit<DirectiveBinding, 'modifier
   }
 }
 
-function isTouchEvent (e: VuetifyRippleEvent): e is TouchEvent {
+function isTouchEvent (e: RippleEvent): e is TouchEvent {
   return e.constructor.name === 'TouchEvent'
 }
 
-function isKeyboardEvent (e: VuetifyRippleEvent): e is KeyboardEvent {
+function isKeyboardEvent (e: RippleEvent): e is KeyboardEvent {
   return e.constructor.name === 'KeyboardEvent'
 }
 
 const calculate = (
-  e: VuetifyRippleEvent,
+  e: RippleEvent,
   el: HTMLElement,
   value: RippleOptions = {}
 ) => {
@@ -85,7 +85,7 @@ const calculate = (
 const ripples = {
   /* eslint-disable max-statements */
   show (
-    e: VuetifyRippleEvent,
+    e: RippleEvent,
     el: HTMLElement,
     value: RippleOptions = {}
   ) {
@@ -168,7 +168,7 @@ function isRippleEnabled (value: any): value is true {
   return typeof value === 'undefined' || !!value
 }
 
-function rippleShow (e: VuetifyRippleEvent) {
+function rippleShow (e: RippleEvent) {
   const value: RippleOptions = {}
   const element = e.currentTarget as HTMLElement | undefined
 

@@ -46,6 +46,7 @@ export function provideLayout (
           active: !!item.active,
           priority: Number(item.priority ?? 0),
           layoutSize: Number(item.layoutSize ?? item.size),
+          disableTransition: Boolean(item.disableTransition),
         }
       })
       .sort((a, b) => b.priority - a.priority)
@@ -81,6 +82,10 @@ export function provideLayout (
     return map
   })
 
+  const transitionEnabled = computed(() => {
+    return !items.value.some(ref => ref.disableTransition)
+  })
+
   provide(LayoutKey, {
     register: (id, itemProps) => {
       itemMap.set(id, itemProps)
@@ -106,7 +111,8 @@ export function provideLayout (
           width: !isHorizontal ? `calc(100% - ${ item.left }px - ${ item.right }px)` : `${ item.size }px`,
           zIndex: Number(props.layerZIndex) + items.value.length - index,
           transform: `translate${ isHorizontal ? 'X' : 'Y' }(${ (item.active ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1) }%)`,
-          position: item.position
+          position: item.position,
+          ...(transitionEnabled.value ? undefined : { transition: 'none' }),
         }
       })
     },
@@ -122,6 +128,7 @@ export function provideLayout (
         paddingRight: convertToUnit(mainLayer.right),
         paddingTop: convertToUnit(mainLayer.top),
         paddingBottom: convertToUnit(mainLayer.bottom),
+        ...(transitionEnabled.value ? undefined : { transition: 'none' }),
       }
     }),
     getLayoutItem,

@@ -10,6 +10,7 @@ export interface LayoutItemProps
   size: string | number
   layoutSize?: string | number
   priority?: string | number
+  disableTransition?: boolean
 }
 
 export interface LayoutLayer
