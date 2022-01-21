@@ -67,10 +67,12 @@ app.mount('#app')
 
 | 项目               | 介绍                                             |
 | --------------------- | ------------------------------------------------------- |
-| [@veno-ui/markdown] | Markdown 渲染器，解析成 VenoUI 组件构成的 HTML。 |
-| [@veno-ui/vite-plugin-markdown] | 一个转化 Markdown 文件成 Vue 组件的 Vite 插件。 |
-| [@veno-ui/vite-plugin-svg] | 一个转化 Svg 文件成 Vue 组件的 Vite 插件。 |
+| [veno-admin] | Veno UI 构建的后台管理系统模板。 |
+| [@veno-ui/markdown] | Markdown 渲染器，解析成 Veno UI 构成的 HTML。 |
+| [@veno-ui/vite-plugin-markdown] | 一个转化 Markdown 文件成 Veno UI 组件的 Vite 插件。 |
+| [@veno-ui/vite-plugin-svg] | 一个转化 Svg 文件成 Veno UI 组件的 Vite 插件。 |
 
+[veno-admin]: https://github.com/qq15725/veno-admin
 [@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
 [@veno-ui/vite-plugin-markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown
 [@veno-ui/vite-plugin-svg]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg
