@@ -1,6 +1,11 @@
 @use '../../../styles/settings';
 
+// color
 $sider-background: rgb(var(--ve-theme-surface)) !default;
+$sider-color: rgb(var(--ve-theme-on-surface)) !default;
+
+$sider-height: 100% !default;
+$sider-will-change: transform !default;
 
 $sider-border-color: settings.$border-color !default;
 $sider-border-style: settings.$border-style !default;

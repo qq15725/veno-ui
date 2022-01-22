@@ -9,19 +9,19 @@ export const ListKey: InjectionKey<{
   updateHasPrepend: (value: boolean) => void
 }> = Symbol.for('veno-ui:list')
 
-export const createList = () => {
-  const data = {
+export function provideList () {
+  const provider = {
     hasPrepend: ref(false),
     updateHasPrepend: (value: boolean) => {
-      if (value) data.hasPrepend.value = value
-    },
+      if (value) provider.hasPrepend.value = value
+    }
   }
 
-  provide(ListKey, data)
+  provide(ListKey, provider)
 
-  return data
+  return provider
 }
 
-export const useList = () => {
+export function useList () {
   return inject(ListKey, null)
 }

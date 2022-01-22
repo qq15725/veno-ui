@@ -5,24 +5,26 @@
 
 .ve-sider {
   -webkit-overflow-scrolling: touch;
-  background: $sider-background;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  background: $sider-background;
+  color: $sider-color;
+  height: $sider-height;
   max-width: 100%;
   pointer-events: auto;
-  top: 0;
   transition-duration: 0.2s;
   transition-property: box-shadow, transform, visibility, width;
   transition-timing-function: settings.$standard-easing;
-  will-change: transform;
+  will-change: $sider-will-change;
   @include tools.use-border(('borders': $sider-borders));
 
   &--start {
+    top: 0;
     border-inline-end-width: $sider-border-thin-width;
   }
 
   &--end {
+    top: 0;
     border-inline-start-width: $sider-border-thin-width;
   }
 

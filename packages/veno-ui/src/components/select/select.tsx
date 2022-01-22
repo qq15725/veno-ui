@@ -48,6 +48,10 @@ export const Select = genericComponent<new () => {
     ...makeInputProps(),
   },
 
+  emits: {
+    'update:modelValue': (val: any) => true,
+  },
+
   setup (props, { attrs, slots }) {
     const model = useProxiedModel(props, 'modelValue')
     const isActive = ref(false)

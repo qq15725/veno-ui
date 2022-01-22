@@ -9,7 +9,7 @@ import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeNestedProps, useNested } from '../../composables/nested'
 import { useDepth } from './composables/depth'
-import { createList } from './composables/list'
+import { provideList } from './composables/list'
 
 // Components
 import { ListSubheader } from './list-subheader'
@@ -56,7 +56,7 @@ export const List = defineComponent({
     const { disabledClasses } = useDisabled(props)
     useNested(props)
     useDepth()
-    createList()
+    provideList()
 
     return () => {
       const hasHeader = typeof props.subheader === 'string' || slots.subheader
@@ -76,9 +76,8 @@ export const List = defineComponent({
           ] }
         >
           { hasHeader && (
-            slots.subheader
-              ? slots.subheader()
-              : <ListSubheader>{ props.subheader }</ListSubheader>
+            slots.subheader?.()
+            ?? <ListSubheader>{ props.subheader }</ListSubheader>
           ) }
 
           <ListChildren items={ props.items } v-slots={ slots } />

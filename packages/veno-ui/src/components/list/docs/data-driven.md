@@ -1,0 +1,40 @@
+:::demo
+
+# 数据驱动
+
+```html
+<div class="p-10 bg-grey-300">
+  <ve-list dense :items="items" />
+</div>
+```
+
+```js
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup () {
+    return {
+      items: ref([
+        {
+          title: 'dashboard',
+          prependIcon: 'mdi-view-dashboard',
+          children: [
+            { title: '主控台', link: true },
+            { title: '工作台', link: true }
+          ]
+        },
+        {
+          title: '系统设置', 
+          prependIcon: 'mdi-tune',
+          children: [
+            { title: '菜单权限管理', link: true },
+            { title: '角色权限管理', link: true }
+          ]
+        },
+      ])
+    }
+  }
+})
+```
+
+:::

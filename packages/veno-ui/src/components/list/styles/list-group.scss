@@ -1,0 +1,11 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools';
+
+.ve-list-group {
+  --ve-list-parent-indent: var(--ve-list-indent, 0px);
+
+  &--prepend {
+    --ve-list-parent-indent: calc(#{$list-item-avatar-size} + var(--ve-list-indent, 0px));
+  }
+}

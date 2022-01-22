@@ -1,3 +1,6 @@
+// Styles
+import './styles/list-group.scss'
+
 // Utils
 import { computed } from 'vue'
 import { genericComponent } from '../../utils'
@@ -14,6 +17,7 @@ import { ListGroupItems } from './list-group-items'
 import type { Prop } from 'vue'
 import type { MakeSlots } from '../../utils'
 import type { ListItemProp } from './list'
+
 export type ListGroupHeaderSlot = {
   onClick: (e: Event) => void
   appendIcon: string
@@ -37,11 +41,11 @@ export const ListGroup = genericComponent<ListGroupGenerator>()({
     value: null,
     collapseIcon: {
       type: String,
-      default: '$dropdown',
+      default: '$collapse',
     },
     expandIcon: {
       type: String,
-      default: '$dropdown',
+      default: '$expand',
     },
     items: Array as Prop<ListItemProp[]>,
 
@@ -65,19 +69,19 @@ export const ListGroup = genericComponent<ListGroupGenerator>()({
     return () => {
       return (
         <props.tag
-          class={[
+          class={ [
             've-list-group',
             {
               've-list-group--prepend': list?.hasPrepend.value,
             },
-          ]}
+          ] }
         >
           { slots.header?.(headerProps.value) }
 
           <ListGroupItems
-            items={props.items}
-            open={isOpen.value}
-            v-slots={slots}
+            items={ props.items }
+            open={ isOpen.value }
+            v-slots={ slots }
           />
         </props.tag>
       )

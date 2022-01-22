@@ -3,12 +3,13 @@
 @use '../../../styles/tools';
 
 .ve-list-item {
-  align-items: center;
-  display: flex;
-  padding: 8px 16px;
   position: relative;
+  display: flex;
+  align-items: center;
+  padding: $list-item-padding;
   outline: none;
   text-decoration: none;
+  transition: $list-item-transition;
   @include tools.use-paper($list-item-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay);
@@ -27,14 +28,18 @@
     cursor: pointer;
   }
 
-  // nav
+  // List Nav
   .ve-list--nav & {
     border-radius: $list-item-nav-border-radius;
   }
-}
 
-.ve-list-group__items {
-  .ve-list-item:not(.ve-list-item--prepend) {
-    padding-inline-start: calc(16px + (var(--ve-list-depth) * 16px)) !important;
+  // ListGroupItems
+  .ve-list-group-items & {
+    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px)) !important;
+  }
+
+  &--prepend,
+  .ve-list-group-items &--prepend {
+    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px) + #{$list-item-avatar-size} + #{$list-item-avatar-margin-start}) !important;
   }
 }

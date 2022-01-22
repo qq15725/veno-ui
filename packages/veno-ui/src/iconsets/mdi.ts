@@ -14,6 +14,8 @@ const aliases: IconAliases = {
   error: 'mdi-close-circle',
   close: 'mdi-close',
   clear: 'mdi-close-circle',
+  collapse: 'mdi-chevron-up',
+  expand: 'mdi-chevron-down',
   menu: 'mdi-menu',
   dropdown: 'mdi-menu-down',
   separator: 'mdi-slash-forward',

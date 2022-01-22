@@ -1,9 +1,11 @@
+// Styles
+import './styles/list-group-items.scss'
+
 // Utils
 import { defineComponent } from '../../utils'
 
 // Composables
-import { createList } from './composables/list'
-import { useDepth } from './composables/depth'
+import { provideList } from './composables/list'
 
 // Components
 import { ExpandTransition } from '../transition'
@@ -22,15 +24,13 @@ export const ListGroupItems = defineComponent({
   },
 
   setup (props, { slots }) {
-    const parent = createList()
-    const depth = useDepth(parent.hasPrepend)
+    provideList()
 
     return () => {
       return (
         <ExpandTransition>
           <div
-            class="ve-list-group__items"
-            style={ { '--ve-list-depth': depth.value } as any }
+            class="ve-list-group-items"
             v-show={ props.open }
           >
             <ListChildren
@@ -41,5 +41,5 @@ export const ListGroupItems = defineComponent({
         </ExpandTransition>
       )
     }
-  },
+  }
 })

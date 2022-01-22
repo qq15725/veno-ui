@@ -1,0 +1,7 @@
+@forward 'variables';
+@use 'variables' as *;
+@use '../../../styles/tools';
+
+.ve-list-group-items {
+  --ve-list-indent: calc(#{$list-indent-offset} + var(--ve-list-parent-indent, 0px));
+}

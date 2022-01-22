@@ -9,7 +9,9 @@ meta:
 
 :::include
 
-basic.md icon.md
+basic.md density.md
+
+icon.md data-driven.md
 
 :::
 

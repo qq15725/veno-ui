@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
@@ -41,11 +42,13 @@ $list-paper: tools.map-deep-merge(
 );
 
 // ListItem
+$list-item-padding: 8px 16px !default;
 $list-item-border-color: settings.$border-color !default;
 $list-item-border-style: settings.$border-style !default;
 $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
 $list-item-border-radius: 0 !default;
+$list-item-transition: .2s settings.$standard-easing !default;
 
 $list-item-paper: () !default;
 $list-item-paper: tools.map-deep-merge(
@@ -75,6 +78,11 @@ $list-item-paper: tools.map-deep-merge(
     ),
     $list-item-paper
 );
+
+// ListItemAvatar
+$list-item-avatar-size: 40px !default;
+$list-item-avatar-margin-start: 16px !default;
+$list-item-avatar-margin-end: 16px !default;
 
 // Nav ListItem
 $list-item-nav-border-radius: settings.$border-radius !default;
@@ -109,3 +117,7 @@ $list-item-nav-title-typography: (
   $list-item-nav-title-line-height,
   null
 );
+
+// indent
+$list-indent: list.nth($list-item-padding, 2) !default;
+$list-indent-offset: 16px !default;

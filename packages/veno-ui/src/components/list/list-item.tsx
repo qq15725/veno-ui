@@ -6,6 +6,7 @@ import { computed, getCurrentInstance } from 'vue'
 import { defineComponent, propIsDefined } from '../../utils'
 
 // Composables
+import { useList } from './composables/list'
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeRouterProps, useLink } from '../../composables/router'
@@ -55,6 +56,7 @@ export const ListItem = defineComponent({
   },
 
   setup (props, { slots, attrs }) {
+    const list = useList()
     const link = useLink(props, attrs)
     const vm = getCurrentInstance()!
     const isActive = computed(() => {
@@ -77,13 +79,17 @@ export const ListItem = defineComponent({
       const hasAppend = !!(slots.append || props.appendAvatar || props.appendIcon)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
+      list?.updateHasPrepend(hasPrepend)
+
       return (
         <Tag
           class={ [
             've-list-item',
             {
               've-list-item--active': isActive.value,
+              've-list-item--disabled': props.disabled,
               've-list-item--link': isClickable,
+              've-list-item--prepend': !hasPrepend && list?.hasPrepend.value,
               [`${ props.activeClass }`]: isActive.value && props.activeClass,
             },
             paperClasses.value,
@@ -102,36 +108,31 @@ export const ListItem = defineComponent({
           { isClickable && <div class="ve-list-item__overlay" /> }
 
           { hasPrepend && (
-            slots.prepend
-              ? slots.prepend()
-              : (
-                <ListItemAvatar left>
-                  <Avatar
-                    color={ false }
-                    variant="text"
-                    density={ props.density }
-                    icon={ props.prependIcon }
-                    image={ props.prependAvatar }
-                  />
-                </ListItemAvatar>
-              )
+            slots.prepend?.() ?? (
+              <ListItemAvatar left>
+                <Avatar
+                  color={ false }
+                  variant="text"
+                  shape="round"
+                  density={ props.density }
+                  icon={ props.prependIcon }
+                  image={ props.prependAvatar }
+                />
+              </ListItemAvatar>
+            )
           ) }
 
           { hasHeader && (
             <ListItemHeader>
               { hasTitle && (
                 <ListItemTitle>
-                  { slots.title
-                    ? slots.title()
-                    : props.title }
+                  { slots.title?.() ?? props.title }
                 </ListItemTitle>
               ) }
 
               { hasSubtitle && (
                 <ListItemSubtitle>
-                  { slots.subtitle
-                    ? slots.subtitle()
-                    : props.subtitle }
+                  { slots.subtitle?.() ?? props.subtitle }
                 </ListItemSubtitle>
               ) }
             </ListItemHeader>
@@ -140,19 +141,17 @@ export const ListItem = defineComponent({
           { slots.default?.() }
 
           { hasAppend && (
-            slots.append
-              ? slots.append()
-              : (
-                <ListItemAvatar right>
-                  <Avatar
-                    color={ false }
-                    variant="text"
-                    density={ props.density }
-                    icon={ props.appendIcon }
-                    image={ props.appendAvatar }
-                  />
-                </ListItemAvatar>
-              )
+            slots.append?.() ?? (
+              <ListItemAvatar right>
+                <Avatar
+                  color={ false }
+                  variant="text"
+                  density={ props.density }
+                  icon={ props.appendIcon }
+                  image={ props.appendAvatar }
+                />
+              </ListItemAvatar>
+            )
           ) }
         </Tag>
       )

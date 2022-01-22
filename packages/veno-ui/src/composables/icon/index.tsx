@@ -17,6 +17,8 @@ export interface IconAliases
   error: IconValue
   close: IconValue
   clear: IconValue
+  collapse: IconValue
+  expand: IconValue
   menu: IconValue
   dropdown: IconValue
   separator: IconValue
