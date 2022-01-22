@@ -4,7 +4,7 @@
 
 ```html
 <div class="p-10 bg-grey-300">
-  <ve-list dense :items="items" />
+  <ve-list :items="items" />
 </div>
 ```
 

@@ -64,7 +64,7 @@ export default defineComponent({
       </ve-header-items>
     </ve-header>
 
-    <ve-sider v-model="active">
+    <ve-drawer v-model="active">
       <ve-list
           nav
           density="compact"
@@ -75,9 +75,9 @@ export default defineComponent({
           <ve-list-subheader>{{ title }}</ve-list-subheader>
         </template>
       </ve-list>
-    </ve-sider>
+    </ve-drawer>
 
-    <ve-sider
+    <ve-drawer
         v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
         width="180"
         side="right"
@@ -93,7 +93,7 @@ export default defineComponent({
           {{ header.title }}
         </ve-anchor-item>
       </ve-anchor>
-    </ve-sider>
+    </ve-drawer>
 
     <ve-layout-item side="top" size="45" priority="-1" class="d-flex align-center px-3 px-md-10">
       <ve-breadcrumb v-if="$route.meta.category">

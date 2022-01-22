@@ -1,5 +1,5 @@
 // Styles
-import './styles/sider.scss'
+import './styles/drawer.scss'
 
 // Utils
 import { computed, onBeforeMount, watch, ref, toRef } from 'vue'
@@ -21,10 +21,10 @@ import { FadeTransition } from '../transition'
 // Types
 import { Ref } from 'vue'
 
-export type Sider = InstanceType<typeof Sider>
+export type Drawer = InstanceType<typeof Drawer>
 
-export const Sider = defineComponent({
-  name: 'VeSider',
+export const Drawer = defineComponent({
+  name: 'VeDrawer',
 
   props: {
     color: String,
@@ -117,15 +117,15 @@ export const Sider = defineComponent({
             onMouseenter={ () => (isHovering.value = true) }
             onMouseleave={ () => (isHovering.value = false) }
             class={ [
-              've-sider',
+              've-drawer',
               {
-                've-sider--bottom': props.side === 'bottom',
-                've-sider--start': props.side === 'left',
-                've-sider--end': props.side === 'right',
-                've-sider--expand-on-hover': props.expandOnHover,
-                've-sider--rail': props.rail,
-                've-sider--is-hovering': isHovering.value,
-                've-sider--temporary': isTemporary.value,
+                've-drawer--bottom': props.side === 'bottom',
+                've-drawer--start': props.side === 'left',
+                've-drawer--end': props.side === 'right',
+                've-drawer--expand-on-hover': props.expandOnHover,
+                've-drawer--rail': props.rail,
+                've-drawer--is-hovering': isHovering.value,
+                've-drawer--temporary': isTemporary.value,
               },
               themeClasses.value,
               backgroundColorClasses.value,
@@ -138,7 +138,7 @@ export const Sider = defineComponent({
             ] }
             { ...attrs }
           >
-            <div class="ve-sider__wrapper">
+            <div class="ve-drawer__wrapper">
               { slots.default?.() }
             </div>
           </props.tag>
@@ -146,7 +146,7 @@ export const Sider = defineComponent({
           <FadeTransition>
             { isTemporary.value && (isDragging.value || isActive.value) && (
               <div
-                class="ve-sider__scrim"
+                class="ve-drawer__scrim"
                 style={ isDragging.value ? {
                   opacity: dragProgress.value * 0.2,
                   transition: 'none',

@@ -1,0 +1,24 @@
+@use '../../../styles/settings';
+
+// color
+$drawer-background: rgb(var(--ve-theme-surface)) !default;
+$drawer-color: rgb(var(--ve-theme-on-surface)) !default;
+
+$drawer-height: 100% !default;
+$drawer-will-change: transform !default;
+
+$drawer-border-color: settings.$border-color !default;
+$drawer-border-style: settings.$border-style !default;
+$drawer-border-width: 0 !default;
+$drawer-border-thin-width: thin !default;
+$drawer-border-radius: map-get(settings.$rounded, '0') !default;
+$drawer-borders: (
+  'default': (
+    'color': $drawer-border-color,
+    'style': $drawer-border-style,
+    'width': $drawer-border-width,
+  ),
+  'existence': (
+    'width': $drawer-border-thin-width,
+  )
+) !default;

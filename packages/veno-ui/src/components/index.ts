@@ -1,6 +1,6 @@
 export * from './app'
 export * from './header'
-export * from './sider'
+export * from './drawer'
 export * from './main'
 export * from './layout'
 export * from './anchor'

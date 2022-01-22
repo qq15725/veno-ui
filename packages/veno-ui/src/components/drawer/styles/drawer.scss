@@ -3,29 +3,29 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-sider {
+.ve-drawer {
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
-  background: $sider-background;
-  color: $sider-color;
-  height: $sider-height;
+  background: $drawer-background;
+  color: $drawer-color;
+  height: $drawer-height;
   max-width: 100%;
   pointer-events: auto;
   transition-duration: 0.2s;
   transition-property: box-shadow, transform, visibility, width;
   transition-timing-function: settings.$standard-easing;
-  will-change: $sider-will-change;
-  @include tools.use-border(('borders': $sider-borders));
+  will-change: $drawer-will-change;
+  @include tools.use-border(('borders': $drawer-borders));
 
   &--start {
     top: 0;
-    border-inline-end-width: $sider-border-thin-width;
+    border-inline-end-width: $drawer-border-thin-width;
   }
 
   &--end {
     top: 0;
-    border-inline-start-width: $sider-border-thin-width;
+    border-inline-start-width: $drawer-border-thin-width;
   }
 
   &--temporary {

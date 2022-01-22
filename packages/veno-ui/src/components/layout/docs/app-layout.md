@@ -9,9 +9,9 @@
 ```html
 <ve-app layer-z-index="0" style="height: 400px;">
   <ve-header position="absolute" class="bg-grey-400" />
-  <ve-sider position="absolute" class="bg-grey-300" width="64" permanent />
+  <ve-drawer position="absolute" class="bg-grey-300" width="64" permanent />
   <ve-main class="bg-grey-200" />
-  <ve-sider side="right" position="absolute" class="bg-grey-300" width="64" permanent />
+  <ve-drawer side="right" position="absolute" class="bg-grey-300" width="64" permanent />
 </ve-app>
 ```
 
