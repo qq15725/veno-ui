@@ -23,7 +23,10 @@ export type ListGroupHeaderSlot = {
   appendIcon: string
   class: string
 }
-type ListGroupGenerator = new <T extends ListItemProp>() => {
+
+export type ListGroup = InstanceType<typeof ListGroup>
+
+export const ListGroup = genericComponent<new <T extends ListItemProp>() => {
   $props: {
     items?: T[]
   }
@@ -32,9 +35,7 @@ type ListGroupGenerator = new <T extends ListItemProp>() => {
     item: [T]
     default: []
   }>
-}
-
-export const ListGroup = genericComponent<ListGroupGenerator>()({
+}>()({
   name: 'VeListGroup',
 
   props: {

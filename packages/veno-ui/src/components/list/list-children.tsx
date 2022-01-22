@@ -11,17 +11,16 @@ import type { MakeSlots } from '../../utils'
 import type { ListGroupHeaderSlot } from './list-group'
 import type { ListItemProp } from './list'
 
-type VeListChildrenGenerator = new <T extends ListItemProp>() => {
+export const ListChildren = genericComponent<new <T extends ListItemProp>() => {
   $props: {
     items?: T[]
   }
   $slots: MakeSlots<{
-    header: [ListGroupHeaderSlot]
+    default: []
+    externalHeader: [ListGroupHeaderSlot]
     item: [T]
   }>
-}
-
-export const ListChildren = genericComponent<VeListChildrenGenerator>()({
+}>()({
   name: 'VeListChildren',
 
   props: {
@@ -29,27 +28,25 @@ export const ListChildren = genericComponent<VeListChildrenGenerator>()({
   },
 
   setup (props, { slots }) {
-    return () => (
-      slots.default?.()
-      ?? props.items?.map(({ children, ...item }) => {
-        const { value, ...rest } = item
-        return children
-          ? <ListGroup
-            value={ value }
-            items={ children }
-            v-slots={ {
-              ...slots,
-              header: headerProps => (
-                slots.header?.({ ...rest, ...headerProps })
-                ?? <ListItem { ...rest } { ...headerProps } />
-              )
-            } }
-          />
-          : (
-            slots.item?.(item)
-            ?? <ListItem { ...item } v-slots={ slots } />
-          )
-      })
-    )
+    return () => slots.default?.() ?? props.items?.map(({ children, ...item }) => {
+      const { value, ...rest } = item
+      return children ? (
+        <ListGroup
+          value={ value }
+          items={ children }
+        >
+          { {
+            ...slots,
+            header: headerProps => (
+              slots.externalHeader?.({ ...rest, ...headerProps })
+              ?? <ListItem { ...rest } { ...headerProps } />
+            )
+          } }
+        </ListGroup>
+      ) : (
+        slots.item?.(item)
+        ?? <ListItem { ...item } v-slots={ slots } />
+      )
+    })
   },
 })

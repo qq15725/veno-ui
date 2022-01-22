@@ -2,13 +2,12 @@
 import './styles/list.scss'
 
 // Utils
-import { defineComponent } from '../../utils'
+import { genericComponent, useRender } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeNestedProps, useNested } from '../../composables/nested'
-import { useDepth } from './composables/depth'
 import { provideList } from './composables/list'
 
 // Components
@@ -17,14 +16,26 @@ import { ListChildren } from './list-children'
 
 // Types
 import type { Prop } from 'vue'
+import type { MakeSlots } from '../../utils'
+import type { ListGroupHeaderSlot } from './list-group'
 
 export type List = InstanceType<typeof List>
+
 export type ListItemProp = {
   children?: ListItemProp[]
   value?: string
 }
 
-export const List = defineComponent({
+export const List = genericComponent<new <T>() => {
+  $props: {
+    items?: T[]
+  }
+  $slots: MakeSlots<{
+    subheader: []
+    header: [ListGroupHeaderSlot]
+    item: [T]
+  }>
+}>()({
   name: 'VeList',
 
   props: {
@@ -54,11 +65,10 @@ export const List = defineComponent({
   setup (props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
     const { disabledClasses } = useDisabled(props)
-    useNested(props)
-    useDepth()
+    const { open, select, activate } = useNested(props)
     provideList()
 
-    return () => {
+    useRender(() => {
       const hasHeader = typeof props.subheader === 'string' || slots.subheader
 
       return (
@@ -67,6 +77,7 @@ export const List = defineComponent({
             've-list',
             {
               've-list--nav': props.nav,
+              've-list--subheader': props.subheader,
             },
             paperClasses.value,
             disabledClasses.value,
@@ -80,9 +91,21 @@ export const List = defineComponent({
             ?? <ListSubheader>{ props.subheader }</ListSubheader>
           ) }
 
-          <ListChildren items={ props.items } v-slots={ slots } />
+          <ListChildren items={ props.items }>
+            { {
+              default: slots.default,
+              item: slots.item,
+              externalHeader: slots.header,
+            } }
+          </ListChildren>
         </props.tag>
       )
+    })
+
+    return {
+      open,
+      select,
+      activate
     }
-  },
+  }
 })
