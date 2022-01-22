@@ -27,7 +27,7 @@ export const LayoutItem = defineComponent({
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       priority: props.priority,
       position: props.position,
-      side: props.side,
+      anchor: props.anchor,
       size: props.size,
       active: props.modelValue,
     })))

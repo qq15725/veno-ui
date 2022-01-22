@@ -80,7 +80,7 @@ export default defineComponent({
     <ve-drawer
         v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
         width="180"
-        side="right"
+        anchor="right"
         border="0"
     >
       <ve-anchor offset="64" class="mt-10">
@@ -95,7 +95,7 @@ export default defineComponent({
       </ve-anchor>
     </ve-drawer>
 
-    <ve-layout-item side="top" size="45" priority="-1" class="d-flex align-center px-3 px-md-10">
+    <ve-layout-item anchor="top" size="45" priority="-1" class="d-flex align-center px-3 px-md-10">
       <ve-breadcrumb v-if="$route.meta.category">
         <ve-breadcrumb-item
             v-for="name in ['组件', $route.meta.category]"

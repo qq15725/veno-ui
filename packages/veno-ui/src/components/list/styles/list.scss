@@ -8,12 +8,4 @@
   position: relative;
   padding: 8px 0;
   @include tools.use-paper($list-paper);
-
-  &--nav {
-    .ve-list-group + .ve-list-group,
-    .ve-list-subheader + .ve-list-group-items,
-    .ve-list-item + .ve-list-item {
-      margin-block-start: 6px;
-    }
-  }
 }

@@ -27,7 +27,7 @@ export const Header = defineComponent({
     ...makeBorderProps(),
     ...makeLayoutItemProps({
       position: 'fixed',
-      side: 'top',
+      anchor: 'top',
     } as const),
   },
 
@@ -36,7 +36,7 @@ export const Header = defineComponent({
     const { themeClasses } = provideTheme(props)
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       position: props.position,
-      side: props.side,
+      anchor: props.anchor,
       size: props.height,
       active: props.modelValue,
       priority: props.priority,

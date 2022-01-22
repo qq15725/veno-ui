@@ -17,7 +17,7 @@ export const makeLayoutItemProps = propsFactory({
     type: String as PropType<'absolute' | 'fixed'>,
     default: 'absolute',
   },
-  side: {
+  anchor: {
     type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
     default: 'left'
   },

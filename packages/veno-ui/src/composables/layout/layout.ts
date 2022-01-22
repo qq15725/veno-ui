@@ -6,7 +6,7 @@ import { convertToUnit, propsFactory, getCurrentInstanceName } from '../../utils
 import type { InjectionKey, Prop, Ref, ExtractPropTypes } from 'vue'
 import type {
   LayoutItemProps,
-  LayoutSide,
+  LayoutAnchor,
   LayoutLayer,
   LayoutItem,
   LayoutProvider
@@ -38,11 +38,12 @@ export function provideLayout (
     itemIds
       .map(id => {
         const item = itemMap.get(id)!.value
+        console.log(id, item.anchor)
         return {
           id,
           size: Number(item.size),
           position: item.position ?? 'absolute',
-          side: item.side ?? 'left',
+          anchor: item.anchor ?? 'left',
           active: !!item.active,
           priority: Number(item.priority ?? 0),
           layoutSize: Number(item.layoutSize ?? item.size),
@@ -55,7 +56,7 @@ export function provideLayout (
           items: [...items, { ...layer, ...item, }],
           layer: {
             ...layer,
-            [item.side]: layer[item.side] + (item.active ? item.layoutSize : 0)
+            [item.anchor]: layer[item.anchor] + (item.active ? item.layoutSize : 0)
           }
         }),
         { items: [], layer: { top: 0, right: 0, bottom: 0, left: 0 } }
@@ -67,17 +68,17 @@ export function provideLayout (
 
   const computedOverlaps = computed(() => {
     const overlaps = props.overlaps ?? []
-    const map = new Map<string, { side: LayoutSide, amount: number }>()
+    const map = new Map<string, { anchor: LayoutAnchor, amount: number }>()
     for (const overlap of overlaps.filter(item => item.includes(':'))) {
       const [top, bottom] = overlap.split(':')
       const topLayoutItem = getLayoutItem(top)
       const bottomLayoutItem = getLayoutItem(bottom)
       if (!topLayoutItem || !bottomLayoutItem) continue
-      const { side: topAlign, layoutSize: topAmount } = topLayoutItem
-      const { side: bottomAlign, layoutSize: bottomAmount } = bottomLayoutItem
+      const { anchor: topAlign, layoutSize: topAmount } = topLayoutItem
+      const { anchor: bottomAlign, layoutSize: bottomAmount } = bottomLayoutItem
       if (!topAlign || !bottomAlign || !topAmount || !bottomAmount) continue
-      map.set(bottom, { side: topAlign, amount: topAmount })
-      map.set(top, { side: bottomAlign, amount: -bottomAmount })
+      map.set(bottom, { anchor: topAlign, amount: topAmount })
+      map.set(top, { anchor: bottomAlign, amount: -bottomAmount })
     }
     return map
   })
@@ -97,17 +98,17 @@ export function provideLayout (
         const item = items.value[index]
         if (!item) throw new Error(`Could not find layout item "${ id }`)
         const overlap = computedOverlaps.value.get(id)
-        if (overlap) item[overlap.side] += overlap.amount
-        const isHorizontal = item.side === 'left' || item.side === 'right'
-        const isOppositeHorizontal = item.side === 'right'
-        const isOppositeVertical = item.side === 'bottom'
+        if (overlap) item[overlap.anchor] += overlap.amount
+        const isHorizontal = item.anchor === 'left' || item.anchor === 'right'
+        const isOppositeHorizontal = item.anchor === 'right'
+        const isOppositeVertical = item.anchor === 'bottom'
         return {
-          [item.side]: 0,
+          [item.anchor]: 0,
           height: isHorizontal ? `calc(100% - ${ item.top }px - ${ item.bottom }px)` : `${ item.size }px`,
           marginLeft: isOppositeHorizontal ? undefined : `${ item.left }px`,
           marginRight: isOppositeHorizontal ? `${ item.right }px` : undefined,
-          marginTop: item.side !== 'bottom' ? `${ item.top }px` : undefined,
-          marginBottom: item.side !== 'top' ? `${ item.bottom }px` : undefined,
+          marginTop: item.anchor !== 'bottom' ? `${ item.top }px` : undefined,
+          marginBottom: item.anchor !== 'top' ? `${ item.bottom }px` : undefined,
           width: !isHorizontal ? `calc(100% - ${ item.left }px - ${ item.right }px)` : `${ item.size }px`,
           zIndex: Number(props.layerZIndex) + items.value.length - index,
           transform: `translate${ isHorizontal ? 'X' : 'Y' }(${ (item.active ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1) }%)`,

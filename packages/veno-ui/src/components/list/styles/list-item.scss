@@ -28,11 +28,6 @@
     cursor: pointer;
   }
 
-  // List Nav
-  .ve-list--nav & {
-    border-radius: $list-item-nav-border-radius;
-  }
-
   // ListGroupItems
   .ve-list-group-items & {
     padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px)) !important;

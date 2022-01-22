@@ -1,11 +1,11 @@
 import type { Ref } from 'vue'
 
-export type LayoutSide = 'top' | 'right' | 'bottom' | 'left'
+export type LayoutAnchor = 'top' | 'right' | 'bottom' | 'left'
 
 export interface LayoutItemProps
 {
   position?: 'absolute' | 'fixed'
-  side?: LayoutSide
+  anchor?: LayoutAnchor
   active?: boolean
   size: string | number
   layoutSize?: string | number

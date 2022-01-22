@@ -47,7 +47,7 @@ export const Drawer = defineComponent({
     ...makeBorderProps(),
     ...makeLayoutItemProps({
       position: 'fixed',
-      side: 'left',
+      anchor: 'left',
       modelValue: null,
     } as const),
   },
@@ -88,7 +88,7 @@ export const Drawer = defineComponent({
       isTemporary,
       width,
       touchless: toRef(props, 'touchless'),
-      position: toRef(props, 'side') as Ref<'left' | 'right' | 'bottom'>,
+      position: toRef(props, 'anchor') as Ref<'left' | 'right' | 'bottom'>,
     })
 
     const layoutSize = computed(() => {
@@ -99,13 +99,17 @@ export const Drawer = defineComponent({
       return isDragging.value ? size * dragProgress.value : size
     })
 
+    const priority = computed(() => {
+      return isTemporary.value ? Number(props.priority) + 1 : props.priority
+    })
+
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       name: props.name,
       position: props.position,
-      side: props.side,
+      anchor: props.anchor,
       size: width.value,
       layoutSize: layoutSize.value,
-      priority: props.priority,
+      priority: priority.value,
       active: isActive.value || isDragging.value,
       disableTransition: isDragging.value
     })))
@@ -119,9 +123,10 @@ export const Drawer = defineComponent({
             class={ [
               've-drawer',
               {
-                've-drawer--bottom': props.side === 'bottom',
-                've-drawer--start': props.side === 'left',
-                've-drawer--end': props.side === 'right',
+                've-drawer--top': props.anchor === 'top',
+                've-drawer--bottom': props.anchor === 'bottom',
+                've-drawer--start': props.anchor === 'left',
+                've-drawer--end': props.anchor === 'right',
                 've-drawer--expand-on-hover': props.expandOnHover,
                 've-drawer--rail': props.rail,
                 've-drawer--is-hovering': isHovering.value,

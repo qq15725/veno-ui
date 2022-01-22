@@ -84,9 +84,6 @@ $list-item-avatar-size: 40px !default;
 $list-item-avatar-margin-start: 16px !default;
 $list-item-avatar-margin-end: 16px !default;
 
-// Nav ListItem
-$list-item-nav-border-radius: settings.$border-radius !default;
-
 // ListItemTitle
 $list-item-title-font-size: tools.map-deep-get(settings.$typography, 'body-1', 'size') !default;
 $list-item-title-font-weight: tools.map-deep-get(settings.$typography, 'body-1', 'weight') !default;

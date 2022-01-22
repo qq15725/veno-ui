@@ -28,6 +28,14 @@
     border-inline-start-width: $drawer-border-thin-width;
   }
 
+  &--bottom {
+    left: 0;
+  }
+
+  &--top {
+    left: 0;
+  }
+
   &--temporary {
     @include tools.elevation(16);
   }
@@ -36,11 +44,8 @@
     flex: 0 1 auto;
     height: 100%;
     max-width: 100%;
-    padding-inline-start: 12px;
-    padding-inline-end: 2px;
     overflow-x: hidden;
-    overflow-y: scroll;
-    @include tools.scrollbar();
+    overflow-y: auto;
   }
 
   &__scrim {
