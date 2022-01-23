@@ -38,7 +38,6 @@ export function provideLayout (
     itemIds
       .map(id => {
         const item = itemMap.get(id)!.value
-        console.log(id, item.anchor)
         return {
           id,
           size: Number(item.size),
