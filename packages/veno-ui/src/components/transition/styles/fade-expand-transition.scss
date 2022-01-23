@@ -1,0 +1,15 @@
+@use '../../../styles/tools';
+
+.ve-fade-expand-transition {
+  &-leave-from,
+  &-enter-to {
+    opacity: 1;
+  }
+
+  &-leave-to,
+  &-enter-from {
+    opacity: 0;
+  }
+
+  @include tools.use-transition();
+}

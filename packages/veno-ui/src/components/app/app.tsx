@@ -2,7 +2,7 @@
 import './styles/app.scss'
 
 // Utils
-import { defineComponent } from 'vue'
+import { defineComponent, useRender } from '../../utils'
 
 // Composables
 import { makeThemeProps, provideTheme } from '../../composables/theme'
@@ -21,15 +21,15 @@ export const App = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { themeClasses } = provideTheme(props)
-    const { layoutClasses } = provideLayout(props)
+    const theme = provideTheme(props)
+    const { getLayoutItem, items, layoutClasses } = provideLayout(props)
     createDragSortProvider()
 
-    return () => (
+    useRender(() => (
       <div
         class={ [
           've-app',
-          themeClasses.value,
+          theme.themeClasses.value,
           layoutClasses.value,
         ] }
         data-app="true"
@@ -38,6 +38,12 @@ export const App = defineComponent({
           { slots.default?.() }
         </div>
       </div>
-    )
-  },
+    ))
+
+    return {
+      theme,
+      getLayoutItem,
+      items
+    }
+  }
 })

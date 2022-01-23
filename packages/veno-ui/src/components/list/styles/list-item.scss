@@ -3,6 +3,7 @@
 @use '../../../styles/tools';
 
 .ve-list-item {
+  $root: &;
   position: relative;
   display: flex;
   align-items: center;
@@ -14,7 +15,6 @@
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay);
 
-  $root: &;
   @at-root {
     @include tools.density('ve-list') using($modifier) {
       #{$root} {
@@ -28,13 +28,13 @@
     cursor: pointer;
   }
 
-  // ListGroupItems
-  .ve-list-group-items & {
-    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px)) !important;
-  }
-
   &--prepend,
   .ve-list-group-items &--prepend {
     padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px) + #{$list-item-avatar-size} + #{$list-item-avatar-margin-start}) !important;
+  }
+
+  // ListGroupItems
+  .ve-list-group-items & {
+    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px)) !important;
   }
 }

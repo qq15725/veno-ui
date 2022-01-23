@@ -1,18 +1,11 @@
 @forward 'variables';
 @use 'variables' as *;
+@use '../../../styles/tools';
 
 .ve-app {
-  --ve-scrollbar-offset: 0px;
-  position: relative;
-  display: flex;
-  flex: 1 1 auto;
   background: rgb(var(--ve-theme-background));
   color: rgb(var(--ve-theme-on-background));
-
-  &--full-height {
-    --ve-scrollbar-offset: inherit;
-    height: 100%;
-  }
+  @include tools.use-layout();
 
   &__wrapper {
     position: relative;

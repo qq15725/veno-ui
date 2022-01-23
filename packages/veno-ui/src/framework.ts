@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { mergeDeep } from './utils'
 
 // Composables
-import { createTheme, ThemeSymbol } from './composables/theme'
+import { createTheme, ThemeKey } from './composables/theme'
 import { createHighlighter, HighlighterKey } from './composables/highlighter'
 import { defaultSets, IconKey } from './composables/icon'
 import { createDisplay, DisplayKey } from './composables/display'
@@ -52,7 +52,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     }
 
     app.provide(DefaultsKey, createDefaults(options.defaults))
-    app.provide(ThemeSymbol, createTheme(options.theme))
+    app.provide(ThemeKey, createTheme(options.theme))
     app.provide(DisplayKey, createDisplay(options.display))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconKey, mergeDeep({
@@ -77,7 +77,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       computed: {
         $venoUi () {
           return reactive({
-            theme: inject.call(this, ThemeSymbol),
+            theme: inject.call(this, ThemeKey),
             display: inject.call(this, DisplayKey),
             icons: inject.call(this, IconKey),
           })

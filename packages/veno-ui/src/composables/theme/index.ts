@@ -56,7 +56,7 @@ export interface Theme
   getTheme: (key: string) => InternalThemeDefinition
 }
 
-export const ThemeSymbol: InjectionKey<Theme> = Symbol.for('veno-ui:theme')
+export const ThemeKey: InjectionKey<Theme> = Symbol.for('veno-ui:theme')
 
 export const makeThemeProps = propsFactory({
   theme: String,
@@ -203,7 +203,7 @@ export interface ThemeProps
 export function provideTheme (props: MaybeRef<ThemeProps>) {
   getCurrentInstance('provideTheme')
 
-  const theme = inject(ThemeSymbol, null)
+  const theme = inject(ThemeKey, null)
 
   if (!theme) throw new Error('Could not find VenoUi theme injection')
 
@@ -223,7 +223,7 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
     themeClasses,
   }
 
-  provide(ThemeSymbol, newTheme)
+  provide(ThemeKey, newTheme)
 
   return newTheme
 }
@@ -231,7 +231,7 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
 export function useTheme () {
   getCurrentInstance('useTheme')
 
-  const theme = inject(ThemeSymbol, null)
+  const theme = inject(ThemeKey, null)
 
   if (!theme) throw new Error('Could not find VenoUi theme injection')
 

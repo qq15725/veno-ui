@@ -13,6 +13,7 @@
   word-wrap: break-word;
   @include tools.typography($list-item-title-typography...);
 
+  // List Nav
   .ve-list--nav & {
     @include tools.typography($list-item-nav-title-typography...);
   }

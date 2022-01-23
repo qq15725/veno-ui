@@ -4,6 +4,7 @@
 @use '../../../styles/settings';
 
 .ve-list-subheader {
+  $root: &;
   align-items: center;
   background: inherit;
   display: flex;
@@ -16,7 +17,6 @@
   transition: 0.2s min-height settings.$standard-easing;
   opacity: var(--ve-medium-emphasis-opacity);
 
-  $root: &;
   @at-root {
     @include tools.density('ve-list') using($modifier) {
       #{$root} {

@@ -2,11 +2,11 @@
 
 @mixin use-transition() {
   &-enter-active {
-    transition: 0.3s $standard-easing;
+    transition: .2s $standard-easing;
   }
 
   &-leave-active {
-    transition: 0.3s $standard-easing;
+    transition: .2s $standard-easing;
   }
 
   &-move {

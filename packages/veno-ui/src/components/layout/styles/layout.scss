@@ -1,11 +1,5 @@
-.ve-layout {
-  --v-scrollbar-offset: 0px;
-  position: relative;
-  display: flex;
-  flex: 1 1 auto;
+@use '../../../styles/tools';
 
-  &--full-height {
-    --v-scrollbar-offset: inherit;
-    height: 100%;
-  }
+.ve-layout {
+  @include tools.use-layout();
 }

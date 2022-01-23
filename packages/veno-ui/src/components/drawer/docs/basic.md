@@ -5,7 +5,7 @@
 ```html
 <ve-button class="mb-3" @click="show = !show">切换</ve-button>
 
-<ve-app style="height: 200px;">
+<ve-layout style="height: 200px;">
   <ve-drawer :rail="show" position="absolute">
     <ve-list>
       <ve-list-item prepend-icon="mdi-close" title="Menu 1" link />
@@ -15,7 +15,7 @@
       <ve-list-item title="Menu 5" link />
     </ve-list>
   </ve-drawer>
-</ve-app>
+</ve-layout>
 ```
 
 ```js

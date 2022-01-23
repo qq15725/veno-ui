@@ -7,13 +7,17 @@
   <ve-button @click="show = !show" class="mb-3">点我</ve-button>
 
   <ve-spacer>
-    <ve-expand-transition>
-      <ve-paper v-show="show" color="primary" size="100" />
-    </ve-expand-transition>
-
     <ve-fade-transition>
       <ve-paper v-show="show" color="primary" size="100" />
     </ve-fade-transition>
+    
+    <ve-expand-transition>
+      <ve-paper v-show="show" color="primary" size="100" />
+    </ve-expand-transition>
+    
+    <ve-fade-expand-transition>
+      <ve-paper v-show="show" color="primary" size="100" />
+    </ve-fade-expand-transition>
 
     <ve-scale-transition>
       <ve-paper v-show="show" color="primary" size="100" />

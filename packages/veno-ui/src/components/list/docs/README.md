@@ -13,6 +13,8 @@ basic.md density.md
 
 icon.md data-driven.md
 
+nav.md
+
 :::
 
 ## API
