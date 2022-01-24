@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue'
 import { version } from 'veno-ui'
-import { useAppStore } from '@/store/app'
+import { useAppStore } from '@/stores/app'
 import { routesToMenus } from '@/utils'
 import { useRoute } from 'vue-router'
 // @ts-ignore

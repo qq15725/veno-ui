@@ -12,7 +12,7 @@ function resolveOptions (userOptions?: Options): ResolvedOptions {
   return Object.assign({}, userOptions || {}) as ResolvedOptions
 }
 
-function svgToVue (raw: string, id: string, options: ResolvedOptions) {
+function svgToVue (id: string, raw: string, options: ResolvedOptions) {
   const optimizedSvg = optimize(raw, options.svgoOptions)
   if (optimizedSvg.error) {
     throw new Error(`Optimize svg error: ${ optimizedSvg.error }`)
@@ -42,20 +42,16 @@ export default function svgPlugin (userOptions?: Options): PluginOption {
 
   return {
     name: '@veno-ui/vite-plugin-svg',
-
     enforce: 'pre',
-
     configResolved (config) {
       vuePlugin = config.plugins.find(p => p.name === 'vite:vue')
       resolvedConfig = config
     },
-
     resolveId (id) {
       if (!filter(id)) return
       if (!isAbsolutePath(id)) return
       return id
     },
-
     async load (id) {
       if (!filter(id)) return
       if (!isAbsolutePath(id)) return
@@ -64,25 +60,23 @@ export default function svgPlugin (userOptions?: Options): PluginOption {
         map: null
       }
     },
-
     transform (raw, id) {
       if (!filter(id)) return
       if (!isAbsolutePath(id)) return
       if (!vuePlugin) return this.error('Not found plugin [vite:vue]')
       try {
-        return vuePlugin.transform?.call(this, svgToVue(raw, id, options), getVueId(id))
+        return vuePlugin.transform?.call(this, svgToVue(id, raw, options), getVueId(id))
       } catch (e: any) {
         this.error(e)
       }
     },
-
     async handleHotUpdate (ctx) {
       if (!vuePlugin || !filter(ctx.file)) return
       if (!isAbsolutePath(ctx.file)) return
       return vuePlugin.handleHotUpdate?.call(this, {
         ...ctx,
         file: getVueId(ctx.file),
-        read: async () => svgToVue(await ctx.read(), ctx.file, options)
+        read: async () => svgToVue(ctx.file, await ctx.read(), options)
       })
     }
   }

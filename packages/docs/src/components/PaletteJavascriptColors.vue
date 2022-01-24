@@ -1,3 +1,17 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'PaletteJavascriptColors',
+
+  computed: {
+    colors () {
+      return this.$venoUi.theme.themes[this.$venoUi.theme.current].colors
+    }
+  }
+})
+</script>
+
 <template>
   <ve-container>
     <ve-row>
@@ -40,17 +54,3 @@
     </ve-row>
   </ve-container>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'PaletteJavascriptColors',
-
-  computed: {
-    colors () {
-      return this.$venoUi.theme.themes[this.$venoUi.theme.current].colors
-    }
-  }
-})
-</script>

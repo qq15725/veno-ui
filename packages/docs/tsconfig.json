@@ -11,9 +11,6 @@
       "veno-ui": ["../veno-ui/src/framework.ts"]
     },
     "types": [
-      "vite/client",
-      "vite-plugin-pages/client",
-      "vite-plugin-pwa/client",
       "vue-router",
       "prismjs"
     ]

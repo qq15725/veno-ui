@@ -1,30 +1,21 @@
 // Utils
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { useAppStore } from '@/store/app'
-import pages from '~pages'
-
-// Loyouts
-import DefaultLayout from '@/layouts/default.vue'
+import { useAppStore } from '@/stores/app'
+import generatedRoutes from 'virtual:generated-pages'
+import { setupLayouts } from 'virtual:generated-layouts'
 
 // Types
-import type { RouteRecordRaw } from 'vue-router'
-import type { UsePlugin } from '@/types'
+import type { InstallPlugin } from '@/types'
 
-const routes: RouteRecordRaw[] = [
-  {
-    path: '',
-    component: DefaultLayout,
-    children: [
-      ...pages,
-      { path: '', redirect: '/zh/start' },
-    ],
-  },
-]
+export const install: InstallPlugin = app => {
+  const store = useAppStore()
 
-export const useRouter: UsePlugin = app => {
   const router = createRouter({
     history: createWebHashHistory(),
-    routes,
+    routes: [
+      ...setupLayouts(generatedRoutes),
+      { path: '/', redirect: '/zh/start' },
+    ],
     // @ts-ignore
     scrollBehavior (to, from, savedPosition) {
       if (to.path === from.path) return savedPosition
@@ -34,14 +25,14 @@ export const useRouter: UsePlugin = app => {
 
   router.beforeEach(function (to, from, next) {
     if (!from || to.path !== from.path) {
-      useAppStore().loading = true
+      store.loading = true
     }
     next()
   })
 
   router.afterEach(function (to, from) {
     if (!from || to.path !== from.path) {
-      useAppStore().loading = false
+      store.loading = false
     }
   })
 

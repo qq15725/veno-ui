@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useAppStore } from '@/store/app'
+import { useAppStore } from '@/stores/app'
 
 const btn = ref()
 

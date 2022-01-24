@@ -1,3 +1,3 @@
 import type { App } from 'vue'
 
-export type UsePlugin = (app: App) => void
+export type InstallPlugin = (app: App) => void

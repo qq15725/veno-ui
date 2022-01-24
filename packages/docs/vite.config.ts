@@ -10,6 +10,7 @@ import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import Legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
+import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from '@veno-ui/vite-plugin-markdown'
 import Svg from '@veno-ui/vite-plugin-svg'
@@ -73,6 +74,15 @@ export default defineConfig(({ mode }) => {
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
+      Vue({
+        include: [/\.vue$/, /\.md$/],
+      }),
+      VueJsx(),
+      Legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      }),
+
       // https://github.com/hannoeru/vite-plugin-pages
       Pages({
         extensions: ['vue', 'md'],
@@ -110,6 +120,21 @@ export default defineConfig(({ mode }) => {
             meta: routeMeta
           }
         }
+      }),
+
+      // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
+      Layouts({
+        layoutsDir: 'src/layouts',
+        defaultLayout: 'default'
+      }),
+
+      // https://github.com/antfu/unplugin-vue-components
+      Components({
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [
+          VenoUiResolver(),
+        ],
+        dts: 'src/components.d.ts',
       }),
 
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
@@ -158,14 +183,6 @@ export default defineConfig(({ mode }) => {
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-svg
       Svg(),
 
-      // https://github.com/antfu/unplugin-vue-components
-      Components({
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-        resolvers: [
-          VenoUiResolver(),
-        ]
-      }),
-
       // https://github.com/antfu/vite-plugin-pwa
       VitePWA({
         registerType: 'autoUpdate',
@@ -194,13 +211,6 @@ export default defineConfig(({ mode }) => {
             }
           ]
         }
-      }),
-
-      Vue(),
-      VueJsx(),
-      Legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
       }),
     ],
     define: {

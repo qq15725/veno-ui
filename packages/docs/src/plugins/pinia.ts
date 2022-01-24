@@ -2,8 +2,8 @@
 import { createPinia } from 'pinia'
 
 // Types
-import type { UsePlugin } from '@/types'
+import type { InstallPlugin } from '@/types'
 
-export const usePinia: UsePlugin = app => {
+export const install: InstallPlugin = app => {
   app.use(createPinia())
 }

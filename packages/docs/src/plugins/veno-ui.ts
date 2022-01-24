@@ -7,9 +7,9 @@ import { createVenoUi } from 'veno-ui'
 import prismjs from 'prismjs'
 
 // Types
-import type { UsePlugin } from '@/types'
+import type { InstallPlugin } from '@/types'
 
-export const useVenoUi: UsePlugin = app => {
+export const install: InstallPlugin = app => {
   const venoUi = createVenoUi({
     // 高亮器
     highlighter: {
