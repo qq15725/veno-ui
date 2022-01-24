@@ -52,6 +52,7 @@ export const Menu = genericComponent<new () => {
           absolute
           position-strategy="connected"
           scroll-strategy="reposition"
+          close-delay={ 100 }
           min-width={ 0 }
           offset={ 4 }
           scrim={ false }

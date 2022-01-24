@@ -27,7 +27,9 @@ export const Hover = defineComponent({
 
   setup (props, { slots }) {
     const hover = useProxiedModel(props, 'modelValue')
-    const { runOpenDelay, runCloseDelay } = useDelay(props, value => !props.disabled && (hover.value = value))
+    const { runOpenDelay, runCloseDelay } = useDelay(props, value => {
+      !props.disabled && (hover.value = value)
+    })
 
     return () => slots.default?.({
       hover: hover.value,

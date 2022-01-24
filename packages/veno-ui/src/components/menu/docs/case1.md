@@ -3,9 +3,9 @@
 # 示例1
 
 ```html
-<ve-menu>
+<ve-menu open-on-hover>
   <template #activator="{ props }">
-    <ve-button v-bind="props">Click Me</ve-button>
+    <ve-button v-bind="props">Hover</ve-button>
   </template>
   
   <ve-card width="180">
