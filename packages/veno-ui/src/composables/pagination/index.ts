@@ -3,11 +3,11 @@ import { propsFactory } from '../../utils'
 
 export interface PaginationProps
 {
-  firstPage: number | string
-  lastPage: number | string
-  page: number | string
-  perPage: number | string
-  total?: number | string
+  page: number | string // 当前页
+  total: number | string // 总条数
+  perPage?: number | string // 每页条数
+  firstPage?: number | string // 第一页
+  lastPage?: number | string // 最后一页
 }
 
 export const makePaginationProps = propsFactory({
@@ -28,5 +28,4 @@ export const makePaginationProps = propsFactory({
     type: [Number, String],
     default: 10,
   },
-  total: [Number, String],
 }, 'pagination')

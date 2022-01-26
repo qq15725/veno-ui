@@ -2,13 +2,13 @@
 import './styles/table.scss'
 
 // Utils
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import {
-  defineComponent, 
+  defineComponent,
   convertToUnit,
   wrapInArray,
   getObjectValueByPath,
-  useRender, 
+  useRender,
   downloadCSV,
   throttle
 } from '../../utils'
@@ -26,6 +26,7 @@ import { Pagination } from '../pagination'
 
 // Types
 import type { PropType } from 'vue'
+import type { PaginationProps } from '../../composables/pagination'
 
 interface TableHeaderProp
 {
@@ -97,10 +98,10 @@ export const Table = defineComponent({
       default: 'id',
     },
 
-    pagination: {
-      type: [Object, Boolean],
-      default: true
-    },
+    /**
+     * @zh 隐藏分页
+     */
+    hidePagination: Boolean,
 
     ...makeDataIteratorProps(),
     ...makePaperProps({
@@ -109,7 +110,7 @@ export const Table = defineComponent({
   },
 
   emits: {
-    'update:page': (val: number) => true,
+    'update:pagination': (val: PaginationProps) => true,
     'update:sortBy': (val: string | string[]) => true,
     'update:sortDesc': (val: boolean | boolean[]) => true,
     'update:options': (val: Record<string, any>) => true,
@@ -120,7 +121,7 @@ export const Table = defineComponent({
     const containerScrollLeft = ref(0)
 
     const { paperClasses, paperStyles } = usePaper(props, 've-table__wrapper')
-    const { items, page, perPage, total, sortBy, sortDesc, sort } = useDataIterator(props)
+    const { items, pagination, sortBy, sortDesc, sort, updateOptions } = useDataIterator(props)
     const arraySortBy = computed(() => wrapInArray(sortBy.value))
     const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
     const scrollPositionClasses = computed(() => {
@@ -135,21 +136,6 @@ export const Table = defineComponent({
       } else {
         return 've-table--scroll-position-center'
       }
-    })
-
-    // TODO
-    watch([
-      page,
-      perPage,
-      arraySortBy,
-      arraySortDesc
-    ], ([page, perPage, sortBy, sortDesc]) => {
-      emit('update:options', {
-        page,
-        perPage,
-        sortBy,
-        sortDesc
-      })
     })
 
     function handleScroll (e: Event) {
@@ -178,7 +164,7 @@ export const Table = defineComponent({
       const hasColgroup = !slots.colgroup && props.headers.length > 0
       const hasThead = !slots.header && !props.hideHeader && props.headers.length > 0
       const hasTbody = !slots.default
-      const hasPagination = hasTbody && !!props.pagination
+      const hasPagination = hasTbody && !props.hidePagination
 
       return (
         <props.tag
@@ -294,11 +280,12 @@ export const Table = defineComponent({
           { hasPagination && (
             <Pagination
               class="ve-table__pagination"
-              v-model:page={ page.value }
+              { ...pagination.value }
+              onUpdate:page={ page => {
+                pagination.value.page = page
+                updateOptions()
+              } }
               total-visible={ 7 }
-              per-page={ perPage.value }
-              last-page={ props.lastPage }
-              total={ total.value }
             />
           ) }
         </props.tag>

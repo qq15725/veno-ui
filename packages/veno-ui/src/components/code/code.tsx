@@ -32,15 +32,12 @@ export const Code = defineComponent({
     /**
      * @zh: 显示代码语言
      */
-    showLanguage: {
-      type: Boolean,
-      default: true,
-    },
+    hideLanguage: Boolean,
 
     /**
      * @zh: 显示行号
      */
-    showLineNumbers: Boolean,
+    hideLineNumbers: Boolean,
 
     /**
      * @zh: 高亮的行号
@@ -116,8 +113,8 @@ export const Code = defineComponent({
 
     return () => {
       const hasHighlightedCode = !!code.value
-      const hasLineNumbers = hasHighlightedCode && props.showLineNumbers
-      const hasLanguage = hasHighlightedCode && props.showLanguage && props.language
+      const hasLineNumbers = hasHighlightedCode && !props.hideLineNumbers
+      const hasLanguage = hasHighlightedCode && !props.hideLanguage && props.language
       const hasPreformatted = hasHighlightedCode
       const Tag = hasHighlightedCode ? 'div' : 'code'
 
@@ -127,7 +124,7 @@ export const Code = defineComponent({
             've-code',
             {
               've-code--highlighted': hasHighlightedCode,
-              've-code--show-line-numbers': hasLineNumbers,
+              've-code--line-numbers': hasLineNumbers,
             },
             backgroundColorClasses.value
           ] }
@@ -150,9 +147,8 @@ export const Code = defineComponent({
                       highlightedLineBackgroundColorClasses.value,
                     ] }
                     style={ highlightedLineBackgroundColorStyles.value }
-                  >
-                    #
-                  </div>
+                    v-html="&nbsp;"
+                  />
 
                   <span class="ve-code__line-number">{ number }</span>
                 </div>

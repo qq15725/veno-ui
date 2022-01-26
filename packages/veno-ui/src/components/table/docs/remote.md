@@ -11,15 +11,8 @@
     :headers="headers"
     :items="items"
     :loading="loading"
-    v-bind="pagination"
-    @update:options="options => {
-      pagination = { 
-        ...pagination,
-        descending: options.sortDesc[0] ? 'desc' : 'asc',
-        ...options,
-      }
-      fetch()
-    }"
+    :pagination="pagination"
+    @update:options="handleOptions"
   >
     <template #item.short_title="{ item }">
       <ve-tooltip
@@ -50,11 +43,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup () {
-    const pagination = ref({
-      page: 1,
-      perPage: 10,
-      lastPage: 0,
-    })
+    const pagination = ref()
     const loading = ref(false)
     const items = ref([])
 
@@ -75,25 +64,23 @@ export default defineComponent({
       })
     }
 
-    async function fetch () {
+    async function fetch (query = {}) {
       loading.value = true
       const {
         data,
-        meta
-      } = await apiFetch(pagination.value)
+        meta: { current_page: page, per_page: perPage, total }
+      } = await apiFetch(query)
       items.value = data
-      pagination.value = Object.keys(meta).reduce((obj, v) => {
-        return {
-          ...obj,
-          [v.replace(/_([a-z])/, (_, v) => `${ v.toUpperCase() }`)]: meta[v],
-        }
-      }, {})
+      pagination.value = { page, perPage, total }
       loading.value = false
     }
 
     fetch()
 
     return {
+      handleOptions: ({ sortBy, sortDesc, pagination: { page, perPage } }) => {
+        fetch({ page, perPage, sortBy, descending: sortDesc[0] ? 'desc' : 'asc' })
+      },
       loading,
       headers: ref([
         {

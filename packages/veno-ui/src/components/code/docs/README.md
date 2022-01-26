@@ -40,7 +40,7 @@ export default createVenoUi({
 
 basic.md highlight.md
 
-hide-language.md line-numbers.md
+hide-language.md hide-line-numbers.md
 
 highlighted-line-numbers.md
 

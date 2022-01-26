@@ -1,10 +1,9 @@
 // Utils
-import { computed } from 'vue'
-import { propsFactory, wrapInArray, deepEqual, sortItems } from '../../utils'
+import { computed, reactive } from 'vue'
+import { propsFactory, wrapInArray, deepEqual, sortItems, getCurrentInstance } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'
-import { makePaginationProps } from '../pagination'
 
 // Types
 import type { PropType } from 'vue'
@@ -18,7 +17,7 @@ export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
   customSorters?: Record<K, (a: T[K], b: T[K]) => number>
 ) => T[]
 
-interface DataIteratorProps extends PaginationProps
+interface DataIteratorProps
 {
   remote: boolean
   items: Record<string, any>[]
@@ -28,6 +27,18 @@ interface DataIteratorProps extends PaginationProps
   sortDesc: boolean | boolean[]
   customSort: DataIteratorSortFunction
   locale: string
+  pagination?: PaginationProps
+  'onUpdate:pagination': ((val: PaginationProps) => void) | undefined
+  'onUpdate:sortBy': ((val: string | string[]) => void) | undefined
+  'onUpdate:sortDesc': ((val: boolean | boolean[]) => void) | undefined
+}
+
+const defaultPagination = {
+  page: 1,
+  perPage: 10,
+  firstPage: 1,
+  lastPage: 1,
+  total: 0,
 }
 
 export const makeDataIteratorProps = propsFactory({
@@ -54,7 +65,10 @@ export const makeDataIteratorProps = propsFactory({
     type: String,
     default: 'en-US',
   },
-  ...makePaginationProps(),
+  pagination: {
+    type: Object as PropType<PaginationProps>,
+    defualt: () => ({ ...defaultPagination })
+  },
 }, 'data-iterator')
 
 
@@ -94,13 +108,36 @@ function toggle (
 }
 
 export function useDataIterator (props: DataIteratorProps) {
-  const page = useProxiedModel(props, 'page',  props.page,v => Number(v))
-  const perPage = useProxiedModel(props, 'perPage',props.perPage, v => Number(v))
-  const total = useProxiedModel(props, 'total', props.total, v => v === undefined ? props.items.length : Number(v))
-  const mustSort = useProxiedModel(props, 'mustSort')
-  const multiSort = useProxiedModel(props, 'multiSort')
+  const vm = getCurrentInstance('useDataIterator')
+  const pagination = useProxiedModel(
+    props,
+    'pagination',
+    { ...defaultPagination },
+    val => {
+      const total = props.remote
+        ? Number(val?.total ?? props.items.length)
+        : props.items.length
+      const perPage = Number(val?.perPage ?? defaultPagination.perPage)
+      const lastPage = Number(val?.lastPage ?? ~~(total / perPage))
+      return reactive({
+        page: Number(val?.page ?? defaultPagination.page),
+        perPage,
+        firstPage: Number(val?.firstPage ?? defaultPagination.firstPage),
+        lastPage,
+        total,
+      })
+    }
+  )
   const sortBy = useProxiedModel(props, 'sortBy')
   const sortDesc = useProxiedModel(props, 'sortDesc')
+
+  function updateOptions () {
+    vm.emit('update:options', {
+      pagination: pagination.value,
+      sortBy: sortBy.value,
+      sortDesc: sortDesc.value
+    })
+  }
 
   function sortItems (items: any[]): any[] {
     return props.customSort(
@@ -113,8 +150,8 @@ export function useDataIterator (props: DataIteratorProps) {
 
   function paginateItems (items: any[]): any[] {
     return items.slice(
-      (page.value - 1) * perPage.value,
-      Math.min(total.value, page.value * perPage.value)
+      (pagination.value.page - 1) * pagination.value.perPage,
+      Math.min(pagination.value.total, pagination.value.page * pagination.value.perPage)
     )
   }
 
@@ -133,28 +170,29 @@ export function useDataIterator (props: DataIteratorProps) {
         return i > -1 ? wrapInArray(sortDesc.value)[i] : false
       })
       sortBy.value = key
+      updateOptions()
     } else {
       const res = toggle(
         key,
         wrapInArray(sortBy.value),
         wrapInArray(sortDesc.value),
-        page.value,
-        mustSort.value,
-        multiSort.value
+        pagination.value.page,
+        props.mustSort,
+        props.multiSort
       )
       sortBy.value = res.by
       sortDesc.value = res.desc
-      page.value = res.page
+      pagination.value.page = res.page
+      updateOptions()
     }
   }
 
   return {
     items,
-    page,
-    perPage,
-    total,
+    pagination,
     sortBy,
     sortDesc,
     sort,
+    updateOptions
   }
 }

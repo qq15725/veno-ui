@@ -8,8 +8,8 @@ import { genericComponent } from '../../utils'
 import { makeTagProps } from '../../composables/tag'
 import { useGroup } from '../../composables/group'
 
-// Symbols
-export const BreadcrumbSymbol = Symbol.for('veno-ui:breadcrumb')
+// Keys
+export const BreadcrumbKey = Symbol.for('veno-ui:breadcrumb')
 
 // Types
 import type { MakeSlots } from '../../utils'
@@ -30,8 +30,12 @@ export const Breadcrumb = genericComponent<new () => {
     }),
   },
 
+  emits: {
+    'update:modelValue': (value: any) => true,
+  },
+
   setup (props, { slots }) {
-    useGroup({}, BreadcrumbSymbol)
+    useGroup(props, BreadcrumbKey)
 
     return () => {
       return (

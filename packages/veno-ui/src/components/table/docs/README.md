@@ -9,11 +9,11 @@ meta:
 
 :::include
 
+remote.md
+
 basic.md
 
 export.md
-
-remote.md
 
 :::
 

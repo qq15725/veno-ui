@@ -23,6 +23,7 @@ interface GroupProps
   mandatory?: boolean | 'force'
   max?: number
   selectedClass?: string
+  'onUpdate:modelValue': ((val: unknown) => void) | undefined
 }
 
 interface GroupProvide

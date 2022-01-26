@@ -1,6 +1,6 @@
 :::demo
 
-# 显示行号
+# 隐藏行号
 
 ```html
 <ve-code
@@ -10,7 +10,7 @@ function sleep (ms = 1000) {
 }
 `"
   language="js"
-  show-line-numbers
+  hide-line-numbers
 />
 ```
 

@@ -48,16 +48,13 @@
     min-width: 100%;
   }
 
-  &--disabled {
-    cursor: not-allowed;
-  }
-
   &--loading {
     cursor: wait;
   }
 
   &--disabled {
     &#{$root}--disabled {
+      cursor: not-allowed;
       color: rgba(var(--ve-theme-on-surface), $button-disabled-opacity);
       opacity: 1;
 

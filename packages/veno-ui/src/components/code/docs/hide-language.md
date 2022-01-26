@@ -1,6 +1,6 @@
 :::demo
 
-# 隐藏代码语言显示
+# 隐藏语言
 
 ```html
 <ve-code
@@ -10,7 +10,7 @@ function sleep (ms = 1000) {
 }
 `"
   language="js"
-  :show-language="false"
+  hide-language
 />
 ```
 

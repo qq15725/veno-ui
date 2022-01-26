@@ -10,7 +10,7 @@ import { Button } from '../../components/button'
 import { Icon } from '../../components/icon'
 
 // Symbols
-import { BreadcrumbSymbol } from './breadcrumb'
+import { BreadcrumbKey } from './breadcrumb'
 
 // Types
 import type { MakeSlots } from '../../utils'
@@ -31,7 +31,7 @@ export const BreadcrumbItem = genericComponent<new () => {
 
   setup (props, { slots, attrs }) {
     // @ts-ignore
-    const { id, group } = useGroupItem({}, BreadcrumbSymbol)
+    const { id, group } = useGroupItem({}, BreadcrumbKey)
 
     const hasNext = computed(() => {
       if (!group.items.value.length) return false

@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite --port 3022 --open"
   },
   "dependencies": {
     "pinia": "^2.0.9",
