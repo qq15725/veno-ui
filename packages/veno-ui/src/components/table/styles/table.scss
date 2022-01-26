@@ -54,13 +54,13 @@
 
   th,
   td {
-    padding: 8px 16px;
+    padding: 12px;
   }
 
   th {
     position: relative;
     font-weight: 500;
-    background: rgb(var(--ve-theme-surface));
+    background: rgb(var(--ve-theme-secondary));
   }
 
   &--fixed-header th {

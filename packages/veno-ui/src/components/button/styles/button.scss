@@ -19,7 +19,7 @@
   height: var(--ve-button-height);
   min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
   padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
-  transition-property: box-shadow, transform, opacity, color;
+  transition-property: box-shadow, transform, opacity;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
   user-select: none;

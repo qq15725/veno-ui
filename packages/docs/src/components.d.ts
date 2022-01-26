@@ -11,6 +11,7 @@ declare module 'vue' {
     VeAnchor: typeof import('veno-ui/components')['Anchor']
     VeAnchorItem: typeof import('veno-ui/components')['AnchorItem']
     VeApp: typeof import('veno-ui/components')['App']
+    VeAvatar: typeof import('veno-ui/components')['Avatar']
     VeBreadcrumb: typeof import('veno-ui/components')['Breadcrumb']
     VeBreadcrumbItem: typeof import('veno-ui/components')['BreadcrumbItem']
     VeButton: typeof import('veno-ui/components')['Button']

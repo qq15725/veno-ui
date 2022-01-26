@@ -211,7 +211,7 @@ export const Pagination = defineComponent({
               icon: true,
               disabled: props.disabled || lastPage.value < 2,
               elevation: props.elevation,
-              variant: props.variant,
+              variant: isActive ? 'outlined' : props.variant,
               border: props.border,
               color: isActive ? props.activeColor : undefined,
               ariaCurrent: isActive,
