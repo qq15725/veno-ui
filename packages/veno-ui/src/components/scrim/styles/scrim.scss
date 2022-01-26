@@ -1,0 +1,15 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-scrim {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background-color: rgb(var(--ve-theme-on-surface));
+  opacity: .4;
+  transition: opacity 0.2s settings.$standard-easing;
+  z-index: 1;
+}

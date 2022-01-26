@@ -14,9 +14,10 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { useDisplay } from '../../composables/display'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { useBackgroundColor } from '../../composables/color'
+import { useRoute } from '../../composables/router'
 
 // Components
-import { FadeTransition } from '../transition'
+import { Scrim } from '../scrim'
 
 // Types
 import { Ref } from 'vue'
@@ -69,6 +70,10 @@ export const Drawer = defineComponent({
         : Number(props.rail ? props.railWidth : props.width)
     })
     const isTemporary = computed(() => !props.permanent && (mobile.value || props.temporary))
+
+    watch(useRoute(), () => {
+      if (isTemporary.value) isActive.value = false
+    })
 
     if (!props.disableResizeWatcher) {
       watch(mobile, val => !props.permanent && (isActive.value = !val))
@@ -148,18 +153,14 @@ export const Drawer = defineComponent({
             </div>
           </props.tag>
 
-          <FadeTransition>
-            { isTemporary.value && (isDragging.value || isActive.value) && (
-              <div
-                class="ve-drawer__scrim"
-                style={ isDragging.value ? {
-                  opacity: dragProgress.value * 0.2,
-                  transition: 'none',
-                } : undefined }
-                onClick={ () => isActive.value = false }
-              />
-            ) }
-          </FadeTransition>
+          <Scrim
+            model-value={ isTemporary.value && (isDragging.value || isActive.value) }
+            style={ isDragging.value ? {
+              opacity: dragProgress.value * 0.2,
+              transition: 'none',
+            } : undefined }
+            onClick={ () => isActive.value = false }
+          />
         </>
       )
     }

@@ -2,7 +2,7 @@
 import './styles/overlay.scss'
 
 // Utils
-import { computed, mergeProps, ref, toHandlers, toRef, watch } from 'vue'
+import { mergeProps, ref, toHandlers, toRef, watch } from 'vue'
 import {
   convertToUnit,
   genericComponent,
@@ -12,8 +12,9 @@ import {
 } from '../../utils'
 
 // Components
-import { Teleport, Transition } from 'vue'
+import { Teleport } from 'vue'
 import { FadeTransition } from '../transition'
+import { Scrim } from '../scrim'
 
 // Composables
 import { makeActivatorProps, useActivator } from '../../composables/activator'
@@ -22,7 +23,6 @@ import { makeScrollStrategyProps, useScrollStrategy } from '../../composables/sc
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useBackButton } from '../../composables/router'
-import { useBackgroundColor } from '../../composables/color'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { useTeleport } from '../../composables/teleport'
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
@@ -35,33 +35,6 @@ import { ClickOutside } from '../../directives/click-outside'
 // Types
 import type { PropType, Ref, ComponentPublicInstance } from 'vue'
 import type { MakeSlots } from '../../utils'
-import type { BackgroundColorData } from '../../composables/color'
-
-interface ScrimProps
-{
-  [key: string]: unknown
-
-  modelValue: boolean
-  color: BackgroundColorData
-}
-
-function Scrim (props: ScrimProps) {
-  const { modelValue, color, ...rest } = props
-  return (
-    <Transition name="ve-fade-transition" appear>
-      { props.modelValue && (
-        <div
-          class={ [
-            've-overlay__scrim',
-            props.color.backgroundColorClasses.value,
-          ] }
-          style={ props.color.backgroundColorStyles.value }
-          { ...rest }
-        />
-      ) }
-    </Transition>
-  )
-}
 
 export interface OverlaySlot
 {
@@ -122,9 +95,6 @@ export const Overlay = genericComponent<new () => {
     const { teleportTarget } = useTeleport(toRef(props, 'attach'))
     const { themeClasses } = provideTheme(props)
     const { hasContent, onAfterLeave } = useLazy(props, isActive)
-    const scrimColor = useBackgroundColor(computed(() => {
-      return typeof props.scrim === 'string' ? props.scrim : null
-    }))
     const { activatorEl, activatorEvents, runOpenDelay, runCloseDelay } = useActivator(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
@@ -259,8 +229,8 @@ export const Overlay = genericComponent<new () => {
               { ...attrs }
             >
               <Scrim
-                color={ scrimColor }
                 modelValue={ isActive.value && !!props.scrim }
+                color={ typeof props.scrim === 'string' ? props.scrim : undefined }
               />
 
               <MaybeTransition

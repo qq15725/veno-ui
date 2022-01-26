@@ -44,18 +44,6 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
-
-  &__scrim {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: black;
-    opacity: .2;
-    transition: opacity 0.2s settings.$standard-easing;
-    z-index: 1;
-  }
 }
 
 
