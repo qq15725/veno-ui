@@ -45,6 +45,7 @@ export function useDragArea (props: DragAreaProps = {}) {
       }, false)
     }
     event.preventDefault()
+    return
   }
 
   return {

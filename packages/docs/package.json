@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "scripts": {
     "serve": "vite preview",
-    "build": "vite build",
+    "build": "vite-ssg build",
     "dev": "vite --port 3022 --open"
   },
   "dependencies": {
@@ -21,11 +21,12 @@
     "@veno-ui/markdown": "^0.2.0",
     "@veno-ui/vite-plugin-markdown": "^0.2.0",
     "@veno-ui/vite-plugin-svg": "^0.2.0",
-    "@vitejs/plugin-legacy": "^1.6.4",
     "@vue/compiler-sfc": "^3.0.5",
+    "@vueuse/head": "^0.7.5",
     "unplugin-vue-components": "^0.17.11",
     "vite-plugin-pages": "^0.19.9",
     "vite-plugin-pwa": "^0.11.13",
-    "vite-plugin-vue-layouts": "^0.5.0"
+    "vite-plugin-vue-layouts": "^0.5.0",
+    "vite-ssg": "^0.17.9"
   }
 }

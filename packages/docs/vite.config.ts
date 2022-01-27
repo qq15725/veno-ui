@@ -8,7 +8,6 @@ import { createMarkdown } from '@veno-ui/markdown'
 // Plugins
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
-import Legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -50,27 +49,19 @@ export default defineConfig(({ mode }) => {
   const completedApi = getCompleteApi()
 
   return {
-    base: './',
-    server: {
-      host: '0.0.0.0',
-    },
     resolve: {
       alias: [
         { find: '@root', replacement: resolve('../..') },
         { find: '@', replacement: resolve('./src') },
-        ...(
-          mode === 'development'
-            ? [
-              { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
-              { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
-              { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
-            ]
-            : []
-        ),
-      ]
-    },
-    build: {
-      target: 'es2015',
+      ].concat(
+        mode === 'development'
+          ? [
+            { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
+            { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
+            { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
+          ]
+          : []
+      )
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
@@ -78,10 +69,6 @@ export default defineConfig(({ mode }) => {
         include: [/\.vue$/, /\.md$/],
       }),
       VueJsx(),
-      Legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-      }),
 
       // https://github.com/hannoeru/vite-plugin-pages
       Pages({
@@ -90,6 +77,7 @@ export default defineConfig(({ mode }) => {
           { dir: 'src/pages', baseRoute: '' },
           { dir: '../veno-ui/src', baseRoute: 'api' },
         ],
+        exclude: ['**/docs/!(README).md'],
         extendRoute (route) {
           let file = route.component
           if (file.indexOf('/src/pages') === 0) file = path.join(root, file)
@@ -104,12 +92,8 @@ export default defineConfig(({ mode }) => {
           }
           if (routePath.startsWith('/api')) {
             const matched = routePath.match(/\/(\w+)\/(\w+)\/docs\/(\w+)/)
-            if (matched[3] === 'readme') {
-              routePath = ['', matched[1], matched[2]].join('/')
-              routeMeta.isNav = true
-            } else {
-              routePath = ['', matched[1], matched[2], matched[3]].join('/')
-            }
+            routePath = ['', matched[1], matched[2]].join('/')
+            routeMeta.isNav = true
           } else {
             routeMeta.isNav = true
           }
@@ -191,7 +175,7 @@ export default defineConfig(({ mode }) => {
           name: 'Veno UI',
           short_name: 'Veno UI',
           description: 'A Vue 3 UI Library. Uses Composable. Uses TypeScript.',
-          theme_color: '#ffffff',
+          theme_color: '#FFF',
           icons: [
             {
               src: 'pwa-192x192.png',
@@ -213,6 +197,15 @@ export default defineConfig(({ mode }) => {
         }
       }),
     ],
+    // https://github.com/antfu/vite-ssg
+    ssgOptions: {
+      script: 'async',
+      formatting: 'minify',
+      crittersOptions: false,
+    },
+    server: {
+      port: +(process.env.PORT ?? 8080),
+    },
     define: {
       __VENO_UI_VERSION__: JSON.stringify(
         JSON.parse(fs.readFileSync('./package.json', 'utf-8')).version

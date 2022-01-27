@@ -1,3 +1,3 @@
-import type { App } from 'vue'
+import type { ViteSSGContext } from 'vite-ssg'
 
-export type InstallPlugin = (app: App) => void
+export type InstallPlugin = (ctx: ViteSSGContext) => void

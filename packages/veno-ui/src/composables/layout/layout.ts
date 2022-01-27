@@ -93,9 +93,8 @@ export function provideLayout (
 
       return computed(() => {
         const index = items.value.findIndex(i => i.id === id)
-        if (index < 0) throw new Error(`Layout item "${ id }" is missing from layout prop`)
         const item = items.value[index]
-        if (!item) throw new Error(`Could not find layout item "${ id }`)
+        if (!item) return {}
         const overlap = computedOverlaps.value.get(id)
         if (overlap) item[overlap.anchor] += overlap.amount
         const isHorizontal = item.anchor === 'left' || item.anchor === 'right'

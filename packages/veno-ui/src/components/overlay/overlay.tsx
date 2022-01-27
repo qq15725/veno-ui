@@ -2,8 +2,9 @@
 import './styles/overlay.scss'
 
 // Utils
-import { mergeProps, ref, toHandlers, toRef, watch } from 'vue'
+import { mergeProps, ref, toHandlers, computed, watch } from 'vue'
 import {
+  IN_BROWSER,
   convertToUnit,
   genericComponent,
   getScrollParent,
@@ -62,10 +63,8 @@ export const Overlay = genericComponent<new () => {
   props: {
     modelValue: Boolean,
     absolute: Boolean,
-    attach: {
-      type: [Boolean, String, Object] as PropType<boolean | string | Element>,
-      default: 'body',
-    },
+    attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
+    contained: Boolean,
     contentClass: null,
     noClickAnimation: Boolean,
     persistent: Boolean,
@@ -92,7 +91,7 @@ export const Overlay = genericComponent<new () => {
 
   setup (props, { slots, attrs, emit }) {
     const isActive = useProxiedModel(props, 'modelValue')
-    const { teleportTarget } = useTeleport(toRef(props, 'attach'))
+    const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
     const { themeClasses } = provideTheme(props)
     const { hasContent, onAfterLeave } = useLazy(props, isActive)
     const { activatorEl, activatorEvents, runOpenDelay, runCloseDelay } = useActivator(props, isActive)
@@ -124,7 +123,7 @@ export const Overlay = genericComponent<new () => {
       return isActive.value && isTop.value
     }
 
-    watch(isActive, val => {
+    IN_BROWSER && watch(isActive, val => {
       if (val) {
         window.addEventListener('keydown', onKeydown)
       } else {
@@ -212,7 +211,7 @@ export const Overlay = genericComponent<new () => {
         <Teleport
           disabled={ !teleportTarget.value }
           ref={ root }
-          to={ teleportTarget.value }
+          to={ teleportTarget.value || 'body' }
         >
           { hasContent.value && (
             <div

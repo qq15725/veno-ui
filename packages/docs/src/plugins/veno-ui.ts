@@ -9,7 +9,7 @@ import prismjs from 'prismjs'
 // Types
 import type { InstallPlugin } from '@/types'
 
-export const install: InstallPlugin = app => {
+export const install: InstallPlugin = ({ app }) => {
   const venoUi = createVenoUi({
     // 高亮器
     highlighter: {

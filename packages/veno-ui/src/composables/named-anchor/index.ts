@@ -58,7 +58,7 @@ export function useNamedAnchor (props: NamedAnchorProps) {
       ? document.querySelector(props.scrollContainer)
       : props.scrollContainer
   })
-  const isHashMode = computed(() => !!router?.options?.history?.base?.includes?.('#'))
+  const isHashMode = computed(() => Boolean(router && router.options.history.base.includes('#')))
   const disabled = ref(false)
 
   const provider = {
@@ -172,7 +172,7 @@ export function useNamedAnchorItem (props: NamedAnchorItemProps) {
       if (namedAnchor.isHashMode.value) {
         return { query: { anchor: props.name }, replace: true }
       } else {
-        return { hash: props.name, replace: true }
+        return { hash: `#${ props.name }`, replace: true }
       }
     }),
     isActive: computed(() => {

@@ -2,6 +2,7 @@
 node_modules/
 .env
 dist
+.vite-ssg-temp
 
 # IDE user config
 .vscode/

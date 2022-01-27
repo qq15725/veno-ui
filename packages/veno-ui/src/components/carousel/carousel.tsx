@@ -36,6 +36,10 @@ export const Carousel = genericComponent()({
     ...makeTagProps(),
   },
 
+  emits: {
+    'update:modelValue': (value: any) => true,
+  },
+
   setup (props, { slots }) {
     const { paperStyles, paperClasses } = usePaper(props)
     const { isSelected, select, selected, next, items } = useGroup(props, CarouselSymbol)

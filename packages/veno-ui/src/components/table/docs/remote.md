@@ -39,7 +39,7 @@
 ```
 
 ```js
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 
 export default defineComponent({
   setup () {
@@ -75,7 +75,7 @@ export default defineComponent({
       loading.value = false
     }
 
-    fetch()
+    onMounted(() => fetch())
 
     return {
       handleOptions: ({ sortBy, sortDesc, pagination: { page, perPage } }) => {
