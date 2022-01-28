@@ -107,7 +107,7 @@ export function provideLayout (
         const isOppositeHorizontal = item.anchor === 'right'
         const isOppositeVertical = item.anchor === 'bottom'
         return {
-          [item.anchor]: 0,
+          [item.anchor]: '0px',
           height: isHorizontal ? `calc(100% - ${ item.top }px - ${ item.bottom }px)` : `${ item.size }px`,
           marginLeft: isOppositeHorizontal ? undefined : `${ item.left }px`,
           marginRight: isOppositeHorizontal ? `${ item.right }px` : undefined,
