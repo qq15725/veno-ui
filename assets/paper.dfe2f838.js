@@ -1,1 +1,0 @@
-import{e as r,q as t,r as o}from"./app.5f4a9383.js";import{j as l}from"./vendor.4605c240.js";const c=r({name:"VePaper",props:t(),setup(e,{slots:a}){const{paperClasses:s,paperStyles:p}=o(e);return()=>l(e.tag,{class:["ve-paper",s.value],style:p.value},a,8,["class","style"])}});export{c as P};
