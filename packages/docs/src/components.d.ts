@@ -84,6 +84,7 @@ declare module 'vue' {
     VeSwitch: typeof import('veno-ui/components')['Switch']
     VeTable: typeof import('veno-ui/components')['Table']
     VeTag: typeof import('veno-ui/components')['Tag']
+    VeThemeProvider: typeof import('veno-ui/components')['ThemeProvider']
     VeTooltip: typeof import('veno-ui/components')['Tooltip']
   }
 }

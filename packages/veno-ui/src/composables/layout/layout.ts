@@ -34,34 +34,41 @@ export function provideLayout (
 ) {
   const itemIds = reactive<string[]>([])
   const itemMap = new Map<string, Ref<LayoutItemProps>>()
-  const handled = computed(() => (
-    itemIds
-      .map(id => {
-        const item = itemMap.get(id)!.value
-        return {
-          id,
-          size: Number(item.size),
-          position: item.position ?? 'absolute',
-          anchor: item.anchor ?? 'left',
-          active: !!item.active,
-          priority: Number(item.priority ?? 0),
-          layoutSize: Number(item.layoutSize ?? item.size),
-          disableTransition: Boolean(item.disableTransition),
-        }
-      })
-      .sort((a, b) => b.priority - a.priority)
-      .reduce<{ items: LayoutItem[], layer: LayoutLayer }>(
-        ({ items, layer }, item) => ({
-          items: [...items, { ...layer, ...item, }],
-          layer: {
-            ...layer,
-            [item.anchor]: layer[item.anchor] + (item.active ? item.layoutSize : 0)
+
+  function generate () {
+    return (
+      itemIds
+        .map(id => {
+          const item = itemMap.get(id)!.value
+          return {
+            id,
+            size: Number(item.size),
+            position: item.position ?? 'absolute',
+            anchor: item.anchor ?? 'left',
+            active: !!item.active,
+            priority: Number(item.priority ?? 0),
+            layoutSize: Number(item.layoutSize ?? item.size),
+            disableTransition: Boolean(item.disableTransition),
           }
-        }),
-        { items: [], layer: { top: 0, right: 0, bottom: 0, left: 0 } }
-      )
-  ))
-  const items = computed(() => handled.value.items)
+        })
+        .sort((a, b) => b.priority - a.priority)
+        .reduce<{ items: LayoutItem[], layer: LayoutLayer }>(
+          ({ items, layer }, item) => ({
+            items: [...items, { ...layer, ...item, }],
+            layer: {
+              ...layer,
+              [item.anchor]: layer[item.anchor] + (item.active ? item.layoutSize : 0)
+            }
+          }),
+          {
+            items: [],
+            layer: { top: 0, right: 0, bottom: 0, left: 0 }
+          }
+        )
+    )
+  }
+
+  const items = computed(() => generate().items)
 
   const getLayoutItem = (id: string) => items.value.find(item => item.id === id)
 
@@ -82,9 +89,7 @@ export function provideLayout (
     return map
   })
 
-  const transitionEnabled = computed(() => {
-    return !items.value.some(ref => ref.disableTransition)
-  })
+  const transitionEnabled = computed(() => !items.value.some(ref => ref.disableTransition))
 
   provide(LayoutKey, {
     register: (id, itemProps) => {
@@ -92,9 +97,10 @@ export function provideLayout (
       itemIds.push(id)
 
       return computed(() => {
-        const index = items.value.findIndex(i => i.id === id)
-        const item = items.value[index]
-        if (!item) return {}
+        const { items } = generate()
+        const index = items.findIndex(i => i.id === id)
+        const item = items[index]
+        if (!item) throw new Error(`Could not find layout item "${ id }`)
         const overlap = computedOverlaps.value.get(id)
         if (overlap) item[overlap.anchor] += overlap.amount
         const isHorizontal = item.anchor === 'left' || item.anchor === 'right'
@@ -108,7 +114,7 @@ export function provideLayout (
           marginTop: item.anchor !== 'bottom' ? `${ item.top }px` : undefined,
           marginBottom: item.anchor !== 'top' ? `${ item.bottom }px` : undefined,
           width: !isHorizontal ? `calc(100% - ${ item.left }px - ${ item.right }px)` : `${ item.size }px`,
-          zIndex: Number(props.layerZIndex) + items.value.length - index,
+          zIndex: Number(props.layerZIndex) + items.length - index,
           transform: `translate${ isHorizontal ? 'X' : 'Y' }(${ (item.active ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1) }%)`,
           position: item.position,
           ...(transitionEnabled.value ? undefined : { transition: 'none' }),
@@ -120,13 +126,13 @@ export function provideLayout (
       itemMap.delete(id)
     },
     mainStyles: computed(() => {
-      const mainLayer = handled.value.layer
+      const { layer } = generate()
       return {
         position: 'relative',
-        paddingLeft: convertToUnit(mainLayer.left),
-        paddingRight: convertToUnit(mainLayer.right),
-        paddingTop: convertToUnit(mainLayer.top),
-        paddingBottom: convertToUnit(mainLayer.bottom),
+        paddingLeft: convertToUnit(layer.left),
+        paddingRight: convertToUnit(layer.right),
+        paddingTop: convertToUnit(layer.top),
+        paddingBottom: convertToUnit(layer.bottom),
         ...(transitionEnabled.value ? undefined : { transition: 'none' }),
       }
     }),

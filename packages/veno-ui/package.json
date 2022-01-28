@@ -60,6 +60,7 @@
     "build": "npm run build:lib && npm run build:dist"
   },
   "devDependencies": {
+    "@vueuse/head": "^0.7.5",
     "vite-plugin-dts": "^0.9.6",
     "vue-router": "^4.0.12"
   },

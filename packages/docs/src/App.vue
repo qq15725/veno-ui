@@ -10,8 +10,8 @@ const route = useRoute()
 const meta = computed(() => genAppMetaInfo({
   site: metadata.site,
   title: `${ route.meta.title } — ${ metadata.site }`,
-  description: route.meta.description || metadata.description,
-  keywords: route.meta.keywords || metadata.keywords,
+  description: String(route.meta.description || metadata.description),
+  keywords: String(route.meta.keywords || metadata.keywords)
 }))
 
 useHead({
@@ -22,5 +22,7 @@ useHead({
 </script>
 
 <template>
-  <router-view />
+  <ve-theme-provider>
+    <router-view />
+  </ve-theme-provider>
 </template>

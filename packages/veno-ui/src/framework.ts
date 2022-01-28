@@ -52,7 +52,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
     }
 
     app.provide(DefaultsKey, createDefaults(options.defaults))
-    app.provide(ThemeKey, createTheme(options.theme))
+    app.provide(ThemeKey, createTheme(app, options.theme))
     app.provide(DisplayKey, createDisplay(options.display))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconKey, mergeDeep({

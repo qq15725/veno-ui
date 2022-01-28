@@ -35,7 +35,6 @@ export function genMetaInfo (defaults: Metadata) {
 function genLink () {
   return [
     { rel: 'shortcut icon', href: '/favicon.ico' },
-    { rel: 'manifest', href: '/manifest.json' },
   ]
 }
 
@@ -43,7 +42,7 @@ function genOpenGraphMetaInfo (args: Metadata) {
   return parseMeta('og', {
     description: args.description,
     image: '/pwa-192x192.png',
-    site_name: 'Veno UI',
+    site_name: args.site,
     title: args.title,
     type: 'website',
   })

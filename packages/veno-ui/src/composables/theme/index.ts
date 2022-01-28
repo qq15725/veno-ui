@@ -1,6 +1,7 @@
 // Utils
-import { computed, inject, provide, ref, unref, watch } from 'vue'
+import { computed, inject, provide, ref, unref, watch, watchEffect } from 'vue'
 import {
+  IN_BROWSER,
   colorToRGB,
   getLuma,
   mergeDeep,
@@ -11,9 +12,10 @@ import { colorToOnColorHex } from '../../utils/color'
 import defaultOptions from './default-options'
 
 // Types
-import type { InjectionKey, Ref } from 'vue'
+import type { App, InjectionKey, Ref } from 'vue'
 import type { MaybeRef } from '../../utils'
 import type { Colors, BaseColors, BaseOnColors } from './colors'
+import type { HeadClient } from '@vueuse/head'
 
 interface InternalThemeDefinition
 {
@@ -78,7 +80,8 @@ function createCssClass (selector: string, content: string[]) {
   ]
 }
 
-export function createTheme (options?: ThemeOptions): Theme {
+export function createTheme (app: App, options?: ThemeOptions): Theme {
+  const head = app._context.provides.usehead as HeadClient | undefined
   const parsedOptions = parseThemeOptions(options)
   const styleEl = ref<HTMLStyleElement>()
   const current = ref(parsedOptions.defaultTheme)
@@ -145,7 +148,7 @@ export function createTheme (options?: ThemeOptions): Theme {
       }
     }
 
-    return lines.map((str, i) => i === 0 ? str : `    ${str}`).join('')
+    return lines.map((str, i) => i === 0 ? str : `    ${ str }`).join('')
   })
 
   function genCssVariables (name: string) {
@@ -164,21 +167,35 @@ export function createTheme (options?: ThemeOptions): Theme {
     return variables
   }
 
-  watch(themes, updateStyles, { deep: true, immediate: true })
+  if (head) {
+    head.addHeadObjs(computed(() => ({
+      style: [{
+        children: styles.value,
+        type: 'text/css',
+        id: 'veno-ui-theme-stylesheet',
+      }],
+    })))
 
-  function updateStyles () {
-    if (parsedOptions.isDisabled) return
-    genStyleElement()
-    if (styleEl.value) styleEl.value.innerHTML = styles.value
-  }
+    if (IN_BROWSER) {
+      watchEffect(() => head.updateDOM())
+    }
+  } else {
+    watch(themes, updateStyles, { deep: true, immediate: true })
 
-  function genStyleElement () {
-    if (typeof document === 'undefined' || styleEl.value) return
-    const el = document.createElement('style')
-    el.type = 'text/css'
-    el.id = 'veno-ui-theme-stylesheet'
-    styleEl.value = el
-    document.head.appendChild(styleEl.value)
+    function updateStyles () {
+      if (parsedOptions.isDisabled) return
+      genStyleElement()
+      if (styleEl.value) styleEl.value.innerHTML = styles.value
+    }
+
+    function genStyleElement () {
+      if (typeof document === 'undefined' || styleEl.value) return
+      const el = document.createElement('style')
+      el.type = 'text/css'
+      el.id = 'veno-ui-theme-stylesheet'
+      styleEl.value = el
+      document.head.appendChild(styleEl.value)
+    }
   }
 
   return {
@@ -214,7 +231,7 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
   })
 
   const themeClasses = computed(() => {
-    return theme.isDisabled ? undefined : `ve-theme--${current.value}`
+    return theme.isDisabled ? undefined : `ve-theme--${ current.value }`
   })
 
   const newTheme: Theme = {
