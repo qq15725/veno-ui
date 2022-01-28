@@ -7,7 +7,7 @@
   display: flex;
   padding: 16px;
   @include tools.use-paper();
-  @include tools.overlay('#{&}__overlay', .08);
+  @include tools.overlay('#{&}__overlay', .08, inherit);
 
   &__icon {
     margin-inline-end: 8px;

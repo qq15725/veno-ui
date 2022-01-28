@@ -3,10 +3,12 @@
 
 @mixin states($selector: '&::before', $active: true) {
   &:hover #{$selector} {
+    visibility: visible;
     opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
   &:focus-visible #{$selector} {
+    visibility: visible;
     opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
@@ -26,10 +28,12 @@
 @mixin active-states($selector: '::before') {
   &:hover #{$selector},
   #{$selector} {
+    visibility: visible;
     opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
   }
 
   &:focus #{$selector} {
+    visibility: visible;
     opacity: calc(var(--ve-pressed-opacity) * var(--ve-theme-overlay-multiplier));
   }
 }
