@@ -3,14 +3,18 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'veno-ui/styles'
 
 // Utils
-import { createVenoUi } from 'veno-ui'
 import prismjs from 'prismjs'
+import { createVenoUi } from 'veno-ui'
+import * as components from 'veno-ui/components'
+import * as directives from 'veno-ui/directives'
 
 // Types
 import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
   const venoUi = createVenoUi({
+    components,
+    directives,
     // 高亮器
     highlighter: {
       prismjs,

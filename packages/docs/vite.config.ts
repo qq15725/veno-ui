@@ -57,6 +57,7 @@ export default defineConfig(({ mode }) => {
         mode === 'development'
           ? [
             { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
+            { find: 'veno-ui/directives', replacement: resolve('../veno-ui/src/directives') },
             { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
             { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
           ]
@@ -65,62 +66,6 @@ export default defineConfig(({ mode }) => {
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
-      Vue({
-        include: [/\.vue$/, /\.md$/],
-      }),
-      VueJsx(),
-
-      // https://github.com/hannoeru/vite-plugin-pages
-      Pages({
-        extensions: ['vue', 'md'],
-        pagesDir: [
-          { dir: 'src/pages', baseRoute: '' },
-          { dir: '../veno-ui/src', baseRoute: 'api' },
-        ],
-        exclude: ['**/docs/!(README).md'],
-        extendRoute (route) {
-          let file = route.component
-          if (file.indexOf('/src/pages') === 0) file = path.join(root, file)
-          md.render(fs.readFileSync(file, { encoding: 'utf-8' }), { root, file })
-          const { frontmatter, ...restData } = md._context
-          const { meta, ...restFrontmatter } = frontmatter || {}
-          let routePath = route.path
-          let routeMeta = {
-            ...restData,
-            ...restFrontmatter,
-            ...Object(meta)
-          }
-          if (routePath.startsWith('/api')) {
-            const matched = routePath.match(/\/(\w+)\/(\w+)\/docs\/(\w+)/)
-            routePath = ['', matched[1], matched[2]].join('/')
-            routeMeta.isNav = true
-          } else {
-            routeMeta.isNav = true
-          }
-          return {
-            ...route,
-            name: routePath.substring(1).replace(/\//g, '-'),
-            path: routePath,
-            meta: routeMeta
-          }
-        }
-      }),
-
-      // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
-      Layouts({
-        layoutsDir: 'src/layouts',
-        defaultLayout: 'default'
-      }),
-
-      // https://github.com/antfu/unplugin-vue-components
-      Components({
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-        resolvers: [
-          VenoUiResolver(),
-        ],
-        dts: 'src/components.d.ts',
-      }),
-
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
       Markdown({
         transforms: {
@@ -166,6 +111,62 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-svg
       Svg(),
+
+      // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
+      Layouts({
+        layoutsDir: 'src/layouts',
+        defaultLayout: 'default'
+      }),
+
+      // https://github.com/hannoeru/vite-plugin-pages
+      Pages({
+        extensions: ['vue', 'md'],
+        pagesDir: [
+          { dir: 'src/pages', baseRoute: '' },
+          { dir: '../veno-ui/src', baseRoute: 'api' },
+        ],
+        exclude: ['**/docs/!(README).md'],
+        extendRoute (route) {
+          let file = route.component
+          if (file.indexOf('/src/pages') === 0) file = path.join(root, file)
+          md.render(fs.readFileSync(file, { encoding: 'utf-8' }), { root, file })
+          const { frontmatter, ...restData } = md._context
+          const { meta, ...restFrontmatter } = frontmatter || {}
+          let routePath = route.path
+          let routeMeta = {
+            ...restData,
+            ...restFrontmatter,
+            ...Object(meta)
+          }
+          if (routePath.startsWith('/api')) {
+            const matched = routePath.match(/\/(\w+)\/(\w+)\/docs\/(\w+)/)
+            routePath = ['', matched[1], matched[2]].join('/')
+            routeMeta.isNav = true
+          } else {
+            routeMeta.isNav = true
+          }
+          return {
+            ...route,
+            name: routePath.substring(1).replace(/\//g, '-'),
+            path: routePath,
+            meta: routeMeta
+          }
+        }
+      }),
+
+      Vue({
+        include: [/\.vue$/, /\.md$/],
+      }),
+      VueJsx(),
+
+      // https://github.com/antfu/unplugin-vue-components
+      Components({
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [
+          VenoUiResolver(),
+        ],
+        dts: 'src/components.d.ts',
+      }),
 
       // https://github.com/antfu/vite-plugin-pwa
       VitePWA({
