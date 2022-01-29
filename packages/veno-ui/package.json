@@ -30,8 +30,6 @@
     "./framework": "./lib/framework.js",
     "./components": "./lib/components/index.js",
     "./components/*": "./lib/components/*/*.js",
-    "./composables": "./lib/composables/index.js",
-    "./composables/*": "./lib/composables/*/index.js",
     "./directives": "./lib/directives/index.js",
     "./directives/*": "./lib/directives/*/*.js",
     "./iconsets/*": "./lib/iconsets/*.js",

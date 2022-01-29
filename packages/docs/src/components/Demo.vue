@@ -1,8 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, toRef, watch } from 'vue'
 import { useAppStore } from '@/stores/app'
-
-const btn = ref()
+import { useUserStore } from '@/stores/user'
 
 export default defineComponent({
   name: 'Demo',
@@ -15,12 +14,19 @@ export default defineComponent({
   },
 
   setup (props) {
+    const btn = ref()
     const { repository } = useAppStore()
+    const user = useUserStore()
+    const theme = ref(user.theme)
+
+    watch(toRef(user, 'theme'), userTheme => {
+      theme.value = userTheme
+    })
 
     return {
       ...props,
       repository,
-      theme: ref(),
+      theme,
       isActive: ref(false),
       btn,
       focusBtn: () => {

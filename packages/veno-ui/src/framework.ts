@@ -20,6 +20,8 @@ import type { IconOptions } from './composables/icon'
 import type { DisplayOptions } from './composables/display'
 import type { DefaultsOptions } from './composables/defaults'
 
+export * from './composables'
+
 export interface VenoUiOptions
 {
   componentPrefix?: string,

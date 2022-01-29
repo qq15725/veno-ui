@@ -219,38 +219,27 @@ export interface ThemeProps
 
 export function provideTheme (props: MaybeRef<ThemeProps>) {
   getCurrentInstance('provideTheme')
-
   const theme = inject(ThemeKey, null)
-
   if (!theme) throw new Error('Could not find VenoUi theme injection')
-
   const current = computed<string>(() => {
     const { theme: propTheme } = unref(props)
-
     return propTheme ?? theme?.current.value
   })
-
   const themeClasses = computed(() => {
     return theme.isDisabled ? undefined : `ve-theme--${ current.value }`
   })
-
   const newTheme: Theme = {
     ...theme,
     current,
     themeClasses,
   }
-
   provide(ThemeKey, newTheme)
-
   return newTheme
 }
 
 export function useTheme () {
   getCurrentInstance('useTheme')
-
-  const theme = inject(ThemeKey, null)
-
-  if (!theme) throw new Error('Could not find VenoUi theme injection')
-
-  return theme
+  const provider = inject(ThemeKey, null)
+  if (!provider) throw new Error('Could not find VenoUi theme injection')
+  return provider
 }

@@ -1,32 +1,29 @@
-<script lang="ts">
-import { ref, defineComponent, computed } from 'vue'
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
 import { version } from 'veno-ui'
 import { useAppStore } from '@/stores/app'
 import { routesToMenus } from '@/utils'
 import { useRoute } from 'vue-router'
 // @ts-ignore
 import pages from '~pages'
+import { useUserStore } from '@/stores/user'
 
-export default defineComponent({
-  setup () {
-    const app = useAppStore()
-    const route = useRoute()
-
-    return {
-      active: ref(),
-      menus: routesToMenus(pages),
-      app,
-      version,
-      url: computed(() => {
-        const { relativePath } = route.meta
-        if (relativePath.includes('../')) {
-          return `${ app.repository }/${ relativePath.replace('../', 'packages/') }`
-        }
-        return `${ app.repository }/packages/docs/${ relativePath }`
-      })
-    }
+const user = useUserStore()
+const app = useAppStore()
+const route = useRoute()
+const active = ref()
+const menus = routesToMenus(pages)
+const url = computed(() => {
+  const { relativePath } = route.meta
+  if (relativePath.includes('../')) {
+    return `${ app.repository }/${ relativePath.replace('../', 'packages/') }`
   }
+  return `${ app.repository }/packages/docs/${ relativePath }`
 })
+
+function toggle () {
+  user.theme = user.theme === 'dark' ? 'light' : 'dark'
+}
 </script>
 
 <template>
@@ -45,8 +42,8 @@ export default defineComponent({
         <ve-tooltip text="反转示例颜色" #activator="{ props }">
           <ve-button
               v-bind="props"
-              @click="$venoUi.theme.current = $venoUi.theme.current === 'dark' ? 'light' : 'dark'"
-              :icon="$venoUi.theme.current === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+              @click="toggle"
+              :icon="user.theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
           />
         </ve-tooltip>

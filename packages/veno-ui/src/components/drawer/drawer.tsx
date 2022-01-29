@@ -155,10 +155,13 @@ export const Drawer = defineComponent({
 
           <Scrim
             model-value={ isTemporary.value && (isDragging.value || isActive.value) }
-            style={ isDragging.value ? {
-              opacity: dragProgress.value * 0.2,
-              transition: 'none',
-            } : undefined }
+            style={ [
+              { zIndex: 1 },
+              isDragging.value ? {
+                opacity: dragProgress.value * 0.2,
+                transition: 'none',
+              } : undefined
+            ] }
             onClick={ () => isActive.value = false }
           />
         </>
