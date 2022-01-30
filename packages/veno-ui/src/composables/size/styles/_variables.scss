@@ -1,11 +1,11 @@
 @use '../../../styles/tools/functions';
 
 $sizes: (
-  'xs': -2,
-  'sm': -1,
-  'md': 0,
-  'lg': 1,
-  'xl': 2
+  'x-small': -2,
+  'small': -1,
+  'medium': 0,
+  'large': 1,
+  'x-large': 2
 ) !default;
 
 $size-props: () !default;

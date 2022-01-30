@@ -1,41 +1,41 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 // Constants
-export const SHAPES = ['tile', 'round', 'pill', 'circle'] as const
+export const shapes = [
+  'tile',
+  'rounded',
+  'pill',
+  'circle',
+] as const
 
-const ALIASES = {
-  'tile': 'rounded-0',
-  'round': 'rounded-xl',
-  'pill': 'rounded-pill',
-  'circle': 'rounded-circle',
-}
-
-type ShapeValue = undefined | typeof SHAPES[number] | string
+type ShapeValue = typeof shapes[number]
 
 export interface ShapeProps
 {
-  shape: ShapeValue
+  shape?: ShapeValue
 }
 
 export const makeShapeProps = propsFactory({
-  shape: String as PropType<ShapeValue>,
+  shape: {
+    type: String as PropType<ShapeValue>,
+    default: 'tile',
+  },
 }, 'shape')
 
-export function useShape (props: MaybeRef<ShapeProps>) {
+export function useShape (
+  props: MaybeRef<ShapeProps>,
+  name = getCurrentInstanceName()
+) {
   const shapeClasses = computed(() => {
     let { shape } = unref(props)
-
-    if (shape && shape in ALIASES) {
-      shape = ALIASES[shape as keyof typeof ALIASES]
-    }
-
-    return shape
+    if (!shape || !shapes.includes(shape)) return null
+    return `${ name }--shape-${ shape }`
   })
 
   return {

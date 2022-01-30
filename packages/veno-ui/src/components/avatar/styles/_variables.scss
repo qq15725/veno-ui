@@ -10,7 +10,6 @@ $avatar-border-color: settings.$border-color !default;
 $avatar-border-style: settings.$border-style !default;
 $avatar-border-width: 0 !default;
 $avatar-border-thin-width: thin !default;
-$avatar-border-radius: settings.$border-radius !default;
 
 $avatar-paper: (
   'variants': (
@@ -37,7 +36,4 @@ $avatar-paper: (
     ),
   ),
   'positions': absolute fixed,
-  'shapes': (
-    'default': $avatar-border-radius,
-  )
 ) !default;

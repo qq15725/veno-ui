@@ -10,7 +10,6 @@ $list-border-color: settings.$border-color !default;
 $list-border-style: settings.$border-style !default;
 $list-border-width: 0 !default;
 $list-border-thin-width: thin !default;
-$list-border-radius: settings.$border-radius !default;
 
 $list-paper: () !default;
 $list-paper: tools.map-deep-merge(
@@ -34,9 +33,6 @@ $list-paper: tools.map-deep-merge(
       'positions': absolute fixed,
       'use-size': false,
       'use-density': false,
-      'shapes': (
-        'default': $list-border-radius,
-      )
     ),
     $list-paper
 );
@@ -47,7 +43,6 @@ $list-item-border-color: settings.$border-color !default;
 $list-item-border-style: settings.$border-style !default;
 $list-item-border-width: 0 !default;
 $list-item-border-thin-width: thin !default;
-$list-item-border-radius: 0 !default;
 $list-item-transition: .2s settings.$standard-easing !default;
 
 $list-item-paper: () !default;
@@ -72,9 +67,6 @@ $list-item-paper: tools.map-deep-merge(
       'positions': absolute fixed,
       'use-size': false,
       'use-density': false,
-      'shapes': (
-        'default': $list-item-border-radius,
-      ),
     ),
     $list-item-paper
 );

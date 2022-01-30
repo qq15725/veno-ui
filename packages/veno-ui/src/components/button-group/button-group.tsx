@@ -14,7 +14,9 @@ export const ButtonGroup = defineComponent({
 
   props: {
     divided: Boolean,
-    ...makePaperProps(),
+    ...makePaperProps({
+      shape: 'rounded'
+    } as const),
   },
 
   setup (props, { slots }) {

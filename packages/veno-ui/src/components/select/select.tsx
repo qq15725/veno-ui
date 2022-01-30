@@ -112,7 +112,7 @@ export const Select = genericComponent<new () => {
               <List
                 max-height={ 200 }
                 elevation={ 8 }
-                density="compact"
+                density="ultra-high"
               >
                 { normaledItems.value.map((item: any) => (
                   <ListItem

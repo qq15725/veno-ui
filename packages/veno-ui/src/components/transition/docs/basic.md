@@ -3,7 +3,7 @@
 # 基础使用
 
 ```html
-<ve-paper height="130">
+<ve-paper min-height="180">
   <ve-button @click="show = !show" class="mb-3">点我</ve-button>
 
   <ve-spacer>

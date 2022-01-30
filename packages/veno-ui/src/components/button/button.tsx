@@ -55,7 +55,8 @@ export const Button = defineComponent({
     ...makeGroupItemProps(),
     ...makePaperProps({
       tag: 'button',
-    }),
+      shape: 'rounded'
+    } as const)
   },
 
   emits: {

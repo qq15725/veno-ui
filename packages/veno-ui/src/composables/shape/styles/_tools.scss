@@ -2,16 +2,12 @@
 @use 'variables';
 @use '../../../styles/tools/functions';
 
-@mixin generate-shape($prop, $name) {
-  border-radius: $prop;
-}
-
 @mixin use-shape($props: ()) {
   $props: functions.map-deep-merge(variables.$shape-props, $props);
-  
+
   @each $name, $prop in map.get($props, 'shapes') {
-    @if ($name == 'default') {
-      @include generate-shape($prop, $name);
+    &--shape-#{$name} {
+      border-radius: $prop;
     }
   }
 }

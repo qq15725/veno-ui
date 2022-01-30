@@ -11,7 +11,6 @@ $device-border-color: settings.$border-color !default;
 $device-border-style: settings.$border-style !default;
 $device-border-width: thin !default;
 $device-border-thin-width: thin !default;
-$device-border-radius: settings.$border-radius !default;
 $device-borders: (
   'default': (
     'color': $device-border-color,
@@ -21,7 +20,4 @@ $device-borders: (
   'existence': (
     'width': $device-border-thin-width,
   )
-) !default;
-$device-shapes: (
-  'default': $device-border-radius,
 ) !default;

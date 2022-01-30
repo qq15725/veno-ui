@@ -68,6 +68,7 @@
 
       #{$root}__overlay {
         opacity: math.div($button-disabled-overlay, $button-disabled-opacity);
+        visibility: visible;
       }
     }
   }

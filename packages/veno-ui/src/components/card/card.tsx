@@ -2,7 +2,7 @@
 import './styles/card.scss'
 
 // Utils
-import { defineComponent } from '../../utils'
+import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -26,34 +26,36 @@ import { CardActions } from './card-actions'
 // Directives
 import { Ripple } from '../../directives'
 
+export const makeCardProps = propsFactory({
+  link: Boolean,
+  hover: Boolean,
+  image: String,
+  prependAvatar: String,
+  prependIcon: String,
+  appendAvatar: String,
+  appendIcon: String,
+  title: String,
+  subtitle: String,
+  divided: Boolean,
+  text: String,
+  ripple: {
+    type: Boolean,
+    default: true,
+  },
+  ...makePaperProps({
+    shape: 'rounded'
+  } as const),
+  ...makeRouterProps(),
+  ...makeLoadingProps(),
+  ...makeDisabledProps(),
+}, 'card')
+
 export const Card = defineComponent({
   name: 'VeCard',
 
   directives: { Ripple },
 
-  props: {
-    link: Boolean,
-    hover: Boolean,
-    image: String,
-    prependAvatar: String,
-    prependIcon: String,
-    appendAvatar: String,
-    appendIcon: String,
-    title: String,
-    subtitle: String,
-    divided: Boolean,
-    text: String,
-    ripple: {
-      type: Boolean,
-      default: true,
-    },
-    ...makePaperProps({
-      size: undefined,
-    }),
-    ...makeRouterProps(),
-    ...makeLoadingProps(),
-    ...makeDisabledProps(),
-  },
+  props: makeCardProps(),
 
   setup (props, { attrs, slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
@@ -96,10 +98,8 @@ export const Card = defineComponent({
 
           { hasImage && (
             <CardImage>
-              { slots.image
-                ? slots.image?.({ src: props.image })
-                : (<Image src={ props.image } cover alt="" />)
-              }
+              { slots.image?.({ src: props.image })
+              ?? <Image src={ props.image } cover /> }
             </CardImage>
           ) }
 
@@ -109,43 +109,35 @@ export const Card = defineComponent({
             <CardHeader>
               { hasPrepend && (
                 <CardAvatar>
-                  { slots.prepend
-                    ? slots.prepend()
-                    : (<Avatar
-                      color={ false }
-                      variant="text"
-                      icon={ props.prependIcon }
-                      image={ props.prependAvatar }
-                    />) }
+                  { slots.prepend?.()
+                  ?? <Avatar
+                    color={ false }
+                    variant="text"
+                    icon={ props.prependIcon }
+                    image={ props.prependAvatar }
+                  /> }
                 </CardAvatar>
               ) }
 
               { hasHeaderText && (
                 <CardHeaderText>
-                  { hasTitle && (
-                    <CardTitle>
-                      { slots.title ? slots.title() : props.title }
-                    </CardTitle>
-                  ) }
+                  { hasTitle && <CardTitle>{ slots.title?.() ?? props.title }</CardTitle> }
 
-                  { hasSubtitle && (
-                    <CardSubtitle>
-                      { slots.subtitle ? slots.subtitle() : props.subtitle }
-                    </CardSubtitle>
-                  ) }
+                  { hasSubtitle && <CardSubtitle>{ slots.subtitle?.() ?? props.subtitle }</CardSubtitle> }
+
+                  { slots.header?.() }
                 </CardHeaderText>
               ) }
 
               { hasAppend && (
                 <CardAvatar>
-                  { slots.append
-                    ? slots.append()
-                    : (<Avatar
-                      color={ false }
-                      variant="text"
-                      icon={ props.appendIcon }
-                      image={ props.appendAvatar }
-                    />) }
+                  { slots.append?.()
+                  ?? <Avatar
+                    color={ false }
+                    variant="text"
+                    icon={ props.appendIcon }
+                    image={ props.appendAvatar }
+                  /> }
                 </CardAvatar>
               ) }
             </CardHeader>
@@ -153,19 +145,13 @@ export const Card = defineComponent({
 
           { props.divided && <Divider /> }
 
-          { hasText && (
-            <CardText>
-              { slots.text ? slots.text() : props.text }
-            </CardText>
-          ) }
+          { hasText && <CardText>{ slots.text?.() ?? props.text }</CardText> }
 
           { slots.default?.() }
 
           { slots.actions && props.divided && <Divider /> }
 
-          { slots.actions && (
-            <CardActions>{ slots.actions() }</CardActions>
-          ) }
+          { slots.actions && <CardActions>{ slots.actions() }</CardActions> }
         </Tag>
       )
     }

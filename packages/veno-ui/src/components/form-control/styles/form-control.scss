@@ -10,7 +10,9 @@
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
   grid-template-rows: auto auto;
-  @include tools.use-density((densities: $form-control-density));
+  @include tools.use-density((
+    densities: $form-control-density
+  ));
 
   &--horizontal {
     #{$root}__label {

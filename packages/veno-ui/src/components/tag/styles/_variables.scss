@@ -12,7 +12,6 @@ $tag-border-color: settings.$border-color !default;
 $tag-border-style: settings.$border-style !default;
 $tag-border-width: 0 !default;
 $tag-border-thin-width: thin !default;
-$tag-border-radius: settings.$border-radius !default;
 
 $tag-paper: () !default;
 $tag-paper: tools.map-deep-merge(
@@ -33,9 +32,6 @@ $tag-paper: tools.map-deep-merge(
         'existence': (
           'width': $tag-border-thin-width,
         )
-      ),
-      'shapes': (
-        'default': $tag-border-radius,
       ),
     ),
     $tag-paper

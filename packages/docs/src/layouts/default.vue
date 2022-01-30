@@ -64,7 +64,7 @@ function toggle () {
     <ve-drawer v-model="active">
       <ve-list
           nav
-          density="compact"
+          density="ultra-high"
           :items="menus"
           :opened="menus.map(item => item.value)"
       >

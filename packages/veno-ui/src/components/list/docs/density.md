@@ -4,7 +4,7 @@
 
 ```html
 <div class="p-10 bg-grey-300">
-  <ve-list density="comfortable" class="mb-3">
+  <ve-list density="high" class="mb-3">
     <ve-list-subheader>Comfortable</ve-list-subheader>
     <ve-list-group>
       <template #header="props">
@@ -16,7 +16,7 @@
     <ve-list-item title="Navigation 2" link />
   </ve-list>
 
-  <ve-list density="compact">
+  <ve-list density="ultra-high">
     <ve-list-subheader>Compact</ve-list-subheader>
     <ve-list-group>
       <template #header="props">

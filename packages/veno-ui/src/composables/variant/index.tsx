@@ -63,7 +63,6 @@ export function useVariant (
         return {
           text: color ?? textColor,
         }
-      case 'contained':
       default:
         return {
           text: textColor,

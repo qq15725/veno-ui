@@ -18,7 +18,9 @@ export const Tag = defineComponent({
 
   props: {
     icon: String,
-    ...makePaperProps(),
+    ...makePaperProps({
+      shape: 'rounded'
+    } as const),
   },
 
   setup (props, { slots }) {

@@ -2,7 +2,7 @@
 
 # 按钮尺寸
 
-按钮的尺寸有 `x-small` - 特小、`small` - 小、`medium` - 中等、`large` - 大、`x-large` - 特大。
+按钮的尺寸有 `x-small` - 特小、`small` - 小、`medium` - 中等（默认）、`large` - 大、`x-large` - 特大。
 
 ```html
 <ve-spacer align="center">

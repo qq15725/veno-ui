@@ -1,9 +1,11 @@
 @use '../../../styles/tools/functions';
 
 $densities: (
-  'compact': -2,
-  'comfortable': -1,
-  'medium': 0
+  'ultra-high': -2,
+  'high': -1,
+  'medium': 0,
+  'low': 1,
+  'ultra-low': 2,
 ) !default;
 
 $density-props: () !default;

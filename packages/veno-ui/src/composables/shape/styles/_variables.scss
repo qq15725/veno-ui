@@ -1,9 +1,11 @@
+@use '../../../styles/settings/rounded' as settings;
 @use '../../../styles/tools/functions';
 
-$shape-border-radius: 4px !default;
-
 $shapes: (
-  'default': $shape-border-radius,
+  'tile': map-get(settings.$rounded, '0'),
+  'rounded': map-get(settings.$rounded, null),
+  'pill': map-get(settings.$rounded, 'pill'),
+  'circle': map-get(settings.$rounded, 'circle'),
 ) !default;
 
 $shape-props: () !default;

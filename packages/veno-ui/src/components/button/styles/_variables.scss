@@ -37,7 +37,6 @@ $button-border-color: settings.$border-color !default;
 $button-border-style: settings.$border-style !default;
 $button-border-width: 0 !default;
 $button-border-thin-width: thin !default;
-$button-border-radius: settings.$border-radius !default;
 
 $button-paper: () !default;
 $button-paper: tools.map-deep-merge(
@@ -61,9 +60,6 @@ $button-paper: tools.map-deep-merge(
         'existence': (
           'width': $button-border-thin-width,
         )
-      ),
-      'shapes': (
-        'default': $button-border-radius,
       ),
     ),
     $button-paper

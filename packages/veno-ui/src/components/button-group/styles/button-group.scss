@@ -29,9 +29,6 @@
         'width': thin,
       )
     ),
-    'shapes': (
-      'default': settings.$border-radius,
-    ),
   ));
 
   .ve-button.ve-button--selected:not(.ve-button--disabled) {

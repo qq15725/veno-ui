@@ -4,9 +4,10 @@
 
 ```html
 <ve-spacer gutter="md" align="center">
-  <ve-card text="Tile" shape="tile" />
-  <ve-card text="Default" />
-  <ve-card text="Round" shape="round" />  
+  <ve-card shape="tile" text="Tile" />
+  <ve-card shape="rounded" text="Rounded" />
+  <ve-card shape="pill" text="Pill" />  
+  <ve-card shape="circle" text="Circle" />  
 </ve-spacer>
 ```
 

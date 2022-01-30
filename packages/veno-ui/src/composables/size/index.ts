@@ -3,31 +3,34 @@ import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName, convertToUnit } from '../../utils'
 
 // Constants
-export const SIZES = [
-  'xs', 'sm', 'md', 'lg', 'xl',
-  'x-small', 'small', 'medium', 'large', 'x-large',
+const aliases = {
+  'xs': 'x-small',
+  'sm': 'small',
+  'md': 'medium',
+  'lg': 'large',
+  'xl': 'x-large',
+} as const
+
+export const sizes = [
+  ...Object.keys(aliases),
+  ...new Set(Object.values(aliases))
 ]
 
-const ALIASES = {
-  'x-small': 'xs',
-  'small': 'sm',
-  'medium': 'md',
-  'large': 'lg',
-  'x-large': 'xl',
-}
-
 // Types
+import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
+
+export type Size = string | number | typeof sizes[number]
 
 export interface SizeProps
 {
-  size?: string | number
+  size?: Size
 }
 
 export const makeSizeProps = propsFactory({
   size: {
-    type: [String, Number],
-    default: 'md',
+    type: [String, Number] as PropType<Size>,
+    default: 'medium',
   },
 }, 'size')
 
@@ -37,21 +40,14 @@ export function useSize (
 ) {
   const sizeClasses = computed(() => {
     let { size } = unref(props)
-
-    if (!name || !size || !SIZES.includes(size as string)) return null
-
-    if (size in ALIASES) {
-      size = ALIASES[size as keyof typeof ALIASES]
-    }
-
+    if (!name || !size || !sizes.includes(size as string)) return null
+    if (size in aliases) size = aliases[size as keyof typeof aliases]
     return `${ name }--size-${ size }`
   })
 
   const sizeStyles = computed(() => {
     const { size } = unref(props)
-
-    if (!size || SIZES.includes(size as string)) return {}
-
+    if (!size || sizes.includes(size as string)) return {}
     return {
       width: convertToUnit(size),
       height: convertToUnit(size),

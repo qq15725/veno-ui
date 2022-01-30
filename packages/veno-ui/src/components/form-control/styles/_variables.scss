@@ -3,4 +3,10 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-$form-control-density: ('medium': 0, 'comfortable': -1, 'compact': -3) !default;
+$form-control-density: (
+  'ultra-low': -3,
+  'low': -1,
+  'medium': 0,
+  'high': 1,
+  'ultra-high': 3
+) !default;

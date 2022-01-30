@@ -106,7 +106,8 @@ export const Table = defineComponent({
     ...makeDataIteratorProps(),
     ...makePaperProps({
       border: true,
-    }),
+      shape: 'rounded'
+    } as const),
   },
 
   emits: {
