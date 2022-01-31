@@ -14,9 +14,15 @@ basic.md
 
 contained.md 
 
-outlined.md 
+outlined.md
+
+plain.md
 
 text.md 
+
+contained-text.md
+
+contained-outlined.md
 
 icon.md 
 

@@ -2,21 +2,23 @@
 
 # 头像密度
 
+头像的密度有 `ultra-high` - 超高、`high` - 高、`medium` - 中等（默认）、`low` - 低、`ultra-low` - 超低。
+
 ```html
-<ve-radio-group label="size" v-model="size">
-  <ve-radio label="x-small" />
-  <ve-radio label="small" />
+<ve-radio-group label="density" v-model="density">
+  <ve-radio label="ultra-high" />
+  <ve-radio label="high" />
   <ve-radio label="medium" />
-  <ve-radio label="large" />
-  <ve-radio label="x-large" />
+  <ve-radio label="low" />
+  <ve-radio label="ultra-low" />
 </ve-radio-group>
 
-<ve-spacer gutter="md" align="center">
-  <ve-avatar density="ultra-high" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar density="high" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar density="medium" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar density="low" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar density="ultra-low" :size="size" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+<ve-spacer align="center">
+  <ve-avatar :density="density" size="x-small" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :density="density" size="small" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :density="density" size="medium" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :density="density" size="large" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :density="density" size="x-large" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
 </ve-spacer>
 ```
 
@@ -26,7 +28,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      size: ref('medium'),
+      density: ref('medium'),
     }
   }
 })

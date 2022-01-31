@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper } from '../../composables/paper'
+import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -55,7 +55,8 @@ export const Button = defineComponent({
     ...makeGroupItemProps(),
     ...makePaperProps({
       tag: 'button',
-      shape: 'rounded'
+      shape: 'rounded',
+      variant: 'contained',
     } as const)
   },
 
@@ -119,7 +120,7 @@ export const Button = defineComponent({
             props.icon ? ['center'] : null,
           ] }
         >
-          { props.overlay && <div class="ve-button__overlay" /> }
+          { genOverlays(props.overlay, 've-button') }
 
           { hasLoding && (
             <Progress

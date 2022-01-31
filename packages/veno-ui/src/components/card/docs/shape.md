@@ -4,10 +4,10 @@
 
 ```html
 <ve-spacer gutter="md" align="center">
-  <ve-card shape="tile" text="Tile" />
-  <ve-card shape="rounded" text="Rounded" />
-  <ve-card shape="pill" text="Pill" />  
-  <ve-card shape="circle" text="Circle" />  
+  <ve-card shape="tile" text="Tile" border />
+  <ve-card shape="rounded" text="Rounded" border />
+  <ve-card shape="pill" text="Pill" border />  
+  <ve-card shape="circle" text="Circle" border />  
 </ve-spacer>
 ```
 

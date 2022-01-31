@@ -42,6 +42,8 @@ export interface PaperProps
   //
 }
 
+export { genOverlays } from '../variant'
+
 export const makePaperProps = propsFactory({
   ...makeTagProps(),
   ...makeThemeProps(),

@@ -6,6 +6,7 @@
 <ve-card
   subtitle="微信号：xxxxxx"
   append-avatar="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132"
+  elevation="8"
 >
   <template #title>
     <span>艺术家</span>

@@ -2,13 +2,13 @@
 import './styles/card.scss'
 
 // Utils
-import { defineComponent, propsFactory } from '../../utils'
+import { defineComponent, propsFactory, pick } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
+import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
 
 // Components
 import { Avatar } from '../avatar'
@@ -26,6 +26,10 @@ import { CardActions } from './card-actions'
 // Directives
 import { Ripple } from '../../directives'
 
+export function filterCardProps (props: Record<string, any>) {
+  return pick(props, Object.keys(Card.props) as any)
+}
+
 export const makeCardProps = propsFactory({
   link: Boolean,
   hover: Boolean,
@@ -42,12 +46,12 @@ export const makeCardProps = propsFactory({
     type: Boolean,
     default: true,
   },
-  ...makePaperProps({
-    shape: 'rounded'
-  } as const),
   ...makeRouterProps(),
   ...makeLoadingProps(),
   ...makeDisabledProps(),
+  ...makePaperProps({
+    shape: 'rounded',
+  } as const),
 }, 'card')
 
 export const Card = defineComponent({
@@ -68,10 +72,10 @@ export const Card = defineComponent({
       const hasImage = !!(slots.image || props.image)
       const hasTitle = !!(slots.title || props.title)
       const hasSubtitle = !!(slots.subtitle || props.subtitle)
-      const hasHeaderText = hasTitle || hasSubtitle
+      const hasHeaderText = !!slots.headerText || hasTitle || hasSubtitle
       const hasPrepend = !!(slots.prepend || props.prependAvatar || props.prependIcon)
       const hasAppend = !!(slots.append || props.appendAvatar || props.appendIcon)
-      const hasHeader = hasHeaderText || hasPrepend || hasAppend
+      const hasHeader = !!slots.header || hasHeaderText || hasPrepend || hasAppend
       const hasText = !!(slots.text || props.text)
       const isClickable = !props.disabled && (link.isClickable.value || props.link)
 
@@ -94,12 +98,13 @@ export const Card = defineComponent({
             isClickable && props.ripple,
           ] }
         >
-          { isClickable && <div class="ve-card__overlay" /> }
+          { genOverlays(isClickable, 've-card') }
 
           { hasImage && (
             <CardImage>
-              { slots.image?.({ src: props.image })
-              ?? <Image src={ props.image } cover /> }
+              { slots.image?.({ src: props.image }) ?? (
+                <Image src={ props.image } cover />
+              ) }
             </CardImage>
           ) }
 
@@ -107,38 +112,48 @@ export const Card = defineComponent({
 
           { hasHeader && (
             <CardHeader>
-              { hasPrepend && (
-                <CardAvatar>
-                  { slots.prepend?.()
-                  ?? <Avatar
-                    color={ false }
-                    variant="text"
-                    icon={ props.prependIcon }
-                    image={ props.prependAvatar }
-                  /> }
-                </CardAvatar>
-              ) }
+              { slots.header?.() ?? (
+                <>
+                  { hasPrepend && (
+                    <CardAvatar>
+                      { slots.prepend?.() ?? (
+                        <Avatar
+                          density={ props.density }
+                          icon={ props.prependIcon }
+                          image={ props.prependAvatar }
+                        />
+                      ) }
+                    </CardAvatar>
+                  ) }
 
-              { hasHeaderText && (
-                <CardHeaderText>
-                  { hasTitle && <CardTitle>{ slots.title?.() ?? props.title }</CardTitle> }
+                  { hasHeaderText && (
+                    <CardHeaderText>
+                      { slots.headerText?.() ?? (
+                        <>
+                          { hasTitle && (
+                            <CardTitle>{ slots.title?.() ?? props.title }</CardTitle>
+                          ) }
 
-                  { hasSubtitle && <CardSubtitle>{ slots.subtitle?.() ?? props.subtitle }</CardSubtitle> }
+                          { hasSubtitle && (
+                            <CardSubtitle>{ slots.subtitle?.() ?? props.subtitle }</CardSubtitle>
+                          ) }
+                        </>
+                      ) }
+                    </CardHeaderText>
+                  ) }
 
-                  { slots.header?.() }
-                </CardHeaderText>
-              ) }
-
-              { hasAppend && (
-                <CardAvatar>
-                  { slots.append?.()
-                  ?? <Avatar
-                    color={ false }
-                    variant="text"
-                    icon={ props.appendIcon }
-                    image={ props.appendAvatar }
-                  /> }
-                </CardAvatar>
+                  { hasAppend && (
+                    <CardAvatar>
+                      { slots.append?.() ?? (
+                        <Avatar
+                          density={ props.density }
+                          icon={ props.appendIcon }
+                          image={ props.appendAvatar }
+                        />
+                      ) }
+                    </CardAvatar>
+                  ) }
+                </>
               ) }
             </CardHeader>
           ) }
@@ -155,5 +170,5 @@ export const Card = defineComponent({
         </Tag>
       )
     }
-  }
+  },
 })

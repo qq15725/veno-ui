@@ -5,11 +5,15 @@ $variants: functions.map-deep-merge(
     (
       'contained': (
         'background': rgb(var(--ve-theme-surface)),
-        'color': rgb(var(--ve-theme-on-surface))
+        'color': rgb(var(--ve-theme-on-surface)),
+        'elevation': 0,
+      ),
+      'plain': (
+        'opacity': .62,
       ),
       'text': (
-        'color': inherit
-      )
+        'color': inherit,
+      ),
     ),
     $variants
 );
@@ -17,6 +21,7 @@ $variants: functions.map-deep-merge(
 $variant-props: () !default;
 $variant-props: functions.map-deep-merge(
     (
+      'use-variant': true,
       'variants': $variants,
     ),
     $variant-props

@@ -10,7 +10,9 @@ meta:
 
 :::include
 
-basic.md closable.md
+basic.md type.md
+
+closable.md icon.md
 
 :::
 

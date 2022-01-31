@@ -3,9 +3,10 @@ import './styles/button-group.scss'
 
 // Utils
 import { defineComponent } from '../../utils'
-import { reactive, computed } from 'vue'
+import { reactive, toRef } from 'vue'
 
 // Composables
+import { makeDisabledProps } from '../../composables/disabled'
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { provideDefaults } from '../../composables/defaults'
 
@@ -14,6 +15,7 @@ export const ButtonGroup = defineComponent({
 
   props: {
     divided: Boolean,
+    ...makeDisabledProps(),
     ...makePaperProps({
       shape: 'rounded'
     } as const),
@@ -25,9 +27,10 @@ export const ButtonGroup = defineComponent({
     provideDefaults(reactive({
       defaults: {
         VeButton: {
+          disabled: toRef(props, 'disabled'),
           height: 'auto',
-          color: computed(() => props.color),
-          variant: computed(() => props.variant),
+          color: toRef(props, 'color'),
+          variant: toRef(props, 'variant'),
         },
       },
     }))

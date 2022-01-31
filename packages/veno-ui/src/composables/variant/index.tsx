@@ -9,27 +9,37 @@ import { useColor } from '../color'
 import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export type Variant = 'outlined' | 'contained' | 'text' | string
+export const variants = [
+  'contained', 'outlined', 'plain', 'text',
+  'contained-text', 'contained-outlined'
+] as const
+
+export type Variant = typeof variants[number]
 
 export interface VariantProps
 {
-  color?: string | false | null
-  textColor?: string | false | null
+  color?: string
+  textColor?: string
   variant: Variant
 }
 
+export function genOverlays (isClickable: boolean, name: string) {
+  return (
+    <>
+      { isClickable && <div class={ `${ name }__overlay` } /> }
+
+      <div class={ `${ name }__underlay` } />
+    </>
+  )
+}
+
 export const makeVariantProps = propsFactory({
-  color: {
-    type: [String, Boolean] as PropType<string | false | null>,
-    default: undefined,
-  },
-  textColor: {
-    type: [String, Boolean] as PropType<string | false | null>,
-    default: undefined,
-  },
+  color: String,
+  textColor: String,
   variant: {
     type: String as PropType<Variant>,
     default: 'contained',
+    validator: (v: any) => variants.includes(v),
   },
 }, 'variant')
 
@@ -37,39 +47,35 @@ export function useVariant (
   props: MaybeRef<VariantProps>,
   name = getCurrentInstanceName()
 ) {
-  const variantClasses = computed(() => {
+  const variant = computed(() => {
     const { variant } = unref(props)
+    return variant
+  })
+
+  const colors = computed(() => {
+    const { textColor, color, variant } = unref(props)
+    return {
+      text: textColor,
+      [variant === 'contained' ? 'background' : 'text']: color,
+    }
+  })
+
+  const variantClasses = computed(() => {
     return [
-      `${ name }--variant-${ variant }`,
+      `${ name }--variant-${ variant.value }`,
     ]
   })
 
   const variantStyles = computed(() => {
-    const { textColor, color, variant } = unref(props)
-    if (variant === 'outlined'
-      && (color !== undefined || textColor !== undefined)) {
-      return {
-        borderColor: 'currentColor',
-      }
+    const styles: Record<string, any> = {}
+    if ((variant.value === 'outlined' || variant.value === 'contained-outlined')
+      && colors.value.text !== undefined) {
+      styles.borderColor = 'currentColor'
     }
-    return {}
+    return styles
   })
 
-  const { colorClasses, colorStyles } = useColor(computed(() => {
-    const { textColor, color, variant } = unref(props)
-    switch (variant) {
-      case 'outlined':
-      case 'text':
-        return {
-          text: color ?? textColor,
-        }
-      default:
-        return {
-          text: textColor,
-          background: color,
-        }
-    }
-  }))
+  const { colorClasses, colorStyles } = useColor(colors)
 
   return { colorClasses, colorStyles, variantClasses, variantStyles }
 }

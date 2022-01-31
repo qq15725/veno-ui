@@ -3,42 +3,9 @@
 @use '../../../styles/tools';
 
 .ve-alert {
-  position: relative;
-  display: flex;
-  padding: 16px;
-  @include tools.use-paper();
-  @include tools.overlay('#{&}__overlay', .08, inherit);
-
-  &__icon {
-    margin-inline-end: 8px;
-    height: 24px;
-    width: 24px;
-  }
-
-  &__action {
-    margin-inline-start: 8px;
-
-    .ve-button {
-      height: 24px;
-      width: 24px;
-      min-width: 24px;
+  &.ve-card--variant-contained-outlined {
+    .ve-card-header-text {
+      color: rgb(var(--ve-theme-on-background));
     }
-  }
-
-  &__wrapper {
-    flex: 1 1 0;
-    display: flex;
-    flex-direction: column;
-    line-height: 24px;
-  }
-
-  &__title {
-    font-size: 16px;
-    font-weight: 500;
-  }
-
-  &__title + &__content {
-    opacity: var(--ve-medium-emphasis-opacity);
-    margin-top: 4px;
   }
 }

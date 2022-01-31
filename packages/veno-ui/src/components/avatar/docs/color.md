@@ -3,7 +3,7 @@
 # 颜色
 
 ```html
-<ve-spacer gutter="md">
+<ve-spacer>
   <ve-avatar color="primary" />
   <ve-avatar color="error" />
   <ve-avatar color="red" />

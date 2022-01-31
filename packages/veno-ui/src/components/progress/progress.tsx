@@ -39,11 +39,6 @@ export const Progress = defineComponent({
   name: 'VeProgress',
 
   props: {
-    variant: {
-      type: String as PropType<ProgressVariant>,
-      default: 'linear',
-      validator: (v: any) => allowedVariants.includes(v),
-    },
     color: {
       type: [String, Boolean] as PropType<string | false | null>,
       default: 'primary',
@@ -55,11 +50,16 @@ export const Progress = defineComponent({
     ...makeThemeProps(),
     ...makeSizeProps(),
     ...makeTagProps(),
+    variant: {
+      type: String as PropType<ProgressVariant>,
+      default: 'linear',
+      validator: (v: any) => allowedVariants.includes(v),
+    },
   },
 
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
-    const { variantClasses, variantStyles } = useVariant(props)
+    const { variantClasses, variantStyles } = useVariant(props as any)
     const { sizeClasses, sizeStyles } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(
       toRef(props, 'color')

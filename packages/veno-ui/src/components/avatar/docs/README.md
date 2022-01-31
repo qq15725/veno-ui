@@ -9,13 +9,21 @@ meta:
 
 :::include
 
-basic.md border.md
+basic.md 
 
-color.md shape.md
+border.md
 
-size.md density.md
+color.md 
 
-slot.md icon.md
+shape.md
+
+size.md 
+
+density.md
+
+slot.md 
+
+icon.md
 
 fit-size.md
 

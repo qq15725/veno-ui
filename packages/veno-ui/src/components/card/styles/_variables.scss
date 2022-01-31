@@ -44,7 +44,7 @@ $card-actions-padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px !def
 // border
 $card-border-color: settings.$border-color !default;
 $card-border-style: settings.$border-style !default;
-$card-border-width: thin !default;
+$card-border-width: 0 !default;
 $card-border-thin-width: thin !default;
 
 $card-paper: () !default;

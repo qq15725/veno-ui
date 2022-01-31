@@ -1,23 +1,75 @@
 @use 'sass:map';
+@use 'sass:string';
 @use 'variables';
 @use '../../../styles/tools/functions' as tools;
+@use '../../../styles/tools/elevation' as *;
 
 @mixin use-variant($props: ()) {
+  $prefix: string.slice(#{&}, 2);
   $props: tools.map-deep-merge(variables.$variant-props, $props);
-  $variants: map.get($props, 'variants');
 
-  &--variant-contained {
-    background: tools.map-deep-get($variants, 'contained', 'background');
-    color: tools.map-deep-get($variants, 'contained', 'color');
-  }
+  @if map.get($props, 'use-variant') {
+    $variants: map.get($props, 'variants');
 
-  &--variant-text,
-  &--variant-outlined {
-    background: transparent;
-    color: tools.map-deep-get($variants, 'text', 'color');
-  }
+    &--variant-plain,
+    &--variant-outlined,
+    &--variant-text,
+    &--variant-contained-text,
+    &--variant-contained-outlined {
+      background: transparent;
+      color: tools.map-deep-get($variants, 'text', 'color');
+    }
 
-  &--variant-outlined {
-    border-width: thin;
+    &--variant-contained {
+      background: tools.map-deep-get($variants, 'contained', 'background');
+      color: tools.map-deep-get($variants, 'contained', 'color');
+      $elevation: tools.map-deep-get($variants, 'contained', 'elevation');
+      @if ($elevation > 0) {
+        @include elevation($elevation);
+      }
+    }
+
+    &--variant-outlined {
+      border-width: thin;
+    }
+
+    &--variant-contained-outlined {
+      border: thin solid currentColor;
+    }
+
+    &--variant-plain {
+      opacity: tools.map-deep-get($variants, 'plain', 'opacity');
+
+      .#{$prefix}__overlay {
+        display: none;
+      }
+
+      &:focus,
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &--variant-text {
+      .#{$prefix}__overlay {
+        background: currentColor;
+      }
+    }
+
+    &--variant-contained-text,
+    &--variant-contained-outlined {
+      .#{$prefix}__underlay {
+        background: currentColor;
+        opacity: var(--ve-activated-opacity);
+        border-radius: inherit;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+      }
+    }
   }
 }

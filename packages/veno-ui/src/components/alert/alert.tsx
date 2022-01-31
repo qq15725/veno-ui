@@ -6,23 +6,23 @@ import { computed } from 'vue'
 import { genericComponent, MakeSlots } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper } from '../../composables/paper'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
-import { useTextColor } from '../../composables/color'
+import { makeCardProps, filterCardProps } from '../card/card'
 
 // Components
 import { Button } from '../button'
-import { Avatar } from '../avatar'
+import { Card } from '../card'
+import { Icon } from '../icon'
 import { FadeTransition } from '../transition'
 
 // Constants
-export const AlertTypes = ['success', 'info', 'warning', 'error'] as const
+export const alertTypes = ['success', 'info', 'warning', 'error'] as const
 
 // Types
 import type { PropType } from 'vue'
 
-export type AlertType = typeof AlertTypes[number]
+export type AlertType = typeof alertTypes[number]
 export type Alert = InstanceType<typeof Alert>
 
 export type AlertSlots = MakeSlots<{
@@ -40,25 +40,25 @@ export const Alert = genericComponent<new () => {
       type: Boolean,
       default: true,
     },
-    title: String,
-    text: String,
     type: {
       type: String as PropType<AlertType>,
-      validator: (val: AlertType) => AlertTypes.includes(val),
+      validator: (val: AlertType) => alertTypes.includes(val),
     },
     icon: {
-      type: [Boolean, String] as PropType<false | string>,
-      default: null,
+      type: [String, Boolean] as PropType<string | false>,
+      default: true,
     },
     closable: Boolean,
     closeIcon: {
       type: String,
       default: '$close',
     },
-    overlayColor: String,
-    ...makePaperProps(),
     ...makeTransitionProps({
       transition: { component: FadeTransition },
+    } as const),
+    ...makeCardProps({
+      shape: 'rounded',
+      variant: 'contained-outlined',
     } as const),
   },
 
@@ -67,77 +67,71 @@ export const Alert = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
-    const { paperClasses, paperStyles } = usePaper(props)
-    const iconColor = computed(() => props.textColor ?? props.type)
-    const {
-      textColorClasses: overlayColorClasses,
-      textColorStyles: overlayColorStyles
-    } = useTextColor(computed(() => props.overlayColor ?? iconColor.value))
+    const color = computed(() => props.color ?? props.type)
     const isActive = useProxiedModel(props, 'modelValue')
-    const icon = computed(() => props.icon ? props.icon : `$${ props.type }`)
+    const icon = computed(() => {
+      if (typeof props.icon === 'string') return props.icon
+      if (props.type) return `$${ props.type }`
+      return
+    })
 
     function onCloseClick (e: Event) {
       isActive.value = false
     }
 
     return () => {
-      const hasIcon = props.icon !== false && (props.type || props.icon)
-      const hasAction = props.closable || slots.action
-      const hasText = props.text || slots.default
+      const [cardProps] = filterCardProps(props)
+      const hasPrepend = icon.value || slots.prepend
+      const hasAppend = props.closable || slots.append
 
       return (
         <MaybeTransition transition={ props.transition }>
           { isActive.value && (
-            <props.tag
+            <Card
+              { ...cardProps }
               role="alert"
               class={ [
-                've-alert',
-                paperClasses.value,
+                've-alert'
               ] }
-              style={ paperStyles.value }
+              color={ color.value }
             >
-              <div
-                class={ [
-                  've-alert__overlay',
-                  overlayColorClasses.value
-                ] }
-                style={ overlayColorStyles.value }
-              />
+              { {
+                prepend: hasPrepend ? () => (
+                  <>
+                    { icon.value && (
+                      <Icon icon={ icon.value } />
+                    ) }
 
-              { hasIcon && (
-                <Avatar
-                  class="ve-alert__icon"
-                  icon={ icon.value }
-                  color="transparent"
-                  text-color={ iconColor.value }
-                />
-              ) }
+                    { slots.prepend?.() }
+                  </>
+                ) : undefined,
+                headerText: () => (
+                  <>
+                    <div>{ props.title }</div>
+                    <div>{ slots.default?.() ?? props.subtitle }</div>
+                  </>
+                ),
+                append: hasAppend ? () => (
+                  <>
+                    { slots.append?.() }
 
-              <div class="ve-alert__wrapper">
-                { props.title && (
-                  <div class="ve-alert__title">{ props.title }</div>
-                ) }
-
-                { hasText && (
-                  <div class="ve-alert__content">{ props.text ?? slots.default?.() }</div>
-                ) }
-              </div>
-
-              { hasAction && (
-                <div class="ve-alert__action">
-                  { slots.action?.({ props: { onClick: onCloseClick } }) ?? (
-                    <Button
-                      icon={ props.closeIcon }
-                      color="transparent"
-                      onClick={ onCloseClick }
-                    />
-                  ) }
-                </div>
-              ) }
-            </props.tag>
+                    { props.closeIcon && (
+                      <Button
+                        variant="text"
+                        style={ {
+                          '--ve-button-height': '1.5em'
+                        } }
+                        icon={ props.closeIcon }
+                        onClick={ onCloseClick }
+                      />
+                    ) }
+                  </>
+                ) : undefined,
+              } }
+            </Card>
           ) }
         </MaybeTransition>
       )
     }
-  },
+  }
 })

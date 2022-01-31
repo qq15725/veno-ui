@@ -3,7 +3,7 @@
 # 所有可用的组件（插槽）
 
 ```html
-<ve-card>
+<ve-card border>
   <div class="px-5 pt-3">media 插槽</div>
   <ve-card-header>
     <ve-card-avatar>prepend 插槽</ve-card-avatar>

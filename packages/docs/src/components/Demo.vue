@@ -43,7 +43,7 @@ export default defineComponent({
 
     <slot name="prepend" />
 
-    <ve-card :theme="theme">
+    <ve-card border :theme="theme">
       <ve-button
           ref="btn"
           absolute
