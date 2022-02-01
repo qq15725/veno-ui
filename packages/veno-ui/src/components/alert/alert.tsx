@@ -26,8 +26,9 @@ export type AlertType = typeof alertTypes[number]
 export type Alert = InstanceType<typeof Alert>
 
 export type AlertSlots = MakeSlots<{
-  action: []
+  prepend: []
   default: []
+  append: []
 }>
 
 export const Alert = genericComponent<new () => {
@@ -67,7 +68,12 @@ export const Alert = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
-    const color = computed(() => props.color ?? props.type)
+    const computedProps = computed(() => {
+      return {
+        ...props,
+        textColor: props.textColor ?? props.type
+      }
+    })
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
       if (typeof props.icon === 'string') return props.icon
@@ -80,9 +86,9 @@ export const Alert = genericComponent<new () => {
     }
 
     return () => {
-      const [cardProps] = filterCardProps(props)
+      const [cardProps] = filterCardProps(computedProps.value)
       const hasPrepend = icon.value || slots.prepend
-      const hasAppend = props.closable || slots.append
+      const hasAppend = (props.closable && props.closeIcon) || slots.append
 
       return (
         <MaybeTransition transition={ props.transition }>
@@ -93,7 +99,6 @@ export const Alert = genericComponent<new () => {
               class={ [
                 've-alert'
               ] }
-              color={ color.value }
             >
               { {
                 prepend: hasPrepend ? () => (
@@ -115,7 +120,7 @@ export const Alert = genericComponent<new () => {
                   <>
                     { slots.append?.() }
 
-                    { props.closeIcon && (
+                    { props.closable && props.closeIcon && (
                       <Button
                         variant="text"
                         style={ {

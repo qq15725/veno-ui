@@ -54,9 +54,14 @@ export function useVariant (
 
   const colors = computed(() => {
     const { textColor, color, variant } = unref(props)
+    if (variant === 'contained') {
+      return {
+        text: textColor,
+        background: color,
+      }
+    }
     return {
-      text: textColor,
-      [variant === 'contained' ? 'background' : 'text']: color,
+      text: color ?? textColor,
     }
   })
 

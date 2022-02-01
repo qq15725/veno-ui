@@ -16,7 +16,7 @@ export interface MessageItemProp
 {
   id: string
   type: AlertType
-  text: string
+  title: string
   duration: number
   close: () => void
 }
@@ -28,12 +28,14 @@ export const Message = defineComponent({
     const items = ref<MessageItemProp[]>([])
 
     const open = (type: AlertType) => {
-      return (text: string, rest?: Record<string, any>) => {
+      return (title: string, rest?: Record<string, any>) => {
         const id = `ve-message-${ getUid() }`
         const item = {
           id,
           type,
-          text,
+          title,
+          variant: 'contained',
+          elevation: 8,
           duration: 1000,
           close: () => items.value.splice(items.value.findIndex(v => v.id === id), 1),
           ...rest,
@@ -62,8 +64,6 @@ export const Message = defineComponent({
                 { items.value.map(item => (
                   <li>
                     <Alert
-                      overlay-color="white"
-                      elevation={ 4 }
                       { ...item }
                     />
                   </li>

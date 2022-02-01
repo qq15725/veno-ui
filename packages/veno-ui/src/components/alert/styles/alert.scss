@@ -3,9 +3,7 @@
 @use '../../../styles/tools';
 
 .ve-alert {
-  &.ve-card--variant-contained-outlined {
-    .ve-card-header-text {
-      color: rgb(var(--ve-theme-on-background));
-    }
+  .ve-card-header-text {
+    color: rgb(var(--ve-theme-on-background));
   }
 }
