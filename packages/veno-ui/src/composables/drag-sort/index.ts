@@ -2,7 +2,6 @@
 import {
   ref,
   toRef,
-  provide,
   inject,
   watchEffect,
   getCurrentInstance,
@@ -18,7 +17,7 @@ import { propsFactory, getUid } from '../../utils'
 // Types
 import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 
-interface DragSortProvide
+interface DragSortProvider
 {
   register: (item: DragSortItem) => void
   unregister: (id: number) => void
@@ -65,12 +64,9 @@ export const makeDragSortProps = propsFactory({
   },
 }, 'drag-sort')
 
-export const DragSortProviderKey: InjectionKey<DragSortProvide> = Symbol.for('veno-ui:drag-sort-provide')
+export const DragSortKey: InjectionKey<DragSortProvider> = Symbol.for('veno-ui:drag-sort-provide')
 
-export function useDragSort (
-  props: DragSortProps,
-  injectKey = DragSortProviderKey
-) {
+export function useDragSort (props: DragSortProps) {
   const id = getUid()
   const selected = ref<number | null>(null)
   const put = toRef(props, 'put')
@@ -80,7 +76,7 @@ export function useDragSort (
 
   watchEffect(() => items.value = [...props.modelValue])
 
-  const provide = inject(injectKey, null)
+  const provide = inject(DragSortKey, null)
 
   if (provide) {
     provide.register({
@@ -203,7 +199,7 @@ export function useDragSort (
   }
 }
 
-export function createDragSortProvider (injectKey = DragSortProviderKey) {
+export function createDragSort () {
   const items = ref<DragSortItem[]>([])
   const selected = ref<number | null>(null)
 
@@ -265,7 +261,7 @@ export function createDragSortProvider (injectKey = DragSortProviderKey) {
     // TODO
   }
 
-  const state = {
+  return {
     register,
     unregister,
     items,
@@ -274,8 +270,4 @@ export function createDragSortProvider (injectKey = DragSortProviderKey) {
     dragenter,
     dragleave,
   }
-
-  provide(injectKey, state)
-
-  return state
 }

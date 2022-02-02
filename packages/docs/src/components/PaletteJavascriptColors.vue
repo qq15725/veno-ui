@@ -6,7 +6,7 @@ export default defineComponent({
 
   computed: {
     colors () {
-      return this.$venoUi.theme.themes[this.$venoUi.theme.current].colors
+      return this.$veno.theme.themes[this.$veno.theme.current].colors
     }
   }
 })

@@ -3,9 +3,9 @@
 # 自定义预设图标
 
 ```ts
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 
-const venoUi = createVenoUi({
+const veno = createVeno({
   // 自定义预设图标集合
   icons: {
     aliases: {
@@ -15,7 +15,7 @@ const venoUi = createVenoUi({
   // ...其他选项
 })
 
-export default venoUi
+export default veno
 ```
 
 使用 `@veno-ui/vite-plugin-svg` 。
@@ -37,11 +37,11 @@ export default defineConfig({
 导入 `svg` 成 `vue` 组件
 
 ```ts
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 import { SvgIcon, ComponentIcon } from 'veno-ui/components'
 import Sunny from '@/svgs/sunny.svg'
 
-const venoUi = createVenoUi({
+const veno = createVeno({
   // 自定义预设图标集合
   icons: {
     sets: {
@@ -55,7 +55,7 @@ const venoUi = createVenoUi({
   // ...其他选项
 })
 
-export default venoUi
+export default veno
 ```
 
 :::

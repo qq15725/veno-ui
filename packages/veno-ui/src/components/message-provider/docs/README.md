@@ -4,10 +4,10 @@ meta:
   wai-aria: https://www.w3.org/TR/wai-aria-1.1/#alert
 ---
 
-# 消息 Message
+# 全局提示 Message
 
 :::warning 使用前提
-你需要把调用其方法的组件放在 `ve-message-provider` 内部并且使用 `useMessage` 去获取 API。
+你需要把调用其方法的组件放在 `ve-message-provider` 内部，使用 `useMessage` 或者 `this.$veno.message` 去获取 API。
 :::
 
 
@@ -28,6 +28,7 @@ export default defineComponent({
     return {
       warning () {
         message.warning('...')
+        // 或者直接使用 this.$veno.message.warning('...')
       }
     }
   }

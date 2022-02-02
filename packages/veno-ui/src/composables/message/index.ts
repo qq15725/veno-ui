@@ -5,6 +5,8 @@ import { getUid } from '../../utils'
 // Types
 import type { InjectionKey, Ref } from 'vue'
 
+type closeMessage = () => void
+
 export interface MessageItem
 {
   id: string
@@ -12,20 +14,20 @@ export interface MessageItem
   type: string
   title: string
   duration: number
-  close: () => void
+  close: closeMessage
 }
 
-type MessageItemGenerator = (title: string, rest?: Record<string, any>) => MessageItem
+type OpenMessage = (title: string, rest?: Record<string, any>) => Promise<MessageItem> | closeMessage
 
 export interface MessageInstance
 {
   items: Ref<MessageItem[]>
-  open: (type: string) => MessageItemGenerator
+  open: (type: string) => OpenMessage
   close: (id: string) => void
-  info: MessageItemGenerator
-  success: MessageItemGenerator
-  warning: MessageItemGenerator
-  error: MessageItemGenerator
+  info: OpenMessage
+  success: OpenMessage
+  warning: OpenMessage
+  error: OpenMessage
 }
 
 export const MessageKey: InjectionKey<MessageInstance> = Symbol.for('veno-ui:message')
@@ -36,7 +38,7 @@ export function useMessage () {
   return provider
 }
 
-export function provideMessage () {
+export function createMessage () {
   const items = ref<MessageItem[]>([])
 
   function close (id: string) {
@@ -47,7 +49,7 @@ export function provideMessage () {
   }
 
   const open = (type: string) => {
-    return (title: string, rest?: Record<string, any>) => {
+    return function (title: string, rest?: Record<string, any>) {
       const id = `ve-message-${ getUid() }`
       const item = {
         id,
@@ -61,12 +63,19 @@ export function provideMessage () {
         ...rest,
       }
       items.value.push(item)
-      item.duration && setTimeout(item.close, item.duration)
-      return item
+      if (item.duration > 0) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            item.close()
+            resolve(item)
+          }, item.duration)
+        })
+      }
+      return item.close
     }
   }
 
-  const message = {
+  return {
     items,
     open,
     close,
@@ -75,8 +84,10 @@ export function provideMessage () {
     warning: open('warning'),
     error: open('error'),
   }
+}
 
+export function provideMessage () {
+  const message = createMessage()
   provide(MessageKey, message)
-
   return message
 }

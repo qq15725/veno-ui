@@ -8,6 +8,8 @@ import { createHighlighter, HighlighterKey } from './composables/highlighter'
 import { defaultSets, IconKey } from './composables/icon'
 import { createDisplay, DisplayKey } from './composables/display'
 import { createDefaults, DefaultsKey } from './composables/defaults'
+import { MessageKey } from './composables/message'
+import { createDragSort, DragSortKey } from './composables/drag-sort'
 
 // Iconsets
 import { mdi, aliases } from './iconsets/mdi'
@@ -22,7 +24,7 @@ import type { DefaultsOptions } from './composables/defaults'
 
 export * from './composables'
 
-export interface VenoUiOptions
+export interface VenoOptions
 {
   componentPrefix?: string,
   components?: Record<string, any>
@@ -36,7 +38,7 @@ export interface VenoUiOptions
 
 export const version = __VENO_UI_VERSION__
 
-export const createVenoUi = (options: VenoUiOptions = {}) => {
+export const createVeno = (options: VenoOptions = {}) => {
   const install = (app: App) => {
     const {
       componentPrefix = 'Ve',
@@ -53,9 +55,7 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       app.directive(key, directives[key])
     }
 
-    app.provide(DefaultsKey, createDefaults(options.defaults))
     app.provide(ThemeKey, createTheme(app, options.theme))
-    app.provide(DisplayKey, createDisplay(options.display))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconKey, mergeDeep({
       defaultSet: 'mdi',
@@ -65,6 +65,9 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
       },
       aliases
     }, icons))
+    app.provide(DisplayKey, createDisplay(options.display))
+    app.provide(DefaultsKey, createDefaults(options.defaults))
+    app.provide(DragSortKey, createDragSort())
 
     // Vue's inject() can only be used in setup
     function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
@@ -77,11 +80,12 @@ export const createVenoUi = (options: VenoUiOptions = {}) => {
 
     app.mixin({
       computed: {
-        $venoUi () {
+        $veno () {
           return reactive({
             theme: inject.call(this, ThemeKey),
             display: inject.call(this, DisplayKey),
             icons: inject.call(this, IconKey),
+            message: inject.call(this, MessageKey),
           })
         }
       }

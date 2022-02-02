@@ -7,7 +7,6 @@ import { defineComponent, useRender } from '../../utils'
 // Composables
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeLayoutProps, provideLayout } from '../../composables/layout'
-import { createDragSortProvider } from '../../composables/drag-sort'
 
 export const App = defineComponent({
   name: 'VeApp',
@@ -23,7 +22,6 @@ export const App = defineComponent({
   setup (props, { slots }) {
     const theme = provideTheme(props)
     const { getLayoutItem, items, layoutClasses } = provideLayout(props)
-    createDragSortProvider()
 
     useRender(() => (
       <div

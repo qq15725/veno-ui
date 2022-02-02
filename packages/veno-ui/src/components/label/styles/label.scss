@@ -1,27 +1,23 @@
-@forward './variables';
 @use '../../../styles/settings';
 @use '../../../styles/tools';
-@use './variables' as *;
 
 .ve-label {
   align-items: center;
-  color: $label-color;
+  color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
   cursor: pointer;
-  display: $label-display;
-  font-size: $label-font-size;
-  line-height: 1;
-  letter-spacing: $label-letter-spacing;
+  display: inline-flex;
+  letter-spacing: .009375em;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
   &--disabled {
-    color: $label-disabled-color;
+    color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));
   }
 
   &--error {
-    color: $label-error-color;
+    color: rgb(var(--ve-theme-error));
   }
 }
 

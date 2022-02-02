@@ -14,10 +14,10 @@ meta:
 下面的代码展示了如何设定 `prismjs` 作为代码高亮插件。
 
 ```typescript
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 import prismjs from 'prismjs'
 
-export default createVenoUi({
+export default createVeno({
   highlighter: {
     prismjs,
     prismjsLoadLanguage: async (language: string) => {

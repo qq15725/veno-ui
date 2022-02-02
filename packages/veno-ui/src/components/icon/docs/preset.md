@@ -7,7 +7,7 @@
 ```html
 <ve-spacer>
   <ve-card
-    v-for="v, k in $venoUi.icons.aliases"
+    v-for="v, k in $veno.icons.aliases"
     :key="k"
     size="100"
     class="d-flex align-center justify-center flex-column"

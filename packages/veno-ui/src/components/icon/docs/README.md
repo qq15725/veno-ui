@@ -17,10 +17,10 @@ $ npm i @mdi/font -D
 ```ts
 // src/plugins/veno-ui.ts
 import '@mdi/font/css/materialdesignicons.css'
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 import { aliases, mdi } from 'veno-ui/lib/iconsets/mdi'
 
-export default createVenoUi({
+export default createVeno({
   icons: {
     defaultSet: 'mdi',
     aliases,
@@ -85,7 +85,7 @@ export default Object.keys(modules).reduce((svgs, path) => ({
 // @/svgs 等于 src/svgs
 import svgs from '@/svgs'
 // ...
-createVenoUi({
+createVeno({
   icons: {
     aliases: svgs
   }

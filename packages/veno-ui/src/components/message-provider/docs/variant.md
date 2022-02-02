@@ -4,22 +4,9 @@
 
 ```html
 <ve-spacer>
-  <ve-button @click="message.info('Contained !', { variant: 'contained' })">Contained</ve-button>
-  <ve-button @click="message.info('ContainedText !', { variant: 'contained-text' })">ContainedText</ve-button>
+  <ve-button @click="$veno.message.info('Contained !', { variant: 'contained' })">Contained</ve-button>
+  <ve-button @click="$veno.message.info('ContainedText !', { variant: 'contained-text' })">ContainedText</ve-button>
 </ve-spacer>
-```
-
-```js
-import { defineComponent } from 'vue'
-import { useMessage } from 'veno-ui'
-
-export default defineComponent({
-  setup () {
-    return {
-      message: useMessage(),
-    }
-  }
-})
 ```
 
 :::

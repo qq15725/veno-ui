@@ -4,7 +4,7 @@ import 'veno-ui/styles'
 
 // Utils
 import prismjs from 'prismjs'
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 import * as components from 'veno-ui/components'
 import * as directives from 'veno-ui/directives'
 
@@ -12,7 +12,7 @@ import * as directives from 'veno-ui/directives'
 import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
-  const venoUi = createVenoUi({
+  const veno = createVeno({
     components,
     directives,
     // 高亮器
@@ -32,5 +32,5 @@ export const install: InstallPlugin = ({ app }) => {
     },
   })
 
-  app.use(venoUi)
+  app.use(veno)
 }

@@ -35,7 +35,7 @@ function toggle () {
     />
 
     <ve-header border>
-      <ve-header-nav-icon v-if="$venoUi.display.mobile" @click="active = !active" />
+      <ve-header-nav-icon v-if="$veno.display.mobile" @click="active = !active" />
       <ve-header-title v-else>Veno UI</ve-header-title>
       <ve-spacer />
       <ve-header-items>

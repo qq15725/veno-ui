@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 
 // Types
 import type { Component } from './types'
 
 const app = createApp({})
-app.use(createVenoUi())
+app.use(createVeno())
 
 const kebabCase = (str: string) => {
   let kebab = ''

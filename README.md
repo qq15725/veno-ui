@@ -52,14 +52,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import 'veno-ui/styles'
-import { createVenoUi } from 'veno-ui'
+import { createVeno } from 'veno-ui'
 import * as components from 'veno-ui/components'
-const venoUi = createVenoUi({
+const veno = createVeno({
   components
 })
 
 const app = createApp(App)
-app.use(venoUi)
+app.use(veno)
 app.mount('#app')
 ```
 

@@ -31,9 +31,7 @@ export const Label = defineComponent({
           },
         ] }
       >
-        { props.text }
-
-        { slots.default?.() }
+        { slots.default?.() ?? props.text }
       </label>
     )
   },
