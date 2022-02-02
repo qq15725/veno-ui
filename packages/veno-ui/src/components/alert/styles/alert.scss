@@ -3,7 +3,28 @@
 @use '../../../styles/tools';
 
 .ve-alert {
+  --ve-card-py: 8px;
+  transform-origin: top center;
+
+  .ve-card--variant-contained {
+    @include tools.elevation(1);
+  }
+
+  .ve-card--variant-text,
+  .ve-card--variant-outlined,
+  .ve-card--variant-outlined-text,
+  .ve-card--variant-outlined-outlined {
+    background: rgb(var(--ve-theme-surface));
+    color: rgb(var(--ve-theme-on-surface));
+  }
+
   .ve-card-header-text {
     color: rgb(var(--ve-theme-on-background));
+  }
+
+  &__close {
+    --ve-button-height: 1.5em;
+    padding: 0;
+    color: rgb(var(--ve-theme-on-background)) !important;
   }
 }

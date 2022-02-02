@@ -48,7 +48,7 @@ export type ThemeOptions = false | {
   themes?: Record<string, ThemeDefinition>
 }
 
-export interface Theme
+export interface ThemeInstance
 {
   isDisabled: boolean
   themes: Ref<Record<string, InternalThemeDefinition>>
@@ -58,7 +58,7 @@ export interface Theme
   getTheme: (key: string) => InternalThemeDefinition
 }
 
-export const ThemeKey: InjectionKey<Theme> = Symbol.for('veno-ui:theme')
+export const ThemeKey: InjectionKey<ThemeInstance> = Symbol.for('veno-ui:theme')
 
 export const makeThemeProps = propsFactory({
   theme: String,
@@ -80,7 +80,7 @@ function createCssClass (selector: string, content: string[]) {
   ]
 }
 
-export function createTheme (app: App, options?: ThemeOptions): Theme {
+export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
   const head = app._context.provides.usehead as HeadClient | undefined
   const parsedOptions = parseThemeOptions(options)
   const styleEl = ref<HTMLStyleElement>()
@@ -228,7 +228,7 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
   const themeClasses = computed(() => {
     return theme.isDisabled ? undefined : `ve-theme--${ current.value }`
   })
-  const newTheme: Theme = {
+  const newTheme: ThemeInstance = {
     ...theme,
     current,
     themeClasses,

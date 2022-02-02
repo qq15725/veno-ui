@@ -24,6 +24,8 @@ useHead({
 
 <template>
   <ve-theme-provider :theme="user.theme">
-    <router-view />
+    <ve-message-provider>
+      <router-view />
+    </ve-message-provider>
   </ve-theme-provider>
 </template>

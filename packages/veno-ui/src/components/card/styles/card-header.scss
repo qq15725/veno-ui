@@ -1,0 +1,9 @@
+.ve-card-header {
+  display: flex;
+  padding: calc(var(--ve-card-py, 16px) + var(--ve-card-density-offset, 0px)) var(--ve-card-px, 16px);
+
+  & + .ve-divider {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

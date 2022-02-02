@@ -1,0 +1,16 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-card-text {
+  padding: 16px;
+  font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing');
+  transition: inherit;
+  transition-property: color, opacity;
+
+  .ve-card-header + &,
+  .ve-card-title + & {
+    padding-top: 0;
+  }
+}

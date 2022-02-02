@@ -1,0 +1,16 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-card-avatar {
+  display: inline-flex;
+  margin: 0 8px;
+
+  // Header
+  .ve-card-header &:last-child {
+    margin-inline-end: 0;
+  }
+
+  .ve-card-header &:first-child {
+    margin-inline-start: 0;
+  }
+}

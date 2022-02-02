@@ -7,7 +7,7 @@
   $root: &;
   position: relative;
   display: block;
-  color: $card-color;
+  color: rgb(var(--ve-theme-on-surface));
   text-decoration: none;
   @include tools.use-paper($card-paper);
   @include tools.overlay(#{&}__overlay);
@@ -57,97 +57,7 @@
 
   &--disabled {
     cursor: not-allowed;
-    background-color: $card-disabled-background;
-    color: $card-disabled-color;
-  }
-
-  &-image {
-    border-radius: inherit;
-    display: flex;
-    overflow: hidden;
-    @include tools.absolute();
-  }
-
-  &-header {
-    display: flex;
-    padding: $card-header-padding;
-
-    &-text {
-      flex: 1 1 auto;
-    }
-  }
-
-  &-title {
-    display: flex;
-    align-items: center;
-    padding: $card-title-padding;
-    font-size: $card-title-font-size;
-    font-weight: $card-title-font-weight;
-    letter-spacing: $card-title-letter-spacing;
-    line-height: $card-title-line-height;
-    hyphens: auto;
-    overflow-wrap: normal;
-    text-transform: none;
-    word-break: normal;
-    word-wrap: break-word;
-  }
-
-  &-subtitle {
-    display: flex;
-    align-items: center;
-    padding: $card-subtitle-padding;
-    font-size: $card-subtitle-font-size;
-    font-weight: $card-subtitle-font-weight;
-    letter-spacing: $card-subtitle-letter-spacing;
-    line-height: $card-subtitle-line-height;
-    opacity: $card-subtitle-opacity;
-  }
-
-  &-title + &-subtitle {
-    margin-top: 4px;
-  }
-
-  &-header &-title,
-  &-header &-subtitle {
-    padding: 0;
-  }
-
-  &-header + .ve-divider {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  &-avatar {
-    display: inline-flex;
-    margin: 0 8px;
-  }
-
-  &-header &-avatar:last-child {
-    margin-inline-end: 0;
-  }
-
-  &-header &-avatar:first-child {
-    margin-inline-start: 0;
-  }
-
-  &-text {
-    padding: $card-text-padding;
-    font-size: $card-text-font-size;
-    font-weight: $card-text-font-weight;
-    letter-spacing: $card-text-letter-spacing;
-    transition: inherit;
-    transition-property: color, opacity;
-  }
-
-  &-header + &-text,
-  &-title + &-text {
-    padding-top: 0;
-  }
-
-  &-actions {
-    display: flex;
-    align-items: center;
-    flex: 1 1 0;
-    padding: $card-actions-padding;
+    background-color: settings.$disabled-background;
+    color: settings.$disabled-color;
   }
 }

@@ -137,7 +137,8 @@ export default defineComponent({
           v-if="isActive"
           :value="code"
           language="vue"
-          :show-language="false"
+          hide-language
+          hide-line-numbers
           class="mt-3"
       />
     </ve-expand-transition>

@@ -5,7 +5,7 @@
 显示关闭按钮，点击可关闭警告提示。
 
 ```html
-<ve-alert title="Error Title" subtitle="Error Text Error Text Error Text Error Text Error Text Error Text" type="error" closable />
+<ve-alert closable type="error" title="Error Title" subtitle="Error Text Error Text Error Text Error Text Error Text Error Text" />
 ```
 
 :::

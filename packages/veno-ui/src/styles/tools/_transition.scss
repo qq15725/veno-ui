@@ -1,12 +1,14 @@
 @use '../settings/transition' as *;
 
-@mixin use-transition() {
+@mixin use-transition($overflow: inherit) {
   &-enter-active {
-    transition: .2s $standard-easing;
+    overflow: #{$overflow};
+    transition: .3s $standard-easing;
   }
 
   &-leave-active {
-    transition: .2s $standard-easing;
+    overflow: #{$overflow};
+    transition: .3s $standard-easing;
   }
 
   &-move {

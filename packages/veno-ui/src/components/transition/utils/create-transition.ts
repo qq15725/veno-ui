@@ -38,7 +38,7 @@ export function createCssTransition (
           mode: props.mode,
           onBeforeEnter (el: HTMLElement) {
             el.style.transformOrigin = props.origin
-            props.onBeforeEnter && props.onBeforeEnter()
+            props.onBeforeEnter?.(el)
           },
           onLeave (el: HTMLElement) {
             if (props.leaveAbsolute) {
@@ -62,7 +62,7 @@ export function createCssTransition (
               el.style.display = 'none'
             }
 
-            props.onLeave && props.onLeave()
+            props.onLeave?.(el)
           },
           onAfterLeave (el: HTMLElement) {
             if (props.leaveAbsolute && el?._transitionInitialStyles) {
@@ -79,7 +79,7 @@ export function createCssTransition (
               el.style.display = (el as any)._initialDisplay || ''
             }
 
-            props.onAfterLeave && props.onAfterLeave()
+            props.onAfterLeave?.(el)
           },
           ...attrs,
         }, slots.default)
@@ -97,18 +97,35 @@ export function createJavascriptTransition (
     name,
 
     props: {
+      group: Boolean,
       mode: {
         type: String,
         default: mode,
       } as Prop<'in-out' | 'out-in' | 'default'>,
+      onBeforeEnter: Function,
+      onLeave: Function,
+      onAfterLeave: Function,
     },
 
     setup (props, { slots }) {
       return () => {
-        return h(Transition, {
+        const tag = props.group ? TransitionGroup : Transition
+        return h(tag as FunctionalComponent, {
           name,
           // mode: props.mode, // TODO: vuejs/vue-next#3104
           ...functions,
+          onBeforeEnter (el: HTMLElement) {
+            functions.onBeforeEnter?.(el)
+            props.onBeforeEnter?.(el)
+          },
+          onLeave (el: HTMLElement) {
+            functions.onLeave?.(el)
+            props.onLeave?.(el)
+          },
+          onAfterLeave (el: HTMLElement) {
+            functions.onAfterLeave?.(el)
+            props.onAfterLeave?.(el)
+          }
         }, slots.default)
       }
     },

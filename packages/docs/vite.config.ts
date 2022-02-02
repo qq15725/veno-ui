@@ -139,7 +139,7 @@ export default defineConfig(({ mode }) => {
             ...Object(meta)
           }
           if (routePath.startsWith('/api')) {
-            const matched = routePath.match(/\/(\w+)\/(\w+)\/docs\/(\w+)/)
+            const matched = routePath.match(/\/([\w-]+)\/([\w-]+)\/docs\/([\w-]+)/)
             routePath = ['', matched[1], matched[2]].join('/')
             routeMeta.isNav = true
           } else {

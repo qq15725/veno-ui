@@ -1,0 +1,9 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-card-imagae {
+  border-radius: inherit;
+  display: flex;
+  overflow: hidden;
+  @include tools.absolute();
+}

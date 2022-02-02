@@ -12,7 +12,7 @@ interface HTMLExpandElement extends HTMLElement
   }
 }
 
-export default function (expandedParentClass = '', x = false) {
+export function expandTransitionGenerator (expandedParentClass = '', x = false) {
   const sizeProperty = x ? 'width' : 'height' as 'width' | 'height'
   const offsetProperty = camelize(`offset-${ sizeProperty }`) as 'offsetHeight' | 'offsetWidth'
 
@@ -82,5 +82,66 @@ export default function (expandedParentClass = '', x = false) {
     el.style.overflow = el._initialStyle!.overflow
     if (size != null) el.style[sizeProperty] = size
     delete el._initialStyle
+  }
+}
+
+export function fadeInExpandTransitionGenerator (x = false, reverse = false) {
+  return {
+    onBeforeLeave: (el: HTMLElement) => {
+      if (x) {
+        el.style.maxWidth = `${ el.offsetWidth }px`
+      } else {
+        el.style.maxHeight = `${ el.offsetHeight }px`
+      }
+      void el.offsetWidth
+    },
+    onLeave: (el: HTMLElement) => {
+      if (x) {
+        el.style.maxWidth = '0'
+      } else {
+        el.style.maxHeight = '0'
+      }
+      void el.offsetWidth
+    },
+    onAfterLeave: (el: HTMLElement) => {
+      if (x) {
+        el.style.maxWidth = ''
+      } else {
+        el.style.maxHeight = ''
+      }
+    },
+    onEnter: (el: HTMLElement) => {
+      el.style.transition = 'none'
+      if (x) {
+        const memorizedWidth = el.offsetWidth
+        el.style.maxWidth = '0'
+        void el.offsetWidth
+        el.style.transition = ''
+        el.style.maxWidth = `${ memorizedWidth }px`
+      } else {
+        if (reverse) {
+          el.style.maxHeight = `${ el.offsetHeight }px`
+          void el.offsetHeight
+          el.style.transition = ''
+          el.style.maxHeight = '0'
+        } else {
+          const memorizedHeight = el.offsetHeight
+          el.style.maxHeight = '0'
+          void el.offsetWidth
+          el.style.transition = ''
+          el.style.maxHeight = `${ memorizedHeight }px`
+        }
+      }
+      void el.offsetWidth
+    },
+    onAfterEnter: (el: HTMLElement) => {
+      if (x) {
+        el.style.maxWidth = ''
+      } else {
+        if (!reverse) {
+          el.style.maxHeight = ''
+        }
+      }
+    }
   }
 }

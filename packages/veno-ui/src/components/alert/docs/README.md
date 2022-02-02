@@ -12,7 +12,11 @@ meta:
 
 basic.md type.md
 
-closable.md icon.md
+icon.md variant.md
+
+closable.md close-text.md
+
+append.md
 
 :::
 

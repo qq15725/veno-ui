@@ -2,70 +2,25 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-// position
-$card-positions: absolute fixed !default;
-
-// color
-$card-background: rgb(var(--ve-theme-surface)) !default;
-$card-color: rgb(var(--ve-theme-on-surface)) !default;
-
-// disabled
-$card-disabled-background: settings.$disabled-background !default;
-$card-disabled-color: settings.$disabled-color !default;
-
-// header
-$card-header-padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px !default;
-
-// title
-$card-title-padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px !default;
-$card-title-font-size: tools.map-deep-get(settings.$typography, 'h5', 'size') !default;
-$card-title-font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight') !default;
-$card-title-letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing') !default;
-$card-title-line-height: tools.map-deep-get(settings.$typography, 'h5', 'line-height') !default;
-
-// subtitle
-$card-subtitle-padding: 0 16px !default;
-$card-subtitle-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;
-$card-subtitle-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
-$card-subtitle-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;
-$card-subtitle-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
-$card-subtitle-opacity: var(--ve-medium-emphasis-opacity) !default;
-
-// text
-$card-text-padding: 16px !default;
-$card-text-font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size') !default;
-$card-text-font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight') !default;
-$card-text-letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing') !default;
-$card-text-line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height') !default;
-
-// actions
-$card-actions-padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px !default;
-
-// border
-$card-border-color: settings.$border-color !default;
-$card-border-style: settings.$border-style !default;
-$card-border-width: 0 !default;
-$card-border-thin-width: thin !default;
-
 $card-paper: () !default;
 $card-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
-          'background': $card-background,
-          'color': $card-color,
+          'background': rgb(var(--ve-theme-surface)),
+          'color': rgb(var(--ve-theme-on-surface)),
         ),
       ),
-      'positions': $card-positions,
+      'positions': absolute fixed,
       'use-size': false,
       'borders': (
         'default': (
-          'color': $card-border-color,
-          'style': $card-border-style,
-          'width': $card-border-width,
+          'color': settings.$border-color,
+          'style': settings.$border-style,
+          'width': 0,
         ),
         'existence': (
-          'width': $card-border-thin-width,
+          'width': thin,
         ),
       ),
     ),

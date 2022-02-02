@@ -147,7 +147,7 @@ export const Code = defineComponent({
                       highlightedLineBackgroundColorClasses.value,
                     ] }
                     style={ highlightedLineBackgroundColorStyles.value }
-                    v-html="&nbsp;"
+                    v-html="'&nbsp;'"
                   />
 
                   <span class="ve-code__line-number">{ number }</span>

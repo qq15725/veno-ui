@@ -3,7 +3,7 @@ import './styles/alert.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, MakeSlots } from '../../utils'
+import { genericComponent, propsFactory, pick } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -14,13 +14,14 @@ import { makeCardProps, filterCardProps } from '../card/card'
 import { Button } from '../button'
 import { Card } from '../card'
 import { Icon } from '../icon'
-import { FadeTransition } from '../transition'
+import { FadeExpandTransition } from '../transition'
 
 // Constants
 export const alertTypes = ['success', 'info', 'warning', 'error'] as const
 
 // Types
 import type { PropType } from 'vue'
+import { MakeSlots } from '../../utils'
 
 export type AlertType = typeof alertTypes[number]
 export type Alert = InstanceType<typeof Alert>
@@ -31,37 +32,44 @@ export type AlertSlots = MakeSlots<{
   append: []
 }>
 
+export function filterAlertProps (props: Record<string, unknown>) {
+  return pick(props, Object.keys(Alert.props))
+}
+
+export const makeAlertProps = propsFactory({
+  modelValue: {
+    type: Boolean,
+    default: true,
+  },
+  type: {
+    type: String as PropType<AlertType>,
+    validator: (val: AlertType) => alertTypes.includes(val),
+  },
+  icon: {
+    type: [String, Boolean] as PropType<string | false>,
+    default: true,
+  },
+  closable: Boolean,
+  closeIcon: {
+    type: String,
+    default: '$close',
+  },
+  closeText: String,
+  ...makeTransitionProps({
+    transition: { component: FadeExpandTransition },
+  } as const),
+  ...makeCardProps({
+    shape: 'rounded',
+    variant: 'contained-outlined',
+  } as const),
+}, 'alert')
+
 export const Alert = genericComponent<new () => {
   $slots: AlertSlots
 }>()({
   name: 'VeAlert',
 
-  props: {
-    modelValue: {
-      type: Boolean,
-      default: true,
-    },
-    type: {
-      type: String as PropType<AlertType>,
-      validator: (val: AlertType) => alertTypes.includes(val),
-    },
-    icon: {
-      type: [String, Boolean] as PropType<string | false>,
-      default: true,
-    },
-    closable: Boolean,
-    closeIcon: {
-      type: String,
-      default: '$close',
-    },
-    ...makeTransitionProps({
-      transition: { component: FadeTransition },
-    } as const),
-    ...makeCardProps({
-      shape: 'rounded',
-      variant: 'contained-outlined',
-    } as const),
-  },
+  props: makeAlertProps(),
 
   emits: {
     'update:modelValue': (value: boolean) => true,
@@ -71,11 +79,12 @@ export const Alert = genericComponent<new () => {
     const computedProps = computed(() => {
       return {
         ...props,
-        textColor: props.textColor ?? props.type
+        textColor: props.textColor ?? props.type,
       }
     })
     const isActive = useProxiedModel(props, 'modelValue')
     const icon = computed(() => {
+      if (props.icon === false) return
       if (typeof props.icon === 'string') return props.icon
       if (props.type) return `$${ props.type }`
       return
@@ -88,52 +97,57 @@ export const Alert = genericComponent<new () => {
     return () => {
       const [cardProps] = filterCardProps(computedProps.value)
       const hasPrepend = icon.value || slots.prepend
-      const hasAppend = (props.closable && props.closeIcon) || slots.append
+      const hasClosable = props.closable && (props.closeText || props.closeIcon)
+      const hasAppend = hasClosable || slots.append
 
       return (
         <MaybeTransition transition={ props.transition }>
           { isActive.value && (
-            <Card
-              { ...cardProps }
+            <props.tag
               role="alert"
               class={ [
                 've-alert'
               ] }
             >
-              { {
-                prepend: hasPrepend ? () => (
-                  <>
-                    { icon.value && (
-                      <Icon icon={ icon.value } />
-                    ) }
+              <Card
+                { ...cardProps }
+                tag="div"
+              >
+                { {
+                  prepend: hasPrepend ? () => (
+                    <>
+                      { icon.value && (
+                        <Icon icon={ icon.value } />
+                      ) }
 
-                    { slots.prepend?.() }
-                  </>
-                ) : undefined,
-                headerText: () => (
-                  <>
-                    <div>{ props.title }</div>
-                    <div>{ slots.default?.() ?? props.subtitle }</div>
-                  </>
-                ),
-                append: hasAppend ? () => (
-                  <>
-                    { slots.append?.() }
+                      { slots.prepend?.() }
+                    </>
+                  ) : undefined,
+                  headerText: () => (
+                    <>
+                      <div>{ props.title }</div>
+                      <div>{ slots.default?.() ?? props.subtitle }</div>
+                    </>
+                  ),
+                  append: hasAppend ? () => (
+                    <>
+                      { slots.append?.() }
 
-                    { props.closable && props.closeIcon && (
-                      <Button
-                        variant="text"
-                        style={ {
-                          '--ve-button-height': '1.5em'
-                        } }
-                        icon={ props.closeIcon }
-                        onClick={ onCloseClick }
-                      />
-                    ) }
-                  </>
-                ) : undefined,
-              } }
-            </Card>
+                      { hasClosable && (
+                        <Button
+                          variant="plain"
+                          ripple={ false }
+                          class="ve-alert__close"
+                          icon={ props.closeText ? false : props.closeIcon }
+                          text={ props.closeText }
+                          onClick={ onCloseClick }
+                        />
+                      ) }
+                    </>
+                  ) : undefined,
+                } }
+              </Card>
+            </props.tag>
           ) }
         </MaybeTransition>
       )

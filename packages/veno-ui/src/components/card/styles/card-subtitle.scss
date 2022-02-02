@@ -1,0 +1,23 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-card-subtitle {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing');
+  line-height: tools.map-deep-get(settings.$typography, 'body-2', 'line-height');
+  opacity: var(--ve-medium-emphasis-opacity);
+
+  // Header
+  .ve-card-header & {
+    padding: 0;
+  }
+
+  // Title
+  .ve-card-title + & {
+    margin-top: 4px;
+  }
+}

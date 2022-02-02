@@ -1,0 +1,22 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-card-title {
+  display: flex;
+  align-items: center;
+  padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px;
+  font-size: tools.map-deep-get(settings.$typography, 'h5', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing');
+  line-height: tools.map-deep-get(settings.$typography, 'h5', 'line-height');
+  hyphens: auto;
+  overflow-wrap: normal;
+  text-transform: none;
+  word-break: normal;
+  word-wrap: break-word;
+
+  // Header
+  .ve-card-header & {
+    padding: 0;
+  }
+}
