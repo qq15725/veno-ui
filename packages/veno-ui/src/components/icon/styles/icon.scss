@@ -1,20 +1,22 @@
 @forward 'variables';
 @use 'variables' as *;
 @use 'sass:map';
+@use '../../../styles/settings';
+@use '../../../styles/tools';
 
 .ve-icon {
-  position: relative;
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  display: inline-flex;
   font-feature-settings: 'liga';
-  letter-spacing: $icon-letter-spacing;
-  line-height: $icon-line-height;
-  text-indent: $icon-text-indent;
+  height: 1em;
+  justify-content: center;
+  letter-spacing: normal;
+  line-height: 1;
+  position: relative;
+  text-indent: 0;
   user-select: none;
-  vertical-align: $icon-vertical-align;
-  height: $icon-size;
-  width: $icon-size;
+  vertical-align: middle;
+  width: 1em;
 
   @each $name, $multiplier in $icon-sizes {
     &--size-#{$name} {
@@ -23,11 +25,11 @@
   }
 
   &--left {
-    margin-inline-end: $icon-margin-start;
+    margin-inline-end: map.get(settings.$grid-gutters, 'md');
   }
 
   &--right {
-    margin-inline-start: $icon-margin-end;
+    margin-inline-start: map.get(settings.$grid-gutters, 'md');
   }
 
   &__svg {

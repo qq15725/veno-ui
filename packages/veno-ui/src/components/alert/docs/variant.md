@@ -3,7 +3,7 @@
 # 多种变体
 
 ```html
-<ve-radio-group label="variant" v-model="variant">
+<ve-radio-group v-model="variant">
   <ve-radio label="contained" />
   <ve-radio label="outlined" />
   <ve-radio label="contained-text" />
@@ -11,10 +11,10 @@
 </ve-radio-group>
 
 <ve-spacer cols="12">
-  <ve-alert :variant="variant" title="Success Text" type="success" />
-  <ve-alert :variant="variant" title="Info Text" type="info" />
-  <ve-alert :variant="variant" title="Warning Text" type="warning" />
-  <ve-alert :variant="variant" title="Error Text" type="error" />
+  <ve-alert :variant="variant" type="success">This is an success alert.</ve-alert>
+  <ve-alert :variant="variant" type="info">This is an info alert.</ve-alert>
+  <ve-alert :variant="variant" type="warning">This is an warning alert.</ve-alert>
+  <ve-alert :variant="variant" type="error">This is an error alert.</ve-alert>
 </ve-spacer>
 ```
 

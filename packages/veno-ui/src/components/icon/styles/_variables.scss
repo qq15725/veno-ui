@@ -2,23 +2,14 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-// Defaults
-$icon-letter-spacing: normal !default;
-$icon-line-height: 1 !default;
-$icon-size: 1em !default;
-$icon-text-indent: 0 !default;
-$icon-vertical-align: middle !default;
-$icon-margin-end: map.get(settings.$grid-gutters, 'md') !default;
-$icon-margin-start: map.get(settings.$grid-gutters, 'md') !default;
-
 $icon-sizes: () !default;
 $icon-sizes: tools.map-deep-merge(
-  (
-    'x-small': 1em,
-    'small': 1.25em,
-    'medium': 1.5em,
-    'lerge': 1.75em,
-    'x-lerge': 2em,
-  ),
-  $icon-sizes
+    (
+      'x-small': 1em,
+      'small': 1.25em,
+      'medium': 1.5em,
+      'lerge': 1.75em,
+      'x-lerge': 2em,
+    ),
+    $icon-sizes
 );

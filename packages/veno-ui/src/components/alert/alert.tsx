@@ -43,6 +43,7 @@ export const makeAlertProps = propsFactory({
   },
   type: {
     type: String as PropType<AlertType>,
+    default: 'info',
     validator: (val: AlertType) => alertTypes.includes(val),
   },
   icon: {
@@ -79,6 +80,7 @@ export const Alert = genericComponent<new () => {
     const computedProps = computed(() => {
       return {
         ...props,
+        text: undefined,
         textColor: props.textColor ?? props.type,
       }
     })
@@ -97,6 +99,7 @@ export const Alert = genericComponent<new () => {
     return () => {
       const [cardProps] = filterCardProps(computedProps.value)
       const hasPrepend = icon.value || slots.prepend
+      const hasTitle = !!props.title
       const hasClosable = props.closable && (props.closeText || props.closeIcon)
       const hasAppend = hasClosable || slots.append
 
@@ -106,7 +109,10 @@ export const Alert = genericComponent<new () => {
             <props.tag
               role="alert"
               class={ [
-                've-alert'
+                've-alert',
+                {
+                  've-alert--with-title': hasTitle,
+                }
               ] }
             >
               <Card
@@ -117,7 +123,7 @@ export const Alert = genericComponent<new () => {
                   prepend: hasPrepend ? () => (
                     <>
                       { icon.value && (
-                        <Icon icon={ icon.value } />
+                        <Icon class="ve-alert__icon" icon={ icon.value } />
                       ) }
 
                       { slots.prepend?.() }
@@ -125,8 +131,11 @@ export const Alert = genericComponent<new () => {
                   ) : undefined,
                   headerText: () => (
                     <>
-                      <div>{ props.title }</div>
-                      <div>{ slots.default?.() ?? props.subtitle }</div>
+                      { hasTitle && (
+                        <div class="ve-alert__title">{ props.title }</div>
+                      ) }
+
+                      { slots.default?.() ?? props.text }
                     </>
                   ),
                   append: hasAppend ? () => (

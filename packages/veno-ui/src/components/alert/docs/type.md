@@ -1,15 +1,15 @@
 :::demo
 
-# 四种类型
+# 提示类型
 
-共有四种类型 `success`、`info`、`warning`、`error`。
+警告提示有 `success`、`info`、`warning`、`error` 四种类型。
 
 ```html
 <ve-spacer cols="12">
-  <ve-alert title="Success Text" :icon="false" type="success" />
-  <ve-alert title="Info Text" :icon="false" type="info" />
-  <ve-alert title="Warning Text" :icon="false" type="warning" />
-  <ve-alert title="Error Text" :icon="false" type="error" />
+  <ve-alert type="info">This is an info alert.</ve-alert>
+  <ve-alert type="success">This is an success alert.</ve-alert>
+  <ve-alert type="warning">This is an warning alert.</ve-alert>
+  <ve-alert type="error">This is an error alert.</ve-alert>
 </ve-spacer>
 ```
 

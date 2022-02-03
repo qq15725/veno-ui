@@ -12,12 +12,12 @@ export interface MessageItem
   id: string
   modelValue: boolean
   type: string
-  title: string
+  text: string
   duration: number
   close: closeMessage
 }
 
-type OpenMessage = (title: string, rest?: Record<string, any>) => Promise<MessageItem> | closeMessage
+type OpenMessage = (text: string, rest?: Record<string, any>) => Promise<MessageItem> | closeMessage
 
 export interface MessageInstance
 {
@@ -49,12 +49,12 @@ export function createMessage () {
   }
 
   const open = (type: string) => {
-    return function (title: string, rest?: Record<string, any>) {
+    return function (text: string, rest?: Record<string, any>) {
       const id = `ve-message-${ getUid() }`
       const item = {
         id,
         type,
-        title,
+        text,
         modelValue: true,
         variant: 'contained',
         elevation: 15,

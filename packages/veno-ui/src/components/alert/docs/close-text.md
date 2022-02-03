@@ -3,7 +3,7 @@
 # 自定义关闭
 
 ```html
-<ve-alert closable close-text="Close Now" type="info" title="Info Title" />
+<ve-alert closable close-text="Close Now">This is an info alert.</ve-alert>
 ```
 
 :::
