@@ -1,7 +1,7 @@
 @use '../../../styles/tools';
 
 .ve-fade-expand-transition {
-  @include tools.use-transition(visible);
+  @include tools.use-transition(.3s, visible);
 
   &-leave-from,
   &-enter-to {

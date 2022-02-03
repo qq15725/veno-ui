@@ -8,7 +8,7 @@ import { defineComponent } from '../../utils'
 import { provideList } from './composables/list'
 
 // Components
-import { FadeExpandTransition } from '../transition'
+import { ExpandTransition } from '../transition'
 import { ListChildren } from './list-children'
 
 // Types
@@ -28,7 +28,7 @@ export const ListGroupItems = defineComponent({
 
     return () => {
       return (
-        <FadeExpandTransition>
+        <ExpandTransition>
           <div
             class="ve-list-group-items"
             v-show={ props.open }
@@ -38,7 +38,7 @@ export const ListGroupItems = defineComponent({
               v-slots={ slots }
             />
           </div>
-        </FadeExpandTransition>
+        </ExpandTransition>
       )
     }
   }

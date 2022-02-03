@@ -107,9 +107,7 @@ function toggle () {
           target="_blank"
           :href="url"
           append-icon="mdi-pencil"
-      >
-        编辑此页面
-      </ve-link>
+      >编辑此页面</ve-link>
     </ve-layout-item>
 
     <ve-main>

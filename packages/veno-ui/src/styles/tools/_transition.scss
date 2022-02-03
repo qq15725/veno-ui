@@ -1,17 +1,17 @@
-@use '../settings/transition' as *;
+@use '../settings/transition' as settings;
 
-@mixin use-transition($overflow: inherit) {
+@mixin use-transition($duration: .3s, $overflow: inherit) {
   &-enter-active {
-    overflow: #{$overflow};
-    transition: .3s $standard-easing;
+    overflow: $overflow;
+    transition: $duration settings.$standard-easing;
   }
 
   &-leave-active {
-    overflow: #{$overflow};
-    transition: .3s $standard-easing;
+    overflow: $overflow;
+    transition: $duration settings.$standard-easing;
   }
 
   &-move {
-    transition: transform .5s $standard-easing;
+    transition: transform .5s settings.$standard-easing;
   }
 }

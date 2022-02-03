@@ -84,6 +84,7 @@ export const Pagination = defineComponent({
     ...makePaperProps({
       tag: 'nav',
       variant: 'text',
+      shape: 'rounded',
     } as const),
   },
 

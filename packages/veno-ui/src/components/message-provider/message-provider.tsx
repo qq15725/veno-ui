@@ -54,7 +54,7 @@ export const MessageProvider = defineComponent({
                       tag="li"
                       appear
                       v-model={ item.modelValue }
-                      onAfterLeave={ () => remove(item.id) }
+                      on-after-leave={ () => remove(item.id) }
                       { ...filterAlertProps(item)[0] }
                     />
                   )) }
