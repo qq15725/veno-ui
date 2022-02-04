@@ -14,7 +14,7 @@ meta:
 ```ts
 import { createVeno } from 'veno-ui'
 import { MessageProvider } from 'veno-ui/providers'
-const veno = createVeno({
+export default createVeno({
   providers: { MessageProvider }
 })
 // ...
