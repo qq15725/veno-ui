@@ -1,5 +1,5 @@
 // Styles
-import './styles/message-provider.scss'
+import './styles/notification-provider.scss'
 
 // Utils
 import { defineComponent, useRender } from '../../utils'
@@ -12,13 +12,14 @@ import { Alert } from '../alert'
 import { filterAlertProps } from '../alert/alert'
 
 // Composables
-import { provideMessage } from '../../composables/message'
+import { provideNotification } from '../../composables/message'
+import { SlideRightFadeInExpandTransition } from '../transition'
 
-export const MessageProvider = defineComponent({
-  name: 'VeMessageProvider',
+export const NotificationProvider = defineComponent({
+  name: 'VeNotificationProvider',
 
   setup (props, { slots }) {
-    const provider = provideMessage()
+    const provider = provideNotification()
 
     const { items, remove } = provider
 
@@ -33,7 +34,7 @@ export const MessageProvider = defineComponent({
             scroll-strategy={ () => {
             } }
             class={ [
-              've-message-provider',
+              've-notification-provider',
             ] }
           >
             { {
@@ -49,6 +50,8 @@ export const MessageProvider = defineComponent({
                         appear
                         v-model={ item.modelValue }
                         on-after-leave={ () => remove(item.id) }
+                        min-width="300"
+                        transition={ { component: SlideRightFadeInExpandTransition } }
                         { ...alertProps }
                       />
                     )

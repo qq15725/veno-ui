@@ -23,9 +23,7 @@ useHead({
 </script>
 
 <template>
-  <ve-theme-provider :theme="user.theme">
-    <ve-message-provider>
-      <router-view />
-    </ve-message-provider>
-  </ve-theme-provider>
+  <ve-app :theme="user.theme">
+    <router-view />
+  </ve-app>
 </template>

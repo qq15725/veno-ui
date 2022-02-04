@@ -3,7 +3,7 @@
 @use '../../../styles/tools';
 
 .ve-alert {
-  --ve-card-py: 8px;
+  --ve-card-py: 12px;
   transform-origin: top center;
 
   &__title {
@@ -37,7 +37,7 @@
     margin-top: 2px;
   }
 
-  &__close {
+  &__close.ve-button {
     --ve-button-height: 1.5em;
     padding: 0;
     color: rgb(var(--ve-theme-on-background)) !important;

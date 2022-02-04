@@ -9,15 +9,15 @@
   @include tools.use-size(('sizes': $progress-sizes));
 
   &--left {
-    margin-inline-end: $progress-margin-start;
+    margin-inline-end: map.get(settings.$grid-gutters, 'md');
   }
 
   &--right {
-    margin-inline-start: $progress-margin-end;
+    margin-inline-start: map.get(settings.$grid-gutters, 'md');
   }
 
   &--variant-circular {
-    --ve-progress-circular-size: calc(#{$progress-circular-size} + var(--ve-progress-size-offset, 0px));
+    --ve-progress-circular-size: calc(40px + var(--ve-progress-size-offset, 0px));
     display: inline-flex;
     align-items: center;
     justify-content: center;

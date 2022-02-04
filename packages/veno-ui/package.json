@@ -32,6 +32,7 @@
     "./components/*": "./lib/components/*/*.js",
     "./directives": "./lib/directives/index.js",
     "./directives/*": "./lib/directives/*/*.js",
+    "./providers": "./lib/providers/index.js",
     "./iconsets/*": "./lib/iconsets/*.js",
     "./*": "./*"
   },

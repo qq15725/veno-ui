@@ -1,0 +1,19 @@
+@use '../../../styles/tools';
+
+.ve-slide-right-fade-in-expand-transition {
+  @include tools.use-transition(.3s, visible);
+
+  &-leave-from,
+  &-enter-to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &-leave-to,
+  &-enter-from {
+    transform: translateX(100%);
+    opacity: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}

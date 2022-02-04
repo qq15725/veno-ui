@@ -8,13 +8,15 @@ import { genericComponent, propsFactory, pick } from '../../utils'
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeCardProps, filterCardProps } from '../card/card'
 
 // Components
 import { Button } from '../button'
 import { Card } from '../card'
 import { Icon } from '../icon'
-import { FadeExpandTransition } from '../transition'
+import { Progress } from '../progress'
+import { FadeInExpandTransition } from '../transition'
 
 // Constants
 export const alertTypes = ['success', 'info', 'warning', 'error'] as const
@@ -57,8 +59,9 @@ export const makeAlertProps = propsFactory({
   },
   closeText: String,
   ...makeTransitionProps({
-    transition: { component: FadeExpandTransition },
+    transition: { component: FadeInExpandTransition },
   } as const),
+  ...makeLoadingProps(),
   ...makeCardProps({
     shape: 'rounded',
     variant: 'contained-outlined',
@@ -77,6 +80,7 @@ export const Alert = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
+    const { loadingClasses } = useLoading(props)
     const computedProps = computed(() => {
       return {
         ...props,
@@ -98,7 +102,9 @@ export const Alert = genericComponent<new () => {
 
     return () => {
       const [cardProps] = filterCardProps(computedProps.value)
-      const hasPrepend = icon.value || slots.prepend
+      const hasLoading = props.loading
+      const hasIcon = !hasLoading && icon.value
+      const hasPrepend = hasIcon || hasLoading || slots.prepend
       const hasTitle = !!props.title
       const hasClosable = props.closable && (props.closeText || props.closeIcon)
       const hasAppend = hasClosable || slots.append
@@ -112,7 +118,8 @@ export const Alert = genericComponent<new () => {
                 've-alert',
                 {
                   've-alert--with-title': hasTitle,
-                }
+                },
+                loadingClasses.value,
               ] }
             >
               <Card
@@ -122,8 +129,18 @@ export const Alert = genericComponent<new () => {
                 { {
                   prepend: hasPrepend ? () => (
                     <>
-                      { icon.value && (
+                      { hasIcon && (
                         <Icon class="ve-alert__icon" icon={ icon.value } />
+                      ) }
+
+                      { hasLoading && (
+                        <Progress
+                          class="ve-alert__icon"
+                          size="21"
+                          variant="circular"
+                          stroke-width="2"
+                          indeterminate
+                        />
                       ) }
 
                       { slots.prepend?.() }

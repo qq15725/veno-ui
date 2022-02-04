@@ -24,7 +24,7 @@ import {
 } from './progress-linear'
 
 // Constants
-export const allowedVariants = [
+export const progressVariants = [
   'linear', // 线性
   'circular', // 圆形
 ] as const
@@ -33,7 +33,7 @@ export const allowedVariants = [
 import type { PropType } from 'vue'
 
 export type Progress = InstanceType<typeof Progress>
-export type ProgressVariant = typeof allowedVariants[number]
+export type ProgressVariant = typeof progressVariants[number]
 
 export const Progress = defineComponent({
   name: 'VeProgress',
@@ -53,7 +53,7 @@ export const Progress = defineComponent({
     variant: {
       type: String as PropType<ProgressVariant>,
       default: 'linear',
-      validator: (v: any) => allowedVariants.includes(v),
+      validator: (v: any) => progressVariants.includes(v),
     },
   },
 

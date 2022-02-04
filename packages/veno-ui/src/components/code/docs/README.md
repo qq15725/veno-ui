@@ -16,19 +16,12 @@ meta:
 ```typescript
 import { createVeno } from 'veno-ui'
 import prismjs from 'prismjs'
+// 需要支持 typescript 语法高亮时
+// import 'prismjs/components/prism-typescript.js'
 
 export default createVeno({
   highlighter: {
     prismjs,
-    prismjsLoadLanguage: async (language: string) => {
-      switch (language) {
-        case 'bash':
-          // @ts-ignore
-          await import('prismjs/components/prism-bash.js')
-          break
-        // ... 其他语言的 import 
-      }
-    }
   },
   // ... 其他 veno-ui 选项
 })

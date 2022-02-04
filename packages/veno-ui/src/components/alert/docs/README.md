@@ -18,7 +18,7 @@ variant.md shape.md
 
 closable.md close-text.md
 
-append.md
+append.md loading.md
 
 :::
 

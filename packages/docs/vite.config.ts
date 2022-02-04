@@ -58,6 +58,7 @@ export default defineConfig(({ mode }) => {
           ? [
             { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
             { find: 'veno-ui/directives', replacement: resolve('../veno-ui/src/directives') },
+            { find: 'veno-ui/providers', replacement: resolve('../veno-ui/src/providers') },
             { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
             { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
           ]

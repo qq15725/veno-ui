@@ -1,0 +1,21 @@
+.ve-notification-provider {
+  display: flex;
+  justify-content: end;
+  padding: 8px;
+
+  li {
+    list-style-type: none;
+
+    + li {
+      margin-top: 8px;
+    }
+  }
+
+  .ve-alert {
+    --ve-card-py: 16px;
+  }
+
+  .ve-alert .ve-card {
+    display: inline-block;
+  }
+}

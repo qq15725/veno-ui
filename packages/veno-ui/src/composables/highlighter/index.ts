@@ -15,7 +15,6 @@ export interface HighlighterOptions
 {
   type?: 'prismjs'
   prismjs: Prismjs
-  prismjsLoadLanguage?: (language: string) => Promise<void>
 }
 
 export interface Highlighter
@@ -50,15 +49,7 @@ export function createHighlighter (options?: HighlighterOptions): Ref<Highlighte
     }
 
     if (!prismjs.languages[language]) {
-      try {
-        await options?.prismjsLoadLanguage?.(language)
-      } catch (e) {
-        //
-      }
-    }
-
-    if (!prismjs.languages[language]) {
-      console.warn(`[VenoUi] Syntax highlight for language "${ language }" is not supported.`)
+      console.warn(`[VenoUi] Syntax highlight for language "${ language }" is not supported. try "import 'prismjs/components/prism-${ language }.js'" .`)
       return text
     }
 
@@ -81,8 +72,6 @@ export function createHighlighter (options?: HighlighterOptions): Ref<Highlighte
 
 export function useHighlighter () {
   const provider = inject(HighlighterKey)
-
   if (!provider) throw new Error('[VenoUi] Could not find highlighter instance')
-
   return provider
 }
