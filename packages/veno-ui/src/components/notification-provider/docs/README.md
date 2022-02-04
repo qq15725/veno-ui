@@ -6,7 +6,7 @@ meta:
 # 通知提醒框 Notification
 
 :::warning 使用前提
-创建 Veno 实例时注册 `NotificationProvider`，或者把调用其方法的组件放在 `ve-notification-provider` 内部，使用 `useNotification` 或者 `this.$veno.notification` 去获取 API。
+注册 `NotificationProvider`，或者把调用其方法的组件放在 `ve-notification-provider` 内部，使用 `useNotification` 或者 `this.$veno.notification` 去获取 API。
 :::
 
 注册 `NotificationProvider` （推荐）

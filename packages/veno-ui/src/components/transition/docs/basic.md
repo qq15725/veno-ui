@@ -15,9 +15,9 @@
       <ve-paper v-show="show" color="primary" size="100" />
     </ve-expand-transition>
     
-    <ve-fade-expand-transition>
+    <ve-fade-in-expand-transition>
       <ve-paper v-show="show" color="primary" size="100" />
-    </ve-fade-expand-transition>
+    </ve-fade-in-expand-transition>
 
     <ve-scale-transition>
       <ve-paper v-show="show" color="primary" size="100" />
