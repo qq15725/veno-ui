@@ -12,16 +12,27 @@ import { Alert } from '../alert'
 import { filterAlertProps } from '../alert/alert'
 
 // Composables
-import { provideNotification } from '../../composables/message'
+import { provideNotification, useNotification, notification, NotificationKey } from '../../composables/message'
 import { SlideRightFadeInExpandTransition } from '../transition'
+
+// Types
+import type { App } from 'vue'
 
 export const NotificationProvider = defineComponent({
   name: 'VeNotificationProvider',
 
-  setup (props, { slots }) {
-    const provider = provideNotification()
+  register (app: App) {
+    app.provide(NotificationKey, notification)
+  },
 
-    const { items, remove } = provider
+  props: {
+    registered: Boolean,
+  },
+
+  setup (props, { slots }) {
+    const notification = props.registered ? useNotification() : provideNotification()
+
+    const { items, remove } = notification
 
     useRender(() => {
       return (
@@ -64,6 +75,6 @@ export const NotificationProvider = defineComponent({
       )
     })
 
-    return provider
+    return notification
   }
 })

@@ -34,6 +34,10 @@ export interface MessageInstance
 export const MessageKey: InjectionKey<MessageInstance> = Symbol.for('veno-ui:message')
 export const NotificationKey: InjectionKey<MessageInstance> = Symbol.for('veno-ui:notification')
 
+// global
+export const message = createMessage()
+export const notification = createMessage()
+
 export function createMessage () {
   const items = ref<MessageItem[]>([])
 
@@ -89,25 +93,25 @@ export function createMessage () {
 }
 
 export function provideMessage () {
-  const provider = createMessage()
-  provide(MessageKey, provider)
-  return provider
+  const message = createMessage()
+  provide(MessageKey, message)
+  return message
 }
 
 export function useMessage () {
-  const provider = inject(MessageKey)
-  if (!provider) throw new Error('[VenoUi] Could not find message instance')
-  return provider
+  const message = inject(MessageKey)
+  if (!message) throw new Error('[VenoUi] Could not find message instance')
+  return message
 }
 
 export function provideNotification () {
-  const provider = createMessage()
-  provide(NotificationKey, provider)
-  return provider
+  const notification = createMessage()
+  provide(NotificationKey, notification)
+  return notification
 }
 
 export function useNotification () {
-  const provider = inject(NotificationKey)
-  if (!provider) throw new Error('[VenoUi] Could not find notification instance')
-  return provider
+  const notification = inject(NotificationKey)
+  if (!notification) throw new Error('[VenoUi] Could not find notification instance')
+  return notification
 }

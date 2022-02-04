@@ -12,15 +12,26 @@ import { Alert } from '../alert'
 import { filterAlertProps } from '../alert/alert'
 
 // Composables
-import { provideMessage } from '../../composables/message'
+import { provideMessage, useMessage, message, MessageKey } from '../../composables/message'
+
+// Types
+import type { App } from 'vue'
 
 export const MessageProvider = defineComponent({
   name: 'VeMessageProvider',
 
-  setup (props, { slots }) {
-    const provider = provideMessage()
+  register (app: App) {
+    app.provide(MessageKey, message)
+  },
 
-    const { items, remove } = provider
+  props: {
+    registered: Boolean,
+  },
+
+  setup (props, { slots }) {
+    const message = !props.registered ? provideMessage() : useMessage()
+
+    const { items, remove } = message
 
     useRender(() => {
       return (
@@ -61,6 +72,6 @@ export const MessageProvider = defineComponent({
       )
     })
 
-    return provider
+    return message
   }
 })

@@ -9,7 +9,7 @@ meta:
 创建 Veno 实例时注册 `NotificationProvider`，或者把调用其方法的组件放在 `ve-notification-provider` 内部，使用 `useNotification` 或者 `this.$veno.notification` 去获取 API。
 :::
 
-创建 Veno 实例时注册 `NotificationProvider`（推荐）
+注册 `NotificationProvider` （推荐）
 
 ```ts
 import { createVeno } from 'veno-ui'
@@ -28,23 +28,6 @@ export default createVeno({
 </ve-notification-provider>
 ```
 
-```ts
-import { defineComponent } from 'vue'
-import { useNotification } from 'veno-ui'
-
-export default defineComponent({
-  setup () {
-    const notification = useNotification()
-    return {
-      warning () {
-        notification.warning('...')
-        // 或者直接使用 this.$veno.notification.warning('...')
-      }
-    }
-  }
-})
-```
-
 ## 演示
 
 :::include
@@ -52,3 +35,21 @@ export default defineComponent({
 basic.md
 
 :::
+
+## 全局使用
+
+需要先注册 `NotificationProvider` 。
+
+```ts
+import { notification } from 'veno-ui'
+
+export default defineComponent({
+  setup () {
+    return {
+      warning () {
+        notification.warning('...')
+      }
+    }
+  }
+})
+```

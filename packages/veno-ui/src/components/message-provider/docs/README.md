@@ -9,7 +9,7 @@ meta:
 创建 Veno 实例时注册 `MessageProvider`，或者把调用其方法的组件放在 `ve-message-provider` 内部，使用 `useMessage` 或者 `this.$veno.message` 去获取 API。
 :::
 
-创建 Veno 实例时注册 `MessageProvider`（推荐）
+注册 `MessageProvider` （推荐）
 
 ```ts
 import { createVeno } from 'veno-ui'
@@ -28,23 +28,6 @@ export default createVeno({
 </ve-message-provider>
 ```
 
-```ts
-import { defineComponent } from 'vue'
-import { useMessage } from 'veno-ui'
-
-export default defineComponent({
-  setup () {
-    const message = useMessage()
-    return {
-      warning () {
-        message.warning('...')
-        // 或者直接使用 this.$veno.message.warning('...')
-      }
-    }
-  }
-})
-```
-
 ## 演示
 
 :::include
@@ -56,3 +39,21 @@ variant.md
 closable.md
 
 :::
+
+## 全局使用
+
+需要先注册 `MessageProvider` 。
+
+```ts
+import { message } from 'veno-ui'
+
+export default defineComponent({
+  setup () {
+    return {
+      warning () {
+        message.warning('...')
+      }
+    }
+  }
+})
+```

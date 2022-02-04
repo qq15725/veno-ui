@@ -2,7 +2,7 @@
 import { shallowRef, inject } from 'vue'
 
 // Types
-import type { ShallowRef, InjectionKey, Component } from 'vue'
+import type { App, ShallowRef, InjectionKey, Component } from 'vue'
 
 export interface ProvidersInstance
 {
@@ -14,13 +14,16 @@ export interface ProvidersInstance
 
 export const ProvidersKey: InjectionKey<ProvidersInstance> = Symbol.for('veno-ui:providers')
 
-export function createProviders (options?: Record<string, Component>): ProvidersInstance {
+export function createProviders (app: App, options?: Record<string, Component>): ProvidersInstance {
   const providers = shallowRef({ ...options })
 
+  Object.values(providers.value).forEach((provider: any) => {
+    provider.register?.(app)
+  })
+
   function createRootProvider () {
-    const components = Object.values(providers.value)
-    return components.reduce<Component>((Prev: any, Cur: any) => {
-      return (props, { slots }) => <Prev><Cur>{ slots.default?.() }</Cur></Prev>
+    return Object.values(providers.value).reduce<Component>((Prev: any, Cur: any) => {
+      return (props, { slots }) => <Prev registered><Cur registered>{ slots.default?.() }</Cur></Prev>
     }, (props, { slots }) => slots.default?.())
   }
 

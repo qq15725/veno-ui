@@ -17,7 +17,7 @@ import { propsFactory, getUid } from '../../utils'
 // Types
 import type { InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
 
-interface DragSortProvider
+interface DragSortInstance
 {
   register: (item: DragSortItem) => void
   unregister: (id: number) => void
@@ -64,7 +64,7 @@ export const makeDragSortProps = propsFactory({
   },
 }, 'drag-sort')
 
-export const DragSortKey: InjectionKey<DragSortProvider> = Symbol.for('veno-ui:drag-sort-provide')
+export const DragSortKey: InjectionKey<DragSortInstance> = Symbol.for('veno-ui:drag-sort')
 
 export function useDragSort (props: DragSortProps) {
   const id = getUid()

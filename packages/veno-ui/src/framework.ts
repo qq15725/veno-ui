@@ -70,7 +70,7 @@ export const createVeno = (options: VenoOptions = {}) => {
       },
       aliases
     }, icons))
-    app.provide(ProvidersKey, createProviders(options.providers))
+    app.provide(ProvidersKey, createProviders(app, options.providers))
 
     // Vue's inject() can only be used in setup
     function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {

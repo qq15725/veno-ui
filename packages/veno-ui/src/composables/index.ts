@@ -1,7 +1,7 @@
 export { useDisplay } from './display'
 export { useTheme } from './theme'
 export { useLayout } from './layout'
-export { useMessage } from './message'
+export { useMessage, message } from './message'
 
 export type { DefaultsInstance } from './defaults'
 export type { DisplayBreakpoint, DisplayInstance, DisplayThresholds } from './display'
