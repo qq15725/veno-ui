@@ -111,9 +111,9 @@ export const ListItem = defineComponent({
             slots.prepend?.() ?? (
               <ListItemAvatar left>
                 <Avatar
-                  color={ false }
+                  color="inherit"
                   variant="text"
-                  shape="round"
+                  shape="rounded"
                   density={ props.density }
                   icon={ props.prependIcon }
                   image={ props.prependAvatar }
@@ -144,7 +144,7 @@ export const ListItem = defineComponent({
             slots.append?.() ?? (
               <ListItemAvatar right>
                 <Avatar
-                  color={ false }
+                  color="inherit"
                   variant="text"
                   density={ props.density }
                   icon={ props.appendIcon }

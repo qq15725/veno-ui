@@ -40,7 +40,7 @@ declare module 'vue' {
     VeDragSort: typeof import('veno-ui/components')['DragSort']
     VeDrawer: typeof import('veno-ui/components')['Drawer']
     VeExpandTransition: typeof import('veno-ui/components')['ExpandTransition']
-    VeFadeExpandTransition: typeof import('veno-ui/components')['FadeExpandTransition']
+    VeFadeInExpandTransition: typeof import('veno-ui/components')['FadeInExpandTransition']
     VeFadeTransition: typeof import('veno-ui/components')['FadeTransition']
     VeForm: typeof import('veno-ui/components')['Form']
     VeFormControl: typeof import('veno-ui/components')['FormControl']
@@ -68,7 +68,6 @@ declare module 'vue' {
     VeListSubheader: typeof import('veno-ui/components')['ListSubheader']
     VeMain: typeof import('veno-ui/components')['Main']
     VeMenu: typeof import('veno-ui/components')['Menu']
-    VeMessage: typeof import('veno-ui/components')['Message']
     VeOverlay: typeof import('veno-ui/components')['Overlay']
     VeP: typeof import('veno-ui/components')['P']
     VePagination: typeof import('veno-ui/components')['Pagination']
@@ -84,7 +83,6 @@ declare module 'vue' {
     VeSwitch: typeof import('veno-ui/components')['Switch']
     VeTable: typeof import('veno-ui/components')['Table']
     VeTag: typeof import('veno-ui/components')['Tag']
-    VeThemeProvider: typeof import('veno-ui/components')['ThemeProvider']
     VeTooltip: typeof import('veno-ui/components')['Tooltip']
   }
 }

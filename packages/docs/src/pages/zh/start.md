@@ -18,15 +18,19 @@ $ npm install veno-ui
 
 ## 完整引入
 
-```js{4-9,12}
+```js{4-13,16}
 import { createApp } from 'vue'
 import App from './App.vue'
 
 import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 import * as components from 'veno-ui/components'
+import * as directives from 'veno-ui/directives'
+import * as providers from 'veno-ui/providers'
 const veno = createVeno({
-  components
+  components,
+  directives,
+  providers,
 })
 
 const app = createApp(App)

@@ -4,7 +4,7 @@
 
 ```html
 <div class="p-10 bg-grey-300">
-  <ve-list nav density="comfortable" :items="items" />
+  <ve-list nav density="ultra-high" :items="items" />
 </div>
 ```
 
