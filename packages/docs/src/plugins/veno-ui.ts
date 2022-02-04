@@ -16,9 +16,9 @@ import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
   const veno = createVeno({
-    providers,
     components,
     directives,
+    providers,
     highlighter: {
       prismjs,
     },
