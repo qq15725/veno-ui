@@ -36,13 +36,11 @@ export const CheckboxGroup = defineComponent({
     const id = computed(() => props.id || `ve-checkbox-group-${ uid }`)
 
     provideDefaults(reactive({
-      defaults: {
-        VeCheckbox: {
-          density: computed(() => props.density),
-          readonly: computed(() => props.readonly),
-          disabled: computed(() => props.disabled),
-        },
-      }
+      VeCheckbox: {
+        density: computed(() => props.density),
+        readonly: computed(() => props.readonly),
+        disabled: computed(() => props.disabled),
+      },
     }))
 
     return () => {

@@ -11,16 +11,23 @@ export const HeaderTitle = defineComponent({
   name: 'VeHeaderTitle',
 
   props: {
+    text: String,
     ...makeTagProps({ tag: 'header' }),
   },
 
   setup (props, { slots }) {
-    return () => (
-      <props.tag class="ve-header-title">
-        <div class="ve-header-title__wrapper">
-          { slots.default?.() }
-        </div>
-      </props.tag>
-    )
+    return () => {
+      const hasDefault = slots.default || props.text
+
+      return (
+        <props.tag class="ve-header-title">
+          { hasDefault && (
+            <div class="ve-header-title__wrapper">
+              { slots.default?.() ?? props.text }
+            </div>
+          ) }
+        </props.tag>
+      )
+    }
   },
 })

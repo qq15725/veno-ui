@@ -1,0 +1,89 @@
+// Styles
+import './styles/toolbar.scss'
+
+// Utils
+import { computed } from 'vue'
+import { defineComponent, convertToUnit, propsFactory, pick } from '../../utils'
+
+// Composables
+import { makePaperProps, usePaper } from '../../composables/paper'
+import { provideDefaults } from '../../composables/defaults'
+
+// Components
+import { ToolbarTitle } from './toolbar-title'
+
+// Types
+export type Toolbar = InstanceType<typeof Toolbar>
+
+export const makeToolbarProps = propsFactory({
+  title: String,
+  ...makePaperProps({
+    tag: 'header',
+    height: 64,
+  } as const),
+}, 'toolbar')
+
+export function filterToolbarProps (attrs: Record<string, any>) {
+  return pick(attrs, Object.keys(Toolbar.props) as any)
+}
+
+export const Toolbar = defineComponent({
+  name: 'VeToolbar',
+
+  props: makeToolbarProps(),
+
+  setup (props, { slots }) {
+    const { paperClasses, paperStyles } = usePaper(computed(() => ({
+      ...props,
+      height: undefined
+    })))
+
+    provideDefaults({
+      VeButton: {
+        variant: 'text',
+      },
+      VeInput: {
+        hideDetails: true,
+      },
+    }, { scoped: true })
+
+    return () => {
+      const hasTitle = !!(props.title || slots.title)
+
+      return (
+        <props.tag
+          class={ [
+            've-toolbar',
+            paperClasses.value,
+          ] }
+          style={ paperStyles.value }
+        >
+          <div
+            class="ve-toolbar__wrapper"
+            style={ { height: convertToUnit(props.height) } }
+          >
+            { slots.prepend && (
+              <div class="ve-toolbar__prepend">
+                { slots.prepend?.() }
+              </div>
+            ) }
+
+            { hasTitle && (
+              <ToolbarTitle text={ props.title }>
+                { { text: slots.title } }
+              </ToolbarTitle>
+            ) }
+
+            { slots.default?.() }
+
+            { slots.append && (
+              <div class="ve-toolbar__append">
+                { slots.append?.() }
+              </div>
+            ) }
+          </div>
+        </props.tag>
+      )
+    }
+  },
+})

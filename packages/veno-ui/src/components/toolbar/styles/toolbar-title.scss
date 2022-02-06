@@ -1,11 +1,10 @@
-@forward 'variables';
-@use 'variables' as *;
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-header-title {
-  font-size: tools.map-deep-get(settings.$typography, 'h5', 'size');
-  padding: 6px 20px;
+.ve-toolbar-title {
+  font-size: 1.25rem;
+  min-width: 0;
+  padding-left: 20px;
 
   &__wrapper {
     overflow: hidden;
@@ -13,7 +12,3 @@
     white-space: nowrap;
   }
 }
-
-
-
-

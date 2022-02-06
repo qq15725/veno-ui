@@ -37,27 +37,25 @@ function toggle () {
     <ve-header-nav-icon v-if="$veno.display.mobile" @click="active = !active" />
     <ve-header-title v-else>Veno UI</ve-header-title>
     <ve-spacer />
-    <ve-header-items>
-      <ve-tooltip text="反转示例颜色" #activator="{ props }">
-        <ve-button
-            v-bind="props"
-            @click="toggle"
-            :icon="user.theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-            variant="text"
-        />
-      </ve-tooltip>
-      <ve-tooltip text="在 Github 中查看" #activator="{ props }">
-        <ve-button
-            v-bind="props"
-            href="https://github.com/qq15725/veno-ui"
-            target="_blank"
-            icon="mdi-github"
-            variant="text"
-            class="ml-3"
-        />
-      </ve-tooltip>
-      <ve-button variant="text" class="ml-3">{{ version }}</ve-button>
-    </ve-header-items>
+    <ve-tooltip text="反转示例颜色" #activator="{ props }">
+      <ve-button
+          v-bind="props"
+          @click="toggle"
+          :icon="user.theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          variant="text"
+      />
+    </ve-tooltip>
+    <ve-tooltip text="在 Github 中查看" #activator="{ props }">
+      <ve-button
+          v-bind="props"
+          href="https://github.com/qq15725/veno-ui"
+          target="_blank"
+          icon="mdi-github"
+          variant="text"
+          class="ml-3"
+      />
+    </ve-tooltip>
+    <ve-button variant="text" class="ml-3">{{ version }}</ve-button>
   </ve-header>
 
   <ve-drawer v-model="active">

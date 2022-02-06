@@ -1,11 +1,5 @@
 @use '../../../styles/settings';
 
-$header-background: rgb(var(--ve-theme-surface)) !default;
-$header-color: rgb(var(--ve-theme-on-surface)) !default;
-
-$header-padding-end: 1rem !default;
-$header-padding-start: 1rem !default;
-
 // border
 $header-border-color: settings.$border-color !default;
 $header-border-radius: map-get(settings.$rounded, '0') !default;
@@ -22,8 +16,3 @@ $header-borders: (
     'width': $header-border-thin-width,
   )
 ) !default;
-
-// title
-$header-title-font-size: 18px !default;
-$header-title-font-weight: 500 !default;
-$header-title-padding: 6px 20px !default;

@@ -45,11 +45,7 @@
 
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-    @if map.has-key($map, $key) {
-      $map: map.get($map, $key);
-    } @else {
-      @return null;
-    }
+    $map: map.get($map, $key);
   }
 
   @return $map;

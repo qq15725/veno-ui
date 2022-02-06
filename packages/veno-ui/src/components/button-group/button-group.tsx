@@ -25,13 +25,11 @@ export const ButtonGroup = defineComponent({
     const { paperClasses, paperStyles } = usePaper(props)
 
     provideDefaults(reactive({
-      defaults: {
-        VeButton: {
-          disabled: toRef(props, 'disabled'),
-          height: 'auto',
-          color: toRef(props, 'color'),
-          variant: toRef(props, 'variant'),
-        },
+      VeButton: {
+        disabled: toRef(props, 'disabled'),
+        height: 'auto',
+        color: toRef(props, 'color'),
+        variant: toRef(props, 'variant'),
       },
     }))
 

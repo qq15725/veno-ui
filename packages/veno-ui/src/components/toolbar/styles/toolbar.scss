@@ -1,32 +1,26 @@
-@forward 'variables';
-@use 'variables' as *;
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-.ve-header {
+.ve-toolbar {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   max-width: 100%;
   overflow: hidden;
-  padding-left: $header-padding-start;
-  padding-right: calc(#{$header-padding-end} + var(--ve-scrollbar-offset));
+  padding-inline-end: calc(16px + var(--ve-scrollbar-offset));
+  padding-inline-start: 16px;
+  position: relative;
+  transition-property: height, transform, max-width;
   transition: .2s settings.$standard-easing;
-  transition-property: height, transform;
-  color: $header-color;
-  background: $header-background;
-  @include tools.use-border(('borders': $header-borders));
+  @include tools.use-paper();
 
   &__wrapper {
     align-items: center;
     display: flex;
     flex: 0 0 auto;
+    position: relative;
     transition: inherit;
     width: 100%;
   }
 }
-
-
-
-

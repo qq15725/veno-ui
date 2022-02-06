@@ -1,7 +1,10 @@
-import { computed, inject, provide, ref } from 'vue'
+// Utils
+import { computed, inject, provide, ref, unref } from 'vue'
 import { mergeDeep } from '../../utils'
 
-import type { InjectionKey, Ref } from 'vue'
+// Types
+import type { InjectionKey, Ref, ComputedRef } from 'vue'
+import type { MaybeRef } from '../../utils'
 
 export interface DefaultsInstance
 {
@@ -19,16 +22,49 @@ export function createDefaults (options?: DefaultsInstance): Ref<DefaultsInstanc
 }
 
 export function useDefaults () {
-  const provider = inject(DefaultsKey)
-  if (!provider) throw new Error('[VenoUi] Could not find defaults instance')
-  return provider
+  const defaults = inject(DefaultsKey)
+  if (!defaults) throw new Error('[VenoUi] Could not find defaults instance')
+  return defaults
 }
 
-export function provideDefaults (props?: { defaults?: DefaultsInstance }) {
-  const provider = useDefaults()
-  const newProvider = computed(() => {
-    return mergeDeep(provider.value, props?.defaults) as any as DefaultsInstance
-  })
-  provide(DefaultsKey, newProvider)
-  return newProvider
+export function provideDefaults (
+  defaults?: MaybeRef<DefaultsInstance | undefined>,
+  options?: {
+    reset?: MaybeRef<number | string | undefined>
+    root?: MaybeRef<boolean | undefined>
+    scoped?: MaybeRef<boolean | undefined>
+  }
+) {
+  const injectedDefaults = useDefaults()
+  const providedDefaults = ref(defaults)
+
+  const newDefaults = computed(() => {
+    const scoped = unref(options?.scoped)
+    const reset = unref(options?.reset)
+    const root = unref(options?.root)
+
+    let properties = mergeDeep(providedDefaults.value, {
+      prev: injectedDefaults.value
+    })
+
+    if (scoped) return properties
+
+    if (reset || root) {
+      const len = Number(reset || Infinity)
+
+      for (let i = 0; i <= len; i++) {
+        if (!properties.prev) break
+
+        properties = properties.prev
+      }
+
+      return properties
+    }
+
+    return mergeDeep(properties, properties.prev)
+  }) as ComputedRef<DefaultsInstance>
+
+  provide(DefaultsKey, newDefaults)
+
+  return newDefaults
 }

@@ -1,15 +1,13 @@
-// Styles
-import './styles/header.scss'
-
 // Utils
 import { computed } from 'vue'
-import { defineComponent, convertToUnit } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
-import { makeTagProps } from '../../composables/tag'
-import { makeThemeProps, provideTheme } from '../../composables/theme'
-import { makeBorderProps, useBorder } from '../../composables/border'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
+import { makeToolbarProps, filterToolbarProps } from '../toolbar/toolbar'
+
+// Components
+import { Toolbar } from '../toolbar'
 
 // Types
 export type Header = InstanceType<typeof Header>
@@ -18,13 +16,7 @@ export const Header = defineComponent({
   name: 'VeHeader',
 
   props: {
-    height: {
-      type: [Number, String],
-      default: 64,
-    },
-    ...makeTagProps({ tag: 'header' }),
-    ...makeThemeProps(),
-    ...makeBorderProps(),
+    ...makeToolbarProps(),
     ...makeLayoutItemProps({
       position: 'fixed',
       anchor: 'top',
@@ -32,8 +24,6 @@ export const Header = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { borderClasses } = useBorder(props)
-    const { themeClasses } = provideTheme(props)
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       position: props.position,
       anchor: props.anchor,
@@ -42,22 +32,20 @@ export const Header = defineComponent({
       priority: props.priority,
     })))
 
-    return () => (
-      <props.tag
-        class={ [
-          've-header',
-          themeClasses.value,
-          borderClasses.value,
-        ] }
-        style={ layoutItemStyles.value }
-      >
-        <div
-          class="ve-header__wrapper"
-          style={ { height: convertToUnit(props.height) } }
+    return () => {
+      const [toolbarProps] = filterToolbarProps(props)
+
+      return (
+        <Toolbar
+          { ...toolbarProps }
+          class={ [
+            've-header',
+          ] }
+          style={ layoutItemStyles.value }
         >
-          { slots.default?.() }
-        </div>
-      </props.tag>
-    )
+          { slots }
+        </Toolbar>
+      )
+    }
   },
 })

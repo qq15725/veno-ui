@@ -44,14 +44,12 @@ export const Form = defineComponent({
     })
 
     provideDefaults(reactive({
-      defaults: {
-        VeInput: DefaultProps,
-        VeSelect: DefaultProps,
-        VeRadioGroup: DefaultProps,
-        VeCheckboxGroup: DefaultProps,
-        VeSwitch: DefaultProps,
-        VeFormControl: DefaultProps,
-      }
+      VeInput: DefaultProps,
+      VeSelect: DefaultProps,
+      VeRadioGroup: DefaultProps,
+      VeCheckboxGroup: DefaultProps,
+      VeSwitch: DefaultProps,
+      VeFormControl: DefaultProps,
     }))
 
     useRender(() => {

@@ -37,13 +37,11 @@ export const RadioGroup = defineComponent({
     const id = computed(() => props.id || `ve-radio-group-${ uid }`)
 
     provideDefaults(reactive({
-      defaults: {
-        VeRadio: {
-          density: computed(() => props.density),
-          readonly: computed(() => props.readonly),
-          disabled: computed(() => props.disabled),
-        },
-      }
+      VeRadio: {
+        density: computed(() => props.density),
+        readonly: computed(() => props.readonly),
+        disabled: computed(() => props.disabled),
+      },
     }))
 
     return () => {
