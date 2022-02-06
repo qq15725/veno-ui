@@ -114,13 +114,6 @@
     opacity: 0;
     transition: .15s settings.$standard-easing;
     transition-property: opacity, transform, width;
-
-    .ve-button {
-      font-size: 16px;
-      min-width: 20px;
-      min-height: 20px;
-      border-radius: 50%;
-    }
   }
 
   &--focused &__clearable,

@@ -52,6 +52,7 @@ export const Switch = defineComponent({
               return (
                 <SelectionControl
                   { ...selectionInputProps }
+                  class="ve-switch__control"
                   ref={ control }
                   type="checkbox"
                   onUpdate:modelValue={ val => emit('update:modelValue', val) }

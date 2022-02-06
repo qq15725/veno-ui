@@ -174,7 +174,9 @@ export const InputControl = genericComponent<new () => {
                   { slots.clear?.(slotProps.value) ?? (
                     <Button
                       icon={ props.clearIcon }
-                      color="transparent"
+                      variant="text"
+                      shape="circle"
+                      ripple={ false }
                     />
                   ) }
                 </div>

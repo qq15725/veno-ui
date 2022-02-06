@@ -2,8 +2,10 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-$selection-control-disabled-color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity)) !default;
-$selection-control-error-color: rgb(var(--ve-theme-error)) !default;
-$selection-control-density: ('medium': 0, 'comfortable': -0.5, 'compact': -1) !default;
-$selection-control-color: rgba(var(--ve-theme-on-surface), var(--ve-high-emphasis-opacity)) !default;
-$selection-control-height: 22px !default;
+$selection-control-density: (
+  'ultra-high': -1,
+  'high': -0.5,
+  'medium': 0,
+  'low': 0.5,
+  'ultra-low': 1,
+) !default;

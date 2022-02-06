@@ -6,14 +6,16 @@
 @use './variables' as *;
 
 .ve-selection-control {
-  --ve-selection-control-height: calc(#{$selection-control-height} + var(--ve-selection-control-density-offset, 0px));
+  --ve-selection-control-height: calc(22px + var(--ve-selection-control-density-offset, 0px));
   position: relative;
   display: inline-flex;
   align-items: center;
   align-self: center;
   user-select: none;
   min-height: var(--ve-selection-control-height);
-  @include tools.use-density((densities: $selection-control-density));
+  @include tools.use-density((
+    densities: $selection-control-density
+  ));
 
   &--dirty {
     .v-icon {

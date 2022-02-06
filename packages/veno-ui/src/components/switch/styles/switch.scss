@@ -2,8 +2,10 @@
 @use '../../../styles/tools';
 
 .ve-switch {
-  .ve-selection-control {
-    display: flex;
+  &__control {
+    --ve-switch-track-width: calc(40 / 22 * var(--ve-selection-control-height));
+    --ve-switch-thumb-size: calc(18 / 22 * var(--ve-selection-control-height));
+    --ve-switch-offset: calc(8 / 40 * var(--ve-switch-track-width));
     height: var(--ve-form-control-height);
   }
 
@@ -18,11 +20,11 @@
     border-radius: 50%;
     transition: .15s settings.$standard-easing;
     transition-property: transform;
-    transform: translateX(-8px);
+    transform: translateX(calc(-1 * var(--ve-switch-offset, 8px)));
   }
 
   .ve-selection-control--dirty .ve-selection-control__input {
-    transform: translateX(8px);
+    transform: translateX(var(--ve-switch-offset, 8px));
   }
 
   &__track {
@@ -33,7 +35,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    min-width: 40px;
+    min-width: var(--ve-switch-track-width, 44px);
     color: rgba(var(--ve-theme-on-surface), .2);
     background-color: currentColor;
     border-radius: 12px;
@@ -42,9 +44,9 @@
 
   &__thumb {
     position: absolute;
-    height: calc(.75 * var(--ve-selection-control-height));
-    width: calc(.75 * var(--ve-selection-control-height));
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+    height: var(--ve-switch-thumb-size, 18px);
+    width: var(--ve-switch-thumb-size, 18px);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3), inset 0 0 1px 0 rgba(0, 0, 0, 0.05);
     border-radius: 50%;
     transition: 0.15s transform cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #FFF;

@@ -16,9 +16,11 @@
     v-model="density"
     messages="Messages"
   >
-    <ve-radio label="compact" />
-    <ve-radio label="comfortable" />
+    <ve-radio label="ultra-high" />
+    <ve-radio label="high" />
     <ve-radio label="medium" />
+    <ve-radio label="low" />
+    <ve-radio label="ultra-low" />
   </ve-radio-group>
 
   <ve-radio-group label="Direction" v-model="direction">
