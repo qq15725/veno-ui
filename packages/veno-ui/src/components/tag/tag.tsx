@@ -5,47 +5,90 @@ import './styles/tag.scss'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper } from '../../composables/paper'
+import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
 import { Icon } from '../icon'
-
-// Types
-export type Tag = InstanceType<typeof Tag>
+import { Button } from '../button'
+import { FadeInExpandTransition } from '../transition'
 
 export const Tag = defineComponent({
   name: 'VeTag',
 
   props: {
+    closable: Boolean,
+    closeIcon: {
+      type: String,
+      default: '$close',
+    },
     icon: String,
+    modelValue: {
+      type: Boolean,
+      default: true,
+    },
+    ...makeTransitionProps({
+      transition: { component: FadeInExpandTransition },
+    } as const),
     ...makePaperProps({
-      shape: 'rounded'
+      shape: 'rounded',
+      variant: 'contained-outlined',
     } as const),
   },
 
+  emits: {
+    'update:modelValue': (value: boolean) => true,
+  },
+
   setup (props, { slots }) {
+    const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
 
-    return () => {
-      return (
-        <props.tag
-          class={ [
-            've-tag',
-            paperClasses.value
-          ] }
-          style={ paperStyles.value }
-        >
-          { props.icon && (
-            <Icon
-              class="ve-tag__icon"
-              icon={ props.icon }
-              left={ true }
-            />
-          ) }
+    function onCloseClick (e: Event) {
+      isActive.value = false
+    }
 
-          { slots.default?.() }
-        </props.tag>
+    return () => {
+      const hasClosable = props.closable && props.closeIcon
+
+      return (
+        <MaybeTransition transition={ props.transition }>
+          { isActive.value && (
+            <props.tag
+              class={ [
+                've-tag',
+                paperClasses.value
+              ] }
+              style={ paperStyles.value }
+            >
+              { genOverlays(false, 've-tag') }
+
+              { props.icon && (
+                <Icon
+                  class="ve-tag__icon"
+                  icon={ props.icon }
+                  left={ true }
+                />
+              ) }
+
+              { slots.default?.() }
+
+              { hasClosable && (
+                <Button
+                  variant="plain"
+                  ripple={ false }
+                  class="ve-tag__close"
+                  icon={ props.closeIcon }
+                  onClick={ onCloseClick }
+                />
+              ) }
+            </props.tag>
+          ) }
+        </MaybeTransition>
       )
     }
   }
 })
+
+export type Tag = InstanceType<typeof Tag>

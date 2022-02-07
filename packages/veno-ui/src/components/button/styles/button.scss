@@ -43,8 +43,10 @@
   }
 
   &--icon {
-    min-width: var(--ve-height);
+    width: var(--ve-height);
+    min-width: 0;
     padding: 0;
+    font-size: 1rem;
   }
 
   &--block {
@@ -76,13 +78,9 @@
     }
   }
 
-  &__icon.ve-icon,
   &__icon.ve-progress {
     --ve-size: 1em;
     font-size: 1.5em;
-  }
-
-  &__icon.ve-progress {
     opacity: var(--ve-medium-emphasis-opacity);
   }
 

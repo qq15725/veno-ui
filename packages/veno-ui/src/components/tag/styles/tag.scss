@@ -1,16 +1,24 @@
 @forward 'variables';
+@use 'sass:math';
 @use 'variables' as *;
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
 .ve-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  position: relative;
   padding: 0 8px;
-  font-size: 12px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   vertical-align: middle;
-  font-weight: 500;
   @include tools.use-paper($tag-paper);
+
+  @each $name, $multiplier in settings.$sizes {
+    &--size-#{$name} {
+      font-size: #{math.max(12px, 14px + $multiplier * settings.$spacer)};
+    }
+  }
 }

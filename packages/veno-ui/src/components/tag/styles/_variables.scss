@@ -3,36 +3,30 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
-// color
-$tag-background: rgb(var(--ve-theme-secondary)) !default;
-$tag-color: rgb(var(--ve-theme-on-secondary)) !default;
-
-// border
-$tag-border-color: settings.$border-color !default;
-$tag-border-style: settings.$border-style !default;
-$tag-border-width: 0 !default;
-$tag-border-thin-width: thin !default;
-
 $tag-paper: () !default;
 $tag-paper: tools.map-deep-merge(
     (
       'variants': (
         'contained': (
-          'background': $tag-background,
-          'color': $tag-color,
+          'background': rgb(var(--ve-theme-secondary)),
+          'color': rgb(var(--ve-theme-on-secondary)),
+        ),
+        'text': (
+          'color': rgb(var(--ve-theme-on-secondary)),
         ),
       ),
       'positions': absolute fixed,
       'borders': (
         'default': (
-          'color': $tag-border-color,
-          'style': $tag-border-style,
-          'width': $tag-border-width,
+          'color': settings.$border-color,
+          'style': settings.$border-style,
+          'width': 0,
         ),
         'existence': (
-          'width': $tag-border-thin-width,
-        )
+          'width': thin,
+        ),
       ),
+      'use-size': false,
     ),
     $tag-paper
 );

@@ -11,9 +11,10 @@
       'vue3-components',
     ]"
     :key="tag"
+    size="small"
+    variant="contained"
     color="#ddf4ff"
     text-color="#0969da"
-    shape="round"
     :href="`https://github.com/topics/${ tag }`"
   >
     {{ tag }}
