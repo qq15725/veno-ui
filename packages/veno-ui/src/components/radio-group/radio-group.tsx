@@ -1,5 +1,5 @@
 // Utils
-import { computed, reactive } from 'vue'
+import { computed, toRef } from 'vue'
 import { defineComponent, filterInputAttrs, getUid } from '../../utils'
 
 // Components
@@ -32,17 +32,21 @@ export const RadioGroup = defineComponent({
     }),
   },
 
-  setup (props, { attrs, slots }) {
+  emits: {
+    'update:modelValue': (val: any) => true,
+  },
+
+  setup (props, { attrs, slots, emit }) {
     const uid = getUid()
     const id = computed(() => props.id || `ve-radio-group-${ uid }`)
 
-    provideDefaults(reactive({
+    provideDefaults({
       VeRadio: {
-        density: computed(() => props.density),
-        readonly: computed(() => props.readonly),
-        disabled: computed(() => props.disabled),
+        density: toRef(props, 'density'),
+        readonly: toRef(props, 'readonly'),
+        disabled: toRef(props, 'disabled'),
       },
-    }))
+    })
 
     return () => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
@@ -65,6 +69,7 @@ export const RadioGroup = defineComponent({
                 id={ id.value }
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }
+                onUpdate:modelValue={ val => emit('update:modelValue', val) }
                 { ...restAttrs }
               >
                 { { default: defaultSlot } }
@@ -74,5 +79,5 @@ export const RadioGroup = defineComponent({
         </FormControl>
       )
     }
-  }
+  },
 })

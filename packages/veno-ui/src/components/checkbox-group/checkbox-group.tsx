@@ -31,7 +31,7 @@ export const CheckboxGroup = defineComponent({
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots, attrs }) {
+  setup (props, { slots, attrs, emit }) {
     const uid = getUid()
     const id = computed(() => props.id || `ve-checkbox-group-${ uid }`)
 
@@ -65,6 +65,7 @@ export const CheckboxGroup = defineComponent({
                   id={ id.value }
                   disabled={ isDisabled.value }
                   readonly={ isReadonly.value }
+                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
                   { ...restAttrs }
                 >
                   { { default: defaultSlot } }

@@ -3,7 +3,6 @@
 # 基本用法
 
 ```html
-
 <ve-form
   label-width="100"
   :density="form.density"
@@ -11,6 +10,7 @@
   :disabled="form.disabled"
   :readonly="form.readonly"
   :hide-details="form.hideDetails"
+  @submit="send"
 >
   <ve-radio-group
     name="density"
@@ -39,6 +39,7 @@
   <ve-input
     name="input"
     label="Input"
+    v-model="form.input"
     placeholder="请输入"
     clearable
     counter="48"
@@ -47,6 +48,7 @@
   <ve-input
     name="textarea"
     label="Textarea"
+    v-model="form.textarea"
     type="textarea"
     placeholder="请输入"
     clearable
@@ -58,32 +60,33 @@
   <ve-select
     name="select"
     label="Select"
+    v-model="form.select"
     placeholder="请选择"
     :items="[
-    { label: '选项1', value: 1 },
-    { label: '选项2', value: 2 },
-    { label: '选项3', value: 3 },
-  ]"
+      { value: 'Option 1' },
+      { value: 'Option 2' },
+      { value: 'Option 3' },
+    ]"
     clearable
   />
 
   <ve-form-control label>
-    <ve-switch name="switch" label="Switch" />
+    <ve-switch name="switch" label="Switch" v-model="form.switch" />
   </ve-form-control>
 
-  <ve-checkbox-group name="checkbox" label="Checkbox">
+  <ve-checkbox-group name="checkbox" label="Checkbox" v-model="form.checkbox">
     <ve-checkbox value="Checkbox 1" />
     <ve-checkbox value="Checkbox 2" />
     <ve-checkbox value="Checkbox 3" />
   </ve-checkbox-group>
 
-  <ve-radio-group name="radio" label="Radio">
+  <ve-radio-group name="radio" label="Radio" v-model="form.radio">
     <ve-radio value="Radio1" />
     <ve-radio value="Radio2" />
   </ve-radio-group>
 
   <ve-form-control label>
-    <ve-button color="primary">提交</ve-button>
+    <ve-button :loading="sending" type="submit" color="primary">提交</ve-button>
   </ve-form-control>
 </ve-form>
 
@@ -92,17 +95,33 @@
 
 ```js
 import { defineComponent, ref } from 'vue'
+import { message } from 'veno-ui'
 
 export default defineComponent({
   setup () {
+    const sending = ref(false)
+    
     return {
       form: ref({
-        density: 'medium',
+        density: 'high',
         direction: 'horizontal',
         hideDetails: true,
         disabled: false,
         readonly: false,
+        radio: 'Radio1',
+        switch: false,
+        checkbox: [],
+        select: null,
+        input: null,
       }),
+      sending,
+      send: async () => {
+        if (sending.value) return
+        sending.value = true
+        await message.info('Sending')
+        message.success('Sended')
+        sending.value = false
+      }
     }
   }
 })

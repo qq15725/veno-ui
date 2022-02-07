@@ -128,7 +128,7 @@ export const Button = defineComponent({
               color="currentColor"
               indeterminate
               variant="circular"
-              stroke-width={ 1 }
+              stroke-width={ 2 }
               left={ !props.stacked && props.icon === false }
             />
           ) }

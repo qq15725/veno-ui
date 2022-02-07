@@ -20,8 +20,6 @@ import type { InputSlots } from '../input/input'
 import type { Origin } from '../../composables/position-strategy'
 import type { Anchor } from '../../utils'
 
-export type Select = InstanceType<typeof Select>
-
 type NormaledSelectItem = { label: string, value: string }
 type SelectItem = string | NormaledSelectItem
 
@@ -57,19 +55,20 @@ export const Select = genericComponent<new () => {
     const isActive = ref(false)
     const uid = getUid()
     const id = computed(() => props.id || `ve-select-${ uid }`)
+
     const normaledItems = computed<NormaledSelectItem[]>(() => {
       return props.items.map(v => {
         if (typeof v === 'string') {
           v = { label: v, value: v }
-        } else if (v.value === undefined) {
-          v.value = v.label
+        } else if (v.label === undefined) {
+          v.label = v.value
         }
         return v
       })
     })
-    const current = computed(() => {
-      return normaledItems.value.find(v => v.value === model.value)
-    })
+
+    const current = computed(() => normaledItems.value.find(v => v.value === model.value))
+
     return () => {
       const [inputProps] = filterInputProps(props)
 
@@ -95,7 +94,10 @@ export const Select = genericComponent<new () => {
                 readonly
                 modelValue={ current.value?.label }
                 onUpdate:modelValue={ val => model.value = val }
-                onClick:control={ activatorProps?.onClick }
+                onClick:control={ e => {
+                  if (props.readonly || props.disabled) return
+                  activatorProps?.onClick(e)
+                } }
                 { ...attrs }
                 v-slots={ {
                   ...slots,
@@ -135,3 +137,5 @@ export const Select = genericComponent<new () => {
     }
   }
 })
+
+export type Select = InstanceType<typeof Select>

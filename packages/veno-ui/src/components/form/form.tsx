@@ -1,5 +1,5 @@
 // Utils
-import { reactive, toRef } from 'vue'
+import { toRef } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
@@ -32,23 +32,27 @@ export const Form = defineComponent({
   setup (props, { slots }) {
     const form = provideForm(props)
 
-    const defaults = reactive({
+    const defaults = {
       density: toRef(props, 'density'),
       direction: toRef(props, 'direction'),
       labelWidth: toRef(props, 'labelWidth'),
       hideDetails: toRef(props, 'hideDetails'),
       readonly: toRef(props, 'readonly'),
       disabled: toRef(props, 'disabled'),
-    })
+    }
 
-    provideDefaults(reactive({
+    provideDefaults({
       VeInput: defaults,
       VeSelect: defaults,
       VeRadioGroup: defaults,
       VeCheckboxGroup: defaults,
       VeSwitch: defaults,
       VeFormControl: defaults,
-    }))
+      VeButton: {
+        density: defaults.density,
+        disabled: defaults.disabled,
+      },
+    })
 
     useRender(() => {
       return (

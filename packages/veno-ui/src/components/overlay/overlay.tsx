@@ -49,8 +49,6 @@ export type OverlaySlots = MakeSlots<{
   activator: [OverlaySlot]
 }>
 
-export type Overlay = InstanceType<typeof Overlay>
-
 export const Overlay = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
@@ -278,3 +276,5 @@ export const Overlay = genericComponent<new () => {
     }
   }
 })
+
+export type Overlay = InstanceType<typeof Overlay>

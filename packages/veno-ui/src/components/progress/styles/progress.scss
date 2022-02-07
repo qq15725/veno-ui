@@ -6,7 +6,7 @@
 .ve-progress {
   --ve-size-offset: 0px;
   --ve-circular-default-size: 40px;
-  --ve-circular-size: calc(var(--ve-circular-default-size) + var(--ve-size-offset));
+  --ve-size: calc(var(--ve-circular-default-size) + var(--ve-size-offset));
   position: relative;
   vertical-align: middle;
   @include tools.use-size(('sizes': $progress-sizes));
@@ -23,8 +23,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: var(--ve-circular-size);
-    width: var(--ve-circular-size);
+    height: var(--ve-size);
+    width: var(--ve-size);
   }
 
   .ve-progress-circular {

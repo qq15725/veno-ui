@@ -16,8 +16,6 @@ import { MenuTransition } from '../transition'
 // Types
 import type { OverlaySlots } from '../overlay/overlay'
 
-export type Menu = InstanceType<typeof Menu>
-
 export const Menu = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
@@ -68,3 +66,5 @@ export const Menu = genericComponent<new () => {
     }
   },
 })
+
+export type Menu = InstanceType<typeof Menu>

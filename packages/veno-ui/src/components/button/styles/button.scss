@@ -76,10 +76,14 @@
     }
   }
 
-  &__icon {
-    width: 1em !important;
-    height: 1em !important;
-    font-size: 1.5em !important;
+  &__icon.ve-icon,
+  &__icon.ve-progress {
+    --ve-size: 1em;
+    font-size: 1.5em;
+  }
+
+  &__icon.ve-progress {
+    opacity: var(--ve-medium-emphasis-opacity);
   }
 
   // Pagination
