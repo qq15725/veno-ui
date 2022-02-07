@@ -110,7 +110,7 @@ export const Select = genericComponent<new () => {
             ),
             default: () => (
               <List
-                max-height={ 200 }
+                max-height={ 250 }
                 elevation={ 8 }
                 density="ultra-high"
                 border

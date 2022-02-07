@@ -2,6 +2,7 @@
 import './styles/list.scss'
 
 // Utils
+import { toRef } from 'vue'
 import { genericComponent, useRender } from '../../utils'
 
 // Composables
@@ -9,6 +10,7 @@ import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeNestedProps, useNested } from '../../composables/nested'
 import { provideList } from './composables/list'
+import { provideDefaults } from '../../composables/defaults'
 
 // Components
 import { ListSubheader } from './list-subheader'
@@ -50,10 +52,10 @@ export const List = genericComponent<new <T>() => {
     } as const),
     ...makeDisabledProps(),
     ...makeNestedProps({
-      selectStrategy: 'leaf' as const,
-      openStrategy: 'multiple' as const,
-      activeStrategy: 'single' as const,
-    }),
+      selectStrategy: 'leaf',
+      openStrategy: 'multiple',
+      activeStrategy: 'single',
+    } as const),
   },
 
   emits: {
@@ -67,6 +69,12 @@ export const List = genericComponent<new <T>() => {
     const { disabledClasses } = useDisabled(props)
     const { open, select, activate } = useNested(props)
     provideList()
+
+    provideDefaults({
+      VeListItem: {
+        density: toRef(props, 'density'),
+      },
+    })
 
     useRender(() => {
       const hasHeader = typeof props.subheader === 'string' || slots.subheader

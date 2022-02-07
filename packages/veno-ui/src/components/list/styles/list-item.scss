@@ -1,28 +1,25 @@
 @forward 'variables';
 @use 'variables' as *;
 @use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-list-item {
   $root: &;
+  --ve-density-offset: 0px;
+  --ve-default-height: 48px;
+  --ve-min-height: calc(var(--ve-default-height) + var(--ve-density-offset));
+  --ve-padding-y: calc(8px + var(--ve-density-offset));
   position: relative;
   display: flex;
   align-items: center;
-  padding: $list-item-padding;
   outline: none;
   text-decoration: none;
-  transition: $list-item-transition;
+  transition: .2s settings.$standard-easing;
+  min-height: var(--ve-min-height);
+  padding: var(--ve-padding-y) 16px;
   @include tools.use-paper($list-item-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay);
-
-  @at-root {
-    @include tools.density('ve-list') using($modifier) {
-      #{$root} {
-        min-height: 48px + $modifier;
-        padding: (8px + $modifier) 16px;
-      }
-    }
-  }
 
   &--link {
     cursor: pointer;

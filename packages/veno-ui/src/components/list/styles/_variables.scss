@@ -6,11 +6,6 @@
 $list-background: rgba(var(--ve-theme-surface)) !default;
 $list-color: rgba(var(--ve-theme-on-surface)) !default;
 
-$list-border-color: settings.$border-color !default;
-$list-border-style: settings.$border-style !default;
-$list-border-width: 0 !default;
-$list-border-thin-width: thin !default;
-
 $list-paper: () !default;
 $list-paper: tools.map-deep-merge(
     (
@@ -22,12 +17,12 @@ $list-paper: tools.map-deep-merge(
       ),
       'borders': (
         'default': (
-          'color': $list-border-color,
-          'style': $list-border-style,
-          'width': $list-border-width,
+          'color': settings.$border-color,
+          'style': settings.$border-style,
+          'width': 0,
         ),
         'existence': (
-          'width': $list-border-thin-width,
+          'width': thin,
         ),
       ),
       'positions': absolute fixed,
@@ -39,11 +34,6 @@ $list-paper: tools.map-deep-merge(
 
 // ListItem
 $list-item-padding: 8px 16px !default;
-$list-item-border-color: settings.$border-color !default;
-$list-item-border-style: settings.$border-style !default;
-$list-item-border-width: 0 !default;
-$list-item-border-thin-width: thin !default;
-$list-item-transition: .2s settings.$standard-easing !default;
 
 $list-item-paper: () !default;
 $list-item-paper: tools.map-deep-merge(
@@ -56,17 +46,16 @@ $list-item-paper: tools.map-deep-merge(
       ),
       'borders': (
         'default': (
-          'color': $list-item-border-color,
-          'style': $list-item-border-style,
-          'width': $list-item-border-width,
+          'color': settings.$border-color,
+          'style': settings.$border-style,
+          'width': 0,
         ),
         'existence': (
-          'width': $list-item-border-thin-width,
+          'width': thin,
         )
       ),
       'positions': absolute fixed,
       'use-size': false,
-      'use-density': false,
     ),
     $list-item-paper
 );

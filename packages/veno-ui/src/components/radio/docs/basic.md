@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-radio label="Radio1" value="radio" />
+<ve-radio label="Radio" value="radio" />
 ```
 
 :::

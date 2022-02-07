@@ -16,7 +16,7 @@
   align-items: center;
   border-radius: 4px;
   flex: 1 0;
-  min-height: inherit;
+  height: var(--ve-control-height);
   color: rgb(var(--ve-theme-on-secondary));
   background-color: rgb(var(--ve-theme-secondary));
   border: 1px solid transparent;

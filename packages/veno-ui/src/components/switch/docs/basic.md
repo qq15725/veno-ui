@@ -2,9 +2,9 @@
 # 基本用法
 
 ```html
-<ve-switch 
+<ve-switch
   v-model="value"
-  label="label"
+  label="Switch"
 />
 
 <div class="mt-3">{{ value }}</div>
