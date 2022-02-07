@@ -13,7 +13,7 @@ const aliases: IconAliases = {
   warning: 'mdi-alert-circle',
   error: 'mdi-close-circle',
   close: 'mdi-close',
-  clear: 'mdi-close-circle',
+  clear: 'mdi-close',
   collapse: 'mdi-chevron-up',
   expand: 'mdi-chevron-down',
   menu: 'mdi-menu',

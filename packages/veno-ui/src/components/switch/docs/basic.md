@@ -4,7 +4,7 @@
 ```html
 <ve-switch 
   v-model="value"
-  hide-details
+  label="label"
 />
 
 <div class="mt-3">{{ value }}</div>

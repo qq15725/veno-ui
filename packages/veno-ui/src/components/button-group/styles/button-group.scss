@@ -1,16 +1,17 @@
-@forward 'variables';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
-@use 'variables' as *;
 
 .ve-button-group {
-  --ve-button-group-height: calc(32px + var(--ve-button-group-size-offset, 0px) + var(--ve-button-group-density-offset, 0px));
+  --ve-size-offset: 0px;
+  --ve-density-offset: 0px;
+  --ve-default-height: 32px;
+  --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset) + var(--ve-density-offset));
   display: inline-flex;
   flex-wrap: nowrap;
   flex: 1 1;
+  height: var(--ve-height);
   max-width: 100%;
   min-width: 0;
-  height: var(--ve-button-group-height);
   @include tools.use-paper((
     'use-variant': false,
     'positions': absolute fixed,
@@ -56,9 +57,9 @@
 
   &--divided {
     .ve-button:not(:last-child) {
-      border-right-width: $button-group-border-thin-width;
-      border-right-style: $button-group-border-style;
-      border-right-color: $button-group-border-color;
+      border-right-width: thin;
+      border-right-style: settings.$border-style;
+      border-right-color: settings.$border-color;
     }
   }
 }

@@ -51,9 +51,7 @@ export function useSelectionControl (
   const modelValue = useProxiedModel(props, 'modelValue')
   const trueValue = computed(() => (
     props.trueValue !== undefined ? props.trueValue : (
-      props.value !== undefined ? props.value : (
-        props.label !== undefined ? props.label : true
-      )
+      props.value !== undefined ? props.value : true
     )
   ))
   const falseValue = computed(() => (

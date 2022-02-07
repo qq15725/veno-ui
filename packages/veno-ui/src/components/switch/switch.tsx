@@ -6,8 +6,6 @@ import { ref } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Components
-import { FormControl } from '../form-control'
-import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { SelectionControl } from '../selection-control'
 import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
 
@@ -17,10 +15,7 @@ export type Switch = InstanceType<typeof Switch>
 export const Switch = defineComponent({
   name: 'VeSwitch',
 
-  inheritAttrs: false,
-
   props: {
-    ...makeFormControlProps(),
     ...makeSelectionControlProps({
       color: 'primary'
     } as const),
@@ -38,52 +33,36 @@ export const Switch = defineComponent({
     }
 
     return () => {
-      const [formControlProps] = filterFormControlProps(props)
-      const [{ label, ...selectionInputProps }] = filterSelectionControlProps(props)
+      const [selectionInputProps] = filterSelectionControlProps(props)
 
       return (
-        <FormControl
-          { ...formControlProps }
+        <SelectionControl
+          { ...selectionInputProps }
+          ref={ control }
           class="ve-switch"
+          type="checkbox"
+          onUpdate:modelValue={ val => emit('update:modelValue', val) }
         >
           { {
-            ...slots,
-            default: ({ isDisabled, isReadonly, props: formControlProps }) => {
+            default: ({ textColorClasses, textColorStyles }) => (
+              <div
+                class={ [
+                  've-switch__track',
+                  textColorClasses.value,
+                ] }
+                style={ [
+                  textColorStyles.value,
+                ] }
+                onClick={ onClick }
+              />
+            ),
+            input: () => {
               return (
-                <SelectionControl
-                  { ...selectionInputProps }
-                  class="ve-switch__control"
-                  ref={ control }
-                  type="checkbox"
-                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
-                  disabled={ isDisabled.value }
-                  readonly={ isReadonly.value }
-                  { ...formControlProps }
-                >
-                  { {
-                    default: ({ textColorClasses, textColorStyles }) => (
-                      <div
-                        class={ [
-                          've-switch__track',
-                          textColorClasses.value,
-                        ] }
-                        style={ [
-                          textColorStyles.value,
-                        ] }
-                        onClick={ onClick }
-                      />
-                    ),
-                    input: () => {
-                      return (
-                        <div class="ve-switch__thumb" />
-                      )
-                    }
-                  } }
-                </SelectionControl>
+                <div class="ve-switch__thumb" />
               )
             }
           } }
-        </FormControl>
+        </SelectionControl>
       )
     }
   }

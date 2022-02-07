@@ -4,10 +4,10 @@
 
 ```html
 <ve-radio-group v-model="variant">
-  <ve-radio label="contained" />
-  <ve-radio label="outlined" />
-  <ve-radio label="contained-text" />
-  <ve-radio label="contained-outlined" />
+  <ve-radio value="contained" />
+  <ve-radio value="outlined" />
+  <ve-radio value="contained-text" />
+  <ve-radio value="contained-outlined" />
 </ve-radio-group>
 
 <ve-spacer cols="12">

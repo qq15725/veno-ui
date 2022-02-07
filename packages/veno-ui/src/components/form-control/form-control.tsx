@@ -47,7 +47,7 @@ export function filterFormControlProps (props: ExtractPropTypes<ReturnType<typeo
 export const makeFormControlProps = propsFactory({
   appendIcon: String,
   prependIcon: String,
-  label: String,
+  label: [Boolean, String],
   labelId: String,
   labelWidth: [String, Number],
   hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
@@ -160,18 +160,15 @@ export const FormControl = genericComponent<new () => {
                 width: convertToUnit(props.labelWidth),
               } }
             >
-              { props.label }
-
-              { slots.label?.(slotProps.value) }
+              { slots.label?.(slotProps.value) ?? props.label }
             </Label>
           ) }
 
-          { slots.default?.({
-            ...slotProps.value,
-            props: {
-              class: 've-form-control__control',
-            }
-          }) }
+          { slots.default && (
+            <div class="ve-form-control__control">
+              { slots.default(slotProps.value) }
+            </div>
+          ) }
 
           { hasAppend && (
             <div

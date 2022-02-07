@@ -141,8 +141,8 @@ export const Input = genericComponent<new () => {
       nextTick(() => {
         if (!sizerRef.value) return
         const style = getComputedStyle(sizerRef.value)
-        const padding = parseFloat(style.getPropertyValue('--ve-native-control-padding-top'))
-          + parseFloat(style.getPropertyValue('--ve-native-control-padding-bottom'))
+        const padding = (parseFloat(style.getPropertyValue('--ve-native-padding-top')) || 0)
+          + (parseFloat(style.getPropertyValue('--ve-native-padding-bottom')) || 0)
         const height = sizerRef.value.scrollHeight
         const lineHeight = parseFloat(style.lineHeight)
         const minHeight = parseFloat(String(props.rows)) * lineHeight + padding
@@ -176,8 +176,8 @@ export const Input = genericComponent<new () => {
       const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
       const [formControlProps] = filterFormControlProps(props)
       const [inputControlProps] = filterInputControlProps(props)
-      const styles = isTextarea
-        ? { '--ve-form-control-height': controlHeight.value }
+      const styles = isTextarea && controlHeight.value
+        ? { '--ve-control-default-height': controlHeight.value }
         : {}
 
       return (
@@ -199,7 +199,7 @@ export const Input = genericComponent<new () => {
           v-slots={ {
             prepend: slots.prepend,
             label: slots.label,
-            default: ({ isDisabled, isReadonly, props: formControlProps }) => {
+            default: ({ isDisabled, isReadonly }) => {
               return (
                 <InputControl
                   { ...inputControlProps }
@@ -217,7 +217,6 @@ export const Input = genericComponent<new () => {
                     focus()
                     emit('click:control', e)
                   } }
-                  { ...formControlProps }
                   v-slots={ {
                     prependInner: slots.prependInner,
                     prefix: slots.prefix,

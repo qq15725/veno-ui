@@ -6,11 +6,11 @@
 
 ```html
 <ve-radio-group label="density" v-model="density">
-  <ve-radio label="ultra-high" />
-  <ve-radio label="high" />
-  <ve-radio label="medium" />
-  <ve-radio label="low" />
-  <ve-radio label="ultra-low" />
+  <ve-radio value="ultra-high" />
+  <ve-radio value="high" />
+  <ve-radio value="medium" />
+  <ve-radio value="low" />
+  <ve-radio value="ultra-low" />
 </ve-radio-group>
 
 <ve-spacer align="center">

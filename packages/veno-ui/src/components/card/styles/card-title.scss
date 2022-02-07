@@ -4,7 +4,7 @@
 .ve-card-title {
   display: flex;
   align-items: center;
-  padding: calc(16px + var(--ve-card-density-offset, 0px)) 16px;
+  padding: calc(16px + var(--ve-density-offset, 0px)) 16px;
   font-size: tools.map-deep-get(settings.$typography, 'h5', 'size');
   font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight');
   letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing');

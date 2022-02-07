@@ -113,6 +113,8 @@ export const Select = genericComponent<new () => {
                 max-height={ 200 }
                 elevation={ 8 }
                 density="ultra-high"
+                border
+                shape="rounded"
               >
                 { normaledItems.value.map((item: any) => (
                   <ListItem

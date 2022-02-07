@@ -6,12 +6,11 @@
 
 @mixin use-density($props: ()) {
   $props: functions.map-deep-merge(variables.$density-props, $props);
-  $prefix: string.slice(#{&}, 2);
 
   @if map.get($props, 'use-density') {
     @each $name, $multiplier in map.get($props, 'densities') {
       &--density-#{$name} {
-        --#{$prefix}-density-offset: #{$multiplier * settings.$spacer};
+        --ve-density-offset: #{$multiplier * settings.$spacer};
       }
     }
   }

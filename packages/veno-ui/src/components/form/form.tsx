@@ -34,7 +34,7 @@ export const Form = defineComponent({
   setup (props, { slots }) {
     const form = createForm(props)
 
-    const DefaultProps = reactive({
+    const defaultProps = reactive({
       density: computed(() => props.density),
       direction: computed(() => props.direction),
       labelWidth: computed(() => props.labelWidth),
@@ -44,12 +44,12 @@ export const Form = defineComponent({
     })
 
     provideDefaults(reactive({
-      VeInput: DefaultProps,
-      VeSelect: DefaultProps,
-      VeRadioGroup: DefaultProps,
-      VeCheckboxGroup: DefaultProps,
-      VeSwitch: DefaultProps,
-      VeFormControl: DefaultProps,
+      VeInput: defaultProps,
+      VeSelect: defaultProps,
+      VeRadioGroup: defaultProps,
+      VeCheckboxGroup: defaultProps,
+      VeSwitch: defaultProps,
+      VeFormControl: defaultProps,
     }))
 
     useRender(() => {

@@ -16,31 +16,23 @@
     v-model="density"
     messages="Messages"
   >
-    <ve-radio label="ultra-high" />
-    <ve-radio label="high" />
-    <ve-radio label="medium" />
-    <ve-radio label="low" />
-    <ve-radio label="ultra-low" />
+    <ve-radio value="ultra-high" />
+    <ve-radio value="high" />
+    <ve-radio value="medium" />
+    <ve-radio value="low" />
+    <ve-radio value="ultra-low" />
   </ve-radio-group>
 
   <ve-radio-group label="Direction" v-model="direction">
-    <ve-radio label="horizontal" />
-    <ve-radio label="vertical" />
+    <ve-radio value="horizontal" />
+    <ve-radio value="vertical" />
   </ve-radio-group>
 
-  <ve-switch
-    label="Disabled"
-    v-model="disabled"
-    :disabled="false"
-  />
-
-  <ve-switch
-    label="Readonly"
-    v-model="readonly"
-    :readonly="false"
-  />
-
-  <ve-switch label="HideDetails" v-model="hideDetails" />
+  <ve-form-control label :disabled="false">
+    <ve-switch label="Disabled" v-model="disabled" :disabled="false" />
+    <ve-switch label="Readonly" v-model="readonly" :readonly="false" />
+    <ve-switch label="HideDetails" v-model="hideDetails" />
+  </ve-form-control>
 
   <ve-input
     label="Input"
@@ -70,22 +62,23 @@
     clearable
   />
 
-  <ve-switch label="Switch" />
+  <ve-form-control label>
+    <ve-switch label="Switch" />
+  </ve-form-control>
 
   <ve-checkbox-group label="Checkbox">
-    <ve-checkbox label="Checkbox 1" />
-    <ve-checkbox label="Checkbox 2" />
-    <ve-checkbox label="Checkbox 3" />
+    <ve-checkbox value="Checkbox 1" />
+    <ve-checkbox value="Checkbox 2" />
+    <ve-checkbox value="Checkbox 3" />
   </ve-checkbox-group>
 
   <ve-radio-group label="Radio">
-    <ve-radio label="Radio1" />
-    <ve-radio label="Radio2" />
+    <ve-radio value="Radio1" />
+    <ve-radio value="Radio2" />
   </ve-radio-group>
 
-  <ve-form-control>
-    <template #prepend><div style="width: 100px;"></div></template>
-    <ve-button>提交</ve-button>
+  <ve-form-control label>
+    <ve-button color="primary">提交</ve-button>
   </ve-form-control>
 </ve-form>
 ```

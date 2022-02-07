@@ -110,7 +110,7 @@ export const SelectionControl = genericComponent<new <T>() => {
         },
       }
       const type = group?.type.value ?? props.type
-      const hasLabel = !!(slots.label || props.label)
+      const hasLabel = !!(slots.label || props.label || props.value)
       const [selectionControlAttrs, restAttrs] = filterInputAttrs(attrs)
 
       return (
@@ -161,9 +161,7 @@ export const SelectionControl = genericComponent<new <T>() => {
 
           { hasLabel && (
             <Label for={ id.value }>
-              { props.label }
-
-              { slots.label?.(slotProps) }
+              { slots.label?.(slotProps) ?? props.label ?? props.value }
             </Label>
           ) }
         </div>

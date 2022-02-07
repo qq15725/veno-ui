@@ -1,7 +1,6 @@
 .ve-selection-group-control {
   display: flex;
   flex-wrap: wrap;
-  min-height: var(--ve-form-control-height);
 
   > .ve-selection-control:not(:last-child) {
     margin-inline-end: 6px;

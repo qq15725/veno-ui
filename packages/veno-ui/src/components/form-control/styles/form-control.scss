@@ -4,8 +4,10 @@
 @use './variables' as *;
 
 .ve-form-control {
+  --ve-density-offset: 0px;
+  --ve-control-default-height: 42px;
+  --ve-control-height: calc(var(--ve-control-default-height) + var(--ve-density-offset));
   $root: &;
-  --ve-form-control-height: calc(42px + var(--ve-form-control-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
@@ -69,6 +71,7 @@
 
   &__control {
     grid-area: control;
+    min-height: var(--ve-control-height);
   }
 
   &__append {

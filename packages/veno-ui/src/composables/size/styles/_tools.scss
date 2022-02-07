@@ -6,12 +6,11 @@
 
 @mixin use-size($props: ()) {
   $props: functions.map-deep-merge(variables.$size-props, $props);
-  $prefix: string.slice(#{&}, 2);
 
   @if map.get($props, 'use-size') {
     @each $name, $multiplier in map.get($props, 'sizes') {
       &--size-#{$name} {
-        --#{$prefix}-size-offset: #{$multiplier * settings.$spacer};
+        --ve-size-offset: #{$multiplier * settings.$spacer};
       }
     }
   }

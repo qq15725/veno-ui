@@ -7,26 +7,31 @@
 
 .ve-button {
   $root: &;
-  --ve-button-height: calc(#{map.get($button-sizes, 'height')} + var(--ve-button-size-offset, 0px) + var(--ve-button-density-offset, 0px));
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
+  --ve-size-offset: 0px;
+  --ve-density-offset: 0px;
+  --ve-default-height: #{map.get($button-sizes, 'height')};
+  --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset) + var(--ve-density-offset));
+  --ve-min-width: calc(var(--ve-height) * #{map.get($button-sizes, 'width-ratio')});
+  --ve-padding-x: calc(var(--ve-height) / #{map.get($button-sizes, 'padding-ratio')});
   align-items: center;
+  display: inline-flex;
+  font-weight: tools.map-deep-get(settings.$typography, 'button', 'weight');
+  justify-content: center;
+  letter-spacing: tools.map-deep-get(settings.$typography, 'button', 'letter-spacing');
   outline: none;
-  font-weight: $button-font-weight;
-  letter-spacing: $button-text-letter-spacing;
-  text-transform: $button-text-transform;
-  height: var(--ve-button-height);
-  min-width: calc(var(--ve-button-height) * #{map.get($button-sizes, 'width-ratio')});
-  padding: 0 calc(var(--ve-button-height) / #{map.get($button-sizes, 'padding-ratio')});
+  position: relative;
+  height: var(--ve-height);
+  min-width: var(--ve-min-width);
+  padding: 0 var(--ve-padding-x);
+  text-decoration: none;
+  text-transform: tools.map-deep-get(settings.$typography, 'button', 'text-transform');
   transition-property: box-shadow, transform, opacity;
   transition-duration: 0.28s;
   transition-timing-function: settings.$standard-easing;
   user-select: none;
-  text-decoration: none;
-  vertical-align: $button-vertical-align;
-  flex-shrink: 0;
+  vertical-align: middle;
   white-space: nowrap;
+  flex-shrink: 0;
   @include tools.use-paper($button-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay, false);
@@ -38,8 +43,8 @@
   }
 
   &--icon {
+    min-width: var(--ve-height);
     padding: 0;
-    min-width: var(--ve-button-height);
   }
 
   &--block {
