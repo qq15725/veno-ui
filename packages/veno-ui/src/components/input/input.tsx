@@ -229,15 +229,16 @@ export const Input = genericComponent<new () => {
                             v-intersect={ [{
                               handler: onIntersect,
                             }, null, ['once']] }
-                            ref={ inputRef }
                             autofocus={ props.autofocus }
-                            readonly={ isReadonly.value }
                             disabled={ isDisabled.value }
                             id={ id.value }
-                            placeholder={ props.placeholder }
-                            rows={ props.rows }
+                            name={ props.name }
                             onFocus={ focus }
                             onBlur={ blur }
+                            placeholder={ props.placeholder }
+                            readonly={ isReadonly.value }
+                            ref={ inputRef }
+                            rows={ props.rows }
                             { ...nativeControlProps }
                             { ...restAttrs }
                           />
@@ -265,15 +266,16 @@ export const Input = genericComponent<new () => {
                               handler: onIntersect,
                             }, null, ['once']] }
                             v-model={ model.value }
-                            ref={ inputRef }
                             autofocus={ props.autofocus }
-                            readonly={ isReadonly.value }
                             disabled={ isDisabled.value }
                             id={ id.value }
-                            type={ props.type }
-                            placeholder={ props.placeholder }
+                            name={ props.name }
                             onFocus={ focus }
                             onBlur={ blur }
+                            placeholder={ props.placeholder }
+                            readonly={ isReadonly.value }
+                            ref={ inputRef }
+                            type={ props.type }
                             { ...nativeControlProps }
                             { ...restAttrs }
                           />

@@ -3,17 +3,19 @@
 # 基本用法
 
 ```html
+
 <ve-form
-  :density="density"
-  :direction="direction"
   label-width="100"
-  :disabled="disabled"
-  :readonly="readonly"
-  :hide-details="hideDetails"
+  :density="form.density"
+  :direction="form.direction"
+  :disabled="form.disabled"
+  :readonly="form.readonly"
+  :hide-details="form.hideDetails"
 >
   <ve-radio-group
+    name="density"
     label="Density"
-    v-model="density"
+    v-model="form.density"
     messages="Messages"
   >
     <ve-radio value="ultra-high" />
@@ -23,18 +25,19 @@
     <ve-radio value="ultra-low" />
   </ve-radio-group>
 
-  <ve-radio-group label="Direction" v-model="direction">
+  <ve-radio-group name="direction" label="Direction" v-model="form.direction">
     <ve-radio value="horizontal" />
     <ve-radio value="vertical" />
   </ve-radio-group>
 
   <ve-form-control label :disabled="false">
-    <ve-switch label="Disabled" v-model="disabled" :disabled="false" />
-    <ve-switch label="Readonly" v-model="readonly" :readonly="false" />
-    <ve-switch label="HideDetails" v-model="hideDetails" />
+    <ve-switch name="disabled" label="Disabled" v-model="form.disabled" :disabled="false" />
+    <ve-switch name="readonly" label="Readonly" v-model="form.readonly" :readonly="false" />
+    <ve-switch name="hide-details" label="HideDetails" v-model="form.hideDetails" />
   </ve-form-control>
 
   <ve-input
+    name="input"
     label="Input"
     placeholder="请输入"
     clearable
@@ -42,6 +45,7 @@
   />
 
   <ve-input
+    name="textarea"
     label="Textarea"
     type="textarea"
     placeholder="请输入"
@@ -52,6 +56,7 @@
   />
 
   <ve-select
+    name="select"
     label="Select"
     placeholder="请选择"
     :items="[
@@ -63,16 +68,16 @@
   />
 
   <ve-form-control label>
-    <ve-switch label="Switch" />
+    <ve-switch name="switch" label="Switch" />
   </ve-form-control>
 
-  <ve-checkbox-group label="Checkbox">
+  <ve-checkbox-group name="checkbox" label="Checkbox">
     <ve-checkbox value="Checkbox 1" />
     <ve-checkbox value="Checkbox 2" />
     <ve-checkbox value="Checkbox 3" />
   </ve-checkbox-group>
 
-  <ve-radio-group label="Radio">
+  <ve-radio-group name="radio" label="Radio">
     <ve-radio value="Radio1" />
     <ve-radio value="Radio2" />
   </ve-radio-group>
@@ -81,6 +86,8 @@
     <ve-button color="primary">提交</ve-button>
   </ve-form-control>
 </ve-form>
+
+<ve-code class="mt-3" language="json" :value="JSON.stringify(form, null, 2)" />
 ```
 
 ```js
@@ -89,11 +96,13 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      density: ref('medium'),
-      direction: ref('horizontal'),
-      hideDetails: ref(false),
-      disabled: ref(false),
-      readonly: ref(false),
+      form: ref({
+        density: 'medium',
+        direction: 'horizontal',
+        hideDetails: true,
+        disabled: false,
+        readonly: false,
+      }),
     }
   }
 })

@@ -58,8 +58,8 @@ export const makeFormProps = propsFactory({
   },
 })
 
-export function createForm (props: FormProps) {
-  const vm = getCurrentInstance('createForm')
+export function provideForm (props: FormProps) {
+  const vm = getCurrentInstance('provideForm')
   const model = useProxiedModel(props, 'modelValue')
 
   const isDisabled = computed(() => props.disabled)

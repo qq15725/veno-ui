@@ -1,17 +1,15 @@
 // Utils
-import { reactive, computed } from 'vue'
+import { reactive, toRef } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
-import { makeFormProps, createForm } from '../../composables/form'
+import { makeFormProps, provideForm } from '../../composables/form'
 import { makeFormControlDirectionProps } from '../../composables/form-control-direction'
 import { provideDefaults } from '../../composables/defaults'
 import { makeDensityProps } from '../../composables/density'
 
 // Types
 import type { PropType } from 'vue'
-
-export type Form = InstanceType<typeof Form>
 
 export const Form = defineComponent({
   name: 'VeForm',
@@ -32,24 +30,24 @@ export const Form = defineComponent({
   },
 
   setup (props, { slots }) {
-    const form = createForm(props)
+    const form = provideForm(props)
 
-    const defaultProps = reactive({
-      density: computed(() => props.density),
-      direction: computed(() => props.direction),
-      labelWidth: computed(() => props.labelWidth),
-      hideDetails: computed(() => props.hideDetails),
-      readonly: computed(() => props.readonly),
-      disabled: computed(() => props.disabled),
+    const defaults = reactive({
+      density: toRef(props, 'density'),
+      direction: toRef(props, 'direction'),
+      labelWidth: toRef(props, 'labelWidth'),
+      hideDetails: toRef(props, 'hideDetails'),
+      readonly: toRef(props, 'readonly'),
+      disabled: toRef(props, 'disabled'),
     })
 
     provideDefaults(reactive({
-      VeInput: defaultProps,
-      VeSelect: defaultProps,
-      VeRadioGroup: defaultProps,
-      VeCheckboxGroup: defaultProps,
-      VeSwitch: defaultProps,
-      VeFormControl: defaultProps,
+      VeInput: defaults,
+      VeSelect: defaults,
+      VeRadioGroup: defaults,
+      VeCheckboxGroup: defaults,
+      VeSwitch: defaults,
+      VeFormControl: defaults,
     }))
 
     useRender(() => {
@@ -68,3 +66,5 @@ export const Form = defineComponent({
     return form
   }
 })
+
+export type Form = InstanceType<typeof Form>

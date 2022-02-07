@@ -9,7 +9,11 @@ import {
   pick,
   SUPPORT_FOCUS_VISIBLE,
   useRender,
-  filterInputAttrs
+  filterInputAttrs,
+  propsFactory,
+  deepEqual,
+  getCurrentInstanceName,
+  wrapInArray
 } from '../../utils'
 
 // Components
@@ -17,12 +21,14 @@ import { Icon } from '../icon'
 import { Label } from '../label'
 
 // Composables
-import { makeSelectionControlProps, useSelectionControl } from '../../composables/selection-control'
-
-export { makeSelectionControlProps } from '../../composables/selection-control'
+import { makeThemeProps } from '../../composables/theme'
+import { makeDensityProps, useDensity } from '../../composables/density'
+import { useProxiedModel } from '../../composables/proxied-model'
+import { useTextColor } from '../../composables/color'
+import { useSelectionGroupControl } from '../selection-group-control/selection-group-control'
 
 // Types
-import type { ComputedRef, ExtractPropTypes, Ref, WritableComputedRef } from 'vue'
+import type { PropType, ComputedRef, ExtractPropTypes, Ref, WritableComputedRef } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type SelectionControlSlot = {
@@ -43,7 +49,109 @@ export function filterSelectionControlProps (props: ExtractPropTypes<ReturnType<
   return pick(props, Object.keys(SelectionControl.props) as any)
 }
 
-export type SelectionControl = InstanceType<typeof SelectionControl>
+export const makeSelectionControlProps = propsFactory({
+  color: String,
+  disabled: Boolean,
+  error: Boolean,
+  id: String,
+  inline: Boolean,
+  label: String,
+  falseIcon: String,
+  trueIcon: String,
+  multiple: {
+    type: Boolean as PropType<boolean | null>,
+    default: null,
+  },
+  name: String,
+  readonly: Boolean,
+  trueValue: null,
+  falseValue: null,
+  modelValue: null,
+  type: String,
+  value: null,
+  valueComparator: {
+    type: Function as PropType<typeof deepEqual>,
+    default: deepEqual,
+  },
+  ...makeThemeProps(),
+  ...makeDensityProps(),
+}, 'selection-control')
+
+export function useSelectionControl (
+  props: ExtractPropTypes<ReturnType<typeof makeSelectionControlProps>> & {
+    'onUpdate:modelValue': ((val: any) => void) | undefined
+  },
+  name = getCurrentInstanceName()
+) {
+  const group = useSelectionGroupControl()
+  const { densityClasses } = useDensity(props, name)
+  const modelValue = useProxiedModel(props, 'modelValue')
+  const trueValue = computed(() => (
+    props.trueValue !== undefined ? props.trueValue : (
+      props.value !== undefined ? props.value : true
+    )
+  ))
+  const falseValue = computed(() => (
+    props.falseValue !== undefined ? props.falseValue : false
+  ))
+  const isMultiple = computed(() => (
+    group?.multiple.value
+    || !!props.multiple
+    || (props.multiple == null && Array.isArray(modelValue.value))
+  ))
+  const model = computed({
+    get () {
+      const val = group ? group.modelValue.value : modelValue.value
+
+      if (isMultiple.value) {
+        return (val || []).some((v: any) => props.valueComparator(v, trueValue.value))
+      }
+
+      return props.valueComparator(val, trueValue.value)
+    },
+    set (val: boolean) {
+      const currentValue = val ? trueValue.value : falseValue.value
+
+      let newVal = currentValue
+
+      if (isMultiple.value) {
+        const oldVal = group ? group.modelValue.value : modelValue.value
+
+        if (val) {
+          newVal = [...wrapInArray(oldVal), currentValue]
+        } else {
+          newVal = wrapInArray(oldVal)
+            .filter((v: any) => !props.valueComparator(v, trueValue.value))
+        }
+      }
+
+      if (group) {
+        group.modelValue.value = newVal
+      } else {
+        modelValue.value = newVal
+      }
+    }
+  })
+  const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
+    return model.value ? props.color : undefined
+  }))
+  const icon = computed(() => {
+    return model.value
+      ? group?.trueIcon.value ?? props.trueIcon
+      : group?.falseIcon.value ?? props.falseIcon
+  })
+
+  return {
+    group,
+    densityClasses,
+    trueValue,
+    falseValue,
+    model,
+    textColorClasses,
+    textColorStyles,
+    icon,
+  }
+}
 
 export const SelectionControl = genericComponent<new <T>() => {
   $props: {
@@ -77,7 +185,7 @@ export const SelectionControl = genericComponent<new <T>() => {
       trueValue,
     } = useSelectionControl(props)
     const uid = getUid()
-    const id = computed(() => props.id || `input-${ uid }`)
+    const id = computed(() => props.id || `ve-input-${ uid }`)
     const isFocused = ref(false)
     const isFocusVisible = ref(false)
     const inputRef = ref<HTMLInputElement>()
@@ -174,3 +282,5 @@ export const SelectionControl = genericComponent<new <T>() => {
     }
   },
 })
+
+export type SelectionControl = InstanceType<typeof SelectionControl>
