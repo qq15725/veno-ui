@@ -33,6 +33,7 @@ export const Tag = defineComponent({
       transition: { component: FadeInExpandTransition },
     } as const),
     ...makePaperProps({
+      size: 'x-small',
       shape: 'rounded',
       variant: 'contained',
     } as const),
@@ -69,17 +70,19 @@ export const Tag = defineComponent({
                 <Icon
                   class="ve-tag__icon"
                   icon={ props.icon }
-                  left={ true }
+                  size="x-small"
+                  left
                 />
               ) }
 
-              { slots.default?.() ?? props.text }
+              <span>{ slots.default?.() ?? props.text }</span>
 
               { hasClosable && (
                 <Button
                   variant="plain"
                   ripple={ false }
                   class="ve-tag__close"
+                  size="x-small"
                   icon={ props.closeIcon }
                   onClick={ onCloseClick }
                 />

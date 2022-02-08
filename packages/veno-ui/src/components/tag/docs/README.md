@@ -17,6 +17,10 @@ variant.md
 
 size.md
 
+shape.md
+
+color.md
+
 github-tags.md
 
 :::

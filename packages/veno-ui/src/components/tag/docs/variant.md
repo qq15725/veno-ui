@@ -1,6 +1,6 @@
 :::demo
 
-# 标签种类
+# 不同种类的标签
 
 ```html
 <ve-spacer>
