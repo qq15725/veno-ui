@@ -43,8 +43,7 @@
   }
 
   &--icon {
-    width: var(--ve-height);
-    min-width: 0;
+    min-width: var(--ve-height);
     padding: 0;
     font-size: 1rem;
   }
@@ -82,10 +81,5 @@
     --ve-size: 1em;
     font-size: 1.5em;
     opacity: var(--ve-medium-emphasis-opacity);
-  }
-
-  // Pagination
-  .ve-pagination & {
-    width: auto;
   }
 }
