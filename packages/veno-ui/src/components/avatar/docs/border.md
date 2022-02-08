@@ -4,9 +4,9 @@
 
 ```html
 <ve-spacer>
-  <ve-avatar variant="outlined" shape="tile" />
-  <ve-avatar variant="outlined" shape="rounded" />
-  <ve-avatar variant="outlined" shape="circle" />
+  <ve-avatar border shape="tile" />
+  <ve-avatar border shape="rounded" />
+  <ve-avatar border shape="circle" />
 </ve-spacer>
 ```
 
