@@ -18,7 +18,7 @@
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
-      font-size: #{math.max(12px, 14px + $multiplier * settings.$spacer)};
+      font-size: #{math.max(12px, 14px + $multiplier * 1px)};
     }
   }
 }

@@ -21,14 +21,15 @@ export function useBorder (
   const borderClasses = computed(() => {
     const { border } = unref(props)
     const classes: string[] = []
-    if (border != null && border !== false) {
+
+    if (border === true) {
       classes.push(`${ name }--border`)
-    }
-    if ((typeof border === 'string' && border !== '') || border === 0) {
+    } else if ((typeof border === 'string' && border !== '') || border === 0) {
       for (const value of String(border).split(' ')) {
         classes.push(`border-${ value }`)
       }
     }
+
     return classes
   })
 

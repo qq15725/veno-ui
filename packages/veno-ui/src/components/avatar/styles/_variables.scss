@@ -1,23 +1,7 @@
 @use 'sass:map';
 @use '../../../styles/settings';
 
-// color
-$avatar-background: rgb(var(--ve-theme-surface)) !default;
-$avatar-color: rgb(var(--ve-theme-on-surface)) !default;
-
-// border
-$avatar-border-color: settings.$border-color !default;
-$avatar-border-style: settings.$border-style !default;
-$avatar-border-width: 0 !default;
-$avatar-border-thin-width: thin !default;
-
 $avatar-paper: (
-  'variants': (
-    'contained': (
-      'background': $avatar-background,
-      'color': $avatar-color,
-    ),
-  ),
   'sizes': (
     'x-small': -4,
     'small': -2,
@@ -25,15 +9,4 @@ $avatar-paper: (
     'large': 2,
     'x-large': 4
   ),
-  'borders': (
-    'default': (
-      'color': $avatar-border-color,
-      'style': $avatar-border-style,
-      'width': $avatar-border-width,
-    ),
-    'existence': (
-      'width': $avatar-border-thin-width,
-    ),
-  ),
-  'positions': absolute fixed,
 ) !default;

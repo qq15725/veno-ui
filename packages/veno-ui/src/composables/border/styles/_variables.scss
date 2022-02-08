@@ -5,17 +5,16 @@
 $border-props: () !default;
 $border-props: functions.map-deep-merge(
     (
+      'border': (
+        'color': settings.$border-color,
+        'style': settings.$border-style,
+        'width': 0px,
+      ),
       'borders': (
-        'default': (
-          'color': settings.$border-color,
-          'style': settings.$border-style,
-          'width': 0,
-          'important': false,
-        ),
-        'existence': (
+        null: (
           'width': settings.$border-width,
-        )
-      )
+        ),
+      ),
     ),
     $border-props
 );

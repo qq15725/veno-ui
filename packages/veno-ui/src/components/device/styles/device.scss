@@ -1,21 +1,16 @@
-@forward 'variables';
-@use 'variables' as *;
 @use '../../../styles/tools';
 
 .ve-device {
   display: flex;
   flex-direction: column;
   position: relative;
-  @include tools.use-border(('borders': $device-borders));
-  @include tools.use-shape();
-  @include tools.use-variant((
-    'variants': (
-      'contained': (
-        'background': $device-background,
-        'color': $device-color,
-      )
-    )
+  @include tools.use-border((
+    'border': (
+      'width': thin,
+    ),
   ));
+  @include tools.use-shape();
+  @include tools.use-variant();
 
   &__app-header {
     display: block;
@@ -23,7 +18,7 @@
   }
 
   &__app-bar {
-    height: $device-app-bar-header;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;

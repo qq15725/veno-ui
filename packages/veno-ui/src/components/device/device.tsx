@@ -35,7 +35,7 @@ export const Device = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { colorClasses, colorStyles, variantClasses, variantStyles } = useVariant(props)
+    const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { deviceModel, deviceStyles } = useDevice(props)
 
     return () => {
@@ -48,7 +48,6 @@ export const Device = genericComponent()({
           ] }
           style={ [
             deviceStyles.value,
-            variantStyles.value,
             colorStyles.value,
           ] }
         >

@@ -9,7 +9,7 @@ import type { DefaultsOptions } from '../../composables/defaults'
 import type { PropType } from 'vue'
 
 export const DefaultsProvider = defineComponent({
-  name: 'DefaultsProvider',
+  name: 'VeDefaultsProvider',
 
   props: {
     defaults: Object as PropType<DefaultsOptions>,

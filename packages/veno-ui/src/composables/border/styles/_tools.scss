@@ -1,27 +1,29 @@
 @use 'sass:map';
 @use 'variables';
-@use '../../../styles/tools/functions';
+@use '../../../styles/tools/functions' as tools;
 
-@mixin generate-border($prop, $name) {
-  $important: map.get($prop, 'important');
-  border-color: map.get($prop, 'color') if($important, !important, null);
-  border-style: map.get($prop, 'style') if($important, !important, null);
-  border-width: map.get($prop, 'width') if($important, !important, null);
+@mixin border($value) {
+  $important: map.get($value, 'important');
+  border-color: map.get($value, 'color') if($important, !important, null);
+  border-style: map.get($value, 'style') if($important, !important, null);
+  border-width: map.get($value, 'width') if($important, !important, null);
 }
 
 @mixin use-border($props: ()) {
-  $props: functions.map-deep-merge(variables.$border-props, $props);
+  $props: tools.map-deep-merge(variables.$border-props, $props);
+  $border: map.get($props, 'border');
+  $borders: map.get($props, 'borders');
 
-  @each $name, $prop in map.get($props, 'borders') {
-    @if ($name == 'default') {
-      @include generate-border($prop, $name);
-    } @else if ($name == 'existence') {
+  @include border($border);
+
+  @each $name, $value in $borders {
+    @if ($name == null) {
       &--border {
-        @include generate-border($prop, $name);
+        @include border($value);
       }
     } @else {
       &--border-#{$name} {
-        @include generate-border($prop, $name);
+        @include border($value);
       }
     }
   }

@@ -5,16 +5,6 @@
   position: relative;
   overflow: hidden;
   @include tools.use-paper((
-    'borders': (
-      'default': (
-        'color': settings.$border-color,
-        'style': settings.$border-style,
-        'width': 0,
-      ),
-      'existence': (
-        'width': thin,
-      ),
-    ),
     'use-size': false,
     'use-density': false,
   ));

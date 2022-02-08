@@ -15,17 +15,6 @@ $list-paper: tools.map-deep-merge(
           'color': $list-color,
         ),
       ),
-      'borders': (
-        'default': (
-          'color': settings.$border-color,
-          'style': settings.$border-style,
-          'width': 0,
-        ),
-        'existence': (
-          'width': thin,
-        ),
-      ),
-      'positions': absolute fixed,
       'use-size': false,
       'use-density': false,
     ),
@@ -44,17 +33,6 @@ $list-item-paper: tools.map-deep-merge(
           'color': $list-color,
         ),
       ),
-      'borders': (
-        'default': (
-          'color': settings.$border-color,
-          'style': settings.$border-style,
-          'width': 0,
-        ),
-        'existence': (
-          'width': thin,
-        )
-      ),
-      'positions': absolute fixed,
       'use-size': false,
     ),
     $list-item-paper

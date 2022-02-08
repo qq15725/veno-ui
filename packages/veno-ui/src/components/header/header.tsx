@@ -1,3 +1,6 @@
+// Styles
+import './styles/header.scss'
+
 // Utils
 import { computed } from 'vue'
 import { defineComponent } from '../../utils'

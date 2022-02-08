@@ -14,17 +14,6 @@
   min-width: 0;
   @include tools.use-paper((
     'use-variant': false,
-    'positions': absolute fixed,
-    'borders': (
-      'default': (
-        'color': settings.$border-color,
-        'style': settings.$border-style,
-        'width': 0,
-      ),
-      'existence': (
-        'width': thin,
-      ),
-    ),
   ));
 
   .ve-button.ve-button--selected:not(.ve-button--disabled) {
@@ -60,6 +49,13 @@
       border-right-width: thin;
       border-right-style: settings.$border-style;
       border-right-color: settings.$border-color;
+    }
+  }
+
+  &--divided#{&}--variant-outlined,
+  &--divided#{&}--variant-contained-outlined {
+    .ve-button:not(:last-child) {
+      border-right: inherit;
     }
   }
 }

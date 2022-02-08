@@ -62,7 +62,7 @@ export function usePaper (
   name = getCurrentInstanceName()
 ) {
   const { themeClasses } = provideTheme(props)
-  const { colorClasses, variantClasses, colorStyles, variantStyles } = useVariant(props, name)
+  const { colorClasses, variantClasses, colorStyles } = useVariant(props, name)
   const { positionClasses, positionStyles } = usePosition(props, name)
   const { dimensionStyles } = useDimension(props)
   const { sizeClasses, sizeStyles } = useSize(props, name)
@@ -85,7 +85,6 @@ export function usePaper (
 
   const paperStyles = computed(() => [
     colorStyles.value,
-    variantStyles.value,
     positionStyles.value,
     dimensionStyles.value,
     sizeStyles.value,

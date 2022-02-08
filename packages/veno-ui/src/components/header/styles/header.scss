@@ -1,0 +1,12 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+.ve-header {
+  &.ve-toolbar--border {
+    border-width: 0 0 thin;
+  }
+}
+
+
+
+

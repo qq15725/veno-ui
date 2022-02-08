@@ -27,8 +27,8 @@ export function genOverlays (isClickable: boolean, name: string) {
   return (
     <>
       { isClickable && <div class={ `${ name }__overlay` } /> }
-
       <div class={ `${ name }__underlay` } />
+      <div class={ `${ name }__border` } />
     </>
   )
 }
@@ -71,16 +71,7 @@ export function useVariant (
     ]
   })
 
-  const variantStyles = computed(() => {
-    const styles: Record<string, any> = {}
-    if ((variant.value === 'outlined' || variant.value === 'contained-outlined')
-      && colors.value.text !== undefined) {
-      styles.borderColor = 'currentColor'
-    }
-    return styles
-  })
-
   const { colorClasses, colorStyles } = useColor(colors)
 
-  return { colorClasses, colorStyles, variantClasses, variantStyles }
+  return { colorClasses, colorStyles, variantClasses, }
 }

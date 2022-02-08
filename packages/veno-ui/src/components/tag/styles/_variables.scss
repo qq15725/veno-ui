@@ -15,17 +15,6 @@ $tag-paper: tools.map-deep-merge(
           'color': rgb(var(--ve-theme-on-secondary)),
         ),
       ),
-      'positions': absolute fixed,
-      'borders': (
-        'default': (
-          'color': settings.$border-color,
-          'style': settings.$border-style,
-          'width': 0,
-        ),
-        'existence': (
-          'width': thin,
-        ),
-      ),
       'use-size': false,
     ),
     $tag-paper

@@ -2,6 +2,7 @@
 @use '../../../styles/settings';
 
 .ve-scrim {
+  pointer-events: auto;
   position: fixed;
   top: 0;
   right: 0;

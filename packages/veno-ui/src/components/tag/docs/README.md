@@ -11,6 +11,12 @@ category: Data 数据展示
 
 basic.md
 
+closable.md
+
+variant.md
+
+size.md
+
 github-tags.md
 
 :::

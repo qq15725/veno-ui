@@ -28,12 +28,13 @@ export const Tag = defineComponent({
       type: Boolean,
       default: true,
     },
+    text: String,
     ...makeTransitionProps({
       transition: { component: FadeInExpandTransition },
     } as const),
     ...makePaperProps({
       shape: 'rounded',
-      variant: 'contained-outlined',
+      variant: 'contained',
     } as const),
   },
 
@@ -72,7 +73,7 @@ export const Tag = defineComponent({
                 />
               ) }
 
-              { slots.default?.() }
+              { slots.default?.() ?? props.text }
 
               { hasClosable && (
                 <Button

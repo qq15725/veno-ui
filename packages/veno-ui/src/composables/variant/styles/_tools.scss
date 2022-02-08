@@ -5,7 +5,7 @@
 @use '../../../styles/tools/elevation' as *;
 
 @mixin use-variant($props: ()) {
-  $prefix: string.slice(#{&}, 2);
+  $root: string.insert(string.slice(#{&}, 2), '.', 0);
   $props: tools.map-deep-merge(variables.$variant-props, $props);
 
   @if map.get($props, 'use-variant') {
@@ -27,18 +27,10 @@
       }
     }
 
-    &--variant-outlined {
-      border-width: thin;
-    }
-
-    &--variant-contained-outlined {
-      border: thin solid currentColor;
-    }
-
     &--variant-plain {
       opacity: tools.map-deep-get($variants, 'plain', 'opacity');
 
-      .#{$prefix}__overlay {
+      #{$root}__overlay {
         display: none;
       }
 
@@ -49,7 +41,7 @@
     }
 
     &--variant-text {
-      .#{$prefix}__overlay {
+      #{$root}__overlay {
         background: currentColor;
       }
     }
@@ -57,19 +49,36 @@
     &--variant-contained-text,
     &--variant-contained-outlined {
       background: rgb(var(--ve-theme-surface));
-      color: rgb(var(--ve-theme-on-surface));
+      color: tools.map-deep-get($variants, 'contained', 'color');
 
-      .#{$prefix}__underlay {
+      #{$root}__underlay {
         background: currentColor;
-        opacity: var(--ve-activated-opacity);
         border-radius: inherit;
-        position: absolute;
-        top: 0;
-        right: 0;
         bottom: 0;
-        left: 0;
+        opacity: var(--ve-activated-opacity);
         pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
         transition: opacity 0.2s ease-in-out;
+      }
+    }
+
+    &--variant-outlined:not(#{&}--border),
+    &--variant-contained-outlined:not(#{&}--border) {
+      #{$root}__border {
+        bottom: 0;
+        border-color: currentColor;
+        border-radius: inherit;
+        border-style: inherit;
+        border-width: thin;
+        opacity: .26;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
       }
     }
   }

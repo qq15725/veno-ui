@@ -5,24 +5,7 @@
 $card-paper: () !default;
 $card-paper: tools.map-deep-merge(
     (
-      'variants': (
-        'contained': (
-          'background': rgb(var(--ve-theme-surface)),
-          'color': rgb(var(--ve-theme-on-surface)),
-        ),
-      ),
-      'positions': absolute fixed,
       'use-size': false,
-      'borders': (
-        'default': (
-          'color': settings.$border-color,
-          'style': settings.$border-style,
-          'width': 0,
-        ),
-        'existence': (
-          'width': thin,
-        ),
-      ),
     ),
     $card-paper
 );

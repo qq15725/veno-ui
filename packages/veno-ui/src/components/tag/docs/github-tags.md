@@ -1,9 +1,9 @@
 :::demo
 
-# GitHub Tags
+# GitHub 样式的标签
 
 ```html
-<ve-spacer gutter="md">
+<ve-spacer>
   <ve-tag
     v-for="tag in [
       'components', 'typescript', 'ui',
