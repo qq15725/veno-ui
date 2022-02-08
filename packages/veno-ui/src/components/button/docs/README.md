@@ -40,6 +40,8 @@ loading.md
 
 group.md
 
+theme.md
+
 :::
 
 ## API

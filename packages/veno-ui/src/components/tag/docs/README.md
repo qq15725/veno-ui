@@ -21,7 +21,7 @@ shape.md
 
 color.md
 
-github-tags.md
+github-theme-tags.md
 
 :::
 
