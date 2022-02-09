@@ -11,8 +11,6 @@ import { makeTagProps } from '../../composables/tag'
 // Types
 import type { PropType } from 'vue'
 
-export type TableCell = InstanceType<typeof TableCell>
-
 export function filterTableCellProps (attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(TableCell.props))
 }
@@ -65,3 +63,5 @@ export const TableCell = defineComponent({
     }
   }
 })
+
+export type TableCell = InstanceType<typeof TableCell>

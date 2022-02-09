@@ -10,16 +10,18 @@ export const ListKey: InjectionKey<{
 }> = Symbol.for('veno-ui:list')
 
 export function provideList () {
-  const provider = {
+  const parent = inject(ListKey, { hasPrepend: ref(false), updateHasPrepend: () => null })
+
+  const data = {
     hasPrepend: ref(false),
     updateHasPrepend: (value: boolean) => {
-      if (value) provider.hasPrepend.value = value
-    }
+      if (value) data.hasPrepend.value = value
+    },
   }
 
-  provide(ListKey, provider)
+  provide(ListKey, data)
 
-  return provider
+  return parent
 }
 
 export function useList () {

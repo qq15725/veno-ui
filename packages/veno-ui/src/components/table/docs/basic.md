@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-spacer>
+<ve-spacer class="mb-3">
   <ve-switch label="显示边框" v-model="border" />
   <ve-switch label="隐藏表头" v-model="hideHeader" />  
   <ve-switch label="固定表头" v-model="fixedHeader" />  

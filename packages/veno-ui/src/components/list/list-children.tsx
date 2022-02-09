@@ -1,51 +1,66 @@
+// Utils
+import { genericComponent } from '../../utils'
+
 // Components
 import { ListGroup } from './list-group'
 import { ListItem } from './list-item'
+import { Divider } from '../divider'
+import { ListSubheader } from './list-subheader'
 
-// Utilities
-import { genericComponent } from '../../utils'
+// Composables
+import { provideList } from './composables/list'
 
 // Types
 import type { Prop } from 'vue'
 import type { MakeSlots } from '../../utils'
-import type { ListGroupHeaderSlot } from './list-group'
-import type { ListItemProp } from './list'
+import type { InternalListItemProps } from './list'
+import type { ListGroupActivatorSlot } from './list-group'
+import type { ListItemTitleSlot, ListItemSubtitleSlot } from './list-item'
 
-export const ListChildren = genericComponent<new <T extends ListItemProp>() => {
+export type ListChildrenSlots<T> = MakeSlots<{
+  default: []
+  header: [ListGroupActivatorSlot]
+  item: [T]
+  title: [ListItemTitleSlot]
+  subtitle: [ListItemSubtitleSlot]
+}>
+
+export const ListChildren = genericComponent<new <T extends InternalListItemProps>() => {
   $props: {
     items?: T[]
   }
-  $slots: MakeSlots<{
-    default: []
-    externalHeader: [ListGroupHeaderSlot]
-    item: [T]
-  }>
+  $slots: ListChildrenSlots<T>
 }>()({
   name: 'VeListChildren',
 
   props: {
-    items: Array as Prop<ListItemProp[]>,
+    items: Array as Prop<InternalListItemProps[]>,
   },
 
   setup (props, { slots }) {
-    return () => slots.default?.() ?? props.items?.map(({ children, ...item }) => {
-      const { value, ...rest } = item
+    provideList()
+
+    return () => slots.default?.() ?? props.items?.map(({ children, props: itemProps, type }) => {
+
+      if (type === 'divider') return <Divider { ...itemProps } />
+
+      if (type === 'subheader') return <ListSubheader { ...itemProps } v-slots={ slots } />
+
       return children ? (
-        <ListGroup
-          value={ value }
-          items={ children }
-        >
+        <ListGroup value={ itemProps?.value }>
           { {
-            ...slots,
-            header: headerProps => (
-              slots.externalHeader?.({ ...rest, ...headerProps })
-              ?? <ListItem { ...rest } { ...headerProps } />
-            )
+            default: () => (
+              <ListChildren items={ children } v-slots={ slots } />
+            ),
+            activator: ({ props: activatorProps }) => (
+              slots.header?.({ ...itemProps, ...activatorProps })
+              ?? <ListItem { ...itemProps } { ...activatorProps } />
+            ),
           } }
         </ListGroup>
       ) : (
-        slots.item?.(item)
-        ?? <ListItem { ...item } v-slots={ slots } />
+        slots.item?.(itemProps)
+        ?? <ListItem { ...itemProps } v-slots={ slots } />
       )
     })
   },

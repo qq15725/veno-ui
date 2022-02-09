@@ -1,14 +1,25 @@
 @use '../../../styles/tools';
+@use '../../../styles/settings';
 
 .ve-menu {
   z-index: 800;
-
   .ve-overlay__content {
     display: flex;
     flex-direction: column;
+    border-radius: settings.$border-radius;
 
-    .ve-card {
+    > .ve-card,
+    > .ve-list {
+      background: rgb(var(--ve-theme-surface));
+      border-radius: inherit;
+      height: 100%;
+      border: thin solid rgba(var(--ve-border-color), var(--ve-border-opacity));
       @include tools.elevation(8);
+    }
+
+    > .ve-list {
+      --ve-padding-y: 4px;
+      --ve-item-padding-x: 12px;
     }
   }
 }

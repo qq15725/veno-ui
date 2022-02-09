@@ -13,11 +13,6 @@
     @include tools.active-states('.ve-table-cell__overlay');
   }
 
-  &__wrap {
-    display: flex;
-    align-items: center;
-  }
-
   &__sorter {
     margin-inline-start: 8px;
     color: rgba(var(--ve-theme-on-surface), var(--ve-disabled-opacity));

@@ -11,8 +11,8 @@
   <ve-card width="180">
     <ve-card-text>
       <ve-checkbox-group hide-details>
-        <ve-checkbox label="> 20000" />
-        <ve-checkbox label="> 30000" />
+        <ve-checkbox value="> 20000" />
+        <ve-checkbox value="> 30000" />
       </ve-checkbox-group>
     </ve-card-text>
 

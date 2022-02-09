@@ -18,7 +18,7 @@ export default defineComponent({
         {
           title: 'dashboard',
           prependIcon: 'mdi-view-dashboard',
-          children: [
+          $children: [
             { title: '主控台', link: true },
             { title: '工作台', link: true }
           ]
@@ -26,7 +26,7 @@ export default defineComponent({
         {
           title: '系统设置', 
           prependIcon: 'mdi-tune',
-          children: [
+          $children: [
             { title: '菜单权限管理', link: true },
             { title: '角色权限管理', link: true }
           ]

@@ -7,9 +7,6 @@ import { defineComponent, pick } from '../../utils'
 // Components
 import { TableCell, makeTableCellProps, filterTableCellProps } from './table-cell'
 
-// Types
-export type TableTd = InstanceType<typeof TableTd>
-
 export function filterTableTdProps (attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(TableTd.props))
 }
@@ -29,10 +26,12 @@ export const TableTd = defineComponent({
       return (
         <TableCell
           { ...tableCellProps }
-          class={ {
-            've-table-td': true,
-            've-table-td--sorted': props.sorted
-          } }
+          class={ [
+            've-table-td',
+            {
+              've-table-td--sorted': props.sorted
+            }
+          ] }
           tag="td"
         >
           { slots }
@@ -41,3 +40,5 @@ export const TableTd = defineComponent({
     }
   }
 })
+
+export type TableTd = InstanceType<typeof TableTd>

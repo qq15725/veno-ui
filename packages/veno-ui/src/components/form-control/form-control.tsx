@@ -38,8 +38,6 @@ export type FormControlSlots = MakeSlots<{
   details: [FormControlSlot],
 }>
 
-export type FormControl = InstanceType<typeof FormControl>
-
 export function filterFormControlProps (props: ExtractPropTypes<ReturnType<typeof makeFormControlProps>>) {
   return pick(props, Object.keys(FormControl.props) as any)
 }
@@ -201,3 +199,5 @@ export const FormControl = genericComponent<new () => {
     return {}
   }
 })
+
+export type FormControl = InstanceType<typeof FormControl>

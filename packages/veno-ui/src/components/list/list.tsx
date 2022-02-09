@@ -2,7 +2,7 @@
 import './styles/list.scss'
 
 // Utils
-import { toRef } from 'vue'
+import { computed, toRef } from 'vue'
 import { genericComponent, useRender } from '../../utils'
 
 // Composables
@@ -13,49 +13,61 @@ import { provideList } from './composables/list'
 import { provideDefaults } from '../../composables/defaults'
 
 // Components
-import { ListSubheader } from './list-subheader'
 import { ListChildren } from './list-children'
 
 // Types
 import type { Prop } from 'vue'
-import type { MakeSlots } from '../../utils'
-import type { ListGroupHeaderSlot } from './list-group'
+import type { ListChildrenSlots } from './list-children'
 
-export type List = InstanceType<typeof List>
-
-export type ListItemProp = {
-  children?: ListItemProp[]
-  value?: string
+export type ListItemProps = {
+  [key: string]: any
+  $type?: 'item' | 'subheader' | 'divider'
+  $children?: (string | ListItemProps)[]
 }
+
+export type InternalListItemProps = {
+  type?: 'item' | 'subheader' | 'divider'
+  props?: Record<string, any>
+  children?: InternalListItemProps[]
+}
+
+function parseItems (items?: (string | ListItemProps)[]): InternalListItemProps[] | undefined {
+  if (!items) return undefined
+
+  return items.map(item => {
+    if (typeof item === 'string') return { type: 'item', value: item, title: item }
+
+    const { $type, $children, ...props } = item
+
+    if ($type === 'subheader') return { type: 'subheader', props }
+    if ($type === 'divider') return { type: 'divider', props }
+
+    return { type: 'item', props, children: parseItems($children) }
+  })
+}
+
+export type ListSlots<T> = ListChildrenSlots<T>
 
 export const List = genericComponent<new <T>() => {
   $props: {
     items?: T[]
   }
-  $slots: MakeSlots<{
-    subheader: []
-    header: [ListGroupHeaderSlot]
-    item: [T]
-  }>
+  $slots: ListSlots<T>
 }>()({
   name: 'VeList',
 
   props: {
     nav: Boolean,
-    subheader: {
-      type: [Boolean, String],
-      default: false,
-    },
-    items: Array as Prop<ListItemProp[]>,
-    ...makePaperProps({
-      size: undefined,
-    } as const),
-    ...makeDisabledProps(),
+    items: Array as Prop<ListItemProps[]>,
     ...makeNestedProps({
       selectStrategy: 'leaf',
       openStrategy: 'multiple',
       activeStrategy: 'single',
     } as const),
+    ...makePaperProps({
+      size: undefined,
+    } as const),
+    ...makeDisabledProps(),
   },
 
   emits: {
@@ -65,9 +77,11 @@ export const List = genericComponent<new <T>() => {
   },
 
   setup (props, { slots }) {
+    const items = computed(() => parseItems(props.items))
     const { paperClasses, paperStyles } = usePaper(props)
     const { disabledClasses } = useDisabled(props)
     const { open, select, activate } = useNested(props)
+
     provideList()
 
     provideDefaults({
@@ -77,15 +91,12 @@ export const List = genericComponent<new <T>() => {
     })
 
     useRender(() => {
-      const hasHeader = typeof props.subheader === 'string' || slots.subheader
-
       return (
         <props.tag
           class={ [
             've-list',
             {
               've-list--nav': props.nav,
-              've-list--subheader': props.subheader,
             },
             paperClasses.value,
             disabledClasses.value,
@@ -94,17 +105,8 @@ export const List = genericComponent<new <T>() => {
             paperStyles.value,
           ] }
         >
-          { hasHeader && (
-            slots.subheader?.()
-            ?? <ListSubheader>{ props.subheader }</ListSubheader>
-          ) }
-
-          <ListChildren items={ props.items }>
-            { {
-              default: slots.default,
-              item: slots.item,
-              externalHeader: slots.header,
-            } }
+          <ListChildren items={ items.value }>
+            { slots }
           </ListChildren>
         </props.tag>
       )
@@ -115,5 +117,7 @@ export const List = genericComponent<new <T>() => {
       select,
       activate
     }
-  }
+  },
 })
+
+export type List = InstanceType<typeof List>

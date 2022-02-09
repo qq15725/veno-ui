@@ -27,7 +27,7 @@ export const Avatar = defineComponent({
     text: String,
     ...makePaperProps({
       color: 'secondary',
-      shape: 'rounded',
+      shape: 'circle',
     } as const),
   },
 

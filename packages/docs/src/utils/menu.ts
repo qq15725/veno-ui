@@ -9,7 +9,7 @@ interface MenuItem
 
   // 可选
   to?: RouteLocationRaw // 页面路由
-  children?: MenuItem[] // 子菜单项
+  $children?: MenuItem[] // 子菜单项
 }
 
 function createStringCollator (locale = 'en-US'): Intl.Collator {
@@ -56,8 +56,8 @@ export function routesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
       if (title) {
         const menuGroup = menus.find(v => `group-${ title }` === v.value)
           || initMenuGroup(title)
-        menuGroup.children = menuGroup.children || []
-        menuGroup.children.push(menuItem)
+        menuGroup.$children = menuGroup.$children || []
+        menuGroup.$children.push(menuItem)
       } else {
         menus.push(menuItem)
       }
@@ -65,9 +65,9 @@ export function routesToMenus (routes: RouteRecordRaw[]): MenuItem[] {
       return menus
     }, [] as MenuItem[])
     .sort((a, b) => {
-      if (!a.children && b.children) {
+      if (!a.$children && b.$children) {
         return -1
-      } else if (a.children && !b.children) {
+      } else if (a.$children && !b.$children) {
         return 1
       } else {
         return defaultStringCollator.compare(a.title, b.title)

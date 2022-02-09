@@ -11,28 +11,22 @@ import { useNestedGroup } from '../../composables/nested'
 import { makeTagProps } from '../../composables/tag'
 
 // Components
-import { ListGroupItems } from './list-group-items'
+import { ExpandTransition } from '../transition'
 
 // Types
-import type { Prop } from 'vue'
 import type { MakeSlots } from '../../utils'
-import type { ListItemProp } from './list'
 
-export type ListGroupHeaderSlot = {
-  onClick: (e: Event) => void
-  appendIcon: string
-  class: string
+export type ListGroupActivatorSlot = {
+  props: {
+    onClick: (e: Event) => void
+    appendIcon: string
+    class: string
+  }
 }
 
-export type ListGroup = InstanceType<typeof ListGroup>
-
-export const ListGroup = genericComponent<new <T extends ListItemProp>() => {
-  $props: {
-    items?: T[]
-  }
+export const ListGroup = genericComponent<new () => {
   $slots: MakeSlots<{
-    header: [ListGroupHeaderSlot]
-    item: [T]
+    activator: [ListGroupActivatorSlot]
     default: []
   }>
 }>()({
@@ -48,7 +42,6 @@ export const ListGroup = genericComponent<new <T extends ListItemProp>() => {
       type: String,
       default: '$expand',
     },
-    items: Array as Prop<ListItemProp[]>,
 
     ...makeTagProps(),
   },
@@ -61,10 +54,11 @@ export const ListGroup = genericComponent<new <T extends ListItemProp>() => {
       open(!isOpen.value, e)
     }
 
-    const headerProps = computed(() => ({
+    const activatorProps = computed(() => ({
       onClick,
       appendIcon: isOpen.value ? props.collapseIcon : props.expandIcon,
       class: 've-list-group__header',
+      value: `${ props.value }_header`,
     }))
 
     return () => {
@@ -77,15 +71,17 @@ export const ListGroup = genericComponent<new <T extends ListItemProp>() => {
             },
           ] }
         >
-          { slots.header?.(headerProps.value) }
+          { slots.activator?.({ props: activatorProps.value }) }
 
-          <ListGroupItems
-            items={ props.items }
-            open={ isOpen.value }
-            v-slots={ slots }
-          />
+          <ExpandTransition>
+            <div class="ve-list-group__items" v-show={ isOpen.value }>
+              { slots.default?.() }
+            </div>
+          </ExpandTransition>
         </props.tag>
       )
     }
   },
 })
+
+export type ListGroup = InstanceType<typeof ListGroup>

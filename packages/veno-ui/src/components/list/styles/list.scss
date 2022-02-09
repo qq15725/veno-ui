@@ -3,11 +3,24 @@
 @use '../../../styles/tools';
 
 .ve-list {
-  --ve-list-indent: 0px;
+  --ve-padding-y: 8px;
+  --ve-indent-padding: 0px;
+  --ve-item-padding-x: 16px;
+  --ve-item-avatar-size: calc(40px + var(--ve-density-offset));
+
   overflow: auto;
   position: relative;
-  padding: 8px 0;
+  padding: var(--ve-padding-y) 0;
   @include tools.use-paper($list-paper);
+
+  &--disabled {
+    pointer-events: none;
+    user-select: none;
+
+    > [class*='v-list-'] {
+      opacity: 0.6;
+    }
+  }
 
   &--nav {
     .ve-list-group + .ve-list-group,

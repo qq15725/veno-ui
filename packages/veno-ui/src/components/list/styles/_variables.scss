@@ -3,45 +3,22 @@
 @use '../../../styles/tools';
 
 // List
-$list-background: rgba(var(--ve-theme-surface)) !default;
-$list-color: rgba(var(--ve-theme-on-surface)) !default;
-
 $list-paper: () !default;
 $list-paper: tools.map-deep-merge(
     (
-      'variants': (
-        'contained': (
-          'background': $list-background,
-          'color': $list-color,
-        ),
-      ),
       'use-size': false,
-      'use-density': false,
     ),
     $list-paper
 );
 
 // ListItem
-$list-item-padding: 8px 16px !default;
-
 $list-item-paper: () !default;
 $list-item-paper: tools.map-deep-merge(
     (
-      'variants': (
-        'contained': (
-          'background': $list-background,
-          'color': $list-color,
-        ),
-      ),
       'use-size': false,
     ),
     $list-item-paper
 );
-
-// ListItemAvatar
-$list-item-avatar-size: 40px !default;
-$list-item-avatar-margin-start: 16px !default;
-$list-item-avatar-margin-end: 16px !default;
 
 // ListItemTitle
 $list-item-title-font-size: tools.map-deep-get(settings.$typography, 'body-1', 'size') !default;
@@ -73,7 +50,3 @@ $list-item-nav-title-typography: (
   $list-item-nav-title-line-height,
   null
 );
-
-// indent
-$list-indent: list.nth($list-item-padding, 2) !default;
-$list-indent-offset: 16px !default;

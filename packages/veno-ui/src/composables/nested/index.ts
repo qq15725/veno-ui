@@ -30,7 +30,7 @@ export interface NestedProps {
   'onUpdate:active': ((val: string[]) => void) | undefined
 }
 
-type NestedProvide = {
+type NestedInstance = {
   id: Ref<string | null>
   root: {
     children: Ref<Map<string, string[]>>
@@ -47,9 +47,9 @@ type NestedProvide = {
   }
 }
 
-const VeNestedSymbol: InjectionKey<NestedProvide> = Symbol.for('veno-ui:nested')
+const NestedKey: InjectionKey<NestedInstance> = Symbol.for('veno-ui:nested')
 
-const emptyNested: NestedProvide = {
+const emptyNested: NestedInstance = {
   id: ref(null),
   root: {
     register: () => null,
@@ -131,7 +131,7 @@ export const useNested = (props: NestedProps) => {
     isUnmounted = true
   })
 
-  const nested: NestedProvide = {
+  const nested: NestedInstance = {
     id: ref(null),
     root: {
       opened,
@@ -210,13 +210,13 @@ export const useNested = (props: NestedProps) => {
     },
   }
 
-  provide(VeNestedSymbol, nested)
+  provide(NestedKey, nested)
 
   return nested.root
 }
 
 export const useNestedItem = (id: Ref<string | undefined>) => {
-  const parent = inject(VeNestedSymbol, emptyNested)
+  const parent = inject(NestedKey, emptyNested)
 
   const computedId = computed(() => id.value ?? getUid().toString())
 
@@ -240,7 +240,7 @@ export const useNestedItem = (id: Ref<string | undefined>) => {
 }
 
 export const useNestedGroup = (props: { value: string }) => {
-  const parent = inject(VeNestedSymbol, emptyNested)
+  const parent = inject(NestedKey, emptyNested)
 
   const id = computed(() => props.value ?? getUid().toString())
 
@@ -259,7 +259,7 @@ export const useNestedGroup = (props: { value: string }) => {
     parent.root.unregister(id.value)
   })
 
-  provide(VeNestedSymbol, group)
+  provide(NestedKey, group)
 
   return group
 }

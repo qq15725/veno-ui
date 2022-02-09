@@ -7,7 +7,7 @@
   <ve-list>
     <ve-list-subheader>Subtitle</ve-list-subheader>
     <ve-list-group>
-      <template #header="props">
+      <template #activator="{ props }">
         <ve-list-item v-bind="props" title="Navigation 1" />
       </template>
       <ve-list-item title="Menu 1" link />

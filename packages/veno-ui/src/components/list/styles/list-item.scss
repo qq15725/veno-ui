@@ -5,10 +5,15 @@
 
 .ve-list-item {
   $root: &;
+
   --ve-density-offset: 0px;
-  --ve-default-height: 48px;
-  --ve-min-height: calc(var(--ve-default-height) + var(--ve-density-offset));
+  --ve-default-min-height: 48px;
+  --ve-min-height: calc(var(--ve-default-min-height) + var(--ve-density-offset));
   --ve-padding-y: calc(8px + var(--ve-density-offset));
+  --ve-padding-x: var(--ve-item-padding-x, 16px);
+  --ve-avatar-size: calc(40px + var(--ve-density-offset));
+  --ve-avatar-margin: calc(var(--ve-padding-x));
+
   position: relative;
   display: flex;
   align-items: center;
@@ -16,22 +21,28 @@
   text-decoration: none;
   transition: .2s settings.$standard-easing;
   min-height: var(--ve-min-height);
-  padding: var(--ve-padding-y) 16px;
+  padding: var(--ve-padding-y) var(--ve-padding-x);
   @include tools.use-paper($list-item-paper);
   @include tools.overlay(#{&}__overlay);
   @include tools.states(#{&}__overlay);
+
+  &--disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.6;
+  }
 
   &--link {
     cursor: pointer;
   }
 
   &--prepend,
-  .ve-list-group-items &--prepend {
-    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px) + #{$list-item-avatar-size} + #{$list-item-avatar-margin-start}) !important;
+  .ve-list-group__items &--prepend {
+    padding-inline-start: calc(var(--ve-padding-x) + var(--ve-indent-padding, 0px) + var(--ve-avatar-size) + var(--ve-avatar-margin)) !important;
   }
 
-  // ListGroupItems
-  .ve-list-group-items & {
-    padding-inline-start: calc(#{$list-indent} + var(--ve-list-indent, 0px)) !important;
+  // ListGroup
+  .ve-list-group__items & {
+    padding-inline-start: calc(var(--ve-padding-x) + var(--ve-indent-padding, 0px)) !important;
   }
 }

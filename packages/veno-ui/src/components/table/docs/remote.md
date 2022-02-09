@@ -3,39 +3,31 @@
 # 服务端数据
 
 ```html
-<ve-lazy>
-  <ve-table
-    remote
-    fixed-header
-    height="400"
-    :headers="headers"
-    :items="items"
-    :loading="loading"
-    :pagination="pagination"
-    @update:options="handleOptions"
-  >
-    <template #item.short_title="{ item }">
-      <ve-tooltip
-        #activator="{ props }"
-        :text="item.title"
-        :open-delay="500"
-        anchor="top"
-      >
-        <ve-link
-          :href="item.url"
-          target="_blank"
-          v-bind="props"
-        >
-          {{ item.short_title }}
-        </ve-link>
-      </ve-tooltip>
-    </template>
+<ve-table
+  remote
+  fixed-header
+  height="400"
+  :headers="headers"
+  :items="items"
+  :loading="loading"
+  :pagination="pagination"
+  @update:options="handleOptions"
+>
+  <template #item.short_title="{ item }">
+    <ve-tooltip
+      #activator="{ props }"
+      :text="item.title"
+      :open-delay="500"
+      anchor="top"
+    >
+      <ve-link :href="item.url" target="_blank" v-bind="props">{{ item.short_title }}</ve-link>
+    </ve-tooltip>
+  </template>
 
-    <template #item.cover="{ item }">
-      <ve-image :src="item.cover" width="50" :aspect-ratio="1" />
-    </template>
-  </ve-table>
-</ve-lazy>
+  <template #item.cover="{ item }">
+    <ve-image :src="item.cover" width="50" :aspect-ratio="1" />
+  </template>
+</ve-table>
 ```
 
 ```js
@@ -83,47 +75,14 @@ export default defineComponent({
       },
       loading,
       headers: ref([
-        {
-          text: '封面',
-          width: 80,
-          value: 'cover',
-        },
-        {
-          text: '标题',
-          minWidth: 200,
-          value: 'short_title'
-        },
-        {
-          text: '原价',
-          width: 120,
-          value: 'coupons.0.coupon_product.original_price'
-        },
-        {
-          text: '券后价',
-          width: 120,
-          value: 'coupons.0.coupon_product.price'
-        },
-        {
-          text: '销量',
-          width: 120,
-          value: 'sales_count',
-          sortable: true,
-        },
-        {
-          text: '分类',
-          width: 120,
-          value: 'category_unionid'
-        },
-        {
-          text: '商家',
-          width: 150,
-          value: 'shop.name'
-        },
-        {
-          text: '商家地址',
-          width: 120,
-          value: 'provcity'
-        },
+        { text: '封面', width: 80, value: 'cover', },
+        { text: '标题', minWidth: 200, value: 'short_title' },
+        { text: '原价', width: 120, value: 'coupons.0.coupon_product.original_price' },
+        { text: '券后价', width: 120, value: 'coupons.0.coupon_product.price' },
+        { text: '销量', width: 120, value: 'sales_count', sortable: true, },
+        { text: '分类', width: 120, value: 'category_unionid' },
+        { text: '商家', width: 150, value: 'shop.name' },
+        { text: '商家地址', width: 120, value: 'provcity' },
       ]),
       items,
       pagination,

@@ -64,15 +64,12 @@ export type InputSlots = MakeSlots<{
   label: [FormControlSlot],
   prependInner: [InputControlSlot],
   prefix: [InputControlSlot],
-  default: [InputControlSlot],
   suffix: [InputControlSlot],
   appendInner: [InputControlSlot],
   clear: [InputControlSlot],
   append: [FormControlSlot],
   counter: [],
 }>
-
-export type Input = InstanceType<typeof Input>
 
 export const Input = genericComponent<new () => {
   $slots: InputSlots
@@ -224,24 +221,24 @@ export const Input = genericComponent<new () => {
                       if (isTextarea) {
                         return (
                           <>
-                          <textarea
-                            v-model={ model.value }
-                            v-intersect={ [{
-                              handler: onIntersect,
-                            }, null, ['once']] }
-                            autofocus={ props.autofocus }
-                            disabled={ isDisabled.value }
-                            id={ id.value }
-                            name={ props.name }
-                            onFocus={ focus }
-                            onBlur={ blur }
-                            placeholder={ props.placeholder }
-                            readonly={ isReadonly.value }
-                            ref={ inputRef }
-                            rows={ props.rows }
-                            { ...nativeControlProps }
-                            { ...restAttrs }
-                          />
+                            <textarea
+                              v-model={ model.value }
+                              v-intersect={ [{
+                                handler: onIntersect,
+                              }, null, ['once']] }
+                              autofocus={ props.autofocus }
+                              disabled={ isDisabled.value }
+                              id={ id.value }
+                              name={ props.name }
+                              onFocus={ focus }
+                              onBlur={ blur }
+                              placeholder={ props.placeholder }
+                              readonly={ isReadonly.value }
+                              ref={ inputRef }
+                              rows={ props.rows }
+                              { ...nativeControlProps }
+                              { ...restAttrs }
+                            />
 
                             {
                               props.autoGrow && (
@@ -317,3 +314,5 @@ export const Input = genericComponent<new () => {
     }
   }
 })
+
+export type Input = InstanceType<typeof Input>

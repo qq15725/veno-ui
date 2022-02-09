@@ -4,16 +4,15 @@
 
 .ve-list-item-avatar {
   align-self: center;
+  color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
   transition: inherit;
   transition-property: height, width;
-  width: $list-item-avatar-size;
-  height: $list-item-avatar-size;
 
   &--start {
-    margin-inline-end: $list-item-avatar-margin-end;
+    margin-inline-end: var(--ve-avatar-margin, 16px);
   }
 
   &--end {
-    margin-inline-start: $list-item-avatar-margin-start;
+    margin-inline-start: var(--ve-avatar-margin, 16px);
   }
 }
