@@ -7,8 +7,14 @@ import { defineComponent, propsFactory, pick, convertToUnit } from '../../utils'
 
 import { makeProgressLinearProps } from './progress-linear'
 
+// 以直径作为标准系数
+const diameter = 24
+
 export const makeProgressCircularProps = propsFactory({
-  size: [String, Number],
+  size: {
+    type: [String, Number],
+    default: diameter,
+  },
   rotate: {
     type: [Number, String],
     default: 0,
@@ -26,12 +32,7 @@ export const ProgressCircular = defineComponent({
   props: makeProgressCircularProps(),
 
   setup (props) {
-    const value = computed(() => {
-      return Math.max(0, Math.min(100, parseFloat(String(props.modelValue))))
-    })
-    const diameter = computed(() => {
-      return 24
-    })
+    const value = computed(() => Math.max(0, Math.min(100, parseFloat(String(props.modelValue)))))
     const radius = computed(() => {
       const rate = Math.max(
         Number(props.strokeWidth) && Number(props.size)
@@ -39,17 +40,11 @@ export const ProgressCircular = defineComponent({
           : 0.5,
         0.5
       )
-      return diameter.value * rate / 2
+      return diameter * rate / 2
     })
-    const strokeWidth = computed(() => {
-      return diameter.value - radius.value * 2
-    })
-    const circumference = computed(() => {
-      return 2 * Math.PI * radius.value
-    })
-    const offset = computed(() => {
-      return convertToUnit(((100 - value.value) / 100) * circumference.value)
-    })
+    const strokeWidth = computed(() => diameter - radius.value * 2)
+    const circumference = computed(() => 2 * Math.PI * radius.value)
+    const offset = computed(() => convertToUnit(((100 - value.value) / 100) * circumference.value))
 
     return () => (
       <svg
@@ -58,13 +53,11 @@ export const ProgressCircular = defineComponent({
           {
             've-progress-circular--active': props.active,
             've-progress-circular--indeterminate': props.indeterminate,
-          }
+          },
         ] }
-        style={ {
-          transform: `rotate(calc(-90deg + ${ Number(props.rotate) }deg))`,
-        } }
+        style={ { transform: `rotate(calc(-90deg + ${ Number(props.rotate) }deg))`, } }
         xmlns="http://www.w3.org/2000/svg"
-        viewBox={ `0 0 ${ diameter.value } ${ diameter.value }` }
+        viewBox={ `0 0 ${ diameter } ${ diameter }` }
       >
         <circle
           class="ve-progress-circular__underlay"

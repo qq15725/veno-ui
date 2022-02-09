@@ -16,7 +16,7 @@ export const makeProgressLinearProps = propsFactory({
   },
   strokeWidth: {
     type: [Number, String],
-    default: 3,
+    default: 2,
   },
   indeterminate: Boolean,
 }, 'progress-linear')

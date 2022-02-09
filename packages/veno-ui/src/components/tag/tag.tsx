@@ -8,6 +8,7 @@ import { defineComponent } from '../../utils'
 import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'
+import { makeLoadingProps, useLoading } from '../../composables/loading'
 
 // Components
 import { Icon } from '../icon'
@@ -29,6 +30,7 @@ export const Tag = defineComponent({
       default: true,
     },
     text: String,
+    ...makeLoadingProps(),
     ...makeTransitionProps({
       transition: { component: FadeInExpandTransition },
     } as const),
@@ -46,13 +48,14 @@ export const Tag = defineComponent({
   setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
+    const { loadingClasses } = useLoading(props)
 
     function onCloseClick (e: Event) {
       isActive.value = false
     }
 
     return () => {
-      const hasClosable = props.closable && props.closeIcon
+      const hasClosable = props.loading || (props.closable && props.closeIcon)
 
       return (
         <MaybeTransition transition={ props.transition }>
@@ -60,7 +63,8 @@ export const Tag = defineComponent({
             <props.tag
               class={ [
                 've-tag',
-                paperClasses.value
+                paperClasses.value,
+                loadingClasses.value,
               ] }
               style={ paperStyles.value }
             >
@@ -83,6 +87,7 @@ export const Tag = defineComponent({
                   ripple={ false }
                   class="ve-tag__close"
                   size="x-small"
+                  loading={ props.loading }
                   icon={ props.closeIcon }
                   onClick={ onCloseClick }
                 />

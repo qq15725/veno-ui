@@ -12,16 +12,12 @@ import { makeSizeProps, useSize } from '../../composables/size'
 import { useTextColor } from '../../composables/color'
 import { useVariant } from '../../composables/variant'
 import { useIntersectionObserver } from '../../composables/intersection-observer'
+import { ProgressLinear, filterProgressLinearProps } from './progress-linear'
 import {
   ProgressCircular,
   makeProgressCircularProps,
   filterProgressCircularProps
 } from './progress-circular'
-import {
-  ProgressLinear,
-  makeProgressLinearProps,
-  filterProgressLinearProps
-} from './progress-linear'
 
 // Constants
 export const progressVariants = [
@@ -46,7 +42,6 @@ export const Progress = defineComponent({
     left: Boolean,
     right: Boolean,
     ...makeProgressCircularProps(),
-    ...makeProgressLinearProps(),
     ...makeThemeProps(),
     ...makeSizeProps(),
     ...makeTagProps(),
@@ -108,16 +103,11 @@ export const Progress = defineComponent({
           ] }
         >
           { props.variant === 'circular' && (
-            <ProgressCircular
-              { ...progressCircularProps }
-              size={ size.value }
-            />
+            <ProgressCircular { ...progressCircularProps } size={ size.value } />
           ) }
 
           { props.variant === 'linear' && (
-            <ProgressLinear
-              { ...progressLinearProps }
-            />
+            <ProgressLinear { ...progressLinearProps } />
           ) }
 
           { slots.default && (

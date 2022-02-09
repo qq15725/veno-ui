@@ -136,9 +136,7 @@ export const Col = defineComponent({
     })
 
     return () => (
-      <props.tag class={ classes.value }>
-        { slots }
-      </props.tag>
+      <props.tag class={ classes.value }>{ slots }</props.tag>
     )
   },
 })

@@ -9,32 +9,36 @@ import { Row, Col } from '../grid'
 import { makeRowProps } from '../grid/row'
 import { makeColProps } from '../grid/col'
 
-export type Spacer = InstanceType<typeof Spacer>
-
 export const Spacer = defineComponent({
   name: 'VeSpacer',
 
   props: {
     ...makeRowProps(),
     ...makeColProps({
-      cols: 'auto'
+      cols: 'auto',
     }),
   },
 
   setup (props, { slots }) {
     return () => {
-      if (!slots.default) return <div class="ve-spacer" />
+      const children = flattenFragments(slots.default?.() ?? [])
+
+      if (!children.length) {
+        return <div class="ve-spacer" />
+      }
 
       const [rowProps] = pick(props, Object.keys(Row.props) as any)
       const [colProps] = pick(props, Object.keys(Col.props) as any)
 
       return (
-        <Row class="ve-spacer" { ...rowProps }>
-          { flattenFragments(slots.default()).map((node: any) => (
-            <Col { ...colProps }>{ node }</Col>
+        <Row { ...rowProps } class="ve-spacer">
+          { children.map((child, index) => (
+            <Col { ...colProps } key={ index }>{ child }</Col>
           )) }
         </Row>
       )
     }
   }
 })
+
+export type Spacer = InstanceType<typeof Spacer>

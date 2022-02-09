@@ -13,7 +13,7 @@ import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 
 // Components
-import { Progress } from '../progress'
+import { ProgressCircular } from '../progress/progress-circular'
 import { Icon } from '../icon'
 
 // Directives
@@ -21,9 +21,6 @@ import { Ripple } from '../../directives/ripple'
 
 // Symbols
 import { ButtonToggleKey } from '../button-toggle/button-toggle'
-
-// Types
-export type Button = InstanceType<typeof Button>
 
 export const Button = defineComponent({
   name: 'VeButton',
@@ -123,12 +120,14 @@ export const Button = defineComponent({
           { genOverlays(props.overlay, 've-button') }
 
           { hasLoding && (
-            <Progress
+            <Icon
               class="ve-button__icon"
-              color="currentColor"
-              indeterminate
-              variant="circular"
-              stroke-width={ 2 }
+              icon={
+                <ProgressCircular
+                  color="currentColor"
+                  indeterminate
+                /> as any
+              }
               left={ !props.stacked && props.icon === false }
             />
           ) }
@@ -144,11 +143,13 @@ export const Button = defineComponent({
           { hasDefault && (
             typeof props.icon === 'boolean'
               ? <span>{ props.text ?? slots.default?.() }</span>
-              : <Icon
-                class="ve-button__icon"
-                icon={ props.icon }
-                size={ props.size }
-              />
+              : (
+                <Icon
+                  class="ve-button__icon"
+                  icon={ props.icon }
+                  size={ props.size }
+                />
+              )
           ) }
 
           { hasAppendIcon && (
@@ -163,3 +164,5 @@ export const Button = defineComponent({
     }
   }
 })
+
+export type Button = InstanceType<typeof Button>
