@@ -29,21 +29,20 @@ export interface InputControlSlot
 }
 
 export type InputControlSlots = MakeSlots<{
-  prependInner: [InputControlSlot],
+  'prepend-inner': [InputControlSlot],
   prefix: [InputControlSlot],
   default: [InputControlSlot & { props: Record<string, unknown> }],
   suffix: [InputControlSlot],
-  appendInner: [InputControlSlot],
+  'append-inner': [InputControlSlot],
   clear: [InputControlSlot],
 }>
-
-export type InputControl = InstanceType<typeof InputControl>
 
 export function filterInputControlProps (attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(InputControl.props))
 }
 
 export const makeInputControlProps = propsFactory({
+  prependInnerIcon: String,
   prefix: String,
   prefixIcon: String,
   suffix: String,
@@ -53,6 +52,7 @@ export const makeInputControlProps = propsFactory({
     type: String,
     default: '$clear',
   },
+  appendInnerIcon: String,
   disabled: Boolean,
 }, 'input-control')
 
@@ -68,7 +68,7 @@ export const InputControl = genericComponent<new () => {
   },
 
   emits: {
-    'click:clear': (e: Event) => true,
+    'click:clear': (e: MouseEvent) => true,
     'click:prepend-inner': (e: MouseEvent) => true,
     'click:prefix': (e: MouseEvent) => true,
     'click:suffix': (e: MouseEvent) => true,
@@ -113,11 +113,11 @@ export const InputControl = genericComponent<new () => {
     }
 
     useRender(() => {
-      const hasPrependInner = !!slots.prependInner
+      const hasPrependInner = !!slots['prepend-inner']
       const hasPrefix = slots.prefix || props.prefix || props.prefixIcon
       const hasClear = !!(props.clearable || slots.clear)
       const hasSuffix = slots.suffix || props.suffix || props.suffixIcon
-      const hasAppendInner = !!slots.appendInner
+      const hasAppendInner = !!slots['append-inner']
 
       return (
         <div
@@ -139,9 +139,15 @@ export const InputControl = genericComponent<new () => {
           { hasPrependInner && (
             <div
               class="ve-input-control__prepend-inner"
-              onClick={ e => emit('click:prepend-inner', e) }
             >
-              { slots.prependInner?.(slotProps.value) }
+              { slots['prepend-inner']?.(slotProps.value) }
+
+              { props.prependInnerIcon && (
+                <Icon
+                  onClick={ (e: MouseEvent) => emit('click:prepend-inner', e) }
+                  icon={ props.prependInnerIcon }
+                />
+              ) }
             </div>
           ) }
 
@@ -149,10 +155,14 @@ export const InputControl = genericComponent<new () => {
             { hasPrefix && (
               <span
                 class="ve-input-control__prefix"
-                onClick={ e => emit('click:prefix', e) }
               >
-                { slots.prefix?.(slotProps.value) ?? props.prefix ?? (
-                  <Icon icon={ props.prefixIcon } />
+                { slots.prefix?.(slotProps.value) ?? props.prefix }
+
+                { props.prefixIcon && (
+                  <Icon
+                    onClick={ (e: MouseEvent) => emit('click:prefix', e) }
+                    icon={ props.prefixIcon }
+                  />
                 ) }
               </span>
             ) }
@@ -168,12 +178,12 @@ export const InputControl = genericComponent<new () => {
               <FadeTransition>
                 <div
                   class="ve-input-control__clearable"
-                  onClick={ (e: Event) => emit('click:clear', e) }
                   v-show={ props.dirty }
                 >
                   { slots.clear?.(slotProps.value) ?? (
                     <Button
                       icon={ props.clearIcon }
+                      onClick={ (e: MouseEvent) => emit('click:clear', e) }
                       variant="text"
                       shape="circle"
                       ripple={ false }
@@ -186,11 +196,15 @@ export const InputControl = genericComponent<new () => {
             { hasSuffix && (
               <span
                 class="ve-input-control__suffix"
-                onClick={ e => emit('click:suffix', e) }
               >
-                { slots.suffix?.(slotProps.value) ?? props.suffix ?? (
-                  <Icon icon={ props.suffixIcon } />
+                { props.suffixIcon && (
+                  <Icon
+                    onClick={ (e: MouseEvent) => emit('click:suffix', e) }
+                    icon={ props.suffixIcon }
+                  />
                 ) }
+
+                { slots.suffix?.(slotProps.value) ?? props.suffix }
               </span>
             ) }
           </div>
@@ -198,9 +212,15 @@ export const InputControl = genericComponent<new () => {
           { hasAppendInner && (
             <div
               class="ve-input-control__append-inner"
-              onClick={ e => emit('click:append-inner', e) }
             >
-              { slots.appendInner?.(slotProps.value) }
+              { props.appendInnerIcon && (
+                <Icon
+                  onClick={ (e: MouseEvent) => emit('click:append-inner', e) }
+                  icon={ props.appendInnerIcon }
+                />
+              ) }
+
+              { slots['append-inner']?.(slotProps.value) }
             </div>
           ) }
         </div>
@@ -213,3 +233,5 @@ export const InputControl = genericComponent<new () => {
     }
   }
 })
+
+export type InputControl = InstanceType<typeof InputControl>

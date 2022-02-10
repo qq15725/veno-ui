@@ -2,7 +2,7 @@
 import './styles/select.scss'
 
 // Utils
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { genericComponent, getUid } from '../../utils'
 
 // Composables
@@ -48,8 +48,6 @@ export const Select = genericComponent<new () => {
 }>()({
   name: 'VeSelect',
 
-  inheritAttrs: false,
-
   props: {
     anchor: {
       type: String as PropType<Anchor>,
@@ -69,6 +67,7 @@ export const Select = genericComponent<new () => {
       default: 'value',
     },
     returnObject: Boolean,
+    openOnClear: Boolean,
     ...makeInputProps(),
   },
 
@@ -77,7 +76,9 @@ export const Select = genericComponent<new () => {
   },
 
   setup (props, { attrs, slots }) {
-    const isActive = ref(false)
+    const inputRef = ref()
+    const activator = ref()
+    const isActiveMenu = ref(false)
     const id = computed(() => props.id || `ve-select-${ getUid() }`)
 
     const selected = useProxiedModel(
@@ -88,79 +89,96 @@ export const Select = genericComponent<new () => {
     const items = computed(() => parseItems(props.items, props.itemText, props.itemValue))
     const currentItem = computed(() => items.value?.find(v => v.value === selected.value))
 
+    watch(() => inputRef.value, val => {
+      activator.value = val.$el.querySelector('.ve-input-control')
+    })
+
+    function onClear (e: MouseEvent) {
+      selected.value = null
+
+      if (props.openOnClear) {
+        isActiveMenu.value = true
+      }
+    }
+
     return () => {
       const [inputProps] = filterInputProps(props)
 
       return (
-        <Menu
-          class="ve-select-overlay"
+        <Input
+          { ...inputProps }
+          ref={ inputRef }
           id={ id.value }
-          v-model={ isActive.value }
-          anchor={ props.anchor }
-          origin={ props.origin }
-          min-width={ undefined }
+          class={ [
+            've-select',
+            {
+              've-select--active-menu': isActiveMenu.value,
+            }
+          ] }
+          readonly
+          model-value={ currentItem.value?.text }
+          onClick:clear={ onClear }
+          onClick:control={ () => {
+            if (props.readonly || props.disabled) return
+            isActiveMenu.value = true
+          } }
+          onBlur={ () => isActiveMenu.value = false }
           v-slots={ {
-            activator: ({ props: activatorProps }) => (
-              <Input
-                { ...inputProps }
-                id={ id.value }
-                class={ [
-                  've-select',
-                  {
-                    've-select--active': isActive.value,
-                  }
-                ] }
-                readonly
-                model-value={ currentItem.value?.text }
-                onClick:control={ e => {
-                  if (props.readonly || props.disabled) return
-                  activatorProps?.onClick(e)
-                } }
-                { ...attrs }
-                v-slots={ {
-                  prepend: slots.prepend,
-                  label: slots.label,
-                  prependInner: slots.prependInner,
-                  prefix: slots.prefix,
-                  suffix: slots.suffix,
-                  clear: slots.clear,
-                  append: slots.append,
-                  counter: slots.counter,
-                  appendInner: () => (
-                    <Icon
-                      class="ve-select__icon"
-                      icon="$dropdown"
-                    />
-                  ),
-                } }
+            prepend: slots.prepend,
+            label: slots.label,
+            'prepend-inner': slots['prepend-inner'],
+            prefix: slots.prefix,
+            suffix: slots.suffix,
+            clear: slots.clear,
+            append: slots.append,
+            counter: slots.counter,
+            'append-inner': () => (
+              <Icon
+                class="ve-select__icon"
+                icon="$dropdown"
               />
             ),
             default: () => (
-              <List
-                max-height={ 250 }
-                elevation={ 8 }
-                density="ultra-high"
-                border
-                shape="rounded"
-                items={ items.value }
-                v-slots={ {
-                  header: slots.header,
-                  item: (item: any) => {
-                    return slots.item?.(item) ?? (
-                      <ListItem
-                        { ...item }
-                        active={ item.value === selected.value }
-                        onClick={ () => {
-                          selected.value = item.value
-                          isActive.value = false
-                        } }
-                      />
-                    )
-                  },
-                  title: slots.title,
-                  subtitle: slots.subtitle,
-                } }
-              />
+              <>
+                { activator.value && (
+                  <Menu
+                    class="ve-select-overlay"
+                    id={ `${ id.value }-menu` }
+                    v-model={ isActiveMenu.value }
+                    activator={ activator.value }
+                    anchor={ props.anchor }
+                    origin={ props.origin }
+                    minWidth={ undefined }
+                    openOnClick={ false }
+                  >
+                    <List
+                      max-height={ 250 }
+                      elevation={ 8 }
+                      density="ultra-high"
+                      border
+                      shape="rounded"
+                      items={ items.value }
+                      v-slots={ {
+                        header: slots.header,
+                        item: (item: any) => {
+                          return slots.item?.(item) ?? (
+                            <ListItem
+                              { ...item }
+                              active={ item.value === selected.value }
+                              onClick={ () => {
+                                selected.value = item.value
+                                isActiveMenu.value = false
+                              } }
+                            />
+                          )
+                        },
+                        title: slots.title,
+                        subtitle: slots.subtitle,
+                      } }
+                    />
+                  </Menu>
+                ) }
+              </>
             )
           } }
         />

@@ -58,21 +58,19 @@ export const Button = defineComponent({
   },
 
   emits: {
-    click: (e: Event) => true
+    click: (e: MouseEvent) => true
   },
 
   setup: function (props, { attrs, slots, emit }) {
     const { paperClasses, paperStyles } = usePaper(props)
-    const isDisabled = computed(() => {
-      return group?.disabled.value || props.disabled || props.loading
-    })
+    const isDisabled = computed(() => group?.disabled.value || props.disabled || props.loading)
     const { loadingClasses } = useLoading(props)
     const { disabledClasses } = useDisabled(computed(() => ({
       disabled: group?.disabled.value || props.disabled
     })))
     const group = useGroupItem(props, ButtonToggleKey, false)
     const link = useLink(props, attrs)
-    const handleClick = (e: Event) => {
+    const handleClick = (e: MouseEvent) => {
       if (isDisabled.value) {
         e.preventDefault()
         return
@@ -142,7 +140,7 @@ export const Button = defineComponent({
 
           { hasDefault && (
             typeof props.icon === 'boolean'
-              ? <span>{ props.text ?? slots.default?.() }</span>
+              ? <span class="ve-button__wrapper">{ slots.default?.() ?? props.text }</span>
               : (
                 <Icon
                   class="ve-button__icon"

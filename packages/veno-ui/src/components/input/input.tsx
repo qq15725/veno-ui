@@ -60,15 +60,16 @@ export function filterInputProps (attrs: Record<string, unknown>) {
 }
 
 export type InputSlots = MakeSlots<{
-  prepend: [FormControlSlot],
-  label: [FormControlSlot],
-  prependInner: [InputControlSlot],
-  prefix: [InputControlSlot],
-  suffix: [InputControlSlot],
-  appendInner: [InputControlSlot],
-  clear: [InputControlSlot],
-  append: [FormControlSlot],
-  counter: [],
+  prepend: [FormControlSlot]
+  label: [FormControlSlot]
+  'prepend-inner': [InputControlSlot]
+  prefix: [InputControlSlot]
+  suffix: [InputControlSlot]
+  'append-inner': [InputControlSlot]
+  clear: [InputControlSlot]
+  append: [FormControlSlot]
+  counter: []
+  default: []
 }>
 
 export const Input = genericComponent<new () => {
@@ -83,8 +84,20 @@ export const Input = genericComponent<new () => {
   props: makeInputProps(),
 
   emits: {
-    'update:modelValue': (val: string) => true,
+    // FormControl
+    'click:prepend': (e: MouseEvent) => true,
+    'click:label': (e: MouseEvent) => true,
+    'click:append': (e: MouseEvent) => true,
+
+    // InputControl
+    'click:clear': (e: MouseEvent) => true,
+    'click:prepend-inner': (e: MouseEvent) => true,
+    'click:prefix': (e: MouseEvent) => true,
+    'click:suffix': (e: MouseEvent) => true,
+    'click:append-inner': (e: MouseEvent) => true,
     'click:control': (e: MouseEvent) => true,
+
+    'update:modelValue': (val: string) => true,
   },
 
   setup (props, { attrs, slots, emit }) {
@@ -92,8 +105,7 @@ export const Input = genericComponent<new () => {
     const formControlRef = ref<FormControl>()
     const controlHeight = ref('auto')
     const model = useProxiedModel(props, 'modelValue')
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-input-${ uid }`)
+    const id = computed(() => props.id || `ve-input-${ getUid() }`)
     const internalDirty = ref(false)
     const isDirty = computed(() => {
       return internalDirty.value || !!model.value || dirtyTypes.includes(props.type)
@@ -123,10 +135,7 @@ export const Input = genericComponent<new () => {
       inputControlRef.value?.inputRef?.blur()
     }
 
-    function onIntersect (
-      isIntersecting: boolean,
-      entries: IntersectionObserverEntry[]
-    ) {
+    function onIntersect (isIntersecting: boolean, entries: IntersectionObserverEntry[]) {
       if (!props.autofocus || !isIntersecting) return
       (entries[0].target as HTMLInputElement)?.focus?.()
     }
@@ -167,10 +176,24 @@ export const Input = genericComponent<new () => {
       observer?.disconnect()
     })
 
+    function onControlClick (e: MouseEvent) {
+      focus()
+      emit('click:control', e)
+    }
+
+    function onClear (e: MouseEvent) {
+      e.stopPropagation()
+      focus()
+      nextTick(() => {
+        model.value = ''
+        emit('click:clear', e)
+      })
+    }
+
     useRender(() => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
-      const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
+      const [rootAttrs, restAttrs] = filterInputAttrs(attrs)
       const [formControlProps] = filterFormControlProps(props)
       const [inputControlProps] = filterInputControlProps(props)
       const styles = isTextarea && controlHeight.value
@@ -179,6 +202,7 @@ export const Input = genericComponent<new () => {
 
       return (
         <FormControl
+          { ...rootAttrs }
           { ...formControlProps }
           ref={ formControlRef }
           class={ [
@@ -191,8 +215,9 @@ export const Input = genericComponent<new () => {
           ] }
           label-id={ id.value }
           style={ styles }
-          role="textbox"
-          { ...formControlAttrs }
+          onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
+          onClick:label={ (e: MouseEvent) => emit('click:label', e) }
+          onClick:append={ (e: MouseEvent) => emit('click:append', e) }
           v-slots={ {
             prepend: slots.prepend,
             label: slots.label,
@@ -201,26 +226,29 @@ export const Input = genericComponent<new () => {
                 <InputControl
                   { ...inputControlProps }
                   ref={ inputControlRef }
+                  onMousedown={ (e: MouseEvent) => {
+                    if (e.target === inputControlRef.value?.inputRef) return
+                    e.preventDefault()
+                  } }
                   dirty={ !!model.value }
                   active={ isDirty.value }
                   onUpdate:active={ val => {
                     internalDirty.value = val
                   } }
-                  onClick:clear={ e => {
-                    e.stopPropagation()
-                    model.value = ''
-                  } }
-                  onClick:control={ e => {
-                    focus()
-                    emit('click:control', e)
-                  } }
+                  onClick:clear={ onClear }
+                  onClick:control={ onControlClick }
+                  onClick:prependInner={ (e: MouseEvent) => emit('click:prepend-inner', e) }
+                  onClick:appendInner={ (e: MouseEvent) => emit('click:append-inner', e) }
+                  role="textbox"
                   v-slots={ {
-                    prependInner: slots.prependInner,
+                    'prepend-inner': slots['prepend-inner'],
                     prefix: slots.prefix,
                     default: ({ inputRef, focus, blur, props: nativeControlProps }) => {
                       if (isTextarea) {
                         return (
                           <>
+                            { slots.default?.() }
+
                             <textarea
                               v-model={ model.value }
                               v-intersect={ [{
@@ -258,29 +286,33 @@ export const Input = genericComponent<new () => {
                         )
                       } else {
                         return (
-                          <input
-                            v-intersect={ [{
-                              handler: onIntersect,
-                            }, null, ['once']] }
-                            v-model={ model.value }
-                            autofocus={ props.autofocus }
-                            disabled={ isDisabled.value }
-                            id={ id.value }
-                            name={ props.name }
-                            onFocus={ focus }
-                            onBlur={ blur }
-                            placeholder={ props.placeholder }
-                            readonly={ isReadonly.value }
-                            ref={ inputRef }
-                            type={ props.type }
-                            { ...nativeControlProps }
-                            { ...restAttrs }
-                          />
+                          <>
+                            { slots.default?.() }
+
+                            <input
+                              v-intersect={ [{
+                                handler: onIntersect,
+                              }, null, ['once']] }
+                              v-model={ model.value }
+                              autofocus={ props.autofocus }
+                              disabled={ isDisabled.value }
+                              id={ id.value }
+                              name={ props.name }
+                              onFocus={ focus }
+                              onBlur={ blur }
+                              placeholder={ props.placeholder }
+                              readonly={ isReadonly.value }
+                              ref={ inputRef }
+                              type={ props.type }
+                              { ...nativeControlProps }
+                              { ...restAttrs }
+                            />
+                          </>
                         )
                       }
                     },
                     suffix: slots.suffix,
-                    appendInner: slots.appendInner,
+                    'append-inner': slots['append-inner'],
                     clear: slots.clear,
                   } }
                 />

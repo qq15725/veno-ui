@@ -141,15 +141,15 @@ export const FormControl = genericComponent<new () => {
           ] }
         >
           { hasPrepend && (
-            <div
-              class="ve-form-control__prepend"
-              onClick={ e => emit('click:prepend', e) }
-            >
-              { props.prependIcon && (
-                <Icon icon={ props.prependIcon } />
-              ) }
-
+            <div class="ve-form-control__prepend">
               { slots.prepend?.(slotProps.value) }
+
+              { props.prependIcon && (
+                <Icon
+                  onClick={ (e: MouseEvent) => emit('click:prepend', e) }
+                  icon={ props.prependIcon }
+                />
+              ) }
             </div>
           ) }
 
@@ -158,7 +158,7 @@ export const FormControl = genericComponent<new () => {
               class="ve-form-control__label"
               disabled={ isDisabled.value }
               error={ isValid.value === false }
-              onClick={ (e: any) => emit('click:label', e) }
+              onClick={ (e: MouseEvent) => emit('click:label', e) }
               for={ props.labelId }
               style={ {
                 width: convertToUnit(props.labelWidth),
@@ -175,12 +175,12 @@ export const FormControl = genericComponent<new () => {
           ) }
 
           { hasAppend && (
-            <div
-              class="ve-form-control__append"
-              onClick={ e => emit('click:append', e) }
-            >
+            <div class="ve-form-control__append">
               { props.appendIcon && (
-                <Icon icon={ props.appendIcon } />
+                <Icon
+                  onClick={ (e: MouseEvent) => emit('click:append', e) }
+                  icon={ props.appendIcon }
+                />
               ) }
 
               { slots?.append?.(slotProps.value) }

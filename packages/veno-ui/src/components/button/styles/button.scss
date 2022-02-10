@@ -7,12 +7,14 @@
 
 .ve-button {
   $root: &;
+
   --ve-size-offset: 0px;
   --ve-density-offset: 0px;
   --ve-default-height: #{map.get($button-sizes, 'height')};
   --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset) + var(--ve-density-offset));
   --ve-min-width: calc(var(--ve-height) * #{map.get($button-sizes, 'width-ratio')});
   --ve-padding-x: calc(var(--ve-height) / #{map.get($button-sizes, 'padding-ratio')});
+
   align-items: center;
   display: inline-flex;
   font-weight: tools.map-deep-get(settings.$typography, 'button', 'weight');
@@ -75,5 +77,11 @@
         visibility: visible;
       }
     }
+  }
+
+  &__wrapper {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
