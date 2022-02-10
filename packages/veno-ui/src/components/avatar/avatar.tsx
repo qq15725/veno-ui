@@ -2,7 +2,7 @@
 import './styles/avatar.scss'
 
 // Utils
-import { ref, toRef, watch } from 'vue'
+import { ref, toRef, watch, computed } from 'vue'
 import { defineComponent } from '../../utils'
 import { Resize } from '../../directives/resize'
 
@@ -25,16 +25,18 @@ export const Avatar = defineComponent({
     image: String,
     icon: String,
     text: String,
+    link: Boolean,
     ...makePaperProps({
       color: 'secondary',
       shape: 'circle',
     } as const),
   },
 
-  setup (props, { slots }) {
+  setup (props, { slots, attrs }) {
     const { paperClasses, paperStyles } = usePaper(props)
     const wrapRef = ref<HTMLElement | null>()
     const avatarRef = ref<HTMLElement | null>()
+    const isClickable = computed(() => props.link || !!(attrs.onClick || attrs.onClickOnce))
 
     const fitSizeTransform = (): void => {
       if (avatarRef.value && wrapRef.value) {
@@ -59,6 +61,9 @@ export const Avatar = defineComponent({
         <props.tag
           class={ [
             've-avatar',
+            {
+              've-avatar--link': isClickable.value,
+            },
             paperClasses.value,
           ] }
           style={ paperStyles.value }

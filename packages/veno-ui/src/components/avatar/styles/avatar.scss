@@ -8,6 +8,7 @@
   --ve-density-offset: 0px;
   --ve-default-size: 40px;
   --ve-size: calc(var(--ve-default-size) + var(--ve-size-offset) + var(--ve-density-offset));
+
   align-items: center;
   display: inline-flex;
   justify-content: center;
@@ -19,6 +20,10 @@
   width: var(--ve-size);
   height: var(--ve-size);
   @include tools.use-paper($avatar-paper);
+
+  &--link {
+    cursor: pointer;
+  }
 
   > .ve-image {
     border-radius: inherit;

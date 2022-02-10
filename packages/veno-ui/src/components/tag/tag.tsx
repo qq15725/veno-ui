@@ -51,9 +51,7 @@ export const Tag = defineComponent({
     const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
     const { loadingClasses } = useLoading(props)
-    const isClickable = computed(() => {
-      return props.link || !!(attrs.onClick || attrs.onClickOnce)
-    })
+    const isClickable = computed(() => props.link || !!(attrs.onClick || attrs.onClickOnce))
 
     function onCloseClick (e: Event) {
       isActive.value = false
