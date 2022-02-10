@@ -2,6 +2,7 @@
 import './styles/tag.scss'
 
 // Utils
+import { computed } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
@@ -30,6 +31,7 @@ export const Tag = defineComponent({
       default: true,
     },
     text: String,
+    link: Boolean,
     ...makeLoadingProps(),
     ...makeTransitionProps({
       transition: { component: FadeInExpandTransition },
@@ -45,10 +47,13 @@ export const Tag = defineComponent({
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup (props, { slots, attrs }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
     const { loadingClasses } = useLoading(props)
+    const isClickable = computed(() => {
+      return props.link || !!(attrs.onClick || attrs.onClickOnce)
+    })
 
     function onCloseClick (e: Event) {
       isActive.value = false
@@ -63,6 +68,9 @@ export const Tag = defineComponent({
             <props.tag
               class={ [
                 've-tag',
+                {
+                  've-tag--link': isClickable.value,
+                },
                 paperClasses.value,
                 loadingClasses.value,
               ] }

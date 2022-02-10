@@ -13,6 +13,8 @@ basic.md
 
 closable.md
 
+clickable.md
+
 variant.md
 
 size.md

@@ -17,6 +17,10 @@
   vertical-align: middle;
   @include tools.use-paper($tag-paper);
 
+  &--link {
+    cursor: pointer;
+  }
+
   &__close.ve-button {
     min-width: auto;
     height: auto;
