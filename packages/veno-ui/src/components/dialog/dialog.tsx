@@ -44,11 +44,11 @@ export const Dialog = genericComponent<new () => {
       <Overlay
         aria-role="dialog"
         aria-modal="true"
-        activator-props={{
+        activator-props={ {
           'aria-haspopup': 'dialog',
           'aria-expanded': String(isActive.value),
           'aria-describedby': id.value,
-        }}
+        } }
         v-model={ isActive.value }
         class={ [
           've-dialog',

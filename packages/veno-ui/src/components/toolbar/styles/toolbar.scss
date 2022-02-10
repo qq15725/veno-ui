@@ -12,7 +12,8 @@
   padding-inline-start: 16px;
   position: relative;
   transition-property: height, transform, max-width;
-  transition: .2s settings.$standard-easing;
+  transition-duration: 0.2s;
+  transition-timing-function: settings.$standard-easing;
   @include tools.use-paper();
 
   &__wrapper {
