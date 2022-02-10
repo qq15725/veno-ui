@@ -90,7 +90,7 @@
   </ve-form-control>
 </ve-form>
 
-<ve-code class="mt-3" language="json" :value="JSON.stringify(form, null, 2)" />
+<ve-code class="mt-3" :value="form" />
 ```
 
 ```js

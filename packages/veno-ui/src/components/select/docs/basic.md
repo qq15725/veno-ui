@@ -3,7 +3,9 @@
 # 基本用法
 
 ```html
-<ve-select v-model="value" placeholder="请选择" label="商品品类" :items="items" />
+<ve-select v-model="selected" placeholder="请选择" label="商品品类" :items="items" />
+
+<div>{{ selected }}</div>
 ```
 
 ```js
@@ -12,7 +14,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      value: ref('50010850'),
+      selected: ref('50010850'),
       items: [
         { 'text': '连衣裙', 'value': '50010850' },
         { 'text': '羽绒服', 'value': '50008899' },

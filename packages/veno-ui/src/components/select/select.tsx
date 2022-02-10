@@ -31,6 +31,18 @@ export type InternalSelectItemProps = ListItemProps & {
 
 export type SelectSlots = InputSlots & ListChildrenSlots<InternalSelectItemProps>
 
+function parseItems (items: SelectItemProps[] | undefined, itemText: string, itemValue: string): InternalSelectItemProps[] | undefined {
+  if (!items) return undefined
+  return items.map(item => {
+    if (typeof item === 'string') {
+      return { $type: 'item', text: item, value: item }
+    }
+    const value = item[itemValue]
+    const text = item[itemText] ?? value
+    return { ...item, $type: 'item', text, value }
+  })
+}
+
 export const Select = genericComponent<new () => {
   $slots: SelectSlots
 }>()({
@@ -47,10 +59,7 @@ export const Select = genericComponent<new () => {
       type: String as PropType<Origin>,
       default: 'auto',
     },
-    items: {
-      type: Array as PropType<SelectItemProps[]>,
-      default: () => [],
-    },
+    items: Array as PropType<SelectItemProps[]>,
     itemText: {
       type: String,
       default: 'text',
@@ -68,23 +77,16 @@ export const Select = genericComponent<new () => {
   },
 
   setup (props, { attrs, slots }) {
-    const model = useProxiedModel(props, 'modelValue')
     const isActive = ref(false)
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-select-${ uid }`)
+    const id = computed(() => props.id || `ve-select-${ getUid() }`)
 
-    function parseItem (item: SelectItemProps): InternalSelectItemProps {
-      if (typeof item === 'string') {
-        return { text: item, value: item }
-      }
-      const value = item[props.itemValue]
-      const text = item[props.itemText] ?? value
-      return { ...item, text, value }
-    }
-
-    const items = computed(() => props.items.map(parseItem))
-
-    const current = computed(() => items.value.find(v => v.value === model.value))
+    const selected = useProxiedModel(
+      props, 'modelValue', props.modelValue,
+      v => props.returnObject && typeof v === 'object' ? v[props.itemValue] : v,
+      v => props.returnObject ? props.items?.find(i => typeof i === 'string' ? i === v : i[props.itemValue] === v) : v
+    )
+    const items = computed(() => parseItems(props.items, props.itemText, props.itemValue))
+    const currentItem = computed(() => items.value?.find(v => v.value === selected.value))
 
     return () => {
       const [inputProps] = filterInputProps(props)
@@ -109,7 +111,7 @@ export const Select = genericComponent<new () => {
                   }
                 ] }
                 readonly
-                model-value={ current.value?.text }
+                model-value={ currentItem.value?.text }
                 onClick:control={ e => {
                   if (props.readonly || props.disabled) return
                   activatorProps?.onClick(e)
@@ -147,9 +149,9 @@ export const Select = genericComponent<new () => {
                     return slots.item?.(item) ?? (
                       <ListItem
                         { ...item }
-                        active={ item.value === model.value }
+                        active={ item.value === selected.value }
                         onClick={ () => {
-                          model.value = item.value
+                          selected.value = item.value
                           isActive.value = false
                         } }
                       />

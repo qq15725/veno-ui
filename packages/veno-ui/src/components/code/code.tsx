@@ -19,7 +19,7 @@ export const Code = defineComponent({
     /**
      * @zh: 需要高亮的代码
      */
-    value: String,
+    value: [String, Object],
 
     /**
      * @zh: 代码语言
@@ -69,18 +69,19 @@ export const Code = defineComponent({
     const {
       backgroundColorClasses: highlightedLineBackgroundColorClasses,
       backgroundColorStyles: highlightedLineBackgroundColorStyles
-    } = useBackgroundColor(
-      props, 'highlightedLineBgColor'
-    )
+    } = useBackgroundColor(props, 'highlightedLineBgColor')
     const codeRef = ref<HTMLElement | null>(null)
+    const language = computed(() => typeof props.value === 'object' ? 'json' : props.language)
     const code = computed(() => {
-      return decodeURIComponent(props.value ?? '')
+      return decodeURIComponent(
+        typeof props.value === 'object'
+          ? JSON.stringify(props.value, null, 2)
+          : props.value ?? ''
+      )
         .replace(/\n$/, '')
         .replace(/^\n/, '')
     })
-    const lineNumbers = computed(() => {
-      return code.value.split('\n').map((v, i) => i + 1)
-    })
+    const lineNumbers = computed(() => code.value.split('\n').map((v, i) => i + 1))
     const highlightedLines = computed(() => {
       return lineNumbers.value.filter(lineNumber => {
         return props.highlightedLineNumbers?.some(v => {
@@ -103,18 +104,18 @@ export const Code = defineComponent({
       if (!el) return
       el.innerHTML = await highlighter.value?.highlight(
         code.value,
-        props.language
+        language.value
       )
     }
 
     onMounted(setCode)
-    watch(() => props.language, setCode)
+    watch(() => language.value, setCode)
     watch(code, setCode)
 
     return () => {
       const hasHighlightedCode = !!code.value
       const hasLineNumbers = hasHighlightedCode && !props.hideLineNumbers
-      const hasLanguage = hasHighlightedCode && !props.hideLanguage && props.language
+      const hasLanguage = hasHighlightedCode && !props.hideLanguage && language.value
       const hasPreformatted = hasHighlightedCode
       const Tag = hasHighlightedCode ? 'div' : 'code'
 
@@ -161,7 +162,7 @@ export const Code = defineComponent({
           ) }
 
           { hasLanguage && (
-            <span class="ve-code__language">{ props.language }</span>
+            <span class="ve-code__language">{ language.value }</span>
           ) }
 
           { slots.default?.() }
