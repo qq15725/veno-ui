@@ -6,7 +6,7 @@
     transition: .3s settings.$standard-easing;
   }
 
-  &--active &__icon {
+  &--active-menu &__icon {
     transform: rotate(180deg);
   }
 

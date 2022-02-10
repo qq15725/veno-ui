@@ -1,12 +1,8 @@
-// Utilities
+// Utils
 import { IN_BROWSER, propsFactory } from '../../utils'
 
 // Types
-export interface DelayProps
-{
-  closeDelay?: number | string
-  openDelay?: number | string
-}
+import type { ExtractPropTypes } from 'vue'
 
 // Composables
 export const makeDelayProps = propsFactory({
@@ -14,10 +10,13 @@ export const makeDelayProps = propsFactory({
   openDelay: [Number, String],
 }, 'delay')
 
-export function useDelay (props: DelayProps, cb?: (value: boolean) => void) {
-  const delays: Partial<Record<keyof DelayProps, number>> = {}
+export function useDelay (
+  props: ExtractPropTypes<ReturnType<typeof makeDelayProps>>,
+  cb?: (value: boolean) => void
+) {
+  const delays: Partial<Record<keyof typeof props, number>> = {}
 
-  const runDelayFactory = (prop: keyof DelayProps) => (): Promise<boolean> => {
+  const runDelayFactory = (prop: keyof typeof props) => (): Promise<boolean> => {
     // istanbul ignore next
     if (!IN_BROWSER) return Promise.resolve(true)
 

@@ -2,14 +2,15 @@
 import './styles/list-item.scss'
 
 // Utils
-import { computed, getCurrentInstance } from 'vue'
-import { genericComponent, propIsDefined } from '../../utils'
+import { computed, onMounted } from 'vue'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useList } from './composables/list'
 import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeRouterProps, useLink } from '../../composables/router'
+import { useNestedItem } from '../../composables/nested'
 
 // Components
 import { Avatar } from '../avatar'
@@ -59,18 +60,19 @@ export const ListItem = genericComponent<new () => {
       default: 'primary',
     },
     activeClass: String,
-    link: Boolean,
-    title: String,
-    subtitle: String,
-    text: String,
-    prependAvatar: String,
-    prependIcon: String,
     appendAvatar: String,
     appendIcon: String,
+    link: Boolean,
+    prependAvatar: String,
+    prependIcon: String,
     ripple: {
       type: Boolean,
       default: true,
     },
+    subtitle: String,
+    text: String,
+    title: String,
+    value: null,
     ...makePaperProps({
       variant: 'text',
       size: undefined,
@@ -80,19 +82,29 @@ export const ListItem = genericComponent<new () => {
   },
 
   setup (props, { slots, attrs }) {
-    const list = useList()
     const link = useLink(props, attrs)
-    const vm = getCurrentInstance()!
-    const isActive = computed(() => {
-      if (propIsDefined(vm.vnode, 'active')) return props.active
-      return props.active || link.isExactActive?.value
-    })
-    const computedProps = computed(() => ({
+    const id = computed(() => props.value ?? link.href.value)
+    const { activate, isActive: isNestedActive, select, isSelected, root, parent } = useNestedItem(id)
+    const list = useList()
+    const isActive = computed(() => props.active || link.isExactActive?.value || isNestedActive.value)
+    const { paperClasses, paperStyles } = usePaper(computed(() => ({
       ...props,
       color: isActive.value ? props.activeColor ?? props.color : props.color,
-    }))
-    const { paperClasses, paperStyles } = usePaper(computedProps)
+    })))
     const { disabledClasses } = useDisabled(props)
+
+    onMounted(() => {
+      if (link.isExactActive?.value && parent.value != null) {
+        root.open(parent.value, true)
+      }
+    })
+
+    const slotProps = computed(() => ({
+      isActive: isActive.value,
+      activate,
+      select,
+      isSelected: isSelected.value,
+    }))
 
     return () => {
       const Tag = link.isLink.value ? 'a' : props.tag
@@ -124,15 +136,16 @@ export const ListItem = genericComponent<new () => {
           ] }
           href={ link.href.value }
           tabindex={ isClickable ? 0 : undefined }
-          onClick={ isClickable && link.navigate }
-          v-ripple={ [
-            isClickable && props.ripple,
-          ] }
+          onClick={ isClickable && ((e: MouseEvent) => {
+            link.navigate?.(e)
+            props.value != null && activate(!isNestedActive.value, e)
+          })}
+          v-ripple={ isClickable && props.ripple }
         >
           { genOverlays(isClickable, 've-list-item') }
 
           { hasPrepend && (
-            slots.prepend?.() ?? (
+            slots.prepend?.(slotProps.value) ?? (
               <ListItemAvatar left>
                 <Avatar
                   color="inherit"
@@ -148,23 +161,27 @@ export const ListItem = genericComponent<new () => {
           { hasHeader && (
             <ListItemHeader>
               { hasTitle && (
-                <ListItemTitle>{ slots.title?.() ?? props.title }</ListItemTitle>
+                <ListItemTitle>
+                  { slots.title?.({ title: props.title }) ?? props.title }
+                </ListItemTitle>
               ) }
 
               { hasSubtitle && (
-                <ListItemSubtitle>{ slots.subtitle?.() ?? props.subtitle }</ListItemSubtitle>
+                <ListItemSubtitle>
+                  { slots.subtitle?.({ subtitle: props.subtitle }) ?? props.subtitle }
+                </ListItemSubtitle>
               ) }
 
               { hasText && (
-                <div>{ slots.text?.() ?? props.text }</div>
+                <div>{ slots.text?.({ text: props.text }) ?? props.text }</div>
               ) }
             </ListItemHeader>
           ) }
 
-          { slots.default?.() }
+          { slots.default?.(slotProps.value) }
 
           { hasAppend && (
-            slots.append?.() ?? (
+            slots.append?.(slotProps.value) ?? (
               <ListItemAvatar right>
                 <Avatar
                   color="inherit"

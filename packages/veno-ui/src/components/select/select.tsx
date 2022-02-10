@@ -3,13 +3,13 @@ import './styles/select.scss'
 
 // Utils
 import { computed, ref, watch } from 'vue'
-import { genericComponent, getUid } from '../../utils'
+import { genericComponent, getUid, wrapInArray } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
-import { Input, makeInputProps, filterInputProps } from '../input/input'
+import { Input } from '../input/input'
 import { Icon } from '../icon'
 import { Menu } from '../menu'
 import { List, ListItem } from '../list'
@@ -26,22 +26,10 @@ export type SelectItemProps = string | Record<string, any>
 
 export type InternalSelectItemProps = ListItemProps & {
   text: string
-  value: any
+  value?: any
 }
 
 export type SelectSlots = InputSlots & ListChildrenSlots<InternalSelectItemProps>
-
-function parseItems (items: SelectItemProps[] | undefined, itemText: string, itemValue: string): InternalSelectItemProps[] | undefined {
-  if (!items) return undefined
-  return items.map(item => {
-    if (typeof item === 'string') {
-      return { $type: 'item', text: item, value: item }
-    }
-    const value = item[itemValue]
-    const text = item[itemText] ?? value
-    return { ...item, $type: 'item', text, value }
-  })
-}
 
 export const Select = genericComponent<new () => {
   $slots: SelectSlots
@@ -53,10 +41,7 @@ export const Select = genericComponent<new () => {
       type: String as PropType<Anchor>,
       default: 'bottom',
     },
-    origin: {
-      type: String as PropType<Origin>,
-      default: 'auto',
-    },
+    id: String,
     items: Array as PropType<SelectItemProps[]>,
     itemText: {
       type: String,
@@ -66,47 +51,93 @@ export const Select = genericComponent<new () => {
       type: String,
       default: 'value',
     },
+    modelValue: {
+      type: [String, Object, Array],
+      default: () => ([]),
+    },
+    multiple: Boolean,
+    noDataText: {
+      type: String,
+      default: '暂无数据',
+    },
     returnObject: Boolean,
+    readonly: Boolean,
+    origin: {
+      type: String as PropType<Origin>,
+      default: 'auto',
+    },
     openOnClear: Boolean,
-    ...makeInputProps(),
   },
 
   emits: {
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { slots }) {
     const inputRef = ref()
     const activator = ref()
     const isActiveMenu = ref(false)
     const id = computed(() => props.id || `ve-select-${ getUid() }`)
-
-    const selected = useProxiedModel(
-      props, 'modelValue', props.modelValue,
-      v => props.returnObject && typeof v === 'object' ? v[props.itemValue] : v,
-      v => props.returnObject ? props.items?.find(i => typeof i === 'string' ? i === v : i[props.itemValue] === v) : v
+    const model = useProxiedModel(
+      props, 'modelValue', [],
+      v => wrapInArray(v),
+      (v: any) => props.multiple ? v : v[0]
     )
-    const items = computed(() => parseItems(props.items, props.itemText, props.itemValue))
-    const currentItem = computed(() => items.value?.find(v => v.value === selected.value))
+    const items = computed(() => props.items?.map(normalizeItem))
+    const active = computed({
+      get: () => model.value.map(v => normalizeItem(findItem(v))?.value),
+      set: val => {
+        model.value = props.returnObject ? val.map(v => findItem(v)) : val
+        if (props.multiple) return
+        isActiveMenu.value = false
+      },
+    })
+    const text = computed(() => model.value
+      .map((v: any) => normalizeItem(findItem(v))?.text)
+      .join(', '))
+
+    function findItem (v: any) {
+      return props.items?.find(i => {
+        const i1 = typeof i === 'string' ? i : i[props.itemValue]
+        const v1 = typeof v === 'string' ? v : v[props.itemValue]
+        return i1 === v1
+      })
+    }
+
+    function normalizeItem (item: SelectItemProps | undefined): InternalSelectItemProps | undefined {
+      if (!item) return undefined
+      if (typeof item === 'object') {
+        const value = item[props.itemValue]
+        const text = item[props.itemText] ?? value
+        return { text, value }
+      }
+      return { text: item, value: item }
+    }
 
     watch(() => inputRef.value, val => {
       activator.value = val.$el.querySelector('.ve-input-control')
     })
 
     function onClear (e: MouseEvent) {
-      selected.value = null
-
+      model.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true
       }
     }
 
-    return () => {
-      const [inputProps] = filterInputProps(props)
+    function onKeydown ({ key }: KeyboardEvent) {
+      if (['Enter', ' '].includes(key) && !isActiveMenu.value) {
+        isActiveMenu.value = true
+      }
 
+      if (key === 'Escape' && isActiveMenu.value) {
+        isActiveMenu.value = false
+      }
+    }
+
+    return () => {
       return (
         <Input
-          { ...inputProps }
           ref={ inputRef }
           id={ id.value }
           class={ [
@@ -116,13 +147,19 @@ export const Select = genericComponent<new () => {
             }
           ] }
           readonly
-          model-value={ currentItem.value?.text }
+          modelValue={ text.value }
           onClick:clear={ onClear }
           onClick:control={ () => {
-            if (props.readonly || props.disabled) return
-            isActiveMenu.value = true
+            if (props.readonly) return
+            if (isActiveMenu.value) {
+              inputRef.value?.blur()
+            } else {
+              isActiveMenu.value = true
+            }
           } }
           onBlur={ () => isActiveMenu.value = false }
+          onKeydown={ onKeydown }
+          onMousedown={ (e: MouseEvent) => e.preventDefault() }
           v-slots={ {
             prepend: slots.prepend,
             label: slots.label,
@@ -152,23 +189,23 @@ export const Select = genericComponent<new () => {
                     openOnClick={ false }
                   >
                     <List
-                      max-height={ 250 }
-                      elevation={ 8 }
+                      maxHeight={ 250 }
                       density="ultra-high"
-                      border
-                      shape="rounded"
-                      items={ items.value }
+                      items={
+                        items.value?.length
+                          ? items.value
+                          : [{ text: props.noDataText, link: false }]
+                      }
+                      v-model:active={ active.value }
+                      activeStrategy={ props.multiple ? 'multiple' : 'single' }
                       v-slots={ {
                         header: slots.header,
                         item: (item: any) => {
                           return slots.item?.(item) ?? (
                             <ListItem
+                              onMousedown={ (e: MouseEvent) => e.preventDefault() }
+                              link
                               { ...item }
-                              active={ item.value === selected.value }
-                              onClick={ () => {
-                                selected.value = item.value
-                                isActiveMenu.value = false
-                              } }
                             />
                           )
                         },

@@ -34,19 +34,12 @@ import { useStack } from '../../composables/stack'
 import { ClickOutside } from '../../directives/click-outside'
 
 // Types
-import type { PropType, Ref, ComponentPublicInstance } from 'vue'
+import type { PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export interface OverlaySlot
-{
-  isActive: Ref<boolean>
-  activatorRef: (ref: Element | ComponentPublicInstance | null) => void
-  props: Record<string, any>
-}
-
 export type OverlaySlots = MakeSlots<{
-  default: [OverlaySlot]
-  activator: [OverlaySlot]
+  default: [{ isActive: Ref<boolean> }]
+  activator: [{ isActive: boolean, props: Record<string, any> }]
 }>
 
 export const Overlay = genericComponent<new () => {
@@ -92,7 +85,7 @@ export const Overlay = genericComponent<new () => {
     const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
     const { themeClasses } = provideTheme(props)
     const { hasContent, onAfterLeave } = useLazy(props, isActive)
-    const { activatorEl, activatorEvents, runOpenDelay, runCloseDelay } = useActivator(props, isActive)
+    const { activatorEl, activatorRef, activatorEvents } = useActivator(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
 
@@ -176,35 +169,16 @@ export const Overlay = genericComponent<new () => {
       })
     }
 
-    const slotProps: OverlaySlot = {
-      isActive,
-      activatorRef: selector => {
-        if (!selector) return
-        let activator
-        if ('$el' in selector) {
-          // Component (ref)
-          activator = selector.$el
-        } else {
-          // HTMLElement | Element
-          activator = selector
-        }
-        if (activator?.nodeType === Node.ELEMENT_NODE) {
-          activatorEl.value = activator
-        }
-      },
-      props: mergeProps(
-        {
-          modelValue: isActive.value,
-          'onUpdate:modelValue': (val: boolean) => isActive.value = val,
-        },
-        toHandlers(activatorEvents.value),
-        props.activatorProps
-      ),
-    }
-
     useRender(() => (
       <>
-        { slots.activator?.(slotProps) }
+        { slots.activator?.({
+          isActive: isActive.value,
+          props: mergeProps(
+            { ref: activatorRef },
+            toHandlers(activatorEvents.value),
+            props.activatorProps,
+          ),
+        }) }
 
         <Teleport
           disabled={ !teleportTarget.value }
@@ -253,14 +227,8 @@ export const Overlay = genericComponent<new () => {
                     dimensionStyles.value,
                     contentStyles.value,
                   ] }
-                  onMouseenter={ () => {
-                    props.openOnHover && runOpenDelay()
-                  } }
-                  onMouseleave={ () => {
-                    props.openOnHover && runCloseDelay()
-                  } }
                 >
-                  { slots.default?.(slotProps) }
+                  { slots.default?.({ isActive }) }
                 </div>
               </MaybeTransition>
             </div>

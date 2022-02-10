@@ -202,7 +202,16 @@ export const FormControl = genericComponent<new () => {
       )
     })
 
-    return {}
+    return {
+      isDisabled,
+      isReadonly,
+      isPristine,
+      isValid,
+      isValidating,
+      reset,
+      resetValidation,
+      validate,
+    }
   }
 })
 

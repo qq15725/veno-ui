@@ -1,38 +1,31 @@
 // Utils
-import { computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
-import { getCurrentInstance, IN_BROWSER, SUPPORT_TOUCH, propsFactory, SUPPORT_FOCUS_VISIBLE } from '../../utils'
+import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
+import {
+  isComponentInstance,
+  getCurrentInstance,
+  IN_BROWSER,
+  SUPPORT_TOUCH,
+  propsFactory,
+  SUPPORT_FOCUS_VISIBLE
+} from '../../utils'
 
 // Composables
 import { makeDelayProps, useDelay } from '../delay'
 
 // Types
-import type { ComponentPublicInstance, EffectScope, PropType, Ref } from 'vue'
-import type { DelayProps } from '../delay'
-
-type Activator = 'parent' | string | Element | ComponentPublicInstance
-type activatorProps = Record<string, any>
-
-interface ActivatorProps extends DelayProps
-{
-  activator?: Activator
-  activatorProps: activatorProps
-
-  openOnClick: boolean | undefined
-  openOnHover: boolean
-  openOnFocus: boolean | undefined
-}
+import type { ExtractPropTypes, ComponentPublicInstance, EffectScope, PropType, Ref } from 'vue'
 
 export const makeActivatorProps = propsFactory({
   /**
    * @zh: 激活器
    */
-  activator: [String, Object] as PropType<Activator>,
+  activator: [String, Object] as PropType<'parent' | string | Element | ComponentPublicInstance>,
 
   /**
    * @zh: 激活器属性
    */
   activatorProps: {
-    type: Object as PropType<activatorProps>,
+    type: Object as PropType<Record<string, any>>,
     default: () => ({}),
   },
 
@@ -60,7 +53,10 @@ export const makeActivatorProps = propsFactory({
   ...makeDelayProps(),
 })
 
-export function useActivator (props: ActivatorProps, isActive: Ref<boolean>) {
+export function useActivator (
+  props: ExtractPropTypes<ReturnType<typeof makeActivatorProps>>,
+  isActive: Ref<boolean>
+) {
   const activatorEl = ref<HTMLElement>()
 
   let isHovered = false
@@ -150,22 +146,36 @@ export function useActivator (props: ActivatorProps, isActive: Ref<boolean>) {
     return events
   })
 
+
+  const activatorRef = ref()
+  watchEffect(() => {
+    if (!activatorRef.value) return
+
+    nextTick(() => {
+      const activator = activatorRef.value
+      activatorEl.value = isComponentInstance(activator) ? activator.$el : activator
+    })
+  })
+
   let scope: EffectScope
   watch(() => !!props.activator, val => {
     if (val && IN_BROWSER) {
       scope = effectScope()
       scope.run(() => {
-        _useActivator(props, { activatorEl, activatorEvents, runOpenDelay, runCloseDelay })
+        _useActivator(props, { activatorEl, activatorRef, activatorEvents })
       })
     } else if (scope) {
       scope.stop()
     }
   }, { flush: 'post', immediate: true })
 
-  return { activatorEl, activatorEvents, runOpenDelay, runCloseDelay }
+  return { activatorEl, activatorRef, activatorEvents }
 }
 
-function _useActivator (props: ActivatorProps, { activatorEl, activatorEvents }: ReturnType<typeof useActivator>) {
+function _useActivator (
+  props: ExtractPropTypes<ReturnType<typeof makeActivatorProps>>,
+  { activatorEl, activatorEvents }: ReturnType<typeof useActivator>
+) {
   watch(() => props.activator, (val, oldVal) => {
     if (oldVal && val !== oldVal) {
       const activator = getActivator(oldVal)

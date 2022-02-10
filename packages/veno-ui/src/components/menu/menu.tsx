@@ -21,11 +21,9 @@ export const Menu = genericComponent<new () => {
 }>()({
   name: 'VeMenu',
 
-  inheritAttrs: false,
-
   props: {
-    modelValue: Boolean,
     id: String,
+    modelValue: Boolean,
     ...makeTransitionProps({
       transition: { component: MenuTransition },
     } as const),
@@ -35,7 +33,7 @@ export const Menu = genericComponent<new () => {
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.id || `ve-menu-${ getUid() }`)
 
@@ -48,10 +46,10 @@ export const Menu = genericComponent<new () => {
           ] }
           transition={ props.transition }
           absolute
-          position-strategy="connected"
-          scroll-strategy="reposition"
-          close-delay={ 100 }
-          min-width={ 0 }
+          positionStrategy="connected"
+          scrollStrategy="reposition"
+          closeDelay={ 100 }
+          minWidth={ 0 }
           offset={ 4 }
           scrim={ false }
           activatorProps={ {
@@ -59,7 +57,6 @@ export const Menu = genericComponent<new () => {
             'aria-expanded': String(isActive.value),
             'aria-owns': id.value,
           } }
-          { ...attrs }
           v-slots={ slots }
         />
       )
