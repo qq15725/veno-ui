@@ -5,7 +5,7 @@
 ```html
 <ve-input
   v-model="value" 
-  placeholder="基本的 Input"
+  placeholder="Input"
   clearable
 />
 ```

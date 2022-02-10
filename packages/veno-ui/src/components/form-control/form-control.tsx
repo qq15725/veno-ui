@@ -11,6 +11,7 @@ import { Messages } from '../messages'
 import { Icon } from '../icon'
 
 // Composables
+import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
 import { makeFormControlDirectionProps, useFormControlDirectionProps } from '../../composables/form-control-direction'
@@ -55,6 +56,7 @@ export const makeFormControlProps = propsFactory({
     default: () => ([]),
   },
   persistentHint: Boolean,
+  ...makeDimensionProps(),
   ...makeFormControlDirectionProps(),
   ...makeDensityProps(),
   ...makeValidationProps(),
@@ -78,6 +80,7 @@ export const FormControl = genericComponent<new () => {
 
   setup (props, { slots, emit }) {
     const { formControlDirectionClasses } = useFormControlDirectionProps(props)
+    const { dimensionStyles } = useDimension(props)
     const { densityClasses } = useDensity(props)
     const {
       errorMessages,
@@ -132,6 +135,9 @@ export const FormControl = genericComponent<new () => {
             formControlDirectionClasses.value,
             densityClasses.value,
             validationClasses.value,
+          ] }
+          style={ [
+            dimensionStyles.value,
           ] }
         >
           { hasPrepend && (

@@ -8,9 +8,15 @@ category: Form 表单组件
 
 :::include
 
-basic.md case1.md 
+basic.md 
 
-autogrow.md slots.md
+case1.md 
+
+autogrow.md 
+
+slots.md
+
+width.md
 
 :::
 

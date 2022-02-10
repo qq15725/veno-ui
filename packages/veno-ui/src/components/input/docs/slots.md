@@ -4,7 +4,7 @@
 
 ```html
 <ve-input
-  placeholder="Input..."
+  placeholder="Input"
   hide-details
 >
   <template #append>Append</template>
