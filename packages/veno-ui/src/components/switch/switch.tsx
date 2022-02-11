@@ -7,7 +7,9 @@ import { defineComponent } from '../../utils'
 
 // Components
 import { SelectionControl } from '../selection-control'
-import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
+
+// Composables
+import { makeSelectionControlProps } from '../selection-control/selection-control'
 
 // Types
 export type Switch = InstanceType<typeof Switch>
@@ -15,17 +17,16 @@ export type Switch = InstanceType<typeof Switch>
 export const Switch = defineComponent({
   name: 'VeSwitch',
 
-  props: {
-    ...makeSelectionControlProps({
-      color: 'primary'
-    } as const),
-  },
+  props: makeSelectionControlProps({
+    type: 'checkbox',
+    color: 'primary',
+  } as const),
 
   emits: {
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots, emit }) {
+  setup (props, { emit, slots }) {
     const control = ref<SelectionControl>()
 
     function onClick () {
@@ -33,17 +34,15 @@ export const Switch = defineComponent({
     }
 
     return () => {
-      const [selectionInputProps] = filterSelectionControlProps(props)
-
       return (
         <SelectionControl
-          { ...selectionInputProps }
           ref={ control }
           class="ve-switch"
-          type="checkbox"
+          { ...props }
           onUpdate:modelValue={ val => emit('update:modelValue', val) }
         >
           { {
+            ...slots,
             default: ({ textColorClasses, textColorStyles }) => (
               <div
                 class={ [

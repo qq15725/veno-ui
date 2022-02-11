@@ -3,13 +3,13 @@ import './styles/selection-group-control.scss'
 
 // Utils
 import { computed, toRef, provide, inject } from 'vue'
-import { defineComponent, getUid, pick, propsFactory, useRender } from '../../utils'
+import { defineComponent, getUid, propsFactory, useRender } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import type { ExtractPropTypes, PropType, Ref, InjectionKey } from 'vue'
+import type { PropType, Ref, InjectionKey } from 'vue'
 
 export interface SelectionGroupInstance
 {
@@ -43,43 +43,6 @@ export const makeSelectionGroupControlProps = propsFactory({
   modelValue: null,
 }, 'selection-control-group')
 
-
-export function filterSelectionGroupControlProps (props: ExtractPropTypes<ReturnType<typeof makeSelectionGroupControlProps>>) {
-  return pick(props, Object.keys(SelectionGroupControl.props) as any)
-}
-
-export function provideSelectionGroupControl (
-  props: ExtractPropTypes<ReturnType<typeof makeSelectionGroupControlProps>> & {
-    'onUpdate:modelValue': ((val: any) => void) | undefined
-  }
-) {
-  const modelValue = useProxiedModel(props, 'modelValue')
-  const uid = getUid()
-  const id = computed(() => props.id || `ve-selection-control-group-${ uid }`)
-  const name = computed(() => props.name || id.value)
-  const multiple = computed(() => {
-    return !!props.multiple
-      || (props.multiple == null && Array.isArray(modelValue.value))
-  })
-
-  const group = {
-    disabled: toRef(props, 'disabled'),
-    inline: toRef(props, 'inline'),
-    modelValue,
-    multiple,
-    id,
-    name,
-    falseIcon: toRef(props, 'falseIcon'),
-    trueIcon: toRef(props, 'trueIcon'),
-    readonly: toRef(props, 'readonly'),
-    type: toRef(props, 'type'),
-  }
-
-  provide(SelectionGroupControlKey, group)
-
-  return group
-}
-
 export function useSelectionGroupControl () {
   return inject(SelectionGroupControlKey, null)
 }
@@ -94,7 +57,29 @@ export const SelectionGroupControl = defineComponent({
   },
 
   setup (props, { slots }) {
-    const group = provideSelectionGroupControl(props)
+    const modelValue = useProxiedModel(props, 'modelValue')
+    const uid = getUid()
+    const id = computed(() => props.id || `ve-selection-control-group-${ uid }`)
+    const name = computed(() => props.name || id.value)
+    const multiple = computed(() => {
+      return !!props.multiple
+        || (props.multiple == null && Array.isArray(modelValue.value))
+    })
+
+    const group = {
+      disabled: toRef(props, 'disabled'),
+      inline: toRef(props, 'inline'),
+      modelValue,
+      multiple,
+      id,
+      name,
+      falseIcon: toRef(props, 'falseIcon'),
+      trueIcon: toRef(props, 'trueIcon'),
+      readonly: toRef(props, 'readonly'),
+      type: toRef(props, 'type'),
+    }
+
+    provide(SelectionGroupControlKey, group)
 
     useRender(() => {
       return (

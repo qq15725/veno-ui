@@ -6,14 +6,12 @@ import { computed, ref } from 'vue'
 import {
   genericComponent,
   getUid,
-  pick,
   SUPPORT_FOCUS_VISIBLE,
   useRender,
   filterInputAttrs,
   propsFactory,
   deepEqual,
-  getCurrentInstanceName,
-  wrapInArray
+  wrapInArray,
 } from '../../utils'
 
 // Components
@@ -28,7 +26,7 @@ import { useTextColor } from '../../composables/color'
 import { useSelectionGroupControl } from '../selection-group-control/selection-group-control'
 
 // Types
-import type { PropType, ComputedRef, ExtractPropTypes, Ref, WritableComputedRef } from 'vue'
+import type { PropType, ComputedRef, Ref, WritableComputedRef } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type SelectionControlSlot = {
@@ -43,10 +41,6 @@ export type SelectionControlSlot = {
     onFocus: (e: FocusEvent) => void
     id: string
   }
-}
-
-export function filterSelectionControlProps (props: ExtractPropTypes<ReturnType<typeof makeSelectionControlProps>>) {
-  return pick(props, Object.keys(SelectionControl.props) as any)
 }
 
 export const makeSelectionControlProps = propsFactory({
@@ -77,82 +71,6 @@ export const makeSelectionControlProps = propsFactory({
   ...makeDensityProps(),
 }, 'selection-control')
 
-export function useSelectionControl (
-  props: ExtractPropTypes<ReturnType<typeof makeSelectionControlProps>> & {
-    'onUpdate:modelValue': ((val: any) => void) | undefined
-  },
-  name = getCurrentInstanceName()
-) {
-  const group = useSelectionGroupControl()
-  const { densityClasses } = useDensity(props, name)
-  const modelValue = useProxiedModel(props, 'modelValue')
-  const trueValue = computed(() => (
-    props.trueValue !== undefined ? props.trueValue : (
-      props.value !== undefined ? props.value : true
-    )
-  ))
-  const falseValue = computed(() => (
-    props.falseValue !== undefined ? props.falseValue : false
-  ))
-  const isMultiple = computed(() => (
-    group?.multiple.value
-    || !!props.multiple
-    || (props.multiple == null && Array.isArray(modelValue.value))
-  ))
-  const model = computed({
-    get () {
-      const val = group ? group.modelValue.value : modelValue.value
-
-      if (isMultiple.value) {
-        return (val || []).some((v: any) => props.valueComparator(v, trueValue.value))
-      }
-
-      return props.valueComparator(val, trueValue.value)
-    },
-    set (val: boolean) {
-      const currentValue = val ? trueValue.value : falseValue.value
-
-      let newVal = currentValue
-
-      if (isMultiple.value) {
-        const oldVal = group ? group.modelValue.value : modelValue.value
-
-        if (val) {
-          newVal = [...wrapInArray(oldVal), currentValue]
-        } else {
-          newVal = wrapInArray(oldVal)
-            .filter((v: any) => !props.valueComparator(v, trueValue.value))
-        }
-      }
-
-      if (group) {
-        group.modelValue.value = newVal
-      } else {
-        modelValue.value = newVal
-      }
-    }
-  })
-  const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
-    return model.value ? props.color : undefined
-  }))
-  const icon = computed(() => {
-    return model.value
-      ? group?.trueIcon.value ?? props.trueIcon
-      : group?.falseIcon.value ?? props.falseIcon
-  })
-
-  return {
-    group,
-    densityClasses,
-    trueValue,
-    falseValue,
-    model,
-    textColorClasses,
-    textColorStyles,
-    icon,
-  }
-}
-
 export const SelectionControl = genericComponent<new <T>() => {
   $props: {
     modelValue?: T
@@ -175,15 +93,64 @@ export const SelectionControl = genericComponent<new <T>() => {
   },
 
   setup (props, { attrs, slots }) {
-    const {
-      densityClasses,
-      group,
-      icon,
-      model,
-      textColorClasses,
-      textColorStyles,
-      trueValue,
-    } = useSelectionControl(props)
+    const group = useSelectionGroupControl()
+    const { densityClasses } = useDensity(props)
+    const modelValue = useProxiedModel(props, 'modelValue')
+    const trueValue = computed(() => (
+      props.trueValue !== undefined ? props.trueValue : (
+        props.value !== undefined ? props.value : true
+      )
+    ))
+    const falseValue = computed(() => (
+      props.falseValue !== undefined ? props.falseValue : false
+    ))
+    const isMultiple = computed(() => (
+      group?.multiple.value
+      || !!props.multiple
+      || (props.multiple == null && Array.isArray(modelValue.value))
+    ))
+    const model = computed({
+      get () {
+        const val = group ? group.modelValue.value : modelValue.value
+
+        if (isMultiple.value) {
+          return (val || []).some((v: any) => props.valueComparator(v, trueValue.value))
+        }
+
+        return props.valueComparator(val, trueValue.value)
+      },
+      set (val: boolean) {
+        const currentValue = val ? trueValue.value : falseValue.value
+
+        let newVal = currentValue
+
+        if (isMultiple.value) {
+          const oldVal = group ? group.modelValue.value : modelValue.value
+
+          if (val) {
+            newVal = [...wrapInArray(oldVal), currentValue]
+          } else {
+            newVal = wrapInArray(oldVal)
+              .filter((v: any) => !props.valueComparator(v, trueValue.value))
+          }
+        }
+
+        if (group) {
+          group.modelValue.value = newVal
+        } else {
+          modelValue.value = newVal
+        }
+      }
+    })
+    const { textColorClasses, textColorStyles } = useTextColor(computed(() => {
+      return model.value ? props.color : undefined
+    }))
+    const icon = computed(() => {
+      return model.value
+        ? group?.trueIcon.value ?? props.trueIcon
+        : group?.falseIcon.value ?? props.falseIcon
+    })
+
     const uid = getUid()
     const id = computed(() => props.id || `ve-input-${ uid }`)
     const isFocused = ref(false)
@@ -217,13 +184,14 @@ export const SelectionControl = genericComponent<new <T>() => {
           id: id.value,
         },
       }
+
       const type = group?.type.value ?? props.type
       const hasLabel = !!(slots.label || props.label || props.value)
-      const [selectionControlAttrs, restAttrs] = filterInputAttrs(attrs)
+      const [rootAttrs, restAttrs] = filterInputAttrs(attrs)
 
       return (
         <div
-          { ...selectionControlAttrs }
+          { ...rootAttrs }
           class={ [
             've-selection-control',
             {

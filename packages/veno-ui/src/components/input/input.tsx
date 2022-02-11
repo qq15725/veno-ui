@@ -3,11 +3,10 @@ import './styles/input.scss'
 
 // Utils
 import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
-import { genericComponent, filterInputAttrs, useRender, getUid, propsFactory, pick, convertToUnit } from '../../utils'
+import { genericComponent, useRender, getUid, convertToUnit } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
-import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { InputControl } from '../input-control'
 import { makeInputControlProps, filterInputControlProps } from '../input-control/input-control'
 import { Counter } from '../counter'
@@ -25,39 +24,6 @@ import type { InputControlSlot } from '../input-control/input-control'
 import type { MakeSlots } from '../../utils'
 
 const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'month']
-
-export const makeInputProps = propsFactory({
-  id: String,
-  autofocus: Boolean,
-  counter: [Boolean, Number, String] as PropType<true | number | string>,
-  counterValue: Function as PropType<(value: any) => number>,
-  persistentCounter: Boolean,
-  placeholder: String,
-  type: {
-    type: String,
-    default: 'text',
-  },
-
-  // Textarea Type
-  autoGrow: Boolean,
-  noResize: Boolean,
-  rows: {
-    type: [Number, String],
-    default: 5,
-    validator: (v: any) => !isNaN(parseFloat(v)),
-  },
-  maxRows: {
-    type: [Number, String],
-    validator: (v: any) => !isNaN(parseFloat(v)),
-  },
-
-  ...makeFormControlProps(),
-  ...makeInputControlProps(),
-}, 'input')
-
-export function filterInputProps (attrs: Record<string, unknown>) {
-  return pick(attrs, Object.keys(Input.props))
-}
 
 export type InputSlots = MakeSlots<{
   prepend: [FormControlSlot]
@@ -77,11 +43,38 @@ export const Input = genericComponent<new () => {
 }>()({
   name: 'VeInput',
 
-  inheritAttrs: false,
-
   directives: { Intersect },
 
-  props: makeInputProps(),
+  props: {
+    id: String,
+    autofocus: Boolean,
+    counter: [Boolean, Number, String] as PropType<true | number | string>,
+    counterValue: Function as PropType<(value: any) => number>,
+    persistentCounter: Boolean,
+    placeholder: String,
+    type: {
+      type: String,
+      default: 'text',
+    },
+
+    // Textarea Type
+    autoGrow: Boolean,
+    noResize: Boolean,
+    rows: {
+      type: [Number, String],
+      default: 5,
+      validator: (v: any) => !isNaN(parseFloat(v)),
+    },
+    maxRows: {
+      type: [Number, String],
+      validator: (v: any) => !isNaN(parseFloat(v)),
+    },
+
+    name: String,
+    modelValue: null,
+
+    ...makeInputControlProps(),
+  },
 
   emits: {
     // FormControl
@@ -159,7 +152,6 @@ export const Input = genericComponent<new () => {
 
     onMounted(calculateInputHeight)
     watch(model, calculateInputHeight)
-    watch(() => props.density, calculateInputHeight)
     watch(() => props.rows, calculateInputHeight)
     watch(() => props.maxRows, calculateInputHeight)
 
@@ -193,8 +185,6 @@ export const Input = genericComponent<new () => {
     useRender(() => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
-      const [rootAttrs, restAttrs] = filterInputAttrs(attrs)
-      const [formControlProps] = filterFormControlProps(props)
       const [inputControlProps] = filterInputControlProps(props)
       const styles = isTextarea && controlHeight.value
         ? { '--ve-control-default-height': controlHeight.value }
@@ -202,8 +192,6 @@ export const Input = genericComponent<new () => {
 
       return (
         <FormControl
-          { ...rootAttrs }
-          { ...formControlProps }
           ref={ formControlRef }
           class={ [
             've-input',
@@ -215,6 +203,7 @@ export const Input = genericComponent<new () => {
           ] }
           label-id={ id.value }
           style={ styles }
+          name={ props.name }
           onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
           onClick:label={ (e: MouseEvent) => emit('click:label', e) }
           onClick:append={ (e: MouseEvent) => emit('click:append', e) }
@@ -265,7 +254,7 @@ export const Input = genericComponent<new () => {
                               ref={ inputRef }
                               rows={ props.rows }
                               { ...nativeControlProps }
-                              { ...restAttrs }
+                              { ...attrs }
                             />
 
                             {
@@ -305,7 +294,7 @@ export const Input = genericComponent<new () => {
                               ref={ inputRef }
                               type={ props.type }
                               { ...nativeControlProps }
-                              { ...restAttrs }
+                              { ...attrs }
                             />
                           </>
                         )

@@ -10,15 +10,13 @@ import { Button } from '../button'
 // Types
 import type { PropType } from 'vue'
 
-export type Link = InstanceType<typeof Link>
-
 export const Link = defineComponent({
   name: 'VeLink',
 
   props: {
     underline: {
       type: [Boolean, String] as PropType<boolean | 'hover'>,
-      default: 'hover'
+      default: 'hover',
     },
     linkIcon: {
       type: String,
@@ -45,12 +43,20 @@ export const Link = defineComponent({
           prepend-icon={
             props.prependIcon === true
               ? props.linkIcon
-              : typeof props.prependIcon === 'string' ? props.prependIcon : undefined
+              : (
+                typeof props.prependIcon === 'string'
+                  ? props.prependIcon
+                  : undefined
+              )
           }
           append-icon={
             props.appendIcon === true
               ? props.linkIcon
-              : typeof props.appendIcon === 'string' ? props.appendIcon : undefined
+              : (
+                typeof props.appendIcon === 'string'
+                  ? props.appendIcon
+                  : undefined
+              )
           }
         >
           { slots }
@@ -59,3 +65,5 @@ export const Link = defineComponent({
     }
   }
 })
+
+export type Link = InstanceType<typeof Link>

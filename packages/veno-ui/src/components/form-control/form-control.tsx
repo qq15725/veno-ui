@@ -3,7 +3,7 @@ import './styles/form-control.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, propsFactory, pick, convertToUnit, useRender } from '../../utils'
+import { genericComponent, convertToUnit, useRender } from '../../utils'
 
 // Components
 import { Label } from '../label'
@@ -17,7 +17,7 @@ import { makeValidationProps, useValidation } from '../../composables/validation
 import { makeFormControlDirectionProps, useFormControlDirectionProps } from '../../composables/form-control-direction'
 
 // Types
-import type { ExtractPropTypes, ComputedRef, PropType, Ref } from 'vue'
+import type { ComputedRef, PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type FormControlSlot = {
@@ -39,29 +39,6 @@ export type FormControlSlots = MakeSlots<{
   details: [FormControlSlot],
 }>
 
-export function filterFormControlProps (props: ExtractPropTypes<ReturnType<typeof makeFormControlProps>>) {
-  return pick(props, Object.keys(FormControl.props) as any)
-}
-
-export const makeFormControlProps = propsFactory({
-  appendIcon: String,
-  prependIcon: String,
-  label: [Boolean, String],
-  labelId: String,
-  labelWidth: [String, Number],
-  hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
-  hint: String,
-  messages: {
-    type: [Array, String],
-    default: () => ([]),
-  },
-  persistentHint: Boolean,
-  ...makeDimensionProps(),
-  ...makeFormControlDirectionProps(),
-  ...makeDensityProps(),
-  ...makeValidationProps(),
-}, 'form-control')
-
 export const FormControl = genericComponent<new () => {
   $slots: FormControlSlots
 }>()({
@@ -69,7 +46,22 @@ export const FormControl = genericComponent<new () => {
 
   props: {
     focused: Boolean,
-    ...makeFormControlProps(),
+    appendIcon: String,
+    prependIcon: String,
+    label: [Boolean, String],
+    labelId: String,
+    labelWidth: [String, Number],
+    hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
+    hint: String,
+    messages: {
+      type: [Array, String],
+      default: () => ([]),
+    },
+    persistentHint: Boolean,
+    ...makeDimensionProps(),
+    ...makeFormControlDirectionProps(),
+    ...makeDensityProps(),
+    ...makeValidationProps(),
   },
 
   emits: {

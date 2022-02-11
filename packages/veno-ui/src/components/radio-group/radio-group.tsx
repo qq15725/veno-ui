@@ -1,44 +1,34 @@
 // Utils
 import { computed, toRef } from 'vue'
-import { defineComponent, filterInputAttrs, getUid } from '../../utils'
+import { defineComponent, getUid } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
-import { makeFormControlProps, filterFormControlProps } from '../form-control/form-control'
 import { SelectionGroupControl } from '../selection-group-control'
-import {
-  makeSelectionGroupControlProps,
-  filterSelectionGroupControlProps
-} from '../selection-group-control/selection-group-control'
+import { makeSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
 
 // Composables
+import { makeDensityProps } from '../../composables/density'
 import { provideDefaults } from '../../composables/defaults'
 
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
 
-  inheritAttrs: false,
-
   props: {
-    height: {
-      type: [Number, String],
-      default: 'auto',
-    },
-    ...makeFormControlProps(),
     ...makeSelectionGroupControlProps({
       type: 'radio',
       trueIcon: '$radioOn',
       falseIcon: '$radioOff',
     }),
+    ...makeDensityProps(),
   },
 
   emits: {
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { attrs, slots, emit }) {
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-radio-group-${ uid }`)
+  setup (props, { emit, slots }) {
+    const id = computed(() => props.id || `ve-radio-group-${ getUid() }`)
 
     provideDefaults({
       VeRadio: {
@@ -49,30 +39,25 @@ export const RadioGroup = defineComponent({
     })
 
     return () => {
-      const [formControlAttrs, restAttrs] = filterInputAttrs(attrs)
-      const [formControlProps] = filterFormControlProps(props)
-      const [selectionGroupControlProps] = filterSelectionGroupControlProps(props)
-      const { default: defaultSlot, ...restSlots } = slots
+      const { density, ...restProps } = props
 
       return (
         <FormControl
-          { ...formControlProps }
           class="ve-radio-group"
-          { ...formControlAttrs }
+          density={ density }
         >
           { {
-            ...restSlots,
+            ...slots,
             default: ({ isDisabled, isReadonly, props: controlProps }) => (
               <SelectionGroupControl
-                { ...selectionGroupControlProps }
+                { ...restProps }
                 { ...controlProps }
                 id={ id.value }
                 disabled={ isDisabled.value }
                 readonly={ isReadonly.value }
                 onUpdate:modelValue={ val => emit('update:modelValue', val) }
-                { ...restAttrs }
               >
-                { { default: defaultSlot } }
+                { slots.default?.() }
               </SelectionGroupControl>
             ),
           } }
