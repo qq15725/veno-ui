@@ -98,8 +98,8 @@ export const Select = genericComponent<new () => {
 
     function findItem (v: any) {
       return props.items?.find(i => {
-        const i1 = typeof i === 'string' ? i : i[props.itemValue]
-        const v1 = typeof v === 'string' ? v : v[props.itemValue]
+        const i1 = typeof i === 'object' ? i[props.itemValue] : i
+        const v1 = typeof v === 'object' ? v[props.itemValue] : v
         return i1 === v1
       })
     }
@@ -148,6 +148,9 @@ export const Select = genericComponent<new () => {
           ] }
           readonly
           modelValue={ text.value }
+          type={ props.multiple ? 'textarea' : undefined }
+          autoGrow={ props.multiple ? true : undefined }
+          rows={ props.multiple ? 1 : undefined }
           onClick:clear={ onClear }
           onClick:control={ () => {
             if (props.readonly) return
