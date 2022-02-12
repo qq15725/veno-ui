@@ -117,7 +117,7 @@ export const Table = defineComponent({
     'update:options': (val: Record<string, any>) => true,
   },
 
-  setup (props, { slots, emit }) {
+  setup (props, { slots }) {
     const containerRef = ref<HTMLDivElement>()
     const containerScrollLeft = ref(0)
 

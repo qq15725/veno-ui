@@ -57,7 +57,15 @@ export const Overlay = genericComponent<new () => {
     attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
     contained: Boolean,
     contentClass: null,
+
+    /**
+     * @zh 没有点击动画
+     */
     noClickAnimation: Boolean,
+
+    /**
+     * @zh 持续显示（额外关闭行为不受控）
+     */
     persistent: Boolean,
     scrim: {
       type: [String, Boolean],
@@ -85,17 +93,17 @@ export const Overlay = genericComponent<new () => {
     const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
     const { themeClasses } = provideTheme(props)
     const { hasContent, onAfterLeave } = useLazy(props, isActive)
-    const { activatorEl, activatorRef, activatorEvents } = useActivator(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
-
     const contentEl = ref<HTMLElement>()
+    const { activatorEl, activatorRef, activatorEvents, contentEvents } = useActivator(props, {
+      isActive,
+    })
     const { contentStyles, anchorClasses, updatePosition } = usePositionStrategy(props, {
       contentEl,
       activatorEl,
       isActive,
     })
-
     useScrollStrategy(props, {
       contentEl,
       activatorEl,
@@ -106,8 +114,11 @@ export const Overlay = genericComponent<new () => {
     function onClickOutside (e: MouseEvent) {
       emit('click:outside', e)
 
-      if (!props.persistent) isActive.value = false
-      else animateClick()
+      if (!props.persistent) {
+        isActive.value = false
+      } else {
+        animateClick()
+      }
     }
 
     function closeConditional () {
@@ -126,15 +137,20 @@ export const Overlay = genericComponent<new () => {
       if (e.key === 'Escape' && isTop.value) {
         if (!props.persistent) {
           isActive.value = false
-        } else animateClick()
+        } else {
+          animateClick()
+        }
       }
     }
 
     useBackButton(next => {
       if (isTop.value && isActive.value) {
         next(false)
-        if (!props.persistent) isActive.value = false
-        else animateClick()
+        if (!props.persistent) {
+          isActive.value = false
+        } else {
+          animateClick()
+        }
       } else {
         next()
       }
@@ -227,6 +243,7 @@ export const Overlay = genericComponent<new () => {
                     dimensionStyles.value,
                     contentStyles.value,
                   ] }
+                  { ...toHandlers(contentEvents.value) }
                 >
                   { slots.default?.({ isActive }) }
                 </div>

@@ -53,9 +53,16 @@ export const makeActivatorProps = propsFactory({
   ...makeDelayProps(),
 })
 
-export function useActivator (
-  props: ExtractPropTypes<ReturnType<typeof makeActivatorProps>>,
+type ActivatorProps = ExtractPropTypes<ReturnType<typeof makeActivatorProps>>
+
+interface ActivatorData
+{
   isActive: Ref<boolean>
+}
+
+export function useActivator (
+  props: ActivatorProps,
+  { isActive }: ActivatorData
 ) {
   const activatorEl = ref<HTMLElement>()
 
@@ -80,30 +87,27 @@ export function useActivator (
     }
   })
 
+  function onEnter (e: MouseEvent) {
+    activatorEl.value = (e.currentTarget || e.target) as HTMLElement
+    isHovered = true
+    runOpenDelay()
+  }
+
+  function onLeave (e: MouseEvent) {
+    isHovered = false
+    runCloseDelay()
+  }
+
   const availableEvents = {
     click: (e: MouseEvent) => {
       e.stopPropagation()
       activatorEl.value = (e.currentTarget || e.target) as HTMLElement
       isActive.value = !isActive.value
     },
-    mouseenter: (e: MouseEvent) => {
-      activatorEl.value = (e.currentTarget || e.target) as HTMLElement
-      isHovered = true
-      runOpenDelay()
-    },
-    mouseleave: (e: MouseEvent) => {
-      isHovered = false
-      runCloseDelay()
-    },
-    touchstart: (e: MouseEvent) => {
-      activatorEl.value = (e.currentTarget || e.target) as HTMLElement
-      isHovered = true
-      runOpenDelay()
-    },
-    touchend: (e: MouseEvent) => {
-      isHovered = false
-      runCloseDelay()
-    },
+    mouseenter: onEnter,
+    mouseleave: onLeave,
+    touchstart: onEnter,
+    touchend: onEnter,
     focus: (e: FocusEvent) => {
       if (
         SUPPORT_FOCUS_VISIBLE
@@ -130,8 +134,8 @@ export function useActivator (
 
     if (props.openOnHover) {
       if (SUPPORT_TOUCH) {
-        events.touchstart = availableEvents.touchstart
-        events.touchend = availableEvents.touchend
+        events.touchstart = availableEvents.mouseenter
+        events.touchend = availableEvents.mouseleave
       } else {
         events.mouseenter = availableEvents.mouseenter
         events.mouseleave = availableEvents.mouseleave
@@ -146,6 +150,21 @@ export function useActivator (
     return events
   })
 
+  const contentEvents = computed(() => {
+    const events: Partial<typeof availableEvents> = {}
+
+    if (props.openOnHover) {
+      if (SUPPORT_TOUCH) {
+        events.touchstart = (e: MouseEvent) => isHovered = true
+        events.touchend = availableEvents.touchend
+      } else {
+        events.mouseenter = (e: MouseEvent) => isHovered = true
+        events.mouseleave = availableEvents.mouseleave
+      }
+    }
+
+    return events
+  })
 
   const activatorRef = ref()
   watchEffect(() => {
@@ -157,23 +176,25 @@ export function useActivator (
     })
   })
 
+  const state = { activatorEl, activatorRef, activatorEvents, contentEvents }
+
   let scope: EffectScope
   watch(() => !!props.activator, val => {
     if (val && IN_BROWSER) {
       scope = effectScope()
       scope.run(() => {
-        _useActivator(props, { activatorEl, activatorRef, activatorEvents })
+        _useActivator(props, state)
       })
     } else if (scope) {
       scope.stop()
     }
   }, { flush: 'post', immediate: true })
 
-  return { activatorEl, activatorRef, activatorEvents }
+  return state
 }
 
 function _useActivator (
-  props: ExtractPropTypes<ReturnType<typeof makeActivatorProps>>,
+  props: ActivatorProps,
   { activatorEl, activatorEvents }: ReturnType<typeof useActivator>
 ) {
   watch(() => props.activator, (val, oldVal) => {

@@ -118,11 +118,12 @@ export function useDataIterator (props: DataIteratorProps) {
         ? Number(val?.total ?? props.items.length)
         : props.items.length
       const perPage = Number(val?.perPage ?? defaultPagination.perPage)
-      const lastPage = Number(val?.lastPage ?? ~~(total / perPage))
+      const firstPage = Number(val?.firstPage ?? defaultPagination.firstPage)
+      const lastPage = Number(val?.lastPage ?? Math.max(firstPage, ~~(total / perPage)))
       return reactive({
         page: Number(val?.page ?? defaultPagination.page),
         perPage,
-        firstPage: Number(val?.firstPage ?? defaultPagination.firstPage),
+        firstPage,
         lastPage,
         total,
       })

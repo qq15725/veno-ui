@@ -22,8 +22,8 @@ export const Menu = genericComponent<new () => {
   name: 'VeMenu',
 
   props: {
-    id: String,
     modelValue: Boolean,
+    id: String,
     ...makeTransitionProps({
       transition: { component: MenuTransition },
     } as const),
@@ -41,9 +41,7 @@ export const Menu = genericComponent<new () => {
       return (
         <Overlay
           v-model={ isActive.value }
-          class={ [
-            've-menu',
-          ] }
+          class="ve-menu"
           transition={ props.transition }
           absolute
           positionStrategy="connected"
@@ -57,8 +55,9 @@ export const Menu = genericComponent<new () => {
             'aria-expanded': String(isActive.value),
             'aria-owns': id.value,
           } }
-          v-slots={ slots }
-        />
+        >
+          { slots }
+        </Overlay>
       )
     }
   },

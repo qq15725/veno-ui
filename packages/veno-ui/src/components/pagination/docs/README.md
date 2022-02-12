@@ -10,6 +10,10 @@ category: Navigation 导航
 
 basic.md
 
+total-visible.md
+
+show-first-last-page.md
+
 :::
 
 ## API
