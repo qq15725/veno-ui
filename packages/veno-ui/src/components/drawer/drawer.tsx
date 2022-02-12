@@ -108,7 +108,7 @@ export const Drawer = defineComponent({
       return isTemporary.value ? Number(props.priority) + 1 : props.priority
     })
 
-    const { layoutItemStyles } = useLayoutItem(computed(() => ({
+    const { layoutItemStyles, layoutItemScrimStyles } = useLayoutItem(computed(() => ({
       name: props.name,
       position: props.position,
       anchor: props.anchor,
@@ -156,7 +156,7 @@ export const Drawer = defineComponent({
           <Scrim
             model-value={ isTemporary.value && (isDragging.value || isActive.value) }
             style={ [
-              { zIndex: 1 },
+              layoutItemScrimStyles.value,
               isDragging.value ? {
                 opacity: dragProgress.value * 0.2,
                 transition: 'none',

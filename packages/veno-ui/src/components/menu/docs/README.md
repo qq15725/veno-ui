@@ -8,7 +8,7 @@ category: Navigation 导航
 
 :::include
 
-basic.md case1.md
+basic.md open-on-hover.md
 
 nested.md
 

@@ -3,9 +3,9 @@ import { requestNewFrame } from '../../utils'
 import { bindScroll } from './util'
 
 // Type
-import type { ScrollStrategyData } from './scrollStrategy'
+import type { ScrollStrategyData } from './index'
 
-export function scrollStrategyReposition (data: ScrollStrategyData) {
+export function repositionScrollStrategy (data: ScrollStrategyData, name: string) {
   let slow = false
   let raf = -1
 

@@ -1,6 +1,6 @@
 // Utils
-import { onBeforeUnmount } from 'vue'
-import { getUid, propsFactory } from '../../utils'
+import { ref, onBeforeUnmount, onDeactivated, onActivated, computed } from 'vue'
+import { getUid, propsFactory, getCurrentInstance } from '../../utils'
 import { useLayout } from './layout'
 
 // Types
@@ -28,10 +28,23 @@ export const makeLayoutItemProps = propsFactory({
 }, 'layout-item')
 
 export function useLayoutItem (props: Ref<LayoutItemProps & { name?: string }>) {
-  const provider = useLayout()
+  const layout = useLayout()
   const id = props.value.name ?? `layout-item-${ getUid() }`
-  onBeforeUnmount(() => provider.unregister(id))
+  const vm = getCurrentInstance('useLayoutItem')
+  const isKeptAlive = ref(false)
+  const {
+    layoutItemStyles,
+    layoutItemScrimStyles,
+  } = layout.register(vm, id, computed(() => ({
+    ...props.value,
+    active: !isKeptAlive.value && props.value.active,
+  })))
+  onDeactivated(() => isKeptAlive.value = true)
+  onActivated(() => isKeptAlive.value = false)
+  onBeforeUnmount(() => layout.unregister(id))
   return {
-    layoutItemStyles: provider.register(id, props)
+    layoutItemStyles,
+    layoutRect: layout.layoutRect,
+    layoutItemScrimStyles
   }
 }

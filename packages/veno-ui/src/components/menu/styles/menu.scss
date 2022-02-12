@@ -2,8 +2,7 @@
 @use '../../../styles/settings';
 
 .ve-menu {
-  z-index: 800;
-  .ve-overlay__content {
+  .ve-overlay__wrapper {
     display: flex;
     flex-direction: column;
     border-radius: settings.$border-radius;

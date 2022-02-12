@@ -1,6 +1,15 @@
 // Utils
-import { computed, inject, provide, reactive } from 'vue'
-import { convertToUnit, propsFactory, getCurrentInstanceName } from '../../utils'
+import { ref, computed, inject, provide, reactive } from 'vue'
+import {
+  convertToUnit,
+  propsFactory,
+  getCurrentInstance,
+  getCurrentInstanceName,
+  findChildrenWithProvide,
+} from '../../utils'
+
+// Composables
+import { useResizeObserver } from '../resize-observer'
 
 // Types
 import type { InjectionKey, Prop, Ref, ExtractPropTypes } from 'vue'
@@ -9,10 +18,12 @@ import type {
   LayoutAnchor,
   LayoutLayer,
   LayoutItem,
-  LayoutProvider
+  LayoutInstance
 } from './types'
 
-export const LayoutKey: InjectionKey<LayoutProvider> = Symbol.for('veno-ui:layout')
+export const LayoutKey: InjectionKey<LayoutInstance> = Symbol.for('veno-ui:layout')
+
+export const ROOT_ZINDEX = 1000
 
 export const makeLayoutProps = propsFactory({
   overlaps: {
@@ -20,20 +31,19 @@ export const makeLayoutProps = propsFactory({
     default: () => ([]),
   } as Prop<string[]>,
   fullHeight: Boolean,
-  layerZIndex: {
-    type: [String, Number],
-    default: 0
-  },
 }, 'layout')
 
-export type LayoutProps = ExtractPropTypes<ReturnType<typeof makeLayoutProps>>
-
 export function provideLayout (
-  props: LayoutProps,
+  props: ExtractPropTypes<ReturnType<typeof makeLayoutProps>>,
   name = getCurrentInstanceName()
 ) {
+  const rootVm = getCurrentInstance('provideLayout')
+  const parentLayout = inject(LayoutKey, null)
+  const rootZIndex = computed(() => parentLayout ? parentLayout.rootZIndex.value - 100 : ROOT_ZINDEX)
   const itemIds = reactive<string[]>([])
   const itemMap = new Map<string, Ref<LayoutItemProps>>()
+  const { resizeRef, contentRect: layoutRect } = useResizeObserver()
+  const overlays = ref<number[]>([])
 
   function generate () {
     return (
@@ -92,11 +102,17 @@ export function provideLayout (
   const transitionEnabled = computed(() => !items.value.some(ref => ref.disableTransition))
 
   provide(LayoutKey, {
-    register: (id, itemProps) => {
+    register: (vm, id, itemProps) => {
       itemMap.set(id, itemProps)
-      itemIds.push(id)
+      const instances = findChildrenWithProvide(LayoutKey, rootVm?.vnode)
+      const instanceIndex = instances.indexOf(vm)
+      if (instanceIndex > -1) {
+        itemIds.splice(instanceIndex, 0, id)
+      } else {
+        itemIds.push(id)
+      }
 
-      return computed(() => {
+      const layoutItemStyles = computed(() => {
         const { items } = generate()
         const index = items.findIndex(i => i.id === id)
         const item = items[index]
@@ -114,12 +130,23 @@ export function provideLayout (
           marginTop: item.anchor !== 'bottom' ? `${ item.top }px` : undefined,
           marginBottom: item.anchor !== 'top' ? `${ item.bottom }px` : undefined,
           width: !isHorizontal ? `calc(100% - ${ item.left }px - ${ item.right }px)` : `${ item.size }px`,
-          zIndex: Number(props.layerZIndex) + items.length - index,
+          zIndex: rootZIndex.value + (items.length * 2) - (index * 2),
           transform: `translate${ isHorizontal ? 'X' : 'Y' }(${ (item.active ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1) }%)`,
-          position: item.position,
+          position: item.position === 'absolute' || rootZIndex.value !== ROOT_ZINDEX
+            ? 'absolute'
+            : 'fixed',
           ...(transitionEnabled.value ? undefined : { transition: 'none' }),
         }
       })
+      const layoutItemScrimStyles = computed(() => ({
+        zIndex: layoutItemStyles.value.zIndex - 1,
+        position: rootZIndex.value === ROOT_ZINDEX ? 'fixed' : 'absolute',
+      }))
+
+      return {
+        layoutItemStyles,
+        layoutItemScrimStyles,
+      }
     },
     unregister: (id: string) => {
       itemIds.splice(itemIds.indexOf(id), 1)
@@ -138,19 +165,27 @@ export function provideLayout (
     }),
     getLayoutItem,
     items,
+    layoutRect,
+    rootZIndex,
+    overlays,
   })
 
   return {
     layoutClasses: computed(() => ({
       [`${ name }--full-height`]: props.fullHeight
     })),
+    layoutStyles: computed(() => ({
+      zIndex: rootZIndex.value,
+    })),
     getLayoutItem,
     items,
+    layoutRect,
+    layoutRef: resizeRef,
   }
 }
 
-export function useLayout (): LayoutProvider {
-  const provider = inject(LayoutKey)
-  if (!provider) throw new Error('[VenoUi] Could not find layout instance')
-  return provider
+export function useLayout (): LayoutInstance {
+  const layout = inject(LayoutKey)
+  if (!layout) throw new Error('[VenoUi] Could not find layout instance')
+  return layout
 }

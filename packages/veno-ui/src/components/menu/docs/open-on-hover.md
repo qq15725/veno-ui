@@ -1,6 +1,6 @@
 :::demo
 
-# 示例1
+# 悬停时打开
 
 ```html
 <ve-menu open-on-hover>

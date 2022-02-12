@@ -8,7 +8,8 @@ import type {
   Ref,
   Slots,
   VNode,
-  VNodeChild
+  VNodeChild,
+  InjectionKey,
 } from 'vue'
 
 export function getNestedValue (obj: any, path: (string | number)[], fallback?: any): any {
@@ -515,6 +516,12 @@ export function findChildren (vnode?: VNodeChild): ComponentInternalInstance[] {
   }
 
   return []
+}
+
+export function findChildrenWithProvide (provide: InjectionKey<any>, vnode?: VNodeChild): ComponentInternalInstance[] {
+  return findChildren(vnode)
+    .slice(1) // First one is group component itself
+    .filter(cmp => !!cmp.provides[provide as any]) // TODO: Fix in TS 4.4?
 }
 
 export class CircularBuffer<T = never> {

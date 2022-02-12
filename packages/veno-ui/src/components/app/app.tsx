@@ -16,7 +16,6 @@ export const App = defineComponent({
     ...makeThemeProps(),
     ...makeLayoutProps({
       fullHeight: true,
-      layerZIndex: 700,
     }),
   },
 

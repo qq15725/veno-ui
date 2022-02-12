@@ -30,7 +30,7 @@ function toggle () {
   <ve-progress
       stroke-width="2"
       :indeterminate="app.loading"
-      style="position: fixed; top: 0; z-index: 800;"
+      style="position: fixed; top: 0; z-index: 2000;"
   />
 
   <ve-header border>

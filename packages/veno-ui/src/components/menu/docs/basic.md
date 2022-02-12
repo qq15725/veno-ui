@@ -10,11 +10,13 @@
       <ve-button v-bind="props" icon="$dropdown" />
     </ve-button-group>
   </template>
-
-  <ve-list density="ultra-high">
-    <ve-list-item prepend-icon="mdi-plus" text="新增" link />
-    <ve-list-item prepend-icon="mdi-delete" text="删除" link/>
-  </ve-list>
+  
+  <template #default="{ isActive }">
+    <ve-list density="ultra-high" @click="isActive.value = false">
+      <ve-list-item prepend-icon="mdi-plus" text="新增" link />
+      <ve-list-item prepend-icon="mdi-delete" text="删除" link/>
+    </ve-list>
+  </template>
 </ve-menu>
 ```
 
