@@ -3,15 +3,19 @@
 # 临时抽屉
 
 ```html
-<ve-drawer v-model="show" :anchor="anchor" temporary />
-
 <ve-spacer>
-  <ve-button
-    v-for="v in ['left', 'top', 'right', 'bottom']" :key="v"
-    @click="anchor = v; show = !show;"
-  >
-    {{ v }}
-  </ve-button>  
+  <ve-drawer anchor="top" temporary #activator="{ props }">
+    <ve-button v-bind="props">Top</ve-button>   
+  </ve-drawer>
+  <ve-drawer anchor="right" temporary #activator="{ props }">
+    <ve-button v-bind="props">Right</ve-button>   
+  </ve-drawer>
+  <ve-drawer anchor="bottom" temporary #activator="{ props }">
+    <ve-button v-bind="props">Bottom</ve-button>   
+  </ve-drawer>
+  <ve-drawer anchor="left" temporary #activator="{ props }">
+    <ve-button v-bind="props">Left</ve-button>   
+  </ve-drawer>
 </ve-spacer>
 ```
 

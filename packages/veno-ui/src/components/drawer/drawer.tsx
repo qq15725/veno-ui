@@ -58,10 +58,12 @@ export const Drawer = defineComponent({
   },
 
   setup (props, { attrs, slots }) {
+    const isActive = useProxiedModel(props, 'modelValue')
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
-    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
-    const isActive = useProxiedModel(props, 'modelValue')
+    const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
+      toRef(props, 'color')
+    )
     const { mobile } = useDisplay()
     const isHovering = ref(false)
     const width = computed(() => {
@@ -84,8 +86,8 @@ export const Drawer = defineComponent({
     })
 
     onBeforeMount(() => {
-      if (props.modelValue != null) return
-      isActive.value = props.permanent || !mobile.value
+      if (props.modelValue !== null) return
+      isActive.value = !isTemporary.value && (props.permanent || !mobile.value)
     })
 
     const { isDragging, dragProgress, dragStyles } = useTouch({
@@ -119,9 +121,17 @@ export const Drawer = defineComponent({
       disableTransition: isDragging.value
     })))
 
+    const activatorProps = computed(() => ({
+      onClick: () => {
+        isActive.value = true
+      },
+    }))
+
     return () => {
       return (
         <>
+          { slots.activator?.({ props: activatorProps.value }) }
+
           <props.tag
             onMouseenter={ () => (isHovering.value = true) }
             onMouseleave={ () => (isHovering.value = false) }

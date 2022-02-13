@@ -1,6 +1,9 @@
 // Utils
-import { useVelocity } from '../../composables/touch/index'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { throttle } from '../../utils'
+
+// Composables
+import { useVelocity } from '../../composables/touch'
 
 // Types
 import type { Ref } from 'vue'
@@ -53,7 +56,7 @@ export function useTouch ({ isActive, isTemporary, width, touchless, position }:
   }
 
   function onTouchstart (e: TouchEvent) {
-    if (touchless.value) return
+    if (touchless.value || !isActive.value) return
 
     const touchX = e.changedTouches[0].clientX
     const touchY = e.changedTouches[0].clientY
@@ -63,13 +66,15 @@ export function useTouch ({ isActive, isTemporary, width, touchless, position }:
       position.value === 'left' ? touchX < touchZone
         : position.value === 'right' ? touchX > document.documentElement.clientWidth - touchZone
         : position.value === 'bottom' ? touchY > document.documentElement.clientHeight - touchZone
-          : oops()
+          : position.value === 'top' ? touchY < touchZone
+            : oops()
 
     const inElement: boolean = isActive.value && (
       position.value === 'left' ? touchX < width.value
         : position.value === 'right' ? touchX > document.documentElement.clientWidth - width.value
         : position.value === 'bottom' ? touchY > document.documentElement.clientHeight - width.value
-          : oops()
+          : position.value === 'top' ? touchY < width.value
+            : oops()
     )
 
     if (
@@ -88,7 +93,9 @@ export function useTouch ({ isActive, isTemporary, width, touchless, position }:
     }
   }
 
-  function onTouchmove (e: TouchEvent) {
+  const onTouchmove = throttle((e: TouchEvent) => handleTouchmove(e), 69)
+
+  function handleTouchmove (e: TouchEvent) {
     const touchX = e.changedTouches[0].clientX
     const touchY = e.changedTouches[0].clientY
 
@@ -149,6 +156,7 @@ export function useTouch ({ isActive, isTemporary, width, touchless, position }:
         left: 'right',
         right: 'left',
         bottom: 'up',
+        top: 'down',
       }[position.value] || oops())
     } else {
       isActive.value = dragProgress.value > 0.5
@@ -158,10 +166,11 @@ export function useTouch ({ isActive, isTemporary, width, touchless, position }:
   const dragStyles = computed(() => {
     return isDragging.value ? {
       transform:
-        position.value === 'left' ? `translateX(calc(-100% + ${dragProgress.value * width.value}px))`
-          : position.value === 'right' ? `translateX(calc(100% - ${dragProgress.value * width.value}px))`
-          : position.value === 'bottom' ? `translateY(calc(100% - ${dragProgress.value * width.value}px))`
-            : oops(),
+        position.value === 'left' ? `translateX(calc(-100% + ${ dragProgress.value * width.value }px))`
+          : position.value === 'right' ? `translateX(calc(100% - ${ dragProgress.value * width.value }px))`
+          : position.value === 'bottom' ? `translateY(calc(100% - ${ dragProgress.value * width.value }px))`
+            : position.value === 'top' ? `translateY(calc(-100% + ${ dragProgress.value * width.value }px))`
+              : oops(),
       transition: 'none',
     } : undefined
   })
