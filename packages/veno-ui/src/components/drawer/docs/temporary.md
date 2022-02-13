@@ -19,17 +19,4 @@
 </ve-spacer>
 ```
 
-```js
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  setup () {
-    return {
-      anchor: ref('left'),
-      show: ref(false),
-    }
-  }
-})
-```
-
 :::

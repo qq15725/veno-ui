@@ -58,7 +58,7 @@ export const ListGroup = genericComponent<new () => {
       onClick,
       appendIcon: isOpen.value ? props.collapseIcon : props.expandIcon,
       class: 've-list-group__header',
-      value: `${ props.value }_header`,
+      value: props.value ? `${ props.value }_header` : undefined,
     }))
 
     return () => {
