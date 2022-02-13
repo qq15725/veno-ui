@@ -1,0 +1,21 @@
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+// Blocks
+.ve-tag-group {
+  display: flex;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 4px 0;
+
+  .ve-tag {
+    margin: 4px 8px 4px 0;
+  }
+
+  // Modifiers
+  &--column {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+}

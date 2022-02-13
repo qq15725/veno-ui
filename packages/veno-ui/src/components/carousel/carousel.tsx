@@ -3,7 +3,7 @@ import './styles/carousel.scss'
 
 // Utils
 import { toRef, watch } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -14,10 +14,9 @@ import { makeGroupProps, useGroup } from '../../composables/group'
 import { CarouselActivator } from './carousel-activator'
 
 // Types
-export const CarouselSymbol = Symbol.for('veno-ui:carousel')
-export type Carousel = InstanceType<typeof Carousel>
+export const CarouselKey = Symbol.for('veno-ui:carousel')
 
-export const Carousel = genericComponent()({
+export const Carousel = defineComponent({
   name: 'VeCarousel',
 
   props: {
@@ -42,7 +41,7 @@ export const Carousel = genericComponent()({
 
   setup (props, { slots }) {
     const { paperStyles, paperClasses } = usePaper(props)
-    const { isSelected, select, selected, next, items } = useGroup(props, CarouselSymbol)
+    const { isSelected, select, selected, next, items } = useGroup(props, CarouselKey)
 
     let slideTimeout: number | undefined
 
@@ -96,3 +95,5 @@ export const Carousel = genericComponent()({
     )
   }
 })
+
+export type Carousel = InstanceType<typeof Carousel>

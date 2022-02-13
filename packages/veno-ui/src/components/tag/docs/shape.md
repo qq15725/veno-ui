@@ -4,9 +4,9 @@
 
 ```html
 <ve-spacer>
-  <ve-tag shape="tile">Tile Tag</ve-tag>
-  <ve-tag shape="rounded">Rounded Tag</ve-tag>
-  <ve-tag shape="pill">Pill Tag</ve-tag>
+  <ve-tag color="primary" shape="tile" prepend-avatar="https://avatars.githubusercontent.com/u/19576382">艺术家</ve-tag>
+  <ve-tag color="primary" shape="rounded" prepend-avatar="https://avatars.githubusercontent.com/u/19576382">艺术家</ve-tag>
+  <ve-tag color="primary" shape="pill" prepend-avatar="https://avatars.githubusercontent.com/u/19576382">艺术家</ve-tag>
 </ve-spacer>
 ```
 

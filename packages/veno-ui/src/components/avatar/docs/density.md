@@ -14,11 +14,11 @@
 </ve-radio-group>
 
 <ve-spacer align="center">
-  <ve-avatar :density="density" size="x-small" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar :density="density" size="small" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar :density="density" size="medium" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar :density="density" size="large" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
-  <ve-avatar :density="density" size="x-large" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+  <ve-avatar :density="density" size="x-small" image="https://avatars.githubusercontent.com/u/19576382" />
+  <ve-avatar :density="density" size="small" image="https://avatars.githubusercontent.com/u/19576382" />
+  <ve-avatar :density="density" size="medium" image="https://avatars.githubusercontent.com/u/19576382" />
+  <ve-avatar :density="density" size="large" image="https://avatars.githubusercontent.com/u/19576382" />
+  <ve-avatar :density="density" size="x-large" image="https://avatars.githubusercontent.com/u/19576382" />
 </ve-spacer>
 ```
 

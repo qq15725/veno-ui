@@ -7,7 +7,7 @@
   <ve-badge color="error" content="2" inline />
   
   <ve-badge color="error" dot>
-    <ve-avatar shape="circle" image="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132" />
+    <ve-avatar shape="circle" image="https://avatars.githubusercontent.com/u/19576382" />
   </ve-badge>
   
   <ve-badge color="error" icon="$close" bordered>

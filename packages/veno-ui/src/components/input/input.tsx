@@ -3,7 +3,7 @@ import './styles/input.scss'
 
 // Utils
 import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
-import { genericComponent, useRender, getUid, convertToUnit } from '../../utils'
+import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'
@@ -186,6 +186,7 @@ export const Input = genericComponent<new () => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
       const [inputControlProps] = filterInputControlProps(props)
+      const [, nativeControlAttrs] = filterInputAttrs(attrs)
       const styles = isTextarea && controlHeight.value
         ? { '--ve-control-default-height': controlHeight.value }
         : {}
@@ -254,7 +255,7 @@ export const Input = genericComponent<new () => {
                               ref={ inputRef }
                               rows={ props.rows }
                               { ...nativeControlProps }
-                              { ...attrs }
+                              { ...nativeControlAttrs }
                             />
 
                             {
@@ -294,7 +295,7 @@ export const Input = genericComponent<new () => {
                               ref={ inputRef }
                               type={ props.type }
                               { ...nativeControlProps }
-                              { ...attrs }
+                              { ...nativeControlAttrs }
                             />
                           </>
                         )

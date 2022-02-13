@@ -1,5 +1,6 @@
 @use '../../../styles/tools';
 
-.ve-expand-transition {
+.ve-expand-transition,
+.ve-expand-x-transition {
   @include tools.use-transition(.2s);
 }

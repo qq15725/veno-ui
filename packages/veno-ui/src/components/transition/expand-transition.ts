@@ -9,3 +9,8 @@ export const ExpandTransition = createJavascriptTransition(
   've-expand-transition',
   expandTransitionGenerator()
 )
+
+export const ExpandXTransition = createJavascriptTransition(
+  've-expand-x-transition',
+  expandTransitionGenerator('', true)
+)

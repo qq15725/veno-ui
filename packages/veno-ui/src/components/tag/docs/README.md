@@ -25,6 +25,8 @@ color.md
 
 loading.md
 
+group.md
+
 theme.md
 
 :::

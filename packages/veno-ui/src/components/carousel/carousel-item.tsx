@@ -11,7 +11,7 @@ import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 import { makeTagProps } from '../../composables/tag'
 
 // Components
-import { CarouselSymbol } from './carousel'
+import { CarouselKey } from './carousel'
 
 // Types
 export type CarouselItem = InstanceType<typeof CarouselItem>
@@ -25,7 +25,7 @@ export const CarouselItem = genericComponent()({
   },
 
   setup (props, { slots }) {
-    const { isSelected, group } = useGroupItem(props, CarouselSymbol)
+    const { isSelected, group } = useGroupItem(props, CarouselKey)
     const transitionName = ref()
 
     watch(group.selected, (newSelected, oldSelected) => {

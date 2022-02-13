@@ -5,7 +5,7 @@
 ```html
 <ve-card
   subtitle="微信号：xxxxxx"
-  append-avatar="https://thirdwx.qlogo.cn/mmopen/vi_32/YugUUXsBpKgAeq2uANt0hg6F2pygbGnc61HW7WYRKdu2pXQVXm3U62HPjOPia9HCOMoia6goFZyRAjR7ZJOxibLibw/132"
+  append-avatar="https://avatars.githubusercontent.com/u/19576382"
   elevation="8"
 >
   <template #title>

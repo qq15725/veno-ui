@@ -6,15 +6,6 @@
 $tag-paper: () !default;
 $tag-paper: tools.map-deep-merge(
     (
-      'variants': (
-        'contained': (
-          'background': rgb(var(--ve-theme-secondary)),
-          'color': rgb(var(--ve-theme-on-secondary)),
-        ),
-        'text': (
-          'color': rgb(var(--ve-theme-on-secondary)),
-        ),
-      ),
       'use-size': false,
     ),
     $tag-paper

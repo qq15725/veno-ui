@@ -2,8 +2,10 @@
 import './styles/avatar.scss'
 
 // Utils
-import { ref, toRef, watch, computed } from 'vue'
+import { ref, toRef, watch, nextTick } from 'vue'
 import { defineComponent } from '../../utils'
+
+// Directives
 import { Resize } from '../../directives/resize'
 
 // Composables
@@ -13,8 +15,8 @@ import { makePaperProps, usePaper } from '../../composables/paper'
 import { Image } from '../image'
 import { Icon } from '../icon'
 
-// Types
-export type Avatar = InstanceType<typeof Avatar>
+// Constants
+const RADIX = 0.8
 
 export const Avatar = defineComponent({
   name: 'VeAvatar',
@@ -22,10 +24,26 @@ export const Avatar = defineComponent({
   directives: { Resize },
 
   props: {
+    /**
+     * @zh 图片头像的图片值
+     */
     image: String,
+
+    /**
+     * @zh 图标头像的图标值
+     */
     icon: String,
+
+    /**
+     * @zh 文本头像的文本值
+     */
     text: String,
+
+    /**
+     * @zh 链接头像，可点击
+     */
     link: Boolean,
+
     ...makePaperProps({
       color: 'secondary',
       shape: 'circle',
@@ -34,56 +52,61 @@ export const Avatar = defineComponent({
 
   setup (props, { slots, attrs }) {
     const { paperClasses, paperStyles } = usePaper(props)
-    const wrapRef = ref<HTMLElement | null>()
-    const avatarRef = ref<HTMLElement | null>()
-    const isClickable = computed(() => props.link || !!(attrs.onClick || attrs.onClickOnce))
 
-    const fitSizeTransform = (): void => {
-      if (avatarRef.value && wrapRef.value) {
-        const radix = 0.9
+    const rootRef = ref<HTMLElement | null>()
+    const contentRef = ref<HTMLElement | null>()
+
+    function onResize () {
+      nextTick(() => {
+        if (!rootRef.value || !contentRef.value) return
         const ratio = Math.min(
-          (avatarRef.value!.offsetWidth / wrapRef.value!.offsetWidth) * radix,
-          (avatarRef.value!.offsetHeight / wrapRef.value!.offsetHeight) * radix,
+          (rootRef.value.offsetWidth / contentRef.value.offsetWidth) * RADIX,
+          (rootRef.value.offsetHeight / contentRef.value.offsetHeight) * RADIX,
           1
         )
-        wrapRef.value.style.transform = `translateX(-50%) translateY(-50%) scale(${ ratio })`
-      }
+        contentRef.value.style.transform = `translateX(-50%) translateY(-50%) scale(${ ratio })`
+      })
     }
 
-    watch(toRef(props, 'text'), fitSizeTransform)
+    watch(toRef(props, 'text'), onResize)
 
     return () => {
       const hasImage = !!props.image
       const hasIcon = !!props.icon && !hasImage
       const hasText = !!(props.text || slots.default)
+      const isClickable = props.link || !!(attrs.onClick || attrs.onClickOnce)
 
       return (
         <props.tag
           class={ [
             've-avatar',
             {
-              've-avatar--link': isClickable.value,
+              've-avatar--left': props.left === true,
+              've-avatar--right': props.right === true,
+              've-avatar--link': isClickable,
             },
             paperClasses.value,
           ] }
           style={ paperStyles.value }
-          ref={ avatarRef }
+          ref={ rootRef }
+          v-resize={ onResize }
         >
-          { hasImage && <Image src={ props.image } /> }
+          { hasImage && <Image src={ props.image } alt="" /> }
 
           { hasIcon && <Icon icon={ props.icon } /> }
 
           { hasText && (
-            <div
+            <span
               class="ve-avatar__wrapper"
-              ref={ wrapRef }
-              v-resize={ fitSizeTransform }
+              ref={ contentRef }
             >
               { slots.default?.() ?? props.text }
-            </div>
+            </span>
           ) }
         </props.tag>
       )
     }
   }
 })
+
+export type Avatar = InstanceType<typeof Avatar>

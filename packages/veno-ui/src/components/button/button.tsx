@@ -126,6 +126,7 @@ export const Button = defineComponent({
                   indeterminate
                 /> as any
               }
+              size={ props.size }
               left={ !props.stacked && props.icon === false }
             />
           ) }
@@ -134,6 +135,7 @@ export const Button = defineComponent({
             <Icon
               class="ve-button__icon"
               icon={ props.prependIcon }
+              size={ props.size }
               left={ !props.stacked }
             />
           ) }
@@ -154,6 +156,7 @@ export const Button = defineComponent({
             <Icon
               class="ve-button__icon"
               icon={ props.appendIcon }
+              size={ props.size }
               right={ !props.stacked }
             />
           ) }

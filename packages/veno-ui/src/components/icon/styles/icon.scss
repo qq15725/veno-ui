@@ -5,11 +5,14 @@
 @use '../../../styles/tools';
 
 .ve-icon {
-  --ve-size: 1em;
+  --ve-height: 1em;
+  --ve-width: var(--ve-height);
+
   align-items: center;
   display: inline-flex;
   font-feature-settings: 'liga';
-  height: var(--ve-size);
+  font-size: var(--ve-font-size);
+  height: var(--ve-height);
   justify-content: center;
   letter-spacing: normal;
   line-height: 1;
@@ -17,11 +20,11 @@
   text-indent: 0;
   user-select: none;
   vertical-align: middle;
-  width: var(--ve-size);
+  width: var(--ve-width);
 
   @each $name, $multiplier in $icon-sizes {
     &--size-#{$name} {
-      font-size: $multiplier;
+      --ve-font-size: #{$multiplier};
     }
   }
 

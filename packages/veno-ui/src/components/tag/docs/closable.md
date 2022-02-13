@@ -7,7 +7,7 @@
 ```html
 <ve-spacer>
   <ve-tag closable>Tag</ve-tag>
-  <ve-tag closable icon="mdi-star-outline">Tag</ve-tag>
+  <ve-tag closable prepend-icon="mdi-star-outline">Tag</ve-tag>
 </ve-spacer>
 ```
 
