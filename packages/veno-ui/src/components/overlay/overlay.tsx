@@ -211,7 +211,7 @@ export const Overlay = genericComponent<new () => {
 
           <Teleport
             disabled={ !teleportTarget.value }
-            to={ teleportTarget.value }
+            to={ teleportTarget.value || 'body' }
           >
             { hasContent.value && (
               <div
