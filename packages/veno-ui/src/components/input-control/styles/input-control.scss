@@ -110,7 +110,7 @@
   }
 
   &__clearable {
-    display: none;
+    visibility: hidden;
 
     > .ve-button {
       min-width: auto;
@@ -126,7 +126,7 @@
   }
 
   &:hover &__clearable {
-    display: inline-flex;
+    visibility: visible;
   }
 
   &::before {

@@ -198,8 +198,11 @@ export const InputControl = genericComponent<new () => {
             ) }
           </div>
 
-          { hasClear && props.dirty && (
-            <div class="ve-input-control__clearable">
+          { hasClear && (
+            <div
+              class="ve-input-control__clearable"
+              v-show={ props.dirty }
+            >
               { slots.clear?.(slotProps.value) ?? (
                 <Button
                   icon={ props.clearIcon }
