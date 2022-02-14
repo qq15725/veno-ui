@@ -10,7 +10,7 @@
     text-decoration: underline currentColor;
   }
 
-  &--underline-hover:hover {
+  &--underline-hover:not(.ve-button--disabled):not(.ve-button--loading):hover {
     text-decoration: underline currentColor;
   }
 
