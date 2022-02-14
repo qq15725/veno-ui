@@ -8,11 +8,11 @@
     "dev": "vite --port 3022 --open"
   },
   "dependencies": {
-    "pinia": "^2.0.9",
+    "pinia": "^2.0.11",
     "prismjs": "^1.26.0",
     "veno-ui": "^0.2.12",
-    "vue": "^3.2.26",
-    "vue-router": "^4.0.10"
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@mdi/font": "^6.5.95",
@@ -21,12 +21,12 @@
     "@veno-ui/markdown": "^0.2.1",
     "@veno-ui/vite-plugin-markdown": "^0.2.1",
     "@veno-ui/vite-plugin-svg": "^0.2.0",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/compiler-sfc": "^3.2.31",
     "@vueuse/head": "^0.7.5",
-    "unplugin-vue-components": "^0.17.11",
+    "unplugin-vue-components": "^0.17.18",
     "vite-plugin-pages": "^0.19.9",
     "vite-plugin-pwa": "^0.11.13",
     "vite-plugin-vue-layouts": "^0.5.0",
-    "vite-ssg": "^0.17.9"
+    "vite-ssg": "^0.17.10"
   }
 }
