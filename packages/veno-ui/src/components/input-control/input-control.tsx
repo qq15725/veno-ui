@@ -37,10 +37,6 @@ export type InputControlSlots = MakeSlots<{
   clear: [InputControlSlot],
 }>
 
-export function filterInputControlProps (attrs: Record<string, unknown>) {
-  return pick(attrs, Object.keys(InputControl.props))
-}
-
 export const makeInputControlProps = propsFactory({
   prependInnerIcon: String,
   prefix: String,
@@ -56,6 +52,34 @@ export const makeInputControlProps = propsFactory({
   disabled: Boolean,
 }, 'input-control')
 
+export function filterInputControlProps (attrs: Record<string, unknown>) {
+  return pick(attrs, Object.keys(InputControl.props))
+}
+
+export function filterInputControlSlots (slots: Record<string, unknown>) {
+  return pick(slots, InputControlSlots)
+}
+
+export const InputControlEmits = {
+  'click:clear': (e: MouseEvent) => true,
+  'click:prepend-inner': (e: MouseEvent) => true,
+  'click:prefix': (e: MouseEvent) => true,
+  'click:suffix': (e: MouseEvent) => true,
+  'click:append-inner': (e: MouseEvent) => true,
+  'click:control': (e: MouseEvent) => true,
+  'update:active': (val: boolean) => true,
+  'update:modelValue': (val: any) => true,
+}
+
+export const InputControlSlots = [
+  'prepend-inner',
+  'prefix',
+  'default',
+  'suffix',
+  'append-inner',
+  'clear'
+]
+
 export const InputControl = genericComponent<new () => {
   $slots: InputControlSlots
 }>()({
@@ -67,16 +91,7 @@ export const InputControl = genericComponent<new () => {
     ...makeInputControlProps()
   },
 
-  emits: {
-    'click:clear': (e: MouseEvent) => true,
-    'click:prepend-inner': (e: MouseEvent) => true,
-    'click:prefix': (e: MouseEvent) => true,
-    'click:suffix': (e: MouseEvent) => true,
-    'click:append-inner': (e: MouseEvent) => true,
-    'click:control': (e: MouseEvent) => true,
-    'update:active': (val: boolean) => true,
-    'update:modelValue': (val: any) => true,
-  },
+  emits: InputControlEmits,
 
   setup (props, { slots, emit }) {
     const isActive = useProxiedModel(props, 'active')

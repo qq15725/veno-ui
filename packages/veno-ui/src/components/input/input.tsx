@@ -8,10 +8,21 @@ import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs } 
 // Components
 import { FormControl } from '../form-control'
 import { InputControl } from '../input-control'
-import { makeInputControlProps, filterInputControlProps } from '../input-control/input-control'
 import { Counter } from '../counter'
 
+// Emits
+import { FormControlEmits } from '../form-control/form-control'
+import { InputControlEmits } from '../input-control/input-control'
+
 // Composables
+import {
+  makeInputControlProps,
+  filterInputControlProps,
+  filterInputControlSlots,
+} from '../input-control/input-control'
+import {
+  filterFormControlSlots,
+} from '../form-control/form-control'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Directives
@@ -19,21 +30,13 @@ import Intersect from '../../directives/intersect'
 
 // Types
 import type { PropType } from 'vue'
-import type { FormControlSlot } from '../form-control/form-control'
-import type { InputControlSlot } from '../input-control/input-control'
+import type { FormControlSlots } from '../form-control/form-control'
+import type { InputControlSlots } from '../input-control/input-control'
 import type { MakeSlots } from '../../utils'
 
 const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'month']
 
-export type InputSlots = MakeSlots<{
-  prepend: [FormControlSlot]
-  label: [FormControlSlot]
-  'prepend-inner': [InputControlSlot]
-  prefix: [InputControlSlot]
-  suffix: [InputControlSlot]
-  'append-inner': [InputControlSlot]
-  clear: [InputControlSlot]
-  append: [FormControlSlot]
+export type InputSlots = FormControlSlots & InputControlSlots & MakeSlots<{
   counter: []
   default: []
 }>
@@ -56,7 +59,6 @@ export const Input = genericComponent<new () => {
       type: String,
       default: 'text',
     },
-
     // Textarea Type
     autoGrow: Boolean,
     noResize: Boolean,
@@ -69,7 +71,6 @@ export const Input = genericComponent<new () => {
       type: [Number, String],
       validator: (v: any) => !isNaN(parseFloat(v)),
     },
-
     name: String,
     modelValue: null,
 
@@ -77,19 +78,8 @@ export const Input = genericComponent<new () => {
   },
 
   emits: {
-    // FormControl
-    'click:prepend': (e: MouseEvent) => true,
-    'click:label': (e: MouseEvent) => true,
-    'click:append': (e: MouseEvent) => true,
-
-    // InputControl
-    'click:clear': (e: MouseEvent) => true,
-    'click:prepend-inner': (e: MouseEvent) => true,
-    'click:prefix': (e: MouseEvent) => true,
-    'click:suffix': (e: MouseEvent) => true,
-    'click:append-inner': (e: MouseEvent) => true,
-    'click:control': (e: MouseEvent) => true,
-
+    ...FormControlEmits,
+    ...InputControlEmits,
     'update:modelValue': (val: string) => true,
   },
 
@@ -135,7 +125,7 @@ export const Input = genericComponent<new () => {
 
     const sizerRef = ref<HTMLTextAreaElement>()
 
-    function calculateInputHeight () {
+    function calculateHeight () {
       if (!props.autoGrow) return
       nextTick(() => {
         if (!sizerRef.value) return
@@ -150,15 +140,15 @@ export const Input = genericComponent<new () => {
       })
     }
 
-    onMounted(calculateInputHeight)
-    watch(model, calculateInputHeight)
-    watch(() => props.rows, calculateInputHeight)
-    watch(() => props.maxRows, calculateInputHeight)
+    onMounted(calculateHeight)
+    watch(model, calculateHeight)
+    watch(() => props.rows, calculateHeight)
+    watch(() => props.maxRows, calculateHeight)
 
     let observer: ResizeObserver | undefined
     watch(sizerRef, val => {
       if (val) {
-        observer = new ResizeObserver(calculateInputHeight)
+        observer = new ResizeObserver(calculateHeight)
         observer.observe(sizerRef.value!)
       } else {
         observer?.disconnect()
@@ -185,11 +175,13 @@ export const Input = genericComponent<new () => {
     useRender(() => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
-      const [inputControlProps] = filterInputControlProps(props)
-      const [, nativeControlAttrs] = filterInputAttrs(attrs)
       const styles = isTextarea && controlHeight.value
         ? { '--ve-control-default-height': controlHeight.value }
         : {}
+      const [inputControlProps] = filterInputControlProps(props)
+      const [, nativeControlAttrs] = filterInputAttrs(attrs)
+      const [formControlSlots] = filterFormControlSlots(slots)
+      const [inputControlSlots] = filterInputControlSlots(slots)
 
       return (
         <FormControl
@@ -208,9 +200,9 @@ export const Input = genericComponent<new () => {
           onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
           onClick:label={ (e: MouseEvent) => emit('click:label', e) }
           onClick:append={ (e: MouseEvent) => emit('click:append', e) }
-          v-slots={ {
-            prepend: slots.prepend,
-            label: slots.label,
+        >
+          { {
+            ...formControlSlots,
             default: ({ isDisabled, isReadonly }) => {
               return (
                 <InputControl
@@ -222,17 +214,17 @@ export const Input = genericComponent<new () => {
                   } }
                   dirty={ !!model.value }
                   active={ isDirty.value }
-                  onUpdate:active={ val => {
-                    internalDirty.value = val
-                  } }
                   onClick:clear={ onClear }
-                  onClick:control={ onControlClick }
                   onClick:prependInner={ (e: MouseEvent) => emit('click:prepend-inner', e) }
+                  onClick:prefix={ (e: MouseEvent) => emit('click:prefix', e) }
+                  onClick:suffix={ (e: MouseEvent) => emit('click:suffix', e) }
                   onClick:appendInner={ (e: MouseEvent) => emit('click:append-inner', e) }
+                  onClick:control={ onControlClick }
+                  onUpdate:active={ val => internalDirty.value = val }
                   role="textbox"
-                  v-slots={ {
-                    'prepend-inner': slots['prepend-inner'],
-                    prefix: slots.prefix,
+                >
+                  { {
+                    ...inputControlSlots,
                     default: ({ inputRef, focus, blur, props: nativeControlProps }) => {
                       if (isTextarea) {
                         return (
@@ -300,31 +292,29 @@ export const Input = genericComponent<new () => {
                           </>
                         )
                       }
-                    },
-                    suffix: slots.suffix,
-                    'append-inner': slots['append-inner'],
-                    clear: slots.clear,
+                    }
                   } }
-                />
+                </InputControl>
               )
             },
-            append: slots.append,
-            details: hasCounter ? () => {
-              return (
-                <>
-                  <span />
+            details: hasCounter
+              ? () => {
+                return (
+                  <>
+                    <span />
 
-                  <Counter
-                    active={ props.persistentCounter || isDirty.value }
-                    value={ counterValue.value }
-                    max={ max.value }
-                    v-slots={ slots.counter }
-                  />
-                </>
-              )
-            } : undefined,
+                    <Counter
+                      active={ props.persistentCounter || isDirty.value }
+                      value={ counterValue.value }
+                      max={ max.value }
+                      v-slots={ slots.counter }
+                    />
+                  </>
+                )
+              }
+              : formControlSlots?.details as any,
           } }
-        />
+        </FormControl>
       )
     })
 

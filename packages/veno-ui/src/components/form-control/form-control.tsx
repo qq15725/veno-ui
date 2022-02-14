@@ -3,7 +3,7 @@ import './styles/form-control.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, convertToUnit, useRender } from '../../utils'
+import { genericComponent, convertToUnit, useRender, pick } from '../../utils'
 
 // Components
 import { Label } from '../label'
@@ -39,6 +39,24 @@ export type FormControlSlots = MakeSlots<{
   details: [FormControlSlot],
 }>
 
+export function filterFormControlSlots (slots: Record<string, unknown>) {
+  return pick(slots, FormControlSlots)
+}
+
+export const FormControlEmits = {
+  'click:prepend': (e: MouseEvent) => true,
+  'click:label': (e: MouseEvent) => true,
+  'click:append': (e: MouseEvent) => true,
+}
+
+export const FormControlSlots = [
+  'prepend',
+  'label',
+  'default',
+  'append',
+  'details',
+]
+
 export const FormControl = genericComponent<new () => {
   $slots: FormControlSlots
 }>()({
@@ -64,11 +82,7 @@ export const FormControl = genericComponent<new () => {
     ...makeValidationProps(),
   },
 
-  emits: {
-    'click:prepend': (e: MouseEvent) => true,
-    'click:label': (e: MouseEvent) => true,
-    'click:append': (e: MouseEvent) => true,
-  },
+  emits: FormControlEmits,
 
   setup (props, { slots, emit }) {
     const { formControlDirectionClasses } = useFormControlDirectionProps(props)
