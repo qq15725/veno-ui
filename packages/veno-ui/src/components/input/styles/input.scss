@@ -1,50 +1,29 @@
 @forward 'variables';
 @use 'sass:math';
-@use 'sass:selector';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 @use 'variables' as *;
 
+// Blocks
 .ve-input {
-  .ve-native-control {
-    flex: 1;
-    opacity: 1;
-    transition: .15s opacity settings.$standard-easing;
-  }
+  $root: &;
 
-  &--textarea {
-    $root: &;
-
-    @at-root {
-      @include tools.density('ve-form-control', ('medium': 0, 'comfortable': -2, 'compact': -4)) using($modifier) {
-        @at-root #{selector.append(&, $root)} {
-          --ve-input--textarea-line-height: #{1.75 + math.div($modifier * .125, settings.$spacer) * 1.5};
-        }
+  // Modifiers
+  @at-root {
+    @include tools.density('ve-form-control', (
+      'ultra-high': -4,
+      'high': -2,
+      'medium': 0,
+      'low': 2,
+      'ultra-low': 4,
+    )) using($modifier) {
+      @at-root #{$root}--textarea & {
+        --ve-input--textarea-line-height: #{1.75 + math.div($modifier * .125, settings.$spacer) * 1.5};
       }
     }
-
-    .ve-native-control {
-      align-self: stretch;
-      flex: 1 1 auto;
-      outline: none;
-      line-height: var(--ve-input--textarea-line-height, 1.75);
-    }
-
-    &.ve-form-control--horizontal .ve-form-control__label {
-      align-items: start;
-      line-height: var(--ve-input--textarea-line-height, 1.75);
-      padding-block-start: 6px;
-    }
   }
 
-  &--no-resize .ve-native-control {
-    resize: none;
-  }
-
-  &--auto-grow .ve-native-control {
-    overflow: hidden;
-  }
-
+  // Elements
   &__sizer {
     visibility: hidden;
     position: absolute;
@@ -52,5 +31,37 @@
     left: 0;
     height: 0 !important;
     pointer-events: none;
+  }
+
+  @at-root {
+    // NativeControl
+    .ve-native-control {
+      flex: 1 1 0;
+      opacity: 1 !important;
+      transition: .15s opacity settings.$standard-easing;
+
+      #{$root}--no-resize & {
+        resize: none;
+      }
+
+      #{$root}--auto-grow & {
+        overflow: hidden;
+      }
+
+      #{$root}--textarea & {
+        align-self: stretch;
+        outline: none;
+        line-height: var(--ve-input--textarea-line-height, 1.75);
+      }
+    }
+
+    // FormControlLabel
+    .ve-form-control__label {
+      #{$root}--textarea.ve-form-control--horizontal & {
+        align-items: start;
+        line-height: var(--ve-input--textarea-line-height, 1.75);
+        padding-block-start: 6px;
+      }
+    }
   }
 }

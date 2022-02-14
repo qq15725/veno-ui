@@ -14,4 +14,8 @@
   .ve-input-control__input {
     cursor: pointer;
   }
+
+  &__selections {
+    padding: 4px !important;
+  }
 }

@@ -13,6 +13,7 @@
   item-value="abbr"
   return-object
   multiple
+  tags
 />
 
 <ve-code :value="selected" />

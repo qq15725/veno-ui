@@ -13,6 +13,8 @@ import { Input } from '../input/input'
 import { Icon } from '../icon'
 import { Menu } from '../menu'
 import { List, ListItem } from '../list'
+import { Tag } from '../tag'
+import { TagGroup } from '../tag-group'
 
 // Types
 import type { PropType } from 'vue'
@@ -67,6 +69,7 @@ export const Select = genericComponent<new () => {
       default: 'auto',
     },
     openOnClear: Boolean,
+    tags: Boolean,
   },
 
   emits: {
@@ -83,20 +86,19 @@ export const Select = genericComponent<new () => {
       v => wrapInArray(v),
       (v: any) => props.multiple ? v : v[0]
     )
-    const items = computed(() => props.items?.map(normalizeItem))
+    const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const active = computed({
-      get: () => model.value.map(v => normalizeItem(findItem(v))?.value),
+      get: () => model.value.map((v: any) => v && typeof v === 'object' ? v![props.itemValue] : v),
       set: val => {
-        model.value = props.returnObject ? val.map(v => findItem(v)) : val
+        model.value = props.returnObject ? val.map(v => getItem(v)) : val
         if (props.multiple) return
         isActiveMenu.value = false
       },
     })
-    const text = computed(() => model.value
-      .map((v: any) => normalizeItem(findItem(v))?.text)
-      .join(', '))
+    const selections = computed(() => items.value.filter(item => active.value.includes(item.value)))
+    const text = computed(() => selections.value.map(item => item.text).join(', '))
 
-    function findItem (v: any) {
+    function getItem (v: any) {
       return props.items?.find(i => {
         const i1 = typeof i === 'object' ? i[props.itemValue] : i
         const v1 = typeof v === 'object' ? v[props.itemValue] : v
@@ -104,8 +106,7 @@ export const Select = genericComponent<new () => {
       })
     }
 
-    function normalizeItem (item: SelectItemProps | undefined): InternalSelectItemProps | undefined {
-      if (!item) return undefined
+    function normalizeItem (item: SelectItemProps): InternalSelectItemProps {
       if (typeof item === 'object') {
         const value = item[props.itemValue]
         const text = item[props.itemText] ?? value
@@ -147,7 +148,7 @@ export const Select = genericComponent<new () => {
             }
           ] }
           readonly
-          modelValue={ text.value }
+          modelValue={ props.tags ? undefined : text.value }
           type={ props.multiple ? 'textarea' : undefined }
           autoGrow={ props.multiple ? true : undefined }
           rows={ props.multiple ? 1 : undefined }
@@ -182,7 +183,7 @@ export const Select = genericComponent<new () => {
               <>
                 { activator.value && (
                   <Menu
-                    class="ve-select-overlay"
+                    contentClass="ve-select__wrapper"
                     id={ `${ id.value }-menu` }
                     v-model={ isActiveMenu.value }
                     activator={ activator.value }
@@ -217,6 +218,16 @@ export const Select = genericComponent<new () => {
                       } }
                     />
                   </Menu>
+                ) }
+
+                { props.tags && (
+                  <TagGroup class="ve-select__selections">
+                    { selections.value.map(item => {
+                      return (
+                        <Tag>{ item.text }</Tag>
+                      )
+                    }) }
+                  </TagGroup>
                 ) }
               </>
             )
