@@ -4,6 +4,7 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+// Blocks
 .ve-input-control {
   --ve-padding-left: 0;
   --ve-padding-right: 0;
@@ -11,6 +12,7 @@
   --ve-native-padding-right: 16px;
   --ve-native-padding-top: 6px;
   --ve-native-padding-bottom: 6px;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -23,6 +25,7 @@
   transition: .1s settings.$decelerated-easing;
   transition-property: color, background-color, border-color;
 
+  // Modifiers
   &--disabled {
     opacity: var(--ve-disabled-opacity);
     pointer-events: none;
@@ -54,6 +57,7 @@
     padding-inline-end: 12px;
   }
 
+  // Elements
   &__prepend-inner,
   &__prefix,
   &__suffix,
@@ -105,19 +109,24 @@
     }
   }
 
-  &__clearable + &__suffix {
-    margin-inline-start: 6px;
-  }
-
   &__clearable {
-    opacity: 0;
-    transition: .15s settings.$standard-easing;
-    transition-property: opacity, transform, width;
+    display: none;
+
+    > .ve-button {
+      min-width: auto;
+      height: auto;
+
+      > .ve-button__overlay {
+        top: -15%;
+        left: -15%;
+        width: 130%;
+        height: 130%;
+      }
+    }
   }
 
-  &--focused &__clearable,
   &:hover &__clearable {
-    opacity: 1;
+    display: inline-flex;
   }
 
   &::before {

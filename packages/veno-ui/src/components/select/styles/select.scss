@@ -16,14 +16,12 @@
     cursor: pointer;
   }
 
-  @at-root {
-    // InputControlAppendInner
-    .ve-input-control__append-inner {
-      transition: .3s settings.$standard-easing;
+  // InputControlAppendInner
+  .ve-input-control:hover .ve-input-control__clearable + .ve-input-control__append-inner {
+    display: none;
+  }
 
-      #{$root}--active-menu & {
-        transform: rotate(180deg);
-      }
-    }
+  &--active-menu .ve-input-control__append-inner {
+    transform: rotate(180deg);
   }
 }

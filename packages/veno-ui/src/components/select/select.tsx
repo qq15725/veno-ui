@@ -94,8 +94,9 @@ export const Select = genericComponent<new () => {
       get: () => model.value.map((v: any) => v && typeof v === 'object' ? v![props.itemValue] : v),
       set: val => {
         model.value = props.returnObject ? val.map(v => getItem(v)) : val
-        if (props.multiple) return
-        isActiveMenu.value = false
+        if (!props.multiple) {
+          inputRef.value.blur()
+        }
       },
     })
     const selections = computed(() => items.value.filter(item => active.value.includes(item.value)))
@@ -126,6 +127,8 @@ export const Select = genericComponent<new () => {
       model.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true
+      } else {
+        inputRef.value.blur()
       }
     }
 
@@ -140,6 +143,7 @@ export const Select = genericComponent<new () => {
     }
 
     return () => {
+      const isTextarea = props.multiple && !props.tags
       const [listSlots, inputSlots] = pick(slots, [
         'item', 'header', 'title', 'subtitle'
       ])
@@ -147,7 +151,7 @@ export const Select = genericComponent<new () => {
       return (
         <Input
           appendInnerIcon={ props.appendInnerIcon }
-          autoGrow={ props.multiple ? true : undefined }
+          autoGrow={ isTextarea ? true : undefined }
           class={ [
             've-select',
             {
@@ -170,8 +174,8 @@ export const Select = genericComponent<new () => {
           onMousedown={ (e: MouseEvent) => e.preventDefault() }
           readonly
           ref={ inputRef }
-          rows={ props.multiple ? 1 : undefined }
-          type={ props.multiple ? 'textarea' : undefined }
+          rows={ isTextarea ? 1 : undefined }
+          type={ isTextarea ? 'textarea' : undefined }
         >
           { {
             ...inputSlots,

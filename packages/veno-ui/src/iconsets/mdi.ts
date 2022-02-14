@@ -17,7 +17,7 @@ const aliases: IconAliases = {
   collapse: 'mdi-chevron-up',
   expand: 'mdi-chevron-down',
   menu: 'mdi-menu',
-  dropdown: 'mdi-menu-down',
+  dropdown: 'mdi-chevron-down',
   separator: 'mdi-slash-forward',
   radioOn: 'mdi-radiobox-marked',
   radioOff: 'mdi-radiobox-blank',

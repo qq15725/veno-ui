@@ -8,15 +8,11 @@
 .ve-tag {
   $root: &;
 
-  // fontsize
   --ve-default-font-size: #{tools.map-deep-get(settings.$typography, 'button', 'size')};
   --ve-font-size: calc(var(--ve-default-font-size) + var(--ve-font-size-offset, 0px));
-  // height
   --ve-default-height: 32px;
   --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
-  // padding
   --ve-padding-x: calc(var(--ve-height) / (2 + 2 / 3));
-  // avatar
   --ve-avatar-height: calc(var(--ve-height) - 8px);
   --ve-pill-avatar-height: var(--ve-height);
   --ve-avatar-icon-font-size: var(--ve-font-size);
