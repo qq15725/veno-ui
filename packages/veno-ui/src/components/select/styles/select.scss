@@ -1,21 +1,29 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
+// Blocks
 .ve-select {
-  &__icon {
-    transition: .3s settings.$standard-easing;
+  $root: &;
+
+  // Elements
+  &__selections {
+    padding: 4px !important;
   }
 
-  &--active-menu &__icon {
-    transform: rotate(180deg);
-  }
-
+  // InputControl
   .ve-input-control,
   .ve-input-control__input {
     cursor: pointer;
   }
 
-  &__selections {
-    padding: 4px !important;
+  @at-root {
+    // InputControlAppendInner
+    .ve-input-control__append-inner {
+      transition: .3s settings.$standard-easing;
+
+      #{$root}--active-menu & {
+        transform: rotate(180deg);
+      }
+    }
   }
 }

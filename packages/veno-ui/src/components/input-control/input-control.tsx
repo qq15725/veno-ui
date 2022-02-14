@@ -113,11 +113,11 @@ export const InputControl = genericComponent<new () => {
     }
 
     useRender(() => {
-      const hasPrependInner = !!slots['prepend-inner']
-      const hasPrefix = slots.prefix || props.prefix || props.prefixIcon
+      const hasPrependInner = !!(props.prependInnerIcon || slots['prepend-inner'])
+      const hasPrefix = !!(props.prefix || props.prefixIcon || slots.prefix)
       const hasClear = !!(props.clearable || slots.clear)
-      const hasSuffix = slots.suffix || props.suffix || props.suffixIcon
-      const hasAppendInner = !!slots['append-inner']
+      const hasSuffix = !!(props.suffix || props.suffixIcon || slots.suffix)
+      const hasAppendInner = !!(props.appendInnerIcon || slots['append-inner'])
 
       return (
         <div

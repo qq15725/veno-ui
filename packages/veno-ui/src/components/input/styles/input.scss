@@ -36,9 +36,11 @@
   @at-root {
     // NativeControl
     .ve-native-control {
-      flex: 1 1 0;
-      opacity: 1 !important;
-      transition: .15s opacity settings.$standard-easing;
+      #{$root} & {
+        flex: 1 1 0;
+        opacity: 1 !important;
+        transition: .15s opacity settings.$standard-easing;
+      }
 
       #{$root}--no-resize & {
         resize: none;

@@ -3,14 +3,13 @@ import './styles/select.scss'
 
 // Utils
 import { computed, ref, watch } from 'vue'
-import { genericComponent, getUid, wrapInArray } from '../../utils'
+import { genericComponent, getUid, wrapInArray, pick } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
 import { Input } from '../input/input'
-import { Icon } from '../icon'
 import { Menu } from '../menu'
 import { List, ListItem } from '../list'
 import { Tag } from '../tag'
@@ -43,6 +42,10 @@ export const Select = genericComponent<new () => {
       type: String as PropType<Anchor>,
       default: 'bottom',
     },
+    appendInnerIcon: {
+      type: String,
+      default: '$dropdown',
+    },
     id: String,
     items: Array as PropType<SelectItemProps[]>,
     itemText: {
@@ -62,14 +65,14 @@ export const Select = genericComponent<new () => {
       type: String,
       default: '暂无数据',
     },
-    returnObject: Boolean,
-    readonly: Boolean,
+    openOnClear: Boolean,
     origin: {
       type: String as PropType<Origin>,
       default: 'auto',
     },
-    openOnClear: Boolean,
     tags: Boolean,
+    readonly: Boolean,
+    returnObject: Boolean,
   },
 
   emits: {
@@ -137,21 +140,22 @@ export const Select = genericComponent<new () => {
     }
 
     return () => {
+      const [listSlots, inputSlots] = pick(slots, [
+        'item', 'header', 'title', 'subtitle'
+      ])
+
       return (
         <Input
-          ref={ inputRef }
-          id={ id.value }
+          appendInnerIcon={ props.appendInnerIcon }
+          autoGrow={ props.multiple ? true : undefined }
           class={ [
             've-select',
             {
               've-select--active-menu': isActiveMenu.value,
             }
           ] }
-          readonly
+          id={ id.value }
           modelValue={ props.tags ? undefined : text.value }
-          type={ props.multiple ? 'textarea' : undefined }
-          autoGrow={ props.multiple ? true : undefined }
-          rows={ props.multiple ? 1 : undefined }
           onClick:clear={ onClear }
           onClick:control={ () => {
             if (props.readonly) return
@@ -164,21 +168,13 @@ export const Select = genericComponent<new () => {
           onBlur={ () => isActiveMenu.value = false }
           onKeydown={ onKeydown }
           onMousedown={ (e: MouseEvent) => e.preventDefault() }
-          v-slots={ {
-            prepend: slots.prepend,
-            label: slots.label,
-            'prepend-inner': slots['prepend-inner'],
-            prefix: slots.prefix,
-            suffix: slots.suffix,
-            clear: slots.clear,
-            append: slots.append,
-            counter: slots.counter,
-            'append-inner': () => (
-              <Icon
-                class="ve-select__icon"
-                icon="$dropdown"
-              />
-            ),
+          readonly
+          ref={ inputRef }
+          rows={ props.multiple ? 1 : undefined }
+          type={ props.multiple ? 'textarea' : undefined }
+        >
+          { {
+            ...inputSlots,
             default: () => (
               <>
                 { activator.value && (
@@ -202,8 +198,9 @@ export const Select = genericComponent<new () => {
                       }
                       v-model:active={ active.value }
                       activeStrategy={ props.multiple ? 'multiple' : 'single' }
-                      v-slots={ {
-                        header: slots.header,
+                    >
+                      { {
+                        ...listSlots,
                         item: (item: any) => {
                           return slots.item?.(item) ?? (
                             <ListItem
@@ -213,10 +210,8 @@ export const Select = genericComponent<new () => {
                             />
                           )
                         },
-                        title: slots.title,
-                        subtitle: slots.subtitle,
                       } }
-                    />
+                    </List>
                   </Menu>
                 ) }
 
@@ -232,7 +227,7 @@ export const Select = genericComponent<new () => {
               </>
             )
           } }
-        />
+        </Input>
       )
     }
   }
