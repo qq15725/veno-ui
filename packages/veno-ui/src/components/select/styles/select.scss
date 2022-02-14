@@ -17,7 +17,7 @@
   }
 
   // InputControlAppendInner
-  .ve-input-control:hover .ve-input-control__clearable + .ve-input-control__append-inner {
+  .ve-input-control--dirty:hover .ve-input-control__clearable + .ve-input-control__append-inner {
     display: none;
   }
 
