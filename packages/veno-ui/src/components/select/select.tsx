@@ -80,16 +80,16 @@ export const Select = genericComponent<new () => {
   },
 
   setup (props, { slots }) {
-    const inputRef = ref()
     const activator = ref()
+    const inputRef = ref()
     const isActiveMenu = ref(false)
     const id = computed(() => props.id || `ve-select-${ getUid() }`)
+    const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const model = useProxiedModel(
       props, 'modelValue', [],
       v => wrapInArray(v),
       (v: any) => props.multiple ? v : v[0]
     )
-    const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const active = computed({
       get: () => model.value.map((v: any) => v && typeof v === 'object' ? v![props.itemValue] : v),
       set: val => {

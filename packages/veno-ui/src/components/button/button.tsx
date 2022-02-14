@@ -38,7 +38,7 @@ export const Button = defineComponent({
     appendIcon: String,
     stacked: Boolean,
     block: Boolean,
-    text: String,
+    text: [String, Number],
     ripple: {
       type: Boolean,
       default: true,
