@@ -15,6 +15,7 @@ import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 // Components
 import { ProgressCircular } from '../progress/progress-circular'
 import { Icon } from '../icon'
+import { ExpandXTransition } from '../transition'
 
 // Directives
 import { Ripple } from '../../directives/ripple'
@@ -81,10 +82,10 @@ export const Button = defineComponent({
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
-      const hasLoding = props.loading
-      const hasPrependIcon = !hasLoding && !props.icon && props.prependIcon
-      const hasDefault = !hasLoding || !props.icon
-      const hasAppendIcon = !hasLoding && !props.icon && props.appendIcon
+      const hasPrependIcon = !props.icon && props.prependIcon
+      const hasPrependLoading = !hasPrependIcon && (slots.default && props.loading)
+      const hasDefault = !!(props.icon || slots.default || props.text)
+      const hasAppendIcon = !props.icon && props.appendIcon
       return (
         <Tag
           role={ link.isLink.value ? undefined : 'button' }
@@ -117,24 +118,35 @@ export const Button = defineComponent({
         >
           { genOverlays(props.overlay, 've-button') }
 
-          { hasLoding && (
-            <Icon
-              class="ve-button__icon"
-              icon={
-                <ProgressCircular
-                  color="currentColor"
-                  indeterminate
-                /> as any
-              }
-              size={ props.size }
-              left={ !props.stacked && props.icon === false }
-            />
-          ) }
+          <ExpandXTransition>
+            { hasPrependLoading && (
+              <Icon
+                class="ve-button__icon"
+                icon={
+                  <ProgressCircular
+                    color="currentColor"
+                    indeterminate
+                  /> as any
+                }
+                size={ props.size }
+                left={ !props.stacked }
+              />
+            ) }
+          </ExpandXTransition>
 
           { hasPrependIcon && (
             <Icon
               class="ve-button__icon"
-              icon={ props.prependIcon }
+              icon={
+                props.loading
+                  ? (
+                    <ProgressCircular
+                      color="currentColor"
+                      indeterminate
+                    /> as any
+                  )
+                  : props.prependIcon
+              }
               size={ props.size }
               left={ !props.stacked }
             />
@@ -146,7 +158,16 @@ export const Button = defineComponent({
               : (
                 <Icon
                   class="ve-button__icon"
-                  icon={ props.icon }
+                  icon={
+                    props.loading
+                      ? (
+                        <ProgressCircular
+                          color="currentColor"
+                          indeterminate
+                        /> as any
+                      )
+                      : props.icon
+                  }
                   size={ props.size }
                 />
               )

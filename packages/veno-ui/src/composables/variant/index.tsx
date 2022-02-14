@@ -26,9 +26,9 @@ export interface VariantProps
 export function genOverlays (isClickable: boolean, name: string) {
   return (
     <>
-      { isClickable && <div class={ `${ name }__overlay` } /> }
-      <div class={ `${ name }__underlay` } />
-      <div class={ `${ name }__border` } />
+      { isClickable && <div aria-hidden="true" class={ `${ name }__overlay` } /> }
+      <div aria-hidden="true" class={ `${ name }__underlay` } />
+      <div aria-hidden="true" class={ `${ name }__border` } />
     </>
   )
 }

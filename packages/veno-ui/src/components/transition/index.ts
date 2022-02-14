@@ -1,7 +1,7 @@
 export { FadeTransition } from './fade-transition'
 export { ModalTransition } from './modal-transition'
 export { ScaleTransition } from './scale-transition'
-export { ExpandTransition } from './expand-transition'
+export { ExpandTransition, ExpandXTransition } from './expand-transition'
 export { DialogTransition } from './dialog-transition'
 export { MenuTransition } from './menu-transition'
 export { FadeInExpandTransition } from './fade-in-expand-transition'
