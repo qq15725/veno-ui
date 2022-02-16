@@ -1,5 +1,7 @@
 // Blocks
 .ve-date-picker-panel {
+  display: inline-block;
+
   // Elements
   &__date {
     align-items: center;
@@ -16,16 +18,23 @@
 
   &__cell {
     display: inline-block;
+    padding: 2px;
 
     // Modifiers
-    &--in-range {
-      background-color: rgba(var(--ve-theme-primary), var(--ve-activated-opacity));
-    }
-  }
-
-  &__day {
     &--other-month {
       opacity: var(--ve-disabled-opacity);
+    }
+
+    &--range-in {
+      background-color: rgba(var(--ve-theme-primary), var(--ve-activated-opacity));
+    }
+
+    &--range-start {
+      border-radius: 50% 0 0 50%;
+    }
+
+    &--range-end {
+      border-radius: 0 50% 50% 0;
     }
   }
 }

@@ -66,7 +66,7 @@ export const DatePicker = genericComponent<new () => {
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup (props, { attrs, slots }) {
     const activator = ref()
     const inputRef = ref()
     const isActiveMenu = ref(false)
@@ -143,6 +143,7 @@ export const DatePicker = genericComponent<new () => {
                   >
                     { !props.range && (
                       <DatePickerPanel
+                        { ...attrs }
                         modelValue={ model.value[0] as any }
                         onUpdate:modelValue={ val => {
                           model.value = [val]
@@ -153,6 +154,8 @@ export const DatePicker = genericComponent<new () => {
 
                     { props.range && (
                       <DateRangePickerPanel
+                        { ...attrs }
+                        onPreview={ v => !v && blur() }
                         v-model={ model.value }
                       />
                     ) }

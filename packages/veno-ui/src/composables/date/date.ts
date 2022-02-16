@@ -5,10 +5,21 @@ import { padNumber } from '../../utils'
 import { MAP } from './constants'
 
 // Types
-import { DateInstance, InternalDateInstance } from './types'
+import { DateInstance, DateOptions, InternalDateInstance } from './types'
 
-export function createDate (value?: number | string | Date): DateInstance {
-  let date = value ? new Date(value) : new Date()
+export const defaultDateFormat = 'YYYY-MM-DD HH:mm:ss'
+
+export function createDate (options?: DateOptions): DateInstance {
+  let date: Date
+  {
+    if (!options) {
+      date = new Date()
+    } else if (typeof options === 'string') {
+      date = new Date(options.replaceAll('-', '/'))
+    } else {
+      date = new Date(options)
+    }
+  }
 
   function tap<T> (cb1: () => T, cb2: (v: T) => void) {
     const res = cb1()
@@ -37,7 +48,7 @@ export function createDate (value?: number | string | Date): DateInstance {
     endOf (unit) {
       return createDate(this.format(MAP[unit].endOf))
     },
-    format (value = 'YYYY-MM-DD HH:mm:ss') {
+    format (value = defaultDateFormat) {
       const formatted = this.toObject()
 
       const { format, counter } = value.split('')

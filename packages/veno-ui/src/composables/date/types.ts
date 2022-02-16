@@ -1,7 +1,14 @@
 // Constants
 import { MAP } from './constants'
 
+export interface DateInstance extends Date, InternalDateInstance
+{
+  //
+}
+
 export type DateManipulateType = keyof typeof MAP
+
+export type DateOptions = number | string | Date
 
 export interface InternalDateInstance
 {
@@ -15,9 +22,4 @@ export interface InternalDateInstance
   valueOf (): number
   toDate (): Date
   toObject (): Record<string, any>
-}
-
-export interface DateInstance extends Date, InternalDateInstance
-{
-  //
 }

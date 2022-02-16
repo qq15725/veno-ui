@@ -1,11 +1,11 @@
-export { createDate } from './date'
+export { createDate, defaultDateFormat } from './date'
 export { useDisplay } from './display'
 export { useTheme } from './theme'
 export { useLayout } from './layout'
 export { useMessage, message } from './message'
 
 export type { DefaultsInstance } from './defaults'
-export type { DateInstance, InternalDateInstance, DateManipulateType } from './date'
+export type { DateInstance, DateOptions, InternalDateInstance, DateManipulateType } from './date'
 export type { DisplayBreakpoint, DisplayInstance, DisplayThresholds } from './display'
 export type { IconAliases, IconProps, IconSet, IconOptions } from './icon'
 export type { ThemeDefinition, ThemeInstance } from './theme'

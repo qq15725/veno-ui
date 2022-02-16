@@ -3,7 +3,7 @@ import './styles/date-picker-panel.scss'
 
 // Utils
 import { computed, inject, ref, watch } from 'vue'
-import { createRange, defineComponent } from '../../utils'
+import { createRange, defineComponent, wrapInArray } from '../../utils'
 
 // Components
 import { Card } from '../card'
@@ -18,13 +18,22 @@ import { DateRangeKey } from './date-range-picker-panel'
 
 // Types
 import type { PropType } from 'vue'
-import type { DateInstance } from '../../composables/date'
+import type { DateInstance, DateOptions } from '../../composables/date'
 
 // Constants
 const ROWS_COUNT = 6
 const COLS_COUNT = 7
 const CELLS_COUNT = ROWS_COUNT * COLS_COUNT
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'] as const
+
+interface CELL {
+  isActive?: boolean,
+  selectedIndex?: number,
+  isOtherMonth?: boolean,
+  text?: string,
+  value?: number,
+  props: Record<string, any>,
+}
 
 export const DatePickerPanel = defineComponent({
   name: 'VeDatePickerPanel',
@@ -37,11 +46,6 @@ export const DatePickerPanel = defineComponent({
       type: String,
       default: 'primary',
     },
-
-    /**
-     * @zh 时间值
-     */
-    modelValue: String,
 
     /**
      * @zh 每周的第一天是周几（0 - 周日、1 - 周一）。
@@ -59,6 +63,21 @@ export const DatePickerPanel = defineComponent({
       type: [String, Function] as PropType<string | ((date: DateInstance) => string)>,
       default: 'YYYY-MM-DD',
     },
+
+    /**
+     * @zh 最大时间值
+     */
+    max: String as PropType<DateOptions>,
+
+    /**
+     * @zh 最小时间值
+     */
+    min: String as PropType<DateOptions>,
+
+    /**
+     * @zh 时间值
+     */
+    modelValue: String as PropType<DateOptions>,
 
     /**
      * @zh 双箭头往前翻页图标
@@ -98,7 +117,27 @@ export const DatePickerPanel = defineComponent({
   },
 
   setup (props, { slots }) {
+    const firstDayOfWeek = computed(() => Number(props.firstDayOfWeek))
+    const max = computed(() => props.max ? createDate(props.max) : undefined)
+    const min = computed(() => props.min ? createDate(props.min) : undefined)
+    const model = useProxiedModel(
+      props, 'modelValue', props.modelValue,
+      v => createDate(v),
+      v => formatter(v)
+    )
     const range = inject(DateRangeKey, null)
+    const selected = computed(() => {
+      if (range) {
+        return range.selected.value.map(v => valueFormatter(v.startOf('day')))
+      }
+      return wrapInArray(valueFormatter(model.value.startOf('day')))
+    })
+    const weekdays = computed(() => createRange(7).map(i => WEEKDAYS[(i + firstDayOfWeek.value) % 7]))
+    const internalModel = ref(model.value.startOf('month'))
+    const month = computed(() => internalModel.value.format('M'))
+    watch(model, val => {
+      internalModel.value = val.startOf('month')
+    })
 
     function formatter (date: DateInstance): string {
       return typeof props.format === 'string'
@@ -110,61 +149,51 @@ export const DatePickerPanel = defineComponent({
       return createDate(formatter(date)).valueOf()
     }
 
-    const firstDayOfWeek = computed(() => Number(props.firstDayOfWeek))
-    const model = useProxiedModel(
-      props, 'modelValue', props.modelValue,
-      v => createDate(v),
-      v => formatter(v)
-    )
-    const now = valueFormatter(createDate())
-    const selected = computed(() => valueFormatter(model.value))
-    const weekdays = computed(() => createRange(7).map(i => WEEKDAYS[(i + firstDayOfWeek.value) % 7]))
-
-    const internalModel = ref(model.value.startOf('month'))
-    watch(model, val => {
-      internalModel.value = val.startOf('month')
-    })
-
     const rows = computed(() => {
+      const now = valueFormatter(createDate().startOf('day'))
       const sharedProps = {
         icon: true,
         variant: 'text',
         shape: 'circle',
         size: 'small',
       } as const
-      const cells: { props: Record<string, any>, value?: number }[] = []
+      const cells: CELL[] = []
       const weekDay = Number(internalModel.value.format('d'))
       const offsetDay = firstDayOfWeek.value - weekDay - 1
-      const month = internalModel.value.format('M')
       let date = internalModel.value.add(offsetDay, 'day')
       createRange(CELLS_COUNT).forEach(_ => {
         const current = date
         date = date.add(1, 'day')
+        const text = formatter(current)
         const value = valueFormatter(current)
-        const isActive = value === selected.value
+        const selectedIndex = selected.value.findIndex(v => v === value)
+        const isActive = selectedIndex > -1
         const isToday = now == value
         const variant = isActive ? 'contained' : isToday ? 'outlined' : 'text'
         const color = isActive || isToday ? props.activeColor : undefined
 
         function onClick () {
-          model.value = current
+          if (range) {
+            range.select(text)
+            range.isPreview.value && range.preview(false)
+          } else {
+            model.value = current
+          }
         }
 
         cells.push({
+          isActive,
+          selectedIndex,
+          isOtherMonth: current.format('M') !== month.value,
+          text,
+          value,
           props: {
             ...sharedProps,
             variant,
             color,
             text: current.format('D'),
             onClick,
-            class: [
-              've-date-picker-panel__day',
-              {
-                've-date-picker-panel__day--other-month': current.format('M') !== month
-              }
-            ],
           },
-          value,
         })
       })
       const rows = createRange(ROWS_COUNT).map((_, index) => {
@@ -187,31 +216,43 @@ export const DatePickerPanel = defineComponent({
         size: 'small',
       } as const
 
+      const hasPrev = min.value
+        ? internalModel.value.valueOf() > min.value.valueOf()
+        : true
+      const hasNext = max.value
+        ? internalModel.value.valueOf() < max.value.valueOf()
+        : true
+
       return {
         prevDouble: {
           ...sharedProps,
           icon: props.prevDoubleIcon,
           onClick: prevYear,
+          disabled: !hasPrev,
         },
         prev: {
           ...sharedProps,
           icon: props.prevIcon,
           onClick: prevMonth,
+          disabled: !hasPrev,
         },
         date: {
           ...sharedProps,
           shape: 'rounded',
+          style: { fontSize: '14px' },
           text: internalModel.value.format('YYYY-MM'),
         } as const,
         next: {
           ...sharedProps,
           icon: props.nextIcon,
           onClick: nextMonth,
+          disabled: !hasNext,
         },
         nextDouble: {
           ...sharedProps,
           icon: props.nextDoubleIcon,
           onClick: nextYear,
+          disabled: !hasNext,
         },
       }
     })
@@ -230,6 +271,16 @@ export const DatePickerPanel = defineComponent({
 
     function nextMonth () {
       internalModel.value = internalModel.value.add(1, 'month')
+    }
+
+    function onMousemove (text: string) {
+      if (!range) return
+      if (range.selected.value.length == 1) {
+        !range.isPreview.value && range.preview(true)
+      }
+      if (range.isPreview.value) {
+        range.select(text)
+      }
     }
 
     return () => {
@@ -254,16 +305,22 @@ export const DatePickerPanel = defineComponent({
             ),
             text: () => (
               <>
-                { rows.value.map(cols => (
+                { rows.value.map((cols, i) => (
                   <div class="ve-date-picker-panel__row">
                     { cols.map(col => (
                       <div
+                        key={ col.value }
                         class={ [
                           've-date-picker-panel__cell',
                           {
-                            've-date-picker-panel__cell--in-range': col.value && range?.inRange(col.value),
+                            've-date-picker-panel__cell--active': col.isActive,
+                            've-date-picker-panel__cell--other-month': col.isOtherMonth,
+                            've-date-picker-panel__cell--range-in': col.value && range?.inRange(col.value),
+                            've-date-picker-panel__cell--range-start': col.selectedIndex === 0,
+                            've-date-picker-panel__cell--range-end': col.selectedIndex === 1,
                           },
                         ] }
+                        onMousemove={ () => onMousemove(col.text!) }
                       >
                         <Button{ ...col.props } />
                       </div>

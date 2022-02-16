@@ -1,2 +1,8 @@
-export { createDate } from './date'
-export type { DateInstance, InternalDateInstance, DateManipulateType } from './types'
+export { createDate, defaultDateFormat } from './date'
+
+export type {
+  DateInstance,
+  DateManipulateType,
+  DateOptions,
+  InternalDateInstance,
+} from './types'

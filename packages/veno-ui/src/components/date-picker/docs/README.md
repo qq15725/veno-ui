@@ -10,8 +10,18 @@ category: Form 表单组件
 
 basic.md
 
+range.md
+
+range-custom-format.md
+
+panel.md
+
 :::
 
 ## API
 
 <<<API date-picker
+
+<<<API date-range-picker-panel
+
+<<<API date-picker-panel
