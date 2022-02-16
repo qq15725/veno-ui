@@ -539,3 +539,14 @@ export class CircularBuffer<T = never> {
     return this.#arr.slice(this.#pointer).concat(this.#arr.slice(0, this.#pointer))
   }
 }
+
+export function padNumber (x: number, length: number): string {
+  let padded = String(x)
+  if (padded.length > length) {
+    padded.substring(padded.length - length)
+  }
+  while (padded.length < length) {
+    padded = '0' + padded
+  }
+  return padded
+}

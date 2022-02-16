@@ -30,11 +30,14 @@ export interface IconAliases
   sort: IconValue
   filter: IconValue
   prev: IconValue
+  prevDouble: IconValue
   next: IconValue
+  nextDouble: IconValue
   first: IconValue
   last: IconValue
   nodata: IconValue
   link: IconValue
+  calendar: IconValue
 }
 
 export interface IconProps

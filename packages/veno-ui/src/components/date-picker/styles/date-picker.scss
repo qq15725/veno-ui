@@ -1,0 +1,15 @@
+// Blocks
+.ve-date-picker {
+  // Elements
+
+  // InputControl
+  .ve-input-control,
+  .ve-input-control__input {
+    cursor: pointer;
+  }
+
+  // InputControlAppendInner
+  .ve-input-control--dirty:hover .ve-input-control__clearable + .ve-input-control__append-inner {
+    display: none;
+  }
+}

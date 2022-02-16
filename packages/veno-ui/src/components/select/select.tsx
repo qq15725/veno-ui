@@ -17,9 +17,7 @@ import { TagGroup } from '../tag-group'
 
 // Types
 import type { PropType } from 'vue'
-import type { Anchor } from '../../utils'
 import type { InputSlots } from '../input/input'
-import type { Origin } from '../../composables/position-strategy'
 import type { ListItemProps } from '../list/list'
 import type { ListChildrenSlots } from '../list/list-children'
 
@@ -38,10 +36,6 @@ export const Select = genericComponent<new () => {
   name: 'VeSelect',
 
   props: {
-    anchor: {
-      type: String as PropType<Anchor>,
-      default: 'bottom',
-    },
     appendInnerIcon: {
       type: String,
       default: '$dropdown',
@@ -58,7 +52,7 @@ export const Select = genericComponent<new () => {
     },
     modelValue: {
       type: [String, Object, Array],
-      default: () => ([]),
+      default: () => [],
     },
     multiple: Boolean,
     noDataText: {
@@ -66,10 +60,6 @@ export const Select = genericComponent<new () => {
       default: '暂无数据',
     },
     openOnClear: Boolean,
-    origin: {
-      type: String as PropType<Origin>,
-      default: 'auto',
-    },
     tags: Boolean,
     readonly: Boolean,
     returnObject: Boolean,
@@ -183,12 +173,10 @@ export const Select = genericComponent<new () => {
               <>
                 { activator.value && (
                   <Menu
-                    contentClass="ve-select__wrapper"
+                    contentClass="ve-select-menu-wrapper"
                     id={ `${ id.value }-menu` }
                     v-model={ isActiveMenu.value }
                     activator={ activator.value }
-                    anchor={ props.anchor }
-                    origin={ props.origin }
                     minWidth={ undefined }
                     openOnClick={ false }
                   >

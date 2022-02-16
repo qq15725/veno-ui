@@ -27,11 +27,14 @@ const aliases: IconAliases = {
   sort: 'mdi-arrow-up',
   filter: 'mdi-filter-variant',
   prev: 'mdi-chevron-left',
+  prevDouble: 'mdi-chevron-double-left',
   next: 'mdi-chevron-right',
+  nextDouble: 'mdi-chevron-double-right',
   first: 'mdi-page-first',
   last: 'mdi-page-last',
   nodata: 'mdi-database-off-outline',
   link: 'mdi-link',
+  calendar: 'mdi-calendar-blank-outline',
 }
 
 const mdi: IconSet = {

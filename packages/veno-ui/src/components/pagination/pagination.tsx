@@ -305,14 +305,14 @@ export const Pagination = defineComponent({
         <ul class="ve-pagination__list">
           { props.showFirstLastPage && (
             <li class="ve-pagination__first">
-              { slots.first ? slots.first(controls.value.first) : (
+              { slots.first?.(controls.value.first) ?? (
                 <Button { ...controls.value.first } />
               ) }
             </li>
           ) }
 
           <li class="ve-pagination__prev">
-            { slots.prev ? slots.prev(controls.value.prev) : (
+            { slots.prev?.(controls.value.prev) ?? (
               <Button { ...controls.value.prev } />
             ) }
           </li>
@@ -327,21 +327,21 @@ export const Pagination = defineComponent({
                 },
               ] }
             >
-              { slots.item ? slots.item(item) : (
+              { slots.item?.(item) ?? (
                 <Button { ...item.props }>{ item.page }</Button>
               ) }
             </li>
           )) }
 
           <li class="ve-pagination__next">
-            { slots.next ? slots.next(controls.value.next) : (
+            { slots.next?.(controls.value.next) ?? (
               <Button { ...controls.value.next } />
             ) }
           </li>
 
           { props.showFirstLastPage && (
             <li class="ve-pagination__last">
-              { slots.last ? slots.last(controls.value.last) : (
+              { slots.last?.(controls.value.last) ?? (
                 <Button { ...controls.value.last } />
               ) }
             </li>

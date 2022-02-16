@@ -1,0 +1,31 @@
+// Blocks
+.ve-date-picker-panel {
+  // Elements
+  &__date {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &__row {
+    & + & {
+      margin-top: 4px;
+    }
+  }
+
+  &__cell {
+    display: inline-block;
+
+    // Modifiers
+    &--in-range {
+      background-color: rgba(var(--ve-theme-primary), var(--ve-activated-opacity));
+    }
+  }
+
+  &__day {
+    &--other-month {
+      opacity: var(--ve-disabled-opacity);
+    }
+  }
+}

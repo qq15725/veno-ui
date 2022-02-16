@@ -2,16 +2,29 @@
 import './styles/counter.scss'
 
 // Utils
+import { computed } from 'vue'
+import { genericComponent, MakeSlots } from '../../utils'
+
+// Composables
 import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
-import { computed, defineComponent } from 'vue'
 
 // Components
 import { FadeTransition } from '../transition'
 
-export const Counter = defineComponent({
-  name: 'VeCounter',
+export type CounterSlot = {
+  counter: string,
+  max: number,
+  value: number,
+}
 
-  functional: true,
+export type CounterSlots = MakeSlots<{
+  default: [CounterSlot]
+}>
+
+export const Counter = genericComponent<new () => {
+  $slots: CounterSlots
+}>()({
+  name: 'VeCounter',
 
   props: {
     active: Boolean,
@@ -35,17 +48,14 @@ export const Counter = defineComponent({
       return (
         <MaybeTransition transition={ props.transition }>
           <div
-            v-show={ props.active }
             class="ve-counter"
+            v-show={ props.active }
           >
-            { slots.default
-              ? slots.default({
-                counter: counter.value,
-                max: props.max,
-                value: props.value,
-              })
-              : counter.value
-            }
+            { slots.default?.({
+              counter: counter.value,
+              max: Number(props.max),
+              value: Number(props.value),
+            }) ?? counter.value }
           </div>
         </MaybeTransition>
       )

@@ -31,14 +31,15 @@ import Intersect from '../../directives/intersect'
 // Types
 import type { PropType } from 'vue'
 import type { FormControlSlots } from '../form-control/form-control'
-import type { InputControlSlots } from '../input-control/input-control'
+import type { InputControlSlots, InputControlDefaultSlot } from '../input-control/input-control'
+import type { CounterSlot } from '../counter/counter'
 import type { MakeSlots } from '../../utils'
 
 const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'month']
 
 export type InputSlots = FormControlSlots & InputControlSlots & MakeSlots<{
-  counter: []
-  default: []
+  counter: [CounterSlot]
+  default: [InputControlDefaultSlot]
 }>
 
 export const Input = genericComponent<new () => {
@@ -225,11 +226,13 @@ export const Input = genericComponent<new () => {
                 >
                   { {
                     ...inputControlSlots,
-                    default: ({ inputRef, focus, blur, props: nativeControlProps }) => {
+                    default: (slotProps) => {
+                      const { inputRef, focus, blur, props: nativeControlProps } = slotProps
+
                       if (isTextarea) {
                         return (
                           <>
-                            { slots.default?.() }
+                            { slots.default?.(slotProps) }
 
                             <textarea
                               v-model={ model.value }
@@ -269,7 +272,7 @@ export const Input = genericComponent<new () => {
                       } else {
                         return (
                           <>
-                            { slots.default?.() }
+                            { slots.default?.(slotProps) }
 
                             <input
                               v-intersect={ [{
@@ -307,8 +310,9 @@ export const Input = genericComponent<new () => {
                       active={ props.persistentCounter || isDirty.value }
                       value={ counterValue.value }
                       max={ max.value }
-                      v-slots={ slots.counter }
-                    />
+                    >
+                      { { default: slots.counter } }
+                    </Counter>
                   </>
                 )
               }

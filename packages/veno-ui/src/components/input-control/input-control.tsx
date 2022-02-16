@@ -27,10 +27,12 @@ export interface InputControlSlot
   focus: () => void
 }
 
+export type InputControlDefaultSlot = InputControlSlot & { props: Record<string, unknown> }
+
 export type InputControlSlots = MakeSlots<{
   'prepend-inner': [InputControlSlot],
   prefix: [InputControlSlot],
-  default: [InputControlSlot & { props: Record<string, unknown> }],
+  default: [InputControlDefaultSlot],
   suffix: [InputControlSlot],
   'append-inner': [InputControlSlot],
   clear: [InputControlSlot],
