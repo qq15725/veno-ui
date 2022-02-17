@@ -13,9 +13,8 @@
 
 ## 文档
 
-[www.venojs.com](https://www.venojs.com) 
-
-[国内镜像](https://venoui.fdota.com)
+- [www.venojs.com](https://www.venojs.com) 
+- [国内文档镜像](https://venoui.fdota.com)
 
 ## 特性
 
@@ -81,6 +80,10 @@ app.mount('#app')
 [@veno-ui/vite-plugin-markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown
 [@veno-ui/vite-plugin-svg]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg
 
+## 关于
+
+- 大量代码基于 [Vuetify next 分支](https://github.com/vuetifyjs/vuetify/tree/next) ，[查看许可](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 。
+
 ## License
 
-[MIT 协议](https://github.com/qq15725/veno-ui/blob/master/LICENSE)
+[MIT](https://github.com/qq15725/veno-ui/blob/master/LICENSE)
