@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+// Utils
+import { computed } from 'vue'
+// Stores
+import { useAppStore } from '@/stores/app'
+// Composables
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const appStore = useAppStore()
+const url = computed(() => {
+  const { relativePath } = route.meta
+  if (relativePath.includes('../')) {
+    return `${ appStore.repositoryBaseURL }/${ relativePath.replace('../', 'packages/') }`
+  }
+  return `${ appStore.repositoryBaseURL }/packages/docs/${ relativePath }`
+})
+</script>
+
+<template>
+  <ve-layout-item anchor="top" size="45" priority="-1" class="d-flex align-center">
+    <div class="m-auto d-flex flex-fill px-md-10" style="max-width: 900px;">
+      <ve-breadcrumb v-if="$route.meta.category">
+        <ve-breadcrumb-item
+            v-for="name in ['组件', $route.meta.category]"
+            :key="name"
+        >
+          {{ name }}
+        </ve-breadcrumb-item>
+      </ve-breadcrumb>
+      <ve-spacer />
+      <ve-link
+          class="text-caption"
+          target="_blank"
+          :href="url"
+          append-icon="mdi-pencil"
+          text="编辑此页面"
+      />
+    </div>
+  </ve-layout-item>
+</template>

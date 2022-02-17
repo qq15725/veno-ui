@@ -90,6 +90,7 @@ export const createVeno = (options: VenoOptions = {}) => {
             icons: inject.call(this, IconKey),
             message: inject.call(this, MessageKey),
             notification: inject.call(this, NotificationKey),
+            version,
           })
         }
       }

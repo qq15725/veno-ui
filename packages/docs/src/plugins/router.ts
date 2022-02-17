@@ -25,14 +25,14 @@ export const install: InstallPlugin = ({ router }) => {
 
   router.beforeEach(function (to, from, next) {
     if (!from || to.path !== from.path) {
-      store.loading = true
+      store.pageLoading = true
     }
     next()
   })
 
   router.afterEach(function (to, from) {
     if (!from || to.path !== from.path) {
-      store.loading = false
+      store.pageLoading = false
     }
   })
 }
