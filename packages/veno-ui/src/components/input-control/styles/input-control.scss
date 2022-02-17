@@ -1,31 +1,44 @@
-@forward 'variables';
 @use 'sass:map';
-@use 'variables' as *;
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
 // Blocks
 .ve-input-control {
-  --ve-padding-left: 0;
-  --ve-padding-right: 0;
-  --ve-native-padding-left: 16px;
-  --ve-native-padding-right: 16px;
-  --ve-native-padding-top: 6px;
-  --ve-native-padding-bottom: 6px;
-
+  $root: &;
+  // CSS Variables
+  // --ve-padding-left: 0px;
+  // --ve-padding-right: 0px;
+  // --ve-native-padding-left: 16px;
+  // --ve-native-padding-right: 16px;
+  // --ve-native-padding-top: 6px;
+  // --ve-native-padding-bottom: 6px;
   position: relative;
   display: flex;
   align-items: center;
   border-radius: 4px;
   flex: 1 0;
   height: var(--ve-control-height);
-  color: rgb(var(--ve-theme-on-secondary));
-  background-color: rgb(var(--ve-theme-secondary));
-  border: 1px solid transparent;
   transition: .1s settings.$decelerated-easing;
-  transition-property: color, background-color, border-color;
+  transition-property: color, background-color;
+  @include tools.use-border();
+  @include tools.use-variant((
+    'variants': (
+      'contained': (
+        'background': rgb(var(--ve-theme-secondary)),
+        'color': rgb(var(--ve-theme-on-secondary)),
+      ),
+      'text': (
+        'color': rgb(var(--ve-theme-on-secondary)),
+      )
+    ),
+  ));
 
   // Modifiers
+  &--appended {
+    --ve-native-padding-right: 6px;
+    padding-inline-end: 12px;
+  }
+
   &--disabled {
     opacity: var(--ve-disabled-opacity);
     pointer-events: none;
@@ -35,6 +48,11 @@
     color: rgb(var(--ve-theme-on-surface));
     background-color: rgb(var(--ve-theme-surface));
     border-color: rgb(var(--ve-theme-primary));
+
+    #{$root}__border {
+      opacity: 1 !important;
+      color: rgb(var(--ve-theme-primary)) !important;
+    }
   }
 
   &--prepended {
@@ -50,11 +68,6 @@
   &--suffixed {
     --ve-native-padding-right: 6px;
     --ve-padding-right: 12px;
-  }
-
-  &--appended {
-    --ve-native-padding-right: 6px;
-    padding-inline-end: 12px;
   }
 
   // Elements
@@ -82,8 +95,8 @@
     flex: 1 0;
     height: 100%;
     cursor: text;
-    padding-inline-start: var(--ve-padding-left);
-    padding-inline-end: var(--ve-padding-right);
+    padding-inline-start: var(--ve-padding-left, 0px);
+    padding-inline-end: var(--ve-padding-right, 0px);
   }
 
   .ve-native-control {
@@ -91,10 +104,10 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding-inline-start: var(--ve-native-padding-left);
-    padding-inline-end: var(--ve-native-padding-right);
-    padding-block-start: var(--ve-native-padding-top);
-    padding-block-end: var(--ve-native-padding-bottom);
+    padding-inline-start: var(--ve-native-padding-left, 16px);
+    padding-inline-end: var(--ve-native-padding-right, 16px);
+    padding-block-start: var(--ve-native-padding-top, 6px);
+    padding-block-end: var(--ve-native-padding-bottom, 6px);
     opacity: var(--ve-high-emphasis-opacity);
     cursor: inherit;
 
@@ -111,6 +124,7 @@
 
   &__clearable {
     visibility: hidden;
+    opacity: var(--ve-medium-emphasis-opacity);
 
     > .ve-button {
       min-width: auto;

@@ -12,4 +12,8 @@
   .ve-input-control--dirty:hover .ve-input-control__clearable + .ve-input-control__append-inner {
     display: none;
   }
+
+  .ve-input-control__append-inner .ve-icon {
+    opacity: var(--ve-medium-emphasis-opacity);
+  }
 }

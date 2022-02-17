@@ -6,22 +6,6 @@
 
 ```html
 <ve-spacer cols="12">
-  <ve-link color="primary" href="https://next.vuetifyjs.com/en/components/buttons" target="_blank">Vuetify</ve-link>
-  
-  <ve-defaults-provider
-    :defaults="{ 
-      VeButton: { 
-        variant: 'contained',
-        color: 'white',
-        elevation: 4,
-      },
-    }"
-  >
-    <ve-button>DEFAULT</ve-button>
-  </ve-defaults-provider>
-  
-  <ve-divider />
-
   <ve-link color="primary" href="https://arco.design/vue/component/button" target="_blank">Arco Design Vue</ve-link>
 
   <ve-defaults-provider
@@ -29,12 +13,13 @@
       VeButton: { 
         variant: 'contained',
         color: '#f2f3f5',
-        textColor: '#4e5969',
         ripple: false,
+        height: 32,
       },
     }"
   >
-    <ve-button>Secondary</ve-button>
+    <ve-button text-color="#4e5969" class="mr-3">Secondary</ve-button>
+    <ve-button color="#165dff">Primary</ve-button>
   </ve-defaults-provider>
 
   <ve-divider />
@@ -47,12 +32,31 @@
         variant: 'outlined',
         color: '#333639',
         ripple: false,
+        height: 34,
       },
     }"
   >
-    <ve-button>Default</ve-button>
+    <ve-button class="mr-3">Default</ve-button>
+    <ve-button variant="contained" color="#18a058">Primary</ve-button>
   </ve-defaults-provider>
 
+  <ve-divider />
+
+  <ve-link color="primary" href="https://next.vuetifyjs.com/en/components/buttons" target="_blank">Vuetify</ve-link>
+
+  <ve-defaults-provider
+    :defaults="{ 
+      VeButton: { 
+        variant: 'contained',
+        color: 'white',
+        elevation: 4,
+        height: 36,
+      },
+    }"
+  >
+    <ve-button class="mr-3">DEFAULT</ve-button>
+    <ve-button color="primary">PRIMARY</ve-button>
+  </ve-defaults-provider>
 </ve-spacer>
 ```
 

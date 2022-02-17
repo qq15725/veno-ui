@@ -4,10 +4,11 @@
 @use './variables' as *;
 
 .ve-form-control {
-  --ve-density-offset: 0px;
-  --ve-control-default-height: 42px;
-  --ve-control-height: calc(var(--ve-control-default-height) + var(--ve-density-offset));
   $root: &;
+  // CSS Variables
+  // --ve-control-default-height: 32px;
+  // --ve-density-offset: 0px;
+  --ve-control-height: calc(var(--ve-control-default-height, 32px) + var(--ve-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
@@ -31,6 +32,10 @@
     #{$root}__label {
       margin-block-end: 8px;
     }
+  }
+
+  &--inline {
+    margin-inline-end: 16px;
   }
 
   &--disabled {
@@ -58,6 +63,7 @@
     display: flex;
     align-items: center;
     align-self: center;
+    flex-wrap: wrap;
   }
 
   &__prepend {

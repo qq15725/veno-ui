@@ -89,27 +89,29 @@ function toggle () {
     </ve-anchor>
   </ve-drawer>
 
-  <ve-layout-item anchor="top" size="45" priority="-1" class="d-flex align-center px-3 px-md-10">
-    <ve-breadcrumb v-if="$route.meta.category">
-      <ve-breadcrumb-item
-          v-for="name in ['组件', $route.meta.category]"
-          :key="name"
-      >
-        {{ name }}
-      </ve-breadcrumb-item>
-    </ve-breadcrumb>
-    <ve-spacer />
-    <ve-link
-        class="text-caption"
-        target="_blank"
-        :href="url"
-        append-icon="mdi-pencil"
-        text="编辑此页面"
-    />
+  <ve-layout-item anchor="top" size="45" priority="-1" class="d-flex align-center">
+    <div class="m-auto d-flex flex-fill px-md-10" style="max-width: 900px;">
+      <ve-breadcrumb v-if="$route.meta.category">
+        <ve-breadcrumb-item
+            v-for="name in ['组件', $route.meta.category]"
+            :key="name"
+        >
+          {{ name }}
+        </ve-breadcrumb-item>
+      </ve-breadcrumb>
+      <ve-spacer />
+      <ve-link
+          class="text-caption"
+          target="_blank"
+          :href="url"
+          append-icon="mdi-pencil"
+          text="编辑此页面"
+      />
+    </div>
   </ve-layout-item>
 
   <ve-main>
-    <ve-container class="px-md-10">
+    <ve-container style="max-width: 900px;" class="px-md-10">
       <router-view #default="{ Component }">
         <ve-fade-transition hide-on-leave>
           <component :is="Component" />

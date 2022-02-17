@@ -10,6 +10,7 @@ import { Icon } from '../icon'
 import { Button } from '../button'
 
 // Composables
+import { makeVariantProps, useVariant, genOverlays } from '../../composables/variant'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
@@ -51,6 +52,9 @@ export const makeInputControlProps = propsFactory({
   },
   appendInnerIcon: String,
   disabled: Boolean,
+  ...makeVariantProps({
+    variant: 'contained',
+  } as const),
 }, 'input-control')
 
 export function filterInputControlProps (attrs: Record<string, unknown>) {
@@ -99,6 +103,7 @@ export const InputControl = genericComponent<new () => {
     const isFocused = ref(false)
     const controlRef = ref<HTMLElement>()
     const inputRef = ref<HTMLInputElement>()
+    const { variantClasses, colorClasses, colorStyles } = useVariant(props)
 
     watchEffect(() => isActive.value = isFocused.value || props.dirty)
 
@@ -149,9 +154,14 @@ export const InputControl = genericComponent<new () => {
               've-input-control--suffixed': hasSuffix,
               've-input-control--appended': hasClear || hasAppendInner,
             },
+            variantClasses.value,
+            colorClasses.value,
           ] }
+          style={ colorStyles.value }
           onClick={ onClick }
         >
+          { genOverlays(false, 've-input-control') }
+
           { hasPrependInner && (
             <div class="ve-input-control__prepend-inner">
               { slots['prepend-inner']?.(slotProps.value) }

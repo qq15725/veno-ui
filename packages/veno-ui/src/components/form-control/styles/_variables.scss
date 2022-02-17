@@ -4,9 +4,9 @@
 @use '../../../styles/settings';
 
 $form-control-density: (
-  'ultra-high': -3,
+  'ultra-high': -2,
   'high': -1,
   'medium': 0,
   'low': 1,
-  'ultra-low': 3,
+  'ultra-low': 2,
 ) !default;

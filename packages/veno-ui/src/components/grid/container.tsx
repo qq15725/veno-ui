@@ -2,14 +2,14 @@
 import './styles/container.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
 export type Container = InstanceType<typeof Container>
 
-export const Container = genericComponent()({
+export const Container = defineComponent({
   name: 'VeContainer',
 
   props: {

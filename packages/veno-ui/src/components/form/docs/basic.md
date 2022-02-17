@@ -4,19 +4,32 @@
 
 ```html
 <ve-form
-  label-width="100"
+  :label-width="form.direction === 'inline' ? 70 : 100"
   :density="form.density"
   :direction="form.direction"
   :disabled="form.disabled"
-  :readonly="form.readonly"
   :hide-details="form.hideDetails"
+  :readonly="form.readonly"
+  :variant="form.variant"
   @submit="send"
 >
   <ve-radio-group
-    name="density"
+    label="Variant"
+    name="variant"
+    v-model="form.variant"
+  >
+    <ve-radio value="contained" />
+    <ve-radio value="outlined" />
+    <ve-radio value="text" />
+    <ve-radio value="contained-text" />
+    <ve-radio value="contained-outlined" />
+  </ve-radio-group>
+  
+  <ve-radio-group
     label="Density"
-    v-model="form.density"
     messages="Messages"
+    name="density"
+    v-model="form.density"
   >
     <ve-radio value="ultra-high" />
     <ve-radio value="high" />
@@ -28,6 +41,7 @@
   <ve-radio-group name="direction" label="Direction" v-model="form.direction">
     <ve-radio value="horizontal" />
     <ve-radio value="vertical" />
+    <ve-radio value="inline" />
   </ve-radio-group>
 
   <ve-form-control label :disabled="false">
@@ -37,56 +51,74 @@
   </ve-form-control>
 
   <ve-input
-    name="input"
-    label="Input"
-    v-model="form.input"
-    placeholder="请输入"
     clearable
     counter="48"
+    label="Input"
+    name="input"
+    placeholder="请输入"
+    v-model="form.input"
   />
 
   <ve-input
-    name="textarea"
-    label="Textarea"
-    v-model="form.textarea"
-    type="textarea"
-    placeholder="请输入"
-    clearable
-    rows="3"
     auto-grow
+    clearable
     counter="255"
+    label="Textarea"
+    name="textarea"
+    placeholder="请输入"
+    rows="3"
+    type="textarea"
+    v-model="form.textarea"
   />
 
   <ve-select
-    name="select"
-    label="Select"
-    v-model="form.select"
-    placeholder="请选择"
+    clearable
     :items="[
       { value: 'Option 1' },
       { value: 'Option 2' },
       { value: 'Option 3' },
     ]"
+    label="Select"
+    name="select"
+    placeholder="请选择"
+    v-model="form.select"
+  />
+  
+  <ve-date-picker
     clearable
+    label="Date"
+    name="date"
+    placeholder="请选择"
+    v-model="form.date"
+  />
+  
+  <ve-date-picker
+    clearable
+    :format="['YYYY-MM-DD 00:00:00', 'YYYY-MM-DD 23:59:59']"
+    label="DateRange"
+    name="date-range"
+    placeholder="请选择"
+    range
+    v-model="form.dateRange"
   />
 
   <ve-form-control label>
-    <ve-switch name="switch" label="Switch" v-model="form.switch" />
+    <ve-switch label="Switch" name="switch" v-model="form.switch" />
   </ve-form-control>
 
-  <ve-checkbox-group name="checkbox" label="Checkbox" v-model="form.checkbox">
+  <ve-checkbox-group label="Checkbox" name="checkbox" v-model="form.checkbox">
     <ve-checkbox value="Checkbox 1" />
     <ve-checkbox value="Checkbox 2" />
     <ve-checkbox value="Checkbox 3" />
   </ve-checkbox-group>
 
-  <ve-radio-group name="radio" label="Radio" v-model="form.radio">
+  <ve-radio-group label="Radio" name="radio" v-model="form.radio">
     <ve-radio value="Radio1" />
     <ve-radio value="Radio2" />
   </ve-radio-group>
 
   <ve-form-control label>
-    <ve-button :loading="sending" type="submit" color="primary">提交</ve-button>
+    <ve-button color="primary" :loading="sending" type="submit">提交</ve-button>
   </ve-form-control>
 </ve-form>
 
@@ -103,7 +135,8 @@ export default defineComponent({
     
     return {
       form: ref({
-        density: 'high',
+        variant: 'contained',
+        density: 'medium',
         direction: 'horizontal',
         hideDetails: true,
         disabled: false,

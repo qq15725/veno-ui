@@ -1,9 +1,9 @@
 :::demo
 
-# 基本用法
+# 自定义槽距离
 
 ```html
-<ve-spacer>
+<ve-spacer gutter="4">
   <ve-button>Button</ve-button>
   <ve-button>Button</ve-button>
   <ve-button>Button</ve-button>

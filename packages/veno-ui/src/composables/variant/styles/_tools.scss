@@ -11,6 +11,34 @@
   @if map.get($props, 'use-variant') {
     $variants: map.get($props, 'variants');
 
+    // Elements
+    &__border {
+      bottom: 0;
+      border-color: currentColor;
+      border-radius: inherit;
+      border-style: inherit;
+      border-width: thin;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      left: 0;
+    }
+
+    &__underlay {
+      background: currentColor;
+      border-radius: inherit;
+      bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      left: 0;
+    }
+
+    // Modifiers
     &--variant-plain,
     &--variant-outlined,
     &--variant-text {
@@ -52,33 +80,14 @@
       color: tools.map-deep-get($variants, 'contained', 'color');
 
       #{$root}__underlay {
-        background: currentColor;
-        border-radius: inherit;
-        bottom: 0;
         opacity: var(--ve-activated-opacity);
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
-        transition: opacity 0.2s ease-in-out;
       }
     }
 
     &--variant-outlined:not(#{&}--border),
     &--variant-contained-outlined:not(#{&}--border) {
       #{$root}__border {
-        bottom: 0;
-        border-color: currentColor;
-        border-radius: inherit;
-        border-style: inherit;
-        border-width: thin;
         opacity: .26;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
       }
     }
   }

@@ -1,0 +1,9 @@
+// Blocks
+.ve-form {
+  // Modifiers
+  &--inline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

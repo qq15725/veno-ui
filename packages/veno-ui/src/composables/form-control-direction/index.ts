@@ -3,7 +3,7 @@ import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Constants
-const DIRECTIONS = ['horizontal', 'vertical'] as const
+const DIRECTIONS = ['horizontal', 'vertical', 'inline'] as const
 
 // Types
 import type { PropType } from 'vue'

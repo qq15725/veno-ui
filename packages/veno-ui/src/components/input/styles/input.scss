@@ -17,9 +17,7 @@
       'low': 2,
       'ultra-low': 4,
     )) using($modifier) {
-      @at-root #{$root}--textarea & {
-        --ve-input--textarea-line-height: #{1.75 + math.div($modifier * .125, settings.$spacer) * 1.5};
-      }
+      --ve-input--textarea-line-height: #{1.4285714285714286 + math.div($modifier * .125, settings.$spacer) * 1.5};
     }
   }
 

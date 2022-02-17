@@ -21,7 +21,11 @@
     display: none;
   }
 
-  &--active-menu .ve-input-control__append-inner {
+  .ve-input-control__append-inner .ve-icon {
+    opacity: var(--ve-medium-emphasis-opacity);
+  }
+
+  &--active-menu .ve-input-control__append-inner .ve-icon {
     transform: rotate(180deg);
   }
 }
