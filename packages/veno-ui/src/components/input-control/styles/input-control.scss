@@ -123,7 +123,7 @@
   }
 
   &__clearable {
-    visibility: hidden;
+    display: none;
     opacity: var(--ve-medium-emphasis-opacity);
 
     > .ve-button {
@@ -140,7 +140,7 @@
   }
 
   &:hover &__clearable {
-    visibility: visible;
+    display: inline-flex;
   }
 
   &::before {

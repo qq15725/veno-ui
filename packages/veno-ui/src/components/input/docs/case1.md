@@ -8,7 +8,6 @@
     label="背景色"
     prefix="Color"
     placeholder="请输入 RGBA / HSVA"
-    clearable
     hide-details
     #suffix
   >

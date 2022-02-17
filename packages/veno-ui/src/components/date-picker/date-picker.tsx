@@ -64,9 +64,10 @@ export const DatePicker = genericComponent<new () => {
 
   emits: {
     'update:modelValue': (val: any) => true,
+    'change': (val: any) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { attrs, slots, emit }) {
     const activator = ref()
     const inputRef = ref()
     const isActiveMenu = ref(false)
@@ -100,6 +101,10 @@ export const DatePicker = genericComponent<new () => {
 
     function blur () {
       inputRef.value?.blur()
+    }
+
+    function onChange() {
+      emit('change', props.range ? model.value : model.value[0])
     }
 
     return () => {
@@ -148,6 +153,7 @@ export const DatePicker = genericComponent<new () => {
                         onUpdate:modelValue={ val => {
                           model.value = [val]
                           blur()
+                          onChange()
                         } }
                       />
                     ) }
@@ -155,8 +161,13 @@ export const DatePicker = genericComponent<new () => {
                     { props.range && (
                       <DateRangePickerPanel
                         { ...attrs }
-                        onPreview={ v => !v && blur() }
                         v-model={ model.value }
+                        onPreview={ v => {
+                          if (!v) {
+                            blur()
+                            onChange()
+                          }
+                        } }
                       />
                     ) }
                   </Menu>

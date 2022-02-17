@@ -83,7 +83,7 @@ export const Button = defineComponent({
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
       const hasPrependIcon = !props.icon && props.prependIcon
-      const hasPrependLoading = !hasPrependIcon && (slots.default && props.loading)
+      const hasPrependLoading = !hasPrependIcon && props.loading && (slots.default || props.text)
       const hasDefault = !!(props.icon || slots.default || props.text)
       const hasAppendIcon = !props.icon && props.appendIcon
       return (

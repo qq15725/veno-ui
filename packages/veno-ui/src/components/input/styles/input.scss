@@ -9,16 +9,14 @@
   $root: &;
 
   // Modifiers
-  @at-root {
-    @include tools.density('ve-form-control', (
-      'ultra-high': -4,
-      'high': -2,
-      'medium': 0,
-      'low': 2,
-      'ultra-low': 4,
-    )) using($modifier) {
-      --ve-input--textarea-line-height: #{1.4285714285714286 + math.div($modifier * .125, settings.$spacer) * 1.5};
-    }
+  @include tools.density('ve-form-control', (
+    'ultra-high': -4,
+    'high': -2,
+    'medium': 0,
+    'low': 2,
+    'ultra-low': 4,
+  )) using($modifier) {
+    --ve-input--textarea-line-height: #{1.4285714285714286 + math.div($modifier * .125, settings.$spacer) * 1.5};
   }
 
   // Elements

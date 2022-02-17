@@ -142,9 +142,6 @@ export const FormControl = genericComponent<new () => {
             densityClasses.value,
             validationClasses.value,
           ] }
-          style={ [
-            dimensionStyles.value,
-          ] }
         >
           { hasPrepend && (
             <div class="ve-form-control__prepend">
@@ -175,7 +172,10 @@ export const FormControl = genericComponent<new () => {
           ) }
 
           { slots.default && (
-            <div class="ve-form-control__control">
+            <div
+              class="ve-form-control__control"
+              style={ dimensionStyles.value }
+            >
               { slots.default(slotProps.value) }
             </div>
           ) }

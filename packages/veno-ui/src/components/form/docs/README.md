@@ -10,6 +10,8 @@ category: Form 表单组件
 
 basic.md
 
+inline.md
+
 :::
 
 ## API
