@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <ve-app :theme="user.theme">
+  <ve-app style="min-height: 100vh;" :theme="user.theme">
     <router-view />
   </ve-app>
 </template>

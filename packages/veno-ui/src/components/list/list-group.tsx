@@ -21,6 +21,7 @@ export type ListGroupActivatorSlot = {
     onClick: (e: Event) => void
     appendIcon: string
     class: string
+    value?: string
   }
 }
 

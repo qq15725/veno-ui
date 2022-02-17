@@ -19,7 +19,7 @@ import type { ListItemTitleSlot, ListItemSubtitleSlot } from './list-item'
 
 export type ListChildrenSlots<T> = MakeSlots<{
   default: []
-  header: [ListGroupActivatorSlot]
+  header: [T & ListGroupActivatorSlot]
   item: [T]
   title: [ListItemTitleSlot]
   subtitle: [ListItemSubtitleSlot]

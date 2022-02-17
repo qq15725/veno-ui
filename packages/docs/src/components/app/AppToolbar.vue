@@ -28,7 +28,9 @@
           {{ name }}
         </ve-breadcrumb-item>
       </ve-breadcrumb>
+
       <ve-spacer />
+
       <ve-link
           class="text-caption"
           target="_blank"

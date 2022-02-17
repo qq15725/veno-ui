@@ -105,9 +105,7 @@ export const List = genericComponent<new <T>() => {
             paperStyles.value,
           ] }
         >
-          <ListChildren items={ items.value }>
-            { slots }
-          </ListChildren>
+          <ListChildren items={ items.value }>{ slots }</ListChildren>
         </props.tag>
       )
     })
