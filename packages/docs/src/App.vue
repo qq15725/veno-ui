@@ -1,10 +1,14 @@
 <script lang="ts" setup>
+// Utils
 import { computed } from 'vue'
+import { genAppMetaInfo } from '@/utils'
+// Data
+import metadata from '@/data/metadata.json'
+// Stores
+import { useUserStore } from '@/stores/user'
+// Composables
 import { useHead } from '@vueuse/head'
 import { useRoute } from 'vue-router'
-import { genAppMetaInfo } from '@/utils'
-import metadata from '@/data/metadata.json'
-import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const user = useUserStore()
