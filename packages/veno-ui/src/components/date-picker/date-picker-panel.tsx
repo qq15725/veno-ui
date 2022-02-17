@@ -159,7 +159,7 @@ export const DatePickerPanel = defineComponent({
       } as const
       const cells: CELL[] = []
       const weekDay = Number(internalModel.value.format('d'))
-      const offsetDay = firstDayOfWeek.value - weekDay - 1
+      const offsetDay = firstDayOfWeek.value - weekDay
       let date = internalModel.value.add(offsetDay, 'day')
       createRange(CELLS_COUNT).forEach(_ => {
         const current = date
