@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-// Utils
-import { computed } from 'vue'
-// Stores
-import { useAppStore } from '@/stores/app'
-// Composables
-import { useRoute } from 'vue-router'
+  // Utils
+  import { computed } from 'vue'
+  // Stores
+  import { useAppStore } from '@/stores/app'
+  // Composables
+  import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const appStore = useAppStore()
-const url = computed(() => {
-  const { relativePath } = route.meta
-  if (relativePath.includes('../')) {
-    return `${ appStore.repositoryBaseURL }/${ relativePath.replace('../', 'packages/') }`
-  }
-  return `${ appStore.repositoryBaseURL }/packages/docs/${ relativePath }`
-})
+  const route = useRoute()
+  const appStore = useAppStore()
+  const url = computed(() => {
+    const { relativePath } = route.meta
+    if (relativePath.includes('../')) {
+      return `${ appStore.repositoryBaseURL }/${ relativePath.replace('../', 'packages/') }`
+    }
+    return `${ appStore.repositoryBaseURL }/packages/docs/${ relativePath }`
+  })
 </script>
 
 <template>

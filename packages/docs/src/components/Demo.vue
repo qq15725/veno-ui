@@ -1,40 +1,40 @@
 <script lang="ts">
-import { defineComponent, ref, toRef, watch } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { useUserStore } from '@/stores/user'
+  import { defineComponent, ref, toRef, watch } from 'vue'
+  import { useAppStore } from '@/stores/app'
+  import { useUserStore } from '@/stores/user'
 
-export default defineComponent({
-  name: 'Demo',
+  export default defineComponent({
+    name: 'Demo',
 
-  props: {
-    title: String,
-    slug: String,
-    file: String,
-    code: String,
-  },
+    props: {
+      title: String,
+      slug: String,
+      file: String,
+      code: String,
+    },
 
-  setup (props) {
-    const btn = ref()
-    const { repository } = useAppStore()
-    const user = useUserStore()
-    const theme = ref(user.theme)
+    setup (props) {
+      const btn = ref()
+      const { repository } = useAppStore()
+      const user = useUserStore()
+      const theme = ref(user.theme)
 
-    watch(toRef(user, 'theme'), userTheme => {
-      theme.value = userTheme
-    })
+      watch(toRef(user, 'theme'), userTheme => {
+        theme.value = userTheme
+      })
 
-    return {
-      ...props,
-      repository,
-      theme,
-      isActive: ref(false),
-      btn,
-      focusBtn: () => {
-        setTimeout(() => btn.value?.$el?.focus?.(), 0)
+      return {
+        ...props,
+        repository,
+        theme,
+        isActive: ref(false),
+        btn,
+        focusBtn: () => {
+          setTimeout(() => btn.value?.$el?.focus?.(), 0)
+        }
       }
     }
-  }
-})
+  })
 </script>
 
 <template>

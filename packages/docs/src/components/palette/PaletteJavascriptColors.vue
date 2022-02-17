@@ -1,15 +1,15 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+  import { defineComponent } from 'vue'
 
-export default defineComponent({
-  name: 'PaletteJavascriptColors',
+  export default defineComponent({
+    name: 'PaletteJavascriptColors',
 
-  computed: {
-    colors () {
-      return this.$veno.theme.themes[this.$veno.theme.current].colors
+    computed: {
+      colors () {
+        return this.$veno.theme.themes[this.$veno.theme.current].colors
+      }
     }
-  }
-})
+  })
 </script>
 
 <template>
@@ -45,7 +45,7 @@ export default defineComponent({
                   :style="hover ? 'transform: scale(1.05); z-index: 100;' : undefined"
                   #append
               >
-                <div class="text-caption">{{ colors[hue ? `${item.color}-${hue}` : item.color] }}</div>
+                <div class="text-caption">{{ colors[hue ? `${ item.color }-${ hue }` : item.color] }}</div>
               </ve-list-item>
             </ve-hover>
           </template>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-// Utils
-import { storeToRefs } from 'pinia'
-// Stores
-import { useAppStore } from '@/stores/app'
+  // Utils
+  import { storeToRefs } from 'pinia'
+  // Stores
+  import { useAppStore } from '@/stores/app'
 
-const { pageLoading } = storeToRefs(useAppStore())
+  const { pageLoading } = storeToRefs(useAppStore())
 </script>
 
 <template>

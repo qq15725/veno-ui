@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-// Utils
-import { storeToRefs } from 'pinia'
-import { routesToMenus } from '@/utils'
-import { useAppStore } from '@/stores/app'
-// @ts-ignore
-import pages from '~pages'
+  // Utils
+  import { storeToRefs } from 'pinia'
+  import { routesToMenus } from '@/utils'
+  import { useAppStore } from '@/stores/app'
+  // @ts-ignore
+  import pages from '~pages'
 
-const menus = routesToMenus(pages)
-const { menuActive } = storeToRefs(useAppStore())
+  const menus = routesToMenus(pages)
+  const { menuActive } = storeToRefs(useAppStore())
 </script>
 
 <template>

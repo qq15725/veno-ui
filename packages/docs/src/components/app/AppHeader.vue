@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-// Utils
-import { storeToRefs } from 'pinia'
-// Stores
-import { useAppStore } from '@/stores/app'
-import { useUserStore } from '@/stores/user'
+  // Utils
+  import { storeToRefs } from 'pinia'
+  // Stores
+  import { useAppStore } from '@/stores/app'
+  import { useUserStore } from '@/stores/user'
 
-const userStore = useUserStore()
-const { toggleMenuActive } = useAppStore()
-const { toggleTheme } = userStore
-const { theme } = storeToRefs(userStore)
+  const userStore = useUserStore()
+  const { toggleMenuActive } = useAppStore()
+  const { toggleTheme } = userStore
+  const { theme } = storeToRefs(userStore)
 </script>
 
 <template>

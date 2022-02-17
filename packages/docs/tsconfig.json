@@ -1,8 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src"
-  ],
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
@@ -14,5 +11,12 @@
       "vue-router",
       "prismjs"
     ]
-  }
+  },
+  "include": [
+    "vite.config.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
 }
