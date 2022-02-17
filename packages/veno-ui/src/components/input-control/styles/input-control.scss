@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   border-radius: 4px;
-  flex: 1 0;
+  width: inherit;
   height: var(--ve-control-height);
   transition: .1s settings.$decelerated-easing;
   transition-property: color, background-color;

@@ -34,6 +34,11 @@ export const DatePicker = genericComponent<new () => {
     },
 
     /**
+     * @zh 时间格式化
+     */
+    format: [Array, String, Function],
+
+    /**
      * @zh 输入框ID
      */
     id: String,
@@ -52,6 +57,11 @@ export const DatePicker = genericComponent<new () => {
     openOnClear: Boolean,
 
     /**
+     * @zh 面板的属性
+     */
+    panelProps: Object,
+
+    /**
      * @zh 只读
      */
     readonly: Boolean,
@@ -67,7 +77,7 @@ export const DatePicker = genericComponent<new () => {
     'change': (val: any) => true,
   },
 
-  setup (props, { attrs, slots, emit }) {
+  setup (props, { slots, emit }) {
     const activator = ref()
     const inputRef = ref()
     const isActiveMenu = ref(false)
@@ -77,6 +87,13 @@ export const DatePicker = genericComponent<new () => {
       v => wrapInArray(v),
       (v: any) => props.range ? v : v[0]
     )
+    const panelProps = computed(() => {
+      const panelProps = { ...props.panelProps }
+      if (props.format) {
+        panelProps.format = props.format
+      }
+      return panelProps
+    })
 
     watch(() => inputRef.value, val => {
       activator.value = val.$el.querySelector('.ve-input-control')
@@ -103,7 +120,7 @@ export const DatePicker = genericComponent<new () => {
       inputRef.value?.blur()
     }
 
-    function onChange() {
+    function onChange () {
       emit('change', props.range ? model.value : model.value[0])
     }
 
@@ -148,7 +165,7 @@ export const DatePicker = genericComponent<new () => {
                   >
                     { !props.range && (
                       <DatePickerPanel
-                        { ...attrs }
+                        { ...panelProps.value }
                         modelValue={ model.value[0] as any }
                         onUpdate:modelValue={ val => {
                           model.value = [val]
@@ -160,7 +177,7 @@ export const DatePicker = genericComponent<new () => {
 
                     { props.range && (
                       <DateRangePickerPanel
-                        { ...attrs }
+                        { ...panelProps.value }
                         v-model={ model.value }
                         onPreview={ v => {
                           if (!v) {
