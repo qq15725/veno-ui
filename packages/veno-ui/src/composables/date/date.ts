@@ -15,7 +15,7 @@ export function createDate (options?: DateOptions): DateInstance {
     if (!options) {
       date = new Date()
     } else if (typeof options === 'string') {
-      date = new Date(options.replaceAll('-', '/'))
+      date = new Date(options.replace(/-/g, '/'))
     } else {
       date = new Date(options)
     }
@@ -62,7 +62,7 @@ export function createDate (options?: DateOptions): DateInstance {
           return { format, counter }
         }, { format: '', counter: {} } as { format: string, counter: Record<string, number> })
 
-      return format.replaceAll(/\w/g, key => {
+      return format.replace(/\w/g, key => {
         if (key in formatted) {
           const val = formatted[key as keyof typeof formatted]
           if (key in counter) {
