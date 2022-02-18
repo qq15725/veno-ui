@@ -40,11 +40,27 @@
 
 ## 安装
 
+使用 npm
+
 ```shell
-$ npm install veno-ui
+npm i veno-ui
+```
+
+使用 yarn
+
+```shell
+yarn add veno-ui
+```
+
+使用 pnpm
+
+```shell
+pnpm i veno-ui
 ```
 
 ## 例子
+
+注册全部组件的例子，按需注册请文档查看。
 
 ```typescript
 import { createApp } from 'vue'
@@ -82,7 +98,27 @@ app.mount('#app')
 
 ## 关于
 
-- 大量代码基于 [Vuetify next 分支](https://github.com/vuetifyjs/vuetify/tree/next) ，[查看许可](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 。
+- 大量代码基于 [Vuetify next 分支](https://github.com/vuetifyjs/vuetify/tree/next) 修改，[查看许可](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 。
+
+## 参与开发
+
+安装依赖
+
+```shell
+pnpm i
+```
+
+编译所有插件
+
+```shell
+pnpm build:plugins
+```
+
+运行开发环境（文档工程）
+
+```shell
+pnpm run dev
+```
 
 ## License
 
