@@ -7,14 +7,13 @@
 
 .ve-button {
   $root: &;
-
-  --ve-size-offset: 0px;
-  --ve-density-offset: 0px;
-  --ve-default-height: #{map.get($button-sizes, 'height')};
-  --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset) + var(--ve-density-offset));
-  --ve-min-width: calc(var(--ve-height) * #{map.get($button-sizes, 'width-ratio')});
-  --ve-padding-x: calc(var(--ve-height) / #{map.get($button-sizes, 'padding-ratio')});
-
+  // CSS Variables
+  // --ve-size-offset: 0px;
+  // --ve-density-offset: 0px;
+  // --ve-default-height: #{map.get($button-sizes, 'height')};
+  --ve-height: calc(var(--ve-default-height, #{$button-height}) + var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
+  --ve-min-width: calc(var(--ve-height) * #{$button-width-ratio});
+  --ve-padding-x: calc(var(--ve-height) / #{$button-padding-ratio});
   align-items: center;
   display: inline-flex;
   font-weight: tools.map-deep-get(settings.$typography, 'button', 'weight');
@@ -40,7 +39,7 @@
 
   @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
-      font-size: #{math.max(12px, map.get($button-sizes, 'font-size') + $multiplier * settings.$spacer)};
+      font-size: #{math.max(12px, $button-font-size + $multiplier * settings.$spacer)};
     }
   }
 

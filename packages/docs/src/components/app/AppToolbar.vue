@@ -19,7 +19,7 @@
 
 <template>
   <ve-layout-item anchor="top" size="45" priority="-1" class="d-flex align-center">
-    <div class="m-auto d-flex flex-fill px-md-10" style="max-width: 900px;">
+    <div class="m-auto d-flex flex-fill px-3 px-md-10" style="max-width: 900px;">
       <ve-breadcrumb v-if="$route.meta.category">
         <ve-breadcrumb-item
             v-for="name in ['组件', $route.meta.category]"
