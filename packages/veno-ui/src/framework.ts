@@ -75,7 +75,7 @@ export const createVeno = (options: VenoOptions = {}) => {
     // Vue's inject() can only be used in setup
     function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
       const vm = this.$
-      const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
+      const provides = vm.parent?.appContext?.provides ?? vm.vnode.appContext?.provides
       if (provides && (key as any) in provides) {
         return provides[(key as string)]
       }
