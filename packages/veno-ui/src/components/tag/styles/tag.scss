@@ -7,16 +7,20 @@
 // Blocks
 .ve-tag {
   $root: &;
-
-  --ve-default-font-size: #{tools.map-deep-get(settings.$typography, 'button', 'size')};
-  --ve-font-size: calc(var(--ve-default-font-size) + var(--ve-font-size-offset, 0px));
-  --ve-default-height: 32px;
-  --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
-  --ve-padding-x: calc(var(--ve-height) / (2 + 2 / 3));
-  --ve-avatar-height: calc(var(--ve-height) - 8px);
-  --ve-pill-avatar-height: var(--ve-height);
-  --ve-avatar-icon-font-size: var(--ve-font-size);
-
+  // CSS Variables
+  // --ve-tag---font-size $tag-font-size
+  // --ve-tag---height $tag-height
+  --ve-font-size: calc(var(--ve-tag---font-size, #{$tag-font-size}) + var(--ve-font-size-offset, 0px));
+  --ve-height: calc(var(--ve-tag---height, #{$tag-height}) + var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
+  --ve-padding-x: calc(var(--ve-height) / 4);
+  // Avatar
+  --ve-avatar---height: calc(var(--ve-height) - 8px);
+  --ve-avatar---font-size: var(--ve-font-size);
+  --ve-avatar--icon---height: auto;
+  --ve-avatar--icon---font-size: var(--ve-font-size);
+  // Button
+  --ve-button---height: auto;
+  --ve-button--icon-only---font-size: var(--ve-font-size);
   align-items: center;
   align-self: center;
   display: inline-flex;
@@ -45,6 +49,10 @@
     cursor: pointer;
   }
 
+  &--shape-pill {
+    --ve-avatar---height: var(--ve-height);
+  }
+
   // Elements
   &__prepend,
   &__append,
@@ -70,23 +78,5 @@
 
   #{$root}--shape-pill &__append {
     margin-inline-end: calc(var(--ve-padding-x) * -1);
-  }
-
-  &__close > .ve-button {
-    min-width: auto;
-    height: auto;
-    font-size: var(--ve-avatar-icon-font-size);
-  }
-
-  .ve-avatar {
-    --ve-height: var(--ve-avatar-height);
-
-    > .ve-icon {
-      --ve-font-size: var(--ve-avatar-icon-font-size);
-    }
-  }
-
-  &--shape-pill .ve-avatar {
-    --ve-height: var(--ve-pill-avatar-height);
   }
 }

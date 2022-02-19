@@ -3,6 +3,8 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+$tag-height: 32px !default;
+$tag-font-size: tools.map-deep-get(settings.$typography, 'button', 'size') !default;
 $tag-paper: () !default;
 $tag-paper: tools.map-deep-merge(
     (
