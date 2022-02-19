@@ -62,7 +62,13 @@ export default defineConfig(({ mode }) => {
             { find: 'veno-ui/styles', replacement: resolve('../veno-ui/src/styles/main.scss') },
             { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
           ]
-          : []
+          : [
+            { find: 'veno-ui/components', replacement: resolve('../veno-ui/lib/components/index.js') },
+            { find: 'veno-ui/directives', replacement: resolve('../veno-ui/lib/directives/index.js') },
+            { find: 'veno-ui/providers', replacement: resolve('../veno-ui/lib/providers/index.js') },
+            { find: 'veno-ui/styles', replacement: resolve('../veno-ui/lib/styles/main.scss') },
+            { find: 'veno-ui', replacement: resolve('../veno-ui/lib/framework.js') },
+          ]
       )
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
