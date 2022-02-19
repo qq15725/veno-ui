@@ -35,7 +35,7 @@ export const Drawer = defineComponent({
     rail: Boolean,
     railWidth: {
       type: [Number, String],
-      default: 72,
+      default: 52,
     },
     temporary: Boolean,
     width: {
