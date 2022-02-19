@@ -157,18 +157,19 @@ export const FormControl = genericComponent<new () => {
           ) }
 
           { hasLabel && (
-            <Label
+            <div
               class="ve-form-control__label"
-              disabled={ isDisabled.value }
-              error={ isValid.value === false }
-              onClick={ (e: MouseEvent) => emit('click:label', e) }
-              for={ props.labelId }
-              style={ {
-                width: convertToUnit(props.labelWidth),
-              } }
+              style={ { width: convertToUnit(props.labelWidth) } }
             >
-              { slots.label?.(slotProps.value) ?? props.label }
-            </Label>
+              <Label
+                disabled={ isDisabled.value }
+                error={ isValid.value === false }
+                onClick={ (e: MouseEvent) => emit('click:label', e) }
+                for={ props.labelId }
+              >
+                { slots.label?.(slotProps.value) ?? props.label }
+              </Label>
+            </div>
           ) }
 
           { slots.default && (

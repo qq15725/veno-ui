@@ -55,10 +55,10 @@
 
     // FormControlLabel
     .ve-form-control__label {
-      #{$root}--textarea.ve-form-control--horizontal & {
+      #{$root}--textarea.ve-form-control--horizontal &,
+      #{$root}--textarea.ve-form-control--inline & {
         align-items: start;
         line-height: var(--ve-input--textarea-line-height, 1.75);
-        padding-block-start: 6px;
       }
     }
   }

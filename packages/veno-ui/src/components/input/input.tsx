@@ -256,9 +256,7 @@ export const Input = genericComponent<new () => {
                             {
                               props.autoGrow && (
                                 <textarea
-                                  class={ [
-                                    've-input__sizer',
-                                  ] }
+                                  class="ve-input__sizer"
                                   v-model={ model.value }
                                   ref={ sizerRef }
                                   readonly

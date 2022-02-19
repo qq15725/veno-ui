@@ -82,6 +82,7 @@
 
   &__label {
     grid-area: label;
+    display: inline-flex;
   }
 
   &__control {
