@@ -31,11 +31,11 @@
   }
 
   &--left {
-    margin-inline-end: map.get(settings.$grid-gutters, 'md');
+    margin-inline-end: map.get(settings.$grid-gutters, 'sm');
   }
 
   &--right {
-    margin-inline-start: map.get(settings.$grid-gutters, 'md');
+    margin-inline-start: map.get(settings.$grid-gutters, 'sm');
   }
 
   &__svg {
