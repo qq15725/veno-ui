@@ -6,15 +6,14 @@
 .ve-form-control {
   $root: &;
   // CSS Variables
-  // --ve-control-default-height: 32px;
-  // --ve-density-offset: 0px;
-  --ve-control-height: calc(var(--ve-control-default-height, 32px) + var(--ve-density-offset, 0px));
+  // --ve-form-control__control---height 32px
+  --ve-control-height: calc(var(--ve-form-control__control---height, 32px) + var(--ve-density-offset, 0px));
   display: grid;
   grid-template-areas: "prepend label control append" "a b details c";
   grid-template-columns: max-content max-content auto max-content;
   grid-template-rows: auto auto;
   @include tools.use-density((
-    densities: $form-control-density
+    densities: $form-control-densities
   ));
 
   &--vertical {
@@ -105,10 +104,7 @@
     line-height: normal;
     min-height: 22px;
     overflow: hidden;
-    padding-block-start: 6px;
-    padding-block-end: 6px;
-    padding-inline-start: 6px;
-    padding-inline-end: 6px;
+    padding: 4px;
     justify-content: space-between;
   }
 }

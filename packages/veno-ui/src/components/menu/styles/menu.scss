@@ -5,7 +5,7 @@
   .ve-overlay__wrapper {
     display: flex;
     flex-direction: column;
-    border-radius: settings.$border-radius;
+    border-radius: map-get(settings.$rounded, 'sm');
 
     > .ve-card,
     > .ve-list {
@@ -17,8 +17,12 @@
     }
 
     > .ve-list {
-      --ve-padding-y: 4px;
-      --ve-item-padding-x: 12px;
+      // ListItem
+      --ve-list-item---min-height: 32px;
+      --ve-list-item---padding-y: 0px;
+      --ve-list-item---padding-x: 12px;
+      // AvatarIcon
+      --ve-avatar--icon---height: auto;
     }
   }
 }

@@ -2,17 +2,19 @@
 @use 'variables' as *;
 @use '../../../styles/tools';
 
+// Blocks
 .ve-list {
-  --ve-padding-y: 8px;
+  // CSS Variables
+  // --ve-list---padding-y 8px
+  // --ve-list---padding-x 0px
   --ve-indent-padding: 0px;
-  --ve-item-padding-x: 16px;
-  --ve-item-avatar-size: calc(40px + var(--ve-density-offset));
-
+  --ve-offset: calc(var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
   overflow: auto;
   position: relative;
-  padding: var(--ve-padding-y) 0;
+  padding: var(--ve-list---padding-y, 8px) var(--ve-list---padding-x, 0px);
   @include tools.use-paper($list-paper);
 
+  // Modifiers
   &--disabled {
     pointer-events: none;
     user-select: none;

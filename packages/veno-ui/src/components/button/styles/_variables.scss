@@ -5,6 +5,9 @@
 
 $button-height: 32px !default;
 $button-font-size: tools.map-deep-get(settings.$typography, 'button', 'size') !default;
+$button-font-weight: tools.map-deep-get(settings.$typography, 'button', 'weight') !default;
+$button-letter-spacing: tools.map-deep-get(settings.$typography, 'button', 'letter-spacing') !default;
+$button-text-transform: tools.map-deep-get(settings.$typography, 'button', 'text-transform') !default;
 $button-width-ratio: math.div(16, 9) !default;
 $button-padding-ratio: 2 !default;
 // disabled

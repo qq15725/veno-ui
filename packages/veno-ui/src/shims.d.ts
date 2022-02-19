@@ -1,5 +1,4 @@
 import type { ComponentPublicInstance, FunctionalComponent } from 'vue'
-import type { VNodeChild } from '@vue/runtime-core'
 
 declare global
 {
@@ -7,7 +6,7 @@ declare global
   {
     interface ElementChildrenAttribute
     {
-      $children: any
+      $children
     }
   }
 }
@@ -19,6 +18,8 @@ declare module 'vue'
 
 declare module '@vue/runtime-dom'
 {
+  import type { VNodeChild } from '@vue/runtime-core'
+
   export interface HTMLAttributes
   {
     $children?: VNodeChild

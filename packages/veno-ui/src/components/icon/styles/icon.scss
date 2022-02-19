@@ -5,13 +5,15 @@
 @use '../../../styles/tools';
 
 .ve-icon {
-  --ve-height: 1em;
-  --ve-width: var(--ve-height);
-
+  // CSS Variables
+  // --ve-icon---font-size 1em
+  // --ve-icon---height 1em
+  --ve-height: var(--ve-icon---height, 1em);
+  --ve-width: var(--ve-height, 1em);
   align-items: center;
   display: inline-flex;
   font-feature-settings: 'liga';
-  font-size: var(--ve-font-size);
+  font-size: calc(var(--ve-icon---font-size, 1em) + var(--ve-size-offset));
   height: var(--ve-height);
   justify-content: center;
   letter-spacing: normal;
@@ -22,9 +24,9 @@
   vertical-align: middle;
   width: var(--ve-width);
 
-  @each $name, $multiplier in $icon-sizes {
+  @each $name, $multiplier in settings.$sizes {
     &--size-#{$name} {
-      --ve-font-size: #{$multiplier};
+      --ve-size-offset: #{0.25em * $multiplier};
     }
   }
 

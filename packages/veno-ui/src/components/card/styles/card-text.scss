@@ -2,10 +2,15 @@
 @use '../../../styles/settings';
 
 .ve-card-text {
-  padding: 16px;
+  // CSS Variables
+  // --ve-card-text---padding-x var(--ve-card---padding-x, 12px)
+  // --ve-card-text---padding-y var(--ve-card---padding-y, 12px)
+  --ve-padding-x: var(--ve-card-text---padding-x, var(--ve-card---padding-x, 12px));
+  --ve-padding-y: calc(var(--ve-card-text---padding-y, var(--ve-card---padding-y, 12px)) + var(--ve-density-offset, 0px));
   font-size: tools.map-deep-get(settings.$typography, 'body-2', 'size');
   font-weight: tools.map-deep-get(settings.$typography, 'body-2', 'weight');
   letter-spacing: tools.map-deep-get(settings.$typography, 'body-2', 'letter-spacing');
+  padding: var(--ve-padding-y) var(--ve-padding-x);
   transition: inherit;
   transition-property: color, opacity;
 

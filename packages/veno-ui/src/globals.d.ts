@@ -3,7 +3,10 @@ import type { Events } from '@vue/runtime-dom'
 
 declare global
 {
-  export const __VENO_UI_VERSION__: string
+  interface HTMLCollection
+  {
+    [Symbol.iterator] (): IterableIterator<Element>
+  }
 
   interface Element
   {
@@ -54,6 +57,11 @@ declare global
       [name: string]: any
     }
   }
+
+  function parseInt(s: string | number, radix?: number): number
+  function parseFloat(string: string | number): number
+
+  export const __VENO_UI_VERSION__: string
 }
 
 declare module '@vue/runtime-core'

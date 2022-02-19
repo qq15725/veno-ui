@@ -11,6 +11,7 @@ import { Button } from '../button'
 
 // Composables
 import { makeVariantProps, useVariant, genOverlays } from '../../composables/variant'
+import { makeShapeProps, useShape } from '../../composables/shape'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
@@ -54,6 +55,9 @@ export const makeInputControlProps = propsFactory({
   disabled: Boolean,
   ...makeVariantProps({
     variant: 'contained',
+  } as const),
+  ...makeShapeProps({
+    shape: 'rounded-sm',
   } as const),
 }, 'input-control')
 
@@ -104,6 +108,7 @@ export const InputControl = genericComponent<new () => {
     const controlRef = ref<HTMLElement>()
     const inputRef = ref<HTMLInputElement>()
     const { variantClasses, colorClasses, colorStyles } = useVariant(props)
+    const { shapeClasses } = useShape(props)
 
     watchEffect(() => isActive.value = isFocused.value || props.dirty)
 
@@ -154,8 +159,9 @@ export const InputControl = genericComponent<new () => {
               've-input-control--suffixed': hasSuffix,
               've-input-control--appended': hasClear || hasAppendInner,
             },
-            variantClasses.value,
             colorClasses.value,
+            variantClasses.value,
+            shapeClasses.value,
           ] }
           style={ colorStyles.value }
           onClick={ onClick }
@@ -212,14 +218,17 @@ export const InputControl = genericComponent<new () => {
 
           { hasClear && (
             <div
-              class="ve-input-control__clearable"
-              v-show={ props.dirty }
+              class={ [
+                've-input-control__clearable',
+                { 've-input-control__clearable--has-append-inner': hasAppendInner },
+              ] }
             >
               { slots.clear?.(slotProps.value) ?? (
                 <Button
                   icon={ props.clearIcon }
                   ripple={ false }
                   shape="circle"
+                  size="1em"
                   onClick={ (e: MouseEvent) => emit('click:clear', e) }
                   variant="text"
                 />

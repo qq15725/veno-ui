@@ -1,15 +1,2 @@
-@use 'sass:map';
 @use '../../../styles/settings';
 @use '../../../styles/tools';
-
-$icon-sizes: () !default;
-$icon-sizes: tools.map-deep-merge(
-    (
-      'x-small': 1em,
-      'small': 1.25em,
-      'medium': 1.5em,
-      'lerge': 1.75em,
-      'x-lerge': 2em,
-    ),
-    $icon-sizes
-);

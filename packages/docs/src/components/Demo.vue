@@ -77,7 +77,7 @@
               :color="isActive ? 'primary' : undefined"
               icon="mdi-code-tags"
               variant="text"
-              size="xs"
+              size="small"
           />
         </ve-tooltip>
 
@@ -93,7 +93,7 @@
               icon="mdi-image-filter-center-focus-strong-outline"
               variant="text"
               tabindex="-1"
-              size="xs"
+              size="small"
           />
         </ve-tooltip>
 
@@ -109,7 +109,7 @@
               :icon="theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
               tabindex="-1"
-              size="xs"
+              size="small"
           />
         </ve-tooltip>
 
@@ -126,7 +126,7 @@
               icon="mdi-github"
               variant="text"
               tabindex="-1"
-              size="xs"
+              size="small"
           />
         </ve-tooltip>
       </ve-spacer>

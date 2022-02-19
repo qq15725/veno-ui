@@ -84,7 +84,10 @@ export type MakeSlots<T extends Record<string, any[]>> = {
   [K in keyof T]: Slot<T[K]>
 }
 
-export function genericComponent<T extends (new () => { $slots?: Record<string, Slot> })> (exposeDefaults = true): <PropsOptions extends Readonly<ComponentPropsOptions>,
+export function genericComponent<T extends (new () => {
+  $slots?: Record<string, Slot>
+})> (exposeDefaults = true): <
+  PropsOptions extends Readonly<ComponentPropsOptions>,
   RawBindings,
   D,
   C extends ComputedOptions = {},
@@ -94,7 +97,8 @@ export function genericComponent<T extends (new () => { $slots?: Record<string, 
   E extends EmitsOptions = Record<string, any>,
   EE extends string = string,
   I = InstanceType<T>,
-  Base = DefineComponent<(I extends Record<'$props', any> ? Omit<PropsOptions, keyof I['$props']> : PropsOptions) & (
+  Base = DefineComponent<
+    (I extends Record<'$props', any> ? Omit<PropsOptions, keyof I['$props']> : PropsOptions) & (
     I extends Record<'$slots', any>
       ? SlotsToProps<I['$slots']>
       : {}
@@ -106,6 +110,8 @@ export function genericComponent<T extends (new () => { $slots?: Record<string, 
     Mixin,
     Extends,
     E extends any[] ? E : I extends Record<'$props', any> ? Omit<E, ToListeners<keyof I['$props']>> : E,
-    EE>>(options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>) => Base & T {
+    EE
+  >
+>(options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>) => Base & T {
   return options => (exposeDefaults ? defineComponent : _defineComponent)(options) as any
 }

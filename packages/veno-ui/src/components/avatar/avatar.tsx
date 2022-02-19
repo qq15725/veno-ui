@@ -72,7 +72,7 @@ export const Avatar = defineComponent({
 
     return () => {
       const hasImage = !!props.image
-      const hasIcon = !!props.icon && !hasImage
+      const hasIcon = !!props.icon
       const hasText = !!(props.text || slots.default)
       const isClickable = props.link || !!(attrs.onClick || attrs.onClickOnce)
 
@@ -83,6 +83,7 @@ export const Avatar = defineComponent({
             {
               've-avatar--left': props.left === true,
               've-avatar--right': props.right === true,
+              've-avatar--icon': props.icon,
               've-avatar--link': isClickable,
             },
             paperClasses.value,
@@ -91,11 +92,21 @@ export const Avatar = defineComponent({
           ref={ rootRef }
           v-resize={ onResize }
         >
-          { hasImage && <Image src={ props.image } alt="" /> }
+          { hasImage && (
+            <Image
+              src={ props.image }
+              alt=""
+            />
+          ) }
 
-          { hasIcon && <Icon icon={ props.icon } /> }
+          { hasIcon && !hasImage && (
+            <Icon
+              icon={ props.icon }
+              size={ props.size }
+            />
+          ) }
 
-          { hasText && (
+          { hasText && !hasIcon && !hasImage && (
             <span
               class="ve-avatar__wrapper"
               ref={ contentRef }

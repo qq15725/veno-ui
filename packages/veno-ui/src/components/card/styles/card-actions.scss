@@ -1,6 +1,11 @@
 .ve-card-actions {
-  display: flex;
+  // CSS Variables
+  // --ve-card-actions---padding-x var(--ve-card---padding-x, 12px)
+  // --ve-card-actions---padding-y var(--ve-card---padding-y, 12px)
+  --ve-padding-x: var(--ve-card-actions---padding-x, var(--ve-card---padding-x, 12px));
+  --ve-padding-y: calc(var(--ve-card-actions---padding-y, var(--ve-card---padding-y, 12px)) + var(--ve-density-offset, 0px));
   align-items: center;
+  display: flex;
   flex: 1 1 0;
-  padding: calc(var(--ve-card-py, 16px) + var(--ve-density-offset, 0px)) var(--ve-card-px, 16px);
+  padding: var(--ve-padding-y) var(--ve-padding-x);
 }

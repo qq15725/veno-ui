@@ -1,13 +1,19 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
+// Blocks
 .ve-switch {
+  // CSS Variables
   --ve-track-width: calc(40 / 22 * var(--ve-height));
   --ve-thumb-size: calc(18 / 22 * var(--ve-height));
   --ve-offset: calc(8 / 40 * var(--ve-track-width));
 
   .ve-selection-control__wrapper {
-    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--ve-track-width);
+    height: var(--ve-height);
   }
 
   .ve-selection-control__input {

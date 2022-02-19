@@ -3,15 +3,20 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+// Blocks
 .ve-card {
   $root: &;
-  position: relative;
+  // CSS Variables
+  // --ve-card---padding-y 12px
+  // --ve-card---padding-x 12px
   display: block;
   color: rgb(var(--ve-theme-on-surface));
+  position: relative;
   text-decoration: none;
   @include tools.use-paper($card-paper);
   @include tools.overlay(#{&}__overlay);
 
+  // Modifiers
   &--link {
     cursor: pointer;
     @include tools.states(#{$root}__overlay, false);

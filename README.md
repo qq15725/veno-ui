@@ -55,7 +55,7 @@ yarn add veno-ui
 使用 pnpm
 
 ```shell
-pnpm i veno-ui
+pnpm add veno-ui
 ```
 
 ## 例子
@@ -111,7 +111,7 @@ pnpm i
 编译所有插件
 
 ```shell
-pnpm build:plugins
+pnpm run build:plugins
 ```
 
 运行开发环境（文档工程）

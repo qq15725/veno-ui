@@ -3,15 +3,19 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
+// Blocks
 .ve-avatar {
-  --ve-size-offset: 0px;
-  --ve-density-offset: 0px;
-  --ve-default-height: 40px;
-  --ve-height: calc(var(--ve-default-height) + var(--ve-size-offset) + var(--ve-density-offset));
+  // CSS Variables
+  // --ve-avatar---font-size inherit @zh:"头像字体大小"
+  // --ve-avatar---height 32px @zh:"头像高度"
+  // --ve-avatar--icon---height 32px @zh:"图标头像高度"
+  // --ve-avatar--icon---font-size 20px @zh:"图标头像字体大小"
+  --ve-offset: calc(var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
+  --ve-height: calc(var(--ve-avatar---height, 32px) + var(--ve-offset, 0px));
   --ve-width: var(--ve-height);
-
   align-items: center;
   display: inline-flex;
+  font-size: var(--ve-avatar---font-size, inherit);
   height: var(--ve-height);
   justify-content: center;
   overflow: hidden;
@@ -21,19 +25,26 @@
   width: var(--ve-width);
   @include tools.use-paper($avatar-paper);
 
+  // Modifiers
   &--link {
     cursor: pointer;
   }
 
-  > * {
-    border-radius: inherit;
+  &--icon {
+    --ve-avatar---font-size: var(--ve-avatar--icon---font-size, 20px);
+    --ve-height: calc(var(--ve-avatar--icon---height, var(--ve-avatar---height, 32px)) + var(--ve-offset, 0px));
   }
 
+  // Elements
   &__wrapper {
     position: absolute;
     display: inline-block;
     white-space: nowrap;
     left: 50%;
     top: 50%;
+  }
+
+  > * {
+    border-radius: inherit;
   }
 }

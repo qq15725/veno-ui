@@ -182,7 +182,6 @@ export const Select = genericComponent<new () => {
                   >
                     <List
                       maxHeight={ 250 }
-                      density="ultra-high"
                       items={
                         items.value?.length
                           ? items.value

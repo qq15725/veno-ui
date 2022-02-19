@@ -63,7 +63,7 @@ export const makeAlertProps = propsFactory({
   } as const),
   ...makeLoadingProps(),
   ...makeCardProps({
-    shape: 'rounded',
+    shape: 'rounded-sm',
     variant: 'contained-outlined',
   } as const),
 }, 'alert')
@@ -76,7 +76,7 @@ export const Alert = genericComponent<new () => {
   props: makeAlertProps(),
 
   emits: {
-    'update:modelValue': (value: boolean) => true,
+    'update:modelValue': (_: boolean) => true,
   },
 
   setup (props, { slots }) {
@@ -96,7 +96,7 @@ export const Alert = genericComponent<new () => {
       return
     })
 
-    function onCloseClick (e: Event) {
+    function onCloseClick (_: Event) {
       isActive.value = false
     }
 
@@ -130,7 +130,11 @@ export const Alert = genericComponent<new () => {
                   prepend: hasPrepend ? () => (
                     <>
                       { hasIcon && (
-                        <Icon class="ve-alert__icon" icon={ icon.value } />
+                        <Icon
+                          class="ve-alert__icon"
+                          size="21"
+                          icon={ icon.value }
+                        />
                       ) }
 
                       { hasLoading && (
@@ -161,9 +165,9 @@ export const Alert = genericComponent<new () => {
 
                       { hasClosable && (
                         <Button
+                          class="ve-alert__close"
                           variant="plain"
                           ripple={ false }
-                          class="ve-alert__close"
                           icon={ props.closeText ? false : props.closeIcon }
                           text={ props.closeText }
                           onClick={ onCloseClick }

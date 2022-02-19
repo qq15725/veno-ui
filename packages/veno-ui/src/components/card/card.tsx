@@ -50,7 +50,7 @@ export const makeCardProps = propsFactory({
   ...makeLoadingProps(),
   ...makeDisabledProps(),
   ...makePaperProps({
-    shape: 'rounded',
+    shape: 'rounded-sm',
   } as const),
 }, 'card')
 

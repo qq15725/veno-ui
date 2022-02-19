@@ -2,14 +2,15 @@
 @use 'variables' as *;
 @use '../../../styles/tools';
 
+// Blocks
 .ve-list-group {
   --ve-parent-padding: var(--ve-indent-padding, 0px);
 
   &--prepend {
-    --ve-parent-padding: calc(var(--ve-item-avatar-size, 40px) + var(--ve-indent-padding, 0px));
+    --ve-parent-padding: calc(var(--ve-list-item-avatar---height, 28px) + var(--ve-indent-padding, 0px));
   }
 
   &__items {
-    --ve-indent-padding: calc(var(--ve-item-padding-x, 16px) + var(--ve-parent-padding, 0px));
+    --ve-indent-padding: calc(var(--ve-list-item---padding-x, 12px) + var(--ve-parent-padding, 0px));
   }
 }

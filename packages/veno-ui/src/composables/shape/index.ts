@@ -7,23 +7,24 @@ import type { PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 // Constants
-export const shapes = [
+export const SHAPES = [
   'tile',
+  'rounded-sm',
   'rounded',
   'pill',
   'circle',
 ] as const
 
-type ShapeValue = typeof shapes[number]
+type ShapeProp = typeof SHAPES[number]
 
 export interface ShapeProps
 {
-  shape?: ShapeValue
+  shape?: ShapeProp
 }
 
 export const makeShapeProps = propsFactory({
   shape: {
-    type: String as PropType<ShapeValue>,
+    type: String as PropType<ShapeProp>,
     default: 'tile',
   },
 }, 'shape')
@@ -34,7 +35,7 @@ export function useShape (
 ) {
   const shapeClasses = computed(() => {
     let { shape } = unref(props)
-    if (!shape || !shapes.includes(shape)) return null
+    if (!shape || !SHAPES.includes(shape)) return null
     return `${ name }--shape-${ shape }`
   })
 

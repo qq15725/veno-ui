@@ -4,7 +4,7 @@
 .ve-label {
   align-items: center;
   color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
-  cursor: pointer;
+  cursor: inherit;
   display: inline-flex;
   letter-spacing: .009375em;
   min-width: 0;

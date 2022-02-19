@@ -238,7 +238,7 @@ export const DatePickerPanel = defineComponent({
         },
         date: {
           ...sharedProps,
-          shape: 'rounded',
+          shape: 'rounded-sm',
           style: { fontSize: '14px' },
           text: internalModel.value.format('YYYY-MM'),
         } as const,

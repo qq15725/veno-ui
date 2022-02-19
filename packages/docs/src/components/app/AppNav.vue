@@ -61,7 +61,6 @@
   <ve-drawer v-model="menuActive">
     <ve-list
         nav
-        density="ultra-high"
         :items="menus"
         :opened="opened"
     >

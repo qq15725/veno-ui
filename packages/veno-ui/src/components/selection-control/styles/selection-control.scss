@@ -6,21 +6,22 @@
 @use './variables' as *;
 
 .ve-selection-control {
-  --ve-density-offset: 0px;
-  --ve-default-height: 22px;
-  --ve-height: calc(var(--ve-default-height) + var(--ve-density-offset));
-  position: relative;
-  display: inline-flex;
+  // CSS Variables
+  // --ve-selection-control---height
+  --ve-height: calc(var(--ve-selection-control---height, 22px) + var(--ve-density-offset, 0px));
   align-items: center;
   align-self: center;
-  user-select: none;
+  cursor: pointer;
+  display: inline-flex;
   min-height: var(--ve-height);
+  position: relative;
+  user-select: none;
   @include tools.use-density((
     densities: $selection-control-density
   ));
 
   &--dirty {
-    .v-icon {
+    .ve-icon {
       color: inherit;
     }
   }
@@ -33,7 +34,7 @@
   &--error {
     color: rgb(var(--ve-theme-error));
 
-    .v-icon {
+    .ve-icon {
       color: inherit;
     }
   }
@@ -42,6 +43,7 @@
     opacity: var(--ve-medium-emphasis-opacity);
     width: 100%;
     height: 100%;
+    font-size: 16px;
   }
 
   .ve-label {
@@ -51,11 +53,6 @@
 
   &__wrapper {
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--ve-height);
-    height: var(--ve-height);
     flex: none;
   }
 

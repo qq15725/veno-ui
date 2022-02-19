@@ -5,25 +5,20 @@
 
 .ve-list-subheader {
   $root: &;
+  // CSS Variables
+  // --ve-list-subheader---min-height 40px
+  --ve-offset: calc(var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
   align-items: center;
   background: inherit;
   display: flex;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  padding-inline-end: 16px;
-  padding-inline-start: 16px;
-  min-height: 48px;
+  padding-inline-end: 12px;
+  padding-inline-start: 12px;
+  min-height: calc(var(--ve-list-subheader---min-height, 40px) + var(--ve-offset));
   transition: 0.2s min-height settings.$standard-easing;
   opacity: var(--ve-medium-emphasis-opacity);
-
-  @at-root {
-    @include tools.density('ve-list') using($modifier) {
-      #{$root} {
-        min-height: 48px + $modifier;
-      }
-    }
-  }
 
   &__text {
     overflow: hidden;

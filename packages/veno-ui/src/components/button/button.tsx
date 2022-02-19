@@ -53,7 +53,7 @@ export const Button = defineComponent({
     ...makeGroupItemProps(),
     ...makePaperProps({
       tag: 'button',
-      shape: 'rounded',
+      shape: 'rounded-sm',
       variant: 'contained',
     } as const)
   },
@@ -84,7 +84,8 @@ export const Button = defineComponent({
       const Tag: any = link.isLink.value ? 'a' : props.tag
       const hasPrependIcon = !props.icon && props.prependIcon
       const hasPrependLoading = !hasPrependIcon && props.loading && (slots.default || props.text)
-      const hasDefault = !!(props.icon || slots.default || props.text)
+      const hasIconOnly = props.icon && typeof props.icon === 'string'
+      const hasDefault = !hasIconOnly && (slots.default || props.text)
       const hasAppendIcon = !props.icon && props.appendIcon
       return (
         <Tag
@@ -101,12 +102,11 @@ export const Button = defineComponent({
               've-button--active': link.isExactActive?.value,
               've-button--block': props.block,
               've-button--stacked': props.stacked,
-              've-button--icon': !!props.icon,
+              've-button--icon': !hasIconOnly && !!props.icon,
+              've-button--icon-only': hasIconOnly,
             },
           ] }
-          style={ [
-            paperStyles.value,
-          ] }
+          style={ paperStyles.value }
           disabled={ props.disabled || undefined }
           href={ link.href.value }
           onClick={ handleClick }
@@ -153,24 +153,24 @@ export const Button = defineComponent({
           ) }
 
           { hasDefault && (
-            typeof props.icon === 'boolean'
-              ? <span class="ve-button__wrapper">{ slots.default?.() ?? props.text }</span>
-              : (
-                <Icon
-                  class="ve-button__icon"
-                  icon={
-                    props.loading
-                      ? (
-                        <ProgressCircular
-                          color="currentColor"
-                          indeterminate
-                        /> as any
-                      )
-                      : props.icon
-                  }
-                  size={ props.size }
-                />
-              )
+            <span class="ve-button__wrapper">{ slots.default?.() ?? props.text }</span>
+          ) }
+
+          { hasIconOnly && (
+            <Icon
+              class="ve-button__icon"
+              icon={
+                props.loading
+                  ? (
+                    <ProgressCircular
+                      color="currentColor"
+                      indeterminate
+                    /> as any
+                  )
+                  : props.icon
+              }
+              size={ props.size }
+            />
           ) }
 
           { hasAppendIcon && (

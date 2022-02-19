@@ -2,15 +2,20 @@
 @use '../../../styles/settings';
 
 .ve-card-title {
-  display: flex;
+  // CSS Variables
+  // --ve-card-text---padding-x var(--ve-card---padding-x, 12px)
+  // --ve-card-text---padding-y var(--ve-card---padding-y, 12px)
+  --ve-padding-x: var(--ve-card-text---padding-x, var(--ve-card---padding-x, 12px));
+  --ve-padding-y: calc(var(--ve-card-text---padding-y, var(--ve-card---padding-y, 12px)) + var(--ve-density-offset, 0px));
   align-items: center;
-  padding: calc(16px + var(--ve-density-offset, 0px)) 16px;
+  display: flex;
   font-size: tools.map-deep-get(settings.$typography, 'h5', 'size');
   font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight');
+  hyphens: auto;
   letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing');
   line-height: tools.map-deep-get(settings.$typography, 'h5', 'line-height');
-  hyphens: auto;
   overflow-wrap: normal;
+  padding: var(--ve-padding-y) var(--ve-padding-x);
   text-transform: none;
   word-break: normal;
   word-wrap: break-word;

@@ -131,8 +131,8 @@ export const Input = genericComponent<new () => {
       nextTick(() => {
         if (!sizerRef.value) return
         const style = getComputedStyle(sizerRef.value)
-        const padding = (parseFloat(style.getPropertyValue('--ve-native-padding-top')) || 0)
-          + (parseFloat(style.getPropertyValue('--ve-native-padding-bottom')) || 0)
+        const padding = (parseFloat(style.getPropertyValue('--ve-native-control---padding-top')) || 0)
+          + (parseFloat(style.getPropertyValue('--ve-native-control---padding-bottom')) || 0)
         const height = sizerRef.value.scrollHeight
         const lineHeight = parseFloat(style.lineHeight)
         const minHeight = parseFloat(String(props.rows)) * lineHeight + padding
@@ -177,7 +177,7 @@ export const Input = genericComponent<new () => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
       const styles = isTextarea && controlHeight.value
-        ? { '--ve-control-default-height': controlHeight.value }
+        ? { '--ve-form-control__control---height': controlHeight.value }
         : {}
       const [inputControlProps] = filterInputControlProps(props)
       const [, nativeControlAttrs] = filterInputAttrs(attrs)

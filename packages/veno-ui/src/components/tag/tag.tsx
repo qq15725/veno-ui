@@ -55,8 +55,7 @@ export const Tag = defineComponent({
     } as const),
     ...makePaperProps({
       tag: 'span',
-      size: 'x-small',
-      shape: 'rounded',
+      shape: 'rounded-sm',
       variant: 'contained-text',
     } as const),
     ...makeGroupItemProps(),

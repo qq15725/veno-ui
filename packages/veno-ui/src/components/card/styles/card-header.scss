@@ -1,6 +1,11 @@
 .ve-card-header {
+  // CSS Variables
+  // --ve-card-header---padding-x var(--ve-card---padding-x, 12px)
+  // --ve-card-header---padding-y var(--ve-card---padding-y, 12px)
+  --ve-padding-x: var(--ve-card-header---padding-x, var(--ve-card---padding-x, 12px));
+  --ve-padding-y: calc(var(--ve-card-header---padding-y, var(--ve-card---padding-y, 12px)) + var(--ve-density-offset, 0px));
   display: flex;
-  padding: calc(var(--ve-card-py, 16px) + var(--ve-density-offset, 0px)) var(--ve-card-px, 16px);
+  padding: var(--ve-padding-y) var(--ve-padding-x);
 
   & + .ve-divider {
     margin-top: 0;

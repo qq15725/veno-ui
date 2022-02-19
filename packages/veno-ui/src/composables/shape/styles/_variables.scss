@@ -3,7 +3,9 @@
 
 $shapes: (
   'tile': map-get(settings.$rounded, '0'),
-  'rounded': map-get(settings.$rounded, null),
+  'rounded-sm': map-get(settings.$rounded, 'sm'),
+  'rounded': map-get(settings.$rounded, 'md'),
+  'rounded-lg': map-get(settings.$rounded, 'lg'),
   'pill': map-get(settings.$rounded, 'pill'),
   'circle': map-get(settings.$rounded, 'circle'),
 ) !default;
