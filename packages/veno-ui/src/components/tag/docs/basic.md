@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-tag>Tag</ve-tag>
+<ve-tag>Default</ve-tag>
 ```
 
 :::

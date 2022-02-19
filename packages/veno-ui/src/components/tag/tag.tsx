@@ -55,6 +55,7 @@ export const Tag = defineComponent({
     } as const),
     ...makePaperProps({
       tag: 'span',
+      size: 'x-small',
       shape: 'rounded-sm',
       variant: 'contained-text',
     } as const),
@@ -106,15 +107,18 @@ export const Tag = defineComponent({
               { genOverlays(isClickable, 've-tag') }
 
               { hasPrepend && (
-                <div class="ve-tag__prepend">
+                <div class={ [
+                  've-tag__prepend',
+                  {
+                    've-tag__prepend--avatar': props.prependAvatar,
+                  }
+                ] }>
                   { slots.prepend?.() ?? (
                     <Avatar
                       color="inherit"
                       variant="text"
                       icon={ props.prependIcon }
                       image={ props.prependAvatar }
-                      size={ props.size }
-                      density={ props.density }
                     />
                   ) }
                 </div>
@@ -137,8 +141,6 @@ export const Tag = defineComponent({
                       variant="text"
                       icon={ props.appendIcon }
                       image={ props.appendAvatar }
-                      size={ props.size }
-                      density={ props.density }
                     />
                   ) }
                 </div>
@@ -150,7 +152,6 @@ export const Tag = defineComponent({
                     <Button
                       variant="plain"
                       ripple={ false }
-                      size={ props.size }
                       loading={ props.loading }
                       icon={ props.closeIcon }
                       onClick={ onCloseClick }

@@ -5,7 +5,7 @@
 @use '../../../styles/tools/elevation' as *;
 
 @mixin use-variant($props: ()) {
-  $root: string.insert(string.slice(#{&}, 2), '.', 0);
+  $name: string.insert(string.slice(#{&}, 2), '.', 0);
   $props: tools.map-deep-merge(variables.$variant-props, $props);
 
   @if map.get($props, 'use-variant') {
@@ -41,9 +41,11 @@
     // Modifiers
     &--variant-plain,
     &--variant-outlined,
-    &--variant-text {
+    &--variant-text,
+    &--variant-contained-text,
+    &--variant-contained-outlined {
       background: transparent;
-      color: tools.map-deep-get($variants, 'text', 'color');
+      color: inherit;
     }
 
     &--variant-contained {
@@ -58,7 +60,7 @@
     &--variant-plain {
       opacity: tools.map-deep-get($variants, 'plain', 'opacity');
 
-      #{$root}__overlay {
+      #{$name}__overlay {
         display: none;
       }
 
@@ -69,24 +71,21 @@
     }
 
     &--variant-text {
-      #{$root}__overlay {
+      #{$name}__overlay {
         background: currentColor;
       }
     }
 
     &--variant-contained-text,
     &--variant-contained-outlined {
-      background: rgb(var(--ve-theme-surface));
-      color: tools.map-deep-get($variants, 'contained', 'color');
-
-      #{$root}__underlay {
+      #{$name}__underlay {
         opacity: var(--ve-activated-opacity);
       }
     }
 
-    &--variant-outlined:not(#{&}--border),
-    &--variant-contained-outlined:not(#{&}--border) {
-      #{$root}__border {
+    &--variant-outlined:not(#{$name}--border),
+    &--variant-contained-outlined:not(#{$name}--border) {
+      #{$name}__border {
         opacity: .26;
       }
     }
