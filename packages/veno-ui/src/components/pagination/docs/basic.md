@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-pagination  />
+<ve-pagination total="50" />
 ```
 
 :::

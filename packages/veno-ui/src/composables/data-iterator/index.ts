@@ -7,7 +7,6 @@ import { useProxiedModel } from '../proxied-model'
 
 // Types
 import type { PropType } from 'vue'
-import type { PaginationProps } from '../pagination'
 
 export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
   items: T[],
@@ -33,12 +32,16 @@ interface DataIteratorProps
   'onUpdate:sortDesc': ((val: boolean | boolean[]) => void) | undefined
 }
 
+export type PaginationProps = Partial<typeof defaultPagination>
+
 const defaultPagination = {
   page: 1,
   perPage: 10,
-  firstPage: 1,
-  lastPage: 1,
+  perPageOptions: [10, 20, 50, 100],
   total: 0,
+  totalVisible: 7,
+  showQuickJumper: false,
+  showPerPageSelect: false,
 }
 
 export const makeDataIteratorProps = propsFactory({
@@ -110,22 +113,16 @@ function toggle (
 export function useDataIterator (props: DataIteratorProps) {
   const vm = getCurrentInstance('useDataIterator')
   const pagination = useProxiedModel(
-    props,
-    'pagination',
-    { ...defaultPagination },
+    props, 'pagination', props.pagination,
     val => {
-      const total = props.remote
-        ? Number(val?.total ?? props.items.length)
-        : props.items.length
-      const perPage = Number(val?.perPage ?? defaultPagination.perPage)
-      const firstPage = Number(val?.firstPage ?? defaultPagination.firstPage)
-      const lastPage = Number(val?.lastPage ?? Math.max(firstPage, ~~(total / perPage)))
+      const pagination = { ...defaultPagination, ...val }
       return reactive({
-        page: Number(val?.page ?? defaultPagination.page),
-        perPage,
-        firstPage,
-        lastPage,
-        total,
+        ...pagination,
+        page: parseInt(pagination.page, 10),
+        perPage: parseInt(pagination.perPage, 10),
+        total: props.remote
+          ? Number(pagination.total ?? props.items.length)
+          : props.items.length,
       })
     }
   )

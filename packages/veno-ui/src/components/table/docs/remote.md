@@ -33,37 +33,44 @@
 ```js
 import { defineComponent, ref, onMounted } from 'vue'
 
+function stringify (queryString) {
+  return Object.keys(queryString)
+        .map(k => k.replace(/[A-Z]/, v => `_${ v.toLowerCase() }`) + `=${ queryString[k] }`)
+        .join('&')
+}
+
+function api (params = {}) {
+  return new Promise(resolve => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', `https://cps.fdota.com/products?${ stringify(params) }`)
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        resolve(JSON.parse(xhr.responseText))
+      }
+    }
+    xhr.send(null)
+  })
+}
+
 export default defineComponent({
   setup () {
-    const pagination = ref()
+    const pagination = ref({
+      perPage: 10,
+      perPageOptions: [10, 24, 50, 100],
+      showQuickJumper: true,
+      showPerPageSelect: true,
+    })
     const loading = ref(false)
     const items = ref([])
-
-    function apiFetch (query = {}) {
-      query = Object.keys(query).map(k => {
-        return k.replace(/[A-Z]/, v => `_${ v.toLowerCase() }`) + `=${ query[k] }`
-      }).join('&')
-
-      return new Promise(resolve => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('GET', `https://cps.fdota.com/products?${ query }`)
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-            resolve(JSON.parse(xhr.responseText))
-          }
-        }
-        xhr.send(null)
-      })
-    }
 
     async function fetch (query = {}) {
       loading.value = true
       const {
         data,
         meta: { current_page: page, per_page: perPage, total }
-      } = await apiFetch(query)
+      } = await api(query)
       items.value = data
-      pagination.value = { page, perPage, total }
+      pagination.value = { ...pagination.value, page, perPage, total }
       loading.value = false
     }
 

@@ -7,80 +7,197 @@ import { createRange, defineComponent, keyValues } from '../../utils'
 
 // Components
 import { Button } from '../button'
+import { Select } from '../select'
+import { Input } from '../input'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { useResizeObserver } from '../../composables/resize-observer'
 import { useRefs } from '../../composables/refs'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { makePaginationProps } from '../../composables/pagination'
 
 // Types
-import type { ComponentPublicInstance, } from 'vue'
-
-export type Pagination = InstanceType<typeof Pagination>
+import type { ComponentPublicInstance } from 'vue'
 
 export const Pagination = defineComponent({
   name: 'VePagination',
 
   props: {
-    disabled: Boolean,
-    totalVisible: [Number, String],
-    firstIcon: {
-      type: String,
-      default: '$first',
-    },
-    prevIcon: {
-      type: String,
-      default: '$prev',
-    },
-    nextIcon: {
-      type: String,
-      default: '$next',
-    },
-    lastIcon: {
-      type: String,
-      default: '$last',
-    },
-    ariaLabel: {
-      type: String,
-      default: '分页导航',
-    },
-    pageAriaLabel: {
-      type: String,
-      default: '转到页面 {0}',
-    },
-    currentPageAriaLabel: {
-      type: String,
-      default: '当前页 {0}',
-    },
-    firstAriaLabel: {
-      type: String,
-      default: '首页',
-    },
-    previousAriaLabel: {
-      type: String,
-      default: '上一页',
-    },
-    nextAriaLabel: {
-      type: String,
-      default: '下一页',
-    },
-    lastAriaLabel: {
-      type: String,
-      default: '最后页',
-    },
-    ellipsis: {
-      type: String,
-      default: '...',
-    },
-    showFirstLastPage: Boolean,
+    /**
+     * @zh 激活时的颜色
+     */
     activeColor: {
       type: String,
       default: 'primary',
     },
 
-    ...makePaginationProps(),
+    /**
+     * @zh 导航的无障碍标签值
+     */
+    ariaLabel: {
+      type: String,
+      default: '分页导航',
+    },
+
+    /**
+     * @zh 当前页的无障碍标签值
+     */
+    currentPageAriaLabel: {
+      type: String,
+      default: '当前页 {0}',
+    },
+
+    /**
+     * @zh 是否禁用
+     */
+    disabled: Boolean,
+
+    /**
+     * @zh 省略值
+     */
+    ellipsis: {
+      type: String,
+      default: '...',
+    },
+
+    /**
+     * @zh 第一页的无障碍标签值
+     */
+    firstAriaLabel: {
+      type: String,
+      default: '首页',
+    },
+
+    /**
+     * @zh 第一页初始值
+     */
+    firstPage: {
+      type: [Number, String],
+      default: 1,
+    },
+
+    /**
+     * @zh 第一页的按钮图标
+     */
+    firstIcon: {
+      type: String,
+      default: '$first',
+    },
+
+    /**
+     * @zh 最后一页的无障碍标签值
+     */
+    lastAriaLabel: {
+      type: String,
+      default: '最后页',
+    },
+
+    /**
+     * @zh 最后一页的按钮图标
+     */
+    lastIcon: {
+      type: String,
+      default: '$last',
+    },
+
+    /**
+     * @zh 当前页
+     */
+    modelValue: {
+      type: [Number, String],
+      default: (props: any) => props.firstPage,
+      validator: (val: number) => val % 1 === 0,
+    },
+
+    /**
+     * @zh 下一页的无障碍标签值
+     */
+    nextAriaLabel: {
+      type: String,
+      default: '下一页',
+    },
+
+    /**
+     * @zh 下一页的按钮图标
+     */
+    nextIcon: {
+      type: String,
+      default: '$next',
+    },
+
+    /**
+     * @zh 上一页的按钮图标
+     */
+    prevIcon: {
+      type: String,
+      default: '$prev',
+    },
+
+    /**
+     * @zh 页面的无障碍标签值
+     */
+    pageAriaLabel: {
+      type: String,
+      default: '转到页面 {0}',
+    },
+
+    /**
+     * @zh 每页条数
+     */
+    perPage: {
+      type: [Number, String],
+      default: 10,
+      validator: (val: number) => val % 1 === 0,
+    },
+
+    /**
+     * @zh 每页条数可选项
+     */
+    perPageOptions: {
+      type: Array,
+      default: () => [10, 20, 50, 100]
+    },
+
+    /**
+     * @zh 上一页的无障碍标签值
+     */
+    previousAriaLabel: {
+      type: String,
+      default: '上一页',
+    },
+
+    /**
+     * @zh 显示首页和最后一页
+     */
+    showFirstLastPage: Boolean,
+
+    /**
+     * @zh 显示快速跳跃
+     */
+    showQuickJumper: Boolean,
+
+    /**
+     * @zh 显示每页条数选择器
+     */
+    showPerPageSelect: Boolean,
+
+    /**
+     * @zh 总条数
+     */
+    total: {
+      type: [Number, String],
+      default: 0,
+      validator: (val: number) => val % 1 === 0,
+    },
+
+    /**
+     * @zh 总显示页数
+     */
+    totalVisible: {
+      type: [Number, String],
+      validator: (val: number) => val % 1 === 0,
+    },
+
     ...makePaperProps({
       tag: 'nav',
       variant: 'text',
@@ -89,7 +206,8 @@ export const Pagination = defineComponent({
   },
 
   emits: {
-    'update:page': (value: number) => true,
+    'update:modelValue': (value: number) => true,
+    'update:perPage': (value: number) => true,
     first: (value: number) => true,
     prev: (value: number) => true,
     next: (value: number) => true,
@@ -97,56 +215,55 @@ export const Pagination = defineComponent({
   },
 
   setup (props, { slots, emit }) {
-    const page = useProxiedModel(
-      props, 'page', props.page,
-      v => Number(v)
-    )
-    const firstPage = computed(() => Number(props.firstPage))
-    const lastPage = computed(() => Number(props.lastPage))
+    const internalPage = ref()
     const { paperClasses, paperStyles } = usePaper(props)
-    const maxButtons = ref(-1)
 
+    const page = useProxiedModel(
+      props, 'modelValue', props.modelValue,
+      (v: any) => parseInt(v ?? 1, 10)
+    )
+    const perPage = useProxiedModel(
+      props, 'perPage', props.perPage,
+      (v: any) => parseInt(v ?? 10, 10)
+    )
+    const total = computed(() => parseInt(props.total, 10))
+    const firstPage = computed(() => parseInt(props.firstPage, 10))
+    const lastPage = computed(() => Math.ceil(total.value / perPage.value))
+
+    const maxButtons = ref(-1)
     const { resizeRef } = useResizeObserver((entries: ResizeObserverEntry[]) => {
       if (!entries.length) return
       const { target, contentRect } = entries[0]
-      const firstItem = target.querySelector('.ve-pagination__list > *')
+      const firstItem = target.querySelector('.ve-pagination__wrapper > *')
       if (!firstItem) return
-      const totalWidth = contentRect.width
+      let totalWidth = contentRect.width - 96
+      if (props.showPerPageSelect) totalWidth -= 100
+      if (props.showQuickJumper) totalWidth -= 100
       const itemWidth = firstItem.getBoundingClientRect().width + 10
-      maxButtons.value = Math.max(0, Math.floor((totalWidth - 96) / itemWidth))
+      maxButtons.value = Math.max(0, Math.floor(totalWidth / itemWidth))
     })
 
     const totalVisible = computed(() => {
-      if (props.totalVisible) {
-        return Math.min(Number(props.totalVisible ?? ''), lastPage.value)
-      } else if (maxButtons.value >= 0) {
-        return maxButtons.value
-      }
+      if (props.totalVisible) return Math.min(parseInt(props.totalVisible, 10), lastPage.value)
+      if (maxButtons.value >= 0) return maxButtons.value
       return Math.min(7, lastPage.value)
     })
 
     const range = computed(() => {
       if (lastPage.value <= 0) return []
-
-      if (totalVisible.value <= 3) {
-        return [Math.min(Math.max(firstPage.value, page.value), firstPage.value + lastPage.value)]
-      }
-
-      if (lastPage.value <= totalVisible.value) {
-        return createRange(lastPage.value, firstPage.value)
-      }
-
+      if (totalVisible.value === 1) return [Math.min(Math.max(firstPage.value, page.value), firstPage.value + lastPage.value)]
+      if (lastPage.value <= totalVisible.value) return createRange(lastPage.value, firstPage.value)
       const middle = Math.ceil(totalVisible.value / 2)
       const left = middle
       const right = lastPage.value - middle
-
       if (page.value < left) {
         return [
           ...createRange(Math.max(1, totalVisible.value - 2), firstPage.value),
           props.ellipsis,
           lastPage.value
         ]
-      } else if (page.value > right) {
+      }
+      if (page.value > right) {
         const rangeLength = totalVisible.value - 2
         const rangeStart = lastPage.value - rangeLength + firstPage.value
         return [
@@ -154,17 +271,16 @@ export const Pagination = defineComponent({
           props.ellipsis,
           ...createRange(rangeLength, rangeStart)
         ]
-      } else {
-        const rangeLength = Math.max(1, totalVisible.value - 4)
-        const rangeStart = rangeLength === 1 ? page.value : page.value - Math.ceil(rangeLength / 2) + firstPage.value
-        return [
-          firstPage.value,
-          props.ellipsis,
-          ...createRange(rangeLength, rangeStart),
-          props.ellipsis,
-          lastPage.value
-        ]
       }
+      const rangeLength = Math.max(1, totalVisible.value - 4)
+      const rangeStart = rangeLength === 1 ? page.value : page.value - Math.ceil(rangeLength / 2) + firstPage.value
+      return [
+        firstPage.value,
+        props.ellipsis,
+        ...createRange(rangeLength, rangeStart),
+        props.ellipsis,
+        lastPage.value
+      ]
     })
 
     // TODO: 'first' | 'prev' | 'next' | 'last' does not work here?
@@ -295,14 +411,12 @@ export const Pagination = defineComponent({
           've-pagination',
           paperClasses.value,
         ] }
-        style={ [
-          paperStyles.value
-        ] }
+        style={ paperStyles.value }
         role="navigation"
         aria-label={ props.ariaLabel }
         onKeydown={ onKeydown }
       >
-        <ul class="ve-pagination__list">
+        <ul class="ve-pagination__wrapper">
           { props.showFirstLastPage && (
             <li class="ve-pagination__first">
               { slots.first?.(controls.value.first) ?? (
@@ -346,8 +460,58 @@ export const Pagination = defineComponent({
               ) }
             </li>
           ) }
+
+          { props.showPerPageSelect && (
+            <li class="ve-pagination__per-page">
+              <Select
+                hide-details
+                width="100"
+                v-model={ perPage.value }
+                items={ props.perPageOptions.map(v => ({
+                  text: `${ v } 条/页`,
+                  value: parseInt(v as any, 10),
+                })) }
+              />
+            </li>
+          ) }
+
+          { props.showQuickJumper && (
+            <li class="ve-pagination__quick-jumper">
+              <Input
+                hide-details
+                width="60"
+                v-model={ internalPage.value }
+                type="number"
+                onKeydown={ (e: KeyboardEvent) => {
+                  if (
+                    ['Enter', ' '].includes(e.key)
+                    && internalPage.value
+                    && internalPage.value > 0
+                    && internalPage.value <= lastPage.value
+                  ) {
+                    page.value = internalPage.value
+                    internalPage.value = undefined
+                  }
+                } }
+                onBlur={ () => {
+                  if (
+                    internalPage.value
+                    && internalPage.value > 0
+                    && internalPage.value <= lastPage.value
+                  ) {
+                    page.value = internalPage.value
+                    internalPage.value = undefined
+                  }
+                } }
+              >
+                { { prepend: () => <span>跳至</span> } }
+              </Input>
+            </li>
+          ) }
         </ul>
       </props.tag>
     )
   }
 })
+
+export type Pagination = InstanceType<typeof Pagination>

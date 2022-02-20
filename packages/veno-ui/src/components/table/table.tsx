@@ -26,7 +26,7 @@ import { Pagination } from '../pagination'
 
 // Types
 import type { PropType } from 'vue'
-import type { PaginationProps } from '../../composables/pagination'
+import type { PaginationProps } from '../../composables/data-iterator'
 
 interface TableHeaderProp
 {
@@ -257,7 +257,7 @@ export const Table = defineComponent({
                           sorted={ getSortDesc(header) !== undefined }
                         >
                           { slots[`item.${ header.value }`]?.({ item })
-                          ?? getObjectValueByPath(item, header.value) }
+                            ?? getObjectValueByPath(item, header.value) }
                         </TableTd>
                       )
                     }) }
@@ -282,11 +282,15 @@ export const Table = defineComponent({
             <Pagination
               class="ve-table__pagination"
               { ...pagination.value }
-              onUpdate:page={ page => {
-                pagination.value.page = page
+              modelValue={ pagination.value.page }
+              onUpdate:modelValue={ v => {
+                pagination.value.page = v
                 updateOptions()
               } }
-              total-visible={ 7 }
+              onUpdate:perPage={ v => {
+                pagination.value.perPage = v
+                updateOptions()
+              } }
             />
           ) }
         </props.tag>

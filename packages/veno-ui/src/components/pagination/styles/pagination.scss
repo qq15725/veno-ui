@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
 
-  &__list {
+  &__wrapper {
     display: inline-flex;
     list-style-type: none;
     justify-content: center;
@@ -13,6 +13,16 @@
   &__prev,
   &__next,
   &__last {
-    margin: .3rem;
+    margin: 4px;
+  }
+
+  &__per-page,
+  &__quick-jumper {
+    margin: 4px 6px;
+  }
+
+  &__quick-jumper {
+    display: flex;
+    align-items: center;
   }
 }

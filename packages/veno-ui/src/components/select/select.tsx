@@ -51,7 +51,7 @@ export const Select = genericComponent<new () => {
       default: 'value',
     },
     modelValue: {
-      type: [String, Object, Array],
+      type: null,
       default: () => [],
     },
     multiple: Boolean,
