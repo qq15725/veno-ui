@@ -11,7 +11,6 @@
   :items="items"
   item-text="state"
   item-value="abbr"
-  return-object
   multiple
   tags
 >
