@@ -8,18 +8,24 @@
   // Elements
   &__selections {
     padding-left: 12px !important;
+    width: 100%;
   }
 
   &__tag-input {
-    margin: 4px 4px 4px 0;
+    margin: 3px 6px 3px 0;
     max-width: 100%;
     outline: none;
     position: relative;
     vertical-align: bottom;
+    overflow: hidden;
 
     > input {
       padding: 0 !important;
     }
+  }
+
+  * + &__tag-input {
+    margin-inline-start: 0;
   }
 
   &__tag-input-mirror {

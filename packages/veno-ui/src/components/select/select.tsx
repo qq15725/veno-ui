@@ -11,11 +11,12 @@ import { useProxiedModel } from '../../composables/proxied-model'
 // Components
 import { Input } from '../input/input'
 import { Menu } from '../menu'
-import { List, ListItem } from '../list'
+import { List, ListItem, ListItemAvatar } from '../list'
 import { Tag } from '../tag'
 import { TagGroup } from '../tag-group'
 import { Progress } from '../progress'
 import { Icon } from '../icon'
+import { Checkbox } from '../checkbox'
 
 // Types
 import type { PropType } from 'vue'
@@ -311,10 +312,7 @@ export const Select = genericComponent<new () => {
     }
 
     function resizeTagInput () {
-      tagInputWidth.value = Math.max(
-        parseFloat(1),
-        mirrorRef.value.scrollWidth
-      )
+      tagInputWidth.value = Math.max(0, mirrorRef.value.scrollWidth) + 1
     }
 
     let observer: ResizeObserver | undefined
@@ -412,7 +410,15 @@ export const Select = genericComponent<new () => {
                             onMousedown={ (e: MouseEvent) => e.preventDefault() }
                             link
                             { ...item }
-                          />
+                          >
+                            { {
+                              prepend: props.multiple ? () => (
+                                <ListItemAvatar left>
+                                  <Checkbox model-value={ active.value.includes(item.value) } />
+                                </ListItemAvatar>
+                              ) : undefined
+                            } }
+                          </ListItem>
                         ),
                         append: () => (
                           <>
@@ -452,7 +458,9 @@ export const Select = genericComponent<new () => {
 
                     <div
                       class="ve-select__tag-input"
-                      style={ { width: convertToUnit(tagInputWidth.value) } }
+                      style={ {
+                        width: convertToUnit(selections.value.length > 0 ? tagInputWidth.value : '100%')
+                      } }
                       ref={ tagInputRef }
                     >
                       <span

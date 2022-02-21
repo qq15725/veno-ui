@@ -76,3 +76,5 @@ export const Icon = defineComponent({
     }
   },
 })
+
+export type Icon = InstanceType<typeof Icon>

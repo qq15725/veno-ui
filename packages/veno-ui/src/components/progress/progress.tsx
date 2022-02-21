@@ -28,7 +28,6 @@ export const progressVariants = [
 // Types
 import type { PropType } from 'vue'
 
-export type Progress = InstanceType<typeof Progress>
 export type ProgressVariant = typeof progressVariants[number]
 
 export const Progress = defineComponent({
@@ -120,3 +119,5 @@ export const Progress = defineComponent({
     }
   }
 })
+
+export type Progress = InstanceType<typeof Progress>
