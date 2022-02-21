@@ -19,8 +19,8 @@ import type { ListItemTitleSlot, ListItemSubtitleSlot } from './list-item'
 
 export type ListChildrenSlots<T> = MakeSlots<{
   default: []
-  header: [T & ListGroupActivatorSlot]
-  item: [T]
+  header: [{ item: T, index: number } & ListGroupActivatorSlot]
+  item: [{ item: T, index: number }]
   title: [ListItemTitleSlot]
   subtitle: [ListItemSubtitleSlot]
 }>
@@ -40,7 +40,7 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
   setup (props, { slots }) {
     provideList()
 
-    return () => slots.default?.() ?? props.items?.map(({ children, props: itemProps, type }) => {
+    return () => slots.default?.() ?? props.items?.map(({ children, props: itemProps, type }, index) => {
 
       if (type === 'divider') return <Divider { ...itemProps } />
 
@@ -53,13 +53,13 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
               <ListChildren items={ children } v-slots={ slots } />
             ),
             activator: ({ props: activatorProps }) => (
-              slots.header?.({ ...itemProps, ...activatorProps })
+              slots.header?.({ item: itemProps, index, props: activatorProps })
               ?? <ListItem { ...itemProps } { ...activatorProps } />
             ),
           } }
         </ListGroup>
       ) : (
-        slots.item?.(itemProps)
+        slots.item?.({ item: itemProps, index })
         ?? <ListItem { ...itemProps } v-slots={ slots } />
       )
     })

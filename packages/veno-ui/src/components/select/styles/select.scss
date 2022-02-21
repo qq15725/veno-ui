@@ -6,6 +6,13 @@
   $root: &;
 
   // Elements
+  &__item--pendding {
+    .ve-list-item__overlay {
+      visibility: visible;
+      opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
+    }
+  }
+
   &__selections {
     padding-left: 12px !important;
     width: 100%;

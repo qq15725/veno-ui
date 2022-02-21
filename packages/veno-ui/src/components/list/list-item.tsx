@@ -131,9 +131,7 @@ export const ListItem = genericComponent<new () => {
             paperClasses.value,
             disabledClasses.value,
           ] }
-          style={ [
-            paperStyles.value,
-          ] }
+          style={ paperStyles.value }
           href={ link.href.value }
           tabindex={ isClickable ? 0 : undefined }
           onClick={ isClickable && ((e: MouseEvent) => {

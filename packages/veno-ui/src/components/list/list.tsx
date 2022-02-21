@@ -105,9 +105,7 @@ export const List = genericComponent<new <T>() => {
             paperClasses.value,
             disabledClasses.value,
           ] }
-          style={ [
-            paperStyles.value,
-          ] }
+          style={ paperStyles.value }
         >
           { slots.prepend?.() }
 

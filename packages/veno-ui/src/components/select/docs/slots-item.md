@@ -14,9 +14,9 @@
   return-object
   multiple
 >
-  <template #item="item">
+  <template #item="{ props, item }">
     <ve-list-item
-      v-bind="item"
+      v-bind="{ ...props, ...item }"
       v-show="!item.filtered"
       link
       prepend-avatar="https://avatars.githubusercontent.com/u/19576382"

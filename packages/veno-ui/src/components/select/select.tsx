@@ -158,13 +158,14 @@ export const Select = genericComponent<new () => {
 
   setup (props, { emit, slots }) {
     const activator = ref()
-    const menuRef = ref()
+    const pendingIndex = ref()
+    const id = computed(() => props.id || `ve-select-${ getUid() }`)
     const inputRef = ref()
+    const isActiveMenu = ref(false)
+    const menuRef = ref()
+    const mirrorRef = ref()
     const tagInputRef = ref()
     const tagInputWidth = ref()
-    const mirrorRef = ref()
-    const isActiveMenu = ref(false)
-    const id = computed(() => props.id || `ve-select-${ getUid() }`)
     const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const model = useProxiedModel(
       props, 'modelValue', [],
@@ -182,7 +183,7 @@ export const Select = genericComponent<new () => {
         model.value = props.returnObject
           ? val.map(getItem).filter(v => v !== undefined)
           : val
-        if (!props.multiple) inputRef.value.blur()
+        if (!props.multiple) isActiveMenu.value = false
       },
     })
     const selections = computed(() => {
@@ -273,14 +274,32 @@ export const Select = genericComponent<new () => {
       }
     }
 
+    const onKeydownSetCurrent = debounce(({ key }: KeyboardEvent) => {
+      if (pendingIndex.value === undefined) pendingIndex.value = -1
+      if (key === keyValues.up) {
+        pendingIndex.value = Math.max(0, pendingIndex.value - 1)
+      }
+      if (key === keyValues.down) {
+        pendingIndex.value = Math.min(
+          filteredItems.value.length - 1,
+          pendingIndex.value + 1
+        )
+      }
+    }, 60)
+
     const onKeydownToggle = debounce(() => {
-      const value = filteredItems.value[0].value
-      if (props.multiple) {
-        active.value = active.value.indexOf(value) > -1
-          ? active.value.filter(v => v !== value)
-          : active.value.concat([value])
-      } else {
-        active.value = [value]
+      if (!isActiveMenu.value) {
+        isActiveMenu.value = true
+      } else if (filteredItems.value.length > 0) {
+        const index = pendingIndex.value in filteredItems.value ? pendingIndex.value : 0
+        const value = filteredItems.value[index as any].value
+        if (props.multiple) {
+          active.value = active.value.indexOf(value) > -1
+            ? active.value.filter(v => v !== value)
+            : active.value.concat([value])
+        } else {
+          active.value = [value]
+        }
       }
     }, 60)
 
@@ -288,16 +307,17 @@ export const Select = genericComponent<new () => {
       active.value = active.value.filter((_, i) => i !== active.value.length - 1)
     }, 60)
 
-    function onKeydown ({ key }: KeyboardEvent) {
-      if ([keyValues.enter, keyValues.space].includes(key)) {
-        if (isActiveMenu.value) {
-          if (props.filterable
-            && filteredItems.value.length > 0) {
-            onKeydownToggle()
-          }
-        } else {
-          isActiveMenu.value = true
-        }
+    function onKeydown (e: KeyboardEvent) {
+      const { key } = e
+
+      if ([keyValues.up, keyValues.down].includes(key)) {
+        e.preventDefault()
+        onKeydownSetCurrent(e)
+      }
+
+      if ([keyValues.enter, keyValues.space, ' '].includes(key)) {
+        e.preventDefault()
+        onKeydownToggle()
       }
 
       if (key === keyValues.backspace
@@ -394,7 +414,7 @@ export const Select = genericComponent<new () => {
                 { activator.value && (
                   <Menu
                     ref={ menuRef }
-                    contentClass="ve-select-menu-wrapper"
+                    contentClass="ve-select__menu-wrapper"
                     id={ `${ id.value }-menu` }
                     v-model={ isActiveMenu.value }
                     activator={ activator.value }
@@ -409,22 +429,38 @@ export const Select = genericComponent<new () => {
                     >
                       { {
                         ...listSlots,
-                        item: (item: any) => slots.item?.(item) ?? (
-                          <ListItem
-                            v-show={ !item.filtered }
-                            onMousedown={ (e: MouseEvent) => e.preventDefault() }
-                            link
-                            { ...item }
-                          >
-                            { {
-                              prepend: props.multiple ? () => (
-                                <ListItemAvatar left>
-                                  <Checkbox model-value={ active.value.includes(item.value) } />
-                                </ListItemAvatar>
-                              ) : undefined
-                            } }
-                          </ListItem>
-                        ),
+                        item: (itemSlot: any) => {
+                          const { item, index } = itemSlot
+
+                          const itemSlotProps = {
+                            onMousedown: (e: MouseEvent) => e.preventDefault(),
+                            onMousemove: () => pendingIndex.value = index,
+                            class: {
+                              've-select__item--pendding': pendingIndex.value === index
+                            }
+                          }
+
+                          if (slots.item) {
+                            return slots.item({ ...itemSlot, props: itemSlotProps })
+                          }
+
+                          return (
+                            <ListItem
+                              v-show={ !item.filtered }
+                              { ...itemSlotProps }
+                              { ...item }
+                              link
+                            >
+                              { {
+                                prepend: props.multiple ? () => (
+                                  <ListItemAvatar left>
+                                    <Checkbox model-value={ active.value.includes(item.value) } />
+                                  </ListItemAvatar>
+                                ) : undefined
+                              } }
+                            </ListItem>
+                          )
+                        },
                         append: () => (
                           <>
                             { filteredItems.value.length === 0 && (slots['no-data']?.() ?? (
@@ -449,6 +485,7 @@ export const Select = genericComponent<new () => {
 
                       return slots.tag?.({ item, close }) ?? (
                         <Tag
+                          aria-hidden="true"
                           tag="div"
                           key={ item.value }
                           closable

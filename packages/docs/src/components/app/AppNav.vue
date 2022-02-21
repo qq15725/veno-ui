@@ -64,7 +64,7 @@
         :items="menus"
         :opened="opened"
     >
-      <template #header="{ title, apiType }">
+      <template #header="{ item: { title, apiType } }">
         <ve-list-subheader v-if="apiType">{{ title }}</ve-list-subheader>
         <ve-list-subheader
             v-else
