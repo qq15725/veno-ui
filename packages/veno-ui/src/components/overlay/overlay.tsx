@@ -210,65 +210,67 @@ export const Overlay = genericComponent<new () => {
             ),
           }) }
 
-          <Teleport
-            disabled={ !teleportTarget.value }
-            to={ teleportTarget.value || 'body' }
-          >
-            { hasContent.value && (
-              <div
-                class={ [
-                  've-overlay',
-                  {
-                    've-overlay--absolute': props.absolute || props.contained,
-                    've-overlay--active': isActive.value,
-                    've-overlay--contained': props.contained,
-                  },
-                  anchorClasses.value,
-                  themeClasses.value,
-                ] }
-                ref={ root }
-                style={{
-                  top: convertToUnit(top.value),
-                  zIndex: overlayZIndex.value,
-                }}
-                { ...attrs }
-              >
-                <Scrim
-                  color={ typeof props.scrim === 'string' ? props.scrim : undefined }
-                  modelValue={ isActive.value && !!props.scrim }
-                />
-
-                <MaybeTransition
-                  appear
-                  onAfterLeave={ onAfterLeave }
-                  persisted
-                  transition={ props.transition }
-                  target={ activatorEl.value }
+          { IN_BROWSER && (
+            <Teleport
+              disabled={ !teleportTarget.value }
+              to={ teleportTarget.value }
+            >
+              { hasContent.value && (
+                <div
+                  class={ [
+                    've-overlay',
+                    {
+                      've-overlay--absolute': props.absolute || props.contained,
+                      've-overlay--active': isActive.value,
+                      've-overlay--contained': props.contained,
+                    },
+                    anchorClasses.value,
+                    themeClasses.value,
+                  ] }
+                  ref={ root }
+                  style={{
+                    top: convertToUnit(top.value),
+                    zIndex: overlayZIndex.value,
+                  }}
+                  { ...attrs }
                 >
-                  <div
-                    ref={ contentEl }
-                    v-show={ isActive.value }
-                    v-click-outside={ {
-                      handler: onClickOutside,
-                      closeConditional,
-                      include: () => [activatorEl.value]
-                    } }
-                    class={ [
-                      've-overlay__wrapper',
-                      props.contentClass,
-                    ] }
-                    style={ [
-                      dimensionStyles.value,
-                      contentStyles.value,
-                    ] }
-                    { ...toHandlers(contentEvents.value) }
+                  <Scrim
+                    color={ typeof props.scrim === 'string' ? props.scrim : undefined }
+                    modelValue={ isActive.value && !!props.scrim }
+                  />
+
+                  <MaybeTransition
+                    appear
+                    onAfterLeave={ onAfterLeave }
+                    persisted
+                    transition={ props.transition }
+                    target={ activatorEl.value }
                   >
-                    { slots.default?.({ isActive }) }
-                  </div>
-                </MaybeTransition>
-              </div>
-            ) }
-          </Teleport>
+                    <div
+                      ref={ contentEl }
+                      v-show={ isActive.value }
+                      v-click-outside={ {
+                        handler: onClickOutside,
+                        closeConditional,
+                        include: () => [activatorEl.value]
+                      } }
+                      class={ [
+                        've-overlay__wrapper',
+                        props.contentClass,
+                      ] }
+                      style={ [
+                        dimensionStyles.value,
+                        contentStyles.value,
+                      ] }
+                      { ...toHandlers(contentEvents.value) }
+                    >
+                      { slots.default?.({ isActive }) }
+                    </div>
+                  </MaybeTransition>
+                </div>
+              ) }
+            </Teleport>
+          ) }
         </>
       )
     })

@@ -3,7 +3,7 @@ import './styles/input.scss'
 
 // Utils
 import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
-import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs } from '../../utils'
+import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs, IN_BROWSER } from '../../utils'
 
 // Components
 import { Teleport } from 'vue'
@@ -303,10 +303,11 @@ export const Input = genericComponent<new () => {
                           <>
                             { slots.default?.(slotProps) }
 
-                            <Teleport
-                              disabled={ !props.inputAttach }
-                              to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
-                            >
+                            { IN_BROWSER && (
+                              <Teleport
+                                disabled={ !props.inputAttach }
+                                to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
+                              >
                                <textarea
                                  v-model={ model.value }
                                  v-intersect={ [{
@@ -326,17 +327,18 @@ export const Input = genericComponent<new () => {
                                  { ...nativeControlAttrs }
                                />
 
-                              { props.autoResize && (
-                                <textarea
-                                  class="ve-input__textarea-mirror"
-                                  v-model={ model.value }
-                                  ref={ mirrorRef }
-                                  readonly
-                                  aria-hidden="true"
-                                  { ...nativeControlProps }
-                                />
-                              ) }
-                            </Teleport>
+                                { props.autoResize && (
+                                  <textarea
+                                    class="ve-input__textarea-mirror"
+                                    v-model={ model.value }
+                                    ref={ mirrorRef }
+                                    readonly
+                                    aria-hidden="true"
+                                    { ...nativeControlProps }
+                                  />
+                                ) }
+                              </Teleport>
+                            ) }
                           </>
                         )
                       } else {
@@ -344,44 +346,46 @@ export const Input = genericComponent<new () => {
                           <>
                             { slots.default?.(slotProps) }
 
-                            <Teleport
-                              disabled={ !props.inputAttach }
-                              to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
-                            >
-                              <input
-                                v-intersect={ [{
-                                  handler: onIntersect,
-                                }, null, ['once']] }
-                                v-model={ model.value }
-                                onInput={ ((e: InputEvent) => {
-                                  if (mirrorRef.value) {
-                                    mirrorRef.value.textContent = (e.target as any).value
-                                    resize()
-                                  }
-                                }) as any }
-                                autofocus={ props.autofocus }
-                                disabled={ isDisabled.value }
-                                id={ id.value }
-                                name={ props.name }
-                                onFocus={ focus }
-                                onBlur={ blur }
-                                placeholder={ props.placeholder }
-                                readonly={ isReadonly.value }
-                                ref={ inputRef }
-                                type={ props.type }
-                                { ...nativeControlProps }
-                                { ...nativeControlAttrs }
-                              />
-
-                              { props.autoResize && (
-                                <span
-                                  class="ve-input__input-mirror"
-                                  ref={ mirrorRef }
-                                  aria-hidden="true"
+                            { IN_BROWSER && (
+                              <Teleport
+                                disabled={ !props.inputAttach }
+                                to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
+                              >
+                                <input
+                                  v-intersect={ [{
+                                    handler: onIntersect,
+                                  }, null, ['once']] }
+                                  v-model={ model.value }
+                                  onInput={ ((e: InputEvent) => {
+                                    if (mirrorRef.value) {
+                                      mirrorRef.value.textContent = (e.target as any).value
+                                      resize()
+                                    }
+                                  }) as any }
+                                  autofocus={ props.autofocus }
+                                  disabled={ isDisabled.value }
+                                  id={ id.value }
+                                  name={ props.name }
+                                  onFocus={ focus }
+                                  onBlur={ blur }
+                                  placeholder={ props.placeholder }
+                                  readonly={ isReadonly.value }
+                                  ref={ inputRef }
+                                  type={ props.type }
                                   { ...nativeControlProps }
-                                >{ model.value }</span>
-                              ) }
-                            </Teleport>
+                                  { ...nativeControlAttrs }
+                                />
+
+                                { props.autoResize && (
+                                  <span
+                                    class="ve-input__input-mirror"
+                                    ref={ mirrorRef }
+                                    aria-hidden="true"
+                                    { ...nativeControlProps }
+                                  >{ model.value }</span>
+                                ) }
+                              </Teleport>
+                            ) }
                           </>
                         )
                       }
