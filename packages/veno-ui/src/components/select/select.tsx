@@ -208,9 +208,11 @@ export const Select = genericComponent<new () => {
       set: val => {
         query.value = val
         onUpdateQuery(val)
-        nextTick(() => {
-          menuRef.value?.overlayRef?.updatePosition()
-        })
+        if (isActiveMenu.value) {
+          nextTick(() => {
+            menuRef.value?.overlayRef?.updatePosition?.()
+          })
+        }
       },
     })
     const placeholder = computed(() => {
@@ -275,17 +277,24 @@ export const Select = genericComponent<new () => {
     }
 
     const onKeydownSetCurrent = debounce(({ key }: KeyboardEvent) => {
-      if (pendingIndex.value === undefined) pendingIndex.value = -1
       if (key === keyValues.up) {
-        pendingIndex.value = Math.max(0, pendingIndex.value - 1)
+        if (pendingIndex.value === undefined) {
+          pendingIndex.value = filteredItems.value.length - 1
+        } else {
+          pendingIndex.value = Math.max(0, pendingIndex.value - 1)
+        }
       }
       if (key === keyValues.down) {
-        pendingIndex.value = Math.min(
-          filteredItems.value.length - 1,
-          pendingIndex.value + 1
-        )
+        if (pendingIndex.value === undefined) {
+          pendingIndex.value = 0
+        } else {
+          pendingIndex.value = Math.min(
+            filteredItems.value.length - 1,
+            pendingIndex.value + 1
+          )
+        }
       }
-    }, 60)
+    }, 30)
 
     const onKeydownToggle = debounce(() => {
       if (!isActiveMenu.value) {
@@ -420,6 +429,7 @@ export const Select = genericComponent<new () => {
                     activator={ activator.value }
                     minWidth={ undefined }
                     openOnClick={ false }
+                    eager
                   >
                     <List
                       maxHeight={ 250 }

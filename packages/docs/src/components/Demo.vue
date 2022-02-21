@@ -15,7 +15,7 @@
 
     setup (props) {
       const btn = ref()
-      const { repository } = useAppStore()
+      const { repositoryBaseURL } = useAppStore()
       const user = useUserStore()
       const theme = ref(user.theme)
 
@@ -25,7 +25,7 @@
 
       return {
         ...props,
-        repository,
+        repositoryBaseURL,
         theme,
         isActive: ref(false),
         btn,
@@ -121,7 +121,7 @@
         >
           <ve-button
               v-bind="tooltipProps"
-              :href="`${ repository }${ file }`"
+              :href="`${ repositoryBaseURL }${ file }`"
               target="_blank"
               icon="mdi-github"
               variant="text"

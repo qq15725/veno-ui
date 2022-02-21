@@ -6,7 +6,8 @@
   $root: &;
 
   // Elements
-  &__item--pendding {
+  &__item--pendding.ve-list-item {
+     color: rgb(var(--ve-theme-on-surface)) !important;
     .ve-list-item__overlay {
       visibility: visible;
       opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));

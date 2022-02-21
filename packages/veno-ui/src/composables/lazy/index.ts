@@ -3,13 +3,16 @@ import { computed, ref, watch } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
-import type { Ref } from 'vue'
+import type { Ref, ExtractPropTypes } from 'vue'
 
 export const makeLazyProps = propsFactory({
   eager: Boolean,
 }, 'lazy')
 
-export function useLazy (props: { eager: boolean }, active: Ref<boolean>) {
+export function useLazy (
+  props: ExtractPropTypes<ReturnType<typeof makeLazyProps>>,
+  active: Ref<boolean>
+) {
   const isBooted = ref(false)
 
   const hasContent = computed(() => isBooted.value || props.eager || active.value)
