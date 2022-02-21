@@ -2,8 +2,8 @@
 import './styles/menu.scss'
 
 // Utils
-import { computed } from 'vue'
-import { genericComponent, getUid } from '../../utils'
+import { computed, ref } from 'vue'
+import { genericComponent, getUid, useRender } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -35,11 +35,13 @@ export const Menu = genericComponent<new () => {
 
   setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
+    const overlayRef = ref()
     const id = computed(() => props.id || `ve-menu-${ getUid() }`)
 
-    return () => {
+    useRender(() => {
       return (
         <Overlay
+          ref={ overlayRef }
           v-model={ isActive.value }
           class="ve-menu"
           transition={ props.transition }
@@ -59,6 +61,10 @@ export const Menu = genericComponent<new () => {
           { slots }
         </Overlay>
       )
+    })
+
+    return {
+      overlayRef,
     }
   },
 })

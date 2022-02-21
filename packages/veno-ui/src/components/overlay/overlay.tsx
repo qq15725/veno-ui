@@ -279,6 +279,7 @@ export const Overlay = genericComponent<new () => {
       animateClick,
       contentEl,
       activatorEl,
+      updatePosition,
     }
   }
 })

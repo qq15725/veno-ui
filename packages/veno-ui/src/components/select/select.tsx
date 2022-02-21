@@ -2,7 +2,7 @@
 import './styles/select.scss'
 
 // Utils
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { genericComponent, getUid, wrapInArray, pick, debounce, keyValues, convertToUnit } from '../../utils'
 
 // Composables
@@ -158,6 +158,7 @@ export const Select = genericComponent<new () => {
 
   setup (props, { emit, slots }) {
     const activator = ref()
+    const menuRef = ref()
     const inputRef = ref()
     const tagInputRef = ref()
     const tagInputWidth = ref()
@@ -206,6 +207,9 @@ export const Select = genericComponent<new () => {
       set: val => {
         query.value = val
         onUpdateQuery(val)
+        nextTick(() => {
+          menuRef.value?.overlayRef?.updatePosition()
+        })
       },
     })
     const placeholder = computed(() => {
@@ -389,6 +393,7 @@ export const Select = genericComponent<new () => {
               <>
                 { activator.value && (
                   <Menu
+                    ref={ menuRef }
                     contentClass="ve-select-menu-wrapper"
                     id={ `${ id.value }-menu` }
                     v-model={ isActiveMenu.value }
