@@ -4,13 +4,14 @@
 // Blocks
 .ve-tag-group {
   display: flex;
+  flex-wrap: wrap;
   max-width: 100%;
   min-width: 0;
   overflow-x: auto;
-  padding: 4px 0;
+  padding-left: 4px;
 
   .ve-tag {
-    margin: 4px 8px 4px 0;
+    margin: 4px 4px 4px 0;
   }
 
   // Modifiers

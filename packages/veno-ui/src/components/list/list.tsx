@@ -17,6 +17,7 @@ import { ListChildren } from './list-children'
 
 // Types
 import type { Prop } from 'vue'
+import type { MakeSlots } from '../../utils'
 import type { ListChildrenSlots } from './list-children'
 
 export type ListItemProps = {
@@ -35,7 +36,7 @@ function parseItems (items?: (string | ListItemProps)[]): InternalListItemProps[
   if (!items) return undefined
 
   return items.map(item => {
-    if (typeof item === 'string') return { type: 'item', value: item, title: item }
+    if (typeof item === 'string') return { type: 'item', props: { value: item, title: item } }
 
     const { $type, $children, ...props } = item
 
@@ -46,7 +47,10 @@ function parseItems (items?: (string | ListItemProps)[]): InternalListItemProps[
   })
 }
 
-export type ListSlots<T> = ListChildrenSlots<T>
+export type ListSlots<T> = ListChildrenSlots<T> & MakeSlots<{
+  prepend: [],
+  append: [],
+}>
 
 export const List = genericComponent<new <T>() => {
   $props: {
@@ -105,7 +109,11 @@ export const List = genericComponent<new <T>() => {
             paperStyles.value,
           ] }
         >
+          { slots.prepend?.() }
+
           <ListChildren items={ items.value }>{ slots }</ListChildren>
+
+          { slots.append?.() }
         </props.tag>
       )
     })

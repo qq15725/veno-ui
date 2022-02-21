@@ -3,7 +3,7 @@ import './styles/date-picker.scss'
 
 // Utils
 import { computed, ref, watch } from 'vue'
-import { genericComponent, getUid, wrapInArray } from '../../utils'
+import { genericComponent, getUid, wrapInArray, keyValues } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -107,11 +107,11 @@ export const DatePicker = genericComponent<new () => {
     }
 
     function onKeydown ({ key }: KeyboardEvent) {
-      if (['Enter', ' '].includes(key) && !isActiveMenu.value) {
+      if ([keyValues.enter, keyValues.space].includes(key) && !isActiveMenu.value) {
         isActiveMenu.value = true
       }
 
-      if (key === 'Escape' && isActiveMenu.value) {
+      if (key === keyValues.esc && isActiveMenu.value) {
         isActiveMenu.value = false
       }
     }

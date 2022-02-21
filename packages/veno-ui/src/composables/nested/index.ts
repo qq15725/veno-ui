@@ -25,6 +25,7 @@ export interface NestedProps {
   selected: string[] | undefined
   opened: string[] | undefined
   active: string[] | undefined
+  deleteAfterUnmount: boolean
   'onUpdate:selected': ((val: string[]) => void) | undefined
   'onUpdate:opened': ((val: string[]) => void) | undefined
   'onUpdate:active': ((val: string[]) => void) | undefined
@@ -73,6 +74,14 @@ export const makeNestedProps = propsFactory({
   opened: Array as Prop<string[]>,
   selected: Array as Prop<string[]>,
   active: Array as Prop<string[]>,
+
+  /**
+   * @zh 卸载 DOM 后删除
+   */
+  deleteAfterUnmount: {
+    type: Boolean,
+    default: true,
+  },
 }, 'nested')
 
 export const useNested = (props: NestedProps) => {
@@ -166,8 +175,11 @@ export const useNested = (props: NestedProps) => {
         }
         parents.value.delete(id)
         opened.value.delete(id)
-        active.value.delete(id)
-        selected.value.delete(id)
+
+        if (props.deleteAfterUnmount) {
+          active.value.delete(id)
+          selected.value.delete(id)
+        }
       },
       open: (id, value, event) => {
         const newOpened = openStrategy.value({

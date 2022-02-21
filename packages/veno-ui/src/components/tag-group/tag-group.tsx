@@ -26,10 +26,10 @@ export const TagGroup = defineComponent({
     },
 
     ...makeGroupProps({
-      selectedClass: 've-tag--active'
+      selectedClass: 've-tag--active',
     } as const),
     ...makePaperProps({
-      variant: 'contained-text'
+      variant: 'contained-text',
     } as const),
   },
 
@@ -44,6 +44,7 @@ export const TagGroup = defineComponent({
     provideDefaults({
       VeTag: {
         color: toRef(props, 'color'),
+        size: toRef(props, 'size'),
         variant: toRef(props, 'variant'),
       },
     })

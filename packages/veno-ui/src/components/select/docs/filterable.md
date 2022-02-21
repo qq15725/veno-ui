@@ -1,20 +1,19 @@
 :::demo
 
-# 多选选择器
+# 可过滤的
 
-通过设置 `multiple` 支持多选。
+通过设置 `filterable` ，可以让选择器支持过滤。
 
-配合 `tags` 得到一个标签形式的多选框。
+通过监听 `@update:query` 事件，获取查询字符串改动，并且已经做了反抖动处理。
 
 ```html
 <ve-select
-  v-model="selected"
   placeholder="请选择"
   :items="items"
   item-text="state"
   item-value="abbr"
   return-object
-  multiple
+  filterable
 />
 
 <ve-select
@@ -26,6 +25,7 @@
   return-object
   multiple
   tags
+  filterable
 />
 
 <ve-code :value="selected" />
@@ -37,7 +37,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      selected: ref(['FL']),
+      selected: ref([]),
       items: [
         { state: 'Florida', abbr: 'FL' },
         { state: 'Georgia', abbr: 'GA' },

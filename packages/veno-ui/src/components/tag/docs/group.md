@@ -3,7 +3,7 @@
 # 标签组
 
 ```html
-<ve-tag-group v-model="value" mandatory>
+<ve-tag-group v-model="value" mandatory class="mb-3">
   <ve-tag value="tag1">Tag1</ve-tag>
   <ve-tag value="tag2">Tag2</ve-tag>
 </ve-tag-group>

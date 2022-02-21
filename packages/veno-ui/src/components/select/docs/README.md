@@ -18,7 +18,15 @@ custom-text-value.md
 
 multiple.md
 
-no-data.md
+filterable.md
+
+search.md
+
+slots-item.md
+
+slots-tag.md
+
+slots-no-data.md
 
 :::
 

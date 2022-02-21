@@ -6,6 +6,7 @@ import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
 import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs } from '../../utils'
 
 // Components
+import { Teleport } from 'vue'
 import { FormControl } from '../form-control'
 import { InputControl } from '../input-control'
 import { Counter } from '../counter'
@@ -50,30 +51,90 @@ export const Input = genericComponent<new () => {
   directives: { Intersect },
 
   props: {
-    id: String,
+    /**
+     * @zh 自动聚焦
+     */
     autofocus: Boolean,
+
+    /**
+     * @zh 自动调整大小
+     */
+    autoResize: Boolean,
+
+    /**
+     * @zh 计数器
+     */
     counter: [Boolean, Number, String] as PropType<true | number | string>,
+
+    /**
+     * @zh 计数器值
+     */
     counterValue: Function as PropType<(value: any) => number>,
-    persistentCounter: Boolean,
-    placeholder: String,
-    type: {
-      type: String,
-      default: 'text',
+
+    /**
+     * @zh ID
+     */
+    id: String,
+
+    /**
+     * @zh 输入框需要传送到那个 DOM
+     */
+    inputAttach: [Boolean, String, Object] as PropType<boolean | string | Element>,
+
+    /**
+     * @zh textarea 独有最大行数
+     */
+    maxRows: {
+      type: [Number, String],
+      validator: (v: any) => !isNaN(parseFloat(v)),
     },
-    // Textarea Type
-    autoGrow: Boolean,
+
+    /**
+     * @zh 输入框的值
+     */
+    modelValue: null,
+
+    /**
+     * @zh 输入框 name
+     */
+    name: String,
+
+    /**
+     * @zh textarea 独有不允许重置大小
+     */
     noResize: Boolean,
+
+    /**
+     * @zh 持续显示的计数器
+     */
+    persistentCounter: Boolean,
+
+    /**
+     * @zh 占位符内容
+     */
+    placeholder: String,
+
+    /**
+     * @zh textarea 独有最小行数
+     */
     rows: {
       type: [Number, String],
       default: 5,
       validator: (v: any) => !isNaN(parseFloat(v)),
     },
-    maxRows: {
-      type: [Number, String],
-      validator: (v: any) => !isNaN(parseFloat(v)),
+
+    /**
+     * @zh 输入框类型
+     */
+    type: {
+      type: String,
+      default: 'text',
     },
-    name: String,
-    modelValue: null,
+
+    /**
+     * @zh 宽
+     */
+    width: [String, Number],
 
     ...makeInputControlProps(),
   },
@@ -87,7 +148,8 @@ export const Input = genericComponent<new () => {
   setup (props, { attrs, slots, emit }) {
     const inputControlRef = ref<InputControl>()
     const formControlRef = ref<FormControl>()
-    const controlHeight = ref('auto')
+    const controlHeight = ref()
+    const controlWidth = ref(props.width)
     const model = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.id || `ve-input-${ getUid() }`)
     const internalDirty = ref(false)
@@ -124,33 +186,38 @@ export const Input = genericComponent<new () => {
       (entries[0].target as HTMLInputElement)?.focus?.()
     }
 
-    const sizerRef = ref<HTMLTextAreaElement>()
+    const mirrorRef = ref<HTMLTextAreaElement | HTMLInputElement>()
 
-    function calculateHeight () {
-      if (!props.autoGrow) return
+    function resize () {
+      if (!props.autoResize) return
       nextTick(() => {
-        if (!sizerRef.value) return
-        const style = getComputedStyle(sizerRef.value)
-        const padding = (parseFloat(style.getPropertyValue('--ve-native-control---padding-top')) || 0)
-          + (parseFloat(style.getPropertyValue('--ve-native-control---padding-bottom')) || 0)
-        const height = sizerRef.value.scrollHeight
-        const lineHeight = parseFloat(style.lineHeight)
-        const minHeight = parseFloat(String(props.rows)) * lineHeight + padding
-        const maxHeight = parseFloat(String(props.maxRows!)) * lineHeight + padding || Infinity
-        controlHeight.value = convertToUnit(Math.min(maxHeight, Math.max(minHeight, height ?? 0)))
+        if (!mirrorRef.value) return
+        if (props.type === 'textarea') {
+          const style = getComputedStyle(mirrorRef.value)
+          const padding = (parseFloat(style.getPropertyValue('--ve-native-control---padding-top')) || 0)
+            + (parseFloat(style.getPropertyValue('--ve-native-control---padding-bottom')) || 0)
+          const lineHeight = parseFloat(style.lineHeight)
+          const minHeight = parseFloat(props.rows) * lineHeight + padding
+          const maxHeight = parseFloat(props.maxRows!) * lineHeight + padding || Infinity
+          controlHeight.value = Math.min(maxHeight, Math.max(minHeight, mirrorRef.value.scrollHeight))
+        } else {
+          controlWidth.value = Math.max(
+            parseFloat(props.width ?? 100),
+            mirrorRef.value.scrollWidth
+          )
+        }
       })
     }
 
-    onMounted(calculateHeight)
-    watch(model, calculateHeight)
-    watch(() => props.rows, calculateHeight)
-    watch(() => props.maxRows, calculateHeight)
-
+    onMounted(resize)
+    watch(model, resize)
+    watch(() => props.rows, resize)
+    watch(() => props.maxRows, resize)
     let observer: ResizeObserver | undefined
-    watch(sizerRef, val => {
+    watch(mirrorRef, val => {
       if (val) {
-        observer = new ResizeObserver(calculateHeight)
-        observer.observe(sizerRef.value!)
+        observer = new ResizeObserver(resize)
+        observer.observe(mirrorRef.value!)
       } else {
         observer?.disconnect()
       }
@@ -176,9 +243,6 @@ export const Input = genericComponent<new () => {
     useRender(() => {
       const isTextarea = props.type === 'textarea'
       const hasCounter = !!(slots.counter || props.counter || props.counterValue)
-      const styles = isTextarea && controlHeight.value
-        ? { '--ve-form-control__control---height': controlHeight.value }
-        : {}
       const [inputControlProps] = filterInputControlProps(props)
       const [, nativeControlAttrs] = filterInputAttrs(attrs)
       const [formControlSlots] = filterFormControlSlots(slots)
@@ -191,16 +255,21 @@ export const Input = genericComponent<new () => {
             've-input',
             {
               've-input--textarea': isTextarea,
-              've-input--auto-grow': props.autoGrow,
-              've-input--no-resize': props.noResize || props.autoGrow,
+              've-input--auto-resize': props.autoResize,
+              've-input--no-resize': props.noResize || props.autoResize,
             },
           ] }
           label-id={ id.value }
-          style={ styles }
+          style={
+            controlHeight.value
+              ? { '--ve-form-control__control---height': convertToUnit(controlHeight.value) }
+              : {}
+          }
           name={ props.name }
           onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
           onClick:label={ (e: MouseEvent) => emit('click:label', e) }
           onClick:append={ (e: MouseEvent) => emit('click:append', e) }
+          width={ controlWidth.value }
         >
           { {
             ...formControlSlots,
@@ -234,37 +303,40 @@ export const Input = genericComponent<new () => {
                           <>
                             { slots.default?.(slotProps) }
 
-                            <textarea
-                              v-model={ model.value }
-                              v-intersect={ [{
-                                handler: onIntersect,
-                              }, null, ['once']] }
-                              autofocus={ props.autofocus }
-                              disabled={ isDisabled.value }
-                              id={ id.value }
-                              name={ props.name }
-                              onFocus={ focus }
-                              onBlur={ blur }
-                              placeholder={ props.placeholder }
-                              readonly={ isReadonly.value }
-                              ref={ inputRef }
-                              rows={ props.rows }
-                              { ...nativeControlProps }
-                              { ...nativeControlAttrs }
-                            />
+                            <Teleport
+                              disabled={ !props.inputAttach }
+                              to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
+                            >
+                               <textarea
+                                 v-model={ model.value }
+                                 v-intersect={ [{
+                                   handler: onIntersect,
+                                 }, null, ['once']] }
+                                 autofocus={ props.autofocus }
+                                 disabled={ isDisabled.value }
+                                 id={ id.value }
+                                 name={ props.name }
+                                 onFocus={ focus }
+                                 onBlur={ blur }
+                                 placeholder={ props.placeholder }
+                                 readonly={ isReadonly.value }
+                                 ref={ inputRef }
+                                 rows={ props.rows }
+                                 { ...nativeControlProps }
+                                 { ...nativeControlAttrs }
+                               />
 
-                            {
-                              props.autoGrow && (
+                              { props.autoResize && (
                                 <textarea
-                                  class="ve-input__sizer"
+                                  class="ve-input__textarea-mirror"
                                   v-model={ model.value }
-                                  ref={ sizerRef }
+                                  ref={ mirrorRef }
                                   readonly
                                   aria-hidden="true"
                                   { ...nativeControlProps }
                                 />
-                              )
-                            }
+                              ) }
+                            </Teleport>
                           </>
                         )
                       } else {
@@ -272,24 +344,44 @@ export const Input = genericComponent<new () => {
                           <>
                             { slots.default?.(slotProps) }
 
-                            <input
-                              v-intersect={ [{
-                                handler: onIntersect,
-                              }, null, ['once']] }
-                              v-model={ model.value }
-                              autofocus={ props.autofocus }
-                              disabled={ isDisabled.value }
-                              id={ id.value }
-                              name={ props.name }
-                              onFocus={ focus }
-                              onBlur={ blur }
-                              placeholder={ props.placeholder }
-                              readonly={ isReadonly.value }
-                              ref={ inputRef }
-                              type={ props.type }
-                              { ...nativeControlProps }
-                              { ...nativeControlAttrs }
-                            />
+                            <Teleport
+                              disabled={ !props.inputAttach }
+                              to={ typeof props.inputAttach === 'boolean' ? null : props.inputAttach }
+                            >
+                              <input
+                                v-intersect={ [{
+                                  handler: onIntersect,
+                                }, null, ['once']] }
+                                v-model={ model.value }
+                                onInput={ ((e: InputEvent) => {
+                                  if (mirrorRef.value) {
+                                    mirrorRef.value.textContent = (e.target as any).value
+                                    resize()
+                                  }
+                                }) as any }
+                                autofocus={ props.autofocus }
+                                disabled={ isDisabled.value }
+                                id={ id.value }
+                                name={ props.name }
+                                onFocus={ focus }
+                                onBlur={ blur }
+                                placeholder={ props.placeholder }
+                                readonly={ isReadonly.value }
+                                ref={ inputRef }
+                                type={ props.type }
+                                { ...nativeControlProps }
+                                { ...nativeControlAttrs }
+                              />
+
+                              { props.autoResize && (
+                                <span
+                                  class="ve-input__input-mirror"
+                                  ref={ mirrorRef }
+                                  aria-hidden="true"
+                                  { ...nativeControlProps }
+                                >{ model.value }</span>
+                              ) }
+                            </Teleport>
                           </>
                         )
                       }

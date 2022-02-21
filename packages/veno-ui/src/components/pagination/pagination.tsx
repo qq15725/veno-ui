@@ -394,11 +394,11 @@ export const Pagination = defineComponent({
       refs.value[currentIndex]?.$el.focus()
     }
 
-    function onKeydown (e: KeyboardEvent) {
-      if (e.key === keyValues.left && !props.disabled && page.value > firstPage.value) {
+    function onKeydown ({ key }: KeyboardEvent) {
+      if (key === keyValues.left && !props.disabled && page.value > firstPage.value) {
         page.value = page.value - 1
         nextTick(updateFocus)
-      } else if (e.key === keyValues.right && !props.disabled && page.value < firstPage.value + lastPage.value - 1) {
+      } else if (key === keyValues.right && !props.disabled && page.value < firstPage.value + lastPage.value - 1) {
         page.value = page.value + 1
         nextTick(updateFocus)
       }
@@ -482,9 +482,9 @@ export const Pagination = defineComponent({
                 width="60"
                 v-model={ internalPage.value }
                 type="number"
-                onKeydown={ (e: KeyboardEvent) => {
+                onKeydown={ ({ key }: KeyboardEvent) => {
                   if (
-                    ['Enter', ' '].includes(e.key)
+                    key === keyValues.enter
                     && internalPage.value
                     && internalPage.value > 0
                     && internalPage.value <= lastPage.value

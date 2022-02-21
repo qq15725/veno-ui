@@ -1,10 +1,8 @@
 :::demo
 
-# 多选选择器
+# 插槽-标签项
 
-通过设置 `multiple` 支持多选。
-
-配合 `tags` 得到一个标签形式的多选框。
+通过 `tag` 插槽可以自定义标签渲染。
 
 ```html
 <ve-select
@@ -15,18 +13,18 @@
   item-value="abbr"
   return-object
   multiple
-/>
-
-<ve-select
-  v-model="selected"
-  placeholder="请选择"
-  :items="items"
-  item-text="state"
-  item-value="abbr"
-  return-object
-  multiple
   tags
-/>
+>
+  <template #tag="{ item, close }">
+    <ve-tag 
+      :key="item.value" 
+      v-bind="item"
+      @click:close="close"
+      closable
+      variant="contained"
+    />
+  </template>
+</ve-select>
 
 <ve-code :value="selected" />
 ```

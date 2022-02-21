@@ -29,25 +29,68 @@ export const Tag = defineComponent({
   directives: { Ripple },
 
   props: {
+    /**
+     * @zh 激活时的 class
+     */
     activeClass: String,
+
+    /**
+     * @zh 追加的头像图片
+     */
     appendAvatar: String,
+
+    /**
+     * @zh 追加的图标
+     */
     appendIcon: String,
+
+    /**
+     * @zh 可关闭
+     */
     closable: Boolean,
+
+    /**
+     * @zh 关闭图标
+     */
     closeIcon: {
       type: String,
       default: '$close',
     },
+
+    /**
+     * @zh 是否显示
+     */
     modelValue: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 前置的头像图片
+     */
     prependAvatar: String,
+
+    /**
+     * @zh 前置的图标
+     */
     prependIcon: String,
+
+    /**
+     * @zh 涟漪动画
+     */
     ripple: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 标签文字
+     */
     text: String,
+
+    /**
+     * @zh 是否为链接
+     */
     link: Boolean,
     ...makeLoadingProps(),
     ...makeTransitionProps({
@@ -55,7 +98,6 @@ export const Tag = defineComponent({
     } as const),
     ...makePaperProps({
       tag: 'span',
-      size: 'x-small',
       shape: 'rounded-sm',
       variant: 'contained-text',
     } as const),
@@ -64,18 +106,20 @@ export const Tag = defineComponent({
   },
 
   emits: {
+    'click:close': (e: MouseEvent) => true,
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { slots, attrs }) {
+  setup (props, { attrs, emit, slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
     const { loadingClasses } = useLoading(props)
     const group = useGroupItem(props, TagGroupKey, false)
     const link = useLink(props, attrs)
 
-    function onCloseClick (e: Event) {
+    function onCloseClick (e: MouseEvent) {
       isActive.value = false
+      emit('click:close', e)
     }
 
     return () => {

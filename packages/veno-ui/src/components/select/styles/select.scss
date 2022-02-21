@@ -7,7 +7,30 @@
 
   // Elements
   &__selections {
-    padding: 4px !important;
+    padding-left: 12px !important;
+  }
+
+  &__tag-input {
+    margin: 4px 4px 4px 0;
+    max-width: 100%;
+    outline: none;
+    position: relative;
+    vertical-align: bottom;
+
+    > input {
+      padding: 0 !important;
+    }
+  }
+
+  &__tag-input-mirror {
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    visibility: hidden;
+    white-space: pre;
+    width: 0 !important;
   }
 
   // InputControl
@@ -27,5 +50,9 @@
 
   &--active-menu .ve-input-control__append-inner .ve-icon {
     transform: rotate(180deg);
+  }
+
+  .ve-select__selections + .ve-native-control {
+    padding-inline-start: 0;
   }
 }

@@ -20,13 +20,25 @@
   }
 
   // Elements
-  &__sizer {
-    visibility: hidden;
+  &__textarea-mirror {
+    height: 0 !important;
+    left: 0;
+    min-height: 0 !important;
+    pointer-events: none;
     position: absolute;
     top: 0;
+    visibility: hidden;
+  }
+
+  &__input-mirror {
     left: 0;
-    height: 0 !important;
-    pointer-events: none;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    visibility: hidden;
+    white-space: pre;
+    width: 0 !important;
   }
 
   @at-root {
@@ -42,7 +54,7 @@
         resize: none;
       }
 
-      #{$root}--auto-grow & {
+      #{$root}--auto-resize & {
         overflow: hidden;
       }
 

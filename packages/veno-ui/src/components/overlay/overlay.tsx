@@ -9,7 +9,8 @@ import {
   genericComponent,
   getScrollParent,
   standardEasing,
-  useRender
+  useRender,
+  keyValues
 } from '../../utils'
 
 // Components
@@ -146,8 +147,8 @@ export const Overlay = genericComponent<new () => {
       }
     }, { immediate: true })
 
-    function onKeydown (e: KeyboardEvent) {
-      if (e.key === 'Escape' && isTop.value) {
+    function onKeydown ({ key }: KeyboardEvent) {
+      if (key === keyValues.esc && isTop.value) {
         if (!props.persistent) {
           isActive.value = false
         } else {

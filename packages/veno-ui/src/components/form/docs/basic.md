@@ -60,7 +60,7 @@
   />
 
   <ve-input
-    auto-grow
+    auto-resize
     clearable
     counter="255"
     label="Textarea"
