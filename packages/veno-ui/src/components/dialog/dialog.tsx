@@ -10,7 +10,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { makeTransitionProps } from '../../composables/transition'
 
 // Components
-import { ModalTransition } from '../transition'
+import { DialogTransition } from '../transition'
 import { Overlay } from '../overlay'
 
 // Types
@@ -27,7 +27,7 @@ export const Dialog = genericComponent<new () => {
     id: String,
     modelValue: Boolean,
     ...makeTransitionProps({
-      transition: { component: ModalTransition },
+      transition: { component: DialogTransition },
     } as const)
   },
 
@@ -50,9 +50,7 @@ export const Dialog = genericComponent<new () => {
           'aria-describedby': id.value,
         } }
         v-model={ isActive.value }
-        class={ [
-          've-dialog',
-        ] }
+        class="ve-dialog"
         id={ id.value }
         transition={ props.transition }
         { ...attrs }

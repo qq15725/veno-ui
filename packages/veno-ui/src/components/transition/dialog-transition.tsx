@@ -29,14 +29,13 @@ export const DialogTransition = defineComponent({
 
         const { x, y } = getDimensions(props.target!, el as HTMLElement)
 
-        const animation = el.animate([
+        el.animate([
           { transform: `translate(${ x }px, ${ y }px) scale(0.1)`, opacity: 0 },
           { transform: '' },
         ], {
           duration: 225,
           easing: deceleratedEasing,
-        })
-        animation.finished.then(() => done())
+        }).finished.then(() => done())
       },
       onAfterEnter (el: Element) {
         (el as HTMLElement).style.removeProperty('pointer-events')
@@ -49,14 +48,13 @@ export const DialogTransition = defineComponent({
 
         const { x, y } = getDimensions(props.target!, el as HTMLElement)
 
-        const animation = el.animate([
+        el.animate([
           { transform: '' },
           { transform: `translate(${ x }px, ${ y }px) scale(0.1)`, opacity: 0 },
         ], {
           duration: 125,
           easing: acceleratedEasing,
-        })
-        animation.finished.then(() => done())
+        }).finished.then(() => done())
       },
       onAfterLeave (el: Element) {
         (el as HTMLElement).style.removeProperty('pointer-events')
@@ -81,9 +79,13 @@ export const DialogTransition = defineComponent({
 function getDimensions (target: HTMLElement, el: HTMLElement) {
   const targetBox = target.getBoundingClientRect()
   const elBox = nullifyTransforms(el)
-  const [originX, originY] = getComputedStyle(el).transformOrigin.split(' ').map(v => parseFloat(v))
-
-  const [anchorSide, anchorOffset] = getComputedStyle(el).getPropertyValue('--v-overlay-anchor-origin').split(' ')
+  const [originX, originY] = getComputedStyle(el)
+    .transformOrigin
+    .split(' ')
+    .map(v => parseFloat(v))
+  const [anchorSide, anchorOffset] = getComputedStyle(el)
+    .getPropertyValue('--ve-overlay-anchor-origin')
+    .split(' ')
 
   let offsetX = targetBox.left + targetBox.width / 2
   if (anchorSide === 'left' || anchorOffset === 'left') {

@@ -92,9 +92,10 @@ export const Overlay = genericComponent<new () => {
 
   setup (props, { slots, attrs, emit }) {
     const isActive = useProxiedModel(props, 'modelValue')
+    const isLeaved = ref(true)
     const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
     const { themeClasses } = provideTheme(props)
-    const { hasContent, onAfterLeave } = useLazy(props, isActive)
+    const { hasContent, onAfterLeave: lazyOnAfterLeave } = useLazy(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
     const root = ref<HTMLElement>()
@@ -108,6 +109,7 @@ export const Overlay = genericComponent<new () => {
     } = useActivator(props, {
       isActive,
     })
+
     const {
       contentStyles,
       anchorClasses,
@@ -117,15 +119,30 @@ export const Overlay = genericComponent<new () => {
       activatorEl,
       isActive,
     })
+
     useScrollStrategy(props, {
       root,
       contentEl,
       activatorEl,
-      isActive,
+      isActive: computed(() => !isLeaved.value),
       updatePosition,
     })
 
-    function onClickOutside (e: MouseEvent) {
+    // Add a quick "bounce" animation to the content
+    const animateClick = () => {
+      if (props.noClickAnimation) return
+
+      contentEl.value?.animate([
+        { transformOrigin: 'center' },
+        { transform: 'scale(1.03)' },
+        { transformOrigin: 'center' },
+      ], {
+        duration: 150,
+        easing: standardEasing,
+      })
+    }
+
+    const onClickOutside = (e: MouseEvent) => {
       emit('click:outside', e)
 
       if (!props.persistent) {
@@ -135,19 +152,7 @@ export const Overlay = genericComponent<new () => {
       }
     }
 
-    function closeConditional () {
-      return isActive.value && isTop.value
-    }
-
-    IN_BROWSER && watch(isActive, val => {
-      if (val) {
-        window.addEventListener('keydown', onKeydown)
-      } else {
-        window.removeEventListener('keydown', onKeydown)
-      }
-    }, { immediate: true })
-
-    function onKeydown ({ key }: KeyboardEvent) {
+    const onKeydown = ({ key }: KeyboardEvent) => {
       if (key === keyValues.esc && isTop.value) {
         if (!props.persistent) {
           isActive.value = false
@@ -156,6 +161,18 @@ export const Overlay = genericComponent<new () => {
         }
       }
     }
+
+    watch(isActive, val => {
+      if (val) isLeaved.value = false
+
+      if (IN_BROWSER) {
+        if (val) {
+          window.addEventListener('keydown', onKeydown)
+        } else {
+          window.removeEventListener('keydown', onKeydown)
+        }
+      }
+    }, { immediate: true })
 
     useBackButton(next => {
       if (isTop.value && isActive.value) {
@@ -184,18 +201,13 @@ export const Overlay = genericComponent<new () => {
       }
     })
 
-    // Add a quick "bounce" animation to the content
-    function animateClick () {
-      if (props.noClickAnimation) return
+    const onAfterLeave = () => {
+      isLeaved.value = true
+      lazyOnAfterLeave()
+    }
 
-      contentEl.value?.animate([
-        { transformOrigin: 'center' },
-        { transform: 'scale(1.03)' },
-        { transformOrigin: 'center' },
-      ], {
-        duration: 150,
-        easing: standardEasing,
-      })
+    const closeConditional = () => {
+      return isActive.value && isTop.value
     }
 
     useRender(() => {
@@ -228,10 +240,10 @@ export const Overlay = genericComponent<new () => {
                     themeClasses.value,
                   ] }
                   ref={ root }
-                  style={{
+                  style={ {
                     top: convertToUnit(top.value),
                     zIndex: overlayZIndex.value,
-                  }}
+                  } }
                   { ...attrs }
                 >
                   <Scrim

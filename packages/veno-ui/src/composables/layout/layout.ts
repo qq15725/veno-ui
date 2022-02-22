@@ -123,7 +123,7 @@ export function provideLayout (
         const isOppositeHorizontal = item.anchor === 'right'
         const isOppositeVertical = item.anchor === 'bottom'
         return {
-          [item.anchor]: '0px',
+          [item.anchor]: item.anchor === 'right' ? 'calc(0px + var(--ve-scrollbar-offset, 0px))' : '0px',
           height: isHorizontal ? `calc(100% - ${ item.top }px - ${ item.bottom }px)` : `${ item.size }px`,
           marginLeft: isOppositeHorizontal ? undefined : `${ item.left }px`,
           marginRight: isOppositeHorizontal ? `${ item.right }px` : undefined,

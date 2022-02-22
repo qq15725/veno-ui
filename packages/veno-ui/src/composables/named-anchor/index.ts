@@ -53,7 +53,7 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
   const findActiveHash = () => {
     const offsetTop = scroller.value?.getBoundingClientRect().top || 0
 
-    active.value = [...names.value.values()]
+    active.value = [...names.value]
       .reduce((pos, name) => {
         const rect = document.getElementById(name)?.getBoundingClientRect()
 

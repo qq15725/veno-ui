@@ -1,6 +1,6 @@
 :::demo
 
-# 基本用法
+# 包含的遮罩层
 
 ```html
 <ve-overlay contained>

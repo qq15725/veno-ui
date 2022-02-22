@@ -2,13 +2,13 @@
 @use '../../../styles/tools/functions';
 
 @mixin use-layout() {
-  --v-scrollbar-offset: 0px;
+  --ve-scrollbar-offset: 0px;
   position: relative;
   display: flex;
   flex: 1 1 auto;
 
   &--full-height {
-    --v-scrollbar-offset: inherit;
+    --ve-scrollbar-offset: inherit;
     height: 100%;
   }
 }
