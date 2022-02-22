@@ -34,7 +34,7 @@ export default defineConfig(async ({ mode }) => {
     },
     plugins: [
       vue(),
-      vueJsx({ optimize: true, enableObjectSlots: true }),
+      vueJsx({ optimize: false, enableObjectSlots: true }),
       dts({
         include: 'src',
         staticImport: true,

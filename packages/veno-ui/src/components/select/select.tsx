@@ -63,6 +63,14 @@ export const Select = genericComponent<new () => {
     },
 
     /**
+     * @zh 可选项卸载后是否从已选项中移除
+     */
+    deleteAfterUnmount: {
+      type: Boolean,
+      default: true,
+    },
+
+    /**
      * @zh 可过滤的
      */
     filterable: Boolean,
@@ -168,7 +176,7 @@ export const Select = genericComponent<new () => {
     const tagInputWidth = ref()
     const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const model = useProxiedModel(
-      props, 'modelValue', [],
+      props, 'modelValue', props.modelValue,
       v => wrapInArray(v),
       (v: any) => props.multiple ? v : v[0]
     )
@@ -436,6 +444,7 @@ export const Select = genericComponent<new () => {
                       items={ items.value }
                       v-model:active={ active.value }
                       activeStrategy={ props.multiple ? 'multiple' : 'single' }
+                      deleteAfterUnmount={ props.deleteAfterUnmount }
                     >
                       { {
                         ...listSlots,
@@ -444,7 +453,6 @@ export const Select = genericComponent<new () => {
 
                           const itemSlotProps = {
                             onMousedown: (e: MouseEvent) => e.preventDefault(),
-                            onMousemove: () => pendingIndex.value = index,
                             class: {
                               've-select__item--pendding': pendingIndex.value === index
                             }
@@ -456,10 +464,11 @@ export const Select = genericComponent<new () => {
 
                           return (
                             <ListItem
-                              v-show={ !item.filtered }
                               { ...itemSlotProps }
                               { ...item }
                               link
+                              key={ item.value }
+                              v-show={ !item.filtered }
                             >
                               { {
                                 prepend: props.multiple ? () => (

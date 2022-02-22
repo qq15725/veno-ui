@@ -7,9 +7,9 @@
 
   // Elements
   &__item--pendding.ve-list-item {
-     color: rgb(var(--ve-theme-on-surface)) !important;
     .ve-list-item__overlay {
       visibility: visible;
+      background-color: rgb(var(--ve-theme-on-surface));
       opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
     }
   }
