@@ -40,8 +40,8 @@ import type { PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type OverlaySlots = MakeSlots<{
-  default: [{ isActive: Ref<boolean> }]
-  activator: [{ isActive: boolean, props: Record<string, any> }]
+  default: [{ close: () => void, isActive: Ref<boolean> }]
+  activator: [{ close: () => void, isActive: boolean, props: Record<string, any> }]
 }>
 
 export const Overlay = genericComponent<new () => {
@@ -210,10 +210,15 @@ export const Overlay = genericComponent<new () => {
       return isActive.value && isTop.value
     }
 
+    const close = () => {
+      isActive.value = false
+    }
+
     useRender(() => {
       return (
         <>
           { slots.activator?.({
+            close,
             isActive: isActive.value,
             props: mergeProps(
               { ref: activatorRef },
@@ -276,7 +281,7 @@ export const Overlay = genericComponent<new () => {
                       ] }
                       { ...toHandlers(contentEvents.value) }
                     >
-                      { slots.default?.({ isActive }) }
+                      { slots.default?.({ close, isActive }) }
                     </div>
                   </MaybeTransition>
                 </div>
@@ -289,6 +294,7 @@ export const Overlay = genericComponent<new () => {
 
     return {
       animateClick,
+      close,
       contentEl,
       activatorEl,
       updatePosition,

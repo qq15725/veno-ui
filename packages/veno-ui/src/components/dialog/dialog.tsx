@@ -24,21 +24,22 @@ export const Dialog = genericComponent<new () => {
   name: 'VeDialog',
 
   props: {
+    fullscreen: Boolean,
     id: String,
     modelValue: Boolean,
+    scrollable: Boolean,
     ...makeTransitionProps({
       transition: { component: DialogTransition },
-    } as const)
+    } as const),
   },
 
   emits: {
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { slots, attrs }) {
+  setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-dialog-${ uid }`)
+    const id = computed(() => props.id || `ve-dialog-${ getUid() }`)
 
     return () => (
       <Overlay
@@ -49,13 +50,20 @@ export const Dialog = genericComponent<new () => {
           'aria-expanded': String(isActive.value),
           'aria-describedby': id.value,
         } }
-        v-model={ isActive.value }
-        class="ve-dialog"
+        class={ [
+          've-dialog',
+          {
+            've-dialog--fullscreen': props.fullscreen,
+            've-dialog--scrollable': props.scrollable,
+          },
+        ] }
+        contentClass="ve-dialog__wrapper"
         id={ id.value }
         transition={ props.transition }
-        { ...attrs }
-        v-slots={ slots }
-      />
+        v-model={ isActive.value }
+      >
+        { slots }
+      </Overlay>
     )
   }
 })

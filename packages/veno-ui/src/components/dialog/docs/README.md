@@ -14,6 +14,12 @@ category: Feedback 反馈组件
 
 basic.md
 
+scrollable.md
+
+dimension.md
+
+fullscreen.md
+
 :::
 
 ## API
