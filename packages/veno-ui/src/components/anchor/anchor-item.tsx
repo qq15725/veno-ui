@@ -10,18 +10,23 @@ import { Link } from '../link'
 // Composables
 import { makeNamedAnchorItem, useNamedAnchorItem } from '../../composables/named-anchor'
 
-// Types
-export type AnchorItem = InstanceType<typeof AnchorItem>
-
 export const AnchorItem = defineComponent({
   name: 'VeAnchorItem',
 
   props: {
+    /**
+     * @zh 激活时的颜色
+     */
+    activeColor: {
+      type: String,
+      default: 'primary',
+    },
+
     ...makeNamedAnchorItem(),
   },
 
   setup (props, { slots }) {
-    const { to, setCurrent, isActive, activeColor } = useNamedAnchorItem(props)
+    const { to, activate, isActive } = useNamedAnchorItem(props)
 
     return () => {
       return (
@@ -36,12 +41,19 @@ export const AnchorItem = defineComponent({
           <Link
             to={ to.value }
             underline={ false }
-            color={ isActive.value ? activeColor.value : undefined }
-            onClick={ () => props.name && setCurrent(props.name) }
-            v-slots={ slots }
-          />
+            color={ isActive.value ? props.activeColor : undefined }
+            onClick={ (e: MouseEvent) => {
+              e.preventDefault()
+              e.stopPropagation()
+              activate(props.name)
+            } }
+          >
+            { slots }
+          </Link>
         </li>
       )
     }
   }
 })
+
+export type AnchorItem = InstanceType<typeof AnchorItem>

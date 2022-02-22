@@ -43,6 +43,16 @@ interface UseLink extends Omit<Partial<ReturnType<typeof _useLink>>, 'href'>
   href: Ref<string | undefined>
 }
 
+export function useRouterHistory () {
+  const router = useRouter()
+
+  const isWebHashHistory = computed(() => router && router.options.history.base.includes('#'))
+
+  return {
+    isWebHashHistory,
+  }
+}
+
 export function useLink (props: LinkProps, attrs: SetupContext['attrs']): UseLink {
   const RouterLink = resolveDynamicComponent('RouterLink') as typeof _RouterLink | string
 

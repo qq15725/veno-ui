@@ -1,182 +1,175 @@
 // Utils
-import { ref, computed, onMounted, provide, inject, onBeforeUnmount, InjectionKey } from 'vue'
-import { throttle, propsFactory, getUid } from '../../utils'
+import { ref, computed, nextTick, onMounted, provide, inject, onBeforeUnmount, InjectionKey } from 'vue'
+import { propsFactory, throttle } from '../../utils'
 
 // Composables
-import { useRouter } from '../router'
+import { useRoute, useRouterHistory } from '../router'
 
 // Types
-import type { PropType, Ref } from 'vue'
+import type { ExtractPropTypes, Ref, PropType } from 'vue'
 
 export interface NamedAnchorProvider
 {
-  items: Ref<NamedAnchorItem[]>
-  current: Ref<string | null>
-  activeColor: Ref<string>
-  setCurrent: (name: string) => void
-  isHashMode: Ref<boolean>
-  register: (id: string, name: string) => void
-  unregister: (id: string) => void
+  names: Ref<Set<string>>
+  active: Ref<string | undefined>
+  activate: (name: string) => void
+  register: (name: string) => void
+  unregister: (name: string) => void
 }
 
-export interface NamedAnchorItem
-{
-  id: string
-  name: string
-}
-
-export const NamedAnchorKey: InjectionKey<NamedAnchorProvider>
-  = Symbol.for('veno-ui:named-anchor')
-
-export interface NamedAnchorProps
-{
-  offset: string | number
-  scrollContainer?: string | HTMLElement
-  activeColor: string
-}
+export const NamedAnchorKey: InjectionKey<NamedAnchorProvider> = Symbol.for('veno-ui:named-anchor')
 
 export const makeNamedAnchor = propsFactory({
   offset: {
     type: [String, Number],
-    default: 12
+    default: 12,
   },
-  scrollContainer: {
-    type: [String, Object] as PropType<NamedAnchorProps['scrollContainer']>
+  scroller: {
+    type: [String, Object] as PropType<string | HTMLElement>
   },
-  activeColor: {
-    type: String,
-    default: 'primary'
-  }
 }, 'named-anchor')
 
-export function useNamedAnchor (props: NamedAnchorProps) {
-  const router = useRouter()
-  const items = ref<NamedAnchorItem[]>([])
-  const current = ref<string | null>(null)
-  const scrollContainer = computed(() => {
-    return typeof props.scrollContainer === 'string'
-      ? document.querySelector(props.scrollContainer)
-      : props.scrollContainer
-  })
-  const isHashMode = computed(() => Boolean(router && router.options.history.base.includes('#')))
-  const disabled = ref(false)
+export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNamedAnchor>>) {
+  const active = ref<string>()
+  const names = ref(new Set<string>())
+  const scroller = computed(() => (
+    typeof props.scroller === 'string'
+      ? document.querySelector(props.scroller)
+      : props.scroller
+  ))
+  const scrolling = ref(false)
 
-  const provider = {
-    items,
-    activeColor: computed(() => props.activeColor),
-    current,
-    isHashMode,
-    setCurrent: (name: string) => {
-      disabled.value = true
-      current.value = name
-      setTimeout(() => disabled.value = false, 500)
-      document.getElementById(name)?.scrollIntoView({ behavior: 'smooth' })
-    },
-    register: (id: string, name: string) => {
-      items.value.push({ id, name })
-    },
-    unregister: (id: string) => {
-      items.value.splice(items.value.findIndex(v => v.id === id), 1)
-    }
+  const { isWebHashHistory } = useRouterHistory()
+
+  let timeout: any = 0
+  const activate = (name: string) => {
+    scrolling.value = true
+    clearTimeout(timeout)
+    timeout = setTimeout(() => scrolling.value = false, 800)
+    document.getElementById(name)?.scrollIntoView({ behavior: 'smooth' })
+    active.value = name
   }
 
-  const handleScroll = () => {
-    if (disabled.value) return
-    current.value = items.value
-        .reduce<{ name: string, top: number, height: number }[]>((pos, item) => {
-          const el = document.getElementById(item.name)
-          if (!el) return pos
-          const { top, height } = el.getBoundingClientRect()
-          return [
-            ...pos,
-            {
-              name: item.name,
-              top: top - (scrollContainer.value?.getBoundingClientRect?.()?.top ?? 0),
-              height
-            }
-          ]
-        }, [])
-        .sort((a, b) => {
-          if (a.top > b.top) {
-            return 1
-          } else if (a.top === b.top && a.height < b.height) {
-            return -1
-          }
-          return -1
-        })
-        .reduce<{ name: string, top: number, height: number } | null>((prev, item) => {
-          if (item.top + item.height < 0) {
-            return prev
-          }
-          if (item.top <= props.offset) {
-            if (prev === null) {
-              return item
-            } else if (item.top === prev.top) {
-              if (item.name === current.value) {
-                return item
-              } else {
-                return prev
-              }
-            } else if (item.top > prev.top) {
+  const findActiveHash = () => {
+    const offsetTop = scroller.value?.getBoundingClientRect().top || 0
+
+    active.value = [...names.value.values()]
+      .reduce((pos, name) => {
+        const rect = document.getElementById(name)?.getBoundingClientRect()
+
+        if (rect) {
+          pos.push({
+            name,
+            top: rect.top - offsetTop,
+            height: rect.height
+          })
+        }
+
+        return pos
+      }, [] as { name: string, top: number, height: number }[])
+      .sort((a, b) => a.top - b.top)
+      .reduce((prev, item) => {
+        if (item.top + item.height < 0) {
+          return prev
+        }
+        if (item.top <= props.offset) {
+          if (prev === null) {
+            return item
+          } else if (item.top === prev.top) {
+            if (item.name === active.value) {
               return item
             } else {
               return prev
             }
+          } else if (item.top > prev.top) {
+            return item
+          } else {
+            return prev
           }
-          return prev
-        }, null)
-        ?.name
-      ?? null
+        }
+        return prev
+      }, null as { name: string, top: number, height: number } | null)
+      ?.name
   }
 
-  const onScroll = throttle(() => handleScroll(), 128)
+  const onScroll = throttle(() => {
+    if (scrolling.value || !names.value.size) return
+
+    findActiveHash()
+  }, 17)
 
   onMounted(() => {
     document.addEventListener('scroll', onScroll, true)
-    provider.setCurrent(window.location.hash)
-    handleScroll()
+
+    nextTick(() => {
+      if (isWebHashHistory.value) {
+        const route = useRoute()
+        if (route.value?.query?.anchor) {
+          activate(route.value.query.anchor as string)
+        }
+      } else {
+        if (window.location.hash) {
+          activate(decodeURIComponent(window.location.hash.substring(1)))
+        }
+      }
+    })
   })
 
   onBeforeUnmount(() => {
     document.removeEventListener('scroll', onScroll, true)
   })
 
-  provide(NamedAnchorKey, provider)
+  const namedAnchor = {
+    names,
+    active,
+    activate,
+    register: (name: string) => {
+      names.value.add(name)
+    },
+    unregister: (name: string) => {
+      names.value.delete(name)
+    }
+  }
 
-  return provider
-}
+  provide(NamedAnchorKey, namedAnchor)
 
-export interface NamedAnchorItemProps
-{
-  name: string
+  return namedAnchor
 }
 
 export const makeNamedAnchorItem = propsFactory({
   name: {
     type: String,
-    required: true
+    required: true,
   }
 }, 'named-anchor-item')
 
-export function useNamedAnchorItem (props: NamedAnchorItemProps) {
-  const namedAnchor = inject(NamedAnchorKey)
-  if (!namedAnchor) throw new Error('[VenoUi] Could not find namedAnchor instance')
-  const id = `named-anchor-${ getUid() }`
-  namedAnchor.register?.(id, props.name)
-  onBeforeUnmount(() => {
-    namedAnchor.unregister(id)
-  })
-  return {
-    ...namedAnchor,
-    to: computed(() => {
-      if (namedAnchor.isHashMode.value) {
-        return { query: { anchor: props.name }, replace: true }
-      } else {
-        return { hash: `#${ props.name }`, replace: true }
-      }
-    }),
-    isActive: computed(() => {
-      return namedAnchor.current.value === props.name
-    })
+export function useNamedAnchorItem (
+  props: ExtractPropTypes<ReturnType<typeof makeNamedAnchorItem>>
+) {
+  const parent = inject(NamedAnchorKey)
+
+  if (!parent) throw new Error('[VenoUi] Could not find namedAnchor instance')
+
+  const name = computed(() => props.name)
+
+  const { isWebHashHistory } = useRouterHistory()
+
+  const item = {
+    ...parent,
+    isWebHashHistory,
+    to: computed(() => (
+      isWebHashHistory.value
+        ? { query: { anchor: name.value }, replace: true }
+        : { hash: `#${ name.value }`, replace: true }
+    )),
+    isActive: computed(() => parent.active.value === name.value)
   }
+
+  parent.register(name.value)
+
+  onBeforeUnmount(() => {
+    parent.unregister(name.value)
+  })
+
+  return item
 }
