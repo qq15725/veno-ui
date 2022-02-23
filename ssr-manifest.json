@@ -503,6 +503,18 @@
     "/assets/materialdesignicons-webfont.04fb6e8b.woff",
     "/assets/materialdesignicons-webfont.9e94d4db.ttf"
   ],
+  "../veno-ui/lib/utils/create-shared-composable.js": [
+    "/assets/materialdesignicons-webfont.4de2dae5.eot",
+    "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
+    "/assets/materialdesignicons-webfont.04fb6e8b.woff",
+    "/assets/materialdesignicons-webfont.9e94d4db.ttf"
+  ],
+  "../veno-ui/lib/composables/shared-click-target/index.js": [
+    "/assets/materialdesignicons-webfont.4de2dae5.eot",
+    "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
+    "/assets/materialdesignicons-webfont.04fb6e8b.woff",
+    "/assets/materialdesignicons-webfont.9e94d4db.ttf"
+  ],
   "../veno-ui/lib/components/transition/dialog-transition.js": [
     "/assets/materialdesignicons-webfont.4de2dae5.eot",
     "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
@@ -1643,6 +1655,18 @@
     "/assets/materialdesignicons-webfont.04fb6e8b.woff",
     "/assets/materialdesignicons-webfont.9e94d4db.ttf"
   ],
+  "../veno-ui/lib/components/scrollbar/styles/scrollbar.scss": [
+    "/assets/materialdesignicons-webfont.4de2dae5.eot",
+    "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
+    "/assets/materialdesignicons-webfont.04fb6e8b.woff",
+    "/assets/materialdesignicons-webfont.9e94d4db.ttf"
+  ],
+  "../veno-ui/lib/components/scrollbar/scrollbar.js": [
+    "/assets/materialdesignicons-webfont.4de2dae5.eot",
+    "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
+    "/assets/materialdesignicons-webfont.04fb6e8b.woff",
+    "/assets/materialdesignicons-webfont.9e94d4db.ttf"
+  ],
   "../veno-ui/lib/components/spacer/styles/spacer.scss": [
     "/assets/materialdesignicons-webfont.4de2dae5.eot",
     "/assets/materialdesignicons-webfont.11e3d4ca.woff2",
@@ -1926,738 +1950,747 @@
     "/assets/materialdesignicons-webfont.9e94d4db.ttf"
   ],
   "../../node_modules/.pnpm/@vue+shared@3.2.31/node_modules/@vue/shared/dist/shared.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+reactivity@3.2.31/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+runtime-core@3.2.31/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+runtime-dom@3.2.31/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vue@3.2.31/node_modules/vue/dist/vue.runtime.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vue-demi@0.12.1_vue@3.2.31/node_modules/vue-demi/lib/index.mjs": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/env.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/const.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/proxy.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/api.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/app.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/component.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/context.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/hooks.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/util.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/api/index.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/plugin.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vue+devtools-api@6.0.12/node_modules/@vue/devtools-api/lib/esm/index.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/pinia@2.0.11_typescript@4.5.5+vue@3.2.31/node_modules/pinia/dist/pinia.esm-browser.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vue-router@4.0.12_vue@3.2.31/node_modules/vue-router/dist/vue-router.esm-bundler.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "\u0000commonjsHelpers.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "\u0000/private/var/www/veno-ui/node_modules/.pnpm/prismjs@1.27.0/node_modules/prismjs/prism.js?commonjs-module": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/prismjs@1.27.0/node_modules/prismjs/prism.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/prismjs@1.27.0/node_modules/prismjs/components/prism-typescript.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/prismjs@1.27.0/node_modules/prismjs/components/prism-bash.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/prismjs@1.27.0/node_modules/prismjs/components/prism-json.js": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/@vueuse+head@0.7.5_vue@3.2.31/node_modules/@vueuse/head/dist/index.mjs": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vite-ssg@0.17.10_3229c7e655c8ba8f4975923707f9b845/node_modules/vite-ssg/dist/chunks/state.mjs": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vite-ssg@0.17.10_3229c7e655c8ba8f4975923707f9b845/node_modules/vite-ssg/dist/chunks/ClientOnly.mjs": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "../../node_modules/.pnpm/vite-ssg@0.17.10_3229c7e655c8ba8f4975923707f9b845/node_modules/vite-ssg/dist/index.mjs": [
-    "/assets/vendor.72d1722e.js"
+    "/assets/vendor.b63fd99b.js"
   ],
   "src/pages/zh/dark.md": [
-    "/assets/dark.7abba03c.js"
+    "/assets/dark.5daebf9f.js"
   ],
   "src/components/palette/PaletteSaasColors.vue": [
-    "/assets/palette.d6db80b8.js"
+    "/assets/palette.392bbd02.js"
   ],
   "src/pages/zh/palette.md": [
-    "/assets/palette.d6db80b8.js"
+    "/assets/palette.392bbd02.js"
   ],
   "src/pages/zh/start.md": [
-    "/assets/start.7b267b1b.js"
+    "/assets/start.5fc0b63b.js"
   ],
   "../veno-ui/src/components/alert/docs/basic.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/type.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/variant.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/closable.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/append.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/icon.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/density.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/shape.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/close-text.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/loading.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "../veno-ui/src/components/alert/docs/README.md": [
-    "/assets/README.6a43a62e.js"
+    "/assets/README.adef185d.js"
   ],
   "src/components/Demo.vue": [
-    "/assets/Demo.0f2b45cf.js"
+    "/assets/Demo.975b8d7e.js"
   ],
   "../veno-ui/src/components/anchor/docs/basic.md": [
-    "/assets/README.54b4f9bd.js"
+    "/assets/README.646e0b5b.js"
   ],
   "../veno-ui/src/components/anchor/docs/README.md": [
-    "/assets/README.54b4f9bd.js"
+    "/assets/README.646e0b5b.js"
   ],
   "../veno-ui/src/components/avatar/docs/basic.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/border.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/color.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/shape.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/size.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/density.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/slot.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/icon.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/fit-size.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/avatar/docs/README.md": [
-    "/assets/README.bdf622bf.js"
+    "/assets/README.aca504ed.js"
   ],
   "../veno-ui/src/components/badge/docs/basic.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/dot.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/hover.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/location.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/max.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/color.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/content.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/inline.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/badge/docs/README.md": [
-    "/assets/README.94fd620f.js"
+    "/assets/README.f0a87c63.js"
   ],
   "../veno-ui/src/components/breadcrumb/docs/basic.md": [
-    "/assets/README.16889d2d.js"
+    "/assets/README.7aacf8ce.js"
   ],
   "../veno-ui/src/components/breadcrumb/docs/route.md": [
-    "/assets/README.16889d2d.js"
+    "/assets/README.7aacf8ce.js"
   ],
   "../veno-ui/src/components/breadcrumb/docs/separator.md": [
-    "/assets/README.16889d2d.js"
+    "/assets/README.7aacf8ce.js"
   ],
   "../veno-ui/src/components/breadcrumb/docs/icon.md": [
-    "/assets/README.16889d2d.js"
+    "/assets/README.7aacf8ce.js"
   ],
   "../veno-ui/src/components/breadcrumb/docs/README.md": [
-    "/assets/README.16889d2d.js"
+    "/assets/README.7aacf8ce.js"
   ],
   "../veno-ui/src/components/button/docs/basic.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/contained.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/outlined.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/plain.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/text.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/contained-text.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/contained-outlined.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/icon.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/shape.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/color.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/size.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/density.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/block.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/loading.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/group.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/theme.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/button/docs/README.md": [
-    "/assets/README.41e6aa1b.js"
+    "/assets/README.bd154fe8.js"
   ],
   "../veno-ui/src/components/card/docs/basic.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/shape.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/click.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/slot.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/density.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/personal-card-concise.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/personal-card.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/card/docs/README.md": [
-    "/assets/README.ddb6cbaa.js"
+    "/assets/README.66e437f2.js"
   ],
   "../veno-ui/src/components/carousel/docs/basic.md": [
-    "/assets/README.4e72de6e.js"
+    "/assets/README.a857ee9c.js"
   ],
   "../veno-ui/src/components/carousel/docs/autoplay.md": [
-    "/assets/README.4e72de6e.js"
+    "/assets/README.a857ee9c.js"
   ],
   "../veno-ui/src/components/carousel/docs/README.md": [
-    "/assets/README.4e72de6e.js"
+    "/assets/README.a857ee9c.js"
   ],
   "../veno-ui/src/components/checkbox/docs/basic.md": [
-    "/assets/README.ef85eb3d.js"
+    "/assets/README.71caf1e8.js"
   ],
   "../veno-ui/src/components/checkbox/docs/group.md": [
-    "/assets/README.ef85eb3d.js"
+    "/assets/README.71caf1e8.js"
   ],
   "../veno-ui/src/components/checkbox/docs/README.md": [
-    "/assets/README.ef85eb3d.js"
+    "/assets/README.71caf1e8.js"
   ],
   "../veno-ui/src/components/code/docs/basic.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/code/docs/hide-language.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/code/docs/highlighted-line-numbers.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/code/docs/highlight.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/code/docs/hide-line-numbers.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/code/docs/README.md": [
-    "/assets/README.ab5f3c5e.js"
+    "/assets/README.c54954f2.js"
   ],
   "../veno-ui/src/components/date-picker/docs/basic.md": [
-    "/assets/README.446c2ea8.js"
+    "/assets/README.76dee631.js"
   ],
   "../veno-ui/src/components/date-picker/docs/range.md": [
-    "/assets/README.446c2ea8.js"
+    "/assets/README.76dee631.js"
   ],
   "../veno-ui/src/components/date-picker/docs/range-custom-format.md": [
-    "/assets/README.446c2ea8.js"
+    "/assets/README.76dee631.js"
   ],
   "../veno-ui/src/components/date-picker/docs/panel.md": [
-    "/assets/README.446c2ea8.js"
+    "/assets/README.76dee631.js"
   ],
   "../veno-ui/src/components/date-picker/docs/README.md": [
-    "/assets/README.446c2ea8.js"
+    "/assets/README.76dee631.js"
   ],
   "../veno-ui/src/components/device/docs/status-bar.md": [
-    "/assets/README.1b000f74.js"
+    "/assets/README.4cd7627d.js"
   ],
   "../veno-ui/src/components/device/docs/basic.md": [
-    "/assets/README.1b000f74.js"
+    "/assets/README.4cd7627d.js"
   ],
   "../veno-ui/src/components/device/docs/README.md": [
-    "/assets/README.1b000f74.js"
+    "/assets/README.4cd7627d.js"
   ],
   "../veno-ui/src/components/dialog/docs/basic.md": [
-    "/assets/README.8be7e5ea.js"
+    "/assets/README.0870ef1d.js"
+  ],
+  "../veno-ui/src/components/dialog/docs/v-model.md": [
+    "/assets/README.0870ef1d.js"
   ],
   "../veno-ui/src/components/dialog/docs/scrollable.md": [
-    "/assets/README.8be7e5ea.js"
+    "/assets/README.0870ef1d.js"
   ],
   "../veno-ui/src/components/dialog/docs/dimension.md": [
-    "/assets/README.8be7e5ea.js"
+    "/assets/README.0870ef1d.js"
   ],
   "../veno-ui/src/components/dialog/docs/fullscreen.md": [
-    "/assets/README.8be7e5ea.js"
+    "/assets/README.0870ef1d.js"
   ],
   "../veno-ui/src/components/dialog/docs/README.md": [
-    "/assets/README.8be7e5ea.js"
+    "/assets/README.0870ef1d.js"
   ],
   "../veno-ui/src/components/divider/docs/basic.md": [
-    "/assets/README.763d58b8.js"
+    "/assets/README.9f9777da.js"
   ],
   "../veno-ui/src/components/divider/docs/dashed.md": [
-    "/assets/README.763d58b8.js"
+    "/assets/README.9f9777da.js"
   ],
   "../veno-ui/src/components/divider/docs/default-slot.md": [
-    "/assets/README.763d58b8.js"
+    "/assets/README.9f9777da.js"
   ],
   "../veno-ui/src/components/divider/docs/vertical.md": [
-    "/assets/README.763d58b8.js"
+    "/assets/README.9f9777da.js"
   ],
   "../veno-ui/src/components/divider/docs/README.md": [
-    "/assets/README.763d58b8.js"
+    "/assets/README.9f9777da.js"
   ],
   "../veno-ui/src/components/drag/docs/moveable.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drag/docs/sort.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drag/docs/sort-two-list.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drag/docs/moveable-resizable.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drag/docs/sort-handle.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drag/docs/README.md": [
-    "/assets/README.b9a8f9be.js"
+    "/assets/README.4db0ef21.js"
   ],
   "../veno-ui/src/components/drawer/docs/basic.md": [
-    "/assets/README.8522bfb5.js"
+    "/assets/README.f16bed4a.js"
   ],
   "../veno-ui/src/components/drawer/docs/temporary.md": [
-    "/assets/README.8522bfb5.js"
+    "/assets/README.f16bed4a.js"
   ],
   "../veno-ui/src/components/drawer/docs/README.md": [
-    "/assets/README.8522bfb5.js"
+    "/assets/README.f16bed4a.js"
   ],
   "../veno-ui/src/components/form/docs/basic.md": [
-    "/assets/README.a57cab55.js"
+    "/assets/README.b5a00031.js"
   ],
   "../veno-ui/src/components/form/docs/inline.md": [
-    "/assets/README.a57cab55.js"
+    "/assets/README.b5a00031.js"
   ],
   "../veno-ui/src/components/form/docs/README.md": [
-    "/assets/README.a57cab55.js"
+    "/assets/README.b5a00031.js"
   ],
   "../veno-ui/src/components/grid/docs/basic.md": [
-    "/assets/README.a403fdef.js"
+    "/assets/README.8bc3e798.js"
   ],
   "../veno-ui/src/components/grid/docs/gutter.md": [
-    "/assets/README.a403fdef.js"
+    "/assets/README.8bc3e798.js"
   ],
   "../veno-ui/src/components/grid/docs/README.md": [
-    "/assets/README.a403fdef.js"
+    "/assets/README.8bc3e798.js"
   ],
   "../veno-ui/src/components/hover/docs/basic.md": [
-    "/assets/README.28247935.js"
+    "/assets/README.d6fa47fa.js"
   ],
   "../veno-ui/src/components/hover/docs/README.md": [
-    "/assets/README.28247935.js"
+    "/assets/README.d6fa47fa.js"
   ],
   "../veno-ui/src/components/icon/docs/basic.md": [
-    "/assets/README.4bd67ef9.js"
+    "/assets/README.bd0a7232.js"
   ],
   "../veno-ui/src/components/icon/docs/preset.md": [
-    "/assets/README.4bd67ef9.js"
+    "/assets/README.bd0a7232.js"
   ],
   "../veno-ui/src/components/icon/docs/README.md": [
-    "/assets/README.4bd67ef9.js"
+    "/assets/README.bd0a7232.js"
   ],
   "../veno-ui/src/components/image/docs/basic.md": [
-    "/assets/README.29ae9164.js"
+    "/assets/README.55fa8aa0.js"
   ],
   "../veno-ui/src/components/image/docs/cover.md": [
-    "/assets/README.29ae9164.js"
+    "/assets/README.55fa8aa0.js"
   ],
   "../veno-ui/src/components/image/docs/aspect-ratio.md": [
-    "/assets/README.29ae9164.js"
+    "/assets/README.55fa8aa0.js"
   ],
   "../veno-ui/src/components/image/docs/README.md": [
-    "/assets/README.29ae9164.js"
+    "/assets/README.55fa8aa0.js"
   ],
   "../veno-ui/src/components/input/docs/basic.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/input/docs/width.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/input/docs/auto-resize.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/input/docs/slots.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/input/docs/case1.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/input/docs/README.md": [
-    "/assets/README.68ffaece.js"
+    "/assets/README.35125ce3.js"
   ],
   "../veno-ui/src/components/layout/docs/app-layout.md": [
-    "/assets/README.9181050a.js"
+    "/assets/README.8f5918ff.js"
   ],
   "../veno-ui/src/components/layout/docs/custom-layout.md": [
-    "/assets/README.9181050a.js"
+    "/assets/README.8f5918ff.js"
   ],
   "../veno-ui/src/components/layout/docs/README.md": [
-    "/assets/README.9181050a.js"
+    "/assets/README.8f5918ff.js"
   ],
   "../veno-ui/src/components/lazy/docs/basic.md": [
-    "/assets/README.8ad69f1a.js"
+    "/assets/README.3ae8e751.js"
   ],
   "../veno-ui/src/components/lazy/docs/README.md": [
-    "/assets/README.8ad69f1a.js"
+    "/assets/README.3ae8e751.js"
   ],
   "../veno-ui/src/components/link/docs/basic.md": [
-    "/assets/README.0cc0b7ff.js"
+    "/assets/README.35371b2a.js"
   ],
   "../veno-ui/src/components/link/docs/underline.md": [
-    "/assets/README.0cc0b7ff.js"
+    "/assets/README.35371b2a.js"
   ],
   "../veno-ui/src/components/link/docs/icon.md": [
-    "/assets/README.0cc0b7ff.js"
+    "/assets/README.35371b2a.js"
   ],
   "../veno-ui/src/components/link/docs/README.md": [
-    "/assets/README.0cc0b7ff.js"
+    "/assets/README.35371b2a.js"
   ],
   "../veno-ui/src/components/list/docs/basic.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/list/docs/icon.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/list/docs/nav.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/list/docs/density.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/list/docs/data-driven.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/list/docs/README.md": [
-    "/assets/README.3a8d1272.js"
+    "/assets/README.97636eb2.js"
   ],
   "../veno-ui/src/components/menu/docs/basic.md": [
-    "/assets/README.3e6f9765.js"
+    "/assets/README.f8936561.js"
   ],
   "../veno-ui/src/components/menu/docs/nested.md": [
-    "/assets/README.3e6f9765.js"
+    "/assets/README.f8936561.js"
   ],
   "../veno-ui/src/components/menu/docs/open-on-hover.md": [
-    "/assets/README.3e6f9765.js"
+    "/assets/README.f8936561.js"
   ],
   "../veno-ui/src/components/menu/docs/README.md": [
-    "/assets/README.3e6f9765.js"
+    "/assets/README.f8936561.js"
   ],
   "../veno-ui/src/components/message-provider/docs/basic.md": [
-    "/assets/README.57b20879.js"
+    "/assets/README.70f37ec0.js"
   ],
   "../veno-ui/src/components/message-provider/docs/variant.md": [
-    "/assets/README.57b20879.js"
+    "/assets/README.70f37ec0.js"
   ],
   "../veno-ui/src/components/message-provider/docs/closable.md": [
-    "/assets/README.57b20879.js"
+    "/assets/README.70f37ec0.js"
   ],
   "../veno-ui/src/components/message-provider/docs/README.md": [
-    "/assets/README.57b20879.js"
+    "/assets/README.70f37ec0.js"
   ],
   "../veno-ui/src/components/notification-provider/docs/basic.md": [
-    "/assets/README.ff4b9010.js"
+    "/assets/README.74e8e59a.js"
   ],
   "../veno-ui/src/components/notification-provider/docs/README.md": [
-    "/assets/README.ff4b9010.js"
+    "/assets/README.74e8e59a.js"
   ],
   "../veno-ui/src/components/overlay/docs/basic.md": [
-    "/assets/README.350a732f.js"
+    "/assets/README.9fe406a8.js"
   ],
   "../veno-ui/src/components/overlay/docs/contained.md": [
-    "/assets/README.350a732f.js"
+    "/assets/README.9fe406a8.js"
   ],
   "../veno-ui/src/components/overlay/docs/README.md": [
-    "/assets/README.350a732f.js"
+    "/assets/README.9fe406a8.js"
   ],
   "../veno-ui/src/components/pagination/docs/basic.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/pagination/docs/show-per-page-select.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/pagination/docs/show-quick-jumper.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/pagination/docs/total-visible.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/pagination/docs/show-first-last-page.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/pagination/docs/README.md": [
-    "/assets/README.12b708ca.js"
+    "/assets/README.9a97a3f5.js"
   ],
   "../veno-ui/src/components/paper/docs/basic.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/shape.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/dimension.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/color.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/elevation.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/position.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/paper/docs/README.md": [
-    "/assets/README.ca39da53.js"
+    "/assets/README.814ae57b.js"
   ],
   "../veno-ui/src/components/progress/docs/basic.md": [
-    "/assets/README.d410013c.js"
+    "/assets/README.f8751c24.js"
   ],
   "../veno-ui/src/components/progress/docs/size.md": [
-    "/assets/README.d410013c.js"
+    "/assets/README.f8751c24.js"
   ],
   "../veno-ui/src/components/progress/docs/indeterminate.md": [
-    "/assets/README.d410013c.js"
+    "/assets/README.f8751c24.js"
   ],
   "../veno-ui/src/components/progress/docs/color.md": [
-    "/assets/README.d410013c.js"
+    "/assets/README.f8751c24.js"
   ],
   "../veno-ui/src/components/progress/docs/README.md": [
-    "/assets/README.d410013c.js"
+    "/assets/README.f8751c24.js"
   ],
   "../veno-ui/src/components/radio/docs/basic.md": [
-    "/assets/README.cf90a569.js"
+    "/assets/README.6834be68.js"
   ],
   "../veno-ui/src/components/radio/docs/group.md": [
-    "/assets/README.cf90a569.js"
+    "/assets/README.6834be68.js"
   ],
   "../veno-ui/src/components/radio/docs/README.md": [
-    "/assets/README.cf90a569.js"
+    "/assets/README.6834be68.js"
   ],
   "../veno-ui/src/components/responsive/docs/basic.md": [
-    "/assets/README.b6ec9d8f.js"
+    "/assets/README.04a6b110.js"
   ],
   "../veno-ui/src/components/responsive/docs/README.md": [
-    "/assets/README.b6ec9d8f.js"
+    "/assets/README.04a6b110.js"
+  ],
+  "../veno-ui/src/components/scrollbar/docs/basic.md": [
+    "/assets/README.0c813331.js"
+  ],
+  "../veno-ui/src/components/scrollbar/docs/README.md": [
+    "/assets/README.0c813331.js"
   ],
   "../veno-ui/src/components/select/docs/basic.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/custom-text-value.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/multiple.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/filterable.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/search.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/slots-item.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/slots-tag.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/slots-no-data.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/select/docs/README.md": [
-    "/assets/README.a356a291.js"
+    "/assets/README.1d662a19.js"
   ],
   "../veno-ui/src/components/spacer/docs/basic.md": [
-    "/assets/README.bcb59ea1.js"
+    "/assets/README.7ed3cfe5.js"
   ],
   "../veno-ui/src/components/spacer/docs/gutter.md": [
-    "/assets/README.bcb59ea1.js"
+    "/assets/README.7ed3cfe5.js"
   ],
   "../veno-ui/src/components/spacer/docs/README.md": [
-    "/assets/README.bcb59ea1.js"
+    "/assets/README.7ed3cfe5.js"
   ],
   "../veno-ui/src/components/switch/docs/basic.md": [
-    "/assets/README.7a50a5a9.js"
+    "/assets/README.486c3065.js"
   ],
   "../veno-ui/src/components/switch/docs/README.md": [
-    "/assets/README.7a50a5a9.js"
+    "/assets/README.486c3065.js"
   ],
   "../veno-ui/src/components/table/docs/basic.md": [
-    "/assets/README.c456a421.js"
+    "/assets/README.1d3b1a8b.js"
   ],
   "../veno-ui/src/components/table/docs/export.md": [
-    "/assets/README.c456a421.js"
+    "/assets/README.1d3b1a8b.js"
   ],
   "../veno-ui/src/components/table/docs/remote.md": [
-    "/assets/README.c456a421.js"
+    "/assets/README.1d3b1a8b.js"
   ],
   "../veno-ui/src/components/table/docs/README.md": [
-    "/assets/README.c456a421.js"
+    "/assets/README.1d3b1a8b.js"
   ],
   "../veno-ui/src/components/tag/docs/basic.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/closable.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/clickable.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/variant.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/size.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/shape.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/color.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/loading.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/group.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/theme.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tag/docs/README.md": [
-    "/assets/README.1bb11ccf.js"
+    "/assets/README.18a72664.js"
   ],
   "../veno-ui/src/components/tooltip/docs/basic.md": [
-    "/assets/README.ccc5dd6c.js"
+    "/assets/README.1e7e9234.js"
   ],
   "../veno-ui/src/components/tooltip/docs/arrow.md": [
-    "/assets/README.ccc5dd6c.js"
+    "/assets/README.1e7e9234.js"
   ],
   "../veno-ui/src/components/tooltip/docs/anchor.md": [
-    "/assets/README.ccc5dd6c.js"
+    "/assets/README.1e7e9234.js"
   ],
   "../veno-ui/src/components/tooltip/docs/transition.md": [
-    "/assets/README.ccc5dd6c.js"
+    "/assets/README.1e7e9234.js"
   ],
   "../veno-ui/src/components/tooltip/docs/README.md": [
-    "/assets/README.ccc5dd6c.js"
+    "/assets/README.1e7e9234.js"
   ],
   "../veno-ui/src/components/transition/docs/basic.md": [
-    "/assets/README.40155dc6.js"
+    "/assets/README.d7ac2a53.js"
   ],
   "../veno-ui/src/components/transition/docs/README.md": [
-    "/assets/README.40155dc6.js"
+    "/assets/README.d7ac2a53.js"
   ],
   "../veno-ui/src/components/typography/docs/README.md": [
-    "/assets/README.50cdf201.js"
+    "/assets/README.5a78b7c0.js"
   ]
 }
