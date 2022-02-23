@@ -35,6 +35,7 @@ const aliases: IconAliases = {
   nodata: 'mdi-database-off-outline',
   link: 'mdi-link',
   calendar: 'mdi-calendar-blank-outline',
+  toggler: 'mdi-chevron-right',
 }
 
 const mdi: IconSet = {

@@ -17,6 +17,7 @@ import { useBackgroundColor } from '../../composables/color'
 import { useRoute } from '../../composables/router'
 
 // Components
+import { Button } from '../button'
 import { Scrim } from '../scrim'
 
 // Types
@@ -28,8 +29,8 @@ export const Drawer = defineComponent({
   name: 'VeDrawer',
 
   props: {
-    color: String,
     disableResizeWatcher: Boolean,
+    color: String,
     expandOnHover: Boolean,
     permanent: Boolean,
     rail: Boolean,
@@ -37,12 +38,13 @@ export const Drawer = defineComponent({
       type: [Number, String],
       default: 52,
     },
+    showToggler: Boolean,
     temporary: Boolean,
+    touchless: Boolean,
     width: {
       type: [Number, String],
       default: 256,
     },
-    touchless: Boolean,
     ...makeTagProps({ tag: 'nav' }),
     ...makeThemeProps(),
     ...makeBorderProps(),
@@ -106,11 +108,16 @@ export const Drawer = defineComponent({
       return isDragging.value ? size * dragProgress.value : size
     })
 
-    const priority = computed(() => {
-      return isTemporary.value ? Number(props.priority) + 1 : props.priority
-    })
+    const priority = computed(() => (
+      isTemporary.value
+        ? parseInt(props.priority, 10) + 1
+        : props.priority
+    ))
 
-    const { layoutItemStyles, layoutItemScrimStyles } = useLayoutItem(computed(() => ({
+    const {
+      layoutItemStyles: _layoutItemStyles,
+      layoutItemScrimStyles
+    } = useLayoutItem(computed(() => ({
       name: props.name,
       position: props.position,
       anchor: props.anchor,
@@ -121,16 +128,26 @@ export const Drawer = defineComponent({
       disableTransition: isDragging.value
     })))
 
-    const activatorProps = computed(() => ({
-      onClick: () => {
-        isActive.value = true
-      },
-    }))
+    const layoutItemStyles = computed(() => {
+      const styles = _layoutItemStyles.value as Record<string, any>
+      if (props.showToggler && styles.transform) {
+        styles.transform = styles.transform.replace('110', '90')
+      }
+      return styles
+    })
 
     return () => {
+      const hasToggler = props.showToggler
+
+      const slotProps = {
+        onClick: () => {
+          isActive.value = true
+        },
+      }
+
       return (
         <>
-          { slots.activator?.({ props: activatorProps.value }) }
+          { slots.activator?.({ props: slotProps }) }
 
           <props.tag
             onMouseenter={ () => (isHovering.value = true) }
@@ -138,6 +155,7 @@ export const Drawer = defineComponent({
             class={ [
               've-drawer',
               {
+                've-drawer--active': isActive.value,
                 've-drawer--top': props.anchor === 'top',
                 've-drawer--bottom': props.anchor === 'bottom',
                 've-drawer--start': props.anchor === 'left',
@@ -146,6 +164,7 @@ export const Drawer = defineComponent({
                 've-drawer--rail': props.rail,
                 've-drawer--is-hovering': isHovering.value,
                 've-drawer--temporary': isTemporary.value,
+                've-drawer--has-toggler': hasToggler,
               },
               themeClasses.value,
               backgroundColorClasses.value,
@@ -161,6 +180,30 @@ export const Drawer = defineComponent({
             <div class="ve-drawer__wrapper">
               { slots.default?.() }
             </div>
+
+            { hasToggler && (
+              <Button
+                position="absolute"
+                class="ve-drawer__toggler"
+                icon="$toggler"
+                top={
+                  props.anchor === 'left' || props.anchor === 'right'
+                    ? 204 : undefined
+                }
+                left={
+                  props.anchor === 'bottom' || props.anchor === 'top'
+                    ? 204 : props.anchor === 'right' ? 0 : undefined
+                }
+                right={ props.anchor === 'left' ? 0 : undefined }
+                bottom={ props.anchor === 'top' ? 0 : undefined }
+                size="x-small"
+                border
+                shape="circle"
+                onClick={ () => {
+                  isActive.value = !isActive.value
+                } }
+              />
+            ) }
           </props.tag>
 
           <Scrim

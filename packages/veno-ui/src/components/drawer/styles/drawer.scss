@@ -4,6 +4,7 @@
 @use '../../../styles/settings';
 
 .ve-drawer {
+  $root: &;
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
@@ -43,6 +44,27 @@
     max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    position: relative;
+  }
+
+  &--start &__toggler,
+  &--bottom &__toggler {
+    transform: translateX(50%) translateY(-50%);
+  }
+
+  &--active#{&}--start &__toggler,
+  &--active#{&}--bottom &__toggler {
+    transform: translateX(50%) translateY(-50%) rotate(180deg);
+  }
+
+  &--end &__toggler,
+  &--top &__toggler {
+    transform: translateX(-50%) translateY(50%);
+  }
+
+  &--active#{&}--end &__toggler,
+  &--active#{&}--top &__toggler {
+    transform: translateX(-50%) translateY(50%) rotate(180deg);
   }
 }
 

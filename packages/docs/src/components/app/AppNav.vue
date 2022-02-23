@@ -58,7 +58,7 @@
 </script>
 
 <template>
-  <ve-drawer v-model="menuActive">
+  <ve-drawer v-model="menuActive" show-toggler>
     <ve-scrollbar>
       <ve-list
           nav

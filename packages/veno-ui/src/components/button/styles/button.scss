@@ -89,4 +89,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &.position-absolute {
+    overflow: hidden;
+  }
 }
