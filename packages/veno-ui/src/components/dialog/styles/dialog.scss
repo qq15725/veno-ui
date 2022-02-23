@@ -18,7 +18,10 @@
         max-height: inherit;
 
         > .ve-card-text {
-          overflow-y: auto;
+          overflow-y: overlay;
+          @supports not (overflow-y: overlay) {
+            overflow-y: auto;
+          }
         }
       }
     }

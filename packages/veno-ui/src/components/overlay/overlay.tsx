@@ -31,6 +31,7 @@ import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeLazyProps, useLazy } from '../../composables/lazy'
 import { useStack } from '../../composables/stack'
 import { useOverlay } from '../../composables/layout'
+import { useSharedClickTarget } from '../../composables/shared-click-target'
 
 // Directives
 import { ClickOutside } from '../../directives/click-outside'

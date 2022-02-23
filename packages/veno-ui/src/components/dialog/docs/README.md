@@ -18,6 +18,10 @@ v-model.md
 
 scrollable.md
 
+nested.md
+
+menu-dialog.md
+
 dimension.md
 
 fullscreen.md

@@ -1,4 +1,5 @@
 // Utils
+import { ref } from 'vue'
 import {
   acceleratedEasing,
   deceleratedEasing,
@@ -23,11 +24,17 @@ export const DialogTransition = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { createSaveableClickTarget } = useSharedClickTarget()
+    const { clickTargetEl } = useSharedClickTarget()
+    const targetEl = ref<HTMLElement>()
 
-    const getClickTarget = createSaveableClickTarget()
-
-    const getTarget = () => props.target ?? getClickTarget()!
+    const getTransform = (el: Element) => {
+      let transform = 'translate(0px, 0px) scale(0.1)'
+      if (targetEl.value) {
+        const { x, y } = getDimensions(targetEl.value, el as HTMLElement)
+        transform = `translate(${ x }px, ${ y }px) scale(0.1)`
+      }
+      return transform
+    }
 
     const functions = {
       onBeforeEnter (el: Element) {
@@ -36,10 +43,10 @@ export const DialogTransition = defineComponent({
       async onEnter (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
-        const { x, y } = getDimensions(getTarget(), el as HTMLElement)
+        targetEl.value = props.target ?? clickTargetEl.value
 
         el.animate([
-          { transform: `translate(${ x }px, ${ y }px) scale(0.1)`, opacity: 0 },
+          { transform: getTransform(el), opacity: 0 },
           { transform: '' },
         ], {
           duration: 225,
@@ -55,11 +62,9 @@ export const DialogTransition = defineComponent({
       async onLeave (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
-        const { x, y } = getDimensions(getTarget(), el as HTMLElement)
-
         el.animate([
           { transform: '' },
-          { transform: `translate(${ x }px, ${ y }px) scale(0.1)`, opacity: 0 },
+          { transform: getTransform(el), opacity: 0 },
         ], {
           duration: 125,
           easing: acceleratedEasing,

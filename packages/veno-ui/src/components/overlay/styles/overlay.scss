@@ -41,4 +41,9 @@
 .ve-overlay-scroll-blocked {
   overflow-y: hidden !important;
   padding-inline-end: var(--ve-scrollbar-offset);
+
+  // CardText
+  &.ve-card-text {
+    padding-inline-end: calc(var(--ve-padding-x) + var(--ve-scrollbar-offset));
+  }
 }

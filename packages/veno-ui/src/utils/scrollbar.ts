@@ -24,5 +24,20 @@ export function hasScrollbar (el?: Element | null) {
   const style = window.getComputedStyle(el)
 
   return style.overflowY === 'scroll'
-    || (style.overflowY === 'auto' && el.scrollHeight > el.clientHeight)
+    || (
+      (style.overflowY === 'auto' || style.overflowY === 'overlay')
+      && el.scrollHeight > el.clientHeight
+    )
+}
+
+export function getScrollbarWidth (el?: HTMLElement | null) {
+  if (!el || el.nodeType !== Node.ELEMENT_NODE) return 0
+
+  if (el.tagName === 'HTML') {
+    return window.innerWidth - document.documentElement.offsetWidth
+  }
+
+  const style = window.getComputedStyle(el)
+
+  return el.offsetWidth - el.clientWidth - parseFloat(style.borderLeftWidth) - parseFloat(style.borderRightWidth)
 }
