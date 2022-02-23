@@ -74,6 +74,7 @@ export const Drawer = defineComponent({
         : Number(props.rail ? props.railWidth : props.width)
     })
     const isTemporary = computed(() => !props.permanent && (mobile.value || props.temporary))
+    const hasToggler = computed(() => props.showToggler && !mobile.value)
 
     watch(useRoute(), () => {
       if (isTemporary.value) isActive.value = false
@@ -130,15 +131,13 @@ export const Drawer = defineComponent({
 
     const layoutItemStyles = computed(() => {
       const styles = _layoutItemStyles.value as Record<string, any>
-      if (props.showToggler && styles.transform) {
+      if (hasToggler.value && styles.transform) {
         styles.transform = styles.transform.replace('110', '90')
       }
       return styles
     })
 
     return () => {
-      const hasToggler = props.showToggler
-
       const slotProps = {
         onClick: () => {
           isActive.value = true
@@ -164,7 +163,7 @@ export const Drawer = defineComponent({
                 've-drawer--rail': props.rail,
                 've-drawer--is-hovering': isHovering.value,
                 've-drawer--temporary': isTemporary.value,
-                've-drawer--has-toggler': hasToggler,
+                've-drawer--has-toggler': hasToggler.value,
               },
               themeClasses.value,
               backgroundColorClasses.value,
@@ -181,7 +180,7 @@ export const Drawer = defineComponent({
               { slots.default?.() }
             </div>
 
-            { hasToggler && (
+            { hasToggler.value && (
               <Button
                 position="absolute"
                 class="ve-drawer__toggler"
