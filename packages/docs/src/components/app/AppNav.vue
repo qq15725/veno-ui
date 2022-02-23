@@ -59,21 +59,23 @@
 
 <template>
   <ve-drawer v-model="menuActive">
-    <ve-list
-        nav
-        :items="menus"
-        :opened="opened"
-    >
-      <template #header="{ item: { title, apiType } }">
-        <ve-list-subheader v-if="apiType">{{ title }}</ve-list-subheader>
-        <ve-list-subheader
-            v-else
-            class="text-subtitle-1"
-            style="opacity: 1; font-weight: 500;"
-        >
-          {{ title }}
-        </ve-list-subheader>
-      </template>
-    </ve-list>
+    <ve-scrollbar>
+      <ve-list
+          nav
+          :items="menus"
+          :opened="opened"
+      >
+        <template #header="{ item: { title, apiType } }">
+          <ve-list-subheader v-if="apiType">{{ title }}</ve-list-subheader>
+          <ve-list-subheader
+              v-else
+              class="text-subtitle-1"
+              style="opacity: 1; font-weight: 500;"
+          >
+            {{ title }}
+          </ve-list-subheader>
+        </template>
+      </ve-list>
+    </ve-scrollbar>
   </ve-drawer>
 </template>

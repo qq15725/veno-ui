@@ -1,0 +1,37 @@
+@use 'sass:map';
+@use '../../../styles/tools';
+@use '../../../styles/settings';
+
+// Blocks
+.ve-scrollbar {
+  // CSS Variables
+  // --ve-scrollbar---height: 10px
+  // --ve-scrollbar---width: 10px
+  --ve-height: var(--ve-scrollbar---height, 10px);
+  --ve-width: var(--ve-scrollbar---width, var(--ve-height));
+  overflow: overlay;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &:hover::-webkit-scrollbar {
+    display: block;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+    height: var(--ve-height);
+    width: var(--ve-width);
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--ve-theme-on-background), var(--ve-disabled-opacity)) content-box;
+    border: 2px solid transparent;
+    border-radius: #{map.get(settings.$rounded, 'lg')};
+
+    &:hover {
+      background: rgba(var(--ve-theme-on-background), var(--ve-medium-emphasis-opacity)) content-box;
+    }
+  }
+}

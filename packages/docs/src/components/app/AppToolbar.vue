@@ -9,11 +9,11 @@
   const route = useRoute()
   const appStore = useAppStore()
   const url = computed(() => {
-    const { relativePath } = route.meta
-    if (relativePath.includes('../')) {
-      return `${ appStore.repositoryBaseURL }/${ relativePath.replace('../', 'packages/') }`
+    const path = route.meta.relativePath as string
+    if (path.includes('../')) {
+      return `${ appStore.repositoryBaseURL }/${ path.replace('../', 'packages/') }`
     }
-    return `${ appStore.repositoryBaseURL }/packages/docs/${ relativePath }`
+    return `${ appStore.repositoryBaseURL }/packages/docs/${ path }`
   })
 </script>
 
