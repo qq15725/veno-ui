@@ -176,24 +176,27 @@ export function useActivator (
     })
   })
 
-  const state = { activatorEl, activatorRef, activatorEvents, contentEvents }
+  const state = {
+    activatorEl,
+    activatorRef,
+    activatorEvents,
+    contentEvents
+  }
 
   let scope: EffectScope
   watch(() => !!props.activator, val => {
     if (val && IN_BROWSER) {
       scope = effectScope()
-      scope.run(() => {
-        _useActivator(props, state)
-      })
-    } else if (scope) {
-      scope.stop()
+      scope.run(() => useActivatorInScope(props, state))
+    } else {
+      scope?.stop()
     }
   }, { flush: 'post', immediate: true })
 
   return state
 }
 
-function _useActivator (
+function useActivatorInScope (
   props: ActivatorProps,
   { activatorEl, activatorEvents }: ReturnType<typeof useActivator>
 ) {
@@ -207,38 +210,40 @@ function _useActivator (
     }
   }, { immediate: true })
 
-  watch(() => props.activatorProps, () => {
-    bindActivatorProps()
-  })
+  watch(() => props.activatorProps, () => bindActivatorProps())
 
-  onScopeDispose(() => {
-    unbindActivatorProps()
-  })
+  onScopeDispose(unbindActivatorProps)
 
-  function bindActivatorProps (el = getActivator(), _props = props.activatorProps) {
+  function bindActivatorProps (
+    el = getActivator(),
+    activatorProps = props.activatorProps
+  ) {
     if (!el) return
 
     Object.entries(activatorEvents.value).forEach(([name, cb]) => {
       el.addEventListener(name, cb as (e: Event) => void)
     })
 
-    Object.keys(_props).forEach(k => {
-      if (_props[k] == null) {
+    Object.keys(activatorProps).forEach(k => {
+      if (activatorProps[k] == null) {
         el.removeAttribute(k)
       } else {
-        el.setAttribute(k, _props[k])
+        el.setAttribute(k, activatorProps[k])
       }
     })
   }
 
-  function unbindActivatorProps (el = getActivator(), _props = props.activatorProps) {
+  function unbindActivatorProps (
+    el = getActivator(),
+    activatorProps = props.activatorProps
+  ) {
     if (!el) return
 
     Object.entries(activatorEvents.value).forEach(([name, cb]) => {
       el.removeEventListener(name, cb as (e: Event) => void)
     })
 
-    Object.keys(_props).forEach(k => {
+    Object.keys(activatorProps).forEach(k => {
       el.removeAttribute(k)
     })
   }

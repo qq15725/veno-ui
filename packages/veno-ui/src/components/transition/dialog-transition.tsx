@@ -6,6 +6,9 @@ import {
   nullifyTransforms
 } from '../../utils'
 
+// Composables
+import { useSharedClickTarget } from '../../composables/shared-click-target'
+
 // Components
 import { Transition } from 'vue'
 
@@ -20,6 +23,12 @@ export const DialogTransition = defineComponent({
   },
 
   setup (props, { slots }) {
+    const { createSaveableClickTarget } = useSharedClickTarget()
+
+    const getClickTarget = createSaveableClickTarget()
+
+    const getTarget = () => props.target ?? getClickTarget()!
+
     const functions = {
       onBeforeEnter (el: Element) {
         (el as HTMLElement).style.pointerEvents = 'none'
@@ -27,7 +36,7 @@ export const DialogTransition = defineComponent({
       async onEnter (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
-        const { x, y } = getDimensions(props.target!, el as HTMLElement)
+        const { x, y } = getDimensions(getTarget(), el as HTMLElement)
 
         el.animate([
           { transform: `translate(${ x }px, ${ y }px) scale(0.1)`, opacity: 0 },
@@ -46,7 +55,7 @@ export const DialogTransition = defineComponent({
       async onLeave (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
-        const { x, y } = getDimensions(props.target!, el as HTMLElement)
+        const { x, y } = getDimensions(getTarget(), el as HTMLElement)
 
         el.animate([
           { transform: '' },
@@ -62,16 +71,14 @@ export const DialogTransition = defineComponent({
     }
 
     return () => {
-      return props.target
-        ? (
-          <Transition
-            name="dialog-transition"
-            { ...functions }
-            css={ false }
-            v-slots={ slots }
-          />
-        )
-        : <Transition name="dialog-transition" v-slots={ slots } />
+      return (
+        <Transition
+          name="dialog-transition"
+          { ...functions }
+          css={ false }
+          v-slots={ slots }
+        />
+      )
     }
   },
 })

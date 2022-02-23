@@ -16,8 +16,6 @@ import { Overlay } from '../overlay'
 // Types
 import type { OverlaySlots } from '../overlay/overlay'
 
-export type Dialog = InstanceType<typeof Dialog>
-
 export const Dialog = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
@@ -67,3 +65,5 @@ export const Dialog = genericComponent<new () => {
     )
   }
 })
+
+export type Dialog = InstanceType<typeof Dialog>
