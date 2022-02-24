@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/api-generator",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "VenoUI api generator",
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/api-generator",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "veno-ui": "^0.3.8",
+    "veno-ui": "^0.3.9",
     "vue": "^3.2.26"
   },
   "publishConfig": {
