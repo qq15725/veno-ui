@@ -135,11 +135,12 @@
     <ve-expand-transition>
       <ve-code
           v-if="isActive"
+          class="mt-3"
+          color="secondary"
           :code="code"
           language="vue"
-          hide-language
-          hide-line-numbers
-          class="mt-3"
+          show-language
+          show-line-numbers
       />
     </ve-expand-transition>
   </div>
