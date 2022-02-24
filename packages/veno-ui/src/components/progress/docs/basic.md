@@ -23,7 +23,7 @@
   {{ value }}
 </ve-progress>
 
-<ve-input label="进度比" v-model="value" type="number" hide-details />
+<ve-input label="进度比" v-model="value" type="number" hide-details class="mb-3" />
 <ve-input label="描线宽" v-model="strokeWidth" type="number" hide-details />
 ```
 
