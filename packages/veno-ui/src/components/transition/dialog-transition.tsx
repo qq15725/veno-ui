@@ -27,14 +27,12 @@ export const DialogTransition = defineComponent({
     const { clickTargetEl } = useSharedClickTarget()
     const targetEl = ref<HTMLElement>()
 
-    const getTransform = (el: Element) => {
-      let transform = 'translate(0px, 0px) scale(0.1)'
-
+    const getTransformOrigin = (el: Element) => {
       if (targetEl.value && document.documentElement.contains(targetEl.value)) {
         const { x, y } = getDimensions(targetEl.value, el as HTMLElement)
-        transform = `translate(${ x }px, ${ y }px) scale(0.1)`
+        return `${ x }px ${ y }px`
       }
-      return transform
+      return 'center'
     }
 
     const functions = {
@@ -47,10 +45,14 @@ export const DialogTransition = defineComponent({
         targetEl.value = props.target ?? clickTargetEl.value
 
         el.animate([
-          { transform: getTransform(el), opacity: 0 },
+          {
+            transformOrigin: getTransformOrigin(el),
+            transform: 'scale(0.5)',
+            opacity: 0
+          },
           { transform: '' },
         ], {
-          duration: 225,
+          duration: 250,
           easing: deceleratedEasing,
         }).finished.then(() => done())
       },
@@ -65,7 +67,11 @@ export const DialogTransition = defineComponent({
 
         el.animate([
           { transform: '' },
-          { transform: getTransform(el), opacity: 0 },
+          {
+            transformOrigin: getTransformOrigin(el),
+            transform: 'scale(0.5)',
+            opacity: 0
+          },
         ], {
           duration: 125,
           easing: acceleratedEasing,
@@ -92,10 +98,6 @@ export const DialogTransition = defineComponent({
 function getDimensions (target: HTMLElement, el: HTMLElement) {
   const targetBox = target.getBoundingClientRect()
   const elBox = nullifyTransforms(el)
-  const [originX, originY] = getComputedStyle(el)
-    .transformOrigin
-    .split(' ')
-    .map(v => parseFloat(v))
   const [anchorSide, anchorOffset] = getComputedStyle(el)
     .getPropertyValue('--ve-overlay-anchor-origin')
     .split(' ')
@@ -115,7 +117,7 @@ function getDimensions (target: HTMLElement, el: HTMLElement) {
   }
 
   return {
-    x: offsetX - (originX + elBox.left),
-    y: offsetY - (originY + elBox.top),
+    x: offsetX - elBox.left,
+    y: offsetY - elBox.top,
   }
 }
