@@ -129,7 +129,7 @@
   </ve-form-control>
 </ve-form>
 
-<ve-code class="mt-3" :value="form" />
+<ve-code class="mt-3" :code="form" />
 ```
 
 ```js

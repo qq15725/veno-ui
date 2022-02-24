@@ -8,7 +8,7 @@
   <ve-tag value="tag2">Tag2</ve-tag>
 </ve-tag-group>
 
-<ve-code :value="value" />
+<ve-code :code="value" />
 ```
 
 ```js

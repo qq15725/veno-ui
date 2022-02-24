@@ -1,16 +1,16 @@
 :::demo
 
-# 隐藏语言
+# 显示语言
 
 ```html
 <ve-code
-  :value="`
+  :code="`
 function sleep (ms = 1000) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 `"
   language="js"
-  hide-language
+  show-language
 />
 ```
 

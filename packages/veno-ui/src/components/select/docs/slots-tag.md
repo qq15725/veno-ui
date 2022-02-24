@@ -25,7 +25,7 @@
   </template>
 </ve-select>
 
-<ve-code :value="selected" />
+<ve-code :code="selected" />
 ```
 
 ```js

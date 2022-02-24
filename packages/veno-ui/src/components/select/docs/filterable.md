@@ -28,7 +28,7 @@
   filterable
 />
 
-<ve-code :value="selected" />
+<ve-code :code="selected" />
 ```
 
 ```js

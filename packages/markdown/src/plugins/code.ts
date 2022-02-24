@@ -6,6 +6,6 @@ export const codePlugin: PluginSimple = md => {
     const token = tokens[index]
     const attrs = md.renderer.renderAttrs(token)
     const html = md.utils.escapeHtml(token.content)
-    return `<ve-code${ attrs }>${ html }</ve-code>`
+    return `<ve-code color="secondary" inline ${ attrs }>${ html }</ve-code>`
   }
 }

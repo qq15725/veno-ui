@@ -3,7 +3,7 @@
 # 基本用法
 
 ```html
-<ve-code>console.log('code')</ve-code>
+<ve-code inline>console.log('code')</ve-code>
 ```
 
 :::

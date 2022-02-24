@@ -20,7 +20,7 @@
   width="200"
 />
 
-<ve-code :value="selected" />
+<ve-code :code="selected" />
 ```
 
 ```js

@@ -14,7 +14,7 @@
   clearable
 />
 
-<ve-code :value="value" />
+<ve-code :code="value" />
 ```
 
 ```js

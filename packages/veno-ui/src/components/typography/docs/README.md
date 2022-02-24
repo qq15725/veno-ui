@@ -16,7 +16,7 @@ category: Basic 通用组件
 <ve-h5>h5. 标题</ve-h5>
 <ve-h6>h6. 标题</ve-h6>
 <ve-p>With MySpace becoming more popular every day, there is the constant need to be different. There are millions of users. If MySpace layouts are chosen well, then you can enhance your profile a great deal.</ve-p>
-<ve-code>inline code</ve-code>
+<ve-code inline>inline code</ve-code>
 ```
 
 :::

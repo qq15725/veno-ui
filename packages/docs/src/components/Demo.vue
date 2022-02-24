@@ -135,7 +135,7 @@
     <ve-expand-transition>
       <ve-code
           v-if="isActive"
-          :value="code"
+          :code="code"
           language="vue"
           hide-language
           hide-line-numbers

@@ -3,46 +3,52 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+// Blocks
 .ve-code {
   position: relative;
   border-radius: map-get(settings.$rounded, 'sm');
   font-size: $code-font-size;
   font-weight: $code-font-weight;
-  padding: $code-padding;
 
-  &--highlighted {
-    --ve-code-preformatted-padding-top: 20px;
-    --ve-code-preformatted-padding-bottom: 20px;
-    --ve-code-preformatted-padding-left: 20px;
-    --ve-code-preformatted-padding-right: 20px;
+  // Modifiers
+  &--inline {
+    padding: $code-padding;
+  }
+
+  &--block {
+    --ve-padding: 20px;
     display: flex;
-    padding: 0;
     line-height: 1.4;
   }
 
+  // Elements
   &__language {
     position: absolute;
-    top: 6px;
-    right: 12px;
+    top: 0;
+    right: 0;
     font-size: 0.85em;
     user-select: none;
+  }
+
+  &--line-numbers &__language {
+    top: 6px;
+    right: 12px;
   }
 
   &__lines {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-block-start: var(--ve-code-preformatted-padding-top);
-    padding-block-end: var(--ve-code-preformatted-padding-bottom);
+    padding: var(--ve-padding) 0;
     color: #c4c4c6;
+    border-right: 1px solid #e7e6e6;
   }
 
   &__line {
     display: flex;
     justify-content: end;
     width: 100%;
-    padding-inline-start: var(--ve-code-preformatted-padding-left);
-    padding-inline-end: var(--ve-code-preformatted-padding-right);
+    padding: 0 var(--ve-padding);
     font-size: 0.85em;
     line-height: 1.6470588235294117;
     user-select: none;
@@ -67,17 +73,14 @@
   }
 
   &--line-numbers &__preformatted {
-    border-left: 1px solid #e7e6e6;
+    padding: var(--ve-padding);
   }
 
   &__preformatted {
     position: relative;
     flex: 1 1 auto;
-    padding-block-start: var(--ve-code-preformatted-padding-top);
-    padding-block-end: var(--ve-code-preformatted-padding-bottom);
-    padding-inline-start: var(--ve-code-preformatted-padding-left);
-    padding-inline-end: var(--ve-code-preformatted-padding-right);
     overflow: auto;
+    overflow: overlay;
   }
 
   /**
