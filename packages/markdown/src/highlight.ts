@@ -1,11 +1,11 @@
 const RE = /{([\d,-]+)}/
 
 export const highlight = (raw: string, rawLang: string) => {
-  let lang = rawLang, highlightedLineNumbers: number[][] = []
+  let lang = rawLang, lineNumbers: number[][] = []
   {
     if (RE.test(rawLang)) {
       lang = rawLang.replace(RE, '').trim()
-      highlightedLineNumbers = RE.exec(rawLang)![1]
+      lineNumbers = RE.exec(rawLang)![1]
         .split(',')
         .map(v => (
           v.split('-')
@@ -18,9 +18,8 @@ export const highlight = (raw: string, rawLang: string) => {
   class="mb-4"
   color="secondary"
   code="${ encodeURIComponent(raw) }"
-  :highlighted-line-numbers="${ JSON.stringify(highlightedLineNumbers) }" 
-  language="${ lang }" 
-  show-line-numbers
+  :line-numbers="${ JSON.stringify(lineNumbers) }" 
+  language="${ lang }"
   show-language
 />`
 }

@@ -10,8 +10,7 @@ function sleep (ms = 1000) {
 }
 `"
   language="js"
-  show-line-numbers
-  :highlighted-line-numbers="[[2, 3]]"
+  :line-numbers="[[2, 3]]"
 />
 ```
 

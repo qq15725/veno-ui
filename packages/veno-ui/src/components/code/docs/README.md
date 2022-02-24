@@ -33,7 +33,7 @@ export default createVeno({
 
 basic.md highlight.md
 
-show-language.md show-line-numbers.md
+show-language.md line-numbers.md
 
 highlighted-line-numbers.md
 

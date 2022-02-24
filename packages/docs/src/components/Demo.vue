@@ -140,7 +140,7 @@
           :code="code"
           language="vue"
           show-language
-          show-line-numbers
+          line-numbers
       />
     </ve-expand-transition>
   </div>

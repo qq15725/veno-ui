@@ -32,19 +32,14 @@ export const Code = defineComponent({
     showLanguage: Boolean,
 
     /**
-     * @zh: 显示行号
+     * @zh: 显示行号或者指定高亮的行号
      */
-    showLineNumbers: Boolean,
-
-    /**
-     * @zh: 高亮的行号
-     */
-    highlightedLineNumbers: Array as PropType<number[] | number[][]>,
+    lineNumbers: [Boolean, Array] as PropType<boolean | number[] | number[][]>,
 
     /**
      * @zh: 高亮的行的背景颜色
      */
-    highlightedLineBgColor: {
+    highlightedLineColor: {
       type: String,
       default: 'warning',
     },
@@ -85,9 +80,9 @@ export const Code = defineComponent({
       props, 'color'
     )
     const {
-      backgroundColorClasses: highlightedLineBackgroundColorClasses,
-      backgroundColorStyles: highlightedLineBackgroundColorStyles
-    } = useBackgroundColor(props, 'highlightedLineBgColor')
+      backgroundColorClasses: highlightedLineColorClasses,
+      backgroundColorStyles: highlightedLineColorStyles
+    } = useBackgroundColor(props, 'highlightedLineColor')
     const language = computed(() => (
       typeof props.code === 'object'
         ? 'json'
@@ -96,18 +91,20 @@ export const Code = defineComponent({
     const lineNumbers = computed(() => code.value.split('\n').map((v, i) => i + 1))
     const highlightedLines = computed(() => {
       return lineNumbers.value.filter(lineNumber => {
-        return props.highlightedLineNumbers?.some(v => {
-          let start = v, end
-          {
-            if (typeof v === 'object') {
-              [start, end] = v
+        return typeof props.lineNumbers === 'boolean'
+          ? false
+          : props.lineNumbers?.some(v => {
+            let start = v, end
+            {
+              if (typeof v === 'object') {
+                [start, end] = v
+              }
             }
-          }
-          if (start && end) {
-            return lineNumber >= start && lineNumber <= end
-          }
-          return lineNumber === start
-        })
+            if (start && end) {
+              return lineNumber >= start && lineNumber <= end
+            }
+            return lineNumber === start
+          })
       })
     })
 
@@ -128,7 +125,9 @@ export const Code = defineComponent({
             class={ [
               've-code',
               've-code--inline',
+              backgroundColorClasses.value
             ] }
+            style={ backgroundColorStyles.value }
             v-html={ highlightedCode.value }
           />
         )
@@ -140,13 +139,13 @@ export const Code = defineComponent({
             've-code',
             've-code--block',
             {
-              've-code--line-numbers': props.showLineNumbers,
+              've-code--line-numbers': !!props.lineNumbers,
             },
             backgroundColorClasses.value
           ] }
           style={ backgroundColorStyles.value }
         >
-          { props.showLineNumbers && (
+          { !!props.lineNumbers && (
             <div class="ve-code__lines">
               { lineNumbers.value.map(number => (
                 <div
@@ -160,9 +159,9 @@ export const Code = defineComponent({
                   <div
                     class={ [
                       've-code__line-overlay',
-                      highlightedLineBackgroundColorClasses.value,
+                      highlightedLineColorClasses.value,
                     ] }
-                    style={ highlightedLineBackgroundColorStyles.value }
+                    style={ highlightedLineColorStyles.value }
                     v-html={ `&nbsp;` }
                   />
 
