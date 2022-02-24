@@ -6,9 +6,9 @@ import { toRef } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
+import { makeSizeProps } from '../../composables/size'
 import { makeDensityProps } from '../../composables/density'
 import { makeFormProps, provideForm } from '../../composables/form'
-import { makeFormControlDirectionProps, useFormControlDirectionProps } from '../../composables/form-control-direction'
 import { makeVariantProps } from '../../composables/variant'
 import { provideDefaults } from '../../composables/defaults'
 
@@ -19,11 +19,33 @@ export const Form = defineComponent({
   name: 'VeForm',
 
   props: {
-    labelWidth: [Number, String],
+    /**
+     * @zh 布局方向
+     */
+    direction: {
+      type: String as PropType<'horizontal' | 'vertical'>,
+      default: 'horizontal',
+      validator: (v: any) => ['horizontal', 'vertical'].includes(v),
+    },
+
+    /**
+     * @zh 隐藏详情
+     */
     hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
+
+    /**
+     * @zh 内联
+     */
+    inline: Boolean,
+
+    /**
+     * @zh 标签宽度
+     */
+    labelWidth: [Number, String],
+
+    ...makeSizeProps(),
     ...makeDensityProps(),
     ...makeFormProps(),
-    ...makeFormControlDirectionProps(),
     ...makeVariantProps(),
   },
 
@@ -37,12 +59,12 @@ export const Form = defineComponent({
   setup (props, { slots }) {
     const form = provideForm(props)
 
-    const { formControlDirectionClasses } = useFormControlDirectionProps(props)
-
     const defaults = {
       variant: toRef(props, 'variant'),
+      size: toRef(props, 'size'),
       density: toRef(props, 'density'),
       direction: toRef(props, 'direction'),
+      inline: toRef(props, 'inline'),
       labelWidth: toRef(props, 'labelWidth'),
       hideDetails: toRef(props, 'hideDetails'),
       readonly: toRef(props, 'readonly'),
@@ -71,7 +93,10 @@ export const Form = defineComponent({
         <form
           class={ [
             've-form',
-            formControlDirectionClasses.value,
+            {
+              [`ve-form--${ props.direction }`]: !!props.direction,
+              've-form--inline': props.inline,
+            }
           ] }
           novalidate
           onReset={ form.reset }

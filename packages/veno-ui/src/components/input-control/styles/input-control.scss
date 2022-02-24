@@ -10,11 +10,12 @@
   // --ve-native-control---padding-left 12px
   // --ve-native-control---padding-right 12px
   // --ve-native-control---padding-top 4px
-  position: relative;
-  display: flex;
   align-items: center;
-  width: var(--ve-control-width, inherit);
-  min-height: var(--ve-control-height, inherit);
+  display: flex;
+  flex: 1 0;
+  height: 100%;
+  min-height: inherit;
+  position: relative;
   transition: .1s settings.$decelerated-easing;
   transition-property: color, background-color;
   @include tools.use-border();
@@ -78,6 +79,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    height: 100%;
     min-height: inherit;
     white-space: nowrap;
   }
@@ -92,6 +94,7 @@
     display: flex;
     align-items: center;
     flex: 1 0;
+    height: 100%;
     min-height: inherit;
     cursor: text;
     padding-inline-start: var(--ve-padding-left, 0px);
@@ -102,6 +105,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    height: 100%;
     min-height: inherit;
     padding-inline-start: var(--ve-native-control---padding-left, 12px);
     padding-inline-end: var(--ve-native-control---padding-right, 12px);

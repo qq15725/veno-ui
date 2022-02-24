@@ -12,6 +12,8 @@ basic.md
 
 width.md
 
+height.md
+
 auto-resize.md 
 
 slots.md

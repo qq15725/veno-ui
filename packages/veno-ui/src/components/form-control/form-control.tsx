@@ -12,9 +12,9 @@ import { Icon } from '../icon'
 
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
+import { makeSizeProps, useSize } from '../../composables/size'
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeValidationProps, useValidation } from '../../composables/validation'
-import { makeFormControlDirectionProps, useFormControlDirectionProps } from '../../composables/form-control-direction'
 
 // Types
 import type { ComputedRef, PropType, Ref } from 'vue'
@@ -63,21 +63,75 @@ export const FormControl = genericComponent<new () => {
   name: 'VeFormControl',
 
   props: {
-    focused: Boolean,
+    /**
+     * @zh 前置图标
+     */
     appendIcon: String,
-    prependIcon: String,
-    label: [Boolean, String],
-    labelId: String,
-    labelWidth: [String, Number],
+
+    /**
+     * @zh 布局方向
+     */
+    direction: {
+      type: String as PropType<'horizontal' | 'vertical'>,
+      default: 'horizontal',
+      validator: (v: any) => ['horizontal', 'vertical'].includes(v),
+    },
+
+    /**
+     * @zh 聚焦的
+     */
+    focused: Boolean,
+
+    /**
+     * @zh 隐藏详情
+     */
     hideDetails: [Boolean, String] as PropType<boolean | 'auto'>,
+
+    /**
+     * @zh 存在提示
+     */
     hint: String,
+
+    /**
+     * @zh 内联
+     */
+    inline: Boolean,
+
+    /**
+     * @zh 标签文本
+     */
+    label: [Boolean, String],
+
+    /**
+     * @zh 标签ID
+     */
+    labelId: String,
+
+    /**
+     * @zh 标签宽度
+     */
+    labelWidth: [String, Number],
+
+    /**
+     * @zh 提示消息
+     */
     messages: {
       type: [Array, String],
       default: () => ([]),
     },
+
+    /**
+     * @zh 后置图标
+     */
+    prependIcon: String,
+
+    /**
+     * @zh 持续显示的提示
+     */
     persistentHint: Boolean,
+
     ...makeDimensionProps(),
-    ...makeFormControlDirectionProps(),
+    ...makeSizeProps(),
     ...makeDensityProps(),
     ...makeValidationProps(),
   },
@@ -85,8 +139,14 @@ export const FormControl = genericComponent<new () => {
   emits: FormControlEmits,
 
   setup (props, { slots, emit }) {
-    const { formControlDirectionClasses } = useFormControlDirectionProps(props)
-    const { dimensionStyles } = useDimension(props)
+    const { dimensionStyles: dimensionStyles } = useDimension(props)
+    const { sizeClasses, sizeStyles } = useSize(props)
+
+    const computedDimensionStyles = computed(() => ({
+      ...dimensionStyles.value,
+      minHeight: dimensionStyles.value.minHeight ?? dimensionStyles.value.height,
+    }))
+
     const { densityClasses } = useDensity(props)
     const {
       errorMessages,
@@ -136,9 +196,11 @@ export const FormControl = genericComponent<new () => {
           class={ [
             've-form-control',
             {
+              [`ve-form-control--${ props.direction }`]: !!props.direction,
               've-form-control--hide-details': props.hideDetails,
+              've-form-control--inline': props.inline,
             },
-            formControlDirectionClasses.value,
+            sizeClasses.value,
             densityClasses.value,
             validationClasses.value,
           ] }
@@ -175,7 +237,10 @@ export const FormControl = genericComponent<new () => {
           { slots.default && (
             <div
               class="ve-form-control__control"
-              style={ dimensionStyles.value }
+              style={ [
+                sizeStyles.value,
+                computedDimensionStyles.value,
+              ] }
             >
               { slots.default(slotProps.value) }
             </div>

@@ -8,7 +8,7 @@
 .ve-selection-control {
   // CSS Variables
   // --ve-selection-control---height
-  --ve-height: calc(var(--ve-selection-control---height, 22px) + var(--ve-density-offset, 0px));
+  --ve-height: calc(var(--ve-selection-control---height, 22px) + var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
   align-items: center;
   align-self: center;
   cursor: pointer;
@@ -16,6 +16,7 @@
   min-height: var(--ve-height);
   position: relative;
   user-select: none;
+  @include tools.use-size();
   @include tools.use-density((
     densities: $selection-control-density
   ));

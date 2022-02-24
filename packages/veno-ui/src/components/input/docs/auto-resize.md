@@ -6,8 +6,8 @@
 
 ```html
 <ve-input placeholder="Input" width="80" auto-resize />
-<ve-input type="textarea" placeholder="Textarea" auto-resize rows="2" />
-<ve-input type="textarea" placeholder="Textarea" auto-resize rows="3" max-rows="5" />
+<ve-input type="textarea" placeholder="Textarea rows:2" auto-resize rows="2" />
+<ve-input type="textarea" placeholder="Textarea rows:3 max-rows:5" auto-resize rows="3" max-rows="5" />
 ```
 
 :::

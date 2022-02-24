@@ -6,4 +6,17 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+
+  &--vertical:not(#{&}--inline),
+  &--horizontal:not(#{&}--inline) {
+    .ve-form-control--hide-details + .ve-form-control--hide-details {
+      margin-top: 8px;
+    }
+  }
+
+  &--inline {
+    .ve-form-control--hide-details {
+      margin: 4px;
+    }
+  }
 }

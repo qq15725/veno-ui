@@ -4,19 +4,14 @@
 
 ```html
 <ve-form
-  :label-width="form.direction === 'inline' ? 70 : 100"
-  :density="form.density"
-  :direction="form.direction"
-  :disabled="form.disabled"
-  :hide-details="form.hideDetails"
-  :readonly="form.readonly"
-  :variant="form.variant"
+  :label-width="form.props.inline ? 'auto' : 100"
+  v-bind="form.props"
   @submit="send"
 >
   <ve-radio-group
     label="Variant"
     name="variant"
-    v-model="form.variant"
+    v-model="form.props.variant"
   >
     <ve-radio value="contained" />
     <ve-radio value="outlined" />
@@ -26,10 +21,22 @@
   </ve-radio-group>
   
   <ve-radio-group
+    label="Size"
+    name="size"
+    v-model="form.props.size"
+  >
+    <ve-radio value="x-small" />
+    <ve-radio value="small" />
+    <ve-radio value="medium" />
+    <ve-radio value="large" />
+    <ve-radio value="x-large" />
+  </ve-radio-group>
+  
+  <ve-radio-group
     label="Density"
     messages="Messages"
     name="density"
-    v-model="form.density"
+    v-model="form.props.density"
   >
     <ve-radio value="ultra-high" />
     <ve-radio value="high" />
@@ -38,16 +45,16 @@
     <ve-radio value="ultra-low" />
   </ve-radio-group>
 
-  <ve-radio-group name="direction" label="Direction" v-model="form.direction">
+  <ve-radio-group name="direction" label="Direction" v-model="form.props.direction">
     <ve-radio value="horizontal" />
     <ve-radio value="vertical" />
-    <ve-radio value="inline" />
   </ve-radio-group>
 
   <ve-form-control label :disabled="false">
-    <ve-switch name="disabled" label="Disabled" v-model="form.disabled" :disabled="false" />
-    <ve-switch name="readonly" label="Readonly" v-model="form.readonly" :readonly="false" />
-    <ve-switch name="hide-details" label="HideDetails" v-model="form.hideDetails" />
+    <ve-switch name="inline" label="Inline" v-model="form.props.inline" />
+    <ve-switch name="disabled" label="Disabled" v-model="form.props.disabled" :disabled="false" />
+    <ve-switch name="readonly" label="Readonly" v-model="form.props.readonly" :readonly="false" />
+    <ve-switch name="hide-details" label="HideDetails" v-model="form.props.hideDetails" />
   </ve-form-control>
 
   <ve-input
@@ -135,12 +142,16 @@ export default defineComponent({
     
     return {
       form: ref({
-        variant: 'contained',
-        density: 'medium',
-        direction: 'horizontal',
-        hideDetails: true,
-        disabled: false,
-        readonly: false,
+        props: {
+          variant: 'contained',
+          size: 'medium',
+          density: 'medium',
+          direction: 'horizontal',
+          inline: false,
+          hideDetails: true,
+          disabled: false,
+          readonly: false,
+        },
         radio: 'Radio1',
         switch: false,
         checkbox: [],

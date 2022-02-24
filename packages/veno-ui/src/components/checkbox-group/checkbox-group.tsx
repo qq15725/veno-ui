@@ -8,6 +8,7 @@ import { SelectionGroupControl } from '../selection-group-control'
 import { makeSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
 
 // Composables
+import { makeSizeProps } from '../../composables/size'
 import { makeDensityProps } from '../../composables/density'
 import { provideDefaults } from '../../composables/defaults'
 
@@ -21,6 +22,7 @@ export const CheckboxGroup = defineComponent({
       trueIcon: '$checkboxOn',
       multiple: true,
     }),
+    ...makeSizeProps(),
     ...makeDensityProps(),
   },
 
@@ -33,6 +35,7 @@ export const CheckboxGroup = defineComponent({
 
     provideDefaults({
       VeCheckbox: {
+        size: toRef(props, 'size'),
         density: toRef(props, 'density'),
         readonly: toRef(props, 'readonly'),
         disabled: toRef(props, 'disabled'),
@@ -40,11 +43,12 @@ export const CheckboxGroup = defineComponent({
     })
 
     return () => {
-      const { density, ...restProps } = props
+      const { density, size, ...restProps } = props
 
       return (
         <FormControl
           class="ve-checkbox-group"
+          size={ size }
           density={ density }
         >
           { {

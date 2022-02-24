@@ -20,6 +20,7 @@ import { Label } from '../label'
 
 // Composables
 import { makeThemeProps } from '../../composables/theme'
+import { makeSizeProps, useSize } from '../../composables/size'
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { useTextColor } from '../../composables/color'
@@ -68,6 +69,7 @@ export const makeSelectionControlProps = propsFactory({
     default: deepEqual,
   },
   ...makeThemeProps(),
+  ...makeSizeProps(),
   ...makeDensityProps(),
 }, 'selection-control')
 
@@ -94,6 +96,7 @@ export const SelectionControl = genericComponent<new <T>() => {
 
   setup (props, { attrs, slots }) {
     const group = useSelectionGroupControl()
+    const { sizeClasses, sizeStyles } = useSize(props)
     const { densityClasses } = useDensity(props)
     const modelValue = useProxiedModel(props, 'modelValue')
     const trueValue = computed(() => (
@@ -202,9 +205,11 @@ export const SelectionControl = genericComponent<new <T>() => {
               've-selection-control--focus-visible': isFocusVisible.value,
               've-selection-control--inline': group?.inline.value || props.inline,
             },
+            sizeClasses.value,
             densityClasses.value,
             textColorClasses.value,
           ] }
+          style={ sizeStyles.value }
         >
           <div class="ve-selection-control__wrapper">
             { slots.default?.(slotProps) }

@@ -8,6 +8,7 @@ import { SelectionGroupControl } from '../selection-group-control'
 import { makeSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
 
 // Composables
+import { makeSizeProps } from '../../composables/size'
 import { makeDensityProps } from '../../composables/density'
 import { provideDefaults } from '../../composables/defaults'
 
@@ -20,6 +21,7 @@ export const RadioGroup = defineComponent({
       trueIcon: '$radioOn',
       falseIcon: '$radioOff',
     }),
+    ...makeSizeProps(),
     ...makeDensityProps(),
   },
 
@@ -32,6 +34,7 @@ export const RadioGroup = defineComponent({
 
     provideDefaults({
       VeRadio: {
+        size: toRef(props, 'size'),
         density: toRef(props, 'density'),
         readonly: toRef(props, 'readonly'),
         disabled: toRef(props, 'disabled'),
@@ -39,11 +42,12 @@ export const RadioGroup = defineComponent({
     })
 
     return () => {
-      const { density, ...restProps } = props
+      const { density, size, ...restProps } = props
 
       return (
         <FormControl
           class="ve-radio-group"
+          size={ size }
           density={ density }
         >
           { {

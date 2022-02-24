@@ -262,7 +262,7 @@ export const Input = genericComponent<new () => {
           label-id={ id.value }
           style={
             controlHeight.value
-              ? { '--ve-form-control__control---height': convertToUnit(controlHeight.value) }
+              ? { '--ve-form-control---height': convertToUnit(controlHeight.value) }
               : {}
           }
           name={ props.name }
