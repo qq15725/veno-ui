@@ -29,7 +29,8 @@ export const DialogTransition = defineComponent({
 
     const getTransform = (el: Element) => {
       let transform = 'translate(0px, 0px) scale(0.1)'
-      if (targetEl.value) {
+
+      if (targetEl.value && document.documentElement.contains(targetEl.value)) {
         const { x, y } = getDimensions(targetEl.value, el as HTMLElement)
         transform = `translate(${ x }px, ${ y }px) scale(0.1)`
       }

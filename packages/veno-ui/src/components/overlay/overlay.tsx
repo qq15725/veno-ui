@@ -31,7 +31,6 @@ import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeLazyProps, useLazy } from '../../composables/lazy'
 import { useStack } from '../../composables/stack'
 import { useOverlay } from '../../composables/layout'
-import { useSharedClickTarget } from '../../composables/shared-click-target'
 
 // Directives
 import { ClickOutside } from '../../directives/click-outside'
@@ -93,15 +92,15 @@ export const Overlay = genericComponent<new () => {
 
   setup (props, { slots, attrs, emit }) {
     const isActive = useProxiedModel(props, 'modelValue')
-    const isLeaved = ref(true)
+    const isInternalActive = ref(isActive.value)
     const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
     const { themeClasses } = provideTheme(props)
-    const { hasContent, onAfterLeave: lazyOnAfterLeave } = useLazy(props, isActive)
+    const { hasContent, onAfterLeave: onAfterLeaveByLazy } = useLazy(props, isActive)
     const { dimensionStyles } = useDimension(props)
     const { isTop } = useStack(isActive)
     const root = ref<HTMLElement>()
     const contentEl = ref<HTMLElement>()
-    const { overlayZIndex } = useOverlay(isActive)
+    const { overlayZIndex } = useOverlay(isInternalActive)
     const {
       activatorEl,
       activatorRef,
@@ -125,7 +124,7 @@ export const Overlay = genericComponent<new () => {
       root,
       contentEl,
       activatorEl,
-      isActive: computed(() => !isLeaved.value),
+      isActive: isInternalActive,
       updatePosition,
     })
 
@@ -164,7 +163,7 @@ export const Overlay = genericComponent<new () => {
     }
 
     watch(isActive, val => {
-      if (val) isLeaved.value = false
+      if (val) isInternalActive.value = true
 
       if (IN_BROWSER) {
         if (val) {
@@ -203,8 +202,8 @@ export const Overlay = genericComponent<new () => {
     })
 
     const onAfterLeave = () => {
-      isLeaved.value = true
-      lazyOnAfterLeave()
+      isInternalActive.value = false
+      onAfterLeaveByLazy()
     }
 
     const closeConditional = () => {
