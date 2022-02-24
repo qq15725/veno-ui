@@ -44,15 +44,15 @@ export const DialogTransition = defineComponent({
 
         targetEl.value = props.target ?? clickTargetEl.value
 
+        {
+          (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
+        }
+
         el.animate([
-          {
-            transformOrigin: getTransformOrigin(el),
-            transform: 'scale(0.5)',
-            opacity: 0
-          },
+          { transform: 'scale(0.5)', opacity: 0 },
           { transform: '' },
         ], {
-          duration: 250,
+          duration: 225,
           easing: deceleratedEasing,
         }).finished.then(() => done())
       },
@@ -65,13 +65,13 @@ export const DialogTransition = defineComponent({
       async onLeave (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
+        {
+          (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
+        }
+
         el.animate([
           { transform: '' },
-          {
-            transformOrigin: getTransformOrigin(el),
-            transform: 'scale(0.5)',
-            opacity: 0
-          },
+          { transform: 'scale(0.5)', opacity: 0 },
         ], {
           duration: 125,
           easing: acceleratedEasing,

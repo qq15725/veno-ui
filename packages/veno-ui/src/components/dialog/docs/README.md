@@ -14,6 +14,8 @@ category: Feedback 反馈组件
 
 basic.md
 
+persistent.md
+
 v-model.md
 
 scrollable.md
