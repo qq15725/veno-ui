@@ -19,6 +19,8 @@
         max-height: inherit;
 
         > .ve-card-text {
+          overflow-y: auto;
+          overflow-y: overlay;
           @extend .beautify-scrollbar;
         }
       }
