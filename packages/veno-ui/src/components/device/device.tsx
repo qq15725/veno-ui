@@ -2,7 +2,7 @@
 import './styles/device.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -13,10 +13,7 @@ import { convertToUnit } from '../../utils'
 // Components
 import { DeviceStatusBar } from './device-status-bar'
 
-// Types
-export type Device = InstanceType<typeof Device>
-
-export const Device = genericComponent()({
+export const Device = defineComponent({
   name: 'VeDevice',
 
   props: {
@@ -95,3 +92,5 @@ export const Device = genericComponent()({
     }
   }
 })
+
+export type Device = InstanceType<typeof Device>

@@ -173,6 +173,7 @@ export const Select = genericComponent<new () => {
     const id = computed(() => props.id || `ve-select-${ getUid() }`)
     const inputRef = ref()
     const isActiveMenu = ref(false)
+    const listRef = ref()
     const menuRef = ref()
     const mirrorRef = ref()
     const tagInputRef = ref()
@@ -209,12 +210,8 @@ export const Select = genericComponent<new () => {
     }, 300)
     const inputValue = computed({
       get: () => {
-        if (props.filterable && isActiveMenu.value) {
-          return query.value
-        }
-        if (props.tags) {
-          return undefined
-        }
+        if (props.filterable && isActiveMenu.value) return query.value
+        if (props.tags) return undefined
         return selections.value.map(item => item.text).join(', ')
       },
       set: val => {
@@ -288,27 +285,37 @@ export const Select = genericComponent<new () => {
       }
     }
 
-    const onKeydownSetCurrent = debounce(({ key }: KeyboardEvent) => {
+    const onKeydownMove = debounce(({ key }: KeyboardEvent) => {
+      const index = pendingIndex.value ?? filteredItems.value.findIndex(({ value }) => value === active.value[0])
+      const lastIndex = filteredItems.value.length - 1
+
       if (key === keyValues.up) {
-        if (pendingIndex.value === undefined) {
-          pendingIndex.value = filteredItems.value.length - 1
-        } else {
-          pendingIndex.value = Math.max(0, pendingIndex.value - 1)
-        }
+        pendingIndex.value = [-1, 0].includes(index) ? lastIndex : Math.max(0, index - 1)
       }
+
       if (key === keyValues.down) {
-        if (pendingIndex.value === undefined) {
-          pendingIndex.value = 0
-        } else {
-          pendingIndex.value = Math.min(
-            filteredItems.value.length - 1,
-            pendingIndex.value + 1
-          )
-        }
+        pendingIndex.value = [-1, lastIndex].includes(index) ? 0 : Math.min(lastIndex, index + 1)
       }
+
+      nextTick(() => {
+        const el = listRef.value.$el
+        if (!el) return
+        const itemEl = el.querySelector('.ve-select__item--pendding')
+        if (!itemEl) return
+        const itemTop = itemEl.offsetTop
+        if (itemTop <= el.scrollTop) {
+          el.scrollTop -= el.scrollTop - itemTop
+        } else {
+          const itemBottom = itemEl.offsetTop + itemEl.offsetHeight
+          const scrollBottom = el.scrollTop + el.offsetHeight
+          if (itemBottom >= scrollBottom) {
+            el.scrollTop += itemBottom - scrollBottom
+          }
+        }
+      })
     }, 30)
 
-    const onKeydownToggle = debounce(() => {
+    const onKeydownEnter = debounce(() => {
       if (!isActiveMenu.value) {
         isActiveMenu.value = true
       } else if (filteredItems.value.length > 0) {
@@ -333,12 +340,12 @@ export const Select = genericComponent<new () => {
 
       if ([keyValues.up, keyValues.down].includes(key)) {
         e.preventDefault()
-        onKeydownSetCurrent(e)
+        onKeydownMove(e)
       }
 
       if ([keyValues.enter, keyValues.space, ' '].includes(key)) {
         e.preventDefault()
-        onKeydownToggle()
+        onKeydownEnter()
       }
 
       if (key === keyValues.backspace
@@ -371,6 +378,10 @@ export const Select = genericComponent<new () => {
     })
     onBeforeUnmount(() => {
       observer?.disconnect()
+    })
+
+    watch(isActiveMenu, val => {
+      if (!val) pendingIndex.value = undefined
     })
 
     return () => {
@@ -444,6 +455,7 @@ export const Select = genericComponent<new () => {
                     eager
                   >
                     <List
+                      ref={ listRef }
                       class={ scrollbarClasses.value }
                       maxHeight={ 250 }
                       items={ items.value }

@@ -11,6 +11,7 @@
       visibility: visible;
       background-color: rgb(var(--ve-theme-on-surface));
       opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
+      transition: none;
     }
   }
 

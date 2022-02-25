@@ -1,9 +1,9 @@
 :::demo
 
-# 基本用法
+# 水平滚动
 
 ```html
-<ve-scrollbar style="height: 200px;">
+<ve-scrollbar class="text-no-wrap">
   <template v-for="i in 100">占位专用文本</template>
 </ve-scrollbar>
 ```
