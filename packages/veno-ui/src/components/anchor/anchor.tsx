@@ -2,12 +2,21 @@
 import './styles/anchor.scss'
 
 // Utils
-import { toRef } from 'vue'
+import { PropType, toRef } from 'vue'
 import { defineComponent } from '../../utils'
+
+// Components
+import { AnchorItem } from './anchor-item'
 
 // Composables
 import { provideDefaults } from '../../composables/defaults'
 import { makeNamedAnchor, useNamedAnchor } from '../../composables/named-anchor'
+
+type AnchorItemProps = {
+  [key: string]: any
+  text: string
+  value: string
+}
 
 export const Anchor = defineComponent({
   name: 'VeAnchor',
@@ -20,6 +29,11 @@ export const Anchor = defineComponent({
       type: String,
       default: 'primary',
     },
+
+    /**
+     * @zh 锚点项
+     */
+    items: Array as PropType<AnchorItemProps[]>,
 
     ...makeNamedAnchor()
   },
@@ -34,7 +48,11 @@ export const Anchor = defineComponent({
     })
 
     return () => (
-      <ul class="ve-anchor">{ slots.default?.() }</ul>
+      <ul class="ve-anchor">
+        { slots.default?.() }
+
+        { props.items?.map(item => <AnchorItem { ...item } />) }
+      </ul>
     )
   }
 })

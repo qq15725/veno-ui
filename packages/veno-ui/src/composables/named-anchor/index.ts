@@ -24,7 +24,7 @@ export const makeNamedAnchor = propsFactory({
     type: [String, Number],
     default: 12,
   },
-  scroller: {
+  scrollTarget: {
     type: [String, Object] as PropType<string | HTMLElement>
   },
 }, 'named-anchor')
@@ -32,10 +32,11 @@ export const makeNamedAnchor = propsFactory({
 export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNamedAnchor>>) {
   const active = ref<string>()
   const names = ref(new Set<string>())
-  const scroller = computed(() => (
-    typeof props.scroller === 'string'
-      ? document.querySelector(props.scroller)
-      : props.scroller
+  const offset = computed(() => parseInt(props.offset, 10))
+  const scrollTarget = computed(() => (
+    typeof props.scrollTarget === 'string'
+      ? document.querySelector(props.scrollTarget)
+      : props.scrollTarget
   ))
   const scrolling = ref(false)
 
@@ -43,25 +44,33 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
 
   let timeout: any = 0
   const activate = (name: string) => {
-    scrolling.value = true
-    clearTimeout(timeout)
-    timeout = setTimeout(() => scrolling.value = false, 800)
-    document.getElementById(name)?.scrollIntoView({ behavior: 'smooth' })
+    const target = document.getElementById(name)
+    if (target) {
+      clearTimeout(timeout)
+      scrolling.value = true
+      timeout = setTimeout(() => scrolling.value = false, 800)
+      const container = scrollTarget.value ?? window
+      const offsetTop = scrollTarget.value?.scrollTop ?? window.scrollY
+      container.scrollTo({
+        top: target.getBoundingClientRect().top + offsetTop - offset.value,
+        behavior: 'smooth'
+      })
+    }
     active.value = name
   }
 
   const findActiveHash = () => {
-    const offsetTop = scroller.value?.getBoundingClientRect().top || 0
+    const offsetTop = scrollTarget.value?.getBoundingClientRect().top || 0
 
     active.value = [...names.value]
       .reduce((pos, name) => {
-        const rect = document.getElementById(name)?.getBoundingClientRect()
+        const box = document.getElementById(name)?.getBoundingClientRect()
 
-        if (rect) {
+        if (box) {
           pos.push({
             name,
-            top: rect.top - offsetTop,
-            height: rect.height
+            top: box.top - offsetTop,
+            height: box.height
           })
         }
 
@@ -137,7 +146,7 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
 }
 
 export const makeNamedAnchorItem = propsFactory({
-  name: {
+  value: {
     type: String,
     required: true,
   }
@@ -150,8 +159,6 @@ export function useNamedAnchorItem (
 
   if (!parent) throw new Error('[VenoUi] Could not find namedAnchor instance')
 
-  const name = computed(() => props.name)
-
   const { isWebHashHistory } = useRouterHistory()
 
   const item = {
@@ -159,16 +166,16 @@ export function useNamedAnchorItem (
     isWebHashHistory,
     to: computed(() => (
       isWebHashHistory.value
-        ? { query: { anchor: name.value }, replace: true }
-        : { hash: `#${ name.value }`, replace: true }
+        ? { query: { anchor: props.value }, replace: true }
+        : { hash: `#${ props.value }`, replace: true }
     )),
-    isActive: computed(() => parent.active.value === name.value)
+    isActive: computed(() => parent.active.value === props.value)
   }
 
-  parent.register(name.value)
+  parent.register(props.value)
 
   onBeforeUnmount(() => {
-    parent.unregister(name.value)
+    parent.unregister(props.value)
   })
 
   return item

@@ -22,6 +22,11 @@ export const AnchorItem = defineComponent({
       default: 'primary',
     },
 
+    /**
+     * @zh 文本
+     */
+    text: String,
+
     ...makeNamedAnchorItem(),
   },
 
@@ -45,10 +50,15 @@ export const AnchorItem = defineComponent({
             onClick={ (e: MouseEvent) => {
               e.preventDefault()
               e.stopPropagation()
-              activate(props.name)
+              activate(props.value)
             } }
           >
-            { slots }
+            { {
+              ...slots,
+              default: () => {
+                return slots.default?.() ?? props.text
+              }
+            } }
           </Link>
         </li>
       )

@@ -11,6 +11,10 @@ meta:
 
 basic.md
 
+items.md
+
+slots.md
+
 :::
 
 ## API
