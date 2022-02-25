@@ -14,12 +14,12 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(var(--ve-theme-on-background), var(--ve-disabled-opacity)) content-box;
+    background: rgba(var(--ve-theme-on-background), 0.26) content-box;
     border: 2px solid transparent;
     border-radius: #{map.get(settings.$rounded, 'lg')};
 
     &:hover {
-      background: rgba(var(--ve-theme-on-background), var(--ve-medium-emphasis-opacity)) content-box;
+      background: rgba(var(--ve-theme-on-background), 0.38) content-box;
     }
   }
 }

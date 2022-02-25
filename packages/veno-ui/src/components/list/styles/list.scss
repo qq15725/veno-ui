@@ -10,6 +10,7 @@
   --ve-indent-padding: 0px;
   --ve-offset: calc(var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
   overflow: auto;
+  overflow: overlay;
   position: relative;
   padding: var(--ve-list---padding-y, 8px) var(--ve-list---padding-x, 0px);
   @include tools.use-paper($list-paper);
