@@ -1,6 +1,19 @@
+<script lang="ts" setup>
+  import { computed } from 'vue'
+  import { useRoute } from 'vue-router'
+
+  const route = useRoute()
+  const toc = computed(() => {
+    const headers = (route.meta?.headers || []) as any[]
+    return headers
+        .filter(({ title, level }) => level === 3 || title === 'API')
+        .map(({ slug, title }) => ({ text: title, value: slug }))
+  })
+</script>
+
 <template>
   <ve-drawer
-      v-if="!!$route.meta?.headers?.filter(v => v.level === 3)?.length"
+      :model-value="!$veno.display.mobile && toc.length > 0"
       width="180"
       anchor="right"
       border="0"
@@ -8,8 +21,7 @@
     <ve-anchor
         offset="70"
         class="mt-10"
-        :items="$route.meta.headers.filter(v => v.level === 3)
-        .map(({ slug, title }) => ({ text: title, value: slug }))"
+        :items="toc"
     >
       <ve-list-subheader tag="li">目录</ve-list-subheader>
     </ve-anchor>

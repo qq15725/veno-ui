@@ -1,29 +1,27 @@
 // Styles
 import './styles/drawer.scss'
 
+// Types
+import type { Ref } from 'vue'
 // Utils
-import { computed, onBeforeMount, watch, ref, toRef } from 'vue'
+import { computed, onBeforeMount, ref, toRef, watch } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { useTouch } from './touch'
-import { makeTagProps } from '../../composables/tag'
+import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 import { makeBorderProps, useBorder } from '../../composables/border'
+import { useBackgroundColor } from '../../composables/color'
+import { useDisplay } from '../../composables/display'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { useDisplay } from '../../composables/display'
-import { makeThemeProps, provideTheme } from '../../composables/theme'
-import { useBackgroundColor } from '../../composables/color'
 import { useRoute } from '../../composables/router'
+import { makeTagProps } from '../../composables/tag'
+import { makeThemeProps, provideTheme } from '../../composables/theme'
+import { useTouch } from './touch'
 
 // Components
 import { Button } from '../button'
 import { Scrim } from '../scrim'
-
-// Types
-import { Ref } from 'vue'
-
-export type Drawer = InstanceType<typeof Drawer>
 
 export const Drawer = defineComponent({
   name: 'VeDrawer',
@@ -46,6 +44,7 @@ export const Drawer = defineComponent({
       default: 256,
     },
     ...makeTagProps({ tag: 'nav' }),
+    ...makeScrollbar(),
     ...makeThemeProps(),
     ...makeBorderProps(),
     ...makeLayoutItemProps({
@@ -63,6 +62,7 @@ export const Drawer = defineComponent({
     const isActive = useProxiedModel(props, 'modelValue')
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
+    const { scrollbarClasses } = useScrollbar(props)
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       toRef(props, 'color')
     )
@@ -176,7 +176,12 @@ export const Drawer = defineComponent({
             ] }
             { ...attrs }
           >
-            <div class="ve-drawer__wrapper">
+            <div
+              class={ [
+                've-drawer__wrapper',
+                scrollbarClasses.value,
+              ] }
+            >
               { slots.default?.() }
             </div>
 
@@ -221,3 +226,5 @@ export const Drawer = defineComponent({
     }
   }
 })
+
+export type Drawer = InstanceType<typeof Drawer>

@@ -6,6 +6,7 @@ import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { genericComponent, getUid, wrapInArray, pick, debounce, keyValues, convertToUnit } from '../../utils'
 
 // Composables
+import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
@@ -156,6 +157,8 @@ export const Select = genericComponent<new () => {
      * @zh 返回对象值
      */
     returnObject: Boolean,
+
+    ...makeScrollbar(),
   },
 
   emits: {
@@ -175,6 +178,7 @@ export const Select = genericComponent<new () => {
     const tagInputRef = ref()
     const tagInputWidth = ref()
     const items = computed(() => props.items?.map(normalizeItem) ?? [])
+    const { scrollbarClasses } = useScrollbar(props)
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
       v => wrapInArray(v),
@@ -242,10 +246,10 @@ export const Select = genericComponent<new () => {
       let v: InternalSelectItemProps
       if (typeof item === 'object') {
         const value = item[props.itemValue]
-        const text = item[props.itemText] ?? value
+        const text = String(item[props.itemText] ?? value)
         v = { text, value }
       } else {
-        v = { text: item, value: item }
+        v = { text: String(item), value: item }
       }
       if (props.filterable && query.value) {
         v.filtered = defaultFilter(v.text, query.value) === -1
@@ -440,6 +444,7 @@ export const Select = genericComponent<new () => {
                     eager
                   >
                     <List
+                      class={ scrollbarClasses.value }
                       maxHeight={ 250 }
                       items={ items.value }
                       v-model:active={ active.value }

@@ -1,12 +1,12 @@
 // Utils
-import { ref, computed, nextTick, onMounted, provide, inject, onBeforeUnmount, InjectionKey } from 'vue'
+import { ref, computed, onMounted, provide, inject, onBeforeUnmount } from 'vue'
 import { propsFactory, throttle } from '../../utils'
 
 // Composables
 import { useRoute, useRouterHistory } from '../router'
 
 // Types
-import type { ExtractPropTypes, Ref, PropType } from 'vue'
+import type { ExtractPropTypes, Ref, PropType, InjectionKey } from 'vue'
 
 export interface NamedAnchorProvider
 {
@@ -39,8 +39,8 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
       : props.scrollTarget
   ))
   const scrolling = ref(false)
-
   const { isWebHashHistory } = useRouterHistory()
+  const route = useRoute()
 
   let timeout: any = 0
   const activate = (name: string) => {
@@ -60,13 +60,16 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
   }
 
   const findActiveHash = () => {
+    if (scrolling.value || !names.value.size) return
+
     const offsetTop = scrollTarget.value?.getBoundingClientRect().top || 0
 
     active.value = [...names.value]
       .reduce((pos, name) => {
-        const box = document.getElementById(name)?.getBoundingClientRect()
+        const el = document.getElementById(name)
 
-        if (box) {
+        if (el && document.documentElement.contains(el)) {
+          const box = el.getBoundingClientRect()
           pos.push({
             name,
             top: box.top - offsetTop,
@@ -101,27 +104,18 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
       ?.name
   }
 
-  const onScroll = throttle(() => {
-    if (scrolling.value || !names.value.size) return
-
-    findActiveHash()
-  }, 17)
+  const onScroll = throttle(findActiveHash, 17)
 
   onMounted(() => {
     document.addEventListener('scroll', onScroll, true)
 
-    nextTick(() => {
-      if (isWebHashHistory.value) {
-        const route = useRoute()
-        if (route.value?.query?.anchor) {
-          activate(route.value.query.anchor as string)
-        }
-      } else {
-        if (window.location.hash) {
-          activate(decodeURIComponent(window.location.hash.substring(1)))
-        }
-      }
-    })
+    if (isWebHashHistory.value && route.value?.query?.anchor) {
+      activate(route.value.query.anchor as string)
+    } else if (window.location.hash) {
+      activate(decodeURIComponent(window.location.hash.substring(1)))
+    } else {
+      findActiveHash()
+    }
   })
 
   onBeforeUnmount(() => {
@@ -137,6 +131,9 @@ export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNa
     },
     unregister: (name: string) => {
       names.value.delete(name)
+      if (active.value === name) {
+        active.value = undefined
+      }
     }
   }
 

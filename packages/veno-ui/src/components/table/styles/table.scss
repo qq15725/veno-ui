@@ -12,12 +12,14 @@
     height: 100%;
     width: 100%;
     min-height: 40px;
-    overflow-y: hidden;
     overflow-x: auto;
+    overflow-x: overlay;
+    overflow-y: hidden;
     @include tools.use-paper();
 
     #{$root}--fixed-header & {
       overflow-y: auto;
+      overflow-y: overlay;
     }
 
     &--border {

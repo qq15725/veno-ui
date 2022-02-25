@@ -15,6 +15,7 @@ import {
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
+import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
@@ -30,8 +31,6 @@ import type { PaginationProps } from '../../composables/data-iterator'
 
 interface TableHeaderProp
 {
-  [name: string]: any
-
   value: string, // 字段
   text?: string, // 字段文本
   align?: 'start' | 'center' | 'end', // 对齐方式
@@ -40,6 +39,7 @@ interface TableHeaderProp
   width?: string | number // 宽度
   minWidth?: string | number // 最小宽度
   maxWidth?: string | number // 最大宽度
+  [name: string]: any
 }
 
 export const Table = defineComponent({
@@ -108,6 +108,7 @@ export const Table = defineComponent({
       border: true,
       shape: 'rounded-sm',
     } as const),
+    ...makeScrollbar(),
   },
 
   emits: {
@@ -122,6 +123,7 @@ export const Table = defineComponent({
     const containerScrollLeft = ref(0)
 
     const { paperClasses, paperStyles } = usePaper(props, 've-table__wrapper')
+    const { scrollbarClasses } = useScrollbar(props)
     const { items, pagination, sortBy, sortDesc, sort, updateOptions } = useDataIterator(props)
     const arraySortBy = computed(() => wrapInArray(sortBy.value))
     const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
@@ -183,6 +185,7 @@ export const Table = defineComponent({
             class={ [
               've-table__wrapper',
               paperClasses.value,
+              scrollbarClasses.value,
             ] }
             style={ [
               paperStyles.value

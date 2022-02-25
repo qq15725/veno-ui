@@ -2,12 +2,13 @@
 import './styles/code.scss'
 
 // Utils
-import { ref, computed, onMounted, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { defineComponent, flattenFragments } from '../../utils'
 
 // Composables
 import { useHighlighter } from '../../composables/highlighter'
 import { useBackgroundColor } from '../../composables/color'
+import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 
 // Types
 import type { PropType } from 'vue'
@@ -56,10 +57,13 @@ export const Code = defineComponent({
       type: String,
       default: 'html',
     },
+
+    ...makeScrollbar(),
   },
 
   setup (props, { slots }) {
     const highlighter = useHighlighter()
+    const { scrollbarClasses } = useScrollbar(props)
     const code = computed(() => {
       let value = ''
       if (props.code) {
@@ -171,7 +175,12 @@ export const Code = defineComponent({
             </div>
           ) }
 
-          <pre class="ve-code__preformatted"><code v-html={ highlightedCode.value } /></pre>
+          <pre
+            class={ [
+              've-code__preformatted',
+              scrollbarClasses.value,
+            ] }
+          ><code v-html={ highlightedCode.value } /></pre>
 
           { props.showLanguage && (
             <span class="ve-code__language">{ language.value }</span>

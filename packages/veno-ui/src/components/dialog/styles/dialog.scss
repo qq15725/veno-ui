@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
+@use '../../../styles/base/scrollbar' as *;
 
 // Blocks
 .ve-dialog {
@@ -18,10 +19,7 @@
         max-height: inherit;
 
         > .ve-card-text {
-          overflow-y: overlay;
-          @supports not (overflow-y: overlay) {
-            overflow-y: auto;
-          }
+          @extend .beautify-scrollbar;
         }
       }
     }

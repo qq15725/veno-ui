@@ -51,7 +51,12 @@ export const Anchor = defineComponent({
       <ul class="ve-anchor">
         { slots.default?.() }
 
-        { props.items?.map(item => <AnchorItem { ...item } />) }
+        { props.items?.map(item => (
+          <AnchorItem
+            key={ item.value }
+            { ...item }
+          />
+        )) }
       </ul>
     )
   }
