@@ -7,11 +7,11 @@
 ```html
 <ve-paper min-height="200">
   <ve-draggable-resizable v-model="value" #default="{ props }">
-    <ve-card border v-bind="props">
-      <ve-toolbar height="30" theme="dark">Window</ve-toolbar>
-    </ve-card>
+    <ve-card color="primary" v-bind="props" />
   </ve-draggable-resizable>
 </ve-paper>
+
+<ve-code :code="value" />
 ```
 
 ```js

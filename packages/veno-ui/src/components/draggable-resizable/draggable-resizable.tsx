@@ -2,7 +2,7 @@
 import './styles/draggable-resizable.scss'
 
 // Utils
-import { ref, watch, toHandlers, nextTick } from 'vue'
+import { ref, watch, toHandlers, nextTick, mergeProps } from 'vue'
 import { defineComponent, convertToUnit } from '../../utils'
 
 // Composables
@@ -99,9 +99,19 @@ export const DraggableResizable = defineComponent({
     })
 
     return () => {
+      const draggable = mergeProps(toHandlers(draggableEvents.value), {
+        class: 've-draggable-resizable__draggable',
+      })
+
+      const resizable = {
+        style: {
+          width: convertToUnit(model.value.width),
+          height: convertToUnit(model.value.height),
+        },
+      }
+
       return (
         <props.tag
-          { ...toHandlers(draggableEvents.value) }
           ref={ rootEl }
           class={ [
             've-draggable-resizable',
@@ -117,12 +127,9 @@ export const DraggableResizable = defineComponent({
           <div class="ve-draggable-resizable__wrapper">
             { slots.default?.({
               value: model.value,
-              props: {
-                style: {
-                  width: convertToUnit(model.value.width),
-                  height: convertToUnit(model.value.height),
-                },
-              },
+              draggable,
+              resizable,
+              props: mergeProps(draggable, resizable),
             }) }
           </div>
 

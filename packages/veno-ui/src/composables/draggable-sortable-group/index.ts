@@ -13,6 +13,7 @@ export interface DraggableSortableGroupItem
   enter: (key: any, value: any, from: {
     id: string,
     key: any,
+    box: DOMRect,
     position: { left: number, top: number }
   }) => Promise<void>
   leave: (key: any) => Promise<void>
@@ -40,7 +41,7 @@ export function createDraggableSortableGroup () {
     register: (id: string, item: DraggableSortableGroupItem) => items.set(id, item),
     unregister: (id: string) => items.delete(id),
     trySwap: async (
-      from: { id: string, key: any, position: { left: number, top: number } },
+      from: { id: string, key: any, box: DOMRect, position: { left: number, top: number } },
       to: { el: HTMLElement }
     ) => {
       if (swapping.value) return

@@ -7,9 +7,9 @@
 ```html
 <ve-row>
   <ve-col :cols="6">
-    <ve-list border>
+    <ve-list border class="p-3">
       <ve-draggable-sortable v-model="items1" group="group" #item="{ item, props }">
-        <ve-list-item v-bind="props" link variant="contained" border class="m-3">
+        <ve-list-item v-bind="props" link variant="contained" border class="mb-3">
           {{ item }}
         </ve-list-item>
       </ve-draggable-sortable>
@@ -17,9 +17,9 @@
   </ve-col>
 
   <ve-col :cols="6">
-    <ve-list border>
+    <ve-list border class="p-3">
       <ve-draggable-sortable v-model="items2" group="group" #item="{ item, props }">
-        <ve-list-item v-bind="props" link variant="contained" border class="m-3">
+        <ve-list-item v-bind="props" link variant="contained" border class="mb-3">
           {{ item }}
         </ve-list-item>
       </ve-draggable-sortable>

@@ -65,7 +65,8 @@ export function useDraggableSortable (
     ))
     return indexes
   })
-  const ghost = ref<VNode>()
+  const ghostEl = ref<HTMLElement>()
+  const ghostVNode = ref<VNode>()
   const active = ref<any>()
 
   const indexToKey = (index: number) => {
@@ -112,11 +113,14 @@ export function useDraggableSortable (
     enter: async (key, value, from) => {
       const index = keyToIndex(key)!
       model.value.splice(index, 0, value)
+      // TODO 下一帧间隔中鼠标的快速移动，会导致计算后的位置偏移。
       await nextTick()
+      const el = modelEls.get(indexToKey(index))!
+      const box = el.getBoundingClientRect()
       pointerDown(new MouseEvent('mousedown', {
-        clientY: from.position.top,
-        clientX: from.position.left,
-        relatedTarget: modelEls.get(indexToKey(index))
+        clientY: from.position.top - (from.box.top - box.top),
+        clientX: from.position.left - (from.box.left - box.left),
+        relatedTarget: el
       }))
     },
     leave: async (key) => {
@@ -159,11 +163,12 @@ export function useDraggableSortable (
         const newIndex = keyToIndex(key)!
         model.value.splice(newIndex, 0, model.value.splice(oldIndex, 1)[0])
       }
-    } else if (!key && targetEl) {
+    } else if (!key && item.group.value && targetEl && pointerDownEl.value) {
       group?.trySwap({
         id,
         key: active.value,
-        position: pointerCurrentPosition.value!,
+        box: ghostEl.value!.getBoundingClientRect(),
+        position: val,
       }, {
         el: targetEl
       })
@@ -179,10 +184,11 @@ export function useDraggableSortable (
     indexToKey,
     keyToValue,
     pointerEvents,
-    ghost,
+    ghostVNode,
     genGhost: () => {
       return (
         <div
+          ref={ ghostEl }
           class={ `${ name }__ghost` }
           style={ {
             left: convertToUnit(ghostBox.value?.left),
@@ -194,7 +200,7 @@ export function useDraggableSortable (
               : undefined,
           } }
         >
-          { ghost.value }
+          { ghostVNode.value }
         </div>
       )
     },

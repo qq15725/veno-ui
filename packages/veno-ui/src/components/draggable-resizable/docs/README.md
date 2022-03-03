@@ -12,6 +12,8 @@ category: Draggable 拖拽组件
 
 basic.md
 
+slot.md
+
 anchor.md
 
 :::

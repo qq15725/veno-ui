@@ -26,7 +26,7 @@ export const DraggableSortable = defineComponent({
     const {
       model, modelEls, active, pointerEvents,
       keyToIndex, indexToKey,
-      ghost, genGhost,
+      ghostVNode, genGhost,
     } = useDraggableSortable(props)
 
     const vnodes = computed(() => {
@@ -62,9 +62,9 @@ export const DraggableSortable = defineComponent({
     watch(active, val => {
       const vnode = vnodes.value[keyToIndex(val)!]?.[0]
       if (vnode) {
-        ghost.value = cloneVNode(vnode)
+        ghostVNode.value = cloneVNode(vnode)
       } else {
-        ghost.value = undefined
+        ghostVNode.value = undefined
       }
     })
 
@@ -72,7 +72,7 @@ export const DraggableSortable = defineComponent({
       return <>
         { vnodes.value }
 
-        { ghost.value && genGhost() }
+        { ghostVNode.value && genGhost() }
       </>
     }
   }
