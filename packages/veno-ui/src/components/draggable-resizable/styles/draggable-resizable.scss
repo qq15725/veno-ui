@@ -1,22 +1,22 @@
-@forward 'variables';
-@use 'variables' as *;
-@use '../../../styles/tools';
-
-.ve-drag {
+.ve-draggable-resizable {
   position: relative;
   display: inline-flex;
   box-sizing: border-box;
+  cursor: move;
   touch-action: none;
-  @include tools.use-position();
 
-  &__wrap {
+  &--dragging {
+    user-select: none;
+  }
+
+  &__wrapper {
     position: relative;
     width: 100%;
     height: 100%;
   }
 
   &--outlined:not(#{&}--disabled):before {
-    content: "";
+    content: '';
     box-sizing: initial;
     border: 2px solid #6CCFFF;
     height: 100%;
@@ -33,7 +33,7 @@
     margin: -1px 0 0 -1px;
   }
 
-  &__handle {
+  &__resizable-anchor {
     position: absolute;
     z-index: 1;
     transition: opacity .3s;
@@ -140,7 +140,7 @@
       height: 8px;
     }
 
-    &--point:before {
+    &--control:before {
       box-sizing: border-box;
       display: block;
       background: #FFF;
@@ -149,22 +149,22 @@
       border-radius: 6px;
     }
 
-    &--right#{&}--point:before,
-    &--left#{&}--point:before {
+    &--right#{&}--control:before,
+    &--left#{&}--control:before {
       height: 16px;
       width: 7px;
     }
 
-    &--top#{&}--point:before,
-    &--bottom#{&}--point:before {
+    &--top#{&}--control:before,
+    &--bottom#{&}--control:before {
       width: 16px;
       height: 7px;
     }
 
-    &--bottom-left#{&}--point:before,
-    &--top-left#{&}--point:before,
-    &--top-right#{&}--point:before,
-    &--bottom-right#{&}--point:before {
+    &--bottom-left#{&}--control:before,
+    &--top-left#{&}--control:before,
+    &--top-right#{&}--control:before,
+    &--bottom-right#{&}--control:before {
       width: 12px;
       height: 12px;
       border-radius: 50%;

@@ -1,12 +1,12 @@
 // Utils
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { SUPPORT_INTERSECTION_OBSERVER } from '../../utils'
+import { SUPPORTS_INTERSECTION_OBSERVER } from '../../utils'
 
 export function useIntersectionObserver (callback?: IntersectionObserverCallback) {
   const intersectionRef = ref<HTMLElement>()
   const isIntersecting = ref(false)
 
-  if (SUPPORT_INTERSECTION_OBSERVER) {
+  if (SUPPORTS_INTERSECTION_OBSERVER) {
     const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
       callback?.(entries, observer)
 

@@ -3,7 +3,7 @@
 # 点击外面不关闭
 
 ```html
-<ve-dialog persistent>
+<ve-dialog persistent draggable>
   <template #activator="{ props }">
     <ve-button v-bind="props">Dialog</ve-button>
   </template>

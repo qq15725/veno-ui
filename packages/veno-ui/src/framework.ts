@@ -9,7 +9,7 @@ import { defaultSets, IconKey } from './composables/icon'
 import { createDisplay, DisplayKey } from './composables/display'
 import { createDefaults, DefaultsKey } from './composables/defaults'
 import { MessageKey, NotificationKey } from './composables/message'
-import { createDragSort, DragSortKey } from './composables/drag-sort'
+import { createDraggableSortableGroup, DraggableSortableGroupKey } from './composables/draggable-sortable-group'
 import { createProviders, ProvidersKey } from './composables/providers'
 
 // Iconsets
@@ -59,7 +59,7 @@ export const createVeno = (options: VenoOptions = {}) => {
 
     app.provide(DisplayKey, createDisplay(options.display))
     app.provide(DefaultsKey, createDefaults(options.defaults))
-    app.provide(DragSortKey, createDragSort())
+    app.provide(DraggableSortableGroupKey, createDraggableSortableGroup())
     app.provide(ThemeKey, createTheme(app, options.theme))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconKey, mergeDeep({

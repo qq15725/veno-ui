@@ -1,6 +1,6 @@
 // Utils
 import { onBeforeUnmount, readonly, ref, watch } from 'vue'
-import { SUPPORT_RESIZE_OBSERVER } from '../../utils'
+import { SUPPORTS_RESIZE_OBSERVER } from '../../utils'
 
 // Types
 import type { DeepReadonly, Ref } from 'vue'
@@ -19,7 +19,7 @@ export function useResizeObserver (callback?: ResizeObserverCallback): ResizeSta
   const contentBoxSize = ref<ResizeObserverSize>()
   const borderBoxSize = ref<ResizeObserverSize>()
 
-  if (SUPPORT_RESIZE_OBSERVER) {
+  if (SUPPORTS_RESIZE_OBSERVER) {
     const observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
       callback?.(entries, observer)
 

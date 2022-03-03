@@ -6,7 +6,7 @@ import { computed, ref } from 'vue'
 import {
   genericComponent,
   getUid,
-  SUPPORT_FOCUS_VISIBLE,
+  SUPPORTS_FOCUS_VISIBLE,
   useRender,
   filterInputAttrs,
   propsFactory,
@@ -163,8 +163,8 @@ export const SelectionControl = genericComponent<new <T>() => {
     function onFocus (e: FocusEvent) {
       isFocused.value = true
       if (
-        !SUPPORT_FOCUS_VISIBLE ||
-        (SUPPORT_FOCUS_VISIBLE && (e.target as HTMLElement).matches(':focus-visible'))
+        !SUPPORTS_FOCUS_VISIBLE ||
+        (SUPPORTS_FOCUS_VISIBLE && (e.target as HTMLElement).matches(':focus-visible'))
       ) {
         isFocusVisible.value = true
       }

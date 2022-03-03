@@ -1,12 +1,12 @@
 // Utils
-import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
+import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch, withModifiers } from 'vue'
 import {
   isComponentInstance,
   getCurrentInstance,
   IN_BROWSER,
-  SUPPORT_TOUCH,
+  SUPPORTS_TOUCH,
   propsFactory,
-  SUPPORT_FOCUS_VISIBLE
+  SUPPORTS_FOCUS_VISIBLE
 } from '../../utils'
 
 // Composables
@@ -110,7 +110,7 @@ export function useActivator (
     touchend: onEnter,
     focus: (e: FocusEvent) => {
       if (
-        SUPPORT_FOCUS_VISIBLE
+        SUPPORTS_FOCUS_VISIBLE
         && !(e.target as HTMLElement).matches(':focus-visible')
       ) return
       e.stopPropagation()
@@ -133,9 +133,9 @@ export function useActivator (
     }
 
     if (props.openOnHover) {
-      if (SUPPORT_TOUCH) {
-        events.touchstart = availableEvents.mouseenter
-        events.touchend = availableEvents.mouseleave
+      if (SUPPORTS_TOUCH) {
+        events.touchstart = withModifiers(availableEvents.touchstart, ['passive'])
+        events.touchend = availableEvents.touchend
       } else {
         events.mouseenter = availableEvents.mouseenter
         events.mouseleave = availableEvents.mouseleave
@@ -154,8 +154,8 @@ export function useActivator (
     const events: Partial<typeof availableEvents> = {}
 
     if (props.openOnHover) {
-      if (SUPPORT_TOUCH) {
-        events.touchstart = (e: MouseEvent) => isHovered = true
+      if (SUPPORTS_TOUCH) {
+        events.touchstart = withModifiers((e: MouseEvent) => isHovered = true, ['passive'])
         events.touchend = availableEvents.touchend
       } else {
         events.mouseenter = (e: MouseEvent) => isHovered = true

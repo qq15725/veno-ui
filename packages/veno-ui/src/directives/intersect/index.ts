@@ -1,5 +1,5 @@
 // Utils
-import { SUPPORT_INTERSECTION_OBSERVER } from '../../utils'
+import { SUPPORTS_INTERSECTION_OBSERVER } from '../../utils'
 
 // Types
 import type { DirectiveBinding, ObjectDirective } from 'vue'
@@ -23,7 +23,7 @@ export interface IntersectDirectiveBinding extends Omit<DirectiveBinding, 'modif
 }
 
 function mounted (el: HTMLElement, binding: IntersectDirectiveBinding) {
-  if (!SUPPORT_INTERSECTION_OBSERVER) return
+  if (!SUPPORTS_INTERSECTION_OBSERVER) return
 
   const modifiers = binding.modifiers || {}
 

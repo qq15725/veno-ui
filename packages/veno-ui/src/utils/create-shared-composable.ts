@@ -9,27 +9,28 @@ import type { EffectScope } from 'vue'
  *
  * 不支持组合存在参数，参数的响应式监听重新创建 scope 会导致使用时浪费过多心力。
  *
- * @param composable
+ * @param fn
  */
-export function createSharedComposable<T extends () => Exclude<any, undefined>> (
-  composable: T
-) {
+export function createSharedComposable<T> (fn: () => T) {
   let subscribers = 0
   let scope: EffectScope | undefined
-  let state: ReturnType<T> | undefined
+  let state: T
 
-  return (() => {
-    subscribers++
-    if (state === undefined) {
-      scope = effectScope()
-      state = scope.run(composable)
-    }
+  return () => {
     onScopeDispose(() => {
       if (--subscribers <= 0) {
+        subscribers = 0
         scope?.stop()
-        state = undefined
       }
     })
+
+    if (subscribers <= 0) {
+      scope = effectScope(true)
+      state = scope!.run(fn) as T
+    }
+
+    subscribers++
+
     return state
-  }) as T
+  }
 }

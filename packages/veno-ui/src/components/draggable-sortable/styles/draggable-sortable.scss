@@ -1,0 +1,17 @@
+.ve-draggable-sortable {
+  &--active {
+    opacity: 0;
+  }
+
+  &__ghost {
+    position: fixed !important;
+    z-index: 4000 !important;
+    pointer-events: none !important;
+
+    > * {
+      opacity: 1 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}

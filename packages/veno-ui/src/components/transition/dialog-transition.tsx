@@ -8,7 +8,7 @@ import {
 } from '../../utils'
 
 // Composables
-import { useSharedClickTarget } from '../../composables/shared-click-target'
+import { useSharedClick } from '../../composables/shared-click'
 
 // Components
 import { Transition } from 'vue'
@@ -24,7 +24,7 @@ export const DialogTransition = defineComponent({
   },
 
   setup (props, { slots }) {
-    const { clickTargetEl } = useSharedClickTarget()
+    const { clickedEl } = useSharedClick()
     const targetEl = ref<HTMLElement>()
 
     const getTransformOrigin = (el: Element) => {
@@ -42,7 +42,7 @@ export const DialogTransition = defineComponent({
       async onEnter (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
 
-        targetEl.value = props.target ?? clickTargetEl.value
+        targetEl.value = props.target ?? clickedEl.value
 
         {
           (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)

@@ -22,10 +22,31 @@ export const Dialog = genericComponent<new () => {
   name: 'VeDialog',
 
   props: {
+    /**
+     * @zh 全屏
+     */
     fullscreen: Boolean,
+
+    /**
+     * @zh ID
+     */
     id: String,
+
+    /**
+     * @zh 是否显示
+     */
     modelValue: Boolean,
+
+    /**
+     * @zh 是否可以滚动
+     */
     scrollable: Boolean,
+
+    /**
+     * @zh 可以拖拽的
+     */
+    draggable: Boolean,
+
     ...makeTransitionProps({
       transition: { component: DialogTransition },
     } as const),
@@ -60,7 +81,10 @@ export const Dialog = genericComponent<new () => {
         transition={ props.transition }
         v-model={ isActive.value }
       >
-        { slots }
+        { {
+          ...slots,
+          default: slots.default
+        } }
       </Overlay>
     )
   }

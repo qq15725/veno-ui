@@ -21,8 +21,8 @@
   min-height: calc(var(--ve-list-item---min-height, 40px) + var(--ve-offset));
   padding: calc(var(--ve-list-item---padding-y, 8px) + var(--ve-offset)) var(--ve-padding-x);
   @include tools.use-paper($list-item-paper);
-  @include tools.overlay(#{&}__overlay);
-  @include tools.states(#{&}__overlay);
+  @include tools.overlay('#{$root}__overlay');
+  @include tools.states('#{&}__overlay');
 
   &--disabled {
     pointer-events: none;
