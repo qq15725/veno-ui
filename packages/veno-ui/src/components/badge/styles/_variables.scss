@@ -1,8 +1,8 @@
 @use '../../../styles/settings';
 
 // Defaults
-$badge-background: rgb(var(--ve-theme-surface)) !default;
-$badge-color: rgb(var(--ve-theme-on-surface)) !default;
+$badge-background: rgb(var(--ve-theme-surface-variant)) !default;
+$badge-color: rgb(var(--ve-theme-on-surface-variant)) !default;
 $badge-height: 20px !default;
 $badge-min-width: 20px !default;
 $badge-border-radius: 10px !default;

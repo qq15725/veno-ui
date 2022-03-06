@@ -10,7 +10,6 @@
   // --ve-card---padding-y 12px
   // --ve-card---padding-x 12px
   display: block;
-  color: rgb(var(--ve-theme-on-surface));
   position: relative;
   text-decoration: none;
   @include tools.use-paper($card-paper);

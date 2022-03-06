@@ -1,1 +1,104 @@
-export * from './positionStrategy'
+// Utils
+import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
+import { IN_BROWSER, propsFactory } from '../../utils'
+
+// Strategies
+import { staticPositionStrategy } from './static'
+import { connectedPositionStrategy } from './connected'
+
+export const positionStrategies = {
+  static: staticPositionStrategy, // specific viewport position, usually centered
+  connected: connectedPositionStrategy, // connected to a certain element
+}
+
+// Types
+import type { EffectScope, PropType } from 'vue'
+import type { Ref } from 'vue'
+import type { Anchor } from '../../utils'
+
+export interface PositionStrategyData
+{
+  contentEl: Ref<HTMLElement | undefined>
+  activatorEl: Ref<HTMLElement | undefined>
+  isActive: Ref<boolean>
+}
+
+export type PositionStrategy = keyof typeof positionStrategies | ((
+  data: PositionStrategyData,
+  props: PositionStrategyProps,
+  contentStyles: Ref<Record<string, string>>,
+  anchorClasses: Ref<string[]>
+) => undefined | { updatePosition: (e: Event) => void })
+
+export type Origin = Anchor | 'auto' | 'overlap'
+
+export interface PositionStrategyProps
+{
+  positionStrategy: PositionStrategy
+  anchor: Anchor
+  origin: Origin
+  offset?: number | string
+  maxHeight?: number | string
+  maxWidth?: number | string
+  minHeight?: number | string
+  minWidth?: number | string
+}
+
+export const makePositionStrategyProps = propsFactory({
+  positionStrategy: {
+    type: [String, Function] as PropType<PositionStrategy>,
+    default: 'static',
+    validator: (val: any) => typeof val === 'function' || val in positionStrategies,
+  },
+  anchor: {
+    type: String as PropType<Anchor>,
+    default: 'bottom',
+  },
+  origin: {
+    type: String as PropType<Origin>,
+    default: 'auto',
+  },
+  offset: [Number, String],
+})
+
+export function usePositionStrategy (props: PositionStrategyProps, data: PositionStrategyData) {
+  const contentStyles = ref({})
+  const anchorClasses = ref([])
+  const updatePosition = ref<(e: Event) => void>()
+
+  let scope: EffectScope | undefined
+  watchEffect(async () => {
+    scope?.stop()
+    updatePosition.value = undefined
+    if (!(IN_BROWSER
+      && data.isActive.value
+      && data.activatorEl.value
+      && props.positionStrategy)) return
+    scope = effectScope()
+    await nextTick()
+    scope.run(() => {
+      const strategy = typeof props.positionStrategy === 'function'
+        ? props.positionStrategy
+        : positionStrategies[props.positionStrategy]
+      updatePosition.value = strategy(data, props, contentStyles, anchorClasses)?.updatePosition
+    })
+  })
+
+  IN_BROWSER && window.addEventListener('resize', onResize, { passive: true })
+
+  onScopeDispose(() => {
+    IN_BROWSER && window.removeEventListener('resize', onResize)
+    updatePosition.value = undefined
+    scope?.stop()
+  })
+
+  function onResize (e: Event) {
+    updatePosition.value?.(e)
+  }
+
+  return {
+    contentStyles,
+    anchorClasses,
+    updatePosition,
+  }
+}

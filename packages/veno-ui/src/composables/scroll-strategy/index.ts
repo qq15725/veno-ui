@@ -27,9 +27,11 @@ export interface ScrollStrategyData
 
 export const makeScrollStrategyProps = propsFactory({
   scrollStrategy: {
-    type: [String, Function] as PropType<keyof typeof scrollStrategies | ((data: ScrollStrategyData, name: string) => void)>,
+    type: [Boolean, String, Function] as PropType<boolean | keyof typeof scrollStrategies | ((data: ScrollStrategyData, name: string) => void)>,
     default: 'block',
-    validator: (val: any) => typeof val === 'function' || val in scrollStrategies,
+    validator: (val: any) => typeof val === 'function'
+      || typeof val === 'boolean'
+      || val in scrollStrategies,
   },
 })
 
@@ -42,16 +44,18 @@ export function useScrollStrategy (
 
   let scope: EffectScope | undefined
   watchEffect(async () => {
-    const { scrollStrategy } = props
     scope?.stop()
-    if (!(data.isActive.value && scrollStrategy)) return
+    if (!data.isActive.value
+      || !props.scrollStrategy
+      || typeof props.scrollStrategy === 'boolean') return
     scope = effectScope()
     await nextTick()
     scope.run(() => {
-      if (typeof scrollStrategy === 'function') {
-        scrollStrategy(data, name)
-      } else {
-        scrollStrategies[scrollStrategy]?.(data, name)
+      if (typeof props.scrollStrategy === 'function') {
+        props.scrollStrategy(data, name)
+      } else if (typeof props.scrollStrategy === 'string'
+        && props.scrollStrategy in scrollStrategies) {
+        scrollStrategies[props.scrollStrategy]?.(data, name)
       }
     })
   })

@@ -41,12 +41,8 @@ export const DialogTransition = defineComponent({
       },
       async onEnter (el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
-
-        targetEl.value = props.target ?? clickedEl.value
-
-        {
-          (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
-        }
+        targetEl.value = props.target ?? clickedEl.value;
+        (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
 
         el.animate([
           { transform: 'scale(0.5)', opacity: 0 },
@@ -57,17 +53,15 @@ export const DialogTransition = defineComponent({
         }).finished.then(() => done())
       },
       onAfterEnter (el: Element) {
-        (el as HTMLElement).style.removeProperty('pointer-events')
+        (el as HTMLElement).style.removeProperty('pointer-events');
+        (el as HTMLElement).style.removeProperty('transform-origin')
       },
       onBeforeLeave (el: Element) {
         (el as HTMLElement).style.pointerEvents = 'none'
       },
       async onLeave (el: Element, done: () => void) {
-        await new Promise(resolve => requestAnimationFrame(resolve))
-
-        {
-          (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
-        }
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
 
         el.animate([
           { transform: '' },
@@ -78,7 +72,8 @@ export const DialogTransition = defineComponent({
         }).finished.then(() => done())
       },
       onAfterLeave (el: Element) {
-        (el as HTMLElement).style.removeProperty('pointer-events')
+        (el as HTMLElement).style.removeProperty('pointer-events');
+        (el as HTMLElement).style.removeProperty('transform-origin')
       },
     }
 

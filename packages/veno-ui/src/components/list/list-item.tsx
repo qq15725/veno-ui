@@ -2,7 +2,7 @@
 import './styles/list-item.scss'
 
 // Utils
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
@@ -95,6 +95,12 @@ export const ListItem = genericComponent<new () => {
 
     onMounted(() => {
       if (link.isExactActive?.value && parent.value != null) {
+        root.open(parent.value, true)
+      }
+    })
+
+    watch(() => link.isExactActive?.value, val => {
+      if (val && parent.value != null) {
         root.open(parent.value, true)
       }
     })

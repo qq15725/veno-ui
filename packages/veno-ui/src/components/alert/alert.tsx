@@ -85,7 +85,7 @@ export const Alert = genericComponent<new () => {
       return {
         ...props,
         text: undefined,
-        textColor: props.textColor ?? props.type,
+        color: props.type ?? props.color,
       }
     })
     const isActive = useProxiedModel(props, 'modelValue')

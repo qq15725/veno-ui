@@ -51,6 +51,7 @@ export const makeCardProps = propsFactory({
   ...makeDisabledProps(),
   ...makePaperProps({
     shape: 'rounded-sm',
+    variant: 'contained',
   } as const),
 }, 'card')
 

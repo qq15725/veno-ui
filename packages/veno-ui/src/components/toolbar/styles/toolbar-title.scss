@@ -2,9 +2,9 @@
 @use '../../../styles/settings';
 
 .ve-toolbar-title {
+  flex: 1 1;
   font-size: 1.25rem;
   min-width: 0;
-  padding-left: 20px;
 
   &__wrapper {
     overflow: hidden;

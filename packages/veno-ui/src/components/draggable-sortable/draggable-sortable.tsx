@@ -19,7 +19,6 @@ export const DraggableSortable = defineComponent({
 
   emits: {
     'update:modelValue': (value: any[]) => true,
-    'change': (value: boolean) => true,
   },
 
   setup (props, { slots }) {
@@ -32,7 +31,11 @@ export const DraggableSortable = defineComponent({
     const vnodes = computed(() => {
       return model.value.map((value, index) => {
         const key = indexToKey(index)
-        const draggable = toHandlers(pointerEvents.value)
+        const draggable = mergeProps(toHandlers(pointerEvents.value), {
+          style: {
+            cursor: 'move',
+          },
+        })
         const droppable = {
           ref: (v: any) => {
             modelEls.set(key, isComponentInstance(v) ? v.$el : v)

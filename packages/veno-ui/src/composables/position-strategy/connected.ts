@@ -15,7 +15,7 @@ import {
 
 // Types
 import type { Ref } from 'vue'
-import type { PositionStrategyData, PositionStrategyProps } from './positionStrategy'
+import type { PositionStrategyData, PositionStrategyProps } from './index'
 
 /**
  * 连接的定位策略
@@ -25,7 +25,7 @@ import type { PositionStrategyData, PositionStrategyProps } from './positionStra
  * @param contentStyles
  * @param anchorClasses
  */
-export function positionStrategyConnected (
+export function connectedPositionStrategy (
   data: PositionStrategyData,
   props: PositionStrategyProps,
   contentStyles: Ref<Record<string, string>>,

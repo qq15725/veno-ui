@@ -4,7 +4,7 @@
 
 ```html
 <ve-spacer>
-  <ve-badge color="error" content="2" inline />
+  <ve-badge content="2" inline />
   
   <ve-badge color="error" dot>
     <ve-avatar shape="circle" image="https://avatars.githubusercontent.com/u/19576382" />

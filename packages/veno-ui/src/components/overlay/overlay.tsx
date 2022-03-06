@@ -58,6 +58,15 @@ export const Overlay = genericComponent<new () => {
     absolute: Boolean,
     attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
     contained: Boolean,
+
+    /**
+     * @zh 包裹内容 div 的 style
+     */
+    contentStyle: null,
+
+    /**
+     * @zh 包裹内容 div 的 class
+     */
     contentClass: null,
 
     /**
@@ -69,6 +78,10 @@ export const Overlay = genericComponent<new () => {
      * @zh 持续显示（额外关闭行为不受控）
      */
     persistent: Boolean,
+
+    /**
+     * @zh 无遮罩层
+     */
     scrim: {
       type: [String, Boolean],
       default: true,
@@ -276,6 +289,7 @@ export const Overlay = genericComponent<new () => {
                         props.contentClass,
                       ] }
                       style={ [
+                        props.contentStyle,
                         dimensionStyles.value,
                         contentStyles.value,
                       ] }

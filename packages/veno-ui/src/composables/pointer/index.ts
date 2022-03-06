@@ -5,7 +5,7 @@ import { propsFactory, SUPPORTS_TOUCH } from '../../utils'
 // Types
 import type { ExtractPropTypes } from 'vue'
 
-interface PointerPosition
+export interface PointerPosition
 {
   top: number
   left: number

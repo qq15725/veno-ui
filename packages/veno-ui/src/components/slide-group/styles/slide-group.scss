@@ -1,0 +1,56 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+// Blocks
+.ve-slide-group {
+  display: flex;
+
+  // Modifiers
+  &--vertical {
+    &,
+    .ve-slide-group__container,
+    .ve-slide-group__content {
+      flex-direction: column;
+    }
+  }
+
+  // Element
+  &__next,
+  &__prev {
+    align-items: center;
+    display: flex;
+    flex: 0 1 52px;
+    justify-content: center;
+    min-width: 52px;
+    cursor: pointer;
+
+    &--disabled {
+      pointer-events: none;
+      opacity: var(--ve-disabled-opacity);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    transition: 0.2s all settings.$standard-easing;
+    white-space: nowrap;
+
+    > * {
+      white-space: initial;
+    }
+  }
+
+  &__container {
+    contain: content;
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+}
+
+.ve-slide-item {
+  display: inline-flex;
+  flex: 0 1 auto;
+}

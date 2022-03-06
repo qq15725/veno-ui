@@ -30,6 +30,8 @@
     text-indent: 0;
     transition: $badge-transition;
     white-space: nowrap;
+    background: $badge-background;
+    color: $badge-color;
 
     #{$root}--inline & {
       margin: $badge-wrapper-margin;
@@ -45,8 +47,6 @@
       width: $badge-dot-width;
       min-width: 0;
       padding: 0;
-      background: $badge-background;
-      color: $badge-color;
     }
 
     #{$root}--inline & {

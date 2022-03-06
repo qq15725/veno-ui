@@ -35,7 +35,7 @@ export const BreadcrumbItem = genericComponent<new () => {
 
     const hasNext = computed(() => {
       if (!group.items.value.length) return false
-      return group.items.value[group.items.value.length - 1] !== id
+      return group.items.value[group.items.value.length - 1].id !== id
     })
 
     // TODO 如果是导航按钮，当前页设置 aria-current="page"

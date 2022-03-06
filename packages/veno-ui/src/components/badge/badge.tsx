@@ -27,10 +27,7 @@ export const Badge = defineComponent({
       type: Boolean,
       default: true,
     },
-    color: {
-      type: String,
-      default: 'error',
-    },
+    color: String,
     content: [Number, String],
     dot: Boolean,
     floating: Boolean,

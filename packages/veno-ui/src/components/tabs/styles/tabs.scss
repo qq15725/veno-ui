@@ -1,0 +1,68 @@
+@use '../../../styles/settings';
+@use '../../../styles/tools';
+
+// Blocks
+.ve-tabs {
+  // CSS Variables
+  // --ve-tabs---height
+  --ve-height: calc(var(--ve-tabs---height, 48px) + var(--ve-density-offset, 0px));
+  display: flex;
+  height: var(--ve-height);
+  @include tools.use-density();
+
+  &--stacked {
+    --ve-height: calc(var(--ve-tabs--stacked---height, 72px) + var(--ve-density-offset, 0px));
+  }
+
+  &.ve-slide-group--vertical {
+    height: auto;
+
+    .ve-tab {
+      --ve-button---height: var(--ve-tabs---height, 48px);
+    }
+  }
+
+  &--align-with-title:not(.ve-slide-group--has-affixes) {
+    .ve-tab:first-child {
+      margin-inline-start: 42px;
+    }
+  }
+
+  &--fixed-tabs,
+  &--centered {
+    .ve-slide-group__content > .ve-tab:last-child {
+      margin-inline-end: auto;
+    }
+
+    .ve-slide-group__content > .ve-tab:first-child {
+      margin-inline-start: auto;
+    }
+  }
+
+  &--grow .ve-tab {
+    flex: 1 0 auto;
+    max-width: none;
+  }
+
+  &--right {
+    .ve-tab:first-child {
+      margin-inline-start: auto;
+    }
+
+    .ve-tab:last-child {
+      margin-inline-end: 0;
+    }
+  }
+}
+
+@media #{map-get(settings.$display-breakpoints, 'md-and-down')} {
+  .ve-tabs.v-slide-group--is-overflowing:not(.ve-slide-group--has-affixes) {
+    .ve-tab:first-child {
+      margin-inline-start: 52px;
+    }
+
+    .ve-tab:last-child {
+      margin-inline-end: 52px;
+    }
+  }
+}

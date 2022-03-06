@@ -1,12 +1,22 @@
 // Utils
-import { getCurrentInstance, computed, inject, onBeforeUnmount, onMounted, provide, reactive, toRef, ExtractPropTypes } from 'vue'
+import {
+  getCurrentInstance,
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  reactive,
+  toRef,
+  ExtractPropTypes
+} from 'vue'
 import { consoleWarn, deepEqual, findChildren, getUid, propsFactory, wrapInArray } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'
 
 // Types
-import type { ComponentInternalInstance, InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
+import type { ComponentInternalInstance, InjectionKey, PropType, Ref, UnwrapRef, ComputedRef } from 'vue'
 
 interface GroupItem
 {
@@ -26,7 +36,7 @@ interface GroupProps
   'onUpdate:modelValue': ((val: unknown) => void) | undefined
 }
 
-interface GroupProvide
+export interface GroupProvide
 {
   vm: ComponentInternalInstance | null
   register: (item: GroupItem, cmp: ComponentInternalInstance) => void
@@ -37,7 +47,11 @@ interface GroupProvide
   prev: () => void
   next: () => void
   selectedClass: Ref<string | undefined>
-  items: Ref<number[]>
+  items: ComputedRef<{
+    id: number
+    value: unknown
+    disabled: boolean | undefined
+  }[]>
   disabled: Ref<boolean | undefined>
 }
 
@@ -137,7 +151,10 @@ export function useGroupItem (
   }
 }
 
-export function useGroup (props: GroupProps, injectKey: InjectionKey<GroupProvide>) {
+export function useGroup (
+  props: GroupProps,
+  injectKey: InjectionKey<GroupProvide>
+) {
   let isUnmounted = false
   const items = reactive<GroupItem[]>([])
   const selected = useProxiedModel(
@@ -269,7 +286,7 @@ export function useGroup (props: GroupProps, injectKey: InjectionKey<GroupProvid
     next: () => step(1),
     isSelected: (id: number) => selected.value.includes(id),
     selectedClass: computed(() => props.selectedClass),
-    items: computed(() => items.map(({ id }) => id)),
+    items: computed(() => items.map(v => v)),
   }
 
   provide(injectKey, state)
@@ -281,7 +298,7 @@ function getIds (items: UnwrapRef<GroupItem[]>, modelValue: any[]) {
   const ids = []
   for (const item of items) {
     if (item.value != null) {
-      if (modelValue.find(value => deepEqual(value, item.value))) {
+      if (modelValue.find(value => deepEqual(value, item.value)) != null) {
         ids.push(item.id)
       }
     } else if (modelValue.includes(item.id)) {

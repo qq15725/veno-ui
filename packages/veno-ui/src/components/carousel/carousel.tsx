@@ -64,8 +64,8 @@ export const Carousel = defineComponent({
     ], restartTimeout)
 
     watch(items, (newItems, oldItems) => {
-      if (oldItems.length === 0 && newItems.length === 1) {
-        select(newItems[0], true)
+      if ((!oldItems || oldItems.length === 0) && newItems.length === 1) {
+        select(newItems[0].id, true)
       }
     })
 
@@ -75,18 +75,16 @@ export const Carousel = defineComponent({
           've-carousel',
           paperClasses.value,
         ] }
-        style={ [
-          paperStyles.value,
-        ] }
+        style={ paperStyles.value }
       >
         { slots.default?.() }
 
         <div class="ve-carousel__controls">
           {
-            items.value.map(id => (
+            items.value.map(v => (
               <CarouselActivator
-                active={ isSelected(id) }
-                onClick={ () => select(id, true) }
+                active={ isSelected(v.id) }
+                onClick={ () => select(v.id, true) }
               />
             ))
           }

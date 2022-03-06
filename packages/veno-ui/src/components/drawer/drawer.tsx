@@ -14,7 +14,7 @@ import { useBackgroundColor } from '../../composables/color'
 import { useDisplay } from '../../composables/display'
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
 import { useProxiedModel } from '../../composables/proxied-model'
-import { useRoute } from '../../composables/router'
+import { useRouter } from '../../composables/router'
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { useTouch } from './touch'
@@ -28,6 +28,7 @@ export const Drawer = defineComponent({
 
   props: {
     disableResizeWatcher: Boolean,
+    disableRouteWatcher: Boolean,
     color: String,
     expandOnHover: Boolean,
     permanent: Boolean,
@@ -59,7 +60,6 @@ export const Drawer = defineComponent({
   },
 
   setup (props, { attrs, slots }) {
-    const isActive = useProxiedModel(props, 'modelValue')
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
     const { scrollbarClasses } = useScrollbar(props)
@@ -67,6 +67,8 @@ export const Drawer = defineComponent({
       toRef(props, 'color')
     )
     const { mobile } = useDisplay()
+    const router = useRouter()
+    const isActive = useProxiedModel(props, 'modelValue')
     const isHovering = ref(false)
     const width = computed(() => {
       return (props.rail && props.expandOnHover && isHovering.value)
@@ -76,21 +78,23 @@ export const Drawer = defineComponent({
     const isTemporary = computed(() => !props.permanent && (mobile.value || props.temporary))
     const hasToggler = computed(() => props.showToggler && !mobile.value)
 
-    watch(useRoute(), () => {
-      if (isTemporary.value) isActive.value = false
+    watch(isTemporary, val => {
+      if (!props.disableResizeWatcher && !props.permanent) isActive.value = !val
     })
 
-    if (!props.disableResizeWatcher) {
-      watch(mobile, val => !props.permanent && (isActive.value = !val))
+    if (router) {
+      watch(router.currentRoute, () => {
+        if (!props.disableRouteWatcher && isTemporary.value) isActive.value = false
+      })
     }
 
-    watch(props, val => {
-      if (val.permanent) isActive.value = true
+    watch(() => props.permanent, val => {
+      if (val) isActive.value = true
     })
 
     onBeforeMount(() => {
-      if (props.modelValue !== null) return
-      isActive.value = !isTemporary.value && (props.permanent || !mobile.value)
+      if (props.modelValue !== null || isTemporary.value) return
+      isActive.value = props.permanent || !mobile.value
     })
 
     const { isDragging, dragProgress, dragStyles } = useTouch({

@@ -1,0 +1,33 @@
+.ve-tab {
+  display: inline-flex;
+  position: relative;
+  height: 100%;
+  padding: 0;
+  max-width: 360px;
+  min-width: 90px;
+
+  .ve-slide-group--vertical & {
+    justify-content: start;
+  }
+
+  &__slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    pointer-events: none;
+    opacity: 0;
+
+    .ve-tab--selected & {
+      opacity: 1;
+    }
+
+    .ve-slide-group--vertical & {
+      top: 0;
+      height: 100%;
+      width: 2px;
+    }
+  }
+}
