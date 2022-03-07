@@ -5,11 +5,10 @@
 .ve-list-item-avatar {
   // CSS Variables
   // --ve-list-item-avatar---height 28px
-  // --ve-list-item-avatar---margin-x 8px
+  // --ve-list-item-avatar---margin-x 12px
   --ve-avatar---height: var(--ve-list-item-avatar---height, 28px);
-  --ve-margin-x: var(--ve-list-item-avatar---margin-x, 8px);
+  --ve-margin-x: var(--ve-list-item-avatar---margin-x, 12px);
   align-self: center;
-  color: rgba(var(--ve-theme-on-surface), var(--ve-medium-emphasis-opacity));
   transition: inherit;
   transition-property: height, width;
 
@@ -19,5 +18,9 @@
 
   &--end {
     margin-inline-start: var(--ve-margin-x);
+  }
+
+  .ve-icon {
+    opacity: var(--ve-medium-emphasis-opacity);
   }
 }

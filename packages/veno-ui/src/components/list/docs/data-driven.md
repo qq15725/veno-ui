@@ -2,10 +2,14 @@
 
 # 数据驱动
 
+通过 `items` 数据渲染列表，可以很容易的切换为后端数据驱动。
+
 ```html
-<div class="p-10 bg-grey-300">
-  <ve-list :items="items" />
-</div>
+<ve-list
+  elevation="8"
+  width="200"
+  :items="items"
+/>
 ```
 
 ```js

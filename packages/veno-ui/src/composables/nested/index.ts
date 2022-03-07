@@ -9,27 +9,14 @@ import { classicActiveStrategy } from './active-strategies'
 import { useProxiedModel } from '../proxied-model'
 
 // Types
-import type { InjectionKey, Prop, Ref } from 'vue'
-import type { SelectStrategyFn } from './select-strategies'
+import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
+import type { SelectStrategy as BaseSelectStrategy } from './select-strategies'
 import type { OpenStrategyFn } from './open-strategies'
 import type { ActiveStrategyFn } from './active-strategies'
 
-export type SelectStrategy = 'single-leaf' | 'leaf' | 'independent' | 'classic' | SelectStrategyFn
+export type SelectStrategy = 'single-leaf' | 'leaf' | 'independent' | 'classic' | BaseSelectStrategy
 export type OpenStrategy = 'single' | 'multiple' | OpenStrategyFn
 export type ActiveStrategy = 'single' | 'multiple' | ActiveStrategyFn
-
-export interface NestedProps {
-  selectStrategy: SelectStrategy | undefined
-  openStrategy: OpenStrategy | undefined
-  activeStrategy: ActiveStrategy | undefined
-  selected: string[] | undefined
-  opened: string[] | undefined
-  active: string[] | undefined
-  deleteAfterUnmount: boolean
-  'onUpdate:selected': ((val: string[]) => void) | undefined
-  'onUpdate:opened': ((val: string[]) => void) | undefined
-  'onUpdate:active': ((val: string[]) => void) | undefined
-}
 
 type NestedInstance = {
   id: Ref<string | null>
@@ -68,12 +55,38 @@ const emptyNested: NestedInstance = {
 }
 
 export const makeNestedProps = propsFactory({
-  selectStrategy: [String, Function] as Prop<SelectStrategy>,
-  openStrategy: [String, Function] as Prop<OpenStrategy>,
-  activeStrategy: [String, Function] as Prop<ActiveStrategy>,
-  opened: Array as Prop<string[]>,
-  selected: Array as Prop<string[]>,
-  active: Array as Prop<string[]>,
+  /**
+   * @zh 选择策略
+   */
+  selectStrategy: [String, Function] as PropType<SelectStrategy>,
+
+  /**
+   * @zh 打开策略
+   */
+  openStrategy: [String, Function] as PropType<OpenStrategy>,
+
+  /**
+   * @zh 激活策略
+   */
+  activeStrategy: [String, Function] as PropType<ActiveStrategy>,
+
+  /**
+   * @zh 打开项的值
+   */
+  opened: {
+    type: [Boolean, Array] as PropType<boolean | string[]>,
+    default: () => [],
+  },
+
+  /**
+   * @zh 选择项的值
+   */
+  selected: Array as PropType<string[]>,
+
+  /**
+   * @zh 激活项的值
+   */
+  active: Array as PropType<string[]>,
 
   /**
    * @zh 卸载 DOM 后删除
@@ -84,60 +97,83 @@ export const makeNestedProps = propsFactory({
   },
 }, 'nested')
 
-export const useNested = (props: NestedProps) => {
+export const useNested = (
+  props: ExtractPropTypes<ReturnType<typeof makeNestedProps>> & {
+    'onUpdate:selected': ((val: string[]) => void) | undefined
+    'onUpdate:opened': ((val: string[]) => void) | undefined
+    'onUpdate:active': ((val: string[]) => void) | undefined
+  }
+) => {
   let isUnmounted = false
   const children = ref(new Map<string, string[]>())
   const parents = ref(new Map<string, string>())
 
   const opened = useProxiedModel(
     props, 'opened', props.opened,
-      v => new Set(v), v => [...v.values()]
+    v => typeof v === 'boolean'
+      ? new Set(v === true ? [...children.value.keys()] : [])
+      : new Set(v),
+    v => [...v.values()]
   )
   const active = useProxiedModel(
     props, 'active', props.active,
-      v => new Set(v), v => [...v.values()]
+    v => new Set(v),
+    v => [...v.values()]
   )
 
   // 激活时使用的策略
   const activeStrategy = computed(() => {
-    if (typeof props.activeStrategy === 'object') return props.activeStrategy
-
-    switch (props.activeStrategy) {
-      case 'single': return classicActiveStrategy(true)
-      case 'multiple':
-      default:
-        return classicActiveStrategy()
+    if (typeof props.activeStrategy === 'string') {
+      switch (props.activeStrategy) {
+        case 'single':
+          return classicActiveStrategy(true)
+        case 'multiple':
+        default:
+          return classicActiveStrategy()
+      }
     }
+
+    return props.activeStrategy
   })
 
   // 选择时使用的策略
   const selectStrategy = computed(() => {
-    if (typeof props.selectStrategy === 'object') return props.selectStrategy
-
-    switch (props.selectStrategy) {
-      case 'single-leaf': return leafSelectStrategy(true)
-      case 'leaf': return leafSelectStrategy()
-      case 'independent': return independentSelectStrategy
-      case 'classic':
-      default: return classicSelectStrategy
+    if (typeof props.selectStrategy === 'string') {
+      switch (props.selectStrategy) {
+        case 'single-leaf':
+          return leafSelectStrategy(true)
+        case 'leaf':
+          return leafSelectStrategy()
+        case 'independent':
+          return independentSelectStrategy
+        case 'classic':
+        default:
+          return classicSelectStrategy
+      }
     }
+
+    return props.selectStrategy
   })
 
   // 打开时使用的策略
   const openStrategy = computed(() => {
-    if (typeof props.openStrategy === 'function') return props.openStrategy
-
-    switch (props.openStrategy) {
-      case 'single': return singleOpenStrategy
-      case 'multiple':
-      default: return multipleOpenStrategy
+    if (typeof props.openStrategy === 'string') {
+      switch (props.openStrategy) {
+        case 'single':
+          return singleOpenStrategy
+        case 'multiple':
+        default:
+          return multipleOpenStrategy
+      }
     }
+
+    return props.openStrategy
   })
 
   const selected = useProxiedModel(
     props, 'selected', props.selected,
-    v => selectStrategy.value.in(v, children.value, parents.value),
-    v => selectStrategy.value.out(v, children.value, parents.value),
+    v => selectStrategy.value!.in(v, children.value, parents.value),
+    v => selectStrategy.value!.out(v, children.value, parents.value),
   )
 
   onBeforeUnmount(() => {
@@ -186,7 +222,7 @@ export const useNested = (props: NestedProps) => {
         }
       },
       open: (id, value, event) => {
-        const newOpened = openStrategy.value({
+        const newOpened = openStrategy.value!({
           id,
           value,
           opened: new Set(opened.value),
@@ -198,7 +234,7 @@ export const useNested = (props: NestedProps) => {
         newOpened && (opened.value = newOpened)
       },
       select: (id, value, event) => {
-        const newSelected = selectStrategy.value.select({
+        const newSelected = selectStrategy.value!.select({
           id,
           value,
           selected: new Map(selected.value),
@@ -210,7 +246,7 @@ export const useNested = (props: NestedProps) => {
         newSelected && (selected.value = newSelected)
       },
       activate: (id, value, event) => {
-        const newActive = activeStrategy.value({
+        const newActive = activeStrategy.value!({
           id,
           value,
           active: new Set(active.value),

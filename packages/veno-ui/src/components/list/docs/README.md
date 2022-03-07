@@ -5,13 +5,19 @@ meta:
 
 # 列表 List
 
+菜单可选项、选择框可选项、导航列表都是用的它，`ve-list` 组件为组织文本和图像提供一致的样式。
+
 ## 演示
 
 :::include
 
-basic.md density.md
+basic.md 
 
-icon.md data-driven.md
+data-driven.md
+
+density.md 
+
+icon.md
 
 nav.md
 

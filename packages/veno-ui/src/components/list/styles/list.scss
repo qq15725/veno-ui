@@ -28,9 +28,21 @@
   &--nav {
     .ve-list-group + .ve-list-group,
     .ve-list-group + .ve-list-item,
-    .ve-list-subheader + .ve-list-group-items,
-    .ve-list-item + .ve-list-item {
+    .ve-list-item + .ve-list-group,
+    .ve-list-item + .ve-list-group__items,
+    .ve-list-item + .ve-list-item,
+    .ve-list-subheader + .ve-list-group__items {
       margin-block-start: 6px;
+    }
+
+    > .ve-list-group,
+    > .ve-list-item {
+      margin-inline-start: 12px;
+      margin-inline-end: 12px;
+    }
+
+    .ve-list-item {
+      border-radius: 4px;
     }
   }
 }
