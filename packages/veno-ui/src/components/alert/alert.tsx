@@ -23,7 +23,7 @@ export const alertTypes = ['success', 'info', 'warning', 'error'] as const
 
 // Types
 import type { PropType } from 'vue'
-import { MakeSlots } from '../../utils'
+import type { MakeSlots } from '../../utils'
 
 export type AlertType = typeof alertTypes[number]
 export type Alert = InstanceType<typeof Alert>
@@ -85,7 +85,7 @@ export const Alert = genericComponent<new () => {
       return {
         ...props,
         text: undefined,
-        color: props.type ?? props.color,
+        textColor: props.type ?? props.textColor,
       }
     })
     const isActive = useProxiedModel(props, 'modelValue')
