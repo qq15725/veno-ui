@@ -31,7 +31,7 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "veno-ui": "workspace:*"
+    "veno-ui": "^0.4.2"
   },
   "peerDependencies": {
     "vue": "^3.2.31"

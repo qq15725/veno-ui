@@ -69,7 +69,7 @@
     "build": "npm run build:lib && npm run build:dist"
   },
   "dependencies": {
-    "@veno-ui/utils": "workspace:*"
+    "@veno-ui/utils": "^0.4.2"
   },
   "devDependencies": {
     "@vueuse/head": "^0.7.5",
