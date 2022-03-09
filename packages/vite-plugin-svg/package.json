@@ -1,33 +1,49 @@
 {
   "name": "@veno-ui/vite-plugin-svg",
   "version": "0.4.0",
-  "description": "A Vite Svg Plugin",
-  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qq15725/veno-ui.git"
-  },
+  "description": "Vite Svg Plugin for VenoUI",
   "keywords": [
     "vite-plugin",
     "vite-plugin-svg",
     "veno-ui svg"
   ],
-  "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg",
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
   },
-  "peerDependencies": {
-    "vite": "^2.4.0"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq15725/veno-ui.git"
+  },
+  "author": "wxm",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "engines": {
+    "node": ">=14"
   },
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
     "@types/svgo": "^2.6.1",
     "svgo": "^2.8.0"
+  },
+  "peerDependencies": {
+    "vite": "^2.4.0"
   },
   "publishConfig": {
     "access": "public"

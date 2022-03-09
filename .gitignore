@@ -1,6 +1,12 @@
 .DS_Store
-node_modules/
 .env
+.vite-ssg-temp
+node_modules/
+lib/
+dist/
+components.d.ts
+
+# Lock
 package-lock.json
 pnpm-lock.yaml
 

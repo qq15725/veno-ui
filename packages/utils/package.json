@@ -1,13 +1,13 @@
 {
-  "name": "@veno-ui/vite-plugin-markdown",
+  "name": "@veno-ui/utils",
   "version": "0.4.0",
-  "description": "Vite Markdown Plugin for VenoUI",
+  "description": "Utils for VenoUI",
   "keywords": [
-    "vite-plugin",
-    "vite-plugin-markdown",
-    "veno-ui md"
+    "utils",
+    "vue utils",
+    "veno-ui utils"
   ],
-  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown",
+  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/utils",
   "bugs": {
     "url": "https://github.com/qq15725/veno-ui/issues"
   },
@@ -37,12 +37,8 @@
   "engines": {
     "node": ">=14"
   },
-  "dependencies": {
-    "@rollup/pluginutils": "^4.1.2",
-    "@veno-ui/markdown": "workspace:*"
-  },
   "peerDependencies": {
-    "vite": "^2.4.0"
+    "vue": "^3.2.31"
   },
   "publishConfig": {
     "access": "public"

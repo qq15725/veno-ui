@@ -2,43 +2,53 @@
   "name": "veno-ui",
   "version": "0.4.2",
   "description": "A Vue 3 UI Library. Uses Composable. Uses TypeScript.",
-  "homepage": "https://www.venojs.com",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qq15725/veno-ui.git"
-  },
   "keywords": [
     "veno-ui",
     "ui library",
     "vue"
   ],
-  "main": "lib/framework.js",
-  "module": "lib/framework.js",
-  "types": "lib/framework.d.ts",
+  "homepage": "https://github.com/qq15725/veno-ui",
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq15725/veno-ui.git"
+  },
+  "author": "wxm",
+  "sideEffects": [
+    "*.sass",
+    "*.scss",
+    "*.css",
+    "*.vue"
+  ],
   "files": [
     "lib",
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./lib/framework.js",
+      "import": "./lib/framework.mjs",
       "require": "./dist/veno-ui.js"
     },
     "./styles": "./lib/styles/main.scss",
     "./styles/*": "./lib/styles/*",
-    "./framework": "./lib/framework.js",
-    "./components": "./lib/components/index.js",
-    "./components/*": "./lib/components/*/*.js",
-    "./directives": "./lib/directives/index.js",
-    "./directives/*": "./lib/directives/*/*.js",
-    "./providers": "./lib/providers/index.js",
-    "./iconsets/*": "./lib/iconsets/*.js",
+    "./framework": "./lib/framework.mjs",
+    "./components": "./lib/components/index.mjs",
+    "./components/*": "./lib/components/*/*.mjs",
+    "./directives": "./lib/directives/index.mjs",
+    "./directives/*": "./lib/directives/*/*.mjs",
+    "./providers": "./lib/providers/index.mjs",
+    "./iconsets/*": "./lib/iconsets/*.mjs",
     "./*": "./*"
   },
+  "main": "lib/framework.mjs",
+  "module": "lib/framework.mjs",
+  "types": "lib/framework.d.ts",
   "typesVersions": {
     "*": {
-      "lib/framework.js": [
+      "lib/framework.mjs": [
         "lib/framework.d.ts"
       ],
       "framework": [
@@ -58,10 +68,12 @@
     "build:lib": "vite build -c vite.lib.config.ts",
     "build": "npm run build:lib && npm run build:dist"
   },
+  "dependencies": {
+    "@veno-ui/utils": "workspace:*"
+  },
   "devDependencies": {
-    "@vue/runtime-core": "^3.2.31",
-    "@vue/runtime-dom": "^3.2.31",
     "@vueuse/head": "^0.7.5",
+    "magic-string": "^0.26.1",
     "vite-plugin-dts": "^0.9.6",
     "vue-router": "^4.0.12"
   },
@@ -74,12 +86,6 @@
       "optional": true
     }
   },
-  "sideEffects": [
-    "*.sass",
-    "*.scss",
-    "*.css",
-    "*.vue"
-  ],
   "publishConfig": {
     "access": "public"
   }

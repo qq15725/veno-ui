@@ -63,11 +63,11 @@ export default defineConfig(({ mode }) => {
             { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
           ]
           : [
-            { find: 'veno-ui/components', replacement: resolve('../veno-ui/lib/components/index.js') },
-            { find: 'veno-ui/directives', replacement: resolve('../veno-ui/lib/directives/index.js') },
-            { find: 'veno-ui/providers', replacement: resolve('../veno-ui/lib/providers/index.js') },
+            { find: 'veno-ui/components', replacement: resolve('../veno-ui/lib/components/index.mjs') },
+            { find: 'veno-ui/directives', replacement: resolve('../veno-ui/lib/directives/index.mjs') },
+            { find: 'veno-ui/providers', replacement: resolve('../veno-ui/lib/providers/index.mjs') },
             { find: 'veno-ui/styles', replacement: resolve('../veno-ui/lib/styles/main.scss') },
-            { find: 'veno-ui', replacement: resolve('../veno-ui/lib/framework.js') },
+            { find: 'veno-ui', replacement: resolve('../veno-ui/lib/framework.mjs') },
           ]
       )
     },

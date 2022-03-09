@@ -1,4 +1,5 @@
 {
+  "name": "@veno-ui/monorepo",
   "private": true,
   "workspaces": [
     "packages/**"
@@ -8,14 +9,7 @@
     "docs:build": "pnpm run build --filter @veno-ui/docs",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "pnpm run docs:build && pnpm run docs:publish",
-    "build:api-generator": "pnpm run build --filter @veno-ui/api-generator",
-    "build:markdown": "pnpm run build --filter @veno-ui/markdown",
-    "build:vite-plugin-svg": "pnpm run build --filter @veno-ui/vite-plugin-svg",
-    "build:vite-plugin-markdown": "pnpm run build --filter @veno-ui/vite-plugin-markdown",
-    "build:plugins": "pnpm run build:api-generator && pnpm run build:markdown && pnpm run build:vite-plugin-svg && pnpm run build:vite-plugin-markdown",
-    "build:lib": "pnpm run build:lib --filter veno-ui",
-    "build:dist": "pnpm run build:dist --filter veno-ui",
-    "build": "pnpm run build:lib && pnpm run build:dist"
+    "build": "pnpm -r --filter !@veno-ui/docs run build"
   },
   "engines": {
     "node": ">=14"
@@ -24,12 +18,13 @@
     "@octokit/core": "^3.5.1",
     "@types/node": "^14.11.10",
     "@vitejs/plugin-vue": "^1.10.2",
-    "@vitejs/plugin-vue-jsx": "^1.3.7",
+    "@vitejs/plugin-vue-jsx": "^1.3.8",
     "gh-pages": "^3.2.3",
     "lerna": "^3.22.1",
     "sass": "^1.39.0",
     "typescript": "^4.5.5",
-    "vite": "^2.8.4",
+    "unbuild": "^0.6.9",
+    "vite": "^2.8.6",
     "vue": "^3.2.31"
   }
 }

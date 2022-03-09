@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import fs, { promises } from 'fs'
 import path from 'path'
+import magicString from 'magic-string'
 // @ts-ignore
 import mkdirp from 'mkdirp'
 import dts from 'vite-plugin-dts'
@@ -25,7 +26,7 @@ export default defineConfig(async ({ mode }) => {
         output: [
           {
             format: 'es',
-            entryFileNames: '[name].js',
+            entryFileNames: '[name].mjs',
             preserveModules: true,
             preserveModulesRoot: 'src',
           }
@@ -60,6 +61,17 @@ export default defineConfig(async ({ mode }) => {
       {
         name: 'vite:scss-extract',
         apply: 'build',
+        renderChunk (code) {
+          const RE = /\.\.\/\.\.\/veno-ui\/src\/.*\/styles/
+          if (code.match(RE)) {
+            const s = new magicString(code).replace(RE, './styles')
+            return {
+              code: s.toString(),
+              map: s.generateMap({ hires: true })
+            }
+          }
+          return
+        },
         async buildEnd () {
           async function matchScss (dir: string, fn: (filename: string) => void) {
             const files = await promises.readdir(dir)

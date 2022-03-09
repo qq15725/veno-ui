@@ -6,8 +6,7 @@ import {
   toRaw,
   watchEffect,
 } from 'vue'
-import { consoleWarn } from './console'
-import { toKebabCase } from './helpers'
+import { toKebabCase, consoleWarn } from '@veno-ui/utils'
 import { useDefaults } from '../composables/defaults'
 
 // Types

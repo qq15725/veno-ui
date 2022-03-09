@@ -8,7 +8,7 @@ import {
   propsFactory,
   getCurrentInstance,
 } from '../../utils'
-import { colorToOnColorHex } from '../../utils/color'
+import { colorToOnColorHex } from '../../utils'
 import defaultOptions from './default-options'
 
 // Types

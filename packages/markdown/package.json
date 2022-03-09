@@ -1,25 +1,41 @@
 {
   "name": "@veno-ui/markdown",
   "version": "0.4.0",
-  "description": "A VenoUI Markdown Renderer",
-  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/markdown",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qq15725/veno-ui.git"
-  },
+  "description": "Markdown Renderer for VenoUI",
   "keywords": [
     "markdown",
     "markdown renderer",
     "veno-ui markdown"
   ],
+  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/markdown",
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qq15725/veno-ui.git"
+  },
+  "author": "wxm",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "engines": {
+    "node": ">=14"
   },
   "dependencies": {
     "chalk": "^4.1.2",
@@ -30,10 +46,10 @@
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
