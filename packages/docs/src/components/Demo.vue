@@ -134,7 +134,7 @@
 
     <ve-expand-transition>
       <ve-code
-          v-if="isActive"
+          v-show="isActive"
           theme="dark"
           class="mt-2 py-3 px-6"
           shape="rounded-sm"

@@ -6,7 +6,7 @@ meta:
 # 全局提示 Message
 
 :::warning 使用前提
-注册 `MessageProvider`，或者把调用其方法的组件放在 `ve-message-provider` 内部，使用 `useMessage` 或者 `this.$veno.message` 去获取 API。
+注册 **MessageProvider**，或者把调用其方法的组件放在 **ve-message-provider** 内部，使用 **useMessage** 或者 **this.$veno.message** 去获取 API。
 :::
 
 注册 `MessageProvider` （推荐）
