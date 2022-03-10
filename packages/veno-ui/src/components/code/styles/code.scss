@@ -1,79 +1,69 @@
 @forward './variables';
 @use './variables' as *;
+@use 'sass:math';
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
 // Blocks
 .ve-code {
   position: relative;
-  border-radius: map-get(settings.$rounded, 'sm');
   font-size: $code-font-size;
   font-weight: $code-font-weight;
+  background: rgb(var(--ve-theme-surface));
+  color: rgb(var(--ve-theme-on-surface));
+  @include tools.use-shape();
 
   // Modifiers
-  &--inline {
-    padding: $code-padding;
-  }
-
   &--block {
-    --ve-padding: 20px;
     display: flex;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   // Elements
   &__language {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5em;
+    right: 1em;
     font-size: 0.85em;
+    font-weight: 500;
     user-select: none;
-  }
-
-  &--line-numbers &__language {
-    top: 6px;
-    right: 12px;
+    opacity: var(--ve-medium-emphasis-opacity);
   }
 
   &__lines {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--ve-padding) 0;
-    color: #c4c4c6;
-    border-right: 1px solid #e7e6e6;
+  }
+
+  &--show-line-numbers &__lines {
+    padding: 0 16px;
+    margin-right: 16px;
+    border-right: 1px solid rgba(var(--ve-border-color), var(--ve-border-opacity));
   }
 
   &__line {
     display: flex;
     justify-content: end;
     width: 100%;
-    padding: 0 var(--ve-padding);
     font-size: 0.85em;
-    line-height: 1.6470588235294117;
+    line-height: #{math.div(1.5, 0.85)};
     user-select: none;
 
     &-overlay {
-      display: none;
-      color: transparent !important;
       position: absolute;
       left: 0;
       width: 100%;
       line-height: inherit;
-      opacity: .12;
-    }
-
-    &--highlighted &-overlay {
-      display: block;
+      background-color: rgba(0, 0, 0, var(--ve-medium-emphasis-opacity));
+      border-radius: inherit;
+      pointer-events: none;
     }
 
     &-number {
       position: relative;
+      opacity: var(--ve-medium-emphasis-opacity);
     }
-  }
-
-  &--line-numbers &__preformatted {
-    padding: var(--ve-padding);
   }
 
   &__preformatted {

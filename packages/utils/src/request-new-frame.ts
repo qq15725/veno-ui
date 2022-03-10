@@ -3,6 +3,8 @@ const frames = [] as any[]
 
 /**
  * 安排任务在动画帧中运行，避免页面卡顿。
+ *
+ * @param cb 回调函数
  */
 export function requestNewFrame (cb: () => void) {
   if (!clean || frames.length) {

@@ -13,8 +13,8 @@ vue >= 3.2.0
 
 ## 安装
 
-```shell
-$ npm install veno-ui
+```sh
+> npm install veno-ui
 ```
 
 ## 完整引入

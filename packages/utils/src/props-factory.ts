@@ -4,7 +4,7 @@ import type { ComponentObjectPropsOptions, Prop, PropType } from 'vue'
 /**
  * 创建一个 props 的工厂函数.
  *
- * 常用于定义组合的 props 然后在使用的组件中重写默认值.
+ * 常用于定义组合式函数入参 props 然后在使用的组件中重写默认值.
  *
  * @example 简单的函数定义
  * (props: Props) => (defaults?: Record<keyof props, any>) => Props

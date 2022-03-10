@@ -78,13 +78,7 @@
     "vue-router": "^4.0.12"
   },
   "peerDependencies": {
-    "prismjs": "^1.25.0",
     "vue": "^3.2.31"
-  },
-  "peerDependenciesMeta": {
-    "prismjs": {
-      "optional": true
-    }
   },
   "publishConfig": {
     "access": "public"

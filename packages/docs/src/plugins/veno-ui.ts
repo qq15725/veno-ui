@@ -3,25 +3,30 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'veno-ui/styles'
 
 // Utils
-import prismjs from 'prismjs'
-import 'prismjs/components/prism-typescript.js'
-import 'prismjs/components/prism-bash.js'
-import 'prismjs/components/prism-json.js'
 import { createVeno } from 'veno-ui'
 import * as components from 'veno-ui/components'
 import * as directives from 'veno-ui/directives'
 import * as providers from 'veno-ui/providers'
 
+// highlighter
+import { getHighlighter, setCDN } from 'shiki'
+
 // Types
 import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
+  setCDN('https://unpkg.com/shiki@0.10.1/')
+
   const veno = createVeno({
     components,
     directives,
     providers,
     highlighter: {
-      prismjs,
+      type: 'shiki',
+      shiki: getHighlighter({
+        theme: 'material-palenight',
+        langs: ['html', 'vue', 'vue-html', 'ts', 'js', 'json', 'shell'],
+      }),
     },
   })
 

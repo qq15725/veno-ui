@@ -135,12 +135,12 @@
     <ve-expand-transition>
       <ve-code
           v-if="isActive"
-          class="mt-3"
-          color="secondary"
+          theme="dark"
+          class="mt-2 py-3 px-6"
+          shape="rounded-sm"
           :code="code"
           language="vue"
           show-language
-          line-numbers
       />
     </ve-expand-transition>
   </div>

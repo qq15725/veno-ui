@@ -11,6 +11,7 @@ export const SHAPES = [
   'tile',
   'rounded-sm',
   'rounded',
+  'rounded-lg',
   'pill',
   'circle',
 ] as const

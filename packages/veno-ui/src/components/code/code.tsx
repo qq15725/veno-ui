@@ -6,6 +6,8 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { defineComponent, flattenFragments } from '../../utils'
 
 // Composables
+import { makeThemeProps, provideTheme } from '../../composables/theme'
+import { makeShapeProps, useShape } from '../../composables/shape'
 import { useHighlighter } from '../../composables/highlighter'
 import { useBackgroundColor } from '../../composables/color'
 import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
@@ -33,17 +35,14 @@ export const Code = defineComponent({
     showLanguage: Boolean,
 
     /**
-     * @zh: 显示行号或者指定高亮的行号
+     * @zh 显示行号
      */
-    lineNumbers: [Boolean, Array] as PropType<boolean | number[] | number[][]>,
+    showLineNumbers: Boolean,
 
     /**
-     * @zh: 高亮的行的背景颜色
+     * @zh: 高亮的行号
      */
-    highlightedLineColor: {
-      type: String,
-      default: 'warning',
-    },
+    highlightedLineNumbers: Array as PropType<number[] | number[][]>,
 
     /**
      * @zh 使用行内样式
@@ -55,13 +54,17 @@ export const Code = defineComponent({
      */
     language: {
       type: String,
-      default: 'html',
+      default: 'text',
     },
 
+    ...makeThemeProps(),
+    ...makeShapeProps(),
     ...makeScrollbar(),
   },
 
   setup (props, { slots }) {
+    const { themeClasses } = provideTheme(props)
+    const { shapeClasses } = useShape(props)
     const highlighter = useHighlighter()
     const { scrollbarClasses } = useScrollbar(props)
     const code = computed(() => {
@@ -83,32 +86,22 @@ export const Code = defineComponent({
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       props, 'color'
     )
-    const {
-      backgroundColorClasses: highlightedLineColorClasses,
-      backgroundColorStyles: highlightedLineColorStyles
-    } = useBackgroundColor(props, 'highlightedLineColor')
-    const language = computed(() => (
-      typeof props.code === 'object'
-        ? 'json'
-        : props.language
-    ))
+    const language = computed(() => props.code === 'object' ? 'json' : props.language)
     const lineNumbers = computed(() => code.value.split('\n').map((v, i) => i + 1))
     const highlightedLines = computed(() => {
       return lineNumbers.value.filter(lineNumber => {
-        return typeof props.lineNumbers === 'boolean'
-          ? false
-          : props.lineNumbers?.some(v => {
-            let start = v, end
-            {
-              if (typeof v === 'object') {
-                [start, end] = v
-              }
+        return props.highlightedLineNumbers?.some(v => {
+          let start = v, end
+          {
+            if (typeof v === 'object') {
+              [start, end] = v
             }
-            if (start && end) {
-              return lineNumber >= start && lineNumber <= end
-            }
-            return lineNumber === start
-          })
+          }
+          if (start && end) {
+            return lineNumber >= start && lineNumber <= end
+          }
+          return lineNumber === start
+        })
       })
     })
 
@@ -129,6 +122,8 @@ export const Code = defineComponent({
             class={ [
               've-code',
               've-code--inline',
+              themeClasses.value,
+              shapeClasses.value,
               backgroundColorClasses.value
             ] }
             style={ backgroundColorStyles.value }
@@ -137,50 +132,43 @@ export const Code = defineComponent({
         )
       }
 
+      const showLines = props.showLineNumbers
+        || !!props.highlightedLineNumbers?.length
+
       return (
         <div
           class={ [
             've-code',
             've-code--block',
             {
-              've-code--line-numbers': !!props.lineNumbers,
+              've-code--show-line-numbers': !!props.showLineNumbers,
             },
+            themeClasses.value,
+            shapeClasses.value,
             backgroundColorClasses.value
           ] }
           style={ backgroundColorStyles.value }
         >
-          { !!props.lineNumbers && (
+          { showLines && (
             <div class="ve-code__lines">
               { lineNumbers.value.map(number => (
-                <div
-                  class={ [
-                    've-code__line',
-                    {
-                      've-code__line--highlighted': highlightedLines.value.includes(number)
-                    }
-                  ] }
-                >
-                  <div
-                    class={ [
-                      've-code__line-overlay',
-                      highlightedLineColorClasses.value,
-                    ] }
-                    style={ highlightedLineColorStyles.value }
-                    v-html={ `&nbsp;` }
-                  />
+                <div class="ve-code__line">
+                  { highlightedLines.value.includes(number) && (
+                    <div class="ve-code__line-overlay" v-html={ `&nbsp;` } />
+                  ) }
 
-                  <span class="ve-code__line-number">{ number }</span>
+                  { props.showLineNumbers
+                    ? <span class="ve-code__line-number">{ number }</span>
+                    : <br /> }
                 </div>
               )) }
             </div>
           ) }
 
-          <pre
-            class={ [
-              've-code__preformatted',
-              scrollbarClasses.value,
-            ] }
-          ><code v-html={ highlightedCode.value } /></pre>
+          <pre class={ [
+            've-code__preformatted',
+            scrollbarClasses.value,
+          ] }><code v-html={ highlightedCode.value } /></pre>
 
           { props.showLanguage && (
             <span class="ve-code__language">{ language.value }</span>

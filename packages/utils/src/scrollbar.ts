@@ -1,3 +1,8 @@
+/**
+ * 获取当前元素的父级滚动元素
+ *
+ * @param el
+ */
 export function getScrollParent (el?: HTMLElement) {
   while (el) {
     if (hasScrollbar(el)) return el
@@ -7,6 +12,11 @@ export function getScrollParent (el?: HTMLElement) {
   return document.scrollingElement as HTMLElement
 }
 
+/**
+ * 获取当前元素的所有父级滚动元素
+ *
+ * @param el
+ */
 export function getScrollParents (el?: HTMLElement) {
   const elements: HTMLElement[] = []
 
@@ -18,6 +28,11 @@ export function getScrollParents (el?: HTMLElement) {
   return elements
 }
 
+/**
+ * 判断元素是否存在滚动条
+ *
+ * @param el
+ */
 export function hasScrollbar (el?: Element | null) {
   if (!el || el.nodeType !== Node.ELEMENT_NODE) return false
 
@@ -30,6 +45,11 @@ export function hasScrollbar (el?: Element | null) {
     )
 }
 
+/**
+ * 获取滚动条的宽度
+ *
+ * @param el
+ */
 export function getScrollbarWidth (el?: HTMLElement | null) {
   if (!el || el.nodeType !== Node.ELEMENT_NODE) return 0
 

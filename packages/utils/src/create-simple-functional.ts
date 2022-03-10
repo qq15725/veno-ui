@@ -3,11 +3,11 @@ import { h, defineComponent } from 'vue'
 import { toKebabCase } from './helpers'
 
 /**
- * 创建简单函数组件
+ * 创建简单的函数式组件
  *
- * @param klass
- * @param tag
- * @param name
+ * @param klass 类名
+ * @param tag 标签
+ * @param name 组件名
  */
 export function createSimpleFunctional (
   klass: string,

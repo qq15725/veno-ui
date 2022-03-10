@@ -4,7 +4,7 @@
   "version": "0.4.3",
   "scripts": {
     "serve": "vite preview",
-    "build": "vite-ssg build",
+    "build-post": "vite-ssg build",
     "dev": "vite --port 3022 --open"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@veno-ui/vite-plugin-svg": "^0.4.3",
     "@vue/compiler-sfc": "^3.2.31",
     "@vueuse/head": "^0.7.5",
+    "shiki": "^0.10.1",
     "unplugin-vue-components": "^0.17.18",
     "vite-plugin-pages": "^0.19.9",
     "vite-plugin-pwa": "^0.11.13",
