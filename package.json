@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/monorepo",
-  "version": "0.4.4",
+  "version": "0.4.3",
   "private": true,
   "workspaces": [
     "packages/**"
@@ -11,7 +11,7 @@
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "pnpm run docs:build && pnpm run docs:publish",
     "build": "pnpm -r run build",
-    "release": "bumpp package.json packages/*/package.json --commit --push --tag"
+    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish %s\" --push --tag"
   },
   "engines": {
     "node": ">=14"
