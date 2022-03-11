@@ -1,7 +1,7 @@
 {
   "name": "@veno-ui/docs",
   "private": true,
-  "version": "0.4.5",
+  "version": "0.4.6",
   "scripts": {
     "serve": "vite preview",
     "build-post": "vite-ssg build",
