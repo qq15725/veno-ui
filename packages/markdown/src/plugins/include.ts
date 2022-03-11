@@ -1,6 +1,7 @@
 // Utils
 import container from 'markdown-it-container'
-import { slugify, toPascalCase } from '../utils'
+import { slugify } from '../utils'
+import { toPascalCase } from '@veno-ui/utils'
 import { basename, dirname, join } from 'path'
 import { readFileSync } from 'fs'
 

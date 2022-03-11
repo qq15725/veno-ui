@@ -483,6 +483,12 @@ export const toKebabCase = (str: string) => {
     .toLowerCase()
 }
 
+export function toPascalCase (str: string): string {
+  return str
+    .replace(/^[a-z]/, (match: string) => match.toLocaleUpperCase())
+    .replace(/-(\w)/g, (match: string, part1: string) => part1.toLocaleUpperCase())
+}
+
 export type MaybeRef<T> = T | Ref<T>
 
 export type ExtractMaybeRef<P> = P extends MaybeRef<infer T> ? T : P;

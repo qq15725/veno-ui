@@ -38,6 +38,7 @@
     "node": ">=14"
   },
   "dependencies": {
+    "@veno-ui/utils": "workspace:*",
     "chalk": "^4.1.2",
     "diacritics": "^1.3.0",
     "gray-matter": "^4.0.3",

@@ -4,6 +4,7 @@ import fs from 'fs'
 import { defineConfig, loadEnv } from 'vite'
 import { getCompleteApi } from '@veno-ui/api-generator'
 import { createMarkdown } from '@veno-ui/markdown'
+import { toPascalCase } from '@veno-ui/utils'
 
 // Plugins
 import Vue from '@vitejs/plugin-vue'
@@ -20,14 +21,6 @@ import { VitePWA } from 'vite-plugin-pwa'
 import type { ComponentResolver } from 'unplugin-vue-components'
 
 const resolve = (...args: string[]) => path.resolve(__dirname, ...args)
-
-function toPascalCase (string: string): string {
-  return (
-    string.trim()
-      .replace(/^[a-z]/, (match: string) => match.toLocaleUpperCase())
-      .replace(/-(\w)/g, (match: string, part1: string) => part1.toLocaleUpperCase())
-  )
-}
 
 function VenoUiResolver (): ComponentResolver {
   return {
@@ -81,7 +74,7 @@ export default defineConfig(({ mode }) => {
               .replace(/<<<API (.+)/g, (_, name) => {
                 const component = completedApi.find(v => v.name === name)
                 if (!component) return ''
-                name = toPascalCase(name)
+                name = toPascalCase(name.trim())
                 let str = ''
                 if (component.props.length) {
                   const props = component.props.map((prop: any) => {

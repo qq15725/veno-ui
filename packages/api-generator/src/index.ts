@@ -1,24 +1,12 @@
 import { createApp } from 'vue'
 import { createVeno } from 'veno-ui'
+import { toKebabCase } from 'veno-ui/utils'
 
 // Types
 import type { Component } from './types'
 
 const app = createApp({})
 app.use(createVeno())
-
-const kebabCase = (str: string) => {
-  let kebab = ''
-  for (let i = 0; i < str.length; i++) {
-    const charCode = str.charCodeAt(i)
-    if (charCode >= 65 && charCode <= 90) {
-      kebab += `${ i > 0 ? '-' : '' }${ str[i].toLowerCase() }`
-    } else {
-      kebab += str[i]
-    }
-  }
-  return kebab
-}
 
 function getPropType (type: any): any {
   if (Array.isArray(type)) {
@@ -60,7 +48,7 @@ const getComponentsApi = () => {
   for (const componentName in rawComponents) {
     const rawComponent = rawComponents[componentName]
     const component: Component = {
-      name: kebabCase(componentName).replace('ve-', ''),
+      name: toKebabCase(componentName).replace('ve-', ''),
       props: [],
       slots: [],
       events: [],
@@ -69,7 +57,7 @@ const getComponentsApi = () => {
 
     for (const propName in rawComponent.props || {}) {
       const prop = rawComponent.props[propName] || {}
-      const name = kebabCase(propName)
+      const name = toKebabCase(propName)
       const type = getPropType(typeof prop === 'function' ? prop : prop.type)
       component.props.push({
         name,
