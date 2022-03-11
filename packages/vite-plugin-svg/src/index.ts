@@ -2,6 +2,7 @@
 import { promises as fsp } from 'fs'
 import { createFilter } from '@rollup/pluginutils'
 import { optimize } from 'svgo'
+import { mergeDeep } from '@veno-ui/utils'
 
 // Types
 import type { Plugin, PluginOption, ResolvedConfig } from 'vite'
@@ -9,7 +10,12 @@ import type { Options, ResolvedOptions } from './types'
 import type { OptimizedSvg } from 'svgo'
 
 function resolveOptions (userOptions?: Options): ResolvedOptions {
-  return Object.assign({}, userOptions || {}) as ResolvedOptions
+  return mergeDeep({
+    plugins: [
+      { name: 'removeViewBox', active: true },
+      { name: 'removeDimensions', active: true },
+    ],
+  }, userOptions || {}) as ResolvedOptions
 }
 
 function svgToVue (id: string, raw: string, options: ResolvedOptions) {
