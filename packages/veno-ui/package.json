@@ -67,7 +67,7 @@
   "scripts": {
     "build:dist": "vite build -c vite.dist.config.ts && vite build -c vite.dist-min.config.ts",
     "build:lib": "vite build -c vite.lib.config.ts",
-    "build": "npm run build:lib && npm run build:dist"
+    "build": "pnpm run build:lib && pnpm run build:dist"
   },
   "dependencies": {
     "@veno-ui/utils": "workspace:*"

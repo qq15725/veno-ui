@@ -31,7 +31,7 @@ function getPropSource (filePath: string, tag: JSDocTag): string | undefined {
 
   switch (name) {
     case 'propsFactory':
-      return callExpression!.getArguments()[1]?.getText()
+      return callExpression!.getArguments()[1]?.getText()?.replace(/\'|\"/g, '')
     case 'genericComponent':
     case 'defineComponent':
       const res = filePath.match(/([\w|-]*)\.ts/)

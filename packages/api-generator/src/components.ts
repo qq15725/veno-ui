@@ -7,9 +7,11 @@ import { getPropsDescriptions } from './props-descriptions'
 import type { Options, Component } from './types'
 
 function getPropType (type: any): any {
-  if (Array.isArray(type)) return type.map(t => getPropType(t))
-  if (!type) return 'any'
-  return type.name.toLowerCase()
+  return Array.isArray(type)
+    ? type.map(getPropType)
+    : type
+      ? type.name.toLowerCase()
+      : 'any'
 }
 
 function parseFunctionParams (func: any) {

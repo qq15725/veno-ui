@@ -6,6 +6,9 @@ import { propsFactory } from '../../utils'
 import type { ExtractPropTypes } from 'vue'
 
 export const makeScrollbar = propsFactory({
+  /**
+   * @zh 美化滚动条
+   */
   beautifyScrollbar: {
     type: Boolean,
     default: true,

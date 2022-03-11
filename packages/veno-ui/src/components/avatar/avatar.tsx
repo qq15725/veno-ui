@@ -25,22 +25,22 @@ export const Avatar = defineComponent({
 
   props: {
     /**
-     * @zh 图片头像的图片值
+     * @zh 图像
      */
     image: String,
 
     /**
-     * @zh 图标头像的图标值
+     * @zh 图标
      */
     icon: String,
 
     /**
-     * @zh 文本头像的文本值
+     * @zh 文本
      */
     text: String,
 
     /**
-     * @zh 链接头像，可点击
+     * @zh 可点击
      */
     link: Boolean,
 

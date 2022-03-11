@@ -86,7 +86,7 @@ export default defineConfig(({ mode }) => {
                       type: typeof prop.type === 'object'
                         ? prop.type.join(' | ')
                         : prop.type,
-                      default: JSON.stringify(prop.default),
+                      default: JSON.stringify(prop.default, null, 2),
                       description: prop.descriptions.find((v: any) => v.language === 'zh')?.description
                     }
                   })

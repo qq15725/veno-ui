@@ -29,16 +29,43 @@ export const Button = defineComponent({
   directives: { Ripple },
 
   props: {
+    /**
+     * @zh 按钮的类型
+     */
     type: {
       type: String,
       default: 'button',
     },
+
+    /**
+     * @zh 图标按钮
+     */
     icon: [Boolean, String],
+
+    /**
+     * @zh 前置图标
+     */
     prependIcon: String,
+
+    /**
+     * @zh 后置图标
+     */
     appendIcon: String,
     stacked: Boolean,
+
+    /**
+     * @zh 按钮是否显示为块级
+     */
     block: Boolean,
+
+    /**
+     * @zh 按钮文字内容
+     */
     text: [String, Number],
+
+    /**
+     * @zh 按钮是否在点击时出现波纹
+     */
     ripple: {
       type: Boolean,
       default: true,

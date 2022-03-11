@@ -12,7 +12,7 @@ import { colorToOnColorHex } from '../../utils'
 import defaultOptions from './default-options'
 
 // Types
-import type { App, InjectionKey, Ref, ExtractPropTypes } from 'vue'
+import type { App, InjectionKey, Ref } from 'vue'
 import type { MaybeRef } from '../../utils'
 import type { Colors, BaseColors, BaseOnColors } from './colors'
 import type { HeadClient } from '@vueuse/head'
@@ -58,9 +58,17 @@ export interface ThemeInstance
   getTheme: (key: string) => InternalThemeDefinition
 }
 
+export interface ThemeProps
+{
+  theme?: string
+}
+
 export const ThemeKey: InjectionKey<ThemeInstance> = Symbol.for('veno-ui:theme')
 
 export const makeThemeProps = propsFactory({
+  /**
+   * @zh 设置主题
+   */
   theme: String,
 }, 'theme')
 
@@ -212,9 +220,7 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
   }
 }
 
-export function provideTheme (
-  props: MaybeRef<ExtractPropTypes<ReturnType<typeof makeThemeProps>>>
-) {
+export function provideTheme (props: MaybeRef<ThemeProps>) {
   getCurrentInstance('provideTheme')
   const theme = inject(ThemeKey, null)
   if (!theme) throw new Error('Could not find VenoUi theme injection')
