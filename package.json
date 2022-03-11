@@ -11,7 +11,8 @@
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "pnpm run docs:build && pnpm run docs:publish",
     "build": "pnpm -r run build",
-    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish %s\" --push --tag"
+    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag",
+    "publish": "pnpm -r publish"
   },
   "engines": {
     "node": ">=14"
