@@ -20,17 +20,17 @@ export const Code = defineComponent({
 
   props: {
     /**
-     * @zh: 需要高亮的代码
+     * @zh 需要高亮的代码
      */
     code: [String, Object],
 
     /**
-     * @zh: 背景颜色
+     * @zh 背景颜色
      */
     color: String,
 
     /**
-     * @zh: 显示代码语言
+     * @zh 显示代码语言
      */
     showLanguage: Boolean,
 
@@ -40,7 +40,7 @@ export const Code = defineComponent({
     showLineNumbers: Boolean,
 
     /**
-     * @zh: 高亮的行号
+     * @zh 高亮的行号
      */
     highlightedLineNumbers: Array as PropType<number[] | number[][]>,
 
@@ -50,7 +50,7 @@ export const Code = defineComponent({
     inline: Boolean,
 
     /**
-     * @zh: 代码语言
+     * @zh 代码语言
      */
     language: {
       type: String,

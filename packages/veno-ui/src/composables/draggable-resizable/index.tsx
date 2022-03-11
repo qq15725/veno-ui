@@ -30,7 +30,6 @@ export const makeDraggableResizableProps = propsFactory({
 
   /**
    * @zh 可调整尺寸的锚点
-   *
    */
   resizableAnchors: {
     type: Array as PropType<typeof SUPPORTED_DIRECTIONS[number][]>,
@@ -41,7 +40,7 @@ export const makeDraggableResizableProps = propsFactory({
    * @zh 显示调整尺寸每个锚点的控件
    */
   showResizableAnchor: Boolean,
-}, 'resize')
+}, 'draggable-resizable')
 
 export function useDraggableResizable (
   props: ExtractPropTypes<ReturnType<typeof makeDraggableResizableProps>>,

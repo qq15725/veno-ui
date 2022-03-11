@@ -31,9 +31,11 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
+    "@veno-ui/utils": "workspace:*",
     "veno-ui": "workspace:*"
   },
   "peerDependencies": {
+    "ts-morph": "^14.0.0",
     "vue": "^3.2.31"
   },
   "publishConfig": {

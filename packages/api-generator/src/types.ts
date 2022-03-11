@@ -1,14 +1,6 @@
-export interface Prop
+export interface Options
 {
-  name: string
-  source: string
-  type: string | string[]
-  default: any
-}
-
-export interface Event
-{
-  name: string
+  fileGlobs: string
 }
 
 export interface Component
@@ -18,4 +10,26 @@ export interface Component
   slots: any[]
   events: Event[]
   functions: any[]
+}
+
+export interface Event
+{
+  name: string
+}
+
+export interface Prop
+{
+  name: string
+  source: string
+  type: string | string[]
+  default: any
+  descriptions: PropDescription[]
+}
+
+export interface PropDescription
+{
+  language: 'zh'
+  name: string
+  description: string
+  source: string
 }

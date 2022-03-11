@@ -26,7 +26,6 @@ import type { PropType } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type AlertType = typeof alertTypes[number]
-export type Alert = InstanceType<typeof Alert>
 
 export type AlertSlots = MakeSlots<{
   prepend: []
@@ -184,3 +183,5 @@ export const Alert = genericComponent<new () => {
     }
   }
 })
+
+export type Alert = InstanceType<typeof Alert>

@@ -39,7 +39,9 @@ export default defineConfig(({ mode }) => {
   const root = process.cwd()
   Object.assign(process.env, loadEnv(mode, root))
   const md = createMarkdown()
-  const completedApi = getCompleteApi()
+  const completedApi = getCompleteApi({
+    fileGlobs: resolve('../veno-ui/src/**/*{.ts,.tsx}')
+  })
 
   return {
     resolve: {
@@ -84,14 +86,16 @@ export default defineConfig(({ mode }) => {
                       type: typeof prop.type === 'object'
                         ? prop.type.join(' | ')
                         : prop.type,
-                      default: JSON.stringify(prop.default)
+                      default: JSON.stringify(prop.default),
+                      description: prop.descriptions.find((v: any) => v.language === 'zh')?.description
                     }
                   })
                   const headersProp = JSON.stringify([
                     { text: '属性名', value: 'name', minWidth: '120', },
                     { text: '类型', value: 'type', minWidth: '120', },
                     { text: '默认值', value: 'default', minWidth: '200', },
-                    { text: '组合', value: 'source', minWidth: '120', }
+                    { text: '描述', value: 'description', minWidth: '120', },
+                    { text: '来源', value: 'source', minWidth: '120', }
                   ])
                   const itemsProp = JSON.stringify(props).replace(/'/g, '')
                   str += `### ${ name } Props\n<ve-table :pagination="{ perPage: 999 }" hide-pagination :headers='${ headersProp }' :items='${ itemsProp }'/>\n`

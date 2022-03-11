@@ -17,12 +17,12 @@ import type { ExtractPropTypes, ComponentPublicInstance, EffectScope, PropType, 
 
 export const makeActivatorProps = propsFactory({
   /**
-   * @zh: 激活器
+   * @zh 激活器
    */
   activator: [String, Object] as PropType<'parent' | string | Element | ComponentPublicInstance>,
 
   /**
-   * @zh: 激活器属性
+   * @zh 激活器属性
    */
   activatorProps: {
     type: Object as PropType<Record<string, any>>,
@@ -30,7 +30,7 @@ export const makeActivatorProps = propsFactory({
   },
 
   /**
-   * @zh: 点击时打开
+   * @zh 点击时打开
    */
   openOnClick: {
     type: Boolean,
@@ -38,12 +38,12 @@ export const makeActivatorProps = propsFactory({
   },
 
   /**
-   * @zh: 悬停时打开
+   * @zh 悬停时打开
    */
   openOnHover: Boolean,
 
   /**
-   * @zh: 获取焦点时打开
+   * @zh 获取焦点时打开
    */
   openOnFocus: {
     type: Boolean,
@@ -51,7 +51,7 @@ export const makeActivatorProps = propsFactory({
   },
 
   ...makeDelayProps(),
-})
+}, 'activator')
 
 type ActivatorProps = ExtractPropTypes<ReturnType<typeof makeActivatorProps>>
 
