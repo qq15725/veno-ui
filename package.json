@@ -1,5 +1,6 @@
 {
   "name": "@veno-ui/monorepo",
+  "version": "0.4.4",
   "private": true,
   "workspaces": [
     "packages/**"
@@ -9,7 +10,8 @@
     "docs:build": "pnpm run build-post --filter @veno-ui/docs",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "pnpm run docs:build && pnpm run docs:publish",
-    "build": "pnpm -r run build"
+    "build": "pnpm -r run build",
+    "release": "bumpp package.json packages/*/package.json --commit --push --tag"
   },
   "engines": {
     "node": ">=14"
@@ -19,8 +21,8 @@
     "@types/node": "^14.11.10",
     "@vitejs/plugin-vue": "^1.10.2",
     "@vitejs/plugin-vue-jsx": "^1.3.8",
+    "bumpp": "^7.1.1",
     "gh-pages": "^3.2.3",
-    "lerna": "^3.22.1",
     "sass": "^1.39.0",
     "typescript": "^4.5.5",
     "unbuild": "^0.6.9",
