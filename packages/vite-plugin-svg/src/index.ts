@@ -11,10 +11,12 @@ import type { OptimizedSvg } from 'svgo'
 
 function resolveOptions (userOptions?: Options): ResolvedOptions {
   return mergeDeep({
-    plugins: [
-      { name: 'removeViewBox', active: true },
-      { name: 'removeDimensions', active: true },
-    ],
+    svgoOptions: {
+      plugins: [
+        { name: 'removeViewBox', active: true },
+        { name: 'removeDimensions', active: true },
+      ]
+    },
   }, userOptions || {}) as ResolvedOptions
 }
 
