@@ -1,6 +1,6 @@
 # @veno-ui/vite-plugin-markdown
 
-markdown to vue
+[![NPM version](https://img.shields.io/npm/v/@veno-ui/vite-plugin-markdown?color=a1b858&label=)](https://www.npmjs.com/package/@veno-ui/vite-plugin-markdown)
 
 ## 使用
 
@@ -11,19 +11,14 @@ import Markdown from '@veno-ui/vite-plugin-markdown'
 
 export default defineConfig({
   plugins: [
-    Markdown(),
+    Markdown({
+      // 选项
+    }),
     Vue()
   ],
 })
 ```
 
-## Roadmap
+## 选项
 
-- [x] 解析 .md 文件，生成 Usage 用法。
-- [ ] 解析 .tsx 文件，生成 Props 参数。
-- [ ] 运行 Puppeteer 调用 Chrome 截图 .md 用例，生成 Preview 预览。
-
-## 参考
-
-- [Vite + React 组件开发实践](https://mp.weixin.qq.com/s/owJX7VwN9T9hEcp7TPseUA)
-- [一个好的组件应该是什么样的？](https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247495519&idx=1&sn=810ad0e6bde08e795bd7f933d8c6b53b&chksm=e92ad250de5d5b463ff175a616dee00daa9f28cca972ffbcb5f013940c6c13391c2a1e20cfd1&scene=21#wechat_redirect)
+所有可用选项看[这里](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown/src/types.ts) 。

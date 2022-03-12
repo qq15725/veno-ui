@@ -13,8 +13,9 @@ function resolveOptions (userOptions?: Options): ResolvedOptions {
   return mergeDeep({
     svgoOptions: {
       plugins: [
-        { name: 'removeViewBox', active: true },
-        { name: 'removeDimensions', active: true },
+        'preset-default',
+        'removeViewBox',
+        'removeDimensions',
       ]
     },
   }, userOptions || {}) as ResolvedOptions
