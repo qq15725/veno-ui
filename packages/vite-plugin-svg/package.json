@@ -1,6 +1,6 @@
 {
   "name": "@veno-ui/vite-plugin-svg",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Vite Svg Plugin for VenoUI",
   "keywords": [
     "vite-plugin",
