@@ -44,6 +44,7 @@
     "@types/svgo": "^2.6.1",
     "@veno-ui/utils": "workspace:*",
     "debug": "^4.3.3",
+    "fast-glob": "^3.2.11",
     "local-pkg": "^0.4.1",
     "magic-string": "^0.26.1",
     "svgo": "^2.8.0"

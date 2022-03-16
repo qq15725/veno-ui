@@ -4,13 +4,13 @@ import { toKebabCase, toPascalCase } from '@veno-ui/utils'
 import { promises as fsp } from 'fs'
 import { importModule, resolveModule } from 'local-pkg'
 import { optimize } from 'svgo'
+import { getIconData } from '@iconify/utils/lib/icon-set/get-icon'
+import { iconToSVG } from '@iconify/utils/lib/svg/build'
+import { defaults as DefaultIconCustomizations } from '@iconify/utils/lib/customisations'
 
 // Types
 import type { OptimizeOptions } from 'svgo'
 import type { IconifyJSON } from '@iconify/types'
-import { getIconData } from '@iconify/utils/lib/icon-set/get-icon'
-import { iconToSVG } from '@iconify/utils/lib/svg/build'
-import { defaults as DefaultIconCustomizations } from '@iconify/utils/lib/customisations'
 
 // Constants
 import { DISABLE_COMMENT, EXISTING_PKG } from './constants'
