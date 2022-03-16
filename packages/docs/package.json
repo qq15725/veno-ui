@@ -15,12 +15,13 @@
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.1.2",
     "@types/prismjs": "^1.16.6",
     "@veno-ui/api-generator": "workspace:*",
     "@veno-ui/markdown": "workspace:*",
     "@veno-ui/utils": "workspace:*",
-    "@veno-ui/vite-plugin-markdown": "workspace:*",
     "@veno-ui/vite-plugin-icons": "workspace:*",
+    "@veno-ui/vite-plugin-markdown": "workspace:*",
     "@vue/compiler-sfc": "^3.2.31",
     "@vueuse/head": "^0.7.5",
     "shiki": "^0.10.1",
