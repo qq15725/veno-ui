@@ -1,8 +1,8 @@
 // Utils
 import container from 'markdown-it-container'
 import { slugify } from '../utils'
-import { toPascalCase } from '@veno-ui/utils'
-import { basename, dirname, join } from 'path'
+import { getUid } from '@veno-ui/utils'
+import { dirname, join } from 'path'
 import { readFileSync } from 'fs'
 
 // Types
@@ -52,7 +52,7 @@ export const includePlugin: PluginSimple = md => {
         rows.forEach(cols => {
           if (!cols[i]) return
           const file = `./${ cols[i] }`
-          const component = toPascalCase(`ve-include-${ basename(file, '.md') }`)
+          const component = `VenoUiMarkdown${ getUid() }`
           imports.push(`import ${ component } from '${ file }'`)
           codes.push(
             `      <ve-col cols="12"><${ component } /></ve-col>`

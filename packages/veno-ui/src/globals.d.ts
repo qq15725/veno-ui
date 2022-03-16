@@ -61,7 +61,8 @@ declare global
   function parseInt(s: string | number, radix?: number): number
   function parseFloat(string: string | number): number
 
-  export const __VENO_UI_VERSION__: string
+  export const __UI_VERSION__: string
+  export const __UI_NAME__: string
 }
 
 declare module '@vue/runtime-core'

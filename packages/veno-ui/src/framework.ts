@@ -1,29 +1,27 @@
 // Utils
 import { reactive } from 'vue'
-import { mergeDeep } from './utils'
+import { UI_NAME, UI_VERSION } from './utils'
 
 // Composables
 import { createTheme, ThemeKey } from './composables/theme'
 import { createHighlighter, HighlighterKey } from './composables/highlighter'
-import { defaultSets, IconKey } from './composables/icon'
+import { createIcons, IconsKey } from './composables/icons'
 import { createDisplay, DisplayKey } from './composables/display'
 import { createDefaults, DefaultsKey } from './composables/defaults'
 import { MessageKey, NotificationKey } from './composables/message'
 import { createDraggableSortableGroup, DraggableSortableGroupKey } from './composables/draggable-sortable-group'
 import { createProviders, ProvidersKey } from './composables/providers'
 
-// Iconsets
-import { mdi, aliases } from './iconsets/mdi'
-
 // Types
 import type { App, ComponentPublicInstance, InjectionKey, Component } from 'vue'
 import type { HighlighterOptions } from './composables/highlighter'
 import type { ThemeOptions } from './composables/theme'
-import type { IconOptions } from './composables/icon'
+import type { IconsOptions } from './composables/icons'
 import type { DisplayOptions } from './composables/display'
 import type { DefaultsOptions } from './composables/defaults'
 
 export * from './composables'
+export * from './resolver'
 
 export interface VenoOptions
 {
@@ -34,11 +32,12 @@ export interface VenoOptions
   highlighter?: HighlighterOptions
   defaults?: DefaultsOptions
   theme?: ThemeOptions
-  icons?: IconOptions
+  icons?: IconsOptions
   display?: DisplayOptions
 }
 
-export const version = __VENO_UI_VERSION__
+export const name = UI_NAME
+export const version = UI_VERSION
 
 export const createVeno = (options: VenoOptions = {}) => {
   const install = (app: App) => {
@@ -46,7 +45,6 @@ export const createVeno = (options: VenoOptions = {}) => {
       componentPrefix = 'Ve',
       components = {},
       directives = {},
-      icons = {},
     } = options
 
     for (const key in components) {
@@ -62,14 +60,7 @@ export const createVeno = (options: VenoOptions = {}) => {
     app.provide(DraggableSortableGroupKey, createDraggableSortableGroup())
     app.provide(ThemeKey, createTheme(app, options.theme))
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
-    app.provide(IconKey, mergeDeep({
-      defaultSet: 'mdi',
-      sets: {
-        ...defaultSets,
-        mdi
-      },
-      aliases
-    }, icons))
+    app.provide(IconsKey, createIcons(options.icons))
     app.provide(ProvidersKey, createProviders(app, options.providers))
 
     // Vue's inject() can only be used in setup
@@ -87,7 +78,7 @@ export const createVeno = (options: VenoOptions = {}) => {
           return reactive({
             display: inject.call(this, DisplayKey),
             theme: inject.call(this, ThemeKey),
-            icons: inject.call(this, IconKey),
+            icons: inject.call(this, IconsKey),
             message: inject.call(this, MessageKey),
             notification: inject.call(this, NotificationKey),
             version,

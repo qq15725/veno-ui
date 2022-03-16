@@ -1,6 +1,6 @@
 // Utils
 import { inject, reactive, ref, toRefs, watchEffect } from 'vue'
-import { mergeDeep } from '../../utils'
+import { deepMerge } from '../../utils'
 
 // Globals
 import { IN_BROWSER, SUPPORTS_TOUCH } from '../../utils'
@@ -84,7 +84,7 @@ const defaultDisplayOptions: DisplayOptions = {
 }
 
 const parseDisplayOptions = (options: DisplayOptions = defaultDisplayOptions) => {
-  return mergeDeep(defaultDisplayOptions, options) as InternalDisplayOptions
+  return deepMerge(defaultDisplayOptions, options) as InternalDisplayOptions
 }
 
 // Cross-browser support as described in:

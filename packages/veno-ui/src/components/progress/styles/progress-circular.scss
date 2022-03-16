@@ -47,7 +47,7 @@
     transition: stroke-dasharray 0.6s ease-in-out, stroke-width 0s;
 
     // Icon svg
-    .ve-icon__svg > & {
+    .ve-icon > svg > & {
       stroke-opacity: var(--ve-medium-emphasis-opacity);
     }
   }

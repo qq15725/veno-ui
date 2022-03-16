@@ -1,12 +1,15 @@
 // Utils
 import { inject, ref } from 'vue'
+import { createSymbol } from '../../utils'
+
+// Highlighters
 import { prismjsHighlightCode } from './prismjs'
 import { shikiHighlightCode } from './shiki'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
-import type { Prismjs } from './prismjs'
-import type { Shiki } from './shiki'
+import { Prismjs } from './prismjs'
+import { Shiki } from './shiki'
 
 export interface HighlighterOptions
 {
@@ -20,7 +23,7 @@ export interface Highlighter
   highlight (code: string, language: string): Promise<string>
 }
 
-export const HighlighterKey: InjectionKey<Ref<Highlighter>> = Symbol.for('veno-ui:highlighter')
+export const HighlighterKey: InjectionKey<Ref<Highlighter>> = createSymbol('highlighter')
 
 export function createHighlighter (options?: HighlighterOptions): Ref<Highlighter> {
   return ref({

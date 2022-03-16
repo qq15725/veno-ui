@@ -1,5 +1,5 @@
 // Utils
-import { wrapInArray } from './utils'
+import { wrapInArray } from '@veno-ui/utils'
 import { createMarkdown as createBaseMarkdown } from '@veno-ui/markdown'
 
 // Types

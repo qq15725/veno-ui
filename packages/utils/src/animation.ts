@@ -1,6 +1,12 @@
 import { Box } from './box'
 
-/** @see https://stackoverflow.com/a/57876601/2074736 */
+/**
+ * 获取 el transform 后的盒模型
+ *
+ * @see https://stackoverflow.com/a/57876601/2074736
+ *
+ * @param el
+ */
 export function nullifyTransforms (el: HTMLElement): Box {
   const rect = el.getBoundingClientRect()
   const style = getComputedStyle(el)

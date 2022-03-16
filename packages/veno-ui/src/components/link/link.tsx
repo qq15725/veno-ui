@@ -22,8 +22,8 @@ export const Link = defineComponent({
       type: String,
       default: '$link',
     },
-    prependIcon: [Boolean, String],
-    appendIcon: [Boolean, String],
+    prependIcon: [Boolean, String, Object],
+    appendIcon: [Boolean, String, Object],
   },
 
   setup (props, { slots }) {
@@ -44,18 +44,18 @@ export const Link = defineComponent({
             props.prependIcon === true
               ? props.linkIcon
               : (
-                typeof props.prependIcon === 'string'
-                  ? props.prependIcon
-                  : undefined
+                typeof props.prependIcon === 'boolean'
+                  ? undefined
+                  : props.prependIcon
               )
           }
           append-icon={
             props.appendIcon === true
               ? props.linkIcon
               : (
-                typeof props.appendIcon === 'string'
-                  ? props.appendIcon
-                  : undefined
+                typeof props.appendIcon === 'boolean'
+                  ? undefined
+                  : props.appendIcon
               )
           }
         >

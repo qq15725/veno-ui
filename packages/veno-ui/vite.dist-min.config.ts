@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { version } from './package.json'
+import pkg from './package.json'
 
 export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
@@ -15,12 +15,12 @@ export default defineConfig(({ mode }) => {
         entry: 'src/entry.ts',
         name: 'VenoUi',
         formats: ['umd'],
-        fileName: () => 'veno-ui.min.js'
+        fileName: () => `${ pkg.name }.min.js`
       },
       rollupOptions: {
         external: ['vue'],
         output: {
-          assetFileNames: 'veno-ui.min.css',
+          assetFileNames: `${ pkg.name }.min.css`,
           globals: { vue: 'Vue' }
         }
       }
@@ -30,7 +30,8 @@ export default defineConfig(({ mode }) => {
       vueJsx({ optimize: false, enableObjectSlots: true }),
     ],
     define: {
-      __VENO_UI_VERSION__: JSON.stringify(version)
+      __UI_NAME__: JSON.stringify(pkg.name),
+      __UI_VERSION__: JSON.stringify(pkg.version),
     }
   }
 })

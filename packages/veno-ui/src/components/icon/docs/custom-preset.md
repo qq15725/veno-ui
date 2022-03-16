@@ -18,17 +18,17 @@ const veno = createVeno({
 export default veno
 ```
 
-使用 `@veno-ui/vite-plugin-svg` 。
+使用 `@veno-ui/vite-plugin-icons` 。
 
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import Svg from '@veno-ui/vite-plugin-svg'
+import Icons from '@veno-ui/vite-plugin-icons'
 
 export default defineConfig({
   plugins: [
-    Svg(),
+    Icons(),
     Vue()
   ],
 })

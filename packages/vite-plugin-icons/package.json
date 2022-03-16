@@ -1,13 +1,13 @@
 {
-  "name": "@veno-ui/vite-plugin-svg",
+  "name": "@veno-ui/vite-plugin-icons",
   "version": "0.4.7",
-  "description": "Vite Svg Plugin for VenoUI",
+  "description": "Vite icons plugin for Veno UI",
   "keywords": [
     "vite-plugin",
-    "vite-plugin-svg",
-    "veno-ui svg"
+    "vite-plugin-icons",
+    "veno-ui icons"
   ],
-  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-svg",
+  "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons",
   "bugs": {
     "url": "https://github.com/qq15725/veno-ui/issues"
   },
@@ -19,13 +19,15 @@
   "author": "wxm",
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "client.d.ts"
   ],
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
-    }
+    },
+    "./*": "./*"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -38,10 +40,18 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^4.1.2",
+    "@iconify/utils": "^1.0.23",
     "@types/svgo": "^2.6.1",
-    "@veno-ui/utils": "workspace:^0.4.4",
+    "@veno-ui/utils": "workspace:*",
+    "debug": "^4.3.3",
+    "local-pkg": "^0.4.1",
+    "magic-string": "^0.26.1",
     "svgo": "^2.8.0"
+  },
+  "devDependencies": {
+    "@iconify/types": "^1.0.12",
+    "@types/debug": "^4.1.7",
+    "veno-ui": "workspace:*"
   },
   "peerDependencies": {
     "vite": "^2.4.0"

@@ -1,5 +1,4 @@
 // Utils
-import { consoleWarn } from '../console'
 import { chunk, padEnd } from '../helpers'
 import { APCAcontrast } from './apca'
 import * as sRGB from './transform-srgb'
@@ -43,7 +42,7 @@ export function colorToInt (color: Color): ColorInt {
       c = c.split('').map(char => char + char).join('')
     }
     if (c.length !== 6) {
-      consoleWarn(`'${ color }' is not a valid rgb color`)
+      console.warn(`'${ color }' is not a valid rgb color`)
     }
     rgb = parseInt(c, 16)
   } else {
@@ -51,10 +50,10 @@ export function colorToInt (color: Color): ColorInt {
   }
 
   if (rgb < 0) {
-    consoleWarn(`Colors cannot be negative: '${ color }'`)
+    console.warn(`Colors cannot be negative: '${ color }'`)
     rgb = 0
   } else if (rgb > 0xffffff || isNaN(rgb)) {
-    consoleWarn(`'${ color }' is not a valid rgb color`)
+    console.warn(`'${ color }' is not a valid rgb color`)
     rgb = 0xffffff
   }
 
@@ -76,7 +75,7 @@ export function colorToHex (color: Color): string {
 /**
  * Converts HSVA to RGBA. Based on formula from https://en.wikipedia.org/wiki/HSL_and_HSV
  *
- * @param color HSVA color as an array [0-360, 0-1, 0-1, 0-1]
+ * @param hsva HSVA color as an array [0-360, 0-1, 0-1, 0-1]
  */
 export function HSVAtoRGBA (hsva: HSVA): RGBA {
   const { h, s, v, a } = hsva
@@ -93,7 +92,7 @@ export function HSVAtoRGBA (hsva: HSVA): RGBA {
 /**
  * Converts RGBA to HSVA. Based on formula from https://en.wikipedia.org/wiki/HSL_and_HSV
  *
- * @param color RGBA color as an array [0-255, 0-255, 0-255, 0-1]
+ * @param rgba RGBA color as an array [0-255, 0-255, 0-255, 0-1]
  */
 export function RGBAtoHSVA (rgba: RGBA): HSVA {
   if (!rgba) return { h: 0, s: 1, v: 1, a: 1 }

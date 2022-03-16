@@ -28,6 +28,9 @@ export interface SizeProps
 }
 
 export const makeSizeProps = propsFactory({
+  /**
+   * @zh 大小
+   */
   size: {
     type: [String, Number] as PropType<Size>,
     default: 'medium',

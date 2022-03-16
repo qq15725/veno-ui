@@ -7,47 +7,55 @@ import { convertToUnit, flattenFragments } from '../../utils'
 
 // Composables
 import { makeSizeProps, useSize } from '../../composables/size'
-import { makeTagProps } from '../../composables/tag'
-import { useIcon } from '../../composables/icon'
+import { makeIconProps, useIcon } from '../../composables/icon'
 import { useTextColor } from '../../composables/color'
-
-// Types
-import type { IconValue } from '../../composables/icon'
-import type { ComputedRef, PropType } from 'vue'
 
 export const Icon = defineComponent({
   name: 'VeIcon',
 
   props: {
+    /**
+     * @zh 图标颜色
+     */
     color: String,
+
+    /**
+     * @zh 是否为左侧图标
+     */
     left: Boolean,
+
+    /**
+     * @zh 是否为右侧图标
+     */
     right: Boolean,
-    icon: {
-      type: [String, Object] as PropType<IconValue>,
-    },
+
     ...makeSizeProps(),
-    ...makeTagProps({ tag: 'i' }),
+    ...makeIconProps(),
   },
 
   setup (props, { slots }) {
-    let slotIcon: ComputedRef<string | undefined> | undefined
-
-    if (slots.default) {
-      slotIcon = computed(() => {
-        const slot = slots.default?.()
-        if (!slot) return
-
-        return flattenFragments(slot).filter(node =>
-          node.children && typeof node.children === 'string'
-        )[0]?.children as string
-      })
-    }
-
-    const { iconData } = useIcon(slotIcon || props)
+    const { iconData } = useIcon(computed(() => {
+      if (!slots.default) return props
+      const slot = slots.default?.()
+      if (!slot) return props
+      const nodes = flattenFragments(slot)
+      if (typeof nodes?.[0]?.children === 'string') {
+        return {
+          tag: props.tag,
+          icon: nodes[0].children as string,
+        }
+      }
+      return {
+        tag: props.tag,
+        icon: () => slot,
+      }
+    }))
     const { sizeClasses } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
 
     return () => {
+      if (!iconData.value) return
+
       return (
         <iconData.value.component
           tag={ props.tag }

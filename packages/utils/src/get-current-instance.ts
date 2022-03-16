@@ -1,6 +1,6 @@
 // Utils
 import { getCurrentInstance as _getCurrentInstance } from 'vue'
-import { toKebabCase } from './helpers'
+import { toKebabCase } from './string'
 
 /**
  * 获取当前实例
@@ -13,7 +13,7 @@ export function getCurrentInstance (errorName: string, errorMessage?: string) {
 
   if (!vm) {
     throw new Error(
-      `[VenoUi] ${ errorName } ${ errorMessage || 'must be called from inside a setup function' }`
+      `${ errorName } ${ errorMessage || 'must be called from inside a setup function' }`
     )
   }
 

@@ -1,6 +1,6 @@
 // Utils
 import { computed, inject, provide, ref, unref } from 'vue'
-import { mergeDeep } from '../../utils'
+import { deepMerge } from '../../utils'
 
 // Types
 import type { InjectionKey, Ref, ComputedRef } from 'vue'
@@ -43,7 +43,7 @@ export function provideDefaults (
     const reset = unref(options?.reset)
     const root = unref(options?.root)
 
-    let properties = mergeDeep(providedDefaults.value, {
+    let properties = deepMerge(providedDefaults.value, {
       prev: injectedDefaults.value
     })
 
@@ -61,7 +61,7 @@ export function provideDefaults (
       return properties
     }
 
-    return mergeDeep(properties, properties.prev)
+    return deepMerge(properties, properties.prev)
   }) as ComputedRef<DefaultsInstance>
 
   provide(DefaultsKey, newDefaults)

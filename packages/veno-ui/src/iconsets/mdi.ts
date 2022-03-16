@@ -2,44 +2,40 @@
 import { h } from 'vue'
 
 // Components
-import { ClassIcon } from '../composables/icon'
+import { IconClass } from '../components/icon/icon-class'
 
 // Types
-import type { IconAliases, IconSet } from '../composables/icon'
+import type { IconsAliases, IconSetComponent } from '../composables/icons'
 
-const aliases: IconAliases = {
-  success: 'mdi-check-circle',
-  info: 'mdi-information',
-  warning: 'mdi-alert-circle',
-  error: 'mdi-close-circle',
+export const mdi: IconSetComponent = (props: any) => h(IconClass, { ...props, class: 'mdi' })
+
+export const aliases: IconsAliases = {
+  checkboxIndeterminate: 'mdi-minus-box',
+  checkboxOn: 'mdi-checkbox-marked',
+  checkboxOff: 'mdi-checkbox-blank-outline',
   close: 'mdi-close',
   clear: 'mdi-close',
   collapse: 'mdi-chevron-up',
-  expand: 'mdi-chevron-down',
-  menu: 'mdi-menu',
+  calendar: 'mdi-calendar-blank-outline',
   dropdown: 'mdi-chevron-down',
-  separator: 'mdi-slash-forward',
-  radioOn: 'mdi-radiobox-marked',
-  radioOff: 'mdi-radiobox-blank',
-  checkboxOn: 'mdi-checkbox-marked',
-  checkboxOff: 'mdi-checkbox-blank-outline',
-  checkboxIndeterminate: 'mdi-minus-box',
-  sort: 'mdi-arrow-up',
+  error: 'mdi-close-circle',
+  expand: 'mdi-chevron-down',
   filter: 'mdi-filter-variant',
-  prev: 'mdi-chevron-left',
-  prevDouble: 'mdi-chevron-double-left',
+  first: 'mdi-page-first',
+  info: 'mdi-information',
+  last: 'mdi-page-last',
+  link: 'mdi-link',
+  menu: 'mdi-menu',
   next: 'mdi-chevron-right',
   nextDouble: 'mdi-chevron-double-right',
-  first: 'mdi-page-first',
-  last: 'mdi-page-last',
   nodata: 'mdi-database-off-outline',
-  link: 'mdi-link',
-  calendar: 'mdi-calendar-blank-outline',
+  prev: 'mdi-chevron-left',
+  prevDouble: 'mdi-chevron-double-left',
+  radioOn: 'mdi-radiobox-marked',
+  radioOff: 'mdi-radiobox-blank',
+  separator: 'mdi-slash-forward',
+  sort: 'mdi-arrow-up',
+  success: 'mdi-check-circle',
   toggler: 'mdi-chevron-right',
+  warning: 'mdi-alert-circle',
 }
-
-const mdi: IconSet = {
-  component: (props: any) => h(ClassIcon, { ...props, class: 'mdi' }),
-}
-
-export { aliases, mdi }

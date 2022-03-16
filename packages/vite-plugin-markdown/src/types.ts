@@ -1,5 +1,5 @@
 import type { Options as MarkdownOptions, Markdown, PluginSimple, PluginWithOptions } from '@veno-ui/markdown'
-import type { FilterPattern } from '@rollup/pluginutils'
+import type { FilterPattern } from '@veno-ui/utils'
 
 export interface Options
 {

@@ -41,12 +41,12 @@ preset.md
 
 :::
 
-## 加载本地 svg 作为图标使用
+## 加载本地图标资源
 
-安装 svg 转组件的 vite 插件。
+安装 veno-ui icons
 
 ```shell
-$ npm i @veno-ui/vite-plugin-svg -D
+$ npm i @veno-ui/vite-plugin-icons -D
 ```
 
 配置插件。
@@ -55,11 +55,11 @@ $ npm i @veno-ui/vite-plugin-svg -D
 // vite.config.ts
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import Svg from '@veno-ui/vite-plugin-svg'
+import Icons from '@veno-ui/vite-plugin-icons'
 
 export default defineConfig({
   plugins: [
-    Svg(),
+    Icons(),
     // ... 
     Vue()
   ]

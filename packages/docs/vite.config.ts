@@ -13,27 +13,13 @@ import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from '@veno-ui/vite-plugin-markdown'
-import Svg from '@veno-ui/vite-plugin-svg'
+import Icons from '@veno-ui/vite-plugin-icons'
 // @ts-ignore
 import { VitePWA } from 'vite-plugin-pwa'
-
-// Types
-import type { ComponentResolver } from 'unplugin-vue-components'
+import pkg from 'veno-ui/package.json'
+import { VenoUiResolver } from 'veno-ui'
 
 const resolve = (...args: string[]) => path.resolve(__dirname, ...args)
-
-function VenoUiResolver (): ComponentResolver {
-  return {
-    type: 'component',
-    resolve: (name: string) => {
-      if (!name.match(/^Ve[A-Z]/)) return
-      return {
-        importName: name.replace('Ve', ''),
-        path: 'veno-ui/components'
-      }
-    }
-  }
-}
 
 export default defineConfig(({ mode }) => {
   const root = process.cwd()
@@ -113,9 +99,6 @@ export default defineConfig(({ mode }) => {
         }
       }),
 
-      // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-svg
-      Svg(),
-
       // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
       Layouts({
         layoutsDir: 'src/layouts',
@@ -163,6 +146,11 @@ export default defineConfig(({ mode }) => {
         include: [/\.vue$/, /\.md$/],
       }),
       VueJsx(),
+
+      // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-icons
+      Icons({
+        include: [/\.vue$/, /\.vue\?vue/, /.svg$/, /\.md$/, /\.md\?import/],
+      }),
 
       // https://github.com/antfu/unplugin-vue-components
       Components({
@@ -213,9 +201,8 @@ export default defineConfig(({ mode }) => {
       port: +(process.env.PORT ?? 8080),
     },
     define: {
-      __VENO_UI_VERSION__: JSON.stringify(
-        JSON.parse(fs.readFileSync('./package.json', 'utf-8')).version
-      )
+      __UI_NAME__: JSON.stringify(pkg.name),
+      __UI_VERSION__: JSON.stringify(pkg.version),
     }
   }
 })

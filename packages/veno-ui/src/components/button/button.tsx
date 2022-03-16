@@ -40,17 +40,17 @@ export const Button = defineComponent({
     /**
      * @zh 图标按钮
      */
-    icon: [Boolean, String],
+    icon: [Boolean, String, Object],
 
     /**
      * @zh 前置图标
      */
-    prependIcon: String,
+    prependIcon: [String, Object],
 
     /**
      * @zh 后置图标
      */
-    appendIcon: String,
+    appendIcon: [String, Object],
     stacked: Boolean,
 
     /**
@@ -111,7 +111,7 @@ export const Button = defineComponent({
       const Tag: any = link.isLink.value ? 'a' : props.tag
       const hasPrependIcon = !props.icon && props.prependIcon
       const hasPrependLoading = !hasPrependIcon && props.loading && (slots.default || props.text)
-      const hasIconOnly = props.icon && typeof props.icon === 'string'
+      const hasIconOnly = props.icon && typeof props.icon !== 'boolean'
       const hasDefault = !hasIconOnly && (slots.default || props.text)
       const hasAppendIcon = !props.icon && props.appendIcon
       return (

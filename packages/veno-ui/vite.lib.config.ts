@@ -7,7 +7,7 @@ import magicString from 'magic-string'
 // @ts-ignore
 import mkdirp from 'mkdirp'
 import dts from 'vite-plugin-dts'
-import { version } from './package.json'
+import pkg from './package.json'
 
 export default defineConfig(async ({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()))
@@ -100,7 +100,8 @@ export default defineConfig(async ({ mode }) => {
       },
     ],
     define: {
-      __VENO_UI_VERSION__: JSON.stringify(version)
+      __UI_NAME__: JSON.stringify(pkg.name),
+      __UI_VERSION__: JSON.stringify(pkg.version),
     }
   }
 })

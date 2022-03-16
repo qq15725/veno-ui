@@ -5,7 +5,7 @@ import { getCurrentInstance } from './get-current-instance'
 import type { VNode } from 'vue'
 
 /**
- * 使用渲染组合式函数
+ * 使用组合式渲染
  *
  * @param render 渲染回调函数
  */

@@ -38,8 +38,9 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^4.1.2",
-    "@veno-ui/markdown": "workspace:*"
+    "@veno-ui/utils": "workspace:*",
+    "@veno-ui/markdown": "workspace:*",
+    "local-pkg": "^0.4.1"
   },
   "peerDependencies": {
     "vite": "^2.4.0"

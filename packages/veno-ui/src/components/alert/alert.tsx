@@ -48,7 +48,7 @@ export const makeAlertProps = propsFactory({
     validator: (val: AlertType) => alertTypes.includes(val),
   },
   icon: {
-    type: [String, Boolean] as PropType<string | false>,
+    type: [String, Boolean, Object] as PropType<string | false>,
     default: true,
   },
   closable: Boolean,

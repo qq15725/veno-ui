@@ -1,5 +1,5 @@
 /**
- * 判断元素是否为 fixed 定位
+ * 判断 el 是否为 fixed 定位
  * 
  * @param el
  */

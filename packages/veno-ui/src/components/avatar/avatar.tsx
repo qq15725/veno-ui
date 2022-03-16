@@ -32,7 +32,7 @@ export const Avatar = defineComponent({
     /**
      * @zh 图标
      */
-    icon: String,
+    icon: [String, Object],
 
     /**
      * @zh 文本

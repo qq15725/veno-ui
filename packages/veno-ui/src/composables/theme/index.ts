@@ -4,7 +4,7 @@ import {
   IN_BROWSER,
   colorToRGB,
   getLuma,
-  mergeDeep,
+  deepMerge,
   propsFactory,
   getCurrentInstance,
 } from '../../utils'
@@ -77,7 +77,7 @@ const parseThemeOptions = (options: ThemeOptions = defaultOptions): InternalThem
     return { ...defaultOptions, isDisabled: true }
   }
 
-  return mergeDeep(defaultOptions, options) as InternalThemeOptions
+  return deepMerge(defaultOptions, options) as InternalThemeOptions
 }
 
 function createCssClass (selector: string, content: string[]) {
