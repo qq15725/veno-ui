@@ -69,7 +69,7 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
       return
     },
     async transform (source, id) {
-      if (!filter(id) || !id.startsWith(root)) return
+      if (!filter(id)) return
       try {
         if (isSVG(source)) {
           return await transformSVG(source, id, options)

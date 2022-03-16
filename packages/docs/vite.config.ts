@@ -149,7 +149,7 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-icons
       Icons({
-        include: [/\.vue$/, /\.vue\?vue/, /.svg$/, /\.md$/, /\.md\?import/],
+        include: [/\.vue$/, /\.vue\?vue/, /.svg$/, /\.md$/],
       }),
 
       // https://github.com/antfu/unplugin-vue-components
