@@ -13,6 +13,9 @@ export const ListSubheader = defineComponent({
   name: 'VeListSubheader',
 
   props: {
+    /**
+     * @zh 副标题颜色
+     */
     color: String,
     inset: Boolean,
 

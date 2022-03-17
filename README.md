@@ -42,19 +42,19 @@
 
 使用 npm
 
-```shell
+```sh
 npm i veno-ui
 ```
 
 使用 yarn
 
-```shell
+```sh
 yarn add veno-ui
 ```
 
 使用 pnpm
 
-```shell
+```sh
 pnpm add veno-ui
 ```
 
@@ -84,12 +84,12 @@ app.mount('#app')
 
 ## 生态
 
-| 项目               | 介绍                                     |
-| --------------------- |----------------------------------------|
-| [veno-admin] | Veno UI 构建的后台管理系统模板。                   |
-| [@veno-ui/markdown] | Markdown 渲染器，解析成 Veno UI 构成的 HTML。     |
-| [@veno-ui/vite-plugin-markdown] | 一个转化 Markdown 文件成 Veno UI 组件的 Vite 插件。 |
-| [@veno-ui/vite-plugin-icons] | 一个转化图标文件成 Veno UI 组件的 Vite 插件。         |
+| 项目               | 介绍                     |
+| --------------------- |------------------------|
+| [veno-admin] | Veno UI 构建的后台管理系统模板。   |
+| [@veno-ui/markdown] | Veno UI 的 Markdown 渲染器 |
+| [@veno-ui/vite-plugin-markdown] | 解析 Markdown 的 Vite 插件  |
+| [@veno-ui/vite-plugin-icons] | 按需加载图标的 Vite 插件        |
 
 [veno-admin]: https://github.com/qq15725/veno-admin
 [@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
@@ -104,19 +104,19 @@ app.mount('#app')
 
 安装依赖
 
-```shell
+```sh
 pnpm i
 ```
 
 编译所有插件和库
 
-```shell
+```sh
 pnpm run build
 ```
 
 运行开发环境（文档工程）
 
-```shell
+```sh
 pnpm run dev
 ```
 

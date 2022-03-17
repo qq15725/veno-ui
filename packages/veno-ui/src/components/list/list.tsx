@@ -61,7 +61,14 @@ export const List = genericComponent<new <T>() => {
   name: 'VeList',
 
   props: {
+    /**
+     * @zh 是否为导航列表
+     */
     nav: Boolean,
+
+    /**
+     * @zh 数据驱动时列表项数据
+     */
     items: Array as Prop<ListItemProps[]>,
     ...makeNestedProps({
       selectStrategy: 'leaf',

@@ -21,6 +21,16 @@ export interface Options
 
   /**
    * @zh 识别传入组件的属性值替换成图标组件
+   *
+   * @default [
+   *   { component: 'VeAlert', props: ['icon'] },
+   *   { component: 'VeAvatar', props: ['icon'] },
+   *   { component: 'VeButton', props: ['icon', 'prepend-icon', 'append-icon'] },
+   *   { component: 'VeIcon', props: ['icon'] },
+   *   { component: 'VeLink', props: ['icon', 'prepend-icon', 'append-icon'] },
+   *   { component: 'VeListItem', props: ['prepend-icon', 'append-icon'] },
+   *   { component: 'VeListGroup', props: ['collapse-icon', 'expand-icon'] },
+   * ]
    */
   replaces?: { component: string, props: string[] }[],
 
@@ -62,33 +72,4 @@ export interface ResolvedOptions extends Required<Options>
   root: string
   resolvedDirs: string[]
   globs: string[]
-}
-
-export interface ResolverOptions
-{
-  /**
-   * Prefix for resolving components name.
-   * Set '' to disable prefix.
-   *
-   * @default 've-icon'
-   */
-  prefix?: string | false
-
-  /**
-   * Icon collections aliases.
-   *
-   * The `aliases` keys are the `alias` and the values are the `name` for the collection.
-   *
-   * Instead using `<i-icon-park-abnormal />` we can use `<i-park-abnormal />` configuring:
-   * `aliases: { park: 'icon-park' }`
-   */
-  aliases?: Record<string, string>
-
-  /**
-   * Extension for the resolved id
-   * Set `jsx` for JSX components
-   *
-   * @default ''
-   */
-  extension?: string
 }

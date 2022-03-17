@@ -11,9 +11,11 @@ const DEFAULT_OPTIONS = {
   replaces: [
     { component: 'VeAlert', props: ['icon'] },
     { component: 'VeAvatar', props: ['icon'] },
-    { component: 'VeIcon', props: ['icon'] },
     { component: 'VeButton', props: ['icon', 'prepend-icon', 'append-icon'] },
+    { component: 'VeIcon', props: ['icon'] },
     { component: 'VeLink', props: ['icon', 'prepend-icon', 'append-icon'] },
+    { component: 'VeListItem', props: ['prepend-icon', 'append-icon'] },
+    { component: 'VeListGroup', props: ['collapse-icon', 'expand-icon'] },
   ],
   dirs: 'src/icons',
   extensions: ['svg'],

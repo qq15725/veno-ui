@@ -14,7 +14,14 @@ export const ListItemAvatar = genericComponent()({
   name: 'VeListItemAvatar',
 
   props: {
+    /**
+     * @zh 列表项头像是否居左
+     */
     left: Boolean,
+
+    /**
+     * @zh 列表项头像是否居右
+     */
     right: Boolean,
     ...makeTagProps(),
   },

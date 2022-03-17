@@ -54,24 +54,75 @@ export const ListItem = genericComponent<new () => {
   directives: { Ripple },
 
   props: {
+    /**
+     * @zh 是否激活
+     */
     active: Boolean,
+
+    /**
+     * @zh 激活时的颜色
+     */
     activeColor: {
       type: String,
       default: 'primary',
     },
+
+    /**
+     * @zh 激活时的 class
+     */
     activeClass: String,
+
+    /**
+     * @zh 后置头像
+     */
     appendAvatar: String,
-    appendIcon: String,
+
+    /**
+     * @zh 后置图标
+     */
+    appendIcon: [String, Object],
+
+    /**
+     * @zh 是否是一个链接
+     */
     link: Boolean,
+
+    /**
+     * @zh 前置头像
+     */
     prependAvatar: String,
-    prependIcon: String,
+
+    /**
+     * @zh 前置图标
+     */
+    prependIcon: [String, Object],
+
+    /**
+     * @zh 点击时是否有波纹
+     */
     ripple: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 副标题
+     */
     subtitle: String,
+
+    /**
+     * @zh 文本内容
+     */
     text: String,
+
+    /**
+     * @zh 标题
+     */
     title: String,
+
+    /**
+     * @zh 列表项的值
+     */
     value: null,
     ...makePaperProps({
       variant: 'text',

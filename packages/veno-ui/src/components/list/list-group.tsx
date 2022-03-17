@@ -34,15 +34,26 @@ export const ListGroup = genericComponent<new () => {
   name: 'VeListGroup',
 
   props: {
-    value: null,
+    /**
+     * @zh 列表组收起时的图标
+     */
     collapseIcon: {
-      type: String,
+      type: [String, Object],
       default: '$collapse',
     },
+
+    /**
+     * @zh 列表组展开时的图标
+     */
     expandIcon: {
-      type: String,
+      type: [String, Object],
       default: '$expand',
     },
+
+    /**
+     * @zh 列表组的值
+     */
+    value: null,
 
     ...makeTagProps(),
   },
