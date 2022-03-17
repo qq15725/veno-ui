@@ -1,1 +1,0 @@
-import{X as e,Y as o,Z as t}from"./vendor.960e51e5.js";const n={viewBox:"0 0 24 24"},s=t("path",{fill:"currentColor",d:"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"},null,-1),_=[s];function c(r,a){return e(),o("svg",n,_)}var l={name:"MdiClose",render:c};export{l as _};
