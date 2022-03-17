@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build-post": "vite-ssg build",
-    "dev": "vite --port 3022 --open"
+    "dev": "vite --port 3022"
   },
   "dependencies": {
     "pinia": "^2.0.11",

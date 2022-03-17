@@ -7,7 +7,7 @@ export interface Options
    * @zh 引入文件的过滤模式
    * @en RegExp or glob to match files to be transformed
    *
-   * @default [/\.vue$/, /\.vue\?vue/, /.svg$/]
+   * @default [/\.vue$/, /\.vue\?vue/]
    */
   include?: FilterPattern
 

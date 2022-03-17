@@ -46,7 +46,6 @@
     "fast-glob": "^3.2.11",
     "local-pkg": "^0.4.1",
     "magic-string": "^0.26.1",
-    "minimatch": "^5.0.1",
     "svgo": "^2.8.0"
   },
   "devDependencies": {

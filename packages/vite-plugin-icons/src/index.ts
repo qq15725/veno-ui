@@ -1,11 +1,11 @@
 // Utils
 import fg from 'fast-glob'
 import { promises as fsp } from 'fs'
-import { basename, extname } from 'path'
+import { basename, extname, relative } from 'path'
 import { createFilter } from '@veno-ui/utils'
 import { resolveOptions } from './options'
-import { findIcon, isSVG, matchGlobs } from './utils'
-import { ICONS_RE, ICONS_ID } from './constants'
+import { findIcon } from './utils'
+import { VIRTUAL_ID_RE } from './constants'
 import { transformComponent, transformSVG } from './transform'
 
 // Types
@@ -15,85 +15,55 @@ import type { Options } from './types'
 const root = process.cwd()
 
 export default function iconsPlugin (userOptions?: Options): PluginOption {
-  const options = resolveOptions(userOptions || {}, root)
-  const filter = createFilter(options.include, options.exclude)
-
-  const customIcons = new Map<string, string>()
-  const getCustomIconId = (path: string) => basename(path, extname(path))
-  const loadCustomIcon = async (path: string) => await fsp.readFile(path, 'utf8')
-  const loadCustomIcons = () => {
-    fg.sync(options.globs, {
-      ignore: ['node_modules'],
-      onlyFiles: true,
-      cwd: options.root,
-      absolute: true,
-    }).forEach(async path => {
-      customIcons.set(getCustomIconId(path), await loadCustomIcon(path))
-    })
-  }
+  const ctx = resolveOptions(userOptions || {}, root)
+  const filter = createFilter(ctx.include, ctx.exclude)
 
   return {
     name: '@veno-ui/vite-plugin-icons',
-    enforce: 'post',
-    configResolved () {
-      loadCustomIcons()
-    },
-    configureServer (server) {
-      server.watcher.on('unlink', path => {
-        if (!matchGlobs(path, options.globs)) return
-        customIcons.delete(getCustomIconId(path))
-      })
-      server.watcher.on('add', async path => {
-        if (!matchGlobs(path, options.globs)) return
-        customIcons.set(getCustomIconId(path), await loadCustomIcon(path))
-      })
-    },
     resolveId (id) {
-      return ICONS_ID === id || ICONS_RE.test(id) ? id : null
+      return VIRTUAL_ID_RE.test(id) ? id : null
     },
     async load (id) {
-      if (ICONS_RE.test(id)) {
-        id = id.replace(ICONS_RE, '')
-        const [set, name] = id.split('/', 2)
-        if (set && !name && customIcons.has(set)) {
-          const source = customIcons.get(set)!
-          return {
-            code: isSVG(source)
-              ? await transformSVG(source, id, options)
-              : source,
-            map: { version: 3, mappings: '', sources: [] } as any,
-          }
-        } else if (set && name) {
-          let source = await findIcon(set, name)
-          if (!source) throw new Error(`Icon \`${ set }:${ name }\` not found`)
-          return {
-            code: await transformSVG(source, `${ set }-${ name }`, options),
-            map: { version: 3, mappings: '', sources: [] } as any,
-          }
-        }
-      } else if (id === ICONS_ID) {
+      const matched = id.match(VIRTUAL_ID_RE)
+      if (!matched) return
+      if (!matched[1]) {
+        const paths = fg.sync(ctx.globs, {
+          ignore: ['node_modules'],
+          onlyFiles: true,
+          cwd: ctx.root,
+          absolute: true,
+        })
         const code: any = []
-        for (const id in customIcons.entries()) {
-          code.push(`  '${ id }': defineAsyncComponent(() => import('${ ICONS_ID }/${ id }')),`)
+        for (const i in paths) {
+          const path = paths[i]
+          const id = basename(path, extname(path))
+          code.push(`  '${ id }': defineAsyncComponent(() => import('/${ relative(ctx.root, path) }')),`)
         }
         return {
           code: `import { defineAsyncComponent } from 'vue'\nexport default {\n${ code.join('\n') }\n}`,
           map: { version: 3, mappings: '', sources: [] } as any,
         }
+      } else {
+        const [_, set, name] = matched[1].split('/', 3)
+        let source = await findIcon(set, name)
+        if (!source) throw new Error(`Icon \`${ set }:${ name }\` not found`)
+        return {
+          code: await transformSVG(source, `${ set }-${ name }`, ctx),
+          map: { version: 3, mappings: '', sources: [] } as any,
+        }
       }
-      return
     },
     async transform (source, id) {
-      if (!filter(id)) return
       try {
-        if (isSVG(source)) {
-          return await transformSVG(source, id, options)
-        } else {
-          return await transformComponent(source, id, options)
+        if (/\.svg(\?component)?$/.test(id)) {
+          return await transformSVG(await fsp.readFile(id, 'utf-8'), id, ctx)
+        } else if (filter(id)) {
+          return await transformComponent(source, id, ctx)
         }
       } catch (e: any) {
         this.error(e)
       }
-    },
+      return
+    }
   }
 }

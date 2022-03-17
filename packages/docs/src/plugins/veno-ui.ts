@@ -5,6 +5,7 @@ import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 import * as directives from 'veno-ui/directives'
 import * as providers from 'veno-ui/providers'
+import aliases from '~veno-ui/icons'
 
 // highlighter
 import { getHighlighter, setCDN } from 'shiki'
@@ -18,6 +19,9 @@ export const install: InstallPlugin = ({ app }) => {
   const veno = createVeno({
     directives,
     providers,
+    icons: {
+      aliases,
+    },
     highlighter: {
       type: 'shiki',
       shiki: getHighlighter({

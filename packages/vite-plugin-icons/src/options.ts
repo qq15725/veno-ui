@@ -7,7 +7,7 @@ import { join, resolve } from 'path'
 import type { Options, ResolvedOptions } from './types'
 
 const DEFAULT_OPTIONS = {
-  include: [/\.vue$/, /\.vue\?vue/, /.svg$/],
+  include: [/\.vue$/, /\.vue\?vue/],
   exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/],
   replaces: [
     { component: 'VeAlert', props: ['icon'] },

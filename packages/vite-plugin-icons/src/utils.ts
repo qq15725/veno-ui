@@ -1,7 +1,6 @@
 // Utils
 import createDebugger from 'debug'
 import { toKebabCase, toPascalCase } from '@veno-ui/utils'
-import minimatch from 'minimatch'
 import { promises as fsp } from 'fs'
 import { importModule, resolveModule } from 'local-pkg'
 import { optimize } from 'svgo'
@@ -23,18 +22,6 @@ export const debug = createDebugger('@veno-ui/vite-plugin-icons')
  */
 export function slash (str: string) {
   return str.replace(/\\/g, "/")
-}
-
-/**
- * @param filepath
- * @param globs
- */
-export function matchGlobs (filepath: string, globs: string[]) {
-  for (const glob of globs) {
-    if (minimatch(slash(filepath), glob))
-      return true
-  }
-  return false
 }
 
 
@@ -62,15 +49,6 @@ export async function compileTemplate (source: string, id: string) {
   code = code.replace(/^export /gm, '')
   code += `\n\nexport default { name: '${ toPascalCase(id) }', render }`
   return DISABLE_COMMENT + '\n' + code
-}
-
-/**
- * 是 svg 文件
- *
- * @param code
- */
-export function isSVG (code: string) {
-  return /^<svg|<\?xml/.test(code)
 }
 
 /**
