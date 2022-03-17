@@ -41,18 +41,19 @@
   },
   "dependencies": {
     "@iconify/utils": "^1.0.23",
-    "@types/svgo": "^2.6.1",
     "@veno-ui/utils": "workspace:*",
     "debug": "^4.3.3",
     "fast-glob": "^3.2.11",
     "local-pkg": "^0.4.1",
     "magic-string": "^0.26.1",
+    "minimatch": "^5.0.1",
     "svgo": "^2.8.0"
   },
   "devDependencies": {
     "@iconify/types": "^1.0.12",
     "@types/debug": "^4.1.7",
-    "veno-ui": "workspace:*"
+    "@types/minimatch": "^3.0.5",
+    "@types/svgo": "^2.6.1"
   },
   "peerDependencies": {
     "vite": "^2.4.0"

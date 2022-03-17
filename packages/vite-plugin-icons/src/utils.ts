@@ -1,6 +1,7 @@
 // Utils
 import createDebugger from 'debug'
 import { toKebabCase, toPascalCase } from '@veno-ui/utils'
+import minimatch from 'minimatch'
 import { promises as fsp } from 'fs'
 import { importModule, resolveModule } from 'local-pkg'
 import { optimize } from 'svgo'
@@ -16,6 +17,26 @@ import type { IconifyJSON } from '@iconify/types'
 import { DISABLE_COMMENT, EXISTING_PKG } from './constants'
 
 export const debug = createDebugger('@veno-ui/vite-plugin-icons')
+
+/**
+ * @param str
+ */
+export function slash (str: string) {
+  return str.replace(/\\/g, "/")
+}
+
+/**
+ * @param filepath
+ * @param globs
+ */
+export function matchGlobs (filepath: string, globs: string[]) {
+  for (const glob of globs) {
+    if (minimatch(slash(filepath), glob))
+      return true
+  }
+  return false
+}
+
 
 /**
  * 导入 Vue SFC 编译器

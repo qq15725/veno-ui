@@ -4,7 +4,7 @@ import { promises as fsp } from 'fs'
 import { basename, extname } from 'path'
 import { createFilter } from '@veno-ui/utils'
 import { resolveOptions } from './options'
-import { findIcon, isSVG } from './utils'
+import { findIcon, isSVG, matchGlobs } from './utils'
 import { ICONS_RE, ICONS_ID } from './constants'
 import { transformComponent, transformSVG } from './transform'
 
@@ -19,15 +19,16 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
   const filter = createFilter(options.include, options.exclude)
 
   const customIcons = new Map<string, string>()
-
+  const getCustomIconId = (path: string) => basename(path, extname(path))
+  const loadCustomIcon = async (path: string) => await fsp.readFile(path, 'utf8')
   const loadCustomIcons = () => {
     fg.sync(options.globs, {
       ignore: ['node_modules'],
       onlyFiles: true,
       cwd: options.root,
       absolute: true,
-    }).forEach(async id => {
-      customIcons.set(basename(id, extname(id)), await fsp.readFile(id, 'utf8'))
+    }).forEach(async path => {
+      customIcons.set(getCustomIconId(path), await loadCustomIcon(path))
     })
   }
 
@@ -36,6 +37,16 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
     enforce: 'post',
     configResolved () {
       loadCustomIcons()
+    },
+    configureServer (server) {
+      server.watcher.on('unlink', path => {
+        if (!matchGlobs(path, options.globs)) return
+        customIcons.delete(getCustomIconId(path))
+      })
+      server.watcher.on('add', async path => {
+        if (!matchGlobs(path, options.globs)) return
+        customIcons.set(getCustomIconId(path), await loadCustomIcon(path))
+      })
     },
     resolveId (id) {
       return ICONS_ID === id || ICONS_RE.test(id) ? id : null

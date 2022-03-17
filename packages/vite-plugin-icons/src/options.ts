@@ -1,5 +1,6 @@
 // Utils
 import { deepMerge, wrapInArray } from '@veno-ui/utils'
+import { slash } from './utils'
 import { join, resolve } from 'path'
 
 // Types
@@ -26,10 +27,6 @@ const DEFAULT_OPTIONS = {
       'removeDimensions',
     ]
   },
-}
-
-function slash (str: string) {
-  return str.replace(/\\/g, "/")
 }
 
 export function resolveOptions (userOptions: Options, root: string) {
