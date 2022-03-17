@@ -18,20 +18,24 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
   const options = resolveOptions(userOptions || {}, root)
   const filter = createFilter(options.include, options.exclude)
 
-  const icons: Record<string, string> = {}
+  const customIcons = new Map<string, string>()
+
+  const loadCustomIcons = () => {
+    fg.sync(options.globs, {
+      ignore: ['node_modules'],
+      onlyFiles: true,
+      cwd: options.root,
+      absolute: true,
+    }).forEach(async id => {
+      customIcons.set(basename(id, extname(id)), await fsp.readFile(id, 'utf8'))
+    })
+  }
 
   return {
     name: '@veno-ui/vite-plugin-icons',
     enforce: 'post',
-    configureServer () {
-      fg.sync(options.globs, {
-        ignore: ['node_modules'],
-        onlyFiles: true,
-        cwd: options.root,
-        absolute: true,
-      }).forEach(async id => {
-        icons[basename(id, extname(id))] = await fsp.readFile(id, 'utf8')
-      })
+    configResolved () {
+      loadCustomIcons()
     },
     resolveId (id) {
       return ICONS_ID === id || ICONS_RE.test(id) ? id : null
@@ -40,8 +44,8 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
       if (ICONS_RE.test(id)) {
         id = id.replace(ICONS_RE, '')
         const [set, name] = id.split('/', 2)
-        if (set && !name && set in icons) {
-          const source = icons[set]
+        if (set && !name && customIcons.has(set)) {
+          const source = customIcons.get(set)!
           return {
             code: isSVG(source)
               ? await transformSVG(source, id, options)
@@ -58,7 +62,7 @@ export default function iconsPlugin (userOptions?: Options): PluginOption {
         }
       } else if (id === ICONS_ID) {
         const code: any = []
-        for (const id in icons) {
+        for (const id in customIcons.entries()) {
           code.push(`  '${ id }': defineAsyncComponent(() => import('${ ICONS_ID }/${ id }')),`)
         }
         return {

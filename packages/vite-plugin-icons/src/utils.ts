@@ -49,7 +49,7 @@ export async function compileTemplate (source: string, id: string) {
  * @param code
  */
 export function isSVG (code: string) {
-  return /^<svg/.test(code)
+  return /^<svg|<\?xml/.test(code)
 }
 
 /**
