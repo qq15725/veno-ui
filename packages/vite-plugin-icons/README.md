@@ -76,4 +76,75 @@ export default defineConfig({
 })
 ```
 
-所有可用选项看[这里](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons/src/core/types.ts) 。
+## 可用选项
+
+所有可用选项看[types.ts](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons/src/types.ts) 。
+
+
+```ts
+export interface Options
+{
+  /**
+   * @zh 引入文件的过滤模式
+   * @en RegExp or glob to match files to be transformed
+   *
+   * @default [/\.vue$/, /\.vue\?vue/, /.svg$/]
+   */
+  include?: FilterPattern
+
+  /**
+   * @zh 排除文件的过滤模式
+   * @en RegExp or glob to match files to NOT be transformed
+   *
+   * @default [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/]
+   */
+  exclude?: FilterPattern
+
+  /**
+   * @zh 识别传入组件的属性值替换成图标组件
+   *
+   * @default [
+   *   { component: 'VeAlert', props: ['icon'] },
+   *   { component: 'VeAvatar', props: ['icon'] },
+   *   { component: 'VeButton', props: ['icon', 'prepend-icon', 'append-icon'] },
+   *   { component: 'VeIcon', props: ['icon'] },
+   *   { component: 'VeLink', props: ['icon', 'prepend-icon', 'append-icon'] },
+   *   { component: 'VeListItem', props: ['prepend-icon', 'append-icon'] },
+   *   { component: 'VeListGroup', props: ['collapse-icon', 'expand-icon'] },
+   * ]
+   */
+  replaces?: { component: string, props: string[] }[],
+
+  /**
+   * @zh 用于搜索图标的相对目录路径
+   * @en Relative paths to the directory to search for icons
+   *
+   * @default 'src/icons'
+   */
+  dirs?: string | string[]
+
+  /**
+   * @zh 图标的有效文件扩展名
+   * @en Valid file extensions for icons
+   *
+   * @default ['svg']
+   */
+  extensions?: string | string[]
+
+  /**
+   * @zh 搜索子目录
+   * @en Search for subdirectories
+   *
+   * @default true
+   */
+  deep?: boolean
+
+  /**
+   * @zh 传递给 svgo 的选项
+   * @en Options passed to Svgo
+   *
+   * @default { plugins: ['preset-default', 'removeViewBox', 'removeDimensions'] }
+   */
+  svgoOptions?: OptimizeOptions
+}
+```
