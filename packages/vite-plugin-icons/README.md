@@ -35,7 +35,7 @@
 
 ### 加载自定义图标目录
 
-默认自动加载 icons 目录下的所有 svg 结尾的文件，使用 `~veno-ui/icons` 加载。
+默认自动加载 `src/icons` 目录下的所有 `svg` 结尾的文件，使用 `~veno-ui/icons` 加载。
 
 ```ts
 import { createVeno } from 'veno-ui'
@@ -52,7 +52,7 @@ const veno = createVeno({
 ### 插件
 
 ```sh
-> npm i -D @veno-ui/vite-plugin-icons
+npm i -D @veno-ui/vite-plugin-icons
 ```
 
 ### 图标数据

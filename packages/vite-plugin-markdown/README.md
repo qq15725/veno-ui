@@ -1,4 +1,4 @@
-# @veno-ui/vite-plugin-markdown
+# Veno UI 的 Vite Markdown 插件
 
 [![NPM version](https://img.shields.io/npm/v/@veno-ui/vite-plugin-markdown?color=a1b858&label=)](https://www.npmjs.com/package/@veno-ui/vite-plugin-markdown)
 
@@ -21,4 +21,4 @@ export default defineConfig({
 
 ## 选项
 
-所有可用选项看[这里](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown/src/types.ts) 。
+所有可用选项看[types.ts](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown/src/types.ts) 。
