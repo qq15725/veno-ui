@@ -29,7 +29,7 @@ $ npm i -D @mdi/font
 import '@mdi/font/css/materialdesignicons.css'
 ```
 
-## 使用按需图标插件
+## 使用图标插件（推荐）
 
 [@veno-ui/vite-plugin-icons](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons) 文档。
 
