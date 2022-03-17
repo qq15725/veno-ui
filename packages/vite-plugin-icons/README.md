@@ -1,4 +1,4 @@
-# Veno UI 的 `Vite` 图标插件
+# Veno UI 的 Vite 图标插件
 
 [![NPM version](https://img.shields.io/npm/v/@veno-ui/vite-plugin-icons?color=a1b858&label=)](https://www.npmjs.com/package/@veno-ui/vite-plugin-icons)
 
@@ -12,6 +12,10 @@
 - 📲 自动导入 - 直接在模板中使用，匹配组件属性自动替换。
 
 ## 用法
+
+### 模板中组件属性的静态替换
+
+仅支持字符串的静态替换
 
 ```vue
 <ve-button icon="mdi-close" />
@@ -27,6 +31,20 @@
 <template>
   <ve-button :icon="__veno_ui_icons_0" />
 </template>
+```
+
+### 加载自定义图标目录
+
+默认自动加载 icons 目录下的所有 svg 结尾的文件，使用 `~veno-ui/icons` 加载。
+
+```ts
+import { createVeno } from 'veno-ui'
+import icons from '~veno-ui/icons'
+const veno = createVeno({
+  icons: {
+    aliases: icons,
+  },
+})
 ```
 
 ## 安装
