@@ -1,6 +1,6 @@
 // Utils
 import MagicString from 'magic-string'
-import { toSnakeCase } from '@veno-ui/utils'
+import { toSnakeCase, toKebabCase } from '@veno-ui/utils'
 import { optimizeSVG, compileTemplate, findIcon } from './utils'
 import { DISABLE_COMMENT, VIRTUAL_ID } from './constants'
 import { relative } from 'path'
@@ -14,7 +14,7 @@ export async function transformComponent (source: string, id: string, ctx: Resol
   for (const i in ctx.replaces) {
     const { component, props } = ctx.replaces[i]
     const componentRE = `_component_${ toSnakeCase(component) }`
-    const propRE = `(${ props.map(v => v.indexOf('-') > -1 ? `"${ v }"` : v).join('|') })`
+    const propRE = `(${ props.map(toKebabCase).map(v => v.indexOf('-') > -1 ? `"${ v }"` : v).join('|') })`
     const matchAllRE = new RegExp(
       `_createVNode\\(${componentRE}, .*?{.*?${propRE}: (.+?)([,|}].*?\\))`,
       'gs'

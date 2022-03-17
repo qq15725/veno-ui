@@ -3,7 +3,7 @@ import { inject } from 'vue'
 import { createSymbol, deepMerge } from '../../utils'
 
 // Iconsets
-import { mdi, aliases } from '../../iconsets/mdi-svg'
+import { mdi, aliases } from '../../iconsets/mdi'
 
 // Components
 import { IconClass } from '../../components/icon/icon-class'

@@ -23,16 +23,47 @@ export const Badge = defineComponent({
   inheritAttrs: false,
 
   props: {
+    /**
+     * @zh 标记是否存在边框
+     */
     bordered: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 标记的颜色
+     */
     color: String,
+
+    /**
+     * @zh 标记的内容
+     */
     content: [Number, String],
+
+    /**
+     * @zh 标记是否显示为点
+     */
     dot: Boolean,
+
+    /**
+     * @zh 是否为浮动的标记
+     */
     floating: Boolean,
-    icon: String,
+
+    /**
+     * @zh 标记的图标
+     */
+    icon: [String, Object],
+
+    /**
+     * @zh 是否为内联的标记
+     */
     inline: Boolean,
+
+    /**
+     * @zh 标记的位置
+     */
     location: {
       type: String,
       default: 'top-right',
@@ -45,13 +76,33 @@ export const Badge = defineComponent({
         )
       },
     },
+
+    /**
+     * @zh 标记的数量最大值
+     */
     max: [Number, String],
+
+    /**
+     * @zh 标记的数量
+     */
     modelValue: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 标记的 X 偏移值
+     */
     offsetX: [Number, String],
+
+    /**
+     * @zh 标记的 Y 偏移值
+     */
     offsetY: [Number, String],
+
+    /**
+     * @zh 标记的文本颜色
+     */
     textColor: String,
     ...makeShapeProps(),
     ...makeTagProps(),

@@ -14,6 +14,9 @@ export const ButtonGroup = defineComponent({
   name: 'VeButtonGroup',
 
   props: {
+    /**
+     * @zh 是否有分割线
+     */
     divided: Boolean,
     ...makeDisabledProps(),
     ...makePaperProps({

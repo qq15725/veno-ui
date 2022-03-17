@@ -41,18 +41,53 @@ export type InputControlSlots = MakeSlots<{
 }>
 
 export const makeInputControlProps = propsFactory({
-  prependInnerIcon: String,
-  prefix: String,
-  prefixIcon: String,
-  suffix: String,
-  suffixIcon: String,
+  /**
+   * @zh 后置内联图标
+   */
+  appendInnerIcon: [String, Object],
+
+  /**
+   * @zh 是否可清除
+   */
   clearable: Boolean,
+
+  /**
+   * @zh 清除图标
+   */
   clearIcon: {
-    type: String,
+    type: [String, Object],
     default: '$clear',
   },
-  appendInnerIcon: String,
+
+  /**
+   * @zh 是否禁用
+   */
   disabled: Boolean,
+
+  /**
+   * @zh 前置内联图标
+   */
+  prependInnerIcon: [String, Object],
+
+  /**
+   * @zh 前缀
+   */
+  prefix: String,
+
+  /**
+   * @zh 前缀图标
+   */
+  prefixIcon: [String, Object],
+
+  /**
+   * @zh 后缀
+   */
+  suffix: String,
+
+  /**
+   * @zh 后缀图标
+   */
+  suffixIcon: [String, Object],
   ...makeVariantProps({
     variant: 'contained',
   } as const),

@@ -38,24 +38,47 @@ export function filterAlertProps (props: Record<string, unknown>) {
 }
 
 export const makeAlertProps = propsFactory({
+  /**
+   * @zh 警告信息是否显示
+   */
   modelValue: {
     type: Boolean,
     default: true,
   },
+
+  /**
+   * @zh 警告信息的类型
+   */
   type: {
     type: String as PropType<AlertType>,
     default: 'info',
     validator: (val: AlertType) => alertTypes.includes(val),
   },
+
+  /**
+   * @zh 警告信息的图标
+   */
   icon: {
     type: [String, Boolean, Object] as PropType<string | false>,
     default: true,
   },
+
+  /**
+   * @zh 警告信息是否可关闭
+   */
   closable: Boolean,
+
+  /**
+   * @zh 警告信息的关闭图标
+   */
   closeIcon: {
-    type: String,
+    type: [String, Object],
     default: '$close',
   },
+
+  /**
+   * @zh 警告信息的关闭文本
+   */
   closeText: String,
   ...makeTransitionProps({
     transition: { component: FadeInExpandTransition },

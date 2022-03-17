@@ -22,15 +22,22 @@ export interface Options
   /**
    * @zh 识别传入组件的属性值替换成图标组件
    *
-   * @default [
-   *   { component: 'VeAlert', props: ['icon'] },
-   *   { component: 'VeAvatar', props: ['icon'] },
-   *   { component: 'VeButton', props: ['icon', 'prepend-icon', 'append-icon'] },
-   *   { component: 'VeIcon', props: ['icon'] },
-   *   { component: 'VeLink', props: ['icon', 'prepend-icon', 'append-icon'] },
-   *   { component: 'VeListItem', props: ['prepend-icon', 'append-icon'] },
-   *   { component: 'VeListGroup', props: ['collapse-icon', 'expand-icon'] },
-   * ]
+   * @default
+   *
+   *  [
+   *     { component: 'VeAlert', props: ['icon', 'closeIcon'] },
+   *     { component: 'VeAvatar', props: ['icon'] },
+   *     { component: 'VeBadge', props: ['icon'] },
+   *     { component: 'VeButton', props: ['icon', 'prependIcon', 'appendIcon'] },
+   *     { component: 'VeIcon', props: ['icon'] },
+   *     { component: 'VeLink', props: ['icon', 'prependIcon', 'appendIcon'] },
+   *     { component: 'VeListItem', props: ['prependIcon', 'appendIcon'] },
+   *     { component: 'VeListGroup', props: ['collapseIcon', 'expandIcon'] },
+   *     { component: 'VeFormControl', props: ['appendIcon'] },
+   *     { component: 'VeInput', props: ['appendIcon', 'appendInnerIcon', 'clearIcon', 'prependInnerIcon', 'prefixIcon', 'suffixIcon'] },
+   *     { component: 'VeSelect', props: ['appendIcon', 'appendInnerIcon', 'clearIcon', 'prependInnerIcon', 'prefixIcon', 'suffixIcon'] },
+   *     { component: 'VeDatePicker', props: ['appendIcon', 'appendInnerIcon', 'clearIcon', 'prependInnerIcon', 'prefixIcon', 'suffixIcon'] },
+   *   ]
    */
   replaces?: { component: string, props: string[] }[],
 

@@ -64,9 +64,9 @@ export const FormControl = genericComponent<new () => {
 
   props: {
     /**
-     * @zh 前置图标
+     * @zh 后置图标
      */
-    appendIcon: String,
+    appendIcon: [String, Object],
 
     /**
      * @zh 布局方向

@@ -132,7 +132,7 @@ export const Input = genericComponent<new () => {
     },
 
     /**
-     * @zh 宽
+     * @zh 宽度值
      */
     width: [String, Number],
 
