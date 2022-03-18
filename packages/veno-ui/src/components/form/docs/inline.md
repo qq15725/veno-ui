@@ -2,6 +2,8 @@
 
 # 内联表单
 
+使用 `inline` 指定表单下控件为内联样式。
+
 ```html
 <ve-form inline hide-details>
   <ve-input label="Input1" placeholder="请输入" />

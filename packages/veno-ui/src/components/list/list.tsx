@@ -27,22 +27,18 @@ export type ListItemProps = {
 }
 
 export type InternalListItemProps = {
-  type?: 'item' | 'subheader' | 'divider'
+  type?: ListItemProps['$type']
   props?: Record<string, any>
   children?: InternalListItemProps[]
 }
 
 function parseItems (items?: (string | ListItemProps)[]): InternalListItemProps[] | undefined {
   if (!items) return undefined
-
   return items.map(item => {
     if (typeof item === 'string') return { type: 'item', props: { value: item, title: item } }
-
     const { $type, $children, ...props } = item
-
     if ($type === 'subheader') return { type: 'subheader', props }
     if ($type === 'divider') return { type: 'divider', props }
-
     return { type: 'item', props, children: parseItems($children) }
   })
 }
@@ -69,7 +65,7 @@ export const List = genericComponent<new <T>() => {
     /**
      * @zh 数据驱动时列表项数据
      */
-    items: Array as Prop<ListItemProps[]>,
+    items: Array as Prop<(string | ListItemProps)[]>,
     ...makeNestedProps({
       selectStrategy: 'leaf',
       openStrategy: 'multiple',

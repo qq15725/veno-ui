@@ -41,27 +41,29 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
     provideList()
 
     return () => slots.default?.() ?? props.items?.map(({ children, props: itemProps, type }, index) => {
-
-      if (type === 'divider') return <Divider { ...itemProps } />
-
-      if (type === 'subheader') return <ListSubheader { ...itemProps } v-slots={ slots } />
-
-      return children ? (
-        <ListGroup value={ itemProps?.value }>
-          { {
-            default: () => (
-              <ListChildren items={ children } v-slots={ slots } />
-            ),
-            activator: ({ props: activatorProps }) => (
-              slots.header?.({ item: itemProps, index, props: activatorProps })
-              ?? <ListItem { ...itemProps } { ...activatorProps } />
-            ),
-          } }
-        </ListGroup>
-      ) : (
-        slots.item?.({ item: itemProps, index })
-        ?? <ListItem { ...itemProps } v-slots={ slots } />
-      )
+      switch (type) {
+        case 'divider':
+          return <Divider { ...itemProps } />
+        case 'subheader':
+          return <ListSubheader { ...itemProps } v-slots={ slots } />
+        default:
+          return children ? (
+            <ListGroup value={ itemProps?.value }>
+              { {
+                default: () => (
+                  <ListChildren items={ children } v-slots={ slots } />
+                ),
+                activator: ({ props: activatorProps }) => (
+                  slots.header?.({ item: itemProps, index, props: activatorProps })
+                  ?? <ListItem { ...itemProps } { ...activatorProps } />
+                ),
+              } }
+            </ListGroup>
+          ) : (
+            slots.item?.({ item: itemProps, index })
+            ?? <ListItem { ...itemProps } v-slots={ slots } />
+          )
+      }
     })
   },
 })

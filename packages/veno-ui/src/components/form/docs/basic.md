@@ -12,43 +12,30 @@
     label="Variant"
     name="variant"
     v-model="form.props.variant"
-  >
-    <ve-radio value="contained" />
-    <ve-radio value="outlined" />
-    <ve-radio value="text" />
-    <ve-radio value="contained-text" />
-    <ve-radio value="contained-outlined" />
-  </ve-radio-group>
+    :items="['contained', 'outlined', 'text', 'contained-text', 'contained-outlined']"
+  />
   
   <ve-radio-group
     label="Size"
     name="size"
     v-model="form.props.size"
-  >
-    <ve-radio value="x-small" />
-    <ve-radio value="small" />
-    <ve-radio value="medium" />
-    <ve-radio value="large" />
-    <ve-radio value="x-large" />
-  </ve-radio-group>
+    :items="['x-small', 'small', 'medium', 'large', 'x-large']"
+  />
   
   <ve-radio-group
     label="Density"
     messages="Messages"
     name="density"
     v-model="form.props.density"
-  >
-    <ve-radio value="ultra-high" />
-    <ve-radio value="high" />
-    <ve-radio value="medium" />
-    <ve-radio value="low" />
-    <ve-radio value="ultra-low" />
-  </ve-radio-group>
+    :items="['ultra-high', 'high', 'medium', 'low', 'ultra-low']"
+  />
 
-  <ve-radio-group name="direction" label="Direction" v-model="form.props.direction">
-    <ve-radio value="horizontal" />
-    <ve-radio value="vertical" />
-  </ve-radio-group>
+  <ve-radio-group 
+    name="direction"
+    label="Direction" 
+    v-model="form.props.direction"
+    :items="['horizontal', 'vertical']"
+  />
 
   <ve-form-control label :disabled="false">
     <ve-switch name="inline" label="Inline" v-model="form.props.inline" />
@@ -80,15 +67,11 @@
 
   <ve-select
     clearable
-    :items="[
-      { value: 'Option 1' },
-      { value: 'Option 2' },
-      { value: 'Option 3' },
-    ]"
     label="Select"
     name="select"
     placeholder="请选择"
     v-model="form.select"
+    :items="['Option 1', 'Option 2', 'Option 3']"
   />
   
   <ve-date-picker
@@ -113,23 +96,26 @@
     <ve-switch label="Switch" name="switch" v-model="form.switch" />
   </ve-form-control>
 
-  <ve-checkbox-group label="Checkbox" name="checkbox" v-model="form.checkbox">
-    <ve-checkbox value="Checkbox 1" />
-    <ve-checkbox value="Checkbox 2" />
-    <ve-checkbox value="Checkbox 3" />
-  </ve-checkbox-group>
+  <ve-checkbox-group 
+    label="Checkbox" 
+    name="checkbox" 
+    v-model="form.checkbox"
+    :items="['Checkbox 1', 'Checkbox 2', 'Checkbox 3']"
+  />
 
-  <ve-radio-group label="Radio" name="radio" v-model="form.radio">
-    <ve-radio value="Radio1" />
-    <ve-radio value="Radio2" />
-  </ve-radio-group>
+  <ve-radio-group
+    label="Radio" 
+    name="radio" 
+    v-model="form.radio"
+    :items="['Radio1', 'Radio2']"
+  />
 
   <ve-form-control label>
     <ve-button color="primary" :loading="sending" type="submit">提交</ve-button>
   </ve-form-control>
 </ve-form>
 
-<ve-code class="mt-3" :code="form" />
+<ve-code class="mt-3 p-3" :code="form" theme="dark" />
 ```
 
 ```js

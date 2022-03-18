@@ -6,16 +6,32 @@ import { defineComponent, getUid } from '../../utils'
 import { FormControl } from '../form-control'
 import { SelectionGroupControl } from '../selection-group-control'
 import { makeSelectionGroupControlProps } from '../selection-group-control/selection-group-control'
+import { Radio } from '../radio'
 
 // Composables
 import { makeSizeProps } from '../../composables/size'
 import { makeDensityProps } from '../../composables/density'
 import { provideDefaults } from '../../composables/defaults'
 
+// Types
+import type { PropType } from 'vue'
+
+export interface RadioGroupItemProps
+{
+  value: any
+
+  [key: string]: any
+}
+
 export const RadioGroup = defineComponent({
   name: 'VeRadioGroup',
 
   props: {
+    /**
+     * @zh 单选组的所有可选项
+     */
+    items: Array as PropType<(string | RadioGroupItemProps)[]>,
+
     ...makeSelectionGroupControlProps({
       type: 'radio',
       trueIcon: '$radioOn',
@@ -31,6 +47,14 @@ export const RadioGroup = defineComponent({
 
   setup (props, { emit, slots }) {
     const id = computed(() => props.id || `ve-radio-group-${ getUid() }`)
+
+    const items = computed(() => {
+      return props.items?.map((
+        itemProps => typeof itemProps === 'string'
+          ? { value: itemProps }
+          : itemProps
+      ))
+    })
 
     provideDefaults({
       VeRadio: {
@@ -61,6 +85,8 @@ export const RadioGroup = defineComponent({
                 readonly={ isReadonly.value }
                 onUpdate:modelValue={ val => emit('update:modelValue', val) }
               >
+                { items.value?.map(itemProps => <Radio { ...itemProps } />) }
+
                 { slots.default?.() }
               </SelectionGroupControl>
             ),

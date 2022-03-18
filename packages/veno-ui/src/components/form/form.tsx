@@ -2,7 +2,7 @@
 import './styles/form.scss'
 
 // Utils
-import { toRef } from 'vue'
+import { toRef, computed } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
@@ -12,8 +12,21 @@ import { makeFormProps, provideForm } from '../../composables/form'
 import { makeVariantProps } from '../../composables/variant'
 import { provideDefaults } from '../../composables/defaults'
 
+// components
+import { FormChildren } from './form-children'
+
 // Types
 import type { PropType } from 'vue'
+
+export type FormItemProps = {
+  [key: string]: any
+  $type?: 'input' | 'textarea' | 'select' | 'date-picker' | 'checkbox' | 'radio'
+}
+
+export type InternalFormItemProps = {
+  type?: FormItemProps['$type']
+  props?: Record<string, any>
+}
 
 export const Form = defineComponent({
   name: 'VeForm',
@@ -39,6 +52,11 @@ export const Form = defineComponent({
     inline: Boolean,
 
     /**
+     * @zh 数据驱动的表单列表项
+     */
+    items: Array as PropType<FormItemProps[]>,
+
+    /**
      * @zh 标签宽度
      */
     labelWidth: [Number, String],
@@ -58,6 +76,13 @@ export const Form = defineComponent({
 
   setup (props, { slots }) {
     const form = provideForm(props)
+
+    const items = computed(() => {
+      return props.items?.map(item => {
+        const { $type: type, ...props } = item
+        return { type, props }
+      }) as InternalFormItemProps[]
+    })
 
     const defaults = {
       variant: toRef(props, 'variant'),
@@ -102,6 +127,8 @@ export const Form = defineComponent({
           onReset={ form.reset }
           onSubmit={ form.submit }
         >
+          <FormChildren items={ items.value } />
+
           { slots.default?.(form) }
         </form>
       )

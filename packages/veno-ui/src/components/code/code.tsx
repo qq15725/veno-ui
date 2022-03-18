@@ -86,7 +86,7 @@ export const Code = defineComponent({
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       props, 'color'
     )
-    const language = computed(() => props.code === 'object' ? 'json' : props.language)
+    const language = computed(() => typeof props.code === 'object' ? 'json' : props.language)
     const lineNumbers = computed(() => code.value.split('\n').map((v, i) => i + 1))
     const highlightedLines = computed(() => {
       return lineNumbers.value.filter(lineNumber => {

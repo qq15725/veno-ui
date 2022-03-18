@@ -82,7 +82,7 @@ export const Select = genericComponent<new () => {
     id: String,
 
     /**
-     * @zh 可选项
+     * @zh 选择框可选项
      */
     items: Array as PropType<SelectItemProps[]>,
 
