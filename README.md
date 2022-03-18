@@ -18,23 +18,15 @@
 
 ## 特性
 
-### 响应式设计
-
-适配移动端与 PC 端。
-
-### 样式帮助类
-
-提供大量样式帮助类。
-
 ### 自定义主题
 
 组件默认属性值，风格色皆可调。
 
 ### 无障碍设计
 
-所有组件遵循 WAI-ARIA [https://www.w3.org/TR/wai-aria-practices](https://www.w3.org/TR/wai-aria-practices) 。
+所有组件遵循 [WAI-ARIA](https://www.w3.org/TR/wai-aria-practices) 。
 
-### TypeScript
+### 使用 TypeScript
 
 所有组件 TypeScript 编写，类型安全。
 
@@ -84,21 +76,17 @@ app.mount('#app')
 
 ## 生态
 
-| 项目               | 介绍                     |
-| --------------------- |------------------------|
-| [veno-admin] | Veno UI 构建的后台管理系统模板。   |
-| [@veno-ui/markdown] | Veno UI 的 Markdown 渲染器 |
-| [@veno-ui/vite-plugin-markdown] | 解析 Markdown 的 Vite 插件  |
-| [@veno-ui/vite-plugin-icons] | 按需加载图标的 Vite 插件        |
+| 项目               | 介绍                                       |
+| --------------------- |------------------------------------------|
+| [veno-admin] | Veno UI 的后台管理项目模板。                       |
+| [@veno-ui/markdown] | Veno UI 的 Markdown 渲染器                   |
+| [@veno-ui/vite-plugin-markdown] | Veno UI 在 Vite 下的 Markdown 文件解析          |
+| [@veno-ui/vite-plugin-icons] | Veno UI 在 Vite 下的图标解决方案（静态按需导入，SVG 文件导入） |
 
 [veno-admin]: https://github.com/qq15725/veno-admin
 [@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
 [@veno-ui/vite-plugin-markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown
 [@veno-ui/vite-plugin-icons]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons
-
-## 关于
-
-- 大量代码基于 [Vuetify next 分支](https://github.com/vuetifyjs/vuetify/tree/next) 修改，[查看许可](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 。
 
 ## 参与开发
 
@@ -120,6 +108,8 @@ pnpm run build
 pnpm run dev
 ```
 
-## License
+## 许可
 
-[MIT](https://github.com/qq15725/veno-ui/blob/master/LICENSE)
+大量代码基于 [Vuetify next branch](https://github.com/vuetifyjs/vuetify/tree/next) ，遵守 [MIT license](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 许可。
+
+Veno UI 使用 [MIT license](https://github.com/qq15725/veno-ui/blob/master/LICENSE) 许可。
