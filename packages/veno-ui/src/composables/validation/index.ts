@@ -1,12 +1,9 @@
 // Utils
-import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue'
-import { propsFactory, getCurrentInstance, getCurrentInstanceName, getUid } from '../../utils'
-
-// Composables
-import { useForm } from '../form'
+import { computed, ref } from 'vue'
+import { propsFactory, getCurrentInstance, getCurrentInstanceName } from '../../utils'
 
 // Types
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export type ValidationResult = string | true
 export type ValidationRule =
@@ -15,43 +12,56 @@ export type ValidationRule =
   | ((value: any) => ValidationResult)
   | ((value: any) => PromiseLike<ValidationResult>)
 
-export interface ValidationProps
-{
-  disabled?: boolean
-  error?: boolean
-  errorMessages?: string | string[]
-  maxErrors?: string | number
-  name?: string
-  readonly?: boolean
-  rules: ValidationRule[]
-  modelValue?: any
-}
-
 export const makeValidationProps = propsFactory({
+  /**
+   * @zh 是否为禁用状态
+   */
   disabled: Boolean,
+
+  /**
+   * @zh 是否为错误状态
+   */
   error: Boolean,
+
+  /**
+   * @zh 错误消息
+   */
   errorMessages: {
     type: [Array, String] as PropType<string | string[]>,
     default: () => ([]),
   },
+
+  /**
+   * @zh 最大错误数
+   */
   maxErrors: {
     type: [Number, String],
     default: 1,
   },
-  name: String,
+
+  /**
+   * @zh 是否只读
+   */
   readonly: Boolean,
+
+  /**
+   * @zh 验证规则
+   */
   rules: {
     type: Array as PropType<ValidationRule[]>,
     default: () => ([]),
   },
+
+  /**
+   * @zh 验证值
+   */
   modelValue: null,
 })
 
 export function useValidation (
-  props: ValidationProps,
+  props: ExtractPropTypes<ReturnType<typeof makeValidationProps>>,
   name = getCurrentInstanceName()
 ) {
-  const form = useForm()
   const errorMessages = ref<string[]>([])
   const isPristine = ref(true)
   const isDisabled = computed(() => !!props.disabled)
@@ -75,15 +85,6 @@ export function useValidation (
   })
 
   const vm = getCurrentInstance('useValidation')
-  const uid = computed(() => props.name ?? getUid())
-
-  onBeforeMount(() => {
-    form?.register(uid.value, validate, reset, resetValidation)
-  })
-
-  onBeforeUnmount(() => {
-    form?.unregister(uid.value)
-  })
 
   function reset () {
     resetValidation()
@@ -98,34 +99,25 @@ export function useValidation (
 
   async function validate () {
     const results = []
-
     errorMessages.value = []
     isValidating.value = true
-
     for (const rule of props.rules) {
       if (results.length >= (props.maxErrors || 1)) {
         break
       }
-
       const handler = typeof rule === 'function' ? rule : () => rule
       const result = await handler(props?.modelValue?.value ?? props.modelValue)
-
       if (result === true) continue
-
       if (typeof result !== 'string') {
         // eslint-disable-next-line no-console
         console.warn(`${ result } is not a valid value. Rule functions must return boolean true or a string.`)
-
         continue
       }
-
       results.push(result)
     }
-
     errorMessages.value = results
     isValidating.value = false
     isPristine.value = false
-
     return errorMessages.value
   }
 

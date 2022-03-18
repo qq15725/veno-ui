@@ -6,22 +6,16 @@ import { propsFactory, getCurrentInstanceName } from '../../utils'
 import { useColor } from '../color'
 
 // Types
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export const variants = [
+export type VariantProps = ExtractPropTypes<ReturnType<typeof makeVariantProps>>
+
+// Constants
+export const VARIANTS = [
   'contained', 'outlined', 'plain', 'text',
   'contained-text', 'contained-outlined'
 ] as const
-
-export type Variant = typeof variants[number]
-
-export interface VariantProps
-{
-  color?: string
-  textColor?: string
-  variant: Variant
-}
 
 export function genOverlays (isClickable: boolean, name: string) {
   return (
@@ -34,12 +28,23 @@ export function genOverlays (isClickable: boolean, name: string) {
 }
 
 export const makeVariantProps = propsFactory({
+  /**
+   * @zh 颜色
+   */
   color: String,
+
+  /**
+   * @zh 文本颜色
+   */
   textColor: String,
+
+  /**
+   * @zh 变体
+   */
   variant: {
-    type: String as PropType<Variant>,
+    type: String as PropType<typeof VARIANTS[number]>,
     default: 'contained',
-    validator: (v: any) => variants.includes(v),
+    validator: (v: any) => VARIANTS.includes(v),
   },
 }, 'variant')
 

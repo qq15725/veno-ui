@@ -259,16 +259,17 @@ export const Input = genericComponent<new () => {
               've-input--no-resize': props.noResize || props.autoResize,
             },
           ] }
-          label-id={ id.value }
+          labelId={ id.value }
           style={
             controlHeight.value
               ? { '--ve-form-control---height': convertToUnit(controlHeight.value) }
-              : {}
+              : null
           }
           name={ props.name }
           onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
           onClick:label={ (e: MouseEvent) => emit('click:label', e) }
           onClick:append={ (e: MouseEvent) => emit('click:append', e) }
+          v-model={ model.value }
           width={ controlWidth.value }
         >
           { {

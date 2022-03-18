@@ -2,7 +2,7 @@
 import './styles/selection-control.scss'
 
 // Utils
-import { computed, ref } from 'vue'
+import { computed, ref, onBeforeMount, toRef, onBeforeUnmount } from 'vue'
 import {
   genericComponent,
   getUid,
@@ -19,12 +19,13 @@ import { Icon } from '../icon'
 import { Label } from '../label'
 
 // Composables
-import { makeThemeProps } from '../../composables/theme'
-import { makeSizeProps, useSize } from '../../composables/size'
-import { makeDensityProps, useDensity } from '../../composables/density'
-import { useProxiedModel } from '../../composables/proxied-model'
 import { useTextColor } from '../../composables/color'
+import { makeDensityProps, useDensity } from '../../composables/density'
+import { useForm } from '../../composables/form'
+import { useProxiedModel } from '../../composables/proxied-model'
+import { makeSizeProps, useSize } from '../../composables/size'
 import { useSelectionGroupControl } from '../selection-group-control/selection-group-control'
+import { makeThemeProps } from '../../composables/theme'
 
 // Types
 import type { PropType, ComputedRef, Ref, WritableComputedRef } from 'vue'
@@ -115,21 +116,16 @@ export const SelectionControl = genericComponent<new <T>() => {
     const model = computed({
       get () {
         const val = group ? group.modelValue.value : modelValue.value
-
         if (isMultiple.value) {
           return (val || []).some((v: any) => props.valueComparator(v, trueValue.value))
         }
-
         return props.valueComparator(val, trueValue.value)
       },
       set (val: boolean) {
         const currentValue = val ? trueValue.value : falseValue.value
-
         let newVal = currentValue
-
         if (isMultiple.value) {
           const oldVal = group ? group.modelValue.value : modelValue.value
-
           if (val) {
             newVal = [...wrapInArray(oldVal), currentValue]
           } else {
@@ -137,7 +133,6 @@ export const SelectionControl = genericComponent<new <T>() => {
               .filter((v: any) => !props.valueComparator(v, trueValue.value))
           }
         }
-
         if (group) {
           group.modelValue.value = newVal
         } else {
@@ -154,11 +149,22 @@ export const SelectionControl = genericComponent<new <T>() => {
         : group?.falseIcon.value ?? props.falseIcon
     })
 
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-input-${ uid }`)
+    const id = computed(() => props.name || props.id || `ve-selection-control-${ getUid() }`)
     const isFocused = ref(false)
     const isFocusVisible = ref(false)
     const inputRef = ref<HTMLInputElement>()
+    const form = useForm()
+
+    onBeforeMount(() => {
+      form?.register(id.value, {
+        name: toRef(props, 'name'),
+        modelValue: model,
+      })
+    })
+
+    onBeforeUnmount(() => {
+      form?.unregister(id.value)
+    })
 
     function onFocus (e: FocusEvent) {
       isFocused.value = true

@@ -1,32 +1,28 @@
 // Utils
-import { computed, inject, provide, ref } from 'vue'
-import { getCurrentInstance, propsFactory } from '../../utils'
+import { computed, inject, provide, ref, watch } from 'vue'
+import { createSymbol, getCurrentInstance, propsFactory, getObjectValueByPath, setObjectValueByPath } from '../../utils'
 import { useProxiedModel } from '../proxied-model'
 
 // Types
-import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
+import type { ComputedRef, ExtractPropTypes, InjectionKey, PropType, Ref, WatchStopHandle } from 'vue'
 
-export interface FormProvide
+export interface FormField
 {
-  register: (
-    id: number | string,
-    validate: () => Promise<string[]>,
-    reset: () => void,
-    resetValidation: () => void
-  ) => void
-  unregister: (id: number | string) => void
-  items: Ref<FormField[]>
+  name: Ref<string | undefined>
+  modelValue: Ref
+  validate?: () => Promise<string[]>
+  reset?: () => void
+  resetValidation?: () => void
+}
+
+export interface FormInstance
+{
+  items: Map<string | number, FormField>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isValidating: Ref<boolean>
-}
-
-interface FormField
-{
-  id: number | string
-  validate: () => Promise<string[]>
-  reset: () => void
-  resetValidation: () => void
+  register: (id: number | string, item: FormField) => void
+  unregister: (id: number | string) => void
 }
 
 interface FormValidationResult
@@ -35,106 +31,103 @@ interface FormValidationResult
   errorMessages: string[]
 }
 
-export const FormKey: InjectionKey<FormProvide> = Symbol.for('veno-ui:form')
-
-export interface FormProps
-{
-  disabled: boolean
-  fastFail: boolean
-  lazyValidation: boolean
-  readonly: boolean
-  modelValue: boolean | null
-  'onUpdate:modelValue': ((val: boolean | null) => void) | undefined
-}
+export const FormKey: InjectionKey<FormInstance> = createSymbol('form')
 
 export const makeFormProps = propsFactory({
   disabled: Boolean,
   fastFail: Boolean,
   lazyValidation: Boolean,
   readonly: Boolean,
-  modelValue: {
+  valid: {
     type: Boolean as PropType<boolean | null>,
     default: null,
   },
+  modelValue: Object as PropType<Record<string, any>>,
 })
 
-export function provideForm (props: FormProps) {
+export function provideForm (
+  props: ExtractPropTypes<ReturnType<typeof makeFormProps>> & {
+    'onUpdate:valid': ((val: boolean | null) => void) | undefined
+    'onUpdate:modelValue': ((val: Record<string, any>) => void) | undefined
+  }
+) {
   const vm = getCurrentInstance('provideForm')
+  const valid = useProxiedModel(props, 'valid')
   const model = useProxiedModel(props, 'modelValue')
 
   const isDisabled = computed(() => props.disabled)
   const isReadonly = computed(() => props.readonly)
   const isValidating = ref(false)
-  const items = ref<FormField[]>([])
+  const items = new Map<string | number, FormField>()
+  const watchs = new Map<string | number, WatchStopHandle[]>()
   const errorMessages = ref<FormValidationResult[]>([])
 
   async function submit (e: Event) {
     e.preventDefault()
-
     const results = []
-    let valid = true
-
+    let _valid = true
     errorMessages.value = []
-    model.value = null
+    valid.value = null
     isValidating.value = true
-
-    for (const item of items.value) {
+    for (const [id, item] of items) {
+      if (!item.validate) continue
       const itemErrorMessages = await item.validate()
-
       if (itemErrorMessages.length > 0) {
-        valid = false
-
+        _valid = false
         results.push({
-          id: item.id,
+          id,
           errorMessages: itemErrorMessages,
         })
       }
-
-      if (!valid && props.fastFail) break
+      if (!_valid && props.fastFail) break
     }
-
     errorMessages.value = results
-    model.value = valid
+    valid.value = _valid
     isValidating.value = false
-
     vm?.emit('submit', e)
   }
 
   async function reset (e: Event) {
     e.preventDefault()
-
-    items.value.forEach(item => item.reset())
-    model.value = null
-
+    items.forEach(item => item.reset?.())
+    valid.value = null
     vm?.emit('reset', e)
   }
 
   async function resetValidation () {
-    items.value.forEach(item => item.resetValidation())
+    items.forEach(item => item.resetValidation?.())
     errorMessages.value = []
-    model.value = null
-
+    valid.value = null
     vm?.emit('resetValidation')
   }
 
   provide(FormKey, {
-    register: (id, validate, reset, resetValidation) => {
-      items.value.push({
-        id,
-        validate,
-        reset,
-        resetValidation,
-      })
-    },
-    unregister: id => {
-      items.value = items.value.filter(item => {
-        return item.id !== id
-      })
-    },
     isDisabled,
     isReadonly,
     isValidating,
     items,
+    register: (id, item) => {
+      items.set(id, item)
+      watchs.set(id, [
+        watch(item.name, name => {
+          if (!name) return
+          const val = getObjectValueByPath(model.value, name)
+          if (val !== item.modelValue.value) item.modelValue.value = val
+        }, { immediate: true }),
+        watch(item.modelValue, value => {
+          const name = item.name.value
+          if (!name) return
+          if (value !== getObjectValueByPath(model.value, name)) {
+            setObjectValueByPath(model.value, name, value)
+          }
+        }, { immediate: true, deep: true })
+      ])
+    },
+    unregister: id => {
+      items.delete(id)
+      watchs.get(id)?.forEach(v => v())
+      watchs.delete(id)
+    }
   })
 
   return {

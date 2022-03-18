@@ -25,19 +25,31 @@ export function keys<T> (obj: T) {
  */
 export function getNestedValue (obj: any, path: (string | number)[], fallback?: any): any {
   const last = path.length - 1
-
   if (last < 0) return obj === undefined ? fallback : obj
-
   for (let i = 0; i < last; i++) {
     if (obj == null) {
       return fallback
     }
     obj = obj[path[i]]
   }
-
   if (obj == null) return fallback
-
   return obj[path[last]] === undefined ? fallback : obj[path[last]]
+}
+
+/**
+ * 设置对象的嵌套值
+ *
+ * @param obj
+ * @param path
+ * @param value
+ */
+export function setNestedValue (obj: any, path: (string | number)[], value: any) {
+  const last = path.length - 1
+  for (let i = 0; i < last; i++) {
+    if (typeof obj[path[i]] !== 'object') obj[path[i]] = {}
+    obj = obj[path[i]]
+  }
+  obj[path[last]] = value
 }
 
 /**
@@ -76,6 +88,20 @@ export function getObjectValueByPath (obj: any, path: string, fallback?: any): a
 }
 
 /**
+ * 根据路径设置对象的嵌套值
+ *
+ * @param obj
+ * @param path
+ * @param value
+ */
+export function setObjectValueByPath (obj: any, path: string, value: any) {
+  if (typeof obj !== 'object' || !path) return
+  path = path.replace(/\[(\w+)\]/g, '.$1')
+  path = path.replace(/^\./, '')
+  return setNestedValue(obj, path.split('.'), value)
+}
+
+/**
  * 从项中获取某个属性
  *
  * @param item
@@ -88,17 +114,11 @@ export function getPropertyFromItem (
   fallback?: any
 ): any {
   if (property == null) return item === undefined ? fallback : item
-
   if (item !== Object(item)) return fallback === undefined ? item : fallback
-
   if (typeof property === 'string') return getObjectValueByPath(item, property, fallback)
-
   if (Array.isArray(property)) return getNestedValue(item, property, fallback)
-
   if (typeof property !== 'function') return fallback
-
   const value = property(item, fallback)
-
   return typeof value === 'undefined' ? fallback : value
 }
 

@@ -2,8 +2,8 @@
 import './styles/form-control.scss'
 
 // Utils
-import { computed } from 'vue'
-import { genericComponent, convertToUnit, useRender, pick } from '../../utils'
+import { computed, toRef, onBeforeMount, onBeforeUnmount } from 'vue'
+import { genericComponent, convertToUnit, useRender, pick, getUid } from '../../utils'
 
 // Components
 import { Label } from '../label'
@@ -12,9 +12,11 @@ import { Icon } from '../icon'
 
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
-import { makeSizeProps, useSize } from '../../composables/size'
 import { makeDensityProps, useDensity } from '../../composables/density'
+import { useForm } from '../../composables/form'
+import { makeSizeProps, useSize } from '../../composables/size'
 import { makeValidationProps, useValidation } from '../../composables/validation'
+import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
 import type { ComputedRef, PropType, Ref } from 'vue'
@@ -47,6 +49,7 @@ export const FormControlEmits = {
   'click:prepend': (e: MouseEvent) => true,
   'click:label': (e: MouseEvent) => true,
   'click:append': (e: MouseEvent) => true,
+  'update:modelValue': (val: any) => true,
 }
 
 export const FormControlSlots = [
@@ -121,6 +124,11 @@ export const FormControl = genericComponent<new () => {
     },
 
     /**
+     * @zh 名称
+     */
+    name: String,
+
+    /**
      * @zh 后置图标
      */
     prependIcon: String,
@@ -141,12 +149,11 @@ export const FormControl = genericComponent<new () => {
   setup (props, { slots, emit }) {
     const { dimensionStyles: dimensionStyles } = useDimension(props)
     const { sizeClasses, sizeStyles } = useSize(props)
-
+    const model = useProxiedModel(props, 'modelValue')
     const computedDimensionStyles = computed(() => ({
       ...dimensionStyles.value,
       minHeight: dimensionStyles.value.minHeight ?? dimensionStyles.value.height,
     }))
-
     const { densityClasses } = useDensity(props)
     const {
       errorMessages,
@@ -160,6 +167,24 @@ export const FormControl = genericComponent<new () => {
       validate,
       validationClasses,
     } = useValidation(props)
+
+    const form = useForm()
+
+    const id = computed(() => props.name ?? `ve-form-control-${ getUid() }`)
+
+    onBeforeMount(() => {
+      form?.register(id.value, {
+        name: toRef(props, 'name'),
+        modelValue: model,
+        validate,
+        reset,
+        resetValidation
+      })
+    })
+
+    onBeforeUnmount(() => {
+      form?.unregister(id.value)
+    })
 
     const slotProps = computed<FormControlSlot>(() => ({
       isDisabled,

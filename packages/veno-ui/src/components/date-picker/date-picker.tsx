@@ -135,7 +135,7 @@ export const DatePicker = genericComponent<new () => {
             }
           ] }
           id={ id.value }
-          modelValue={ model.value.join(' ~ ') }
+          modelValue={ model.value.join(' ~ ') || undefined }
           onClick:clear={ onClear }
           onClick:control={ () => {
             if (props.readonly) return

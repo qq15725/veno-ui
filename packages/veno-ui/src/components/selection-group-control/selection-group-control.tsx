@@ -3,7 +3,7 @@ import './styles/selection-group-control.scss'
 
 // Utils
 import { computed, toRef, provide, inject } from 'vue'
-import { defineComponent, getUid, propsFactory, useRender } from '../../utils'
+import { defineComponent, getUid, propsFactory, useRender, createSymbol } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -25,7 +25,7 @@ export interface SelectionGroupInstance
   type: Ref<string | undefined>
 }
 
-export const SelectionGroupControlKey: InjectionKey<SelectionGroupInstance> = Symbol.for('veno-ui:selection-control-group')
+export const SelectionGroupControlKey: InjectionKey<SelectionGroupInstance> = createSymbol('selection-control-group')
 
 export const makeSelectionGroupControlProps = propsFactory({
   id: String,
@@ -43,10 +43,6 @@ export const makeSelectionGroupControlProps = propsFactory({
   modelValue: null,
 }, 'selection-control-group')
 
-export function useSelectionGroupControl () {
-  return inject(SelectionGroupControlKey, null)
-}
-
 export const SelectionGroupControl = defineComponent({
   name: 'VeSelectionGroupControl',
 
@@ -58,9 +54,7 @@ export const SelectionGroupControl = defineComponent({
 
   setup (props, { slots }) {
     const modelValue = useProxiedModel(props, 'modelValue')
-    const uid = getUid()
-    const id = computed(() => props.id || `ve-selection-control-group-${ uid }`)
-    const name = computed(() => props.name || id.value)
+    const id = computed(() => props.name || props.id || `ve-selection-control-group-${ getUid() }`)
     const multiple = computed(() => {
       return !!props.multiple
         || (props.multiple == null && Array.isArray(modelValue.value))
@@ -72,7 +66,7 @@ export const SelectionGroupControl = defineComponent({
       modelValue,
       multiple,
       id,
-      name,
+      name: toRef(props, 'name'),
       falseIcon: toRef(props, 'falseIcon'),
       trueIcon: toRef(props, 'trueIcon'),
       readonly: toRef(props, 'readonly'),
@@ -96,5 +90,9 @@ export const SelectionGroupControl = defineComponent({
     return group
   },
 })
+
+export function useSelectionGroupControl () {
+  return inject(SelectionGroupControlKey, null)
+}
 
 export type SelectionGroupControl = InstanceType<typeof SelectionGroupControl>

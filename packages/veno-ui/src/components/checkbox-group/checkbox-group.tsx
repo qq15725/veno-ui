@@ -12,6 +12,7 @@ import { Checkbox } from '../checkbox'
 import { makeSizeProps } from '../../composables/size'
 import { makeDensityProps } from '../../composables/density'
 import { provideDefaults } from '../../composables/defaults'
+import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
 import type { PropType } from 'vue'
@@ -48,6 +49,7 @@ export const CheckboxGroup = defineComponent({
 
   setup (props, { emit, slots }) {
     const id = computed(() => props.id || `ve-checkbox-group-${ getUid() }`)
+    const model = useProxiedModel(props, 'modelValue')
     const items = computed(() => {
       return props.items?.map((
         itemProps => typeof itemProps === 'string'
@@ -71,8 +73,10 @@ export const CheckboxGroup = defineComponent({
       return (
         <FormControl
           class="ve-checkbox-group"
-          size={ size }
           density={ density }
+          name={ props.name }
+          size={ size }
+          v-model={ model.value }
         >
           { {
             ...slots,
@@ -84,7 +88,7 @@ export const CheckboxGroup = defineComponent({
                   id={ id.value }
                   disabled={ isDisabled.value }
                   readonly={ isReadonly.value }
-                  onUpdate:modelValue={ val => emit('update:modelValue', val) }
+                  v-model={ model.value }
                 >
                   { items.value?.map(itemProps => <Checkbox { ...itemProps } />) }
 

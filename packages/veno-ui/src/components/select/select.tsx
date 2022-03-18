@@ -210,9 +210,9 @@ export const Select = genericComponent<new () => {
     }, 300)
     const inputValue = computed({
       get: () => {
-        if (props.filterable && isActiveMenu.value) return query.value
+        if (props.filterable && isActiveMenu.value) return query.value || undefined
         if (props.tags) return undefined
-        return selections.value.map(item => item.text).join(', ')
+        return selections.value.map(item => item.text).join(', ') || undefined
       },
       set: val => {
         query.value = val

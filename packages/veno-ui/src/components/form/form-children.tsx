@@ -4,6 +4,7 @@ import { defineComponent } from '../../utils'
 // Components
 import { Input } from '../input'
 import { Select } from '../select'
+import { Switch } from '../switch'
 import { DatePicker } from '../date-picker'
 import { CheckboxGroup } from '../checkbox-group'
 import { RadioGroup } from '../radio-group'
@@ -26,6 +27,8 @@ export const FormChildren = defineComponent({
           return <Input type="textarea" { ...itemProps } />
         case 'select':
           return <Select { ...itemProps } />
+        case 'switch':
+          return <Switch { ...itemProps } />
         case 'date-picker':
           return <DatePicker { ...itemProps } />
         case 'checkbox':

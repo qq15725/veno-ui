@@ -20,7 +20,7 @@ import type { PropType } from 'vue'
 
 export type FormItemProps = {
   [key: string]: any
-  $type?: 'input' | 'textarea' | 'select' | 'date-picker' | 'checkbox' | 'radio'
+  $type?: 'input' | 'textarea' | 'select' | 'switch' | 'date-picker' | 'checkbox' | 'radio'
 }
 
 export type InternalFormItemProps = {
@@ -68,7 +68,8 @@ export const Form = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (val: boolean | null) => true,
+    'update:valid': (val: boolean | null) => true,
+    'update:modelValue': (val: Record<string, any>) => true,
     resetValidation: () => true,
     reset: (e: Event) => true,
     submit: (e: Event) => true,
