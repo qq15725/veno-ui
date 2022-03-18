@@ -52,7 +52,7 @@ pnpm add veno-ui
 
 ## 例子
 
-注册全部组件的例子，按需注册请文档查看。
+导入全部组件的例子，按需导入请查看文档了解更多。
 
 ```typescript
 import { createApp } from 'vue'
@@ -69,12 +69,10 @@ const veno = createVeno({
   providers,
 })
 
-const app = createApp(App)
-app.use(veno)
-app.mount('#app')
+createApp(App).use(veno).mount('#app')
 ```
 
-## 生态
+## 相关的库
 
 | 项目               | 介绍                                       |
 | --------------------- |------------------------------------------|
