@@ -8,7 +8,11 @@ category: Form 表单组件
 
 :::include
 
-basic.md group.md
+basic.md 
+
+group.md
+
+items.md
 
 :::
 

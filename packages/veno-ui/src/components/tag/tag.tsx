@@ -42,7 +42,7 @@ export const Tag = defineComponent({
     /**
      * @zh 追加的图标
      */
-    appendIcon: String,
+    appendIcon: [String, Object],
 
     /**
      * @zh 可关闭
@@ -53,7 +53,7 @@ export const Tag = defineComponent({
      * @zh 关闭图标
      */
     closeIcon: {
-      type: String,
+      type: [String, Object],
       default: '$close',
     },
 
@@ -73,7 +73,7 @@ export const Tag = defineComponent({
     /**
      * @zh 前置的图标
      */
-    prependIcon: String,
+    prependIcon: [String, Object],
 
     /**
      * @zh 涟漪动画

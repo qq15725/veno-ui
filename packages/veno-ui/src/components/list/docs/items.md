@@ -21,7 +21,7 @@ export default defineComponent({
       items: ref([
         {
           title: 'dashboard',
-          prependIcon: 'mdi-view-dashboard',
+          prependIcon: '$dashboard',
           $children: [
             { title: '主控台', link: true },
             { title: '工作台', link: true }
@@ -29,7 +29,7 @@ export default defineComponent({
         },
         {
           title: '系统设置', 
-          prependIcon: 'mdi-tune',
+          prependIcon: '$settings',
           $children: [
             { title: '菜单权限管理', link: true },
             { title: '角色权限管理', link: true }

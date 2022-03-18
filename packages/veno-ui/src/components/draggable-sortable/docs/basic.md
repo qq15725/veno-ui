@@ -11,7 +11,7 @@
   </ve-draggable-sortable>
 </ve-list>
 
-<ve-code :code="items" class="mt-3" />
+<ve-code class="mt-3 p-3" :code="items" theme="dark" />
 ```
 
 ```js

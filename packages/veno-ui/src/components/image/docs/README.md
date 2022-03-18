@@ -5,8 +5,6 @@ meta:
 
 # 图片 Image
 
-`image` 组件。
-
 ## 演示
 
 :::include

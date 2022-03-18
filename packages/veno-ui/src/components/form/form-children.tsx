@@ -1,13 +1,14 @@
 // Utils
-import { defineComponent } from '../../utils'
+import { defineComponent, pick } from '../../utils'
 
 // Components
+import { CheckboxGroup } from '../checkbox-group'
+import { DatePicker } from '../date-picker'
+import { FormControl } from '../form-control/form-control'
 import { Input } from '../input'
+import { RadioGroup } from '../radio-group'
 import { Select } from '../select'
 import { Switch } from '../switch'
-import { DatePicker } from '../date-picker'
-import { CheckboxGroup } from '../checkbox-group'
-import { RadioGroup } from '../radio-group'
 
 // Types
 import type { PropType } from 'vue'
@@ -28,7 +29,14 @@ export const FormChildren = defineComponent({
         case 'select':
           return <Select { ...itemProps } />
         case 'switch':
-          return <Switch { ...itemProps } />
+          const [controlProps, switchProps] = pick(itemProps || {}, [
+            'label',
+          ])
+          return (
+            <FormControl { ...controlProps }>
+              <Switch { ...switchProps } />
+            </FormControl>
+          )
         case 'date-picker':
           return <DatePicker { ...itemProps } />
         case 'checkbox':

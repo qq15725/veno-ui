@@ -11,7 +11,7 @@
   clearable
 />
 
-<ve-code :code="value" />
+<ve-code class="p-3" :code="value" theme="dark" />
 ```
 
 ```js

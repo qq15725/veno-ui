@@ -23,8 +23,8 @@ export async function transformComponent (source: string, id: string, ctx: Resol
       const matched = match[2]
       if (match.index == null || !matched) continue
       const start_ = match.index + match[0].length - match[2].length - match[3].length
-      for (const subMatch of matched.matchAll(/"(.+?)"/g)) {
-        const subMatched = subMatch[1]
+      for (const subMatch of matched.matchAll(/"(.+?)"|'(.+?)'/g)) {
+        const subMatched = subMatch[1] || subMatch[2]
         const [set] = subMatched.split('-', 1) || []
         const name = subMatched.substring(set.length + 1)
         if (subMatch.index != null && set && name) {

@@ -12,13 +12,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      items: [
-        'Florida',
-        'Georgia',
-        'Nebraska',
-        'California',
-        'New York',
-      ]
+      items: ['Florida', 'Georgia', 'Nebraska', 'California', 'New York']
     }
   }
 })

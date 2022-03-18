@@ -23,7 +23,7 @@
   </template>
 </ve-select>
 
-<ve-code :code="selected" />
+<ve-code class="p-3" :code="selected" theme="dark" />
 ```
 
 ```js
