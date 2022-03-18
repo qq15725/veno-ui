@@ -7,7 +7,7 @@
 ```html
 <ve-spacer>
   <ve-card
-    v-for="v, k in $veno.icons.aliases"
+    v-for="v, k in aliases"
     :key="k"
     size="100"
     class="d-flex align-center justify-center flex-column"
@@ -18,6 +18,19 @@
     <div style="width: 100%;" class="text-center text-truncate">{{ k }}</div>
   </ve-card>
 </ve-spacer>
+```
+
+```js
+import { defineComponent } from 'vue'
+import { aliases } from 'veno-ui/lib/iconsets/mdi'
+
+export default defineComponent({
+  setup () {
+    return {
+      aliases,
+    }
+  }
+})
 ```
 
 :::

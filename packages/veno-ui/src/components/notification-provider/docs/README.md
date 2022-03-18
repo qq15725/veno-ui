@@ -22,7 +22,7 @@ export default createVeno({
 
 或者把调用其方法的组件放在 `ve-notification-provider` 内部
 
-```vue
+```html
 <ve-notification-provider>
   <router-view />
 </ve-notification-provider>

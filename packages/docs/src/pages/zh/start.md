@@ -63,13 +63,13 @@ createApp(App).use(veno).mount('#app')
 import { Button } from 'veno-ui/componentns'
 ```
 
-### 自动按需导入组件
+### 自动按需导入组件（推荐）
 
 使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 插件来开启自动按需导入组件的支持。
 
-插件会自动解析模板中的使用到的组件，并导入。
+配置 `vite.config.js` 并在 `Components` 插件中使用 `VenoUiResolver` Veno UI 的组件解析器。
 
-配置 `vite.config.js` 并在 `Components` 插件中使用 `VenoUiResolver` Veno UI 组件解析器。 
+插件会自动解析模板中的使用到的组件，并导入。
 
 ```js
 import { defineConfig } from 'vite'

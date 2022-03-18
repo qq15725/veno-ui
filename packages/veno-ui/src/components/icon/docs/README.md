@@ -14,26 +14,34 @@ preset.md
 
 :::
 
-## 使用 mdi class 图标
+## 使用 mdi 的字体图标样式
 
 安装依赖
 
 ```sh
-$ npm i -D @mdi/font
+npm i -D @mdi/font
 ```
 
-引入 `@mdi/font/css/materialdesignicons.css`
+引入样式文件
 
 ```ts
-// src/plugins/veno-ui.ts
 import '@mdi/font/css/materialdesignicons.css'
 ```
 
-## 使用图标插件（推荐）
+模板中使用
 
-[@veno-ui/vite-plugin-icons](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons) 文档。
+```html
+<ve-icon icon="mdi-delete" />
+<ve-button icon="mdi-delete" />
+```
 
-详情参见 [veno-admin](https://github.com/qq15725/veno-admin) 如何使用。
+## 使用 Vite 图标插件（推荐）
+
+模板代码中图标的静态按需导入，加载自定义目录下的所有图标文件（SVG）。
+
+如何配置参考 [@veno-ui/vite-plugin-icons](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons) 插件文档。
+
+如何使用参考 [veno-admin](https://github.com/qq15725/veno-admin) 后台工程模板。
 
 ## API
 

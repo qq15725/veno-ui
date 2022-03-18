@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => {
       ].concat(
         mode === 'development'
           ? [
+            { find: 'veno-ui/lib/iconsets/mdi', replacement: resolve('../veno-ui/lib/iconsets/mdi.mjs') },
             { find: 'veno-ui/components', replacement: resolve('../veno-ui/src/components') },
             { find: 'veno-ui/directives', replacement: resolve('../veno-ui/src/directives') },
             { find: 'veno-ui/providers', replacement: resolve('../veno-ui/src/providers') },
@@ -44,6 +45,7 @@ export default defineConfig(({ mode }) => {
             { find: 'veno-ui', replacement: resolve('../veno-ui/src/framework.ts') },
           ]
           : [
+            { find: 'veno-ui/lib/iconsets/mdi', replacement: resolve('../veno-ui/lib/iconsets/mdi.mjs') },
             { find: 'veno-ui/components', replacement: resolve('../veno-ui/lib/components/index.mjs') },
             { find: 'veno-ui/directives', replacement: resolve('../veno-ui/lib/directives/index.mjs') },
             { find: 'veno-ui/providers', replacement: resolve('../veno-ui/lib/providers/index.mjs') },
