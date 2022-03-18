@@ -4,6 +4,8 @@
 
 使用 `items` 数据驱动渲染表单。
 
+相对一大堆模板代码使用 `JSON` 定义可能更方便。
+
 ```html
 <ve-form v-model="value" label-width="100" :items="items" />
 
