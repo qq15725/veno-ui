@@ -5,7 +5,6 @@ import './styles/table-th.scss'
 import { defineComponent, pick } from '../../utils'
 
 // Components
-import { TableCell, makeTableCellProps, filterTableCellProps } from './table-cell'
 import { Button } from '../button'
 import { Icon } from '../icon'
 
@@ -62,24 +61,34 @@ export const TableTh = defineComponent({
       default: () => [],
     },
 
-    ...makeTableCellProps(),
+    /**
+     * @zh 固定方式
+     */
+    fixed: [Boolean, String] as PropType<false | 'start' | 'end'>,
+
+    /**
+     * @zh 对齐方式
+     */
+    align: {
+      type: String as PropType<boolean | 'start' | 'center' | 'end'>,
+      default: 'start'
+    },
   },
 
   setup (props, { slots }) {
     return () => {
-      const [tableCellProps] = filterTableCellProps(props)
-
       return (
-        <TableCell
-          { ...tableCellProps }
+        <th
           class={ [
             've-table-th',
+            `text-${ props.align }`,
             {
               've-table-th--sortable': props.sortable,
-              've-table-th--sorted': props.sortDesc !== undefined
+              've-table-th--sorted': props.sortDesc !== undefined,
+              've-table-th--fixed-start': props.fixed === 'start',
+              've-table-th--fixed-end': props.fixed === 'end',
             }
           ] }
-          tag="th"
         >
           <div class="ve-table-th__wrapper">
             { slots.default?.() }
@@ -90,7 +99,6 @@ export const TableTh = defineComponent({
                   've-table-th__sorter': true,
                   've-table-th__sorter--desc': props.sortDesc === true
                 } }
-                size="x-small"
                 icon={ props.sortIcon }
                 color={ props.sortDesc !== undefined ? props.sortActiveColor : undefined }
               />
@@ -107,7 +115,7 @@ export const TableTh = defineComponent({
               } }
             />
           ) }
-        </TableCell>
+        </th>
       )
     }
   }

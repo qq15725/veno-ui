@@ -19,7 +19,6 @@ import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
-import { TableTd, filterTableTdProps } from './table-td'
 import { TableTh, filterTableThProps } from './table-th'
 import { TableNoData } from './table-no-data'
 import { Progress } from '../progress'
@@ -29,7 +28,7 @@ import { Pagination } from '../pagination'
 import type { PropType } from 'vue'
 import type { PaginationProps } from '../../composables/data-iterator'
 
-interface TableHeaderProp
+interface TableHeaderProps
 {
   value: string, // 字段
   text?: string, // 字段文本
@@ -40,6 +39,11 @@ interface TableHeaderProp
   minWidth?: string | number // 最小宽度
   maxWidth?: string | number // 最大宽度
   [name: string]: any
+}
+
+interface InternalTableHeaderProps extends TableHeaderProps
+{
+  fixed?: false | 'start' | 'end'
 }
 
 export const Table = defineComponent({
@@ -65,7 +69,7 @@ export const Table = defineComponent({
      * @zh 表头
      */
     headers: {
-      type: Array as PropType<TableHeaderProp[]>,
+      type: Array as PropType<TableHeaderProps[]>,
       default: () => []
     },
 
@@ -120,19 +124,37 @@ export const Table = defineComponent({
 
   setup (props, { slots }) {
     const containerRef = ref<HTMLDivElement>()
-    const containerScrollLeft = ref(0)
+    const scrollLeft = ref(0)
 
-    const { paperClasses, paperStyles } = usePaper(props, 've-table__wrapper')
+    const { paperClasses, paperStyles } = usePaper(props, 've-table__table')
     const { scrollbarClasses } = useScrollbar(props)
-    const { items, pagination, sortBy, sortDesc, sort, updateOptions } = useDataIterator(props)
-    const arraySortBy = computed(() => wrapInArray(sortBy.value))
-    const arraySortDesc = computed(() => wrapInArray(sortDesc.value))
+    const {
+      items,
+      pagination,
+      sortBy: rawSortBy,
+      sortDesc: rawSortDesc,
+      sort,
+      updateOptions
+    } = useDataIterator(props)
+    const headers = computed<InternalTableHeaderProps[]>(() => {
+      const length = props.headers.length
+      return props.headers.map((header, index) => {
+        return {
+          ...header,
+          fixed: header.fixed === true
+            ? index < (length - 1) / 2 ? 'start' : 'end'
+            : header.fixed,
+        }
+      })
+    })
+    const sortBy = computed(() => wrapInArray(rawSortBy.value))
+    const sortDesc = computed(() => wrapInArray(rawSortDesc.value))
     const scrollPositionClasses = computed(() => {
-      if (containerRef.value && containerScrollLeft.value === 0) {
+      if (containerRef.value && scrollLeft.value === 0) {
         return 've-table--scroll-position-start'
       } else if (
         containerRef.value
-        && containerScrollLeft.value + containerRef.value.offsetWidth
+        && scrollLeft.value + containerRef.value.offsetWidth
         >= containerRef.value.scrollWidth
       ) {
         return 've-table--scroll-position-end'
@@ -141,14 +163,11 @@ export const Table = defineComponent({
       }
     })
 
-    function handleScroll (e: Event) {
-      const target = e.target as HTMLDivElement
-      if (target.scrollLeft !== containerScrollLeft.value) {
-        containerScrollLeft.value = target.scrollLeft
-      }
+    function handleScroll ({ target }: Event) {
+      scrollLeft.value = (target as HTMLElement).scrollLeft
     }
 
-    function genColProps (header: TableHeaderProp) {
+    function genColProps (header: InternalTableHeaderProps) {
       const styles = {
         width: convertToUnit(header.width),
         minWidth: convertToUnit(header.minWidth ?? header.width),
@@ -159,8 +178,8 @@ export const Table = defineComponent({
       }
     }
 
-    function getSortDesc (header: TableHeaderProp) {
-      return arraySortDesc.value[arraySortBy.value.findIndex(v => v === header.value)]
+    function isSortDesc (header: InternalTableHeaderProps) {
+      return sortDesc.value[sortBy.value.findIndex(v => v === header.value)]
     }
 
     useRender(() => {
@@ -183,20 +202,20 @@ export const Table = defineComponent({
             ref={ containerRef }
             onScroll={ throttle(handleScroll, 128) }
             class={ [
-              've-table__wrapper',
+              've-table__table',
               paperClasses.value,
               scrollbarClasses.value,
             ] }
-            style={ [
-              paperStyles.value
-            ] }
+            style={ paperStyles.value }
           >
             <table>
               { hasColgroup && (
                 <colgroup>
-                  { props.headers.map((header) => (
-                    <col { ...genColProps(header) } />
-                  )) }
+                  { headers.value.map(header => {
+                    return (
+                      <col { ...genColProps(header) } />
+                    )
+                  }) }
                 </colgroup>
               ) }
 
@@ -207,9 +226,7 @@ export const Table = defineComponent({
 
                 { props.loading && (
                   <tr class="ve-table__progress">
-                    <th
-                      colspan={ props.headers.length }
-                    >
+                    <th colspan={ props.headers.length }>
                       <Progress
                         color="primary"
                         indeterminate
@@ -220,16 +237,13 @@ export const Table = defineComponent({
                 ) }
 
                 <tr>
-                  { props.headers.map((header, colIndex) => {
+                  { headers.value.map(header => {
                     return (
                       <TableTh
                         { ...filterTableThProps(header)[0] }
-                        row-index={ 0 }
-                        col-index={ colIndex }
-                        cols={ props.headers.length }
                         sort-icon={ props.sortIcon }
                         sort-active-color={ props.sortActiveColor }
-                        sort-desc={ getSortDesc(header) }
+                        sort-desc={ isSortDesc(header) }
                         onClick={ () => header.sortable && sort(header.value) }
                       >
                         {
@@ -248,20 +262,23 @@ export const Table = defineComponent({
 
               { hasTbody && (
                 <tbody>
-                { items.value.map((item, rowIndex) => (
-                  <tr key={ item[props.itemKey] ?? rowIndex }>
-                    { props.headers.map((header, colIndex) => {
+                { items.value.map((item, row) => (
+                  <tr key={ item[props.itemKey] ?? row }>
+                    { headers.value.map(header => {
                       return (
-                        <TableTd
-                          { ...filterTableTdProps(header)[0] }
-                          row-index={ rowIndex }
-                          col-index={ colIndex }
-                          cols={ props.headers.length }
-                          sorted={ getSortDesc(header) !== undefined }
+                        <td
+                          class={ [
+                            've-table-td',
+                            {
+                              've-table-td--sorted': isSortDesc(header) !== undefined,
+                              've-table-td--fixed-start': header.fixed === 'start',
+                              've-table-td--fixed-end': header.fixed === 'end',
+                            }
+                          ] }
                         >
                           { slots[`item.${ header.value }`]?.({ item })
                             ?? getObjectValueByPath(item, header.value) }
-                        </TableTd>
+                        </td>
                       )
                     }) }
                   </tr>

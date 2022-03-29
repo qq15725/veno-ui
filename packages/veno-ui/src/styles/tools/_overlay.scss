@@ -1,8 +1,8 @@
 @use './absolute' as *;
 
-@mixin overlay($name, $opacity: 0, $visibility: hidden) {
+@mixin overlay($name: '&', $opacity: 0, $visibility: hidden, $pseudo: false) {
   #{$name} {
-    @include absolute();
+    @include absolute($pseudo);
     background-color: currentColor;
     border-radius: inherit;
     pointer-events: none;

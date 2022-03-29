@@ -1,12 +1,14 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
+// Blocks
 .ve-table {
   $root: &;
   display: flex;
   flex-direction: column;
 
-  &__wrapper {
+  // Elements
+  &__table {
     position: relative;
     flex: 1 1 auto;
     height: 100%;
@@ -22,14 +24,129 @@
       overflow-y: overlay;
     }
 
+    // Modifiers
     &--border {
+      th, td {
+        border-bottom: thin solid rgba(var(--ve-border-color), var(--ve-border-opacity));
+      }
+
       tr:last-child td {
         border-bottom-width: 0;
       }
+    }
 
-      th,
-      td {
-        border-bottom: thin solid rgba(var(--ve-border-color), var(--ve-border-opacity));
+    // Elements
+    table {
+      width: 100%;
+      min-width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      thead > tr {
+        @include tools.active-states('> .ve-table-th--sorted::before');
+      }
+
+      tbody > tr {
+        @include tools.states('> td::before', false);
+        @include tools.active-states('> .ve-table-td--sorted::before');
+      }
+    }
+
+    th {
+      position: relative;
+      font-weight: 500;
+      background: rgb(var(--ve-theme-secondary));
+      padding: 12px;
+      @include tools.overlay('&::before', 0, hidden, true);
+
+      @at-root {
+        #{$root}--fixed-header & {
+          position: sticky !important;
+          top: 0;
+          z-index: 2;
+        }
+      }
+    }
+
+    td {
+      position: relative;
+      word-break: break-all;
+      background: rgb(var(--ve-theme-background));
+      padding: 12px;
+      @include tools.overlay('&::before', 0, hidden, true);
+    }
+  }
+
+  &-td--fixed-start,
+  &-td--fixed-end {
+    z-index: 1 !important;
+  }
+
+  &-th--fixed-start,
+  &-th--fixed-end {
+    z-index: 3 !important;
+  }
+
+  &-th--fixed-start,
+  &-td--fixed-start,
+  &-th--fixed-end,
+  &-td--fixed-end {
+    position: sticky !important;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      top: 0;
+      bottom: -1px;
+      width: 10px;
+      pointer-events: none;
+      transition: box-shadow .1s settings.$standard-easing;
+    }
+  }
+
+  &-th--fixed-start,
+  &-td--fixed-start {
+    left: 0;
+
+    &:after {
+      right: 0;
+      transform: translate(100%);
+      box-shadow: inset 6px 0 8px -3px rgba(var(--ve-theme-on-surface), var(--ve-activated-opacity));
+
+      #{$root}--scroll-position-center &,
+      #{$root}--scroll-position-end & {
+        display: block;
+      }
+    }
+  }
+
+  &-th--fixed-end,
+  &-td--fixed-end {
+    right: 0;
+
+    &:after {
+      left: 0;
+      transform: translate(-100%);
+      box-shadow: inset -6px 0 8px -3px rgba(var(--ve-theme-on-surface), var(--ve-activated-opacity));
+
+      #{$root}--scroll-position-center &,
+      #{$root}--scroll-position-start & {
+        display: block;
+      }
+    }
+  }
+
+  &__progress {
+    > th {
+      padding: 0 !important;
+      border: 0 !important;
+      z-index: 4;
+
+      > .ve-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
   }
@@ -37,57 +154,5 @@
   &__pagination {
     margin-top: 12px;
     justify-content: end;
-  }
-
-  table {
-    width: 100%;
-    min-width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
-
-  tbody tr {
-    @include tools.states('.ve-table-cell__overlay', false);
-  }
-
-  tbody tr .ve-table-td--sorted {
-    @include tools.active-states('.ve-table-cell__overlay');
-  }
-
-  th,
-  td {
-    padding: 12px;
-  }
-
-  th {
-    position: relative;
-    font-weight: 500;
-    background: rgb(var(--ve-theme-secondary));
-  }
-
-  &--fixed-header th {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
-  td {
-    position: relative;
-    word-break: break-all;
-    background: rgb(var(--ve-theme-background));
-  }
-
-  &__progress {
-    th {
-      padding: 0 !important;
-      border: 0 !important;
-      z-index: 4;
-    }
-
-    .ve-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
   }
 }

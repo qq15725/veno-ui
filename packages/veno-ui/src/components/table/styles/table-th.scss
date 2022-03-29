@@ -2,15 +2,18 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
+// Blocks
 .ve-table-th {
+  // Modifiers
   &--sortable {
     cursor: pointer;
     padding-inline-end: 28px !important;
-    @include tools.states('.ve-table-cell__overlay', false);
   }
 
-  &--sorted {
-    @include tools.active-states('.ve-table-cell__overlay');
+  // Elements
+  &__wrapper {
+    display: flex;
+    align-items: center;
   }
 
   &__sorter {
