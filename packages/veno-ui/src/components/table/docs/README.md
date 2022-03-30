@@ -11,6 +11,8 @@ meta:
 
 basic.md
 
+selection.md
+
 export.md
 
 remote.md

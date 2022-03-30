@@ -23,13 +23,16 @@ import { TableTh, filterTableThProps } from './table-th'
 import { TableNoData } from './table-no-data'
 import { Progress } from '../progress'
 import { Pagination } from '../pagination'
+import { Checkbox } from '../checkbox'
 
 // Types
 import type { PropType } from 'vue'
 import type { PaginationProps } from '../../composables/data-iterator'
+import { useProxiedModel } from '../../composables/proxied-model'
 
 interface TableHeaderProps
 {
+  $type?: 'selection',
   value: string, // 字段
   text?: string, // 字段文本
   align?: 'start' | 'center' | 'end', // 对齐方式
@@ -38,7 +41,7 @@ interface TableHeaderProps
   width?: string | number // 宽度
   minWidth?: string | number // 最小宽度
   maxWidth?: string | number // 最大宽度
-  [name: string]: any
+  [key: string]: any
 }
 
 interface InternalTableHeaderProps extends TableHeaderProps
@@ -70,7 +73,15 @@ export const Table = defineComponent({
      */
     headers: {
       type: Array as PropType<TableHeaderProps[]>,
-      default: () => []
+      default: () => [],
+    },
+
+    /**
+     * @zh 已选择的
+     */
+    selected: {
+      type: Array as PropType<Record<string, any>[]>,
+      default: () => [],
     },
 
     /**
@@ -120,11 +131,17 @@ export const Table = defineComponent({
     'update:sortBy': (val: string | string[]) => true,
     'update:sortDesc': (val: boolean | boolean[]) => true,
     'update:options': (val: Record<string, any>) => true,
+    'update:selected': (val: Record<string, any>[]) => true,
   },
 
   setup (props, { slots }) {
     const containerRef = ref<HTMLDivElement>()
     const scrollLeft = ref(0)
+    const selected = useProxiedModel(props, 'selected')
+    const isAllSelected = computed(() => {
+      return selected.value.map(v => v[props.itemKey]).sort().join('')
+        === props.items.map(v => v[props.itemKey]).sort().join('')
+    })
 
     const { paperClasses, paperStyles } = usePaper(props, 've-table__table')
     const { scrollbarClasses } = useScrollbar(props)
@@ -246,11 +263,28 @@ export const Table = defineComponent({
                         sort-desc={ isSortDesc(header) }
                         onClick={ () => header.sortable && sort(header.value) }
                       >
-                        {
+                        { header.$type === 'selection' ? (
+                          <Checkbox
+                            indeterminate={ selected.value.length > 0 && !isAllSelected.value }
+                            onUpdate:indeterminate={ val => {
+                              if (!val) {
+                                selected.value = props.items
+                              }
+                            } }
+                            modelValue={ isAllSelected.value }
+                            onUpdate:modelValue={ val => {
+                              if (val) {
+                                selected.value = props.items
+                              } else {
+                                selected.value = []
+                              }
+                            } }
+                          />
+                        ) : (
                           slots[`header.${ header.value }`]?.({ header })
                           ?? header.text
                           ?? header.value
-                        }
+                        ) }
                       </TableTh>
                     )
                   }) }
@@ -262,8 +296,8 @@ export const Table = defineComponent({
 
               { hasTbody && (
                 <tbody>
-                { items.value.map((item, row) => (
-                  <tr key={ item[props.itemKey] ?? row }>
+                { items.value.map((item, index) => (
+                  <tr key={ item[props.itemKey] ?? index }>
                     { headers.value.map(header => {
                       return (
                         <td
@@ -276,8 +310,23 @@ export const Table = defineComponent({
                             }
                           ] }
                         >
-                          { slots[`item.${ header.value }`]?.({ item })
-                            ?? getObjectValueByPath(item, header.value) }
+                          { header.$type === 'selection' ? (
+                            <Checkbox
+                              modelValue={
+                                selected.value.findIndex((v: any) => v[props.itemKey] === item[props.itemKey]) > -1
+                              }
+                              onUpdate:modelValue={ val => {
+                                if (val) {
+                                  selected.value.push(item)
+                                } else {
+                                  selected.value = selected.value.filter((v: any) => v[props.itemKey] !== item[props.itemKey])
+                                }
+                              } }
+                            />
+                          ) : (
+                            slots[`item.${ header.value }`]?.({ item })
+                            ?? getObjectValueByPath(item, header.value)
+                          ) }
                         </td>
                       )
                     }) }

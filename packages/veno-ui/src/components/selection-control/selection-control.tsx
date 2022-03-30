@@ -12,6 +12,7 @@ import {
   propsFactory,
   deepEqual,
   wrapInArray,
+  pick,
 } from '../../utils'
 
 // Components
@@ -28,7 +29,7 @@ import { useSelectionGroupControl } from '../selection-group-control/selection-g
 import { makeThemeProps } from '../../composables/theme'
 
 // Types
-import type { PropType, ComputedRef, Ref, WritableComputedRef } from 'vue'
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, WritableComputedRef } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type SelectionControlSlot = {
@@ -73,6 +74,10 @@ export const makeSelectionControlProps = propsFactory({
   ...makeSizeProps(),
   ...makeDensityProps(),
 }, 'selection-control')
+
+export function filterSelectionControlProps (props: ExtractPropTypes<ReturnType<typeof makeSelectionControlProps>>) {
+  return pick(props, Object.keys(SelectionControl.props) as any)
+}
 
 export const SelectionControl = genericComponent<new <T>() => {
   $props: {

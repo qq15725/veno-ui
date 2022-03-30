@@ -346,9 +346,9 @@ export const Pagination = defineComponent({
         density: props.density,
         shape: props.shape,
         size: props.size,
-        variant: props.variant,
+        variant: 'outlined',
         border: props.border,
-      }
+      } as const
 
       const prevDisabled = props.disabled || page.value <= firstPage.value
       const nextDisabled = props.disabled || page.value >= firstPage.value + lastPage.value - 1
@@ -465,10 +465,10 @@ export const Pagination = defineComponent({
             <li class="ve-pagination__per-page">
               <Select
                 hide-details
-                width="100"
+                width="95"
                 v-model={ perPage.value }
                 items={ props.perPageOptions.map(v => ({
-                  text: `${ v } 条/页`,
+                  text: `${ v } / 页`,
                   value: parseInt(v as any, 10),
                 })) }
               />
