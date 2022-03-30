@@ -26,7 +26,7 @@ import langVue from 'shiki/languages/vue.tmLanguage.json'
 import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
-  setCDN('https://unpkg.com/shiki@0.10.1/')
+  setCDN('https://cdn.jsdelivr.net/npm/shiki@0.10.1/')
 
   const veno = createVeno({
     directives,
