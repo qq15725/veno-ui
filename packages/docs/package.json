@@ -17,7 +17,7 @@
   "devDependencies": {
     "@iconify-json/fontisto": "^1.1.1",
     "@iconify-json/mdi": "^1.1.6",
-    "@iconify-json/tabler": "^1.1.3",
+    "@iconify-json/tabler": "^1.1.7",
     "@types/prismjs": "^1.26.0",
     "@veno-ui/api-generator": "workspace:*",
     "@veno-ui/markdown": "workspace:*",
@@ -27,7 +27,7 @@
     "@vueuse/head": "^0.7.5",
     "shiki": "^0.10.1",
     "unplugin-vue-components": "^0.17.21",
-    "vite-plugin-iconify": "^0.1.0",
+    "vite-plugin-iconify": "^0.1.1",
     "vite-plugin-pages": "^0.19.9",
     "vite-plugin-pwa": "^0.11.13",
     "vite-plugin-vue-layouts": "^0.5.0",
