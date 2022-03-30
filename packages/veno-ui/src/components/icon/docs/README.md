@@ -39,7 +39,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 模板代码中图标的静态按需导入，加载自定义目录下的所有图标文件（SVG）。
 
-如何配置参考 [@veno-ui/vite-plugin-icons](https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons) 插件文档。
+如何配置参考 [vite-plugin-iconify](https://github.com/qq15725/vite-plugin-iconify) 插件文档。
 
 如何使用参考 [veno-admin](https://github.com/qq15725/veno-admin) 后台工程模板。
 

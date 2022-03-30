@@ -23,7 +23,7 @@
       <ve-button
           v-bind="props"
           @click="toggleTheme"
-          :icon="theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          :icon="theme === 'dark' ? 'fontisto-night-clear' : 'fontisto-day-sunny'"
           class="ml-3"
       />
     </ve-tooltip>
@@ -33,7 +33,7 @@
           v-bind="props"
           href="https://github.com/qq15725/veno-ui"
           target="_blank"
-          icon="mdi-github"
+          icon="tabler-brand-github"
           class="ml-3"
       />
     </ve-tooltip>

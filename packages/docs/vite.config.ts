@@ -13,7 +13,7 @@ import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from '@veno-ui/vite-plugin-markdown'
-import Icons from '@veno-ui/vite-plugin-icons'
+import Icons from 'vite-plugin-iconify'
 // @ts-ignore
 import { VitePWA } from 'vite-plugin-pwa'
 import pkg from 'veno-ui/package.json'
@@ -149,9 +149,15 @@ export default defineConfig(({ mode }) => {
       }),
       VueJsx(),
 
-      // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-icons
+      // https://github.com/qq15725/vite-plugin-iconify
       Icons({
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        replaceableProps: [
+          'veno-ui',
+        ],
+        iconifyLoaderOptions: {
+          autoInstall: true,
+        },
       }),
 
       // https://github.com/antfu/unplugin-vue-components

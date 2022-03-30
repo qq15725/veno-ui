@@ -5,7 +5,7 @@ import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 import * as directives from 'veno-ui/directives'
 import * as providers from 'veno-ui/providers'
-import aliases from '~veno-ui/icons'
+import aliases from '~icons'
 
 // Highlighter
 import { getHighlighter, setCDN } from 'shiki'

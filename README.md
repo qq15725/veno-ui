@@ -79,12 +79,10 @@ createApp(App).use(veno).mount('#app')
 | [veno-admin] | Veno UI 的后台管理项目模板。                       |
 | [@veno-ui/markdown] | Veno UI 的 Markdown 渲染器                   |
 | [@veno-ui/vite-plugin-markdown] | Veno UI 在 Vite 下的 Markdown 文件解析          |
-| [@veno-ui/vite-plugin-icons] | Veno UI 在 Vite 下的图标解决方案（静态按需导入，SVG 文件导入） |
 
 [veno-admin]: https://github.com/qq15725/veno-admin
 [@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
 [@veno-ui/vite-plugin-markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown
-[@veno-ui/vite-plugin-icons]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-icons
 
 ## 参与开发
 
