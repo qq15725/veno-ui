@@ -61,7 +61,7 @@ export function provideDefaults (
       return properties
     }
 
-    return deepMerge(properties, properties.prev)
+    return deepMerge(properties.prev, properties)
   }) as ComputedRef<DefaultsInstance>
 
   provide(DefaultsKey, newDefaults)

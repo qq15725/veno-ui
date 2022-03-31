@@ -489,8 +489,14 @@ export const Select = genericComponent<new () => {
                             >
                               { {
                                 prepend: props.multiple ? () => (
-                                  <ListItemAvatar left>
-                                    <Checkbox model-value={ active.value.includes(item.value) } />
+                                  <ListItemAvatar
+                                    start
+                                    color="inherit"
+                                    variant="text"
+                                  >
+                                    <Checkbox
+                                      model-value={ active.value.includes(item.value) }
+                                    />
                                   </ListItemAvatar>
                                 ) : undefined
                               } }

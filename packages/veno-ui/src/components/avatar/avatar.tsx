@@ -3,7 +3,7 @@ import './styles/avatar.scss'
 
 // Utils
 import { ref, toRef, watch, nextTick } from 'vue'
-import { defineComponent } from '../../utils'
+import { defineComponent, propsFactory } from '../../utils'
 
 // Directives
 import { Resize } from '../../directives/resize'
@@ -18,37 +18,50 @@ import { Icon } from '../icon'
 // Constants
 const RADIX = 0.8
 
+export const makeAvatarProps = propsFactory({
+
+  /**
+   * @zh 列表项头像是否在开始侧
+   */
+  start: Boolean,
+
+  /**
+   * @zh 列表项头像是否在结束侧
+   */
+  end: Boolean,
+
+  /**
+   * @zh 图像
+   */
+  image: String,
+
+  /**
+   * @zh 图标
+   */
+  icon: [String, Object],
+
+  /**
+   * @zh 文本
+   */
+  text: String,
+
+  /**
+   * @zh 可点击
+   */
+  link: Boolean,
+
+  ...makePaperProps({
+    color: 'secondary',
+    shape: 'circle',
+  } as const),
+}, 'avatar')
+
 export const Avatar = defineComponent({
   name: 'VeAvatar',
 
   directives: { Resize },
 
-  props: {
-    /**
-     * @zh 图像
-     */
-    image: String,
-
-    /**
-     * @zh 图标
-     */
-    icon: [String, Object],
-
-    /**
-     * @zh 文本
-     */
-    text: String,
-
-    /**
-     * @zh 可点击
-     */
-    link: Boolean,
-
-    ...makePaperProps({
-      color: 'secondary',
-      shape: 'circle',
-    } as const),
-  },
+  props: makeAvatarProps(),
 
   setup (props, { slots, attrs }) {
     const { paperClasses, paperStyles } = usePaper(props)
@@ -73,7 +86,7 @@ export const Avatar = defineComponent({
     return () => {
       const hasImage = !!props.image
       const hasIcon = !!props.icon
-      const hasText = !!(props.text || slots.default)
+      const hasText = !!props.text
       const isClickable = props.link || !!(attrs.onClick || attrs.onClickOnce)
 
       return (
@@ -81,8 +94,8 @@ export const Avatar = defineComponent({
           class={ [
             've-avatar',
             {
-              've-avatar--left': props.left === true,
-              've-avatar--right': props.right === true,
+              've-avatar--start': props.start,
+              've-avatar--end': props.end,
               've-avatar--icon': props.icon,
               've-avatar--link': isClickable,
             },
@@ -111,9 +124,11 @@ export const Avatar = defineComponent({
               class="ve-avatar__wrapper"
               ref={ contentRef }
             >
-              { slots.default?.() ?? props.text }
+              { props.text }
             </span>
           ) }
+
+          { slots.default?.() }
         </props.tag>
       )
     }

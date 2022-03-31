@@ -13,7 +13,6 @@ import { makeRouterProps, useLink } from '../../composables/router'
 import { useNestedItem } from '../../composables/nested'
 
 // Components
-import { Avatar } from '../avatar'
 import { ListItemAvatar } from './list-item-avatar'
 import { ListItemHeader } from './list-item-header'
 import { ListItemTitle } from './list-item-title'
@@ -194,22 +193,21 @@ export const ListItem = genericComponent<new () => {
           onClick={ isClickable && ((e: MouseEvent) => {
             link.navigate?.(e)
             props.value != null && activate(!isNestedActive.value, e)
-          })}
+          }) }
           v-ripple={ isClickable && props.ripple }
         >
           { genOverlays(isClickable, 've-list-item') }
 
           { hasPrepend && (
             slots.prepend?.(slotProps.value) ?? (
-              <ListItemAvatar left>
-                <Avatar
-                  color="inherit"
-                  variant="text"
-                  density={ props.density }
-                  icon={ props.prependIcon }
-                  image={ props.prependAvatar }
-                />
-              </ListItemAvatar>
+              <ListItemAvatar
+                start
+                color="inherit"
+                variant="text"
+                density={ props.density }
+                icon={ props.prependIcon }
+                image={ props.prependAvatar }
+              />
             )
           ) }
 
@@ -237,15 +235,14 @@ export const ListItem = genericComponent<new () => {
 
           { hasAppend && (
             slots.append?.(slotProps.value) ?? (
-              <ListItemAvatar right>
-                <Avatar
-                  color="inherit"
-                  variant="text"
-                  density={ props.density }
-                  icon={ props.appendIcon }
-                  image={ props.appendAvatar }
-                />
-              </ListItemAvatar>
+              <ListItemAvatar
+                end
+                color="inherit"
+                variant="text"
+                density={ props.density }
+                icon={ props.appendIcon }
+                image={ props.appendAvatar }
+              />
             )
           ) }
         </Tag>

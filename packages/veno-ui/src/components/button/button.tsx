@@ -156,7 +156,7 @@ export const Button = defineComponent({
                   /> as any
                 }
                 size={ props.size }
-                left={ !props.stacked }
+                start
               />
             ) }
           </ExpandXTransition>
@@ -175,7 +175,7 @@ export const Button = defineComponent({
                   : props.prependIcon
               }
               size={ props.size }
-              left={ !props.stacked }
+              start
             />
           ) }
 
@@ -205,7 +205,7 @@ export const Button = defineComponent({
               class="ve-button__icon"
               icon={ props.appendIcon }
               size={ props.size }
-              right={ !props.stacked }
+              end
             />
           ) }
         </Tag>

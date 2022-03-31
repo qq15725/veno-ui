@@ -42,10 +42,7 @@ export const Toolbar = defineComponent({
       VeButton: {
         variant: 'text',
       },
-      VeInput: {
-        hideDetails: true,
-      },
-    }, { scoped: true })
+    })
 
     return () => {
       const hasTitle = !!(props.title || slots.title)

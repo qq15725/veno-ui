@@ -30,11 +30,11 @@
     }
   }
 
-  &--left {
+  &--start {
     margin-inline-end: map.get(settings.$grid-gutters, 'sm');
   }
 
-  &--right {
+  &--end {
     margin-inline-start: map.get(settings.$grid-gutters, 'sm');
   }
 

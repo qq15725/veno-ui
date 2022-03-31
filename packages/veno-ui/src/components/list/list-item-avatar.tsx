@@ -1,45 +1,38 @@
 // Styles
 import './styles/list-item-avatar.scss'
 
+// Components
+import { Avatar } from '../avatar'
+
 // Composables
-import { makeTagProps } from '../../composables/tag'
+import { makeAvatarProps } from '../avatar/avatar'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Types
-export type ListItemAvatar = InstanceType<typeof ListItemAvatar>
-
-export const ListItemAvatar = genericComponent()({
+export const ListItemAvatar = defineComponent({
   name: 'VeListItemAvatar',
 
-  props: {
-    /**
-     * @zh 列表项头像是否居左
-     */
-    left: Boolean,
-
-    /**
-     * @zh 列表项头像是否居右
-     */
-    right: Boolean,
-    ...makeTagProps(),
-  },
+  props: makeAvatarProps(),
 
   setup (props, { slots }) {
     return () => {
       return (
-        <props.tag
+        <Avatar
           class={ [
             've-list-item-avatar',
             {
-              've-list-item-avatar--start': props.left,
-              've-list-item-avatar--end': props.right,
+              've-list-item-avatar--start': props.start,
+              've-list-item-avatar--end': props.end,
             },
           ] }
+          { ...props }
           v-slots={ slots }
         />
       )
     }
   },
 })
+
+export type ListItemAvatar = InstanceType<typeof ListItemAvatar>

@@ -22,12 +22,12 @@ export const Icon = defineComponent({
     /**
      * @zh 是否为左侧图标
      */
-    left: Boolean,
+    start: Boolean,
 
     /**
      * @zh 是否为右侧图标
      */
-    right: Boolean,
+    end: Boolean,
 
     ...makeSizeProps(),
     ...makeIconProps(),
@@ -66,8 +66,8 @@ export const Icon = defineComponent({
             sizeClasses.value,
             textColorClasses.value,
             {
-              've-icon--left': props.left,
-              've-icon--right': props.right,
+              've-icon--start': props.start,
+              've-icon--end': props.end,
             },
           ] }
           style={ [

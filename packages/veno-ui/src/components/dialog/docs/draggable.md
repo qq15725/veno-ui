@@ -13,7 +13,7 @@
     persistent 
     no-click-animation 
     :scrim="false" 
-    :scroll-strategy="fullscreen ? 'block' : false"
+    :scroll-strategy="fullscreen ? 'block' : 'none'"
     :content-style="contentStyle"
     :fullscreen="fullscreen"
     scrollable

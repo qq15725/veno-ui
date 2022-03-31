@@ -8,6 +8,7 @@ import { blockScrollStrategy } from './block'
 import { repositionScrollStrategy } from './reposition'
 
 const scrollStrategies = {
+  none: null,
   close: closeScrollStrategy,
   block: blockScrollStrategy,
   reposition: repositionScrollStrategy,

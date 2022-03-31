@@ -39,10 +39,9 @@ export const MessageProvider = defineComponent({
           { slots.default?.() }
 
           <Overlay
-            model-value={ items.value.length > 0 }
+            modelValue={ items.value.length > 0 }
             scrim={ false }
-            scroll-strategy={ () => {
-            } }
+            scrollStrategy="none"
             class={ [
               've-message-provider',
             ] }
