@@ -19,7 +19,8 @@ meta:
 import { createVeno } from 'veno-ui'
 import { getHighlighter, setCDN } from 'shiki'
 
-setCDN('https://unpkg.com/shiki@0.10.1/')
+setCDN('https://cdn.jsdelivr.net/npm/shiki@0.10.1/')
+// setCDN('https://unpkg.com/shiki@0.10.1/')
 
 export default createVeno({
   highlighter: {
