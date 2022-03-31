@@ -67,33 +67,28 @@ export default defineConfig(({ mode }) => {
                 name = toPascalCase(name.trim())
                 let str = ''
                 if (component.props.length) {
-                  const props = component.props.map((prop: any) => {
-                    return {
-                      name: prop.name,
-                      source: prop.source,
-                      type: typeof prop.type === 'object'
-                        ? prop.type.join(' | ')
-                        : prop.type,
-                      default: JSON.stringify(prop.default, null, 2),
-                      description: prop.descriptions.find((v: any) => v.language === 'zh')?.description
-                    }
-                  })
-                  const headersProp = JSON.stringify([
+                  str += `### ${ name } Props\n`
+                  str += `<ve-table :pagination="{ perPage: 999 }" hide-pagination :headers='${ JSON.stringify([
                     { text: '属性名', value: 'name', minWidth: '120', },
                     { text: '类型', value: 'type', minWidth: '120', },
                     { text: '默认值', value: 'default', minWidth: '200', },
                     { text: '描述', value: 'description', minWidth: '120', },
                     { text: '来源', value: 'source', minWidth: '120', }
-                  ])
-                  const itemsProp = JSON.stringify(props).replace(/'/g, '')
-                  str += `### ${ name } Props\n<ve-table :pagination="{ perPage: 999 }" hide-pagination :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
+                  ]) }' :items='${ JSON.stringify(component.props.map((prop: any) => {
+                    return {
+                      ...prop,
+                      type: typeof prop.type === 'object'
+                        ? prop.type.join(' | ')
+                        : prop.type,
+                      description: prop.descriptions.find((v: any) => v.language === 'zh')?.description
+                    }
+                  })).replace(/'/g, '!') }'><template #item.type="{ item }"><ve-code color="secondary" inline class="p-1">{{ item.type }}</ve-code></template><template #item.default="{ item }"><ve-code color="secondary" inline class="p-1">{{ typeof item.default === 'string' ? item.default.replace(/!/g, "'") : JSON.stringify(item.default, null, 2) }}</ve-code></template></ve-table>\n`
                 }
                 if (component.events.length) {
-                  const headersProp = JSON.stringify([
+                  str += `### ${ name } Events\n`
+                  str += `<ve-table :pagination="{ perPage: 999 }" hide-pagination :headers='${ JSON.stringify([
                     { text: '事件名', value: 'name' },
-                  ])
-                  const itemsProp = JSON.stringify(component.events)
-                  str += `### ${ name } Events\n<ve-table :pagination="{ perPage: 999 }" hide-pagination :headers='${ headersProp }' :items='${ itemsProp }'/>\n`
+                  ]) }' :items='${ JSON.stringify(component.events) }'/>\n`
                 }
                 return str
               })
