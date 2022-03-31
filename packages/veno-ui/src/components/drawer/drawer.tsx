@@ -204,7 +204,8 @@ export const Drawer = defineComponent({
                 }
                 right={ props.anchor === 'left' ? 0 : undefined }
                 bottom={ props.anchor === 'top' ? 0 : undefined }
-                size="x-small"
+                size="small"
+                density="ultra-high"
                 border
                 shape="circle"
                 onClick={ () => {

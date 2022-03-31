@@ -18,6 +18,6 @@ icon.md
 
 ## API
 
-继承 `Button`。
+隐式继承按钮 `Button` 的API。
 
 <<<API link
