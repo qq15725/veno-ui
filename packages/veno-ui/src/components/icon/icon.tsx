@@ -20,12 +20,12 @@ export const Icon = defineComponent({
     color: String,
 
     /**
-     * @zh 是否为左侧图标
+     * @zh 是否在左侧
      */
     start: Boolean,
 
     /**
-     * @zh 是否为右侧图标
+     * @zh 是否在右侧
      */
     end: Boolean,
 

@@ -19,14 +19,13 @@ import { Icon } from '../icon'
 const RADIX = 0.8
 
 export const makeAvatarProps = propsFactory({
-
   /**
-   * @zh 列表项头像是否在开始侧
+   * @zh 是否在左侧
    */
   start: Boolean,
 
   /**
-   * @zh 列表项头像是否在结束侧
+   * @zh 是否在右侧
    */
   end: Boolean,
 

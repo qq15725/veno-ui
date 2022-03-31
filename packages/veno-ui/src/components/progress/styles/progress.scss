@@ -11,11 +11,11 @@
   vertical-align: middle;
   @include tools.use-size(('sizes': $progress-sizes));
 
-  &--left {
+  &--start {
     margin-inline-end: map.get(settings.$grid-gutters, 'md');
   }
 
-  &--right {
+  &--end {
     margin-inline-start: map.get(settings.$grid-gutters, 'md');
   }
 

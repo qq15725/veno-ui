@@ -38,8 +38,17 @@ export const Progress = defineComponent({
       type: [String, Boolean] as PropType<string | false | null>,
       default: 'primary',
     },
-    left: Boolean,
-    right: Boolean,
+
+    /**
+     * @zh 是否在左侧
+     */
+    start: Boolean,
+
+    /**
+     * @zh 是否在右侧
+     */
+    end: Boolean,
+
     ...makeProgressCircularProps(),
     ...makeThemeProps(),
     ...makeSizeProps(),
@@ -92,8 +101,8 @@ export const Progress = defineComponent({
             {
               've-progress--indeterminate': !!props.indeterminate,
               've-progress--visible': isIntersecting.value,
-              've-progress--left': props.left,
-              've-progress--right': props.right,
+              've-progress--start': props.start,
+              've-progress--end': props.end,
             },
           ] }
           style={ [
