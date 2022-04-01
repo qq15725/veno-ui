@@ -8,9 +8,13 @@ category: Feedback 反馈组件
 
 :::include
 
-basic.md indeterminate.md
+basic.md
 
-size.md color.md
+indeterminate.md
+
+size.md 
+
+color.md
 
 :::
 
