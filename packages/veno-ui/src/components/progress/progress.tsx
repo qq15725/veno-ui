@@ -5,6 +5,10 @@ import './styles/progress.scss'
 import { toRef, computed } from 'vue'
 import { defineComponent } from '../../utils'
 
+// Components
+import { ProgressLinear } from './progress-linear'
+import { ProgressCircular } from './progress-circular'
+
 // Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
@@ -12,12 +16,8 @@ import { makeSizeProps, useSize } from '../../composables/size'
 import { useTextColor } from '../../composables/color'
 import { useVariant } from '../../composables/variant'
 import { useIntersectionObserver } from '../../composables/intersection-observer'
-import { ProgressLinear, filterProgressLinearProps } from './progress-linear'
-import {
-  ProgressCircular,
-  makeProgressCircularProps,
-  filterProgressCircularProps
-} from './progress-circular'
+import { makeProgressLinearProps, filterProgressLinearProps } from './progress-linear'
+import { makeProgressCircularProps, filterProgressCircularProps } from './progress-circular'
 
 // Constants
 export const progressVariants = [
@@ -34,6 +34,9 @@ export const Progress = defineComponent({
   name: 'VeProgress',
 
   props: {
+    /**
+     * @zh 进度条颜色
+     */
     color: {
       type: [String, Boolean] as PropType<string | false | null>,
       default: 'primary',
@@ -50,6 +53,7 @@ export const Progress = defineComponent({
     end: Boolean,
 
     ...makeProgressCircularProps(),
+    ...makeProgressLinearProps(),
     ...makeThemeProps(),
     ...makeSizeProps(),
     ...makeTagProps(),
@@ -68,9 +72,7 @@ export const Progress = defineComponent({
       toRef(props, 'color')
     )
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
-    const normalizedValue = computed(() => {
-      return Math.max(0, Math.min(100, parseFloat(String(props.modelValue))))
-    })
+    const model = computed(() => Math.max(0, Math.min(100, parseFloat(props.modelValue))))
     const strokeWidth = computed(() => Number(props.strokeWidth))
 
     const size = computed(() => {
@@ -82,13 +84,10 @@ export const Progress = defineComponent({
     })
 
     return () => {
-      const [progressCircularProps] = filterProgressCircularProps(props)
-      const [progressLinearProps] = filterProgressLinearProps(props)
-
       return (
         <props.tag
           role="progressbar"
-          aria-valuenow={ props.indeterminate ? undefined : normalizedValue.value }
+          aria-valuenow={ props.indeterminate ? undefined : model.value }
           aria-valuemin="0"
           aria-valuemax="100"
           ref={ intersectionRef }
@@ -111,16 +110,21 @@ export const Progress = defineComponent({
           ] }
         >
           { props.variant === 'circular' && (
-            <ProgressCircular { ...progressCircularProps } size={ size.value } />
+            <ProgressCircular
+              { ...filterProgressCircularProps(props)[0] }
+              size={ size.value }
+            />
           ) }
 
           { props.variant === 'linear' && (
-            <ProgressLinear { ...progressLinearProps } />
+            <ProgressLinear
+              { ...filterProgressLinearProps(props)[0] }
+            />
           ) }
 
           { slots.default && (
-            <div class="ve-progress__wrap">
-              { slots.default({ value: normalizedValue.value }) }
+            <div class="ve-progress__wrapper">
+              { slots.default({ value: model.value }) }
             </div>
           ) }
         </props.tag>

@@ -4,11 +4,11 @@
 
 ```html
 <ve-spacer>
-  <ve-badge dot>
+  <ve-badge dot color="red">
     <ve-link>Link</ve-link>
   </ve-badge>
   
-  <ve-badge dot>
+  <ve-badge dot color="red">
     <ve-icon icon="$nodata" />
   </ve-badge>
 </ve-spacer>

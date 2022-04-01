@@ -11,10 +11,17 @@ import { makeProgressLinearProps } from './progress-linear'
 const diameter = 24
 
 export const makeProgressCircularProps = propsFactory({
+  /**
+   * @zh 进度条大小
+   */
   size: {
     type: [String, Number],
     default: diameter,
   },
+
+  /**
+   * @zh 进度条初始化角度
+   */
   rotate: {
     type: [Number, String],
     default: 0,
@@ -32,7 +39,7 @@ export const ProgressCircular = defineComponent({
   props: makeProgressCircularProps(),
 
   setup (props) {
-    const value = computed(() => Math.max(0, Math.min(100, parseFloat(String(props.modelValue)))))
+    const model = computed(() => Math.max(0, Math.min(100, parseFloat(props.modelValue))))
     const radius = computed(() => {
       const rate = Math.max(
         Number(props.strokeWidth) && Number(props.size)
@@ -44,7 +51,7 @@ export const ProgressCircular = defineComponent({
     })
     const strokeWidth = computed(() => diameter - radius.value * 2)
     const circumference = computed(() => 2 * Math.PI * radius.value)
-    const offset = computed(() => convertToUnit(((100 - value.value) / 100) * circumference.value))
+    const offset = computed(() => convertToUnit(((100 - model.value) / 100) * circumference.value))
 
     return () => (
       <svg

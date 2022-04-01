@@ -4,9 +4,9 @@
 
 ```html
 <ve-tabs>
-  <ve-tab>tab1</ve-tab>
-  <ve-tab>tab2</ve-tab>
-  <ve-tab>tab3</ve-tab>
+  <ve-tab>Tab1</ve-tab>
+  <ve-tab>Tab2</ve-tab>
+  <ve-tab>Tab3</ve-tab>
 </ve-tabs>
 ```
 

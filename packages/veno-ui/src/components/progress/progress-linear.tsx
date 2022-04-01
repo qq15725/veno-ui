@@ -6,18 +6,33 @@ import { computed } from 'vue'
 import { defineComponent, propsFactory, pick, convertToUnit } from '../../utils'
 
 export const makeProgressLinearProps = propsFactory({
+  /**
+   * @zh 是否激活
+   */
   active: {
     type: Boolean,
     default: true,
   },
+
+  /**
+   * @zh 当前进度比
+   */
   modelValue: {
     type: [Number, String],
     default: 0,
   },
+
+  /**
+   * @zh 描线宽
+   */
   strokeWidth: {
     type: [Number, String],
     default: 2,
   },
+
+  /**
+   * @zh 不确定的进度条
+   */
   indeterminate: Boolean,
 }, 'progress-linear')
 
@@ -31,9 +46,7 @@ export const ProgressLinear = defineComponent({
   props: makeProgressLinearProps(),
 
   setup (props) {
-    const normalizedValue = computed(() => {
-      return Math.max(0, Math.min(100, parseFloat(String(props.modelValue))))
-    })
+    const model = computed(() => Math.max(0, Math.min(100, parseFloat(props.modelValue))))
     const height = computed(() => Number(props.strokeWidth))
     return () => (
       <div
@@ -52,9 +65,7 @@ export const ProgressLinear = defineComponent({
 
         <div
           class="ve-progress-linear__overlay"
-          style={ [
-            { width: convertToUnit(normalizedValue.value, '%') },
-          ] }
+          style={ { width: convertToUnit(model.value, '%') } }
         />
       </div>
     )

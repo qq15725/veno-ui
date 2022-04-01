@@ -3,6 +3,7 @@
 @use '../../../styles/tools';
 @use '../../../styles/settings';
 
+// Blocks
 .ve-progress {
   --ve-size-offset: 0px;
   --ve-circular-default-size: 40px;
@@ -11,6 +12,7 @@
   vertical-align: middle;
   @include tools.use-size(('sizes': $progress-sizes));
 
+  // Modifiers
   &--start {
     margin-inline-end: map.get(settings.$grid-gutters, 'md');
   }
@@ -27,17 +29,6 @@
     width: var(--ve-size);
   }
 
-  .ve-progress-circular {
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-
   &--indeterminate:not(&--visible),
   &--indeterminate:not(&--visible) {
     animation-play-state: paused !important;
@@ -50,15 +41,27 @@
     width: 100%;
   }
 
+  // Elements
+  .ve-progress-circular {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
   .ve-progress-linear {
     flex: 1 0 auto;
   }
 
-  .ve-progress-linear + &__wrap {
+  .ve-progress-linear + &__wrapper {
     min-width: 40px;
   }
 
-  &__wrap {
+  &__wrapper {
     display: flex;
     align-items: center;
     justify-content: end;
