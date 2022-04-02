@@ -223,7 +223,7 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
 export function provideTheme (props: MaybeRef<ThemeProps>) {
   getCurrentInstance('provideTheme')
   const theme = inject(ThemeKey, null)
-  if (!theme) throw new Error('Could not find VenoUi theme injection')
+  if (!theme) throw new Error('Could not find theme injection')
   const current = computed<string>(() => {
     const { theme: propTheme } = unref(props)
 
@@ -249,6 +249,6 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
 export function useTheme () {
   getCurrentInstance('useTheme')
   const provider = inject(ThemeKey, null)
-  if (!provider) throw new Error('Could not find VenoUi theme injection')
+  if (!provider) throw new Error('Could not find theme injection')
   return provider
 }

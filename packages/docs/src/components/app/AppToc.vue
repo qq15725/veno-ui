@@ -13,7 +13,7 @@
 
 <template>
   <ve-drawer
-      :model-value="!$veno.display.mobile && toc.length > 0"
+      :model-value="!$veno.display.platform.ssr && !$veno.display.mobile && toc.length > 0"
       width="180"
       anchor="right"
       border="0"

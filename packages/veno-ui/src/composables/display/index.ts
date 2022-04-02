@@ -204,7 +204,7 @@ export function createDisplay (options?: DisplayOptions): ToRefs<DisplayInstance
 }
 
 export function useDisplay () {
-  const provider = inject(DisplayKey)
-  if (!provider) throw new Error('Could not find VenoUi display injection')
-  return provider
+  const display = inject(DisplayKey)
+  if (!display) throw new Error('[VenoUi] Could not find display injection')
+  return display
 }
