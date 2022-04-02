@@ -5,7 +5,7 @@ import './styles/drawer.scss'
 import type { Ref } from 'vue'
 // Utils
 import { computed, onBeforeMount, ref, toRef, watch } from 'vue'
-import { defineComponent } from '../../utils'
+import { defineComponent, IN_BROWSER } from '../../utils'
 
 // Composables
 import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
@@ -135,7 +135,7 @@ export const Drawer = defineComponent({
 
     const layoutItemStyles = computed(() => {
       const styles = _layoutItemStyles.value as Record<string, any>
-      if (hasToggler.value && styles.transform) {
+      if (IN_BROWSER && hasToggler.value && styles.transform) {
         styles.transform = styles.transform.replace('110', '90')
       }
       return styles
@@ -216,7 +216,7 @@ export const Drawer = defineComponent({
           </props.tag>
 
           <Scrim
-            model-value={ isTemporary.value && (isDragging.value || isActive.value) }
+            modelValue={ isTemporary.value && !!(isDragging.value || isActive.value) }
             style={ [
               layoutItemScrimStyles.value,
               isDragging.value ? {

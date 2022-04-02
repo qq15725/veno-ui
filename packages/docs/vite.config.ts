@@ -9,6 +9,7 @@ import { toPascalCase } from '@veno-ui/utils'
 // Plugins
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
+import Legacy from '@vitejs/plugin-legacy'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -143,6 +144,9 @@ export default defineConfig(({ mode }) => {
         include: [/\.vue$/, /\.md$/],
       }),
       VueJsx(),
+      Legacy({
+        targets: ['defaults', 'not IE 11'],
+      }),
 
       // https://github.com/qq15725/vite-plugin-iconify
       Icons({
@@ -201,6 +205,7 @@ export default defineConfig(({ mode }) => {
       crittersOptions: false,
     },
     server: {
+      host: '0.0.0.0',
       port: +(process.env.PORT ?? 8080),
     },
     define: {

@@ -23,6 +23,7 @@
     "@veno-ui/markdown": "workspace:*",
     "@veno-ui/utils": "workspace:*",
     "@veno-ui/vite-plugin-markdown": "workspace:*",
+    "@vitejs/plugin-legacy": "^1.8.0",
     "@vue/compiler-sfc": "^3.2.31",
     "@vueuse/head": "^0.7.5",
     "shiki": "^0.10.1",

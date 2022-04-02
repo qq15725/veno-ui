@@ -19,31 +19,54 @@ import type { OverlaySlots } from '../overlay/overlay'
 import type { Origin } from '../../composables/position-strategy'
 import type { Anchor } from '../../utils'
 
-export type Tooltip = InstanceType<typeof Tooltip>
-
 export const Tooltip = genericComponent<new () => {
   $slots: OverlaySlots
 }>()({
   name: 'VeTooltip',
 
-  inheritAttrs: false,
-
   props: {
+    /**
+     * @zh 是否展示
+     */
     modelValue: Boolean,
+
+    /**
+     * @zh DOM ID
+     */
     id: String,
+
+    /**
+     * @zh 工具提示内容
+     */
     text: String,
+
+    /**
+     * @zh 是否显示箭头
+     */
     arrow: {
       type: Boolean,
       default: true,
     },
+
+    /**
+     * @zh 锚点位置
+     */
     anchor: {
       type: String as PropType<Anchor>,
       default: 'top',
     },
+
+    /**
+     * @zh 原始点位置
+     */
     origin: {
       type: String as PropType<Origin>,
       default: 'auto',
     },
+
+    /**
+     * @zh 最大宽度
+     */
     maxWidth: {
       type: [String, Number],
       default: 300,
@@ -57,7 +80,7 @@ export const Tooltip = genericComponent<new () => {
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.id || `ve-tooltip-${ getUid() }`)
     const anchor = computed(() => {
@@ -80,26 +103,23 @@ export const Tooltip = genericComponent<new () => {
         <Overlay
           role="tooltip"
           v-model={ isActive.value }
-          class={ [
-            've-tooltip',
-          ] }
+          class="ve-tooltip"
           id={ id.value }
           transition={ props.transition }
           absolute
-          position-strategy="connected"
-          scroll-strategy="reposition"
+          positionStrategy="connected"
+          scrollStrategy="reposition"
           anchor={ anchor.value }
           origin={ origin.value }
-          min-width={ 0 }
+          minWidth={ 0 }
           offset={ 10 }
           scrim={ false }
           persistent
-          open-on-click={ false }
-          open-on-hover
-          activator-props={ {
+          openOnClick={ false }
+          openOnHover
+          activatorProps={ {
             'aria-describedby': id.value,
           } }
-          { ...attrs }
           v-slots={ {
             activator: slots.activator,
           } }
@@ -119,3 +139,5 @@ export const Tooltip = genericComponent<new () => {
     }
   },
 })
+
+export type Tooltip = InstanceType<typeof Tooltip>

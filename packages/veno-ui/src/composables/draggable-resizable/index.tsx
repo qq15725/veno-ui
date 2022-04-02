@@ -1,6 +1,6 @@
 // Utils
 import { ref, computed, watch, toHandlers } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory, SUPPORTS_TOUCH } from '../../utils'
 
 // Composables
 import { usePointer } from '../pointer'
@@ -63,6 +63,7 @@ export function useDraggableResizable (
     pointerEvents,
     pointerMovement
   } = usePointer({
+    pointerDownPreventDefault: SUPPORTS_TOUCH,
     pointerDownStopPropagation: true,
     pointerMovePreventDefault: true,
   })

@@ -11,6 +11,7 @@
   align-self: center;
   transition: inherit;
   transition-property: height, width;
+  flex: none;
 
   &--start {
     margin-inline-end: var(--ve-margin-x);

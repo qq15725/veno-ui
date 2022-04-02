@@ -54,9 +54,24 @@ export const Overlay = genericComponent<new () => {
   directives: { ClickOutside },
 
   props: {
+    /**
+     * @zh 是否展示
+     */
     modelValue: Boolean,
+
+    /**
+     * @zh 使用绝对定位
+     */
     absolute: Boolean,
+
+    /**
+     * @zh 绑定到的 DOM
+     */
     attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
+
+    /**
+     * @zh 使用容器形式
+     */
     contained: Boolean,
 
     /**

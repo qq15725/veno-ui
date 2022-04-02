@@ -6,9 +6,9 @@ import { promises as fsp } from 'fs'
 
 // Types
 import type { Options, MarkdownToVue } from './types'
-import type { PluginOption } from 'vite'
+import type { Plugin } from 'vite'
 
-export default function markdownPlugin (userOptions?: Options): PluginOption {
+export default function markdownPlugin (userOptions?: Options): Plugin {
   const options = resolveOptions(userOptions)
   const filter = createFilter(options.include, options.exclude,)
 

@@ -58,6 +58,7 @@
       font-weight: 500;
       background: rgb(var(--ve-theme-secondary));
       padding: 12px;
+      white-space: nowrap;
       @include tools.overlay('&::before', 0, hidden, true);
 
       @at-root {

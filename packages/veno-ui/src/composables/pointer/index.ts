@@ -1,5 +1,5 @@
 // Utils
-import { ref, onScopeDispose, computed, readonly, withModifiers } from 'vue'
+import { ref, onScopeDispose, computed, readonly } from 'vue'
 import { propsFactory, SUPPORTS_TOUCH } from '../../utils'
 
 // Types
@@ -44,7 +44,8 @@ export const usePointer = (
       top: pointerCurrentPosition.value.top - pointerDownPosition.value.top,
     }
   })
-  const delay = computed(() => SUPPORTS_TOUCH ? 100 : 0)
+  const minDelay = computed(() => SUPPORTS_TOUCH ? 10 : 0)
+  const maxDelay = computed(() => SUPPORTS_TOUCH ? 100 : 0)
 
   const unregisterListeners = () => {
     if (SUPPORTS_TOUCH) {
@@ -83,7 +84,10 @@ export const usePointer = (
       if (props.pointerMovePreventDefault) e.preventDefault()
       pointerCurrentPosition.value = getPointerPosition(e)
     } else {
-      if (Date.now() - pointerDownAt.value! < delay.value) {
+      const time = Date.now() - pointerDownAt.value!
+      if (time < minDelay.value) {
+        return
+      } else if (time < maxDelay.value) {
         unregisterListeners()
       } else if (distance(pointerDownPosition.value!, getPointerPosition(e)) > 0) {
         isPointerMoving.value = true
@@ -104,6 +108,7 @@ export const usePointer = (
   })
 
   const availableEvents = {
+    touchstartPassive: pointerDown,
     touchstart: pointerDown,
     mousedown: pointerDown,
   }
@@ -121,12 +126,14 @@ export const usePointer = (
     pointerEvents: computed(() => {
       const events: Partial<typeof availableEvents> = {}
 
-      const modifiers = !props.pointerDownPreventDefault ? ['passive'] : []
-
       if (SUPPORTS_TOUCH) {
-        events.touchstart = withModifiers(availableEvents.touchstart, modifiers)
+        if (!props.pointerDownPreventDefault) {
+          events.touchstartPassive = availableEvents.touchstartPassive
+        } else {
+          events.touchstart = availableEvents.touchstart
+        }
       } else {
-        events.mousedown = withModifiers(availableEvents.mousedown, modifiers)
+        events.mousedown = availableEvents.mousedown
       }
 
       return events

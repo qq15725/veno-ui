@@ -1,5 +1,5 @@
 // Utils
-import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch, withModifiers } from 'vue'
+import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
 import {
   isComponentInstance,
   getCurrentInstance,
@@ -106,8 +106,9 @@ export function useActivator (
     },
     mouseenter: onEnter,
     mouseleave: onLeave,
-    touchstart: onEnter,
-    touchend: onEnter,
+    touchstartPassive: onEnter,
+    touchend: onLeave,
+    contextmenu: (e: Event) => e.preventDefault(),
     focus: (e: FocusEvent) => {
       if (
         SUPPORTS_FOCUS_VISIBLE
@@ -134,7 +135,8 @@ export function useActivator (
 
     if (props.openOnHover) {
       if (SUPPORTS_TOUCH) {
-        events.touchstart = withModifiers(availableEvents.touchstart, ['passive'])
+        events.touchstartPassive = availableEvents.touchstartPassive
+        events.contextmenu = availableEvents.contextmenu
         events.touchend = availableEvents.touchend
       } else {
         events.mouseenter = availableEvents.mouseenter
@@ -155,7 +157,8 @@ export function useActivator (
 
     if (props.openOnHover) {
       if (SUPPORTS_TOUCH) {
-        events.touchstart = withModifiers((e: MouseEvent) => isHovered = true, ['passive'])
+        events.touchstartPassive = (e: MouseEvent) => isHovered = true
+        events.contextmenu = availableEvents.contextmenu
         events.touchend = availableEvents.touchend
       } else {
         events.mouseenter = (e: MouseEvent) => isHovered = true
