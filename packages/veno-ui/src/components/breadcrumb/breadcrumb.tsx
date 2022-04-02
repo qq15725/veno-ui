@@ -41,9 +41,7 @@ export const Breadcrumb = genericComponent<new () => {
       return (
         <props.tag
           aria-label="breadcrumb"
-          class={ [
-            've-breadcrumb',
-          ] }
+          class="ve-breadcrumb"
         >
           <ol>
             { slots.default?.() }

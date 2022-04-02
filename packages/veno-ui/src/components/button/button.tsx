@@ -3,7 +3,7 @@ import './styles/button.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent } from '../../utils'
+import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
@@ -23,67 +23,69 @@ import { Ripple } from '../../directives/ripple'
 // Symbols
 import { ButtonToggleKey } from '../button-toggle/button-toggle'
 
+export const makeButtonProps = propsFactory({
+  /**
+   * @zh 按钮的类型
+   */
+  type: {
+    type: String,
+    default: 'button',
+  },
+
+  /**
+   * @zh 图标按钮
+   */
+  icon: [Boolean, String, Object],
+
+  /**
+   * @zh 前置图标
+   */
+  prependIcon: [String, Object],
+
+  /**
+   * @zh 后置图标
+   */
+  appendIcon: [String, Object],
+  stacked: Boolean,
+
+  /**
+   * @zh 按钮是否显示为块级
+   */
+  block: Boolean,
+
+  /**
+   * @zh 按钮文字内容
+   */
+  text: [String, Number],
+
+  /**
+   * @zh 按钮是否在点击时出现波纹
+   */
+  ripple: {
+    type: Boolean,
+    default: true,
+  },
+  overlay: {
+    type: Boolean,
+    default: true,
+  },
+  ...makeDisabledProps(),
+  ...makeLoadingProps(),
+  ...makeRouterProps(),
+  ...makeGroupItemProps(),
+  ...makePaperProps({
+    tag: 'button',
+    shape: 'rounded-sm',
+    variant: 'contained',
+  } as const)
+}, 'button')
+
 export const Button = defineComponent({
   name: 'VeButton',
 
   directives: { Ripple },
 
-  props: {
-    /**
-     * @zh 按钮的类型
-     */
-    type: {
-      type: String,
-      default: 'button',
-    },
-
-    /**
-     * @zh 图标按钮
-     */
-    icon: [Boolean, String, Object],
-
-    /**
-     * @zh 前置图标
-     */
-    prependIcon: [String, Object],
-
-    /**
-     * @zh 后置图标
-     */
-    appendIcon: [String, Object],
-    stacked: Boolean,
-
-    /**
-     * @zh 按钮是否显示为块级
-     */
-    block: Boolean,
-
-    /**
-     * @zh 按钮文字内容
-     */
-    text: [String, Number],
-
-    /**
-     * @zh 按钮是否在点击时出现波纹
-     */
-    ripple: {
-      type: Boolean,
-      default: true,
-    },
-    overlay: {
-      type: Boolean,
-      default: true,
-    },
-    ...makeDisabledProps(),
-    ...makeLoadingProps(),
-    ...makeRouterProps(),
-    ...makeGroupItemProps(),
-    ...makePaperProps({
-      tag: 'button',
-      shape: 'rounded-sm',
-      variant: 'contained',
-    } as const)
-  },
+  props: makeButtonProps(),
 
   emits: {
     click: (e: MouseEvent) => true

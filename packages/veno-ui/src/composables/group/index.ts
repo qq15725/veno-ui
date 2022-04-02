@@ -20,7 +20,7 @@ import type { ComponentInternalInstance, InjectionKey, PropType, Ref, UnwrapRef,
 
 interface GroupItem
 {
-  id: number
+  id: string
   value: Ref<unknown>
   disabled: Ref<boolean | undefined>
 }
@@ -40,15 +40,15 @@ export interface GroupProvide
 {
   vm: ComponentInternalInstance | null
   register: (item: GroupItem, cmp: ComponentInternalInstance) => void
-  unregister: (id: number) => void
-  select: (id: number, value: boolean) => void
+  unregister: (id: string) => void
+  select: (id: string, value: boolean) => void
   selected: Ref<any[]>
-  isSelected: (id: number) => boolean
+  isSelected: (id: string) => boolean
   prev: () => void
   next: () => void
   selectedClass: Ref<string | undefined>
   items: ComputedRef<{
-    id: number
+    id: string
     value: unknown
     disabled: boolean | undefined
   }[]>
@@ -57,7 +57,7 @@ export interface GroupProvide
 
 export interface GroupItemProvide
 {
-  id: number
+  id: string
   isSelected: Ref<boolean>
   toggle: () => void
   select: (value: boolean) => void
@@ -119,7 +119,7 @@ export function useGroupItem (
     throw new Error(`[VenoUi] Could not find useGroup injection with symbol ${ injectKey.description }`)
   }
 
-  const id = getUid()
+  const id = `ve-group-item-${ getUid() }`
   const value = toRef(props, 'value')
   const disabled = computed(() => group.disabled.value || props.disabled)
 
@@ -187,7 +187,7 @@ export function useGroup (
     else items.push(unwrapped)
   }
 
-  function unregister (id: number) {
+  function unregister (id: string) {
     if (isUnmounted) return
 
     selected.value = selected.value.filter(v => v !== id)
@@ -214,7 +214,7 @@ export function useGroup (
     isUnmounted = true
   })
 
-  function select (id: number, isSelected: boolean) {
+  function select (id: string, isSelected: boolean) {
     const item = items.find(item => item.id === id)
     if (isSelected && item?.disabled) return
 
@@ -284,7 +284,7 @@ export function useGroup (
     disabled: toRef(props, 'disabled'),
     prev: () => step(items.length - 1),
     next: () => step(1),
-    isSelected: (id: number) => selected.value.includes(id),
+    isSelected: (id: string) => selected.value.includes(id),
     selectedClass: computed(() => props.selectedClass),
     items: computed(() => items.map(v => v)),
   }

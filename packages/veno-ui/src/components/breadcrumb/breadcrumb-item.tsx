@@ -2,12 +2,13 @@
 import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
-// Composables
-import { useGroupItem } from '../../composables/group'
-
 // Components
 import { Button } from '../../components/button'
 import { Icon } from '../../components/icon'
+
+// Composables
+import { useGroupItem } from '../../composables/group'
+import { makeButtonProps } from '../../components/button/button'
 
 // Symbols
 import { BreadcrumbKey } from './breadcrumb'
@@ -25,17 +26,19 @@ export const BreadcrumbItem = genericComponent<new () => {
 }>()({
   name: 'VeBreadcrumbItem',
 
-  props: {
-    //
-  },
+  props: makeButtonProps({
+    variant: 'text',
+  } as const),
 
-  setup (props, { slots, attrs }) {
-    // @ts-ignore
-    const { id, group } = useGroupItem({}, BreadcrumbKey)
+  setup (props, { slots }) {
+    const { id, group } = useGroupItem({
+      value: props.text,
+      disabled: props.disabled,
+    }, BreadcrumbKey)
 
     const hasNext = computed(() => {
-      if (!group.items.value.length) return false
-      return group.items.value[group.items.value.length - 1].id !== id
+      return group.items.value.length > 0
+        && group.items.value[group.items.value.length - 1].id !== id
     })
 
     // TODO 如果是导航按钮，当前页设置 aria-current="page"
@@ -52,8 +55,7 @@ export const BreadcrumbItem = genericComponent<new () => {
             ] }
           >
             <Button
-              variant="text"
-              { ...attrs }
+              { ...props }
               v-slots={ slots }
             />
           </li>

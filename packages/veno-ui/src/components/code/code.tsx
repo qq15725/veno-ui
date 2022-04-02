@@ -82,7 +82,7 @@ export const Code = defineComponent({
         .replace(/\n$/, '')
         .replace(/^\n/, '')
     })
-    const highlightedCode = ref()
+    const highlightedCode = ref(code.value)
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       props, 'color'
     )
