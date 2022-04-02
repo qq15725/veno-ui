@@ -66,7 +66,7 @@ export const Drawer = defineComponent({
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       toRef(props, 'color')
     )
-    const { mobile } = useDisplay()
+    const { mobile, platform } = useDisplay()
     const router = useRouter()
     const isActive = useProxiedModel(props, 'modelValue')
     const isHovering = ref(false)
@@ -136,7 +136,7 @@ export const Drawer = defineComponent({
 
     const layoutItemStyles = computed(() => {
       const styles = _layoutItemStyles.value as Record<string, any>
-      if (hasToggler.value && styles.transform) {
+      if (!platform.value.ssr && hasToggler.value && styles.transform) {
         styles.transform = styles.transform.replace('110', '90')
       }
       return styles
