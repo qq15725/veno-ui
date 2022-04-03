@@ -72,7 +72,6 @@
 
     td {
       position: relative;
-      word-break: break-all;
       background: rgb(var(--ve-theme-background));
       padding: 12px;
       @include tools.overlay('&::before', 0, hidden, true);
