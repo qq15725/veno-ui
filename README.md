@@ -106,4 +106,4 @@ pnpm run dev
 
 ## 许可
 
-Veno UI 使用 [MIT](https://github.com/qq15725/veno-ui/blob/master/LICENSE) 许可 ，大量代码基于 [Vuetify 3](https://github.com/vuetifyjs/vuetify/tree/next) ，遵循 [MIT](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 许可。
+Veno UI 使用 [MIT](https://github.com/qq15725/veno-ui/blob/master/LICENSE) 许可，大量代码基于 [Vuetify 3](https://github.com/vuetifyjs/vuetify/tree/next) ，遵循 [MIT](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 许可。
