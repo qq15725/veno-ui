@@ -95,7 +95,14 @@
 
   &__pagination {
     margin-top: 12px;
-    justify-content: end;
+    overflow-x: auto;
+    overflow-x: overlay;
+    width: 100%;
+
+    &:before {
+      content: '';
+      flex: 1 1 auto;
+    }
   }
 }
 
