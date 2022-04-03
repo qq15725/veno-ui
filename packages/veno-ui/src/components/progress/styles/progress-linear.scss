@@ -4,10 +4,11 @@
 @use '../../../styles/settings';
 
 .ve-progress-linear {
-  position: relative;
-  border-radius: 100px;
-  overflow: hidden;
   animation-play-state: paused;
+  border-radius: inherit;
+  overflow: hidden;
+  position: relative;
+  transition: inherit;
 
   &--active {
     animation-play-state: running;

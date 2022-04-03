@@ -16,6 +16,8 @@ size.md
 
 color.md
 
+method.md
+
 :::
 
 ## API

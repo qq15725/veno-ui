@@ -10,6 +10,8 @@
   --ve-size: calc(var(--ve-circular-default-size) + var(--ve-size-offset));
   position: relative;
   vertical-align: middle;
+  transition: 0.6s linear;
+  border-radius: 100px;
   @include tools.use-size(('sizes': $progress-sizes));
 
   // Modifiers
@@ -65,6 +67,7 @@
     display: flex;
     align-items: center;
     justify-content: end;
+    border-radius: 0;
   }
 }
 

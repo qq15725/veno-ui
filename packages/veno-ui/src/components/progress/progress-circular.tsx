@@ -26,6 +26,7 @@ export const makeProgressCircularProps = propsFactory({
     type: [Number, String],
     default: 0,
   },
+
   ...makeProgressLinearProps(),
 }, 'progress-circular')
 
@@ -66,16 +67,18 @@ export const ProgressCircular = defineComponent({
         xmlns="http://www.w3.org/2000/svg"
         viewBox={ `0 0 ${ diameter } ${ diameter }` }
       >
-        <circle
-          class="ve-progress-circular__underlay"
-          fill="transparent"
-          cx="50%"
-          cy="50%"
-          r={ radius.value }
-          stroke-width={ strokeWidth.value }
-          stroke-dasharray={ circumference.value }
-          stroke-dashoffset={ 0 }
-        />
+        { props.underlay && (
+          <circle
+            class="ve-progress-circular__underlay"
+            fill="transparent"
+            cx="50%"
+            cy="50%"
+            r={ radius.value }
+            stroke-width={ strokeWidth.value }
+            stroke-dasharray={ circumference.value }
+            stroke-dashoffset={ 0 }
+          />
+        ) }
 
         <circle
           class="ve-progress-circular__overlay"

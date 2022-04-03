@@ -5,6 +5,7 @@
 
 .ve-progress-circular {
   animation-play-state: paused;
+  transition: inherit;
 
   &--active {
     animation-play-state: running;
@@ -44,9 +45,10 @@
 
   &__overlay {
     stroke: currentColor;
-    transition: stroke-dasharray 0.6s ease-in-out, stroke-width 0s;
+    transition: inherit;
+    transition-property: stroke-dasharray, stroke-dashoffset, stroke-width;
 
-    // Icon svg
+    // Icon SVG
     .ve-icon > svg > & {
       stroke-opacity: var(--ve-medium-emphasis-opacity);
     }

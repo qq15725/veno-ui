@@ -34,6 +34,14 @@ export const makeProgressLinearProps = propsFactory({
    * @zh 不确定的进度条
    */
   indeterminate: Boolean,
+
+  /**
+   * @zh 是否显示底部衬底
+   */
+  underlay: {
+    type: Boolean,
+    default: true,
+  }
 }, 'progress-linear')
 
 export function filterProgressLinearProps (attrs: Record<string, any>) {
@@ -61,7 +69,9 @@ export const ProgressLinear = defineComponent({
           height: props.active ? convertToUnit(height.value) : 0,
         } }
       >
-        <div class="ve-progress-linear__underlay" />
+        { props.underlay && (
+          <div class="ve-progress-linear__underlay" />
+        ) }
 
         <div
           class="ve-progress-linear__overlay"

@@ -2,8 +2,8 @@
 import './styles/progress.scss'
 
 // Utils
-import { toRef, computed } from 'vue'
-import { defineComponent } from '../../utils'
+import { computed, toRef, ref } from 'vue'
+import { defineComponent, useRender } from '../../utils'
 
 // Components
 import { ProgressLinear } from './progress-linear'
@@ -13,6 +13,7 @@ import { ProgressCircular } from './progress-circular'
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { makeSizeProps, useSize } from '../../composables/size'
+import { useProxiedModel } from '../../composables/proxied-model'
 import { useTextColor } from '../../composables/color'
 import { useVariant } from '../../composables/variant'
 import { useIntersectionObserver } from '../../composables/intersection-observer'
@@ -64,6 +65,10 @@ export const Progress = defineComponent({
     },
   },
 
+  emits: {
+    'update:modelValue': (value: number) => true,
+  },
+
   setup (props, { slots }) {
     const { themeClasses } = provideTheme(props)
     const { variantClasses } = useVariant(props as any)
@@ -72,7 +77,10 @@ export const Progress = defineComponent({
       toRef(props, 'color')
     )
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
-    const model = computed(() => Math.max(0, Math.min(100, parseFloat(props.modelValue))))
+    const model = useProxiedModel(
+      props, 'modelValue', props.modelValue,
+      val => Math.max(0, Math.min(100, parseFloat(val ?? 0)))
+    )
     const strokeWidth = computed(() => Number(props.strokeWidth))
 
     const size = computed(() => {
@@ -83,7 +91,9 @@ export const Progress = defineComponent({
           : Math.max(strokeWidth.value, 32)
     })
 
-    return () => {
+    const transitionDuration = ref()
+
+    useRender(() => {
       return (
         <props.tag
           role="progressbar"
@@ -107,11 +117,15 @@ export const Progress = defineComponent({
           style={ [
             sizeStyles.value,
             textColorStyles.value,
+            {
+              transitionDuration: transitionDuration.value,
+            },
           ] }
         >
           { props.variant === 'circular' && (
             <ProgressCircular
               { ...filterProgressCircularProps(props)[0] }
+              modelValue={ model.value }
               size={ size.value }
             />
           ) }
@@ -119,6 +133,7 @@ export const Progress = defineComponent({
           { props.variant === 'linear' && (
             <ProgressLinear
               { ...filterProgressLinearProps(props)[0] }
+              modelValue={ model.value }
             />
           ) }
 
@@ -129,6 +144,38 @@ export const Progress = defineComponent({
           ) }
         </props.tag>
       )
+    })
+
+    let timer: any
+
+    return {
+      start: () => {
+        if (timer) clearTimeout(timer)
+
+        transitionDuration.value = '0s'
+        model.value = 0
+
+        setTimeout(() => {
+          transitionDuration.value = '4s'
+          model.value = 80
+        }, 0)
+
+        timer = setTimeout(() => {
+          if (transitionDuration.value === '4s') transitionDuration.value = undefined
+          timer = undefined
+        }, 4000)
+      },
+      finish: () => {
+        return new Promise(resolve => {
+          transitionDuration.value = '0.2s'
+          model.value = 100
+
+          setTimeout(() => {
+            transitionDuration.value = undefined
+            if (model.value >= 100) resolve(model.value)
+          }, 200)
+        })
+      },
     }
   }
 })
