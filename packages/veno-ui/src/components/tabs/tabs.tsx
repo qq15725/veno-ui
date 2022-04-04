@@ -3,7 +3,7 @@ import './styles/tabs.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { defineComponent } from '../../utils'
+import { defineComponent, createSymbol } from '../../utils'
 
 // Components
 import { SlideGroup } from '../slide-group'
@@ -15,7 +15,7 @@ import { makeTagProps } from '../../composables/tag'
 import { provideDefaults } from '../../composables/defaults'
 
 // Types
-import type { GroupProvide } from '../../composables/group'
+import type { GroupInstance } from '../../composables/group'
 import type { InjectionKey, PropType } from 'vue'
 
 export type TabItem = string | Record<string, any>
@@ -30,7 +30,7 @@ function parseItems (items: TabItem[] | undefined) {
   })
 }
 
-export const TabsKey: InjectionKey<GroupProvide> = Symbol.for('veno-ui:tabs')
+export const TabsKey: InjectionKey<GroupInstance> = createSymbol('tabs')
 
 export const Tabs = defineComponent({
   name: 'VeTabs',

@@ -24,9 +24,9 @@
         <ve-breadcrumb-item
             v-for="name in ['组件', $route.meta.category]"
             :key="name"
-        >
-          {{ name }}
-        </ve-breadcrumb-item>
+            :text="name"
+            :value="name"
+        />
       </ve-breadcrumb>
 
       <ve-spacer />

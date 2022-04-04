@@ -2,14 +2,14 @@
 import './styles/breadcrumb.scss'
 
 // Utils
-import { genericComponent } from '../../utils'
+import { genericComponent, createSymbol } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
 import { useGroup } from '../../composables/group'
 
 // Keys
-export const BreadcrumbKey = Symbol.for('veno-ui:breadcrumb')
+export const BreadcrumbKey = createSymbol('breadcrumb')
 
 // Types
 import type { MakeSlots } from '../../utils'

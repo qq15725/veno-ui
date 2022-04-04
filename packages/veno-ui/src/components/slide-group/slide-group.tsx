@@ -3,7 +3,7 @@ import './styles/slide-group.scss'
 
 // Utils
 import { bias, calculateCenteredOffset, calculateUpdatedOffset } from './helpers'
-import { clamp, defineComponent, useRender } from '../../utils'
+import { clamp, defineComponent, useRender, createSymbol } from '../../utils'
 import { computed, ref, watch, watchEffect } from 'vue'
 
 // Components
@@ -18,9 +18,9 @@ import { useResizeObserver } from '../../composables/resize-observer'
 
 // Types
 import type { InjectionKey } from 'vue'
-import type { GroupProvide } from '../../composables/group'
+import type { GroupInstance } from '../../composables/group'
 
-export const SlideGroupKey: InjectionKey<GroupProvide> = Symbol.for('veno-ui:slide-group')
+export const SlideGroupKey: InjectionKey<GroupInstance> = createSymbol('slide-group')
 
 export const SlideGroup = defineComponent({
   name: 'VeSlideGroup',

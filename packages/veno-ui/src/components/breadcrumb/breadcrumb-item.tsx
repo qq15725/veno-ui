@@ -7,8 +7,8 @@ import { Button } from '../../components/button'
 import { Icon } from '../../components/icon'
 
 // Composables
-import { useGroupItem } from '../../composables/group'
 import { makeButtonProps } from '../../components/button/button'
+import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 
 // Symbols
 import { BreadcrumbKey } from './breadcrumb'
@@ -26,19 +26,19 @@ export const BreadcrumbItem = genericComponent<new () => {
 }>()({
   name: 'VeBreadcrumbItem',
 
-  props: makeButtonProps({
-    variant: 'text',
-  } as const),
+  props: {
+    ...makeButtonProps({
+      variant: 'text',
+    } as const),
+    ...makeGroupItemProps(),
+  },
 
   setup (props, { slots }) {
-    const { id, group } = useGroupItem({
-      value: props.text,
-      disabled: props.disabled,
-    }, BreadcrumbKey)
+    const { id, group } = useGroupItem(props, BreadcrumbKey)
 
     const hasNext = computed(() => {
-      return group.items.value.length > 0
-        && group.items.value[group.items.value.length - 1].id !== id
+      if (!group.items.value.length) return false
+      return group.items.value[group.items.value.length - 1].id !== id
     })
 
     // TODO 如果是导航按钮，当前页设置 aria-current="page"
