@@ -11,7 +11,7 @@ import type { PointerPosition } from '../../composables/pointer'
 
 export const makeDraggableProps = propsFactory({
   /**
-   * @zh 可拖拽的
+   * @zh 可以拖拽
    */
   draggable: {
     type: Boolean,

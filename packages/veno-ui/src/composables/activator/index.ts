@@ -101,7 +101,6 @@ export function useActivator (
 
   const availableEvents = {
     click: (e: MouseEvent) => {
-      console.log(e)
       e.stopPropagation()
       activatedPosition.value = { left: e.clientX, top: e.clientY }
       activatorEl.value = (e.currentTarget || e.target) as HTMLElement
