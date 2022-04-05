@@ -6,20 +6,22 @@ import {
   IN_BROWSER,
   SUPPORTS_TOUCH,
   propsFactory,
-  SUPPORTS_FOCUS_VISIBLE
+  SUPPORTS_FOCUS_VISIBLE,
+  querySelector,
 } from '../../utils'
 
 // Composables
 import { makeDelayProps, useDelay } from '../delay'
 
 // Types
-import type { ExtractPropTypes, ComponentPublicInstance, EffectScope, PropType, Ref } from 'vue'
+import type { ExtractPropTypes, EffectScope, PropType, Ref } from 'vue'
+import type { Selector } from '../../utils'
 
 export const makeActivatorProps = propsFactory({
   /**
    * @zh 激活器
    */
-  activator: [String, Object] as PropType<'parent' | string | Element | ComponentPublicInstance>,
+  activator: [String, Object] as PropType<Selector>,
 
   /**
    * @zh 激活器属性
@@ -257,24 +259,9 @@ function useActivatorInScope (
   const vm = getCurrentInstance('useActivator')
 
   function getActivator (selector = props.activator): HTMLElement | undefined {
-    let activator
     if (selector) {
-      if (selector === 'parent') {
-        activator = vm?.proxy?.$el?.parentNode
-      } else if (typeof selector === 'string') {
-        // Selector
-        activator = document.querySelector(selector)
-      } else if ('$el' in selector) {
-        // Component (ref)
-        activator = selector.$el
-      } else {
-        // HTMLElement | Element
-        activator = selector
-      }
+      activatorEl.value = querySelector(selector, vm)
     }
-
-    // The activator should only be a valid element (Ignore comments and text nodes)
-    activatorEl.value = activator?.nodeType === Node.ELEMENT_NODE ? activator : null
 
     return activatorEl.value
   }

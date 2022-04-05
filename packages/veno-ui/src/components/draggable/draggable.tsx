@@ -1,6 +1,6 @@
 // Utils
 import { toHandlers, mergeProps } from 'vue'
-import { defineComponent, convertToUnit } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -11,6 +11,8 @@ import type { PropType } from 'vue'
 
 export const Draggable = defineComponent({
   name: 'VeDraggable',
+
+  inheritAttrs: false,
 
   props: {
     modelValue: {
@@ -31,32 +33,29 @@ export const Draggable = defineComponent({
   setup (props, { slots }) {
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
-      v => ({ left: parseFloat(v?.left || 0), top: parseFloat(v?.top || 0) }),
+      v => ({
+        left: parseFloat(v?.left || 0),
+        top: parseFloat(v?.top || 0)
+      })
     )
 
     const {
-      isDragging,
       draggableEvents,
+      draggableStyles,
+      contentStyles,
     } = useDraggable(props, model)
 
     return () => {
       const draggable = mergeProps(toHandlers(draggableEvents.value), {
-        style: props.draggable ? {
-          cursor: 'move',
-        } : null
+        style: draggableStyles.value,
       })
-
-      const contentStyle = props.draggable ? {
-        transform: `translate3d(${ convertToUnit(model.value.left) }, ${ convertToUnit(model.value.top) }, 0)`,
-        userSelect: isDragging.value ? 'none' : undefined
-      } : null
 
       return slots.default?.({
         value: model.value,
         draggable,
-        contentStyle,
+        contentStyle: contentStyles.value,
         props: mergeProps(draggable, {
-          style: contentStyle,
+          style: contentStyles.value,
         }),
       })
     }
