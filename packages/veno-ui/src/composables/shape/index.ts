@@ -3,7 +3,7 @@ import { computed, unref } from 'vue'
 import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 // Constants
@@ -18,10 +18,7 @@ export const SHAPES = [
 
 type ShapeProp = typeof SHAPES[number]
 
-export interface ShapeProps
-{
-  shape?: ShapeProp
-}
+export type ShapeProps = ExtractPropTypes<ReturnType<typeof makeShapeProps>>
 
 export const makeShapeProps = propsFactory({
   shape: {

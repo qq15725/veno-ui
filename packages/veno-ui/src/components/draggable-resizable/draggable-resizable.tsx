@@ -11,6 +11,9 @@ import { makeDraggableProps, useDraggable } from '../../composables/draggable'
 import { makeDraggableResizableProps, useDraggableResizable } from '../../composables/draggable-resizable'
 import { makeTagProps } from '../../composables/tag'
 
+// Components
+import { Tooltip } from '../../components/tooltip'
+
 // Types
 import type { PropType } from 'vue'
 
@@ -18,6 +21,9 @@ export const DraggableResizable = defineComponent({
   name: 'VeDraggableResizable',
 
   props: {
+    /**
+     * @zh 大小位置
+     */
     modelValue: {
       type: Object as PropType<{
         left: string | number
@@ -27,6 +33,15 @@ export const DraggableResizable = defineComponent({
       }>,
       default: () => ({ left: 0, top: 0 })
     },
+
+    /**
+     * @zh 是否在调整大小时显示提示
+     */
+    tooltip: {
+      type: Boolean,
+      default: true,
+    },
+
     ...makeDraggableProps(),
     ...makeDraggableResizableProps(),
     ...makeTagProps(),
@@ -133,7 +148,20 @@ export const DraggableResizable = defineComponent({
             }) }
           </div>
 
-          { props.resizable && genResizableAnchors() }
+          <Tooltip
+            arrow={ false }
+            modelValue={ props.tooltip && isResizing.value }
+            openOnHover={ false }
+            positionStrategy="pointer"
+            scrollStrategy="none"
+            text={ `${ parseInt(model.value.width ?? 0) } x ${ parseInt(model.value.height ?? 0) }` }
+          >
+            { {
+              activator: props.resizable
+                ? ({ on: anchorProps }) => genResizableAnchors(anchorProps)
+                : undefined
+            } }
+          </Tooltip>
         </props.tag>
       )
     }

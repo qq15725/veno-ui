@@ -3,12 +3,10 @@ import { computed, unref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
+import type { ExtractPropTypes } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export interface ElevationProps
-{
-  elevation?: number | string | null
-}
+export type ElevationProps = ExtractPropTypes<ReturnType<typeof makeElevationProps>>
 
 // Composables
 export const makeElevationProps = propsFactory({

@@ -2,35 +2,54 @@
 import { computed, unref } from 'vue'
 import { propsFactory, convertToUnit, getCurrentInstanceName } from '../../utils'
 
+// Constants
+export const POSITIONS = ['static', 'relative', 'fixed', 'absolute', 'sticky'] as const
+
 // Types
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-const positionValues = ['static', 'relative', 'fixed', 'absolute', 'sticky'] as const
+type Position = typeof POSITIONS[number]
 
-type Position = typeof positionValues[number]
-
-export interface PositionProps
-{
-  absolute?: boolean
-  bottom?: boolean | number | string
-  fixed?: boolean
-  left?: boolean | number | string
-  position?: Position
-  right?: boolean | number | string
-  top?: boolean | number | string
-}
+export type PositionProps = ExtractPropTypes<ReturnType<typeof makePositionProps>>
 
 export const makePositionProps = propsFactory({
+  /**
+   * @zh 采用绝对定位
+   */
   absolute: Boolean,
+
+  /**
+   * @zh 底部位置
+   */
   bottom: [Boolean, Number, String],
+
+  /**
+   * @zh 采用固定定位
+   */
   fixed: Boolean,
+
+  /**
+   * @zh 左侧位置
+   */
   left: [Boolean, Number, String],
+
+  /**
+   * @zh 采用的定位模式
+   */
   position: {
     type: String as PropType<Position>,
-    validator: /* istanbul ignore next */ (v: any) => positionValues.includes(v),
+    validator: /* istanbul ignore next */ (v: any) => POSITIONS.includes(v),
   },
+
+  /**
+   * @zh 右侧位置
+   */
   right: [Boolean, Number, String],
+
+  /**
+   * @zh 顶部位置
+   */
   top: [Boolean, Number, String],
 }, 'position')
 

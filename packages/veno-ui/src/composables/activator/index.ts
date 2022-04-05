@@ -64,6 +64,7 @@ export function useActivator (
   props: ActivatorProps,
   { isActive }: ActivatorData
 ) {
+  const activatedPosition = ref<{ left: number, top: number }>()
   const activatorEl = ref<HTMLElement>()
 
   let isHovered = false
@@ -100,7 +101,9 @@ export function useActivator (
 
   const availableEvents = {
     click: (e: MouseEvent) => {
+      console.log(e)
       e.stopPropagation()
+      activatedPosition.value = { left: e.clientX, top: e.clientY }
       activatorEl.value = (e.currentTarget || e.target) as HTMLElement
       isActive.value = !isActive.value
     },
@@ -180,6 +183,7 @@ export function useActivator (
   })
 
   const state = {
+    activatedPosition,
     activatorEl,
     activatorRef,
     activatorEvents,

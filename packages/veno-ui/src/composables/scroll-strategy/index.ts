@@ -27,6 +27,9 @@ export interface ScrollStrategyData
 }
 
 export const makeScrollStrategyProps = propsFactory({
+  /**
+   * @zh 滚动策略
+   */
   scrollStrategy: {
     type: [Boolean, String, Function] as PropType<boolean | keyof typeof scrollStrategies | ((data: ScrollStrategyData, name: string) => void)>,
     default: 'block',

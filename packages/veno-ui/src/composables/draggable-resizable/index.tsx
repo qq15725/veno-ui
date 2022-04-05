@@ -75,7 +75,6 @@ export function useDraggableResizable (
   watch(isPointerDown, val => {
     if (val) {
       active.value = getElAnchor(pointerDownEl.value)
-      isResizing.value = true
     } else {
       active.value = undefined
       isResizing.value = false
@@ -85,6 +84,7 @@ export function useDraggableResizable (
 
   watch(pointerMovement, val => {
     if (!active.value || !val) return
+    if (!isResizing.value) isResizing.value = true
 
     const value = { ...current.value }
 
@@ -108,11 +108,12 @@ export function useDraggableResizable (
   return {
     isResizing,
     resizeValue,
-    genResizableAnchors: () => {
+    genResizableAnchors: (anchorProps?: Record<string, any>) => {
       return props.resizableAnchors.map(anchor => {
         return (
           <div
             { ...toHandlers(pointerEvents.value) }
+            { ...anchorProps }
             key={ anchor }
             data-resizable-anchor={ anchor }
             class={ [

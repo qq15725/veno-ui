@@ -2,10 +2,9 @@
 import { propsFactory } from '../../utils'
 
 // Types
-export interface TagProps
-{
-  tag: string
-}
+import { ExtractPropTypes } from 'vue'
+
+export type TagProps = ExtractPropTypes<ReturnType<typeof makeTagProps>>
 
 // Composables
 export const makeTagProps = propsFactory({

@@ -10,7 +10,8 @@ import {
   getScrollParent,
   standardEasing,
   useRender,
-  keyValues
+  keyValues,
+  propsFactory
 } from '../../utils'
 
 // Components
@@ -40,9 +41,77 @@ import type { PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type OverlaySlots = MakeSlots<{
-  default: [{ close: () => void, isActive: Ref<boolean> }]
-  activator: [{ close: () => void, isActive: boolean, props: Record<string, any> }]
+  default: [{
+    close: () => void,
+    isActive: Ref<boolean>
+  }]
+  activator: [{
+    close: () => void,
+    isActive: boolean,
+    props: Record<string, any>
+    on: Record<string, any>
+  }]
 }>
+
+export const makeOverlayProps = propsFactory({
+  /**
+   * @zh 是否展示
+   */
+  modelValue: Boolean,
+
+  /**
+   * @zh 使用绝对定位
+   */
+  absolute: Boolean,
+
+  /**
+   * @zh 绑定到的 DOM
+   */
+  attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
+
+  /**
+   * @zh 使用容器形式
+   */
+  contained: Boolean,
+
+  /**
+   * @zh 包裹内容 div 的 style
+   */
+  contentStyle: null,
+
+  /**
+   * @zh 包裹内容 div 的 class
+   */
+  contentClass: null,
+
+  /**
+   * @zh 没有点击动画
+   */
+  noClickAnimation: Boolean,
+
+  /**
+   * @zh 持续显示（额外关闭行为不受控）
+   */
+  persistent: Boolean,
+
+  /**
+   * @zh 无遮罩层
+   */
+  scrim: {
+    type: [String, Boolean],
+    default: true,
+  },
+
+  ...makeActivatorProps(),
+  ...makeDimensionProps(),
+  ...makePositionStrategyProps(),
+  ...makeScrollStrategyProps(),
+  ...makeThemeProps(),
+  ...makeTransitionProps({
+    transition: { component: FadeTransition },
+  } as const),
+  ...makeLazyProps(),
+}, 'overlay')
 
 export const Overlay = genericComponent<new () => {
   $slots: OverlaySlots
@@ -53,65 +122,7 @@ export const Overlay = genericComponent<new () => {
 
   directives: { ClickOutside },
 
-  props: {
-    /**
-     * @zh 是否展示
-     */
-    modelValue: Boolean,
-
-    /**
-     * @zh 使用绝对定位
-     */
-    absolute: Boolean,
-
-    /**
-     * @zh 绑定到的 DOM
-     */
-    attach: [Boolean, String, Object] as PropType<boolean | string | Element>,
-
-    /**
-     * @zh 使用容器形式
-     */
-    contained: Boolean,
-
-    /**
-     * @zh 包裹内容 div 的 style
-     */
-    contentStyle: null,
-
-    /**
-     * @zh 包裹内容 div 的 class
-     */
-    contentClass: null,
-
-    /**
-     * @zh 没有点击动画
-     */
-    noClickAnimation: Boolean,
-
-    /**
-     * @zh 持续显示（额外关闭行为不受控）
-     */
-    persistent: Boolean,
-
-    /**
-     * @zh 无遮罩层
-     */
-    scrim: {
-      type: [String, Boolean],
-      default: true,
-    },
-
-    ...makeActivatorProps(),
-    ...makeDimensionProps(),
-    ...makePositionStrategyProps(),
-    ...makeScrollStrategyProps(),
-    ...makeThemeProps(),
-    ...makeTransitionProps({
-      transition: { component: FadeTransition },
-    } as const),
-    ...makeLazyProps(),
-  },
+  props: makeOverlayProps(),
 
   emits: {
     'click:outside': (e: MouseEvent) => true,
@@ -129,7 +140,9 @@ export const Overlay = genericComponent<new () => {
     const root = ref<HTMLElement>()
     const contentEl = ref<HTMLElement>()
     const { overlayZIndex } = useOverlay(isInternalActive)
+
     const {
+      activatedPosition,
       activatorEl,
       activatorRef,
       activatorEvents,
@@ -143,8 +156,9 @@ export const Overlay = genericComponent<new () => {
       anchorClasses,
       updatePosition,
     } = usePositionStrategy(props, {
-      contentEl,
+      activatedPosition,
       activatorEl,
+      contentEl,
       isActive,
     })
 
@@ -243,6 +257,8 @@ export const Overlay = genericComponent<new () => {
     }
 
     useRender(() => {
+      const on = toHandlers(activatorEvents.value)
+
       return (
         <>
           { slots.activator?.({
@@ -250,9 +266,10 @@ export const Overlay = genericComponent<new () => {
             isActive: isActive.value,
             props: mergeProps(
               { ref: activatorRef },
-              toHandlers(activatorEvents.value),
+              on,
               props.activatorProps,
             ),
+            on,
           }) }
 
           { IN_BROWSER && (

@@ -3,12 +3,10 @@ import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Types
+import type { ExtractPropTypes } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export interface BorderProps
-{
-  border?: boolean | number | string
-}
+export type BorderProps = ExtractPropTypes<ReturnType<typeof makeBorderProps>>
 
 export const makeBorderProps = propsFactory({
   border: [Boolean, Number, String],

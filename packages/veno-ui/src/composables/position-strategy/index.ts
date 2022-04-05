@@ -1,14 +1,16 @@
 // Utils
-import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
+import { effectScope, nextTick, onScopeDispose, ref, watchEffect, ExtractPropTypes } from 'vue'
 import { IN_BROWSER, propsFactory } from '../../utils'
 
 // Strategies
 import { staticPositionStrategy } from './static'
 import { connectedPositionStrategy } from './connected'
+import { pointerPositionStrategy } from './pointer'
 
-export const positionStrategies = {
+export const POSITION_STRATEGIES = {
   static: staticPositionStrategy, // specific viewport position, usually centered
   connected: connectedPositionStrategy, // connected to a certain element
+  pointer: pointerPositionStrategy, // pointer position
 }
 
 // Types
@@ -21,9 +23,10 @@ export interface PositionStrategyData
   contentEl: Ref<HTMLElement | undefined>
   activatorEl: Ref<HTMLElement | undefined>
   isActive: Ref<boolean>
+  activatedPosition?: Ref<{ left: number, top: number } | undefined>
 }
 
-export type PositionStrategy = keyof typeof positionStrategies | ((
+export type PositionStrategy = keyof typeof POSITION_STRATEGIES | ((
   data: PositionStrategyData,
   props: PositionStrategyProps,
   contentStyles: Ref<Record<string, string>>,
@@ -32,12 +35,7 @@ export type PositionStrategy = keyof typeof positionStrategies | ((
 
 export type Origin = Anchor | 'auto' | 'overlap'
 
-export interface PositionStrategyProps
-{
-  positionStrategy: PositionStrategy
-  anchor: Anchor
-  origin: Origin
-  offset?: number | string
+export type PositionStrategyProps = ExtractPropTypes<ReturnType<typeof makePositionStrategyProps>> & {
   maxHeight?: number | string
   maxWidth?: number | string
   minHeight?: number | string
@@ -45,23 +43,41 @@ export interface PositionStrategyProps
 }
 
 export const makePositionStrategyProps = propsFactory({
+  /**
+   * @zh 定位策略
+   */
   positionStrategy: {
     type: [String, Function] as PropType<PositionStrategy>,
     default: 'static',
-    validator: (val: any) => typeof val === 'function' || val in positionStrategies,
+    validator: (val: any) => typeof val === 'function' || val in POSITION_STRATEGIES,
   },
+
+  /**
+   * @zh 锚点位置
+   */
   anchor: {
     type: String as PropType<Anchor>,
     default: 'bottom',
   },
+
+  /**
+   * @zh 原始点策略
+   */
   origin: {
     type: String as PropType<Origin>,
     default: 'auto',
   },
-  offset: [Number, String],
-})
 
-export function usePositionStrategy (props: PositionStrategyProps, data: PositionStrategyData) {
+  /**
+   * @zh 偏移值
+   */
+  offset: [Number, String],
+}, 'position-strategy')
+
+export function usePositionStrategy (
+  props: PositionStrategyProps,
+  data: PositionStrategyData
+) {
   const contentStyles = ref({})
   const anchorClasses = ref([])
   const updatePosition = ref<(e: Event) => void>()
@@ -72,15 +88,19 @@ export function usePositionStrategy (props: PositionStrategyProps, data: Positio
     updatePosition.value = undefined
     if (!(IN_BROWSER
       && data.isActive.value
-      && data.activatorEl.value
       && props.positionStrategy)) return
     scope = effectScope()
     await nextTick()
     scope.run(() => {
       const strategy = typeof props.positionStrategy === 'function'
         ? props.positionStrategy
-        : positionStrategies[props.positionStrategy]
-      updatePosition.value = strategy(data, props, contentStyles, anchorClasses)?.updatePosition
+        : POSITION_STRATEGIES[props.positionStrategy]
+      updatePosition.value = strategy(
+        data,
+        props,
+        contentStyles,
+        anchorClasses
+      )?.updatePosition
     })
   })
 

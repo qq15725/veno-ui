@@ -3,31 +3,22 @@ import { computed, unref } from 'vue'
 import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Constants
-export const densities = [
-  'ultra-low',
-  'low',
-  'medium',
-  'high',
-  'ultra-high',
-]
+export const DENSITIES = ['ultra-low', 'low', 'medium', 'high', 'ultra-high'] as const
 
 // Types
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export type Density = typeof densities[number]
+export type Density = typeof DENSITIES[number]
 
-export interface DensityProps
-{
-  density?: Density
-}
+export type DensityProps = ExtractPropTypes<ReturnType<typeof makeDensityProps>>
 
 // Composables
 export const makeDensityProps = propsFactory({
   density: {
-    type: String as PropType<Density>,
+    type: String as PropType<Density | undefined>,
     default: 'medium',
-    validator: (v: any) => densities.includes(v),
+    validator: (v: any) => DENSITIES.includes(v),
   },
 }, 'density')
 
@@ -37,7 +28,7 @@ export function useDensity (
 ) {
   const densityClasses = computed(() => {
     let { density } = unref(props)
-    if (!name || !density || !densities.includes(density)) return null
+    if (!name || !density || !DENSITIES.includes(density)) return null
     return `${ name }--density-${ density }`
   })
 

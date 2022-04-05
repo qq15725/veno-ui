@@ -6,6 +6,9 @@ import { propsFactory } from '../../utils'
 import type { Component, FunctionalComponent, PropType, TransitionProps } from 'vue'
 
 export const makeTransitionProps = propsFactory({
+  /**
+   * @zh 过渡动画
+   */
   transition: {
     type: [Boolean, String, Object] as PropType<string | false | TransitionProps & { component?: Component }>,
     default: 've-fade-transition',

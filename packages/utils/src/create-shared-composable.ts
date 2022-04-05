@@ -1,5 +1,5 @@
 // Utils
-import { effectScope, onScopeDispose } from 'vue'
+import { effectScope, onScopeDispose, getCurrentScope } from 'vue'
 
 // Types
 import type { EffectScope } from 'vue'
@@ -11,26 +11,26 @@ import type { EffectScope } from 'vue'
  *
  * @param composable 组合式函数
  */
-export function createSharedComposable<T> (composable: () => T) {
+export function createSharedComposable<T> (composable: () => Exclude<T, undefined>) {
   let subscribers = 0
   let scope: EffectScope | undefined
-  let state: T
+  let state: T | undefined
 
   return () => {
-    onScopeDispose(() => {
-      if (--subscribers <= 0) {
-        subscribers = 0
-        scope?.stop()
-      }
-    })
-
-    if (subscribers <= 0) {
+    subscribers++
+    if (state === undefined) {
+      // TODO vue 3.2.31 等待修复 https://github.com/vuejs/core/pull/5575
+      const parentScope = getCurrentScope()
       scope = effectScope(true)
       state = scope!.run(composable) as T
+      parentScope?.on()
     }
-
-    subscribers++
-
+    onScopeDispose(() => {
+      if (scope && --subscribers <= 0) {
+        scope?.stop()
+        state = scope = undefined
+      }
+    })
     return state
   }
 }

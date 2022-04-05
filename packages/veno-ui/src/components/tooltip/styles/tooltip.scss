@@ -7,12 +7,12 @@
   --ve-tooltip-arrow-offset: 14px;
 
   &__wrapper {
-    background: rgba(var(--ve-theme-on-surface), 0.85);
+    background: rgba(var(--ve-theme-on-surface), 1);
     color: rgb(var(--ve-theme-surface));
     border-radius: 4px;
     font-size: .875rem;
     display: inline-block;
-    padding: 8px 14px;
+    padding: 6px 12px;
     text-transform: initial;
     width: auto;
 

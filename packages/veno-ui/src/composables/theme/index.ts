@@ -12,7 +12,7 @@ import { colorToOnColorHex } from '../../utils'
 import defaultOptions from './default-options'
 
 // Types
-import type { App, InjectionKey, Ref } from 'vue'
+import type { App, ExtractPropTypes, InjectionKey, Ref } from 'vue'
 import type { MaybeRef } from '../../utils'
 import type { Colors, BaseColors, BaseOnColors } from './colors'
 import type { HeadClient } from '@vueuse/head'
@@ -58,10 +58,7 @@ export interface ThemeInstance
   getTheme: (key: string) => InternalThemeDefinition
 }
 
-export interface ThemeProps
-{
-  theme?: string
-}
+export type ThemeProps = ExtractPropTypes<ReturnType<typeof makeThemeProps>>
 
 export const ThemeKey: InjectionKey<ThemeInstance> = Symbol.for('veno-ui:theme')
 

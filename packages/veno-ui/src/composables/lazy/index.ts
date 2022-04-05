@@ -6,6 +6,9 @@ import { propsFactory } from '../../utils'
 import type { Ref, ExtractPropTypes } from 'vue'
 
 export const makeLazyProps = propsFactory({
+  /**
+   * @zh 急切的
+   */
   eager: Boolean,
 }, 'lazy')
 
