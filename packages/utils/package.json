@@ -38,7 +38,7 @@
     "node": ">=14"
   },
   "peerDependencies": {
-    "vue": "^3.2.31"
+    "vue": "^3.2.32"
   },
   "publishConfig": {
     "access": "public"
