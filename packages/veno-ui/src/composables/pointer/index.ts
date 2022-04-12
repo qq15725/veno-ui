@@ -44,8 +44,8 @@ export const usePointer = (
       top: pointerCurrentPosition.value.top - pointerDownPosition.value.top,
     }
   })
-  const minDelay = computed(() => SUPPORTS_TOUCH ? 10 : 0)
-  const maxDelay = computed(() => SUPPORTS_TOUCH ? 100 : 0)
+  const minDelay = computed(() => SUPPORTS_TOUCH ? 5 : 0)
+  const maxDelay = computed(() => SUPPORTS_TOUCH ? 50 : 0)
 
   const unregisterListeners = () => {
     if (SUPPORTS_TOUCH) {
@@ -81,12 +81,12 @@ export const usePointer = (
 
   const pointerMove = (e: MouseEvent | TouchEvent) => {
     if (isPointerMoving.value) {
-      if (props.pointerMovePreventDefault) e.preventDefault()
+      if (props.pointerMovePreventDefault && e.cancelable) e.preventDefault()
       pointerCurrentPosition.value = getPointerPosition(e)
     } else {
       const time = Date.now() - pointerDownAt.value!
       if (time < minDelay.value) {
-        return
+        //
       } else if (time < maxDelay.value) {
         unregisterListeners()
       } else if (distance(pointerDownPosition.value!, getPointerPosition(e)) > 0) {

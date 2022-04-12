@@ -65,7 +65,6 @@ export function useDraggable (
     pointerMovement: draggableMovement,
     pointerEvents,
   } = usePointer({
-    pointerDownPreventDefault: SUPPORTS_TOUCH,
     pointerMovePreventDefault: true,
   })
 
@@ -131,6 +130,7 @@ export function useDraggable (
 
   const availableEvents = {
     dragstart: (e: DragEvent) => e.preventDefault(),
+    contextmenu: (e: DragEvent) => e.preventDefault(),
   }
 
   const draggableEvents = computed(() => {
@@ -138,6 +138,10 @@ export function useDraggable (
 
     if (props.draggable) {
       events.dragstart = availableEvents.dragstart
+
+      if (SUPPORTS_TOUCH) {
+        events.contextmenu = availableEvents.contextmenu
+      }
 
       Object.assign(events, pointerEvents.value)
     }
@@ -155,7 +159,7 @@ export function useDraggable (
   })
 
   const contentStyles = computed(() => {
-    if (data) {
+    if (props.draggable && data) {
       return {
         transform: `translate3d(${ convertToUnit(data.value.left) }, ${ convertToUnit(data.value.top) }, 0)`,
         userSelect: isDragging.value ? 'none' : undefined,
