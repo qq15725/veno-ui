@@ -11,6 +11,8 @@ meta:
 
 basic.md
 
+hide-pagination.md
+
 selection.md
 
 export.md

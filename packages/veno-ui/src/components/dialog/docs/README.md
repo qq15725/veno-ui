@@ -16,6 +16,8 @@ basic.md
 
 persistent.md
 
+form.md
+
 v-model.md
 
 scrollable.md
