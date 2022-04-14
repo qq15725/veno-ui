@@ -3,7 +3,7 @@ import './styles/carousel-item.scss'
 
 // Utils
 import { watch, ref } from 'vue'
-import { genericComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { Transition } from 'vue'
@@ -13,10 +13,7 @@ import { makeTagProps } from '../../composables/tag'
 // Components
 import { CarouselKey } from './carousel'
 
-// Types
-export type CarouselItem = InstanceType<typeof CarouselItem>
-
-export const CarouselItem = genericComponent()({
+export const CarouselItem = defineComponent({
   name: 'VeCarouselItem',
 
   props: {
@@ -26,22 +23,22 @@ export const CarouselItem = genericComponent()({
 
   setup (props, { slots }) {
     const { isSelected, group } = useGroupItem(props, CarouselKey)
-    const transitionName = ref()
+    const { items, selected } = group
+    const transition = ref()
 
-    watch(group.selected, (newSelected, oldSelected) => {
-      if (oldSelected[0] > newSelected[0]) {
-        transitionName.value = 've-carousel-item-x-reverse-transition'
-      } else {
-        transitionName.value = 've-carousel-item-x-transition'
+    watch(
+      () => items.value.findIndex(({ id }) => selected.value.includes(id)),
+      (val, oldVal) => {
+        transition.value = oldVal > val
+          ? 've-carousel-item-x-reverse-transition'
+          : 've-carousel-item-x-transition'
       }
-    })
+    )
 
     return () => (
-      <Transition name={ transitionName.value }>
+      <Transition name={ transition.value }>
         <props.tag
-          class={ [
-            've-carousel-item',
-          ] }
+          class="ve-carousel-item"
           v-show={ isSelected.value }
         >
           { slots.default?.() }
@@ -50,3 +47,5 @@ export const CarouselItem = genericComponent()({
     )
   }
 })
+
+export type CarouselItem = InstanceType<typeof CarouselItem>

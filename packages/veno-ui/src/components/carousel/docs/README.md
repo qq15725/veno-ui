@@ -18,3 +18,5 @@ basic.md autoplay.md
 ## API
 
 <<<API carousel
+
+<<<API carousel-item

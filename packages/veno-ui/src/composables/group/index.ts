@@ -68,20 +68,54 @@ export interface GroupItemInstance
 }
 
 export const makeGroupProps = propsFactory({
+  /**
+   * @zh 选择的值
+   */
   modelValue: {
     type: [Number, Boolean, String, Array, Object],
     default: undefined,
   },
+
+  /**
+   * @zh 支持多选
+   */
   multiple: Boolean,
+
+  /**
+   * @zh 是否强制选择
+   */
   mandatory: [Boolean, String] as PropType<boolean | 'force'>,
+
+  /**
+   * @zh 最大值
+   */
   max: Number,
+
+  /**
+   * @zh 选中后的 class
+   */
   selectedClass: String,
+
+  /**
+   * @zh 是否禁用
+   */
   disabled: Boolean,
 }, 'group')
 
 export const makeGroupItemProps = propsFactory({
+  /**
+   * @zh 选中后的值
+   */
   value: null,
+
+  /**
+   * @zh 是否禁用
+   */
   disabled: Boolean,
+
+  /**
+   * @zh 选中后的 class
+   */
   selectedClass: String,
 }, 'group-item')
 
@@ -129,9 +163,7 @@ export function useGroupItem (
     disabled,
   }, vm)
 
-  onBeforeUnmount(() => {
-    group.unregister(id)
-  })
+  onBeforeUnmount(() => group.unregister(id))
 
   const isSelected = computed(() => group.isSelected(id))
 
