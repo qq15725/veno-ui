@@ -2,7 +2,7 @@
 import './styles/draggable-resizable.scss'
 
 // Utils
-import { ref, watch, toHandlers, nextTick, mergeProps } from 'vue'
+import { ref, watch, toHandlers, nextTick, mergeProps, computed } from 'vue'
 import { defineComponent, convertToUnit } from '../../utils'
 
 // Composables
@@ -70,7 +70,26 @@ export const DraggableResizable = defineComponent({
     const previous = ref({ ...model.value })
 
     const { isDragging, draggableEvents, draggableMovement } = useDraggable(props)
-    const { isResizing, resizeValue, genResizableAnchors } = useDraggableResizable(props)
+    const { isResizing, resizement, genResizableAnchors } = useDraggableResizable(props)
+
+    const styles = computed(() => {
+      const sharedProps = {
+        width: convertToUnit(model.value.width),
+        height: convertToUnit(model.value.height),
+      }
+      if (props.position) {
+        return {
+          ...sharedProps,
+          position: props.position,
+          top: convertToUnit(model.value.top),
+          left: convertToUnit(model.value.left),
+        }
+      }
+      return {
+        ...sharedProps,
+        transform: `translate3d(${ convertToUnit(model.value.left) }, ${ convertToUnit(model.value.top) }, 0)`,
+      }
+    })
 
     watch(rootEl, async el => {
       if (!el || !props.resizable) return
@@ -102,7 +121,7 @@ export const DraggableResizable = defineComponent({
       }
     })
 
-    watch(resizeValue, val => {
+    watch(resizement, val => {
       if (!props.resizable || !isResizing.value) return
       model.value = {
         ...model.value,
@@ -135,18 +154,19 @@ export const DraggableResizable = defineComponent({
               've-draggable-resizable--resizing': isResizing.value,
             },
           ] }
-          style={ {
-            transform: `translate3d(${ convertToUnit(model.value.left) }, ${ convertToUnit(model.value.top) }, 0)`,
-          } }
+          style={ styles.value }
+          { ...draggable }
         >
-          <div class="ve-draggable-resizable__wrapper">
-            { slots.default?.({
-              value: model.value,
-              draggable,
-              resizable,
-              props: mergeProps(draggable, resizable),
-            }) }
-          </div>
+          { slots.default && (
+            <div class="ve-draggable-resizable__wrapper">
+              { slots.default?.({
+                value: model.value,
+                draggable,
+                resizable,
+                props: mergeProps(draggable, resizable),
+              }) }
+            </div>
+          ) }
 
           <Tooltip
             arrow={ false }
@@ -158,7 +178,7 @@ export const DraggableResizable = defineComponent({
           >
             { {
               activator: props.resizable
-                ? ({ on: anchorProps }) => genResizableAnchors(anchorProps)
+                ? ({ on: anchorProps }) => genResizableAnchors(anchorProps, isDragging)
                 : undefined
             } }
           </Tooltip>

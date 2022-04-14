@@ -6,7 +6,7 @@ import { getCurrentInstanceName, propsFactory, SUPPORTS_TOUCH } from '../../util
 import { usePointer } from '../pointer'
 
 // Types
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType, Ref } from 'vue'
 
 export const SUPPORTED_DIRECTIONS = [
   'top',
@@ -50,7 +50,7 @@ export function useDraggableResizable (
   const isResizing = ref(false)
   const previous = ref({ left: 0, top: 0, width: 0, height: 0 })
   const current = ref({ left: 0, top: 0, width: 0, height: 0 })
-  const resizeValue = computed(() => ({
+  const resizement = computed(() => ({
     left: current.value.left - previous.value.left,
     top: current.value.top - previous.value.top,
     width: current.value.width - previous.value.width,
@@ -107,8 +107,8 @@ export function useDraggableResizable (
 
   return {
     isResizing,
-    resizeValue,
-    genResizableAnchors: (anchorProps?: Record<string, any>) => {
+    resizement,
+    genResizableAnchors: (anchorProps?: Record<string, any>, hide?: Ref<boolean>) => {
       return props.resizableAnchors.map(anchor => {
         return (
           <div
@@ -121,7 +121,7 @@ export function useDraggableResizable (
               `${ name }__resizable-anchor--${ anchor }`,
               {
                 [`${ name }__resizable-anchor--control`]: props.showResizableAnchor,
-                [`${ name }__resizable-anchor--hide`]: isResizing.value && anchor !== active.value,
+                [`${ name }__resizable-anchor--hide`]: (isResizing.value || hide?.value) && anchor !== active.value,
               }
             ] }
           />

@@ -43,6 +43,11 @@ export const makeDraggableProps = propsFactory({
     type: Boolean,
     default: true,
   },
+
+  /**
+   * @zh 定位模式
+   */
+  position: String as PropType<'absolute' | 'fixed'>,
 }, 'draggable')
 
 export function useDraggable (
@@ -160,9 +165,20 @@ export function useDraggable (
 
   const contentStyles = computed(() => {
     if (props.draggable && data) {
-      return {
-        transform: `translate3d(${ convertToUnit(data.value.left) }, ${ convertToUnit(data.value.top) }, 0)`,
+      const sharedProps = {
         userSelect: isDragging.value ? 'none' : undefined,
+      }
+      if (props.position) {
+        return {
+          ...sharedProps,
+          position: props.position,
+          top: convertToUnit(data.value.top),
+          left: convertToUnit(data.value.left),
+        }
+      }
+      return {
+        ...sharedProps,
+        transform: `translate3d(${ convertToUnit(data.value.left) }, ${ convertToUnit(data.value.top) }, 0)`,
       }
     }
     return null
