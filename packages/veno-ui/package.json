@@ -73,10 +73,10 @@
     "@veno-ui/utils": "workspace:*"
   },
   "devDependencies": {
-    "@vueuse/head": "^0.7.5",
+    "@vueuse/head": "^0.7.6",
     "magic-string": "^0.26.1",
-    "vite-plugin-dts": "^0.9.6",
-    "vue-router": "^4.0.12"
+    "vite-plugin-dts": "^1.1.1",
+    "vue-router": "^4.0.15"
   },
   "peerDependencies": {
     "vue": "^3.2.32"

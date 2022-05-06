@@ -99,7 +99,7 @@ export default defineConfig(({ mode }) => {
 
       // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
       Layouts({
-        layoutsDir: 'src/layouts',
+        layoutsDirs: 'src/layouts',
         defaultLayout: 'default'
       }),
 

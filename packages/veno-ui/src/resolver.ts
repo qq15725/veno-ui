@@ -26,8 +26,8 @@ export function VenoUiResolver (options: VenoUiResolverOptions = {}) {
         if (!kebab.startsWith(prefix)) return
         const slice = kebab.slice(prefix.length)
         return {
-          importName: toPascalCase(slice),
-          path: 'veno-ui/components'
+          name: toPascalCase(slice),
+          from: 'veno-ui/components'
         }
       }
     }
