@@ -84,7 +84,7 @@ export function provideForm (
     errorMessages.value = results
     valid.value = _valid
     isValidating.value = false
-    vm?.emit('submit', e)
+    vm?.emit('submit', model.value, e)
   }
 
   async function reset (e: Event) {

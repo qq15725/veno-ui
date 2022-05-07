@@ -127,11 +127,11 @@ export const Table = defineComponent({
   },
 
   emits: {
-    'update:pagination': (val: PaginationProps) => true,
-    'update:sortBy': (val: string | string[]) => true,
-    'update:sortDesc': (val: boolean | boolean[]) => true,
-    'update:options': (val: Record<string, any>) => true,
-    'update:selected': (val: Record<string, any>[]) => true,
+    'update:pagination': (_: PaginationProps) => true,
+    'update:sortBy': (_: string | string[]) => true,
+    'update:sortDesc': (_: boolean | boolean[]) => true,
+    'update:options': (_: Record<string, any>) => true,
+    'update:selected': (_: Record<string, any>[]) => true,
   },
 
   setup (props, { slots }) {
@@ -254,7 +254,7 @@ export const Table = defineComponent({
                 ) }
 
                 <tr>
-                  { headers.value.map(header => {
+                  { headers.value.map((header, index) => {
                     return (
                       <TableTh
                         { ...filterTableThProps(header)[0] }
@@ -281,7 +281,7 @@ export const Table = defineComponent({
                             } }
                           />
                         ) : (
-                          slots[`header.${ header.value }`]?.({ header })
+                          slots[`header.${ header.value }`]?.({ header, index })
                           ?? header.text
                           ?? header.value
                         ) }
@@ -324,7 +324,7 @@ export const Table = defineComponent({
                               } }
                             />
                           ) : (
-                            slots[`item.${ header.value }`]?.({ item })
+                            slots[`item.${ header.value }`]?.({ item, index })
                             ?? getObjectValueByPath(item, header.value)
                           ) }
                         </td>

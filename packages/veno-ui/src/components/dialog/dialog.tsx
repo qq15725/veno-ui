@@ -53,7 +53,7 @@ export const Dialog = genericComponent<new () => {
   },
 
   emits: {
-    'update:modelValue': (value: boolean) => true,
+    'update:modelValue': (_: boolean) => true,
   },
 
   setup (props, { slots }) {

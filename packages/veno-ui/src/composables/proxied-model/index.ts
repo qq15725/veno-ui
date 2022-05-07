@@ -25,23 +25,23 @@ export function useProxiedModel<
       && _propIsDefined(vm.vnode, prop)
   })
 
-  const internal = ref(transformIn(
+  const internal = ref(
     typeof props[prop] === 'undefined'
       ? defaultValue
       : props[prop]
-  )) as Ref<Inner>
+  ) as Ref<Props[Prop]>
 
   return computed<Inner>({
     get () {
       if (propIsDefined.value) {
         return transformIn(props[prop])
       } else {
-        return internal.value
+        return transformIn(internal.value)
       }
     },
     set (newValue) {
-      internal.value = newValue
-      vm.emit(`update:${ prop }`, transformOut(newValue))
+      internal.value = transformOut(newValue)
+      vm.emit(`update:${ prop }`, internal.value)
     }
   })
 }

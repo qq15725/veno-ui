@@ -4,19 +4,19 @@
 
 ```html
 <ve-spacer class="mb-3">
-  <ve-switch label="显示边框" v-model="border" />
-  <ve-switch label="隐藏表头" v-model="hideHeader" />  
-  <ve-switch label="固定表头" v-model="fixedHeader" />  
-  <ve-switch label="暂无数据" v-model="noData" />  
+  <ve-form v-model="table">
+    <ve-switch label="显示边框" name="border" />
+    <ve-switch label="隐藏表头" name="hideHeader" />
+    <ve-switch label="固定表头" name="fixedHeader" />
+    <ve-switch label="暂无数据" name="noData" />  
+  </ve-form>
 </ve-spacer>
 
 <ve-table
-  :border="border"
-  :hide-header="hideHeader"
-  :fixed-header="fixedHeader"
-  :height="fixedHeader ? 250 : undefined"
+  v-bind="table"
+  :height="table.fixedHeader ? 250 : undefined"
   :headers="headers" 
-  :items="noData ? [] : items"
+  :items="table.noData ? [] : items"
 >
   <template #item.operation>
     <ve-dialog>
@@ -47,10 +47,12 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup () {
     return {
-      border: ref(true),
-      hideHeader: ref(false),
-      fixedHeader: ref(false),
-      noData: ref(false),
+      table: ref({
+        border: true,
+        hideHeader: false,
+        fixedHeader: false,
+        noData: false,
+      }),
       headers: ref([
         { text: 'Name', width: 200, value: 'name' },
         { text: 'Salary', width: 160, value: 'salary', sortable: true, filters: [23000] },
@@ -88,7 +90,7 @@ export default defineComponent({
           salary: 27000,
           address: '62 Park Road, London',
           email: 'william.smith@example.com'
-        }
+        },
       ])
     }
   }

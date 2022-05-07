@@ -68,11 +68,11 @@ export const Form = defineComponent({
   },
 
   emits: {
-    'update:valid': (val: boolean | null) => true,
-    'update:modelValue': (val: Record<string, any>) => true,
+    'update:valid': (_: boolean | null) => true,
+    'update:modelValue': (_: Record<string, any>) => true,
     resetValidation: () => true,
-    reset: (e: Event) => true,
-    submit: (e: Event) => true,
+    reset: (_: Event) => true,
+    submit: (_: Record<string, any>, __: Event) => true,
   },
 
   setup (props, { slots }) {

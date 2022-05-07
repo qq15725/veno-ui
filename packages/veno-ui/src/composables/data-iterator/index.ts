@@ -118,8 +118,8 @@ export function useDataIterator (props: DataIteratorProps) {
       const pagination = { ...defaultPagination, ...val }
       return reactive({
         ...pagination,
-        page: parseInt(pagination.page, 10),
-        perPage: parseInt(pagination.perPage, 10),
+        page: Number(pagination.page),
+        perPage: Number(pagination.perPage),
         total: props.remote
           ? Number(pagination.total ?? props.items.length)
           : props.items.length,
