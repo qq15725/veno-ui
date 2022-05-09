@@ -1,31 +1,106 @@
 import './styles/image.scss'
 
 // Utils
-import { computed, h, defineComponent, ref, watch, onBeforeMount, nextTick } from 'vue'
-import { convertToUnit } from '../../utils'
+import {
+  computed,
+  defineComponent,
+  h,
+  nextTick,
+  onBeforeMount,
+  ref,
+  vShow,
+  watch,
+  withDirectives,
+} from 'vue'
+import { convertToUnit, SUPPORTS_INTERSECTION_OBSERVER, IN_BROWSER } from '../../utils'
 
 // Components
 import { Responsive } from '../responsive'
+
+// Composables
+import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+
+// Types
+import type { PropType } from 'vue'
 
 export const Image = defineComponent({
   name: 'VeImage',
 
   props: {
+    /**
+     * @zh 纵横比
+     */
     aspectRatio: [String, Number],
-    cover: Boolean,
-    eager: Boolean,
+
+    /**
+     * @zh alt
+     */
     alt: String,
-    src: String,
+
+    /**
+     * @zh object-fit: cover
+     */
+    cover: Boolean,
+
+    /**
+     * @zh 立即加载
+     */
+    eager: Boolean,
+
+    /**
+     * @zh 渐变
+     */
+    gradient: String,
+
+    /**
+     * @zh 懒加载 src
+     */
+    lazySrc: String,
+
+    /**
+     * @zh IntersectionObserverInit
+     */
+    options: {
+      type: Object as PropType<IntersectionObserverInit>,
+      // For more information on types, navigate to:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+      default: () => ({
+        root: undefined,
+        rootMargin: undefined,
+        threshold: undefined,
+      }),
+    },
+
+    /**
+     * @zh sizes
+     */
     sizes: String,
+
+    /**
+     * @zh src
+     */
+    src: String,
+
+    /**
+     * @zh srcset
+     */
     srcset: String,
+
+    /**
+     * @zh 宽度
+     */
     width: [String, Number],
+
+    ...makeTransitionProps(),
   },
 
   emits: ['loadstart', 'load', 'error'],
 
   setup (props, { emit, slots }) {
     const image = ref<HTMLImageElement>()
-    const state = ref<'idle' | 'loading' | 'loaded' | 'error'>(props.eager ? 'loading' : 'idle')
+    const state = ref<'idle' | 'loading' | 'loaded' | 'error'>(
+      props.eager ? 'loading' : 'idle'
+    )
     const naturalWidth = ref<number>()
     const naturalHeight = ref<number>()
 
@@ -42,22 +117,27 @@ export const Image = defineComponent({
     function init (isIntersecting?: boolean) {
       if (props.eager && isIntersecting) return
       if (
-        false
+        SUPPORTS_INTERSECTION_OBSERVER
         && !isIntersecting
         && !props.eager
       ) return
 
       state.value = 'loading'
+
+      if (props.lazySrc && IN_BROWSER) {
+        const lazyImg = new window.Image()
+        lazyImg.src = props.lazySrc
+        pollForSize(lazyImg, null)
+      }
+
+      if (!props.src) return
+
       nextTick(() => {
-        emit('loadstart', image.value?.currentSrc)
+        emit('loadstart', image.value?.currentSrc || props.src)
 
         if (image.value?.complete) {
-          if (!image.value.naturalWidth) {
-            onError()
-          }
-
+          if (!image.value.naturalWidth) onError()
           if (state.value === 'error') return
-
           if (!aspectRatio.value) pollForSize(image.value, null)
           onLoad()
         } else {
@@ -68,12 +148,12 @@ export const Image = defineComponent({
 
     function onLoad () {
       state.value = 'loaded'
-      emit('load', image.value)
+      emit('load', image.value?.currentSrc || props.src, image.value)
     }
 
     function onError () {
       state.value = 'error'
-      emit('error', image.value)
+      emit('error', image.value?.currentSrc || props.src, image.value)
     }
 
     function pollForSize (img: HTMLImageElement, timeout: number | null = 100) {
@@ -101,7 +181,9 @@ export const Image = defineComponent({
     }))
 
     const __image = computed(() => {
-      return h('img', {
+      if (!props.src || state.value === 'idle') return
+
+      const img = h('img', {
         class: ['ve-image__img', containClasses.value],
         src: props.src,
         srcset: props.srcset,
@@ -110,19 +192,98 @@ export const Image = defineComponent({
         onLoad,
         onError,
       })
+
+      const sources = slots.sources?.()
+
+      return (
+        <MaybeTransition transition={ props.transition } appear>
+          {
+            withDirectives(
+              sources
+                ? <picture class="ve-image__picture">{ sources }{ img }</picture>
+                : img,
+              [[vShow, state.value === 'loaded']]
+            )
+          }
+        </MaybeTransition>
+      )
     })
+
+    const __preloadImage = computed(() => (
+      <MaybeTransition transition={ props.transition }>
+        { props.lazySrc && state.value !== 'loaded' && (
+          <img
+            class={['ve-image__img', 've-image__img--preload', containClasses.value]}
+            src={ props.lazySrc }
+            alt=""
+          />
+        )}
+      </MaybeTransition>
+    ))
+
+    const __placeholder = computed(() => {
+      if (!slots.placeholder) return
+
+      return (
+        <MaybeTransition transition={ props.transition } appear>
+          { (state.value === 'loading' || (state.value === 'error' && !slots.error)) &&
+            <div class="ve-image__placeholder">{ slots.placeholder() }</div>
+          }
+        </MaybeTransition>
+      )
+    })
+
+    const __error = computed(() => {
+      if (!slots.error) return
+
+      return (
+        <MaybeTransition transition={ props.transition } appear>
+          { state.value === 'error' &&
+            <div class="ve-image__error">{ slots.error() }</div>
+          }
+        </MaybeTransition>
+      )
+    })
+
+    const __gradient = computed(() => {
+      if (!props.gradient) return
+
+      return <div class="ve-image__gradient" style={{ backgroundImage: `linear-gradient(${props.gradient})` }} />
+    })
+
+    const isBooted = ref(false)
+    {
+      const stop = watch(aspectRatio, val => {
+        if (val) {
+          // Doesn't work with nextTick, idk why
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              isBooted.value = true
+            })
+          })
+          stop()
+        }
+      })
+    }
 
     return () => (
       <Responsive
-        class="ve-image"
+        class={[
+          've-image',
+          { 've-image--booting': !isBooted.value },
+        ]}
         style={{
           width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width)
         }}
-        aspect-ratio={ aspectRatio.value }
+        aspectRatio={ aspectRatio.value }
         aria-label={ props.alt }
         role={ props.alt ? 'img' : undefined }
+        v-intersect={[{
+          handler: init,
+          options: props.options,
+        }, null, ['once']]}
         v-slots={ {
-          additional: () => [__image.value],
+          additional: () => [__image.value, __preloadImage.value, __gradient.value, __placeholder.value, __error.value],
           default: slots.default,
         } }
       />

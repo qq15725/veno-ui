@@ -7,7 +7,7 @@
 ```html
 <ve-image 
   src="https://picsum.photos/id/11/500/300"
-  :aspect-ratio="3 / 1"
+  :aspect-ratio="6 / 1"
 />
 ```
 

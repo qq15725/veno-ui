@@ -4,10 +4,20 @@
   --ve-theme-overlay-multiplier: 3;
   z-index: 0;
 
-  &__img {
+  &--booting .ve-responsive__sizer {
+    transition: none;
+  }
+
+  &__img,
+  &__picture,
+  &__gradient,
+  &__placeholder,
+  &__error {
     z-index: -1;
     @include tools.absolute();
+  }
 
+  &__img {
     &--preload {
       filter: blur(4px);
     }
@@ -19,5 +29,15 @@
     &--cover {
       object-fit: cover;
     }
+  }
+
+  &__gradient {
+    background-repeat: no-repeat;
+  }
+
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -12,6 +12,7 @@
     display: flex;
     flex: 1 1 auto;
     backface-visibility: hidden;
+    min-height: 100vh;
     max-width: 100%;
   }
 }

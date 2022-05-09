@@ -11,7 +11,7 @@ meta:
 
 basic.md aspect-ratio.md
 
-cover.md
+fill.md loading.md
 
 :::
 
