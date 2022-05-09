@@ -27,19 +27,62 @@ export const Drawer = defineComponent({
   name: 'VeDrawer',
 
   props: {
+    /**
+     * @zh 禁用大小调整监听
+     */
     disableResizeWatcher: Boolean,
+
+    /**
+     * @zh 禁用路由监听
+     */
     disableRouteWatcher: Boolean,
+
+    /**
+     * @zh 背景颜色
+     */
     color: String,
+
+    /**
+     * @zh 悬停时展开
+     */
     expandOnHover: Boolean,
+
+    /**
+     * @zh 持续激活
+     */
     permanent: Boolean,
+
+    /**
+     * @zh 最小化
+     */
     rail: Boolean,
+
+    /**
+     * @zh 最小化宽度
+     */
     railWidth: {
       type: [Number, String],
       default: 52,
     },
+
+    /**
+     * @zh 显示激活/隐藏按钮
+     */
     showToggler: Boolean,
+
+    /**
+     * @zh 临时抽屉
+     */
     temporary: Boolean,
+
+    /**
+     * @zh 可触摸
+     */
     touchless: Boolean,
+
+    /**
+     * @zh 宽度
+     */
     width: {
       type: [Number, String],
       default: 256,
@@ -68,7 +111,7 @@ export const Drawer = defineComponent({
     )
     const { mobile, platform } = useDisplay()
     const router = useRouter()
-    const isActive = useProxiedModel(props, 'modelValue')
+    const isActive = useProxiedModel(props, 'modelValue', null, v => !!v)
     const isHovering = ref(false)
     const width = computed(() => {
       return (props.rail && props.expandOnHover && isHovering.value)

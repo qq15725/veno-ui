@@ -3,7 +3,15 @@ import './styles/input.scss'
 
 // Utils
 import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
-import { genericComponent, useRender, getUid, convertToUnit, filterInputAttrs, IN_BROWSER } from '../../utils'
+import {
+  genericComponent,
+  useRender,
+  getUid,
+  convertToUnit,
+  filterInputAttrs,
+  IN_BROWSER,
+  propsFactory
+} from '../../utils'
 
 // Components
 import { Teleport } from 'vue'
@@ -43,6 +51,101 @@ export type InputSlots = FormControlSlots & InputControlSlots & MakeSlots<{
   default: [InputControlDefaultSlot]
 }>
 
+export const makeInputProps = propsFactory({
+  /**
+   * @zh 自动聚焦
+   */
+  autofocus: Boolean,
+
+  /**
+   * @zh 自动调整大小
+   */
+  autoResize: Boolean,
+
+  /**
+   * @zh 计数器
+   */
+  counter: [Boolean, Number, String] as PropType<true | number | string>,
+
+  /**
+   * @zh 计数器值
+   */
+  counterValue: Function as PropType<(value: any) => number>,
+
+  /**
+   * @zh ID
+   */
+  id: String,
+
+  /**
+   * @zh 输入框需要传送到那个 DOM
+   */
+  inputAttach: [Boolean, String, Object] as PropType<boolean | string | Element>,
+
+  /**
+   * @zh textarea 独有最大行数
+   */
+  maxRows: {
+    type: [Number, String],
+    validator: (v: any) => !isNaN(parseFloat(v)),
+  },
+
+  /**
+   * @zh 输入框的值
+   */
+  modelValue: null,
+
+  /**
+   * @zh 输入框 name
+   */
+  name: String,
+
+  /**
+   * @zh textarea 独有不允许重置大小
+   */
+  noResize: Boolean,
+
+  /**
+   * @zh 持续显示的计数器
+   */
+  persistentCounter: Boolean,
+
+  /**
+   * @zh 占位符内容
+   */
+  placeholder: String,
+
+  /**
+   * @zh textarea 独有最小行数
+   */
+  rows: {
+    type: [Number, String],
+    default: 5,
+    validator: (v: any) => !isNaN(parseFloat(v)),
+  },
+
+  /**
+   * @zh 输入框类型
+   */
+  type: {
+    type: String,
+    default: 'text',
+  },
+
+  /**
+   * @zh 宽度值
+   */
+  width: [String, Number],
+
+  ...makeInputControlProps(),
+})
+
+export const InputEmits = {
+  ...FormControlEmits,
+  ...InputControlEmits,
+  'update:modelValue': (_: string) => true,
+}
+
 export const Input = genericComponent<new () => {
   $slots: InputSlots
 }>()({
@@ -50,100 +153,9 @@ export const Input = genericComponent<new () => {
 
   directives: { Intersect },
 
-  props: {
-    /**
-     * @zh 自动聚焦
-     */
-    autofocus: Boolean,
+  props: makeInputProps(),
 
-    /**
-     * @zh 自动调整大小
-     */
-    autoResize: Boolean,
-
-    /**
-     * @zh 计数器
-     */
-    counter: [Boolean, Number, String] as PropType<true | number | string>,
-
-    /**
-     * @zh 计数器值
-     */
-    counterValue: Function as PropType<(value: any) => number>,
-
-    /**
-     * @zh ID
-     */
-    id: String,
-
-    /**
-     * @zh 输入框需要传送到那个 DOM
-     */
-    inputAttach: [Boolean, String, Object] as PropType<boolean | string | Element>,
-
-    /**
-     * @zh textarea 独有最大行数
-     */
-    maxRows: {
-      type: [Number, String],
-      validator: (v: any) => !isNaN(parseFloat(v)),
-    },
-
-    /**
-     * @zh 输入框的值
-     */
-    modelValue: null,
-
-    /**
-     * @zh 输入框 name
-     */
-    name: String,
-
-    /**
-     * @zh textarea 独有不允许重置大小
-     */
-    noResize: Boolean,
-
-    /**
-     * @zh 持续显示的计数器
-     */
-    persistentCounter: Boolean,
-
-    /**
-     * @zh 占位符内容
-     */
-    placeholder: String,
-
-    /**
-     * @zh textarea 独有最小行数
-     */
-    rows: {
-      type: [Number, String],
-      default: 5,
-      validator: (v: any) => !isNaN(parseFloat(v)),
-    },
-
-    /**
-     * @zh 输入框类型
-     */
-    type: {
-      type: String,
-      default: 'text',
-    },
-
-    /**
-     * @zh 宽度值
-     */
-    width: [String, Number],
-
-    ...makeInputControlProps(),
-  },
-
-  emits: {
-    ...FormControlEmits,
-    ...InputControlEmits,
-    'update:modelValue': (val: string) => true,
-  },
+  emits: InputEmits,
 
   setup (props, { attrs, slots, emit }) {
     const inputControlRef = ref<InputControl>()
