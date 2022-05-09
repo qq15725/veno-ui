@@ -12,7 +12,12 @@ import {
   watch,
   withDirectives,
 } from 'vue'
-import { convertToUnit, SUPPORTS_INTERSECTION_OBSERVER, IN_BROWSER } from '../../utils'
+import {
+  convertToUnit,
+  SUPPORTS_INTERSECTION_OBSERVER,
+  IN_BROWSER,
+  useRender,
+} from '../../utils'
 
 // Components
 import { Responsive } from '../responsive'
@@ -94,9 +99,14 @@ export const Image = defineComponent({
     ...makeTransitionProps(),
   },
 
-  emits: ['loadstart', 'load', 'error'],
+  emits: {
+    loadstart: (src: string | undefined, image: HTMLImageElement | undefined) => true,
+    load: (src: string | undefined, image: HTMLImageElement | undefined) => true,
+    error: (src: string | undefined, image: HTMLImageElement | undefined) => true,
+  },
 
   setup (props, { emit, slots }) {
+    const currentSrc = ref('')
     const image = ref<HTMLImageElement>()
     const state = ref<'idle' | 'loading' | 'loaded' | 'error'>(
       props.eager ? 'loading' : 'idle'
@@ -133,7 +143,7 @@ export const Image = defineComponent({
       if (!props.src) return
 
       nextTick(() => {
-        emit('loadstart', image.value?.currentSrc || props.src)
+        emit('loadstart', image.value?.currentSrc || props.src, image.value)
 
         if (image.value?.complete) {
           if (!image.value.naturalWidth) onError()
@@ -142,11 +152,13 @@ export const Image = defineComponent({
           onLoad()
         } else {
           if (!aspectRatio.value) pollForSize(image.value!)
+          getSrc()
         }
       })
     }
 
     function onLoad () {
+      getSrc()
       state.value = 'loaded'
       emit('load', image.value?.currentSrc || props.src, image.value)
     }
@@ -154,6 +166,11 @@ export const Image = defineComponent({
     function onError () {
       state.value = 'error'
       emit('error', image.value?.currentSrc || props.src, image.value)
+    }
+
+    function getSrc () {
+      const img = image.value
+      if (img) currentSrc.value = img.currentSrc || img.src
     }
 
     function pollForSize (img: HTMLImageElement, timeout: number | null = 100) {
@@ -266,7 +283,7 @@ export const Image = defineComponent({
       })
     }
 
-    return () => (
+    useRender(() => (
       <Responsive
         class={[
           've-image',
@@ -287,6 +304,16 @@ export const Image = defineComponent({
           default: slots.default,
         } }
       />
-    )
+    ))
+
+    return {
+      currentSrc,
+      image,
+      state,
+      naturalWidth,
+      naturalHeight,
+    }
   },
 })
+
+export type Image = InstanceType<typeof Image>
