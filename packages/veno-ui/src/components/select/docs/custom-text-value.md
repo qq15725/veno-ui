@@ -20,7 +20,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       selected: ref({ state: 'Florida', abbr: 'FL' }),
       items: [

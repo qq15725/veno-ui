@@ -1,9 +1,9 @@
 // Utils
 import { computed, unref } from 'vue'
-import type { ExtractPropTypes } from 'vue'
 import { convertToUnit, propsFactory } from '../../utils'
 
 // Types
+import type { ExtractPropTypes } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 export type DimensionProps = ExtractPropTypes<ReturnType<typeof makeDimensionProps>>
@@ -40,8 +40,8 @@ export const makeDimensionProps = propsFactory({
   width: [Number, String],
 }, 'dimension')
 
-export function useDimension(
-  props: MaybeRef<DimensionProps>,
+export function useDimension (
+  props: MaybeRef<DimensionProps>
 ) {
   return {
     dimensionStyles: computed(() => {
@@ -55,6 +55,6 @@ export function useDimension(
         minWidth: convertToUnit(minWidth),
         width: convertToUnit(width),
       }
-    }),
+    })
   }
 }

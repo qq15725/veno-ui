@@ -16,7 +16,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       items: ref([
         {
@@ -28,7 +28,7 @@ export default defineComponent({
           ]
         },
         {
-          title: '系统设置',
+          title: '系统设置', 
           prependIcon: '$settings',
           $children: [
             { title: '菜单权限管理', link: true },

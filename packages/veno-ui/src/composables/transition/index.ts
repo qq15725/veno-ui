@@ -1,9 +1,9 @@
 // Utils
-import { Transition, h, mergeProps } from 'vue'
-import type { Component, FunctionalComponent, PropType, TransitionProps } from 'vue'
+import { h, mergeProps, Transition } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
+import type { Component, FunctionalComponent, PropType, TransitionProps } from 'vue'
 
 export const makeTransitionProps = propsFactory({
   /**
@@ -16,7 +16,8 @@ export const makeTransitionProps = propsFactory({
   },
 }, 'transition')
 
-interface MaybeTransitionProps extends TransitionProps {
+interface MaybeTransitionProps extends TransitionProps
+{
   transition?: string | boolean | TransitionProps & { component?: any }
 }
 
@@ -35,8 +36,8 @@ export const MaybeTransition: FunctionalComponent<MaybeTransitionProps> = (props
       typeof transition === 'string'
         ? { name: transition }
         : customProps as any,
-      rest as any,
+      rest as any
     ),
-    slots,
+    slots
   )
 }

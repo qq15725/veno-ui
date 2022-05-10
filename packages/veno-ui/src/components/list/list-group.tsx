@@ -6,6 +6,7 @@ import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
+import { useList } from './composables/list'
 import { useNestedGroup } from '../../composables/nested'
 import { makeTagProps } from '../../composables/tag'
 
@@ -14,9 +15,8 @@ import { ExpandTransition } from '../transition'
 
 // Types
 import type { MakeSlots } from '../../utils'
-import { useList } from './composables/list'
 
-export interface ListGroupActivatorSlot {
+export type ListGroupActivatorSlot = {
   props: {
     onClick: (e: Event) => void
     appendIcon: string
@@ -58,7 +58,7 @@ export const ListGroup = genericComponent<new () => {
     ...makeTagProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { isOpen, open } = useNestedGroup(props)
     const list = useList()
 
@@ -86,7 +86,7 @@ export const ListGroup = genericComponent<new () => {
           { slots.activator?.({ props: activatorProps.value }) }
 
           <ExpandTransition>
-            <div className="ve-list-group__items" v-show={ isOpen.value }>
+            <div class="ve-list-group__items" v-show={ isOpen.value }>
               { slots.default?.() }
             </div>
           </ExpandTransition>

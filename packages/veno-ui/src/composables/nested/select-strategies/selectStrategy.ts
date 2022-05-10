@@ -19,7 +19,7 @@ export type SelectStrategyTransformOutFn = (
   parents: Map<string, string>
 ) => any[]
 
-export interface SelectStrategy {
+export type SelectStrategy = {
   select: SelectStrategyFn
   in: SelectStrategyTransformInFn
   out: SelectStrategyTransformOutFn

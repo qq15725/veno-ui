@@ -21,7 +21,7 @@ export const Radio = defineComponent({
     'update:modelValue': (val: any) => true,
   },
 
-  setup(props, { emit, slots }) {
+  setup (props, { emit, slots }) {
     return () => {
       return (
         <SelectionControl
@@ -33,7 +33,7 @@ export const Radio = defineComponent({
         </SelectionControl>
       )
     }
-  },
+  }
 })
 
 export type Radio = InstanceType<typeof Radio>

@@ -1,11 +1,11 @@
 // Utils
-import { computed, onActivated, onBeforeUnmount, onDeactivated, ref } from 'vue'
-import type { PropType, Ref } from 'vue'
-import { getCurrentInstance, getUid, propsFactory } from '../../utils'
+import { ref, onBeforeUnmount, onDeactivated, onActivated, computed } from 'vue'
+import { getUid, propsFactory, getCurrentInstance } from '../../utils'
 import { useLayout } from './layout'
 
 // Types
 import type { LayoutItemProps } from './types'
+import type { Ref, PropType } from 'vue'
 
 export const makeLayoutItemProps = propsFactory({
   modelValue: {
@@ -19,15 +19,15 @@ export const makeLayoutItemProps = propsFactory({
   },
   anchor: {
     type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
-    default: 'left',
+    default: 'left'
   },
   priority: {
     type: [String, Number],
-    default: 0,
+    default: 0
   },
 }, 'layout-item')
 
-export function useLayoutItem(props: Ref<LayoutItemProps & { name?: string }>) {
+export function useLayoutItem (props: Ref<LayoutItemProps & { name?: string }>) {
   const layout = useLayout()
   const id = props.value.name ?? `layout-item-${ getUid() }`
   const vm = getCurrentInstance('useLayoutItem')
@@ -45,6 +45,6 @@ export function useLayoutItem(props: Ref<LayoutItemProps & { name?: string }>) {
   return {
     layoutItemStyles,
     layoutRect: layout.layoutRect,
-    layoutItemScrimStyles,
+    layoutItemScrimStyles
   }
 }

@@ -1,7 +1,6 @@
 // Utils
-import { computed, nextTick, ref, toRef, watch } from 'vue'
-import type { ExtractPropTypes, PropType, VNode } from 'vue'
-import { convertToUnit, getCurrentInstanceName, getUid, propsFactory } from '../../utils'
+import { ref, toRef, watch, computed, nextTick } from 'vue'
+import { propsFactory, convertToUnit, getCurrentInstanceName, getUid } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -9,6 +8,7 @@ import { usePointer } from '../pointer'
 import { useDraggableSortableGroupItem } from '../draggable-sortable-group'
 
 // Types
+import type { ExtractPropTypes, PropType, VNode } from 'vue'
 import type { DraggableSortableGroupItem } from '../draggable-sortable-group'
 
 export const makeDraggableSortableProps = propsFactory({
@@ -47,11 +47,11 @@ export const makeDraggableSortableProps = propsFactory({
   group: String,
 }, 'draggable-sortable')
 
-export function useDraggableSortable(
+export function useDraggableSortable (
   props: ExtractPropTypes<ReturnType<typeof makeDraggableSortableProps>> & {
     'onUpdate:modelValue': ((val: any[]) => void) | undefined
   },
-  name = getCurrentInstanceName(),
+  name = getCurrentInstanceName()
 ) {
   const model = useProxiedModel(props, 'modelValue', props.modelValue)
   const modelEls = new Map<any, HTMLElement | undefined>()
@@ -61,7 +61,7 @@ export function useDraggableSortable(
       typeof props.itemKey === 'function'
         ? props.itemKey(value, index)
         : value[props.itemKey],
-      index,
+      index
     ))
     return indexes
   })
@@ -70,7 +70,7 @@ export function useDraggableSortable(
   const active = ref<any>()
 
   const indexToKey = (index: number) => {
-    for (const [key, i] of modelIndexes.value) {
+    for (let [key, i] of modelIndexes.value) {
       if (index === i) return key
     }
     return undefined
@@ -96,7 +96,7 @@ export function useDraggableSortable(
   const item: DraggableSortableGroupItem = {
     findContains: target => {
       if (target) {
-        for (const [key, el] of modelEls) {
+        for (let [key, el] of modelEls) {
           if (el === target || el?.contains(target)) {
             return { key, el }
           }
@@ -120,7 +120,7 @@ export function useDraggableSortable(
       pointerDown(new MouseEvent('mousedown', {
         clientY: from.position.top - (from.box.top - box.top),
         clientX: from.position.left - (from.box.left - box.left),
-        relatedTarget: el,
+        relatedTarget: el
       }))
     },
     leave: async (key) => {
@@ -131,7 +131,7 @@ export function useDraggableSortable(
           clientX: pointerCurrentPosition.value!.left,
         }))
       }
-    },
+    }
   }
 
   const group = useDraggableSortableGroupItem(id, item)
@@ -170,7 +170,7 @@ export function useDraggableSortable(
         box: ghostEl.value!.getBoundingClientRect(),
         position: val,
       }, {
-        el: targetEl,
+        el: targetEl
       })
     }
   })
@@ -189,7 +189,7 @@ export function useDraggableSortable(
       return (
         <div
           ref={ ghostEl }
-          className={ `${ name }__ghost` }
+          class={ `${ name }__ghost` }
           style={ {
             left: convertToUnit(ghostBox.value?.left),
             top: convertToUnit(ghostBox.value?.top),

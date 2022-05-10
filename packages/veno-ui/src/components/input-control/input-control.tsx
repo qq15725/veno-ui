@@ -2,23 +2,24 @@
 import './styles/input-control.scss'
 
 // Utils
-import { computed, ref, watchEffect } from 'vue'
-import type { Ref } from 'vue'
-import { genericComponent, pick, propsFactory, useRender } from '../../utils'
+import { ref, computed, watchEffect } from 'vue'
+import { genericComponent, propsFactory, pick, useRender } from '../../utils'
 
 // Components
 import { Icon } from '../icon'
 import { Button } from '../button'
 
 // Composables
-import { genOverlays, makeVariantProps, useVariant } from '../../composables/variant'
+import { makeVariantProps, useVariant, genOverlays } from '../../composables/variant'
 import { makeShapeProps, useShape } from '../../composables/shape'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
+import type { Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export interface InputControlSlot {
+export interface InputControlSlot
+{
   isActive: boolean
   isDirty: boolean
   isFocused: boolean
@@ -31,12 +32,12 @@ export interface InputControlSlot {
 export type InputControlDefaultSlot = InputControlSlot & { props: Record<string, unknown> }
 
 export type InputControlSlots = MakeSlots<{
-  'prepend-inner': [InputControlSlot]
-  prefix: [InputControlSlot]
-  default: [InputControlDefaultSlot]
-  suffix: [InputControlSlot]
-  'append-inner': [InputControlSlot]
-  clear: [InputControlSlot]
+  'prepend-inner': [InputControlSlot],
+  prefix: [InputControlSlot],
+  default: [InputControlDefaultSlot],
+  suffix: [InputControlSlot],
+  'append-inner': [InputControlSlot],
+  clear: [InputControlSlot],
 }>
 
 export const makeInputControlProps = propsFactory({
@@ -95,11 +96,11 @@ export const makeInputControlProps = propsFactory({
   } as const),
 }, 'input-control')
 
-export function filterInputControlProps(attrs: Record<string, unknown>) {
+export function filterInputControlProps (attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(InputControl.props))
 }
 
-export function filterInputControlSlots(slots: Record<string, unknown>) {
+export function filterInputControlSlots (slots: Record<string, unknown>) {
   return pick(slots, InputControlSlots)
 }
 
@@ -120,7 +121,7 @@ export const InputControlSlots = [
   'default',
   'suffix',
   'append-inner',
-  'clear',
+  'clear'
 ]
 
 export const InputControl = genericComponent<new () => {
@@ -131,12 +132,12 @@ export const InputControl = genericComponent<new () => {
   props: {
     active: Boolean,
     dirty: Boolean,
-    ...makeInputControlProps(),
+    ...makeInputControlProps()
   },
 
   emits: InputControlEmits,
 
-  setup(props, { slots, emit }) {
+  setup (props, { slots, emit }) {
     const isActive = useProxiedModel(props, 'active')
     const isFocused = ref(false)
     const controlRef = ref<HTMLElement>()
@@ -146,11 +147,11 @@ export const InputControl = genericComponent<new () => {
 
     watchEffect(() => isActive.value = isFocused.value || props.dirty)
 
-    function focus() {
+    function focus () {
       isFocused.value = true
     }
 
-    function blur() {
+    function blur () {
       isFocused.value = false
     }
 
@@ -164,7 +165,7 @@ export const InputControl = genericComponent<new () => {
       blur,
     }))
 
-    function onClick(e: MouseEvent) {
+    function onClick (e: MouseEvent) {
       if (e.target !== document.activeElement) {
         e.preventDefault()
       }
@@ -181,7 +182,7 @@ export const InputControl = genericComponent<new () => {
 
       return (
         <div
-          className={ [
+          class={ [
             've-input-control',
             {
               've-input-control--active': isActive.value,
@@ -203,7 +204,7 @@ export const InputControl = genericComponent<new () => {
           { genOverlays(false, 've-input-control') }
 
           { hasPrependInner && (
-            <div className="ve-input-control__prepend-inner">
+            <div class="ve-input-control__prepend-inner">
               { slots['prepend-inner']?.(slotProps.value) }
 
               { props.prependInnerIcon && (
@@ -215,9 +216,9 @@ export const InputControl = genericComponent<new () => {
             </div>
           ) }
 
-          <div className="ve-input-control__input">
+          <div class="ve-input-control__input">
             { hasPrefix && (
-              <span className="ve-input-control__prefix">
+              <span class="ve-input-control__prefix">
                 { slots.prefix?.(slotProps.value) ?? props.prefix }
 
                 { props.prefixIcon && (
@@ -233,11 +234,11 @@ export const InputControl = genericComponent<new () => {
               ...slotProps.value,
               props: {
                 class: 've-native-control',
-              },
+              }
             }) }
 
             { hasSuffix && (
-              <span className="ve-input-control__suffix">
+              <span class="ve-input-control__suffix">
                 { props.suffixIcon && (
                   <Icon
                     onClick={ (e: MouseEvent) => emit('click:suffix', e) }
@@ -252,7 +253,7 @@ export const InputControl = genericComponent<new () => {
 
           { hasClear && (
             <div
-              className={ [
+              class={ [
                 've-input-control__clearable',
                 { 've-input-control__clearable--has-append-inner': hasAppendInner },
               ] }
@@ -271,7 +272,7 @@ export const InputControl = genericComponent<new () => {
           ) }
 
           { hasAppendInner && (
-            <div className="ve-input-control__append-inner">
+            <div class="ve-input-control__append-inner">
               { props.appendInnerIcon && (
                 <Icon
                   icon={ props.appendInnerIcon }
@@ -290,7 +291,7 @@ export const InputControl = genericComponent<new () => {
       inputRef,
       controlRef,
     }
-  },
+  }
 })
 
 export type InputControl = InstanceType<typeof InputControl>

@@ -1,24 +1,26 @@
 // Utils
-import type { DirectiveBinding } from 'vue'
 import { attachedRoot } from '../../utils'
 
 // Types
+import type { DirectiveBinding } from 'vue'
 
-interface ClickOutsideBindingArgs {
+interface ClickOutsideBindingArgs
+{
   handler: (e: MouseEvent) => void
   closeConditional?: (e: Event) => boolean
   include?: () => HTMLElement[]
 }
 
-interface ClickOutsideDirectiveBinding extends DirectiveBinding {
+interface ClickOutsideDirectiveBinding extends DirectiveBinding
+{
   value: ((e: MouseEvent) => void) | ClickOutsideBindingArgs
 }
 
-function defaultConditional() {
+function defaultConditional () {
   return true
 }
 
-function checkEvent(e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirectiveBinding): boolean {
+function checkEvent (e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirectiveBinding): boolean {
   // The include element callbacks below can be expensive
   // so we should avoid calling them when we're not active.
   // Explicitly check for false to allow fallback compatibility
@@ -45,14 +47,14 @@ function checkEvent(e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirecti
   return !elements.some(el => el?.contains(e.target as Node))
 }
 
-function checkIsActive(e: MouseEvent, binding: ClickOutsideDirectiveBinding): boolean | void {
+function checkIsActive (e: MouseEvent, binding: ClickOutsideDirectiveBinding): boolean | void {
   const isActive = (typeof binding.value === 'object' && binding.value.closeConditional)
     || defaultConditional
 
   return isActive(e)
 }
 
-function directive(e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirectiveBinding) {
+function directive (e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirectiveBinding) {
   const handler = typeof binding.value === 'function' ? binding.value : binding.value.handler
 
   el._clickOutside!.lastMousedownWasOutside && checkEvent(e, el, binding) && setTimeout(() => {
@@ -60,7 +62,7 @@ function directive(e: MouseEvent, el: HTMLElement, binding: ClickOutsideDirectiv
   }, 0)
 }
 
-function handleShadow(el: HTMLElement, callback: Function): void {
+function handleShadow (el: HTMLElement, callback: Function): void {
   const root = attachedRoot(el)
 
   callback(document.body)
@@ -76,7 +78,7 @@ export const ClickOutside = {
   // sure that the root element is
   // available, iOS does not support
   // clicks on body
-  mounted(el: HTMLElement, binding: ClickOutsideDirectiveBinding) {
+  mounted (el: HTMLElement, binding: ClickOutsideDirectiveBinding) {
     const onClick = (e: Event) => directive(e as MouseEvent, el, binding)
     const onMousedown = (e: Event) => {
       el._clickOutside!.lastMousedownWasOutside = checkEvent(e as MouseEvent, el, binding)
@@ -94,7 +96,7 @@ export const ClickOutside = {
     }
   },
 
-  unmounted(el: HTMLElement) {
+  unmounted (el: HTMLElement) {
     if (!el._clickOutside) return
 
     handleShadow(el, (app: HTMLElement) => {

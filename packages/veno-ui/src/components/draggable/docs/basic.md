@@ -32,10 +32,10 @@
 ```
 
 ```js
-import { defineComponent, mergeProps, ref } from 'vue'
+import { defineComponent, ref, mergeProps } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       props: ref({
         cursor: true,

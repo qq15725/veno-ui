@@ -1,26 +1,26 @@
 // Utils
-import type { Prop } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Components
-import { Divider } from '../divider'
-import type { MakeSlots } from '../../utils'
 import { ListGroup } from './list-group'
 import { ListItem } from './list-item'
+import { Divider } from '../divider'
 import { ListSubheader } from './list-subheader'
 
 // Composables
 import { provideList } from './composables/list'
 
 // Types
+import type { Prop } from 'vue'
+import type { MakeSlots } from '../../utils'
 import type { InternalListItemProps } from './list'
 import type { ListGroupActivatorSlot } from './list-group'
-import type { ListItemSubtitleSlot, ListItemTitleSlot } from './list-item'
+import type { ListItemTitleSlot, ListItemSubtitleSlot } from './list-item'
 
 export type ListChildrenSlots<T> = MakeSlots<{
   default: []
-  header: [{ item: T; index: number } & ListGroupActivatorSlot]
-  item: [{ item: T; index: number }]
+  header: [{ item: T, index: number } & ListGroupActivatorSlot]
+  item: [{ item: T, index: number }]
   title: [ListItemTitleSlot]
   subtitle: [ListItemSubtitleSlot]
 }>
@@ -37,7 +37,7 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
     items: Array as Prop<InternalListItemProps[]>,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     provideList()
 
     return () => slots.default?.() ?? props.items?.map(({ children, props: itemProps, type }, index) => {
@@ -47,8 +47,7 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
         case 'subheader':
           return <ListSubheader { ...itemProps } v-slots={ slots } />
         default:
-          return children
-            ? (
+          return children ? (
             <ListGroup value={ itemProps?.value }>
               { {
                 default: () => (
@@ -60,11 +59,10 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
                 ),
               } }
             </ListGroup>
-              )
-            : (
-                slots.item?.({ item: itemProps, index })
+          ) : (
+            slots.item?.({ item: itemProps, index })
             ?? <ListItem { ...itemProps } v-slots={ slots } />
-              )
+          )
       }
     })
   },

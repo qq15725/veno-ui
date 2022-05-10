@@ -1,22 +1,20 @@
 // Utils
-import { computed, unref, warn } from 'vue'
+import { computed, warn, unref } from 'vue'
 import { IN_BROWSER } from '../../utils'
 
 // Types
 import type { MaybeRef } from '../../utils'
 
-export function useTeleport(target: MaybeRef<boolean | string | Element> = false) {
+export function useTeleport (target: MaybeRef<boolean | string | Element> = false) {
   const teleportTarget = computed(() => {
     const _target = unref(target)
 
     if (_target === true || !IN_BROWSER) return undefined
 
-    const targetElement
-      = _target === false
-        ? document.body
-        : typeof _target === 'string'
-          ? document.querySelector(_target)
-          : _target
+    const targetElement =
+      _target === false ? document.body
+        : typeof _target === 'string' ? document.querySelector(_target)
+        : _target
 
     if (targetElement == null) {
       warn(`Unable to locate target ${ _target }`)

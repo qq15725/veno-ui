@@ -30,9 +30,9 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     const fullscreen = ref(false)
-
+    
     return {
       fullscreen,
       toggle: () => fullscreen.value = !fullscreen.value

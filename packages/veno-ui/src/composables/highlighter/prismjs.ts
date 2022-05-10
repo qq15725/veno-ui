@@ -3,7 +3,8 @@
  * @see https://github.com/PrismJS/prism
  */
 
-export interface Prismjs {
+export interface Prismjs
+{
   languages: Record<string, any>
 
   highlight (code: string, grammar: any, language: string): string
@@ -19,7 +20,7 @@ const aliases = {
   js: 'javascript',
 }
 
-export async function prismjsHighlightCode(prismjs: Prismjs, code: string, language: string) {
+export async function prismjsHighlightCode (prismjs: Prismjs, code: string, language: string) {
   language = language.toLowerCase()
 
   if (language in aliases) {
@@ -34,7 +35,9 @@ export async function prismjsHighlightCode(prismjs: Prismjs, code: string, langu
   return prismjs.highlight(
     code,
     prismjs.languages[language],
-    language,
+    language
   )
 }
+
+
 

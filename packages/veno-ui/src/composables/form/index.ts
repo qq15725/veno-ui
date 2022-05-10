@@ -1,12 +1,13 @@
 // Utils
 import { computed, inject, provide, ref, watch } from 'vue'
-import type { ComputedRef, ExtractPropTypes, InjectionKey, PropType, Ref, WatchStopHandle } from 'vue'
-import { createSymbol, getCurrentInstance, getObjectValueByPath, propsFactory, setObjectValueByPath } from '../../utils'
+import { createSymbol, getCurrentInstance, propsFactory, getObjectValueByPath, setObjectValueByPath } from '../../utils'
 import { useProxiedModel } from '../proxied-model'
 
 // Types
+import type { ComputedRef, ExtractPropTypes, InjectionKey, PropType, Ref, WatchStopHandle } from 'vue'
 
-export interface FormField {
+export interface FormField
+{
   name: Ref<string | undefined>
   modelValue: Ref
   validate?: () => Promise<string[]>
@@ -14,7 +15,8 @@ export interface FormField {
   resetValidation?: () => void
 }
 
-export interface FormInstance {
+export interface FormInstance
+{
   items: Map<string | number, FormField>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
@@ -23,7 +25,8 @@ export interface FormInstance {
   unregister: (id: number | string) => void
 }
 
-interface FormValidationResult {
+interface FormValidationResult
+{
   id: number | string
   errorMessages: string[]
 }
@@ -42,11 +45,11 @@ export const makeFormProps = propsFactory({
   modelValue: Object as PropType<Record<string, any>>,
 })
 
-export function provideForm(
+export function provideForm (
   props: ExtractPropTypes<ReturnType<typeof makeFormProps>> & {
     'onUpdate:valid': ((val: boolean | null) => void) | undefined
     'onUpdate:modelValue': ((val: Record<string, any>) => void) | undefined
-  },
+  }
 ) {
   const vm = getCurrentInstance('provideForm')
   const valid = useProxiedModel(props, 'valid')
@@ -59,7 +62,7 @@ export function provideForm(
   const watchs = new Map<string | number, WatchStopHandle[]>()
   const errorMessages = ref<FormValidationResult[]>([])
 
-  async function submit(e: Event) {
+  async function submit (e: Event) {
     e.preventDefault()
     const results = []
     let _valid = true
@@ -84,14 +87,14 @@ export function provideForm(
     vm?.emit('submit', model.value, e)
   }
 
-  async function reset(e: Event) {
+  async function reset (e: Event) {
     e.preventDefault()
     items.forEach(item => item.reset?.())
     valid.value = null
     vm?.emit('reset', e)
   }
 
-  async function resetValidation() {
+  async function resetValidation () {
     items.forEach(item => item.resetValidation?.())
     errorMessages.value = []
     valid.value = null
@@ -117,14 +120,14 @@ export function provideForm(
           if (value !== getObjectValueByPath(model.value, name)) {
             setObjectValueByPath(model.value, name, value)
           }
-        }, { immediate: true, deep: true }),
+        }, { immediate: true, deep: true })
       ])
     },
     unregister: id => {
       items.delete(id)
       watchs.get(id)?.forEach(v => v())
       watchs.delete(id)
-    },
+    }
   })
 
   return {
@@ -139,6 +142,6 @@ export function provideForm(
   }
 }
 
-export function useForm() {
+export function useForm () {
   return inject(FormKey, null)
 }

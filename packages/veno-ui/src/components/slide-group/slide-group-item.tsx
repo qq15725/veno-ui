@@ -12,7 +12,7 @@ export const SlideGroupItem = defineComponent({
     ...makeGroupItemProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const group = useGroupItem(props, SlideGroupKey)
 
     return () => slots.default?.({

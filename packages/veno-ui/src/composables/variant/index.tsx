@@ -1,12 +1,12 @@
 // Utils
 import { computed, unref } from 'vue'
-import type { ExtractPropTypes, PropType } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { propsFactory, getCurrentInstanceName } from '../../utils'
 
 // Composables
 import { useColor } from '../color'
 
 // Types
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 export type VariantProps = ExtractPropTypes<ReturnType<typeof makeVariantProps>>
@@ -14,15 +14,15 @@ export type VariantProps = ExtractPropTypes<ReturnType<typeof makeVariantProps>>
 // Constants
 export const VARIANTS = [
   'contained', 'outlined', 'plain', 'text',
-  'contained-text', 'contained-outlined',
+  'contained-text', 'contained-outlined'
 ] as const
 
-export function genOverlays(isClickable: boolean, name: string) {
+export function genOverlays (isClickable: boolean, name: string) {
   return (
     <>
-      { isClickable && <div aria-hidden="true" className={ `${ name }__overlay` } /> }
-      <div aria-hidden="true" className={ `${ name }__underlay` } />
-      <div aria-hidden="true" className={ `${ name }__border` } />
+      { isClickable && <div aria-hidden="true" class={ `${ name }__overlay` } /> }
+      <div aria-hidden="true" class={ `${ name }__underlay` } />
+      <div aria-hidden="true" class={ `${ name }__border` } />
     </>
   )
 }
@@ -48,9 +48,9 @@ export const makeVariantProps = propsFactory({
   },
 }, 'variant')
 
-export function useVariant(
+export function useVariant (
   props: MaybeRef<VariantProps>,
-  name = getCurrentInstanceName(),
+  name = getCurrentInstanceName()
 ) {
   const variant = computed(() => {
     const { variant } = unref(props)
@@ -78,5 +78,5 @@ export function useVariant(
 
   const { colorClasses, colorStyles } = useColor(colors)
 
-  return { colorClasses, colorStyles, variantClasses }
+  return { colorClasses, colorStyles, variantClasses, }
 }

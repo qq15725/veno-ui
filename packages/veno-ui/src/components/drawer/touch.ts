@@ -1,14 +1,14 @@
 // Utils
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import type { Ref } from 'vue'
 import { throttle } from '../../utils'
 
 // Composables
 import { useVelocity } from '../../composables/touch'
 
 // Types
+import type { Ref } from 'vue'
 
-export function useTouch({ isActive, isTemporary, width, touchless, position }: {
+export function useTouch ({ isActive, isTemporary, width, touchless, position }: {
   isActive: Ref<boolean>
   isTemporary: Ref<boolean>
   width: Ref<number>
@@ -36,65 +36,51 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
   const offset = ref(0)
   let start: [number, number] | undefined
 
-  function getOffset(pos: number, active: boolean): number {
+  function getOffset (pos: number, active: boolean): number {
     return (
-      position.value === 'left'
-        ? pos
-        : position.value === 'right'
-          ? document.documentElement.clientWidth - pos
-          : position.value === 'bottom'
-            ? document.documentElement.clientHeight - pos
-            : oops()
+      position.value === 'left' ? pos
+        : position.value === 'right' ? document.documentElement.clientWidth - pos
+        : position.value === 'bottom' ? document.documentElement.clientHeight - pos
+          : oops()
     ) - (active ? width.value : 0)
   }
 
-  function getProgress(pos: number, limit = true): number {
+  function getProgress (pos: number, limit = true): number {
     const progress = (
-      position.value === 'left'
-        ? (pos - offset.value) / width.value
-        : position.value === 'right'
-          ? (document.documentElement.clientWidth - pos - offset.value) / width.value
-          : position.value === 'bottom'
-            ? (document.documentElement.clientHeight - pos - offset.value) / width.value
-            : oops()
+      position.value === 'left' ? (pos - offset.value) / width.value
+        : position.value === 'right' ? (document.documentElement.clientWidth - pos - offset.value) / width.value
+        : position.value === 'bottom' ? (document.documentElement.clientHeight - pos - offset.value) / width.value
+          : oops()
     )
     return limit ? Math.max(0, Math.min(1, progress)) : progress
   }
 
-  function onTouchstart(e: TouchEvent) {
+  function onTouchstart (e: TouchEvent) {
     if (touchless.value || !isActive.value) return
 
     const touchX = e.changedTouches[0].clientX
     const touchY = e.changedTouches[0].clientY
 
     const touchZone = 25
-    const inTouchZone: boolean
-      = position.value === 'left'
-        ? touchX < touchZone
-        : position.value === 'right'
-          ? touchX > document.documentElement.clientWidth - touchZone
-          : position.value === 'bottom'
-            ? touchY > document.documentElement.clientHeight - touchZone
-            : position.value === 'top'
-              ? touchY < touchZone
-              : oops()
+    const inTouchZone: boolean =
+      position.value === 'left' ? touchX < touchZone
+        : position.value === 'right' ? touchX > document.documentElement.clientWidth - touchZone
+        : position.value === 'bottom' ? touchY > document.documentElement.clientHeight - touchZone
+          : position.value === 'top' ? touchY < touchZone
+            : oops()
 
     const inElement: boolean = isActive.value && (
-      position.value === 'left'
-        ? touchX < width.value
-        : position.value === 'right'
-          ? touchX > document.documentElement.clientWidth - width.value
-          : position.value === 'bottom'
-            ? touchY > document.documentElement.clientHeight - width.value
-            : position.value === 'top'
-              ? touchY < width.value
-              : oops()
+      position.value === 'left' ? touchX < width.value
+        : position.value === 'right' ? touchX > document.documentElement.clientWidth - width.value
+        : position.value === 'bottom' ? touchY > document.documentElement.clientHeight - width.value
+          : position.value === 'top' ? touchY < width.value
+            : oops()
     )
 
     if (
-      inTouchZone
-      || inElement
-      || (isActive.value && isTemporary.value)
+      inTouchZone ||
+      inElement ||
+      (isActive.value && isTemporary.value)
     ) {
       maybeDragging = true
       start = [touchX, touchY]
@@ -109,7 +95,7 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
 
   const onTouchmove = throttle((e: TouchEvent) => handleTouchmove(e), 69)
 
-  function handleTouchmove(e: TouchEvent) {
+  function handleTouchmove (e: TouchEvent) {
     const touchX = e.changedTouches[0].clientX
     const touchY = e.changedTouches[0].clientY
 
@@ -149,7 +135,7 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
     }
   }
 
-  function onTouchend(e: TouchEvent) {
+  function onTouchend (e: TouchEvent) {
     maybeDragging = false
 
     if (!isDragging.value) return
@@ -178,21 +164,15 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
   }
 
   const dragStyles = computed(() => {
-    return isDragging.value
-      ? {
-          transform:
-        position.value === 'left'
-          ? `translateX(calc(-100% + ${ dragProgress.value * width.value }px))`
-          : position.value === 'right'
-            ? `translateX(calc(100% - ${ dragProgress.value * width.value }px))`
-            : position.value === 'bottom'
-              ? `translateY(calc(100% - ${ dragProgress.value * width.value }px))`
-              : position.value === 'top'
-                ? `translateY(calc(-100% + ${ dragProgress.value * width.value }px))`
-                : oops(),
-          transition: 'none',
-        }
-      : undefined
+    return isDragging.value ? {
+      transform:
+        position.value === 'left' ? `translateX(calc(-100% + ${ dragProgress.value * width.value }px))`
+          : position.value === 'right' ? `translateX(calc(100% - ${ dragProgress.value * width.value }px))`
+          : position.value === 'bottom' ? `translateY(calc(100% - ${ dragProgress.value * width.value }px))`
+            : position.value === 'top' ? `translateY(calc(-100% + ${ dragProgress.value * width.value }px))`
+              : oops(),
+      transition: 'none',
+    } : undefined
   })
 
   return {
@@ -202,6 +182,6 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
   }
 }
 
-function oops(): never {
+function oops (): never {
   throw new Error()
 }

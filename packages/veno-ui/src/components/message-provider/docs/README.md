@@ -48,9 +48,9 @@ closable.md
 import { message } from 'veno-ui'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
-      warning() {
+      warning () {
         message.warning('...')
       }
     }

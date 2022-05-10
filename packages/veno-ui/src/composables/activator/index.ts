@@ -1,13 +1,12 @@
 // Utils
-import { computed, effectScope, nextTick, onScopeDispose, ref, watch, watchEffect } from 'vue'
-import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
+import { watchEffect, computed, effectScope, nextTick, onScopeDispose, ref, watch } from 'vue'
 import {
-  IN_BROWSER,
-  SUPPORTS_FOCUS_VISIBLE,
-  SUPPORTS_TOUCH,
-  getCurrentInstance,
   isComponentInstance,
+  getCurrentInstance,
+  IN_BROWSER,
+  SUPPORTS_TOUCH,
   propsFactory,
+  SUPPORTS_FOCUS_VISIBLE,
   querySelector,
 } from '../../utils'
 
@@ -15,6 +14,7 @@ import {
 import { makeDelayProps, useDelay } from '../delay'
 
 // Types
+import type { ExtractPropTypes, EffectScope, PropType, Ref } from 'vue'
 import type { Selector } from '../../utils'
 
 export const makeActivatorProps = propsFactory({
@@ -57,15 +57,16 @@ export const makeActivatorProps = propsFactory({
 
 type ActivatorProps = ExtractPropTypes<ReturnType<typeof makeActivatorProps>>
 
-interface ActivatorData {
+interface ActivatorData
+{
   isActive: Ref<boolean>
 }
 
-export function useActivator(
+export function useActivator (
   props: ActivatorProps,
-  { isActive }: ActivatorData,
+  { isActive }: ActivatorData
 ) {
-  const activatedPosition = ref<{ left: number; top: number }>()
+  const activatedPosition = ref<{ left: number, top: number }>()
   const activatorEl = ref<HTMLElement>()
 
   let isHovered = false
@@ -89,13 +90,13 @@ export function useActivator(
     }
   })
 
-  function onEnter(e: MouseEvent) {
+  function onEnter (e: MouseEvent) {
     activatorEl.value = (e.currentTarget || e.target) as HTMLElement
     isHovered = true
     runOpenDelay()
   }
 
-  function onLeave(e: MouseEvent) {
+  function onLeave (e: MouseEvent) {
     isHovered = false
     runCloseDelay()
   }
@@ -187,7 +188,7 @@ export function useActivator(
     activatorEl,
     activatorRef,
     activatorEvents,
-    contentEvents,
+    contentEvents
   }
 
   let scope: EffectScope
@@ -203,9 +204,9 @@ export function useActivator(
   return state
 }
 
-function useActivatorInScope(
+function useActivatorInScope (
   props: ActivatorProps,
-  { activatorEl, activatorEvents }: ReturnType<typeof useActivator>,
+  { activatorEl, activatorEvents }: ReturnType<typeof useActivator>
 ) {
   watch(() => props.activator, (val, oldVal) => {
     if (oldVal && val !== oldVal) {
@@ -221,9 +222,9 @@ function useActivatorInScope(
 
   onScopeDispose(unbindActivatorProps)
 
-  function bindActivatorProps(
+  function bindActivatorProps (
     el = getActivator(),
-    activatorProps = props.activatorProps,
+    activatorProps = props.activatorProps
   ) {
     if (!el) return
 
@@ -240,9 +241,9 @@ function useActivatorInScope(
     })
   }
 
-  function unbindActivatorProps(
+  function unbindActivatorProps (
     el = getActivator(),
-    activatorProps = props.activatorProps,
+    activatorProps = props.activatorProps
   ) {
     if (!el) return
 
@@ -257,7 +258,7 @@ function useActivatorInScope(
 
   const vm = getCurrentInstance('useActivator')
 
-  function getActivator(selector = props.activator): HTMLElement | undefined {
+  function getActivator (selector = props.activator): HTMLElement | undefined {
     if (selector) {
       activatorEl.value = querySelector(selector, vm)
     }

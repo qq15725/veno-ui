@@ -7,7 +7,7 @@ import { defineComponent } from '../../utils'
 
 // Composables
 import { makeLayoutItemProps, useLayoutItem } from '../../composables/layout'
-import { filterToolbarProps, makeToolbarProps } from '../toolbar/toolbar'
+import { makeToolbarProps, filterToolbarProps } from '../toolbar/toolbar'
 
 // Components
 import { Toolbar } from '../toolbar'
@@ -26,7 +26,7 @@ export const Header = defineComponent({
     } as const),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       position: props.position,
       anchor: props.anchor,

@@ -35,7 +35,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       selected: ref([]),
       items: [

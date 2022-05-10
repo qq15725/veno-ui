@@ -3,14 +3,13 @@ import './styles/alert.scss'
 
 // Utils
 import { computed } from 'vue'
-import type { PropType } from 'vue'
-import { genericComponent, pick, propsFactory } from '../../utils'
+import { genericComponent, propsFactory, pick } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
-import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
-import { filterCardProps, makeCardProps } from '../card/card'
+import { makeCardProps, filterCardProps } from '../card/card'
 
 // Components
 import { Button } from '../button'
@@ -19,11 +18,12 @@ import { Icon } from '../icon'
 import { Progress } from '../progress'
 import { FadeInExpandTransition } from '../transition'
 
-// Types
-import type { MakeSlots } from '../../utils'
-
 // Constants
 export const alertTypes = ['success', 'info', 'warning', 'error'] as const
+
+// Types
+import type { PropType } from 'vue'
+import type { MakeSlots } from '../../utils'
 
 export type AlertType = typeof alertTypes[number]
 
@@ -33,7 +33,7 @@ export type AlertSlots = MakeSlots<{
   append: []
 }>
 
-export function filterAlertProps(props: Record<string, unknown>) {
+export function filterAlertProps (props: Record<string, unknown>) {
   return pick(props, Object.keys(Alert.props))
 }
 
@@ -101,7 +101,7 @@ export const Alert = genericComponent<new () => {
     'update:modelValue': (_: boolean) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { loadingClasses } = useLoading(props)
     const computedProps = computed(() => {
       return {
@@ -115,9 +115,10 @@ export const Alert = genericComponent<new () => {
       if (props.icon === false) return
       if (typeof props.icon === 'string') return props.icon
       if (props.type) return `$${ props.type }`
+      return
     })
 
-    function onCloseClick(_: Event) {
+    function onCloseClick (_: Event) {
       isActive.value = false
     }
 
@@ -148,8 +149,7 @@ export const Alert = genericComponent<new () => {
                 tag="div"
               >
                 { {
-                  prepend: hasPrepend
-                    ? () => (
+                  prepend: hasPrepend ? () => (
                     <>
                       { hasIcon && (
                         <Icon
@@ -171,19 +171,17 @@ export const Alert = genericComponent<new () => {
 
                       { slots.prepend?.() }
                     </>
-                      )
-                    : undefined,
+                  ) : undefined,
                   headerText: () => (
                     <>
                       { hasTitle && (
-                        <div className="ve-alert__title">{ props.title }</div>
+                        <div class="ve-alert__title">{ props.title }</div>
                       ) }
 
                       { slots.default?.() ?? props.text }
                     </>
                   ),
-                  append: hasAppend
-                    ? () => (
+                  append: hasAppend ? () => (
                     <>
                       { slots.append?.() }
 
@@ -198,8 +196,7 @@ export const Alert = genericComponent<new () => {
                         />
                       ) }
                     </>
-                      )
-                    : undefined,
+                  ) : undefined,
                 } }
               </Card>
             </props.tag>
@@ -207,7 +204,7 @@ export const Alert = genericComponent<new () => {
         </MaybeTransition>
       )
     }
-  },
+  }
 })
 
 export type Alert = InstanceType<typeof Alert>

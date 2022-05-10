@@ -12,14 +12,21 @@
     "url": "https://github.com/qq15725/veno-ui/issues"
   },
   "license": "MIT",
-  "author": "wxm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
   },
-  "main": "lib/framework.mjs",
-  "module": "lib/framework.mjs",
-  "types": "lib/framework.d.ts",
+  "author": "wxm",
+  "sideEffects": [
+    "*.sass",
+    "*.scss",
+    "*.css",
+    "*.vue"
+  ],
+  "files": [
+    "lib",
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./lib/framework.mjs",
@@ -37,16 +44,9 @@
     "./utils": "./lib/utils/index.mjs",
     "./*": "./*"
   },
-  "files": [
-    "lib",
-    "dist"
-  ],
-  "sideEffects": [
-    "*.sass",
-    "*.scss",
-    "*.css",
-    "*.vue"
-  ],
+  "main": "lib/framework.mjs",
+  "module": "lib/framework.mjs",
+  "types": "lib/framework.d.ts",
   "typesVersions": {
     "*": {
       "lib/framework.mjs": [
@@ -69,9 +69,6 @@
     "build:lib": "vite build -c vite.lib.config.ts",
     "build": "pnpm run build:lib && pnpm run build:dist"
   },
-  "peerDependencies": {
-    "vue": "^3.2.32"
-  },
   "dependencies": {
     "@veno-ui/utils": "workspace:*"
   },
@@ -80,6 +77,9 @@
     "magic-string": "^0.26.1",
     "vite-plugin-dts": "^1.1.1",
     "vue-router": "^4.0.15"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.32"
   },
   "publishConfig": {
     "access": "public"

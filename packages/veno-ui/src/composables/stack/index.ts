@@ -5,16 +5,16 @@ import {
   onScopeDispose,
   ref,
   toRaw,
-  watch,
+  watch
 } from 'vue'
-import type { ComponentInternalInstance, EffectScope, Ref } from 'vue'
 import { getCurrentInstance } from '../../utils'
 
 // Types
+import type { ComponentInternalInstance, EffectScope, Ref } from 'vue'
 
 const stack = ref<ComponentInternalInstance[]>([])
 
-export function useStack(isActive: Ref<boolean>) {
+export function useStack (isActive: Ref<boolean>) {
   const vm = getCurrentInstance('stack')
 
   let scope: EffectScope | undefined

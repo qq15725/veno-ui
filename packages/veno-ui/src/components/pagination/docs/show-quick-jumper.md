@@ -7,10 +7,10 @@
 ```
 
 ```js
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       page: ref(6),
     }

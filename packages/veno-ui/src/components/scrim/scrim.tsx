@@ -6,7 +6,7 @@ import { toRef } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useBackgroundColor } from '../../composables/color'
 
 // Components
@@ -25,7 +25,7 @@ export const Scrim = defineComponent({
     }),
   },
 
-  setup(props, { attrs }) {
+  setup (props, { attrs }) {
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
 
     return () => {
@@ -33,7 +33,7 @@ export const Scrim = defineComponent({
         <MaybeTransition transition={ props.transition } appear>
           { props.modelValue && (
             <div
-              className={ [
+              class={ [
                 've-scrim',
                 backgroundColorClasses.value,
               ] }
@@ -44,5 +44,5 @@ export const Scrim = defineComponent({
         </MaybeTransition>
       )
     }
-  },
+  }
 })

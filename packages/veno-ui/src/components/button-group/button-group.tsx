@@ -2,8 +2,8 @@
 import './styles/button-group.scss'
 
 // Utils
-import { reactive, toRef } from 'vue'
 import { defineComponent } from '../../utils'
+import { reactive, toRef } from 'vue'
 
 // Composables
 import { makeDisabledProps } from '../../composables/disabled'
@@ -24,7 +24,7 @@ export const ButtonGroup = defineComponent({
     } as const),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
 
     provideDefaults(reactive({
@@ -53,5 +53,5 @@ export const ButtonGroup = defineComponent({
         />
       )
     }
-  },
+  }
 })

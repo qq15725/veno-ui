@@ -1,9 +1,9 @@
 // Utils
-import { onScopeDispose } from 'vue'
 import { getScrollParents } from '../../utils'
+import { onScopeDispose } from 'vue'
 
 /** @private */
-export function bindScroll(el: HTMLElement | undefined, onScroll: (e: Event) => void) {
+export function bindScroll (el: HTMLElement | undefined, onScroll: (e: Event) => void) {
   const scrollElements = [document, ...getScrollParents(el)]
 
   scrollElements.forEach(el => {

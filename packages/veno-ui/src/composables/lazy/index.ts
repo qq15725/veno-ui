@@ -1,9 +1,9 @@
 // Utils
 import { computed, ref, watch } from 'vue'
-import type { ExtractPropTypes, Ref } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
+import type { Ref, ExtractPropTypes } from 'vue'
 
 export const makeLazyProps = propsFactory({
   /**
@@ -12,9 +12,9 @@ export const makeLazyProps = propsFactory({
   eager: Boolean,
 }, 'lazy')
 
-export function useLazy(
+export function useLazy (
   props: ExtractPropTypes<ReturnType<typeof makeLazyProps>>,
-  active: Ref<boolean>,
+  active: Ref<boolean>
 ) {
   const isBooted = ref(false)
 
@@ -22,7 +22,7 @@ export function useLazy(
 
   watch(active, () => isBooted.value = true)
 
-  function onAfterLeave() {
+  function onAfterLeave () {
     if (!props.eager) isBooted.value = false
   }
 

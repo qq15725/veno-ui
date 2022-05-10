@@ -14,7 +14,7 @@ export {
   components,
   directives,
   providers,
-  utils,
+  utils
 }
 
 export * from './composables'

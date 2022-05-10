@@ -1,6 +1,5 @@
 // Utils
 import { computed, toRef } from 'vue'
-import type { PropType } from 'vue'
 import { defineComponent, getUid } from '../../utils'
 
 // Components
@@ -16,8 +15,10 @@ import { provideDefaults } from '../../composables/defaults'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
+import type { PropType } from 'vue'
 
-export interface RadioGroupItemProps {
+export interface RadioGroupItemProps
+{
   value: any
 
   [key: string]: any
@@ -45,15 +46,15 @@ export const RadioGroup = defineComponent({
     'update:modelValue': (val: any) => true,
   },
 
-  setup(props, { emit, slots }) {
+  setup (props, { emit, slots }) {
     const id = computed(() => props.id || `ve-radio-group-${ getUid() }`)
     const model = useProxiedModel(props, 'modelValue')
     const items = computed(() => {
-      return props.items?.map(
+      return props.items?.map((
         itemProps => typeof itemProps === 'string'
           ? { value: itemProps }
-          : itemProps,
-      )
+          : itemProps
+      ))
     })
 
     provideDefaults({

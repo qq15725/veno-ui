@@ -1,5 +1,5 @@
 // Utils
-import { inject, provide, ref } from 'vue'
+import { ref, provide, inject } from 'vue'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
@@ -9,7 +9,7 @@ export const ListKey: InjectionKey<{
   updateHasPrepend: (value: boolean) => void
 }> = Symbol.for('veno-ui:list')
 
-export function provideList() {
+export function provideList () {
   const parent = inject(ListKey, { hasPrepend: ref(false), updateHasPrepend: () => null })
 
   const data = {
@@ -24,6 +24,6 @@ export function provideList() {
   return parent
 }
 
-export function useList() {
+export function useList () {
   return inject(ListKey, null)
 }

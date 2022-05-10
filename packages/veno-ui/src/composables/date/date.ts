@@ -5,11 +5,11 @@ import { padNumber } from '../../utils'
 import { MAP } from './constants'
 
 // Types
-import type { DateInstance, DateOptions, InternalDateInstance } from './types'
+import { DateInstance, DateOptions, InternalDateInstance } from './types'
 
 export const defaultDateFormat = 'YYYY-MM-DD HH:mm:ss'
 
-export function createDate(options?: DateOptions): DateInstance {
+export function createDate (options?: DateOptions): DateInstance {
   let date: Date
   {
     if (!options) {
@@ -21,34 +21,34 @@ export function createDate(options?: DateOptions): DateInstance {
     }
   }
 
-  function tap<T>(cb1: () => T, cb2: (v: T) => void) {
+  function tap<T> (cb1: () => T, cb2: (v: T) => void) {
     const res = cb1()
     cb2(res)
     return res
   }
 
   const ctx: InternalDateInstance = {
-    add(value, unit) {
+    add (value, unit) {
       return tap(() => this.clone(), cloned => {
         const get = MAP[unit].get as keyof typeof cloned
         const set = MAP[unit].set as keyof typeof cloned
         if (set in cloned && get in cloned) {
           (cloned[set] as (value: number) => void)(
-            (cloned[get] as () => number)() + value,
+            (cloned[get] as () => number)() + value
           )
         }
       })
     },
-    subtract(value, unit) {
+    subtract (value, unit) {
       return this.add(-value, unit)
     },
-    startOf(unit) {
+    startOf (unit) {
       return createDate(this.format(MAP[unit].startOf))
     },
-    endOf(unit) {
+    endOf (unit) {
       return createDate(this.format(MAP[unit].endOf))
     },
-    format(value = defaultDateFormat) {
+    format (value = defaultDateFormat) {
       const formatted = this.toObject()
 
       const { format, counter } = value.split('')
@@ -60,7 +60,7 @@ export function createDate(options?: DateOptions): DateInstance {
             format += key
           }
           return { format, counter }
-        }, { format: '', counter: {} } as { format: string; counter: Record<string, number> })
+        }, { format: '', counter: {} } as { format: string, counter: Record<string, number> })
 
       return format.replace(/\w/g, key => {
         if (key in formatted) {
@@ -74,16 +74,16 @@ export function createDate(options?: DateOptions): DateInstance {
       })
     },
     clone: () => createDate(date),
-    unix() {
+    unix () {
       return ~~(date.getTime() / 1000)
     },
-    valueOf() {
+    valueOf () {
       return date.valueOf()
     },
-    toDate() {
+    toDate () {
       return date
     },
-    toObject() {
+    toObject () {
       return {
         Y: date.getFullYear(),
         M: date.getMonth() + 1,
@@ -95,7 +95,7 @@ export function createDate(options?: DateOptions): DateInstance {
         // weekday
         d: date.getDay(),
       }
-    },
+    }
   }
 
   return new Proxy<DateInstance>(ctx as any, {

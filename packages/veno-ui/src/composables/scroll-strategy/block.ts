@@ -1,11 +1,11 @@
 // Utils
+import { convertToUnit, getScrollParents, hasScrollbar, getScrollbarWidth } from '../../utils'
 import { onScopeDispose } from 'vue'
-import { convertToUnit, getScrollParents, getScrollbarWidth, hasScrollbar } from '../../utils'
 
 // Types
 import type { ScrollStrategyData } from './index'
 
-export function blockScrollStrategy(data: ScrollStrategyData, name: string) {
+export function blockScrollStrategy (data: ScrollStrategyData, name: string) {
   const rootParent = data.root.value?.offsetParent
   const scrollableParent = rootParent && hasScrollbar(rootParent)
 
@@ -13,12 +13,10 @@ export function blockScrollStrategy(data: ScrollStrategyData, name: string) {
     data.root.value!.classList.add(`${ name }--scroll-blocked`)
   }
 
-  const scrollElements = rootParent
-    ? []
-    : [...new Set([
-        ...getScrollParents(data.activatorEl.value),
-        ...getScrollParents(data.contentEl.value),
-      ])].filter(el => !el.classList.contains(`${ name }-scroll-blocked`))
+  const scrollElements = rootParent ? [] : [...new Set([
+    ...getScrollParents(data.activatorEl.value),
+    ...getScrollParents(data.contentEl.value),
+  ])].filter(el => !el.classList.contains(`${ name }-scroll-blocked`))
 
   scrollElements.forEach(el => {
     el.style.setProperty('--ve-scrollbar-offset', convertToUnit(getScrollbarWidth(el)))

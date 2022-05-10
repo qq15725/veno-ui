@@ -2,11 +2,11 @@
 import { defineComponent, toRefs } from 'vue'
 
 // Composables
-import type { PropType } from 'vue'
 import { provideDefaults } from '../../composables/defaults'
 
 // Types
 import type { DefaultsOptions } from '../../composables/defaults'
+import type { PropType } from 'vue'
 
 export const DefaultsProvider = defineComponent({
   name: 'VeDefaultsProvider',
@@ -18,7 +18,7 @@ export const DefaultsProvider = defineComponent({
     scoped: Boolean,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { defaults, reset, root, scoped } = toRefs(props)
 
     provideDefaults(defaults, {

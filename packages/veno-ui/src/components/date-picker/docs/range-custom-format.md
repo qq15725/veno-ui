@@ -21,7 +21,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       value: ref([
         '2022-02-02 00:00:00',

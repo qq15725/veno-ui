@@ -31,7 +31,7 @@ export const Device = defineComponent({
     ...makeVariantProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { deviceModel, deviceStyles } = useDevice(props)
 
@@ -49,7 +49,7 @@ export const Device = defineComponent({
           ] }
         >
           <div
-            className="ve-device__app-header"
+            class="ve-device__app-header"
             style={ {
               backgroundColor: props.headerColor,
             } }
@@ -63,13 +63,13 @@ export const Device = defineComponent({
             ) }
 
             { slots.header && (
-              <div className="ve-device__app-bar">
+              <div class="ve-device__app-bar">
                 { slots.header?.() }
               </div>
             ) }
           </div>
 
-          <div className="ve-device__app-main">
+          <div class="ve-device__app-main">
             { slots.default?.() }
           </div>
 
@@ -78,7 +78,7 @@ export const Device = defineComponent({
             && typeof deviceModel.value.height === 'number'
             && (
               <div
-                className="ve-device__height-tip"
+                class="ve-device__height-tip"
                 style={ {
                   top: convertToUnit(deviceModel.value.height - 21),
                 } }
@@ -90,7 +90,7 @@ export const Device = defineComponent({
         </props.tag>
       )
     }
-  },
+  }
 })
 
 export type Device = InstanceType<typeof Device>

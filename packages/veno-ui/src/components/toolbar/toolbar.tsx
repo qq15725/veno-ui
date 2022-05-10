@@ -3,7 +3,7 @@ import './styles/toolbar.scss'
 
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
+import { defineComponent, convertToUnit, propsFactory, pick } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -23,7 +23,7 @@ export const makeToolbarProps = propsFactory({
   } as const),
 }, 'toolbar')
 
-export function filterToolbarProps(attrs: Record<string, any>) {
+export function filterToolbarProps (attrs: Record<string, any>) {
   return pick(attrs, Object.keys(Toolbar.props) as any)
 }
 
@@ -32,10 +32,10 @@ export const Toolbar = defineComponent({
 
   props: makeToolbarProps(),
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(computed(() => ({
       ...props,
-      height: undefined,
+      height: undefined
     })))
 
     provideDefaults({
@@ -56,11 +56,11 @@ export const Toolbar = defineComponent({
           style={ paperStyles.value }
         >
           <div
-            className="ve-toolbar__wrapper"
+            class="ve-toolbar__wrapper"
             style={ { height: convertToUnit(props.height) } }
           >
             { slots.prepend && (
-              <div className="ve-toolbar__prepend">
+              <div class="ve-toolbar__prepend">
                 { slots.prepend?.() }
               </div>
             ) }
@@ -74,7 +74,7 @@ export const Toolbar = defineComponent({
             { slots.default?.() }
 
             { slots.append && (
-              <div className="ve-toolbar__append">
+              <div class="ve-toolbar__append">
                 { slots.append?.() }
               </div>
             ) }

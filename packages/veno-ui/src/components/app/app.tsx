@@ -19,7 +19,7 @@ export const App = defineComponent({
     }),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const theme = provideTheme(props)
     const { getLayoutItem, items, layoutClasses } = provideLayout(props)
     const { createRootProvider } = useProviders()
@@ -29,14 +29,14 @@ export const App = defineComponent({
 
       return (
         <div
-          className={ [
+          class={ [
             've-app',
             theme.themeClasses.value,
             layoutClasses.value,
           ] }
           data-app="true"
         >
-          <div className="ve-app__wrapper">
+          <div class="ve-app__wrapper">
             <RootProvider>{ slots.default?.() }</RootProvider>
           </div>
         </div>
@@ -46,7 +46,7 @@ export const App = defineComponent({
     return {
       theme,
       getLayoutItem,
-      items,
+      items
     }
-  },
+  }
 })

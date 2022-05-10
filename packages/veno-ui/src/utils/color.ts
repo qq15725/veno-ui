@@ -4,7 +4,7 @@ import { HexToRGBA, parseHex } from '@veno-ui/utils'
 // Types
 import type { ThemeDefinition } from '../composables/theme'
 
-export function classToHex(
+export function classToHex (
   color: string,
   colors: Record<string, Record<string, string>>,
   currentTheme: Partial<ThemeDefinition['colors']>,
@@ -29,7 +29,7 @@ export function classToHex(
   return hexColor
 }
 
-export function parseGradient(
+export function parseGradient (
   gradient: string,
   colors: Record<string, Record<string, string>>,
   currentTheme: Partial<ThemeDefinition['colors']>,
@@ -37,6 +37,6 @@ export function parseGradient(
   return gradient.replace(/([a-z]+(\s[a-z]+-[1-5])?)(?=$|,)/gi, x => {
     return classToHex(x, colors, currentTheme) || x
   }).replace(/(rgba\()#[0-9a-f]+(?=,)/gi, x => {
-    return `rgba(${ Object.values(HexToRGBA(parseHex(x.replace(/rgba\(/, '')))).slice(0, 3).join(',') }`
+    return 'rgba(' + Object.values(HexToRGBA(parseHex(x.replace(/rgba\(/, '')))).slice(0, 3).join(',')
   })
 }

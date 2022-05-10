@@ -26,10 +26,10 @@ export const Switch = defineComponent({
     'update:modelValue': (val: any) => true,
   },
 
-  setup(props, { emit, slots }) {
+  setup (props, { emit, slots }) {
     const control = ref<SelectionControl>()
 
-    function onClick() {
+    function onClick () {
       control.value?.inputRef?.click()
     }
 
@@ -45,7 +45,7 @@ export const Switch = defineComponent({
             ...slots,
             default: ({ textColorClasses, textColorStyles }) => (
               <div
-                className={ [
+                class={ [
                   've-switch__track',
                   textColorClasses.value,
                 ] }
@@ -57,12 +57,12 @@ export const Switch = defineComponent({
             ),
             input: () => {
               return (
-                <div className="ve-switch__thumb" />
+                <div class="ve-switch__thumb" />
               )
-            },
+            }
           } }
         </SelectionControl>
       )
     }
-  },
+  }
 })

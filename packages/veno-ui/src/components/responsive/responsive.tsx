@@ -9,13 +9,13 @@ import { genericComponent } from '../../utils'
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
 
 // Components
-export function useAspectStyles(props: { aspectRatio?: string | number }) {
+export function useAspectStyles (props: { aspectRatio?: string | number }) {
   return {
     aspectStyles: computed(() => {
       const ratio = Number(props.aspectRatio)
 
       return ratio
-        ? { paddingBottom: `${ String(1 / ratio * 100) }%` }
+        ? { paddingBottom: String(1 / ratio * 100) + '%' }
         : undefined
     }),
   }
@@ -34,16 +34,16 @@ export const Responsive = genericComponent()({
     ...makeDimensionProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { dimensionStyles } = useDimension(props)
     const { aspectStyles } = useAspectStyles(props)
 
     return () => (
-      <div className="ve-responsive" style={ dimensionStyles.value }>
-        <div className="ve-responsive__sizer" style={ aspectStyles.value } />
+      <div class="ve-responsive" style={ dimensionStyles.value }>
+        <div class="ve-responsive__sizer" style={ aspectStyles.value } />
         { slots.additional?.() }
         { slots.default && (
-          <div className={ ['ve-responsive__content', props.contentClass] }>
+          <div class={ ['ve-responsive__content', props.contentClass] }>
             { slots.default() }
           </div>
         ) }

@@ -1,12 +1,15 @@
 import type { VNode } from 'vue'
 import type { Events } from '@vue/runtime-dom'
 
-declare global {
-  interface HTMLCollection {
+declare global
+{
+  interface HTMLCollection
+  {
     [Symbol.iterator] (): IterableIterator<Element>
   }
 
-  interface Element {
+  interface Element
+  {
     _ripple?: {
       enabled?: boolean
       centered?: boolean
@@ -43,11 +46,16 @@ declare global {
     }
   }
 
-  namespace JSX {
-    interface Element extends VNode {
+  namespace JSX
+  {
+    interface Element extends VNode
+    {
     }
 
-    type IntrinsicAttributes = Record<string, any>
+    interface IntrinsicAttributes
+    {
+      [name: string]: any
+    }
   }
 
   function parseInt(s: string | number, radix?: number): number
@@ -57,14 +65,17 @@ declare global {
   export const __UI_NAME__: string
 }
 
-declare module '@vue/runtime-core' {
-  export interface ComponentInternalInstance {
+declare module '@vue/runtime-core'
+{
+  export interface ComponentInternalInstance
+  {
     ctx: Record<string, unknown>
     provides: Record<string, unknown>
   }
 }
 
-declare module '@vue/runtime-dom' {
+declare module '@vue/runtime-dom'
+{
   type UnionToIntersection<U> =
     (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
@@ -84,14 +95,16 @@ declare module '@vue/runtime-dom' {
     [K in keyof E]?: E[K] extends Function ? E[K] : (payload: E[K]) => void
   }
 
-  export interface HTMLAttributes extends EventHandlers<ModifiedEvents> {
+  export interface HTMLAttributes extends EventHandlers<ModifiedEvents>
+  {
   }
 
   type CustomProperties = {
     [k in `--${ string }`]: any
   }
 
-  export interface CSSProperties extends CustomProperties {
+  export interface CSSProperties extends CustomProperties
+  {
   }
 }
 

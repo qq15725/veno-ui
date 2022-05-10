@@ -2,16 +2,16 @@
 import './styles/tag-group.scss'
 
 // Composables
-import { toRef } from 'vue'
-import type { PropType } from 'vue'
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeGroupProps, useGroup } from '../../composables/group'
 import { provideDefaults } from '../../composables/defaults'
 
 // Utilities
 import { deepEqual, defineComponent } from '../../utils'
+import { toRef } from 'vue'
 
 // Types
+import type { PropType } from 'vue'
 
 export const TagGroupKey = Symbol.for('veno-ui:chip-group')
 
@@ -37,7 +37,7 @@ export const TagGroup = defineComponent({
     'update:modelValue': (value: any) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
     const { isSelected, select, next, prev, selected } = useGroup(props, TagGroupKey)
 

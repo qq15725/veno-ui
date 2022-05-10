@@ -3,19 +3,18 @@ import './styles/counter.scss'
 
 // Utils
 import { computed } from 'vue'
-import type { MakeSlots } from '../../utils'
-import { genericComponent } from '../../utils'
+import { genericComponent, MakeSlots } from '../../utils'
 
 // Composables
-import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 
 // Components
 import { FadeTransition } from '../transition'
 
-export interface CounterSlot {
-  counter: string
-  max: number
-  value: number
+export type CounterSlot = {
+  counter: string,
+  max: number,
+  value: number,
 }
 
 export type CounterSlots = MakeSlots<{
@@ -40,7 +39,7 @@ export const Counter = genericComponent<new () => {
     }),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const counter = computed(() => {
       return props.max ? `${ props.value } / ${ props.max }` : String(props.value)
     })
@@ -49,7 +48,7 @@ export const Counter = genericComponent<new () => {
       return (
         <MaybeTransition transition={ props.transition }>
           <div
-            className="ve-counter"
+            class="ve-counter"
             v-show={ props.active }
           >
             { slots.default?.({

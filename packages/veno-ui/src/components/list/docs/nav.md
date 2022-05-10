@@ -18,7 +18,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       opened: ref(true),
       items: ref([

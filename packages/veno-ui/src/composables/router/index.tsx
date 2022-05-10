@@ -7,41 +7,43 @@ import {
   resolveDynamicComponent,
   toRef,
 } from 'vue'
+import { propsFactory } from '../../utils'
 
 // Types
 import type { ComputedRef, PropType, Ref, SetupContext } from 'vue'
 import type {
+  RouterLink as _RouterLink,
+  useLink as _useLink,
   NavigationGuardNext,
   RouteLocationNormalizedLoaded,
   RouteLocationRaw,
   Router,
   RouterLinkProps,
-  RouterLink as _RouterLink,
-  useLink as _useLink,
 } from 'vue-router'
-import { propsFactory } from '../../utils'
 
-export function useRoute(): Ref<RouteLocationNormalizedLoaded | undefined> {
+export function useRoute (): Ref<RouteLocationNormalizedLoaded | undefined> {
   const vm = getCurrentInstance()
 
   return computed(() => vm?.proxy?.$route)
 }
 
-export function useRouter(): Router | undefined {
+export function useRouter (): Router | undefined {
   return getCurrentInstance()?.proxy?.$router
 }
 
-export interface LinkProps extends Partial<RouterLinkProps> {
+export interface LinkProps extends Partial<RouterLinkProps>
+{
   href?: string
 }
 
-interface UseLink extends Omit<Partial<ReturnType<typeof _useLink>>, 'href'> {
+interface UseLink extends Omit<Partial<ReturnType<typeof _useLink>>, 'href'>
+{
   isLink: ComputedRef<boolean>
   isClickable: ComputedRef<boolean>
   href: Ref<string | undefined>
 }
 
-export function useRouterHistory() {
+export function useRouterHistory () {
   const router = useRouter()
 
   const isWebHashHistory = computed(() => router && router.options.history.base.includes('#'))
@@ -51,7 +53,7 @@ export function useRouterHistory() {
   }
 }
 
-export function useLink(props: LinkProps, attrs: SetupContext['attrs']): UseLink {
+export function useLink (props: LinkProps, attrs: SetupContext['attrs']): UseLink {
   const RouterLink = resolveDynamicComponent('RouterLink') as typeof _RouterLink | string
 
   const isLink = computed(() => !!(props.href || props.to))
@@ -85,7 +87,7 @@ export const makeRouterProps = propsFactory({
   to: [String, Object] as PropType<RouteLocationRaw>,
 }, 'router')
 
-export function useBackButton(cb: (next: NavigationGuardNext) => void) {
+export function useBackButton (cb: (next: NavigationGuardNext) => void) {
   const router = useRouter()
   let popped = false
   let removeGuard: (() => void) | undefined
@@ -102,7 +104,7 @@ export function useBackButton(cb: (next: NavigationGuardNext) => void) {
     removeGuard?.()
   })
 
-  function onPopstate(e: PopStateEvent) {
+  function onPopstate (e: PopStateEvent) {
     if (e.state?.replaced) return
 
     popped = true

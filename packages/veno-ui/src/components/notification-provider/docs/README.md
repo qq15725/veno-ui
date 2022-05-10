@@ -44,9 +44,9 @@ basic.md
 import { notification } from 'veno-ui'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
-      warning() {
+      warning () {
         notification.warning('...')
       }
     }

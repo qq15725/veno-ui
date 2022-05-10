@@ -56,7 +56,7 @@ export const Dialog = genericComponent<new () => {
     'update:modelValue': (_: boolean) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.id || `ve-dialog-${ getUid() }`)
 
@@ -83,11 +83,11 @@ export const Dialog = genericComponent<new () => {
       >
         { {
           ...slots,
-          default: slots.default,
+          default: slots.default
         } }
       </Overlay>
     )
-  },
+  }
 })
 
 export type Dialog = InstanceType<typeof Dialog>

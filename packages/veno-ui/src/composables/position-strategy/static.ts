@@ -1,3 +1,3 @@
-export function staticPositionStrategy() {
+export function staticPositionStrategy () {
   // TODO
 }

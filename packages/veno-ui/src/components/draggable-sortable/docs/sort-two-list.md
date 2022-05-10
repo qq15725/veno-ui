@@ -32,7 +32,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       items1: ref([1, 2, 3, 4]),
       items2: ref([5, 6, 7]),

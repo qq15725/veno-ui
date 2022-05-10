@@ -1,24 +1,24 @@
 // Utils
-import { computed, inject, provide, reactive, ref } from 'vue'
-import type { ExtractPropTypes, InjectionKey, Prop, Ref } from 'vue'
+import { ref, computed, inject, provide, reactive } from 'vue'
 import {
   convertToUnit,
-  findChildrenWithProvide,
+  propsFactory,
   getCurrentInstance,
   getCurrentInstanceName,
-  propsFactory,
+  findChildrenWithProvide,
 } from '../../utils'
 
 // Composables
 import { useResizeObserver } from '../resize-observer'
 
 // Types
+import type { InjectionKey, Prop, Ref, ExtractPropTypes } from 'vue'
 import type {
-  LayoutAnchor,
-  LayoutInstance,
-  LayoutItem,
   LayoutItemProps,
+  LayoutAnchor,
   LayoutLayer,
+  LayoutItem,
+  LayoutInstance
 } from './types'
 
 export const LayoutKey: InjectionKey<LayoutInstance> = Symbol.for('veno-ui:layout')
@@ -33,9 +33,9 @@ export const makeLayoutProps = propsFactory({
   fullHeight: Boolean,
 }, 'layout')
 
-export function provideLayout(
+export function provideLayout (
   props: ExtractPropTypes<ReturnType<typeof makeLayoutProps>>,
-  name = getCurrentInstanceName(),
+  name = getCurrentInstanceName()
 ) {
   const rootVm = getCurrentInstance('provideLayout')
   const parentLayout = inject(LayoutKey, null)
@@ -45,7 +45,7 @@ export function provideLayout(
   const { resizeRef, contentRect: layoutRect } = useResizeObserver()
   const overlays = ref<number[]>([])
 
-  function generate() {
+  function generate () {
     return (
       itemIds
         .map(id => {
@@ -62,18 +62,18 @@ export function provideLayout(
           }
         })
         .sort((a, b) => b.priority - a.priority)
-        .reduce<{ items: LayoutItem[]; layer: LayoutLayer }>(
+        .reduce<{ items: LayoutItem[], layer: LayoutLayer }>(
           ({ items, layer }, item) => ({
-            items: [...items, { ...layer, ...item }],
+            items: [...items, { ...layer, ...item, }],
             layer: {
               ...layer,
-              [item.anchor]: layer[item.anchor] + (item.active ? item.layoutSize : 0),
-            },
+              [item.anchor]: layer[item.anchor] + (item.active ? item.layoutSize : 0)
+            }
           }),
           {
             items: [],
-            layer: { top: 0, right: 0, bottom: 0, left: 0 },
-          },
+            layer: { top: 0, right: 0, bottom: 0, left: 0 }
+          }
         )
     )
   }
@@ -84,7 +84,7 @@ export function provideLayout(
 
   const computedOverlaps = computed(() => {
     const overlaps = props.overlaps ?? []
-    const map = new Map<string, { anchor: LayoutAnchor; amount: number }>()
+    const map = new Map<string, { anchor: LayoutAnchor, amount: number }>()
     for (const overlap of overlaps.filter(item => item.includes(':'))) {
       const [top, bottom] = overlap.split(':')
       const topLayoutItem = getLayoutItem(top)
@@ -172,7 +172,7 @@ export function provideLayout(
 
   return {
     layoutClasses: computed(() => ({
-      [`${ name }--full-height`]: props.fullHeight,
+      [`${ name }--full-height`]: props.fullHeight
     })),
     layoutStyles: computed(() => ({
       zIndex: rootZIndex.value,
@@ -184,7 +184,7 @@ export function provideLayout(
   }
 }
 
-export function useLayout(): LayoutInstance {
+export function useLayout (): LayoutInstance {
   const layout = inject(LayoutKey)
   if (!layout) throw new Error('[VenoUi] Could not find layout instance')
   return layout

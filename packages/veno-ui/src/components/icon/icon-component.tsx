@@ -9,7 +9,7 @@ export const IconComponent = defineComponent({
 
   props: makeIconSetProps(),
 
-  setup(props) {
+  setup (props) {
     return () => {
       return (
         <props.tag>

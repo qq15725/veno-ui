@@ -20,10 +20,10 @@ export const LayoutItem = defineComponent({
       default: 64,
     },
     ...makeTagProps(),
-    ...makeLayoutItemProps(),
+    ...makeLayoutItemProps()
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { layoutItemStyles } = useLayoutItem(computed(() => ({
       priority: props.priority,
       position: props.position,

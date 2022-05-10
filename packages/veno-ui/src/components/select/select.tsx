@@ -3,8 +3,7 @@ import './styles/select.scss'
 
 // Utils
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import type { PropType } from 'vue'
-import { convertToUnit, debounce, genericComponent, getUid, keyValues, pick, wrapInArray } from '../../utils'
+import { genericComponent, getUid, wrapInArray, pick, debounce, keyValues, convertToUnit } from '../../utils'
 
 // Composables
 import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
@@ -21,6 +20,7 @@ import { Icon } from '../icon'
 import { Checkbox } from '../checkbox'
 
 // Types
+import type { PropType } from 'vue'
 import type { MakeSlots } from '../../utils'
 import type { InputSlots } from '../input/input'
 import type { ListItemProps } from '../list/list'
@@ -36,13 +36,13 @@ export type InternalSelectItemProps = ListItemProps & {
 
 export type SelectSlots = InputSlots & ListChildrenSlots<InternalSelectItemProps> & MakeSlots<{
   'tag': [{
-    item: InternalSelectItemProps
-    close: () => void
-  }]
-  'no-data': []
+    item: InternalSelectItemProps,
+    close: () => void,
+  }],
+  'no-data': [],
 }>
 
-function defaultFilter(value: string, query: string, item?: any) {
+function defaultFilter (value: string, query: string, item?: any) {
   if (value == null || query == null) return -1
   return value.toString()
     .toLocaleLowerCase()
@@ -167,7 +167,7 @@ export const Select = genericComponent<new () => {
     'update:query': (val: string) => true,
   },
 
-  setup(props, { emit, slots }) {
+  setup (props, { emit, slots }) {
     const activator = ref()
     const pendingIndex = ref()
     const id = computed(() => props.id || `ve-select-${ getUid() }`)
@@ -183,14 +183,14 @@ export const Select = genericComponent<new () => {
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
       v => wrapInArray(v),
-      (v: any) => props.multiple ? v : v[0],
+      (v: any) => props.multiple ? v : v[0]
     )
     const query = ref(props.query)
     const active = computed({
       get: () => model.value.map(
         (v: any) => v && typeof v === 'object'
           ? v![props.itemValue]
-          : v,
+          : v
       ),
       set: val => {
         model.value = props.returnObject
@@ -231,7 +231,7 @@ export const Select = genericComponent<new () => {
     })
     const filteredItems = computed(() => items.value.filter(v => !v.filtered))
 
-    function getItem(v: any) {
+    function getItem (v: any) {
       return props.items?.find(i => {
         const i1 = typeof i === 'object' ? i[props.itemValue] : i
         const v1 = typeof v === 'object' ? v[props.itemValue] : v
@@ -239,7 +239,7 @@ export const Select = genericComponent<new () => {
       })
     }
 
-    function normalizeItem(item: SelectItemProps): InternalSelectItemProps {
+    function normalizeItem (item: SelectItemProps): InternalSelectItemProps {
       let v: InternalSelectItemProps
       if (typeof item === 'object') {
         const value = item[props.itemValue]
@@ -262,11 +262,11 @@ export const Select = genericComponent<new () => {
       query.value = val
     })
 
-    function onBlur() {
+    function onBlur () {
       isActiveMenu.value = false
     }
 
-    function onClear(e: MouseEvent) {
+    function onClear (e: MouseEvent) {
       model.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true
@@ -276,7 +276,7 @@ export const Select = genericComponent<new () => {
       emit('click:clear', e)
     }
 
-    function onControl() {
+    function onControl () {
       if (props.readonly) return
       if (isActiveMenu.value) {
         inputRef.value?.blur()
@@ -322,7 +322,7 @@ export const Select = genericComponent<new () => {
         const index = pendingIndex.value in filteredItems.value ? pendingIndex.value : 0
         const value = filteredItems.value[index as any].value
         if (props.multiple) {
-          active.value = active.value.includes(value)
+          active.value = active.value.indexOf(value) > -1
             ? active.value.filter(v => v !== value)
             : active.value.concat([value])
         } else {
@@ -335,7 +335,7 @@ export const Select = genericComponent<new () => {
       active.value = active.value.filter((_, i) => i !== active.value.length - 1)
     }, 60)
 
-    function onKeydown(e: KeyboardEvent) {
+    function onKeydown (e: KeyboardEvent) {
       const { key } = e
 
       if ([keyValues.up, keyValues.down].includes(key)) {
@@ -363,7 +363,7 @@ export const Select = genericComponent<new () => {
       }
     }
 
-    function resizeTagInput() {
+    function resizeTagInput () {
       tagInputWidth.value = Math.max(0, mirrorRef.value.scrollWidth) + 1
     }
 
@@ -385,15 +385,13 @@ export const Select = genericComponent<new () => {
     })
 
     return () => {
-      const inputProps = props.multiple && !props.tags
-        ? {
-            autoResize: true,
-            rows: 1,
-            type: 'textarea',
-          }
-        : {}
+      const inputProps = props.multiple && !props.tags ? {
+        autoResize: true,
+        rows: 1,
+        type: 'textarea'
+      } : {}
       const [listSlots, inputSlots] = pick(slots, [
-        'item', 'header', 'title', 'subtitle',
+        'item', 'header', 'title', 'subtitle'
       ])
 
       return (
@@ -403,7 +401,7 @@ export const Select = genericComponent<new () => {
             've-select',
             {
               've-select--active-menu': isActiveMenu.value,
-            },
+            }
           ] }
           id={ id.value }
           inputAttach={ tagInputRef.value }
@@ -443,7 +441,7 @@ export const Select = genericComponent<new () => {
                 ) }
               </>
             ),
-            'default': () => (
+            default: () => (
               <>
                 { activator.value && (
                   <Menu
@@ -473,8 +471,8 @@ export const Select = genericComponent<new () => {
                           const itemSlotProps = {
                             onMousedown: (e: MouseEvent) => e.preventDefault(),
                             class: {
-                              've-select__item--pendding': pendingIndex.value === index,
-                            },
+                              've-select__item--pendding': pendingIndex.value === index
+                            }
                           }
 
                           if (slots.item) {
@@ -490,8 +488,7 @@ export const Select = genericComponent<new () => {
                               v-show={ !item.filtered }
                             >
                               { {
-                                prepend: props.multiple
-                                  ? () => (
+                                prepend: props.multiple ? () => (
                                   <ListItemAvatar
                                     start
                                     color="inherit"
@@ -501,8 +498,7 @@ export const Select = genericComponent<new () => {
                                       model-value={ active.value.includes(item.value) }
                                     />
                                   </ListItemAvatar>
-                                    )
-                                  : undefined,
+                                ) : undefined
                               } }
                             </ListItem>
                           )
@@ -513,7 +509,7 @@ export const Select = genericComponent<new () => {
                               <ListItem text={ props.noDataText } />
                             )) }
                           </>
-                        ),
+                        )
                       } }
                     </List>
                   </Menu>
@@ -525,7 +521,7 @@ export const Select = genericComponent<new () => {
                     size="x-small"
                   >
                     { selections.value.map(item => {
-                      function close() {
+                      function close () {
                         active.value = active.value.filter(v => v !== item.value)
                       }
 
@@ -545,14 +541,14 @@ export const Select = genericComponent<new () => {
                     }) }
 
                     <div
-                      className="ve-select__tag-input"
+                      class="ve-select__tag-input"
                       style={ {
-                        width: convertToUnit(selections.value.length > 0 ? tagInputWidth.value : '100%'),
+                        width: convertToUnit(selections.value.length > 0 ? tagInputWidth.value : '100%')
                       } }
                       ref={ tagInputRef }
                     >
                       <span
-                        className="ve-select__tag-input-mirror"
+                        class="ve-select__tag-input-mirror"
                         ref={ mirrorRef }
                         aria-hidden="true"
                       >{ query.value }</span>
@@ -560,12 +556,12 @@ export const Select = genericComponent<new () => {
                   </TagGroup>
                 ) }
               </>
-            ),
+            )
           } }
         </Input>
       )
     }
-  },
+  }
 })
 
 export type Select = InstanceType<typeof Select>

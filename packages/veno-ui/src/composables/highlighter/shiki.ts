@@ -6,7 +6,8 @@
 
 export type Shiki = any | Promise<any>
 
-export interface ShikiHighlighter {
+export interface ShikiHighlighter
+{
   codeToHtml (code: string, language: string): string
 
   loadLanguage (language: string): Promise<void>
@@ -16,7 +17,7 @@ const aliases = {
   template: 'vue-html',
 }
 
-export async function shikiHighlightCode(shiki: Shiki, code: string, language: string) {
+export async function shikiHighlightCode (shiki: Shiki, code: string, language: string) {
   language = language.toLowerCase()
 
   if (language in aliases) {

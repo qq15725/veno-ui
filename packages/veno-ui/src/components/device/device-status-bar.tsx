@@ -2,8 +2,8 @@
 import './styles/device-status-bar.scss'
 
 // Utils
-import { computed, onBeforeUnmount, ref, unref } from 'vue'
-import { convertToUnit, genericComponent } from '../../utils'
+import { ref, onBeforeUnmount, computed, unref } from 'vue'
+import { genericComponent, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -32,8 +32,8 @@ export const DeviceStatusBar = genericComponent()({
     ...makeColorProps(),
   },
 
-  setup(props) {
-    function getClockValue() {
+  setup (props) {
+    function getClockValue () {
       const now = new Date()
       const hour = now.getHours()
       const minute = now.getMinutes()
@@ -75,23 +75,23 @@ export const DeviceStatusBar = genericComponent()({
             colorStyles.value,
           ] }
         >
-          <div className="ve-device-status-bar__clock">{ clock.value }</div>
-          <div className="ve-device-status-bar__mobile-signal">
+          <div class="ve-device-status-bar__clock">{ clock.value }</div>
+          <div class="ve-device-status-bar__mobile-signal">
             { [...Array(4)].map(_ => <div />) }
           </div>
-          <div className="ve-device-status-bar__mobile-operator">{ props.operator }</div>
-          <div className="ve-device-status-bar__wifi-signal">
+          <div class="ve-device-status-bar__mobile-operator">{ props.operator }</div>
+          <div class="ve-device-status-bar__wifi-signal">
             { [...Array(3)].map(_ => <div />) }
           </div>
-          <div className="ve-device-status-bar__spacer" />
-          <div className="ve-device-status-bar__battery-percentage">
+          <div class="ve-device-status-bar__spacer" />
+          <div class="ve-device-status-bar__battery-percentage">
             { props.battery }%
           </div>
-          <div className="ve-device-status-bar__battery">
+          <div class="ve-device-status-bar__battery">
             <div style={ { width: `${ props.battery }%` } } />
           </div>
         </props.tag>
       )
     }
-  },
+  }
 })

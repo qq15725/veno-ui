@@ -2,11 +2,11 @@
 import './styles/carousel-item.scss'
 
 // Utils
-import { ref, watch } from 'vue'
-import { Transition } from 'vue'
+import { watch, ref } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
+import { Transition } from 'vue'
 import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 import { makeTagProps } from '../../composables/tag'
 
@@ -21,7 +21,7 @@ export const CarouselItem = defineComponent({
     ...makeTagProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { isSelected, group } = useGroupItem(props, CarouselKey)
     const { items, selected } = group
     const transition = ref()
@@ -32,7 +32,7 @@ export const CarouselItem = defineComponent({
         transition.value = oldVal > val
           ? 've-carousel-item-x-reverse-transition'
           : 've-carousel-item-x-transition'
-      },
+      }
     )
 
     return () => (
@@ -45,7 +45,7 @@ export const CarouselItem = defineComponent({
         </props.tag>
       </Transition>
     )
-  },
+  }
 })
 
 export type CarouselItem = InstanceType<typeof CarouselItem>

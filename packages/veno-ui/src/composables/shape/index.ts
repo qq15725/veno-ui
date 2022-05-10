@@ -1,9 +1,9 @@
 // Utils
 import { computed, unref } from 'vue'
-import type { ExtractPropTypes, PropType } from 'vue'
 import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 // Constants
@@ -27,12 +27,12 @@ export const makeShapeProps = propsFactory({
   },
 }, 'shape')
 
-export function useShape(
+export function useShape (
   props: MaybeRef<ShapeProps>,
-  name = getCurrentInstanceName(),
+  name = getCurrentInstanceName()
 ) {
   const shapeClasses = computed(() => {
-    const { shape } = unref(props)
+    let { shape } = unref(props)
     if (!shape || !SHAPES.includes(shape)) return null
     return `${ name }--shape-${ shape }`
   })

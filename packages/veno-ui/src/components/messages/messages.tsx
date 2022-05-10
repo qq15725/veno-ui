@@ -2,14 +2,14 @@
 import './styles/messages.scss'
 
 // Utils
-import { computed } from 'vue'
 import { defineComponent, wrapInArray } from '../../utils'
+import { computed } from 'vue'
 
 // Components
 import { FadeTransition } from '../transition'
 
 // Composables
-import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 
 export const Messages = defineComponent({
   name: 'VeMessages',
@@ -29,7 +29,7 @@ export const Messages = defineComponent({
     }),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const messages = computed(() => wrapInArray(props.value))
 
     return () => {
@@ -43,7 +43,7 @@ export const Messages = defineComponent({
         >
           { hasMessages && (
             messages.value.map((message: any, i) => (
-              <div className="ve-messages__message" key={ i }>
+              <div class="ve-messages__message" key={ i }>
                 { message }
               </div>
             ))

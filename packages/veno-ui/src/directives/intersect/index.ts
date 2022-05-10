@@ -1,8 +1,8 @@
 // Utils
-import type { DirectiveBinding, ObjectDirective } from 'vue'
 import { SUPPORTS_INTERSECTION_OBSERVER } from '../../utils'
 
 // Types
+import type { DirectiveBinding, ObjectDirective } from 'vue'
 
 type IntersectHandler = (
   isIntersecting: boolean,
@@ -10,9 +10,10 @@ type IntersectHandler = (
   observer: IntersectionObserver,
 ) => void
 
-export interface IntersectDirectiveBinding extends Omit<DirectiveBinding, 'modifiers' | 'value'> {
+export interface IntersectDirectiveBinding extends Omit<DirectiveBinding, 'modifiers' | 'value'>
+{
   value?: IntersectHandler | {
-    handler: IntersectHandler
+    handler: IntersectHandler,
     options?: IntersectionObserverInit
   }
   modifiers: {
@@ -21,7 +22,7 @@ export interface IntersectDirectiveBinding extends Omit<DirectiveBinding, 'modif
   }
 }
 
-function mounted(el: HTMLElement, binding: IntersectDirectiveBinding) {
+function mounted (el: HTMLElement, binding: IntersectDirectiveBinding) {
   if (!SUPPORTS_INTERSECTION_OBSERVER) return
 
   const modifiers = binding.modifiers || {}
@@ -34,7 +35,7 @@ function mounted(el: HTMLElement, binding: IntersectDirectiveBinding) {
 
   const observer = new IntersectionObserver((
     entries: IntersectionObserverEntry[] = [],
-    observer: IntersectionObserver,
+    observer: IntersectionObserver
   ) => {
     if (!el._intersect) return
 
@@ -60,7 +61,7 @@ function mounted(el: HTMLElement, binding: IntersectDirectiveBinding) {
   observer.observe(el)
 }
 
-function unmounted(el: HTMLElement) {
+function unmounted (el: HTMLElement) {
   if (!el._intersect) return
 
   el._intersect.observer.unobserve(el)

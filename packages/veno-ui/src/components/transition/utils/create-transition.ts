@@ -1,13 +1,13 @@
 // Utils
-import { Transition, TransitionGroup, defineComponent, h } from 'vue'
+import { defineComponent, h, Transition, TransitionGroup } from 'vue'
 
 // Types
 import type { FunctionalComponent, Prop } from 'vue'
 
-export function createCssTransition(
+export function createCssTransition (
   name: string,
   origin = 'top center 0',
-  mode?: string,
+  mode?: string
 ) {
   return defineComponent({
     name,
@@ -29,18 +29,18 @@ export function createCssTransition(
       onAfterLeave: Function,
     },
 
-    setup(props, { slots, attrs }) {
+    setup (props, { slots, attrs }) {
       return () => {
         const tag = props.group ? TransitionGroup : Transition
 
         return h(tag as FunctionalComponent, {
           name,
           mode: props.mode,
-          onBeforeEnter(el: HTMLElement) {
+          onBeforeEnter (el: HTMLElement) {
             el.style.transformOrigin = props.origin
             props.onBeforeEnter?.(el)
           },
-          onLeave(el: HTMLElement) {
+          onLeave (el: HTMLElement) {
             if (props.leaveAbsolute) {
               const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = el
               el._transitionInitialStyles = {
@@ -64,7 +64,7 @@ export function createCssTransition(
 
             props.onLeave?.(el)
           },
-          onAfterLeave(el: HTMLElement) {
+          onAfterLeave (el: HTMLElement) {
             if (props.leaveAbsolute && el?._transitionInitialStyles) {
               const { position, top, left, width, height } = el._transitionInitialStyles
               delete el._transitionInitialStyles
@@ -88,10 +88,10 @@ export function createCssTransition(
   })
 }
 
-export function createJavascriptTransition(
+export function createJavascriptTransition (
   name: string,
   functions: Record<string, any>,
-  mode = 'in-out',
+  mode = 'in-out'
 ) {
   return defineComponent({
     name,
@@ -107,25 +107,25 @@ export function createJavascriptTransition(
       onAfterLeave: Function,
     },
 
-    setup(props, { slots }) {
+    setup (props, { slots }) {
       return () => {
         const tag = props.group ? TransitionGroup : Transition
         return h(tag as FunctionalComponent, {
           name,
           // mode: props.mode, // TODO: vuejs/vue-next#3104
           ...functions,
-          onBeforeEnter(el: HTMLElement) {
+          onBeforeEnter (el: HTMLElement) {
             functions.onBeforeEnter?.(el)
             props.onBeforeEnter?.(el)
           },
-          onLeave(el: HTMLElement) {
+          onLeave (el: HTMLElement) {
             functions.onLeave?.(el)
             props.onLeave?.(el)
           },
-          onAfterLeave(el: HTMLElement) {
+          onAfterLeave (el: HTMLElement) {
             functions.onAfterLeave?.(el)
             props.onAfterLeave?.(el)
-          },
+          }
         }, slots.default)
       }
     },

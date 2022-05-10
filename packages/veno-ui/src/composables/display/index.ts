@@ -1,12 +1,12 @@
 // Utils
 import { inject, reactive, ref, toRefs, watchEffect } from 'vue'
-import type { InjectionKey, ToRefs } from 'vue'
 import { deepMerge } from '../../utils'
 
 // Globals
 import { IN_BROWSER, SUPPORTS_TOUCH } from '../../utils'
 
 // Types
+import type { InjectionKey, ToRefs } from 'vue'
 
 export type DisplayBreakpoint = keyof DisplayThresholds
 
@@ -89,28 +89,24 @@ const parseDisplayOptions = (options: DisplayOptions = defaultDisplayOptions) =>
 
 // Cross-browser support as described in:
 // https://stackoverflow.com/questions/1248081
-function getClientWidth() {
-  return IN_BROWSER
-    ? Math.max(
-      document.documentElement!.clientWidth,
-      window.innerWidth,
-    )
-    : 0 // SSR
+function getClientWidth () {
+  return IN_BROWSER ? Math.max(
+    document.documentElement!.clientWidth,
+    window.innerWidth
+  ) : 0 // SSR
 }
 
-function getClientHeight() {
-  return IN_BROWSER
-    ? Math.max(
-      document.documentElement!.clientHeight,
-      window.innerHeight,
-    )
-    : 0 // SSR
+function getClientHeight () {
+  return IN_BROWSER ? Math.max(
+    document.documentElement!.clientHeight,
+    window.innerHeight
+  ) : 0 // SSR
 }
 
-function getPlatform(): DisplayPlatform {
+function getPlatform (): DisplayPlatform {
   const userAgent = IN_BROWSER ? window.navigator.userAgent : 'ssr'
 
-  function match(regexp: RegExp) {
+  function match (regexp: RegExp) {
     return Boolean(userAgent.match(regexp))
   }
 
@@ -144,7 +140,7 @@ function getPlatform(): DisplayPlatform {
   }
 }
 
-export function createDisplay(options?: DisplayOptions): ToRefs<DisplayInstance> {
+export function createDisplay (options?: DisplayOptions): ToRefs<DisplayInstance> {
   const { thresholds, mobileBreakpoint } = parseDisplayOptions(options)
 
   const height = ref(getClientHeight())
@@ -152,7 +148,7 @@ export function createDisplay(options?: DisplayOptions): ToRefs<DisplayInstance>
   const state = reactive({} as DisplayInstance)
   const width = ref(getClientWidth())
 
-  function onResize() {
+  function onResize () {
     height.value = getClientHeight()
     width.value = getClientWidth()
   }
@@ -165,18 +161,13 @@ export function createDisplay(options?: DisplayOptions): ToRefs<DisplayInstance>
     const lg = width.value < thresholds.xl && !(md || sm || xs)
     const xl = width.value < thresholds.xxl && !(lg || md || sm || xs)
     const xxl = width.value >= thresholds.xxl
-    const name
-      = xs
-        ? 'xs'
-        : sm
-          ? 'sm'
-          : md
-            ? 'md'
-            : lg
-              ? 'lg'
-              : xl
-                ? 'xl'
-                : 'xxl'
+    const name =
+      xs ? 'xs'
+        : sm ? 'sm'
+        : md ? 'md'
+          : lg ? 'lg'
+            : xl ? 'xl'
+              : 'xxl'
     const breakpointValue = typeof mobileBreakpoint === 'number' ? mobileBreakpoint : thresholds[mobileBreakpoint]
     const mobile = !platform.ssr
       ? width.value < breakpointValue
@@ -212,7 +203,7 @@ export function createDisplay(options?: DisplayOptions): ToRefs<DisplayInstance>
   return toRefs(state)
 }
 
-export function useDisplay() {
+export function useDisplay () {
   const display = inject(DisplayKey)
   if (!display) throw new Error('[VenoUi] Could not find display injection')
   return display

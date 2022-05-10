@@ -10,7 +10,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       items: [...Array.from({ length: 20 })].map((_, i) => i + 1)
     }

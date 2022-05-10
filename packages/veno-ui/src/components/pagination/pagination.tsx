@@ -3,7 +3,6 @@ import './styles/pagination.scss'
 
 // Utils
 import { computed, nextTick, ref } from 'vue'
-import type { ComponentPublicInstance } from 'vue'
 import { createRange, defineComponent, keyValues } from '../../utils'
 
 // Components
@@ -18,6 +17,7 @@ import { useRefs } from '../../composables/refs'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
+import type { ComponentPublicInstance } from 'vue'
 
 export const Pagination = defineComponent({
   name: 'VePagination',
@@ -155,7 +155,7 @@ export const Pagination = defineComponent({
      */
     perPageOptions: {
       type: Array,
-      default: () => [10, 20, 50, 100],
+      default: () => [10, 20, 50, 100]
     },
 
     /**
@@ -208,23 +208,23 @@ export const Pagination = defineComponent({
   emits: {
     'update:modelValue': (value: number) => true,
     'update:perPage': (value: number) => true,
-    'first': (value: number) => true,
-    'prev': (value: number) => true,
-    'next': (value: number) => true,
-    'last': (value: number) => true,
+    first: (value: number) => true,
+    prev: (value: number) => true,
+    next: (value: number) => true,
+    last: (value: number) => true,
   },
 
-  setup(props, { slots, emit }) {
+  setup (props, { slots, emit }) {
     const internalPage = ref()
     const { paperClasses, paperStyles } = usePaper(props)
 
     const page = useProxiedModel(
       props, 'modelValue', props.modelValue,
-      (v: any) => parseInt(v ?? 1, 10),
+      (v: any) => parseInt(v ?? 1, 10)
     )
     const perPage = useProxiedModel(
       props, 'perPage', props.perPage,
-      (v: any) => parseInt(v ?? 10, 10),
+      (v: any) => parseInt(v ?? 10, 10)
     )
     const total = computed(() => parseInt(props.total, 10))
     const firstPage = computed(() => parseInt(props.firstPage, 10))
@@ -260,7 +260,7 @@ export const Pagination = defineComponent({
         return [
           ...createRange(Math.max(1, totalVisible.value - 2), firstPage.value),
           props.ellipsis,
-          lastPage.value,
+          lastPage.value
         ]
       }
       if (page.value > right) {
@@ -269,7 +269,7 @@ export const Pagination = defineComponent({
         return [
           firstPage.value,
           props.ellipsis,
-          ...createRange(rangeLength, rangeStart),
+          ...createRange(rangeLength, rangeStart)
         ]
       }
       const rangeLength = Math.max(1, totalVisible.value - 4)
@@ -279,12 +279,12 @@ export const Pagination = defineComponent({
         props.ellipsis,
         ...createRange(rangeLength, rangeStart),
         props.ellipsis,
-        lastPage.value,
+        lastPage.value
       ]
     })
 
     // TODO: 'first' | 'prev' | 'next' | 'last' does not work here?
-    function setValue(e: Event, value: number, event?: any) {
+    function setValue (e: Event, value: number, event?: any) {
       e.preventDefault()
       page.value = value
       event && emit(event, value)
@@ -354,16 +354,14 @@ export const Pagination = defineComponent({
       const nextDisabled = props.disabled || page.value >= firstPage.value + lastPage.value - 1
 
       return {
-        first: props.showFirstLastPage
-          ? {
-              ...sharedProps,
-              icon: props.firstIcon,
-              onClick: (e: Event) => setValue(e, firstPage.value, 'first'),
-              disabled: prevDisabled,
-              ariaLabel: props.firstAriaLabel,
-              ariaDisabled: prevDisabled,
-            }
-          : undefined,
+        first: props.showFirstLastPage ? {
+          ...sharedProps,
+          icon: props.firstIcon,
+          onClick: (e: Event) => setValue(e, firstPage.value, 'first'),
+          disabled: prevDisabled,
+          ariaLabel: props.firstAriaLabel,
+          ariaDisabled: prevDisabled,
+        } : undefined,
         prev: {
           ...sharedProps,
           icon: props.prevIcon,
@@ -380,25 +378,23 @@ export const Pagination = defineComponent({
           ariaLabel: props.nextAriaLabel,
           ariaDisabled: nextDisabled,
         },
-        last: props.showFirstLastPage
-          ? {
-              ...sharedProps,
-              icon: props.lastIcon,
-              onClick: (e: Event) => setValue(e, firstPage.value + lastPage.value - 1, 'last'),
-              disabled: nextDisabled,
-              ariaLabel: props.lastAriaLabel,
-              ariaDisabled: nextDisabled,
-            }
-          : undefined,
+        last: props.showFirstLastPage ? {
+          ...sharedProps,
+          icon: props.lastIcon,
+          onClick: (e: Event) => setValue(e, firstPage.value + lastPage.value - 1, 'last'),
+          disabled: nextDisabled,
+          ariaLabel: props.lastAriaLabel,
+          ariaDisabled: nextDisabled,
+        } : undefined,
       }
     })
 
-    function updateFocus() {
+    function updateFocus () {
       const currentIndex = page.value - firstPage.value
       refs.value[currentIndex]?.$el.focus()
     }
 
-    function onKeydown({ key }: KeyboardEvent) {
+    function onKeydown ({ key }: KeyboardEvent) {
       if (key === keyValues.left && !props.disabled && page.value > firstPage.value) {
         page.value = page.value - 1
         nextTick(updateFocus)
@@ -420,16 +416,16 @@ export const Pagination = defineComponent({
         aria-label={ props.ariaLabel }
         onKeydown={ onKeydown }
       >
-        <ul className="ve-pagination__wrapper">
+        <ul class="ve-pagination__wrapper">
           { props.showFirstLastPage && (
-            <li className="ve-pagination__first">
+            <li class="ve-pagination__first">
               { slots.first?.(controls.value.first) ?? (
                 <Button { ...controls.value.first } />
               ) }
             </li>
           ) }
 
-          <li className="ve-pagination__prev">
+          <li class="ve-pagination__prev">
             { slots.prev?.(controls.value.prev) ?? (
               <Button { ...controls.value.prev } />
             ) }
@@ -438,7 +434,7 @@ export const Pagination = defineComponent({
           { items.value.map((item, index) => (
             <li
               key={ `${ index }_${ item.page }` }
-              className={ [
+              class={ [
                 've-pagination__item',
                 {
                   've-pagination__item--is-active': item.isActive,
@@ -451,14 +447,14 @@ export const Pagination = defineComponent({
             </li>
           )) }
 
-          <li className="ve-pagination__next">
+          <li class="ve-pagination__next">
             { slots.next?.(controls.value.next) ?? (
               <Button { ...controls.value.next } />
             ) }
           </li>
 
           { props.showFirstLastPage && (
-            <li className="ve-pagination__last">
+            <li class="ve-pagination__last">
               { slots.last?.(controls.value.last) ?? (
                 <Button { ...controls.value.last } />
               ) }
@@ -466,7 +462,7 @@ export const Pagination = defineComponent({
           ) }
 
           { props.showPerPageSelect && (
-            <li className="ve-pagination__per-page">
+            <li class="ve-pagination__per-page">
               <Select
                 hide-details
                 width="95"
@@ -480,7 +476,7 @@ export const Pagination = defineComponent({
           ) }
 
           { props.showQuickJumper && (
-            <li className="ve-pagination__quick-jumper">
+            <li class="ve-pagination__quick-jumper">
               <Input
                 hide-details
                 width="60"
@@ -515,7 +511,7 @@ export const Pagination = defineComponent({
         </ul>
       </props.tag>
     )
-  },
+  }
 })
 
 export type Pagination = InstanceType<typeof Pagination>

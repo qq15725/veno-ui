@@ -1,7 +1,8 @@
 // Utils
 import { toKebabCase, toPascalCase } from './utils'
 
-interface VenoUiResolverOptions {
+interface VenoUiResolverOptions
+{
   prefix?: string
 }
 
@@ -10,9 +11,9 @@ interface VenoUiResolverOptions {
  *
  * @param options
  */
-export function VenoUiResolver(options: VenoUiResolverOptions = {}) {
+export function VenoUiResolver (options: VenoUiResolverOptions = {}) {
   const {
-    prefix: rawPrefix = 've',
+    prefix: rawPrefix = 've'
   } = options
 
   const prefix = rawPrefix ? `${ toKebabCase(rawPrefix) }-` : ''
@@ -26,9 +27,9 @@ export function VenoUiResolver(options: VenoUiResolverOptions = {}) {
         const slice = kebab.slice(prefix.length)
         return {
           name: toPascalCase(slice),
-          from: 'veno-ui/components',
+          from: 'veno-ui/components'
         }
-      },
-    },
+      }
+    }
   ]
 }

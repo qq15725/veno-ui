@@ -3,19 +3,19 @@ import './styles/row.scss'
 
 // Utils
 import { capitalize, computed } from 'vue'
-import type { Prop } from 'vue'
-import { convertToUnit, defineComponent, propsFactory } from '../../utils'
+import { defineComponent, propsFactory, convertToUnit } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-
-// Types
 
 // Constants
 const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
 const alignments = ['start', 'end', 'center'] as const
 
-function makeProps(prefix: string, def: () => Prop<string, null>) {
+// Types
+import type { Prop } from 'vue'
+
+function makeProps (prefix: string, def: () => Prop<string, null>) {
   return breakpoints.reduce((props, val) => {
     props[prefix + capitalize(val)] = def()
     return props
@@ -58,7 +58,7 @@ const classMap = {
   alignContent: 'align-content',
 }
 
-function breakpointClass(type: keyof typeof propMap, prop: string, val: string) {
+function breakpointClass (type: keyof typeof propMap, prop: string, val: string) {
   let className = classMap[type]
   if (val == null) {
     return undefined
@@ -122,7 +122,7 @@ export const Row = defineComponent({
     ...makeRowProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const classes = computed(() => {
       const classList: any[] = []
 
@@ -165,12 +165,12 @@ export const Row = defineComponent({
       <props.tag
         class={ [
           've-row',
-          classes.value,
+          classes.value
         ] }
         style={ styles.value }
       >
         { slots }
       </props.tag>
     )
-  },
+  }
 })

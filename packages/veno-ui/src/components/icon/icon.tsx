@@ -2,7 +2,7 @@
 import './styles/icon.scss'
 
 // Utils
-import { computed, defineComponent, toRef } from 'vue'
+import { defineComponent, computed, toRef } from 'vue'
 import { convertToUnit, flattenFragments } from '../../utils'
 
 // Composables
@@ -33,7 +33,7 @@ export const Icon = defineComponent({
     ...makeIconProps(),
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const { iconData } = useIcon(computed(() => {
       if (!slots.default) return props
       const slot = slots.default?.()
@@ -71,13 +71,11 @@ export const Icon = defineComponent({
             },
           ] }
           style={ [
-            !sizeClasses.value
-              ? ({
-                  fontSize: convertToUnit(props.size),
-                  width: convertToUnit(props.size),
-                  height: convertToUnit(props.size),
-                })
-              : undefined,
+            !sizeClasses.value ? ({
+              fontSize: convertToUnit(props.size),
+              width: convertToUnit(props.size),
+              height: convertToUnit(props.size),
+            }) : undefined,
             textColorStyles.value,
           ] }
           aria-hidden="true"

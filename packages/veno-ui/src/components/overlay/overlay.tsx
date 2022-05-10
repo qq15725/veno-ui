@@ -2,21 +2,20 @@
 import './styles/overlay.scss'
 
 // Utils
-import { computed, mergeProps, ref, toHandlers, watch } from 'vue'
-import { Teleport } from 'vue'
-import type { PropType, Ref } from 'vue'
+import { mergeProps, ref, toHandlers, computed, watch } from 'vue'
 import {
   IN_BROWSER,
   convertToUnit,
   genericComponent,
   getScrollParent,
-  keyValues,
-  propsFactory,
   standardEasing,
   useRender,
+  keyValues,
+  propsFactory
 } from '../../utils'
 
 // Components
+import { Teleport } from 'vue'
 import { FadeTransition } from '../transition'
 import { Scrim } from '../scrim'
 
@@ -25,7 +24,7 @@ import { makeActivatorProps, useActivator } from '../../composables/activator'
 import { makePositionStrategyProps, usePositionStrategy } from '../../composables/position-strategy'
 import { makeScrollStrategyProps, useScrollStrategy } from '../../composables/scroll-strategy'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
-import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
+import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
 import { useBackButton } from '../../composables/router'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { useTeleport } from '../../composables/teleport'
@@ -38,16 +37,17 @@ import { useOverlay } from '../../composables/layout'
 import { ClickOutside } from '../../directives/click-outside'
 
 // Types
+import type { PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
 export type OverlaySlots = MakeSlots<{
   default: [{
-    close: () => void
+    close: () => void,
     isActive: Ref<boolean>
   }]
   activator: [{
-    close: () => void
-    isActive: boolean
+    close: () => void,
+    isActive: boolean,
     props: Record<string, any>
     on: Record<string, any>
   }]
@@ -129,7 +129,7 @@ export const Overlay = genericComponent<new () => {
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup(props, { slots, attrs, emit }) {
+  setup (props, { slots, attrs, emit }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const isInternalActive = ref(isActive.value)
     const { teleportTarget } = useTeleport(computed(() => props.attach || props.contained))
@@ -279,7 +279,7 @@ export const Overlay = genericComponent<new () => {
             >
               { hasContent.value && (
                 <div
-                  className={ [
+                  class={ [
                     've-overlay',
                     {
                       've-overlay--absolute': props.absolute || props.contained,
@@ -314,9 +314,9 @@ export const Overlay = genericComponent<new () => {
                       v-click-outside={ {
                         handler: onClickOutside,
                         closeConditional,
-                        include: () => [activatorEl.value],
+                        include: () => [activatorEl.value]
                       } }
-                      className={ [
+                      class={ [
                         've-overlay__wrapper',
                         props.contentClass,
                       ] }
@@ -345,7 +345,7 @@ export const Overlay = genericComponent<new () => {
       activatorEl,
       updatePosition,
     }
-  },
+  }
 })
 
 export type Overlay = InstanceType<typeof Overlay>

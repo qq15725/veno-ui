@@ -3,36 +3,36 @@ import './styles/list.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import type { Prop } from 'vue'
 import { genericComponent, useRender } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeNestedProps, useNested } from '../../composables/nested'
-import { provideDefaults } from '../../composables/defaults'
-import type { MakeSlots } from '../../utils'
 import { provideList } from './composables/list'
+import { provideDefaults } from '../../composables/defaults'
 
 // Components
 import { ListChildren } from './list-children'
 
 // Types
+import type { Prop } from 'vue'
+import type { MakeSlots } from '../../utils'
 import type { ListChildrenSlots } from './list-children'
 
-export interface ListItemProps {
+export type ListItemProps = {
   [key: string]: any
   $type?: 'item' | 'subheader' | 'divider'
   $children?: (string | ListItemProps)[]
 }
 
-export interface InternalListItemProps {
+export type InternalListItemProps = {
   type?: ListItemProps['$type']
   props?: Record<string, any>
   children?: InternalListItemProps[]
 }
 
-function parseItems(items?: (string | ListItemProps)[]): InternalListItemProps[] | undefined {
+function parseItems (items?: (string | ListItemProps)[]): InternalListItemProps[] | undefined {
   if (!items) return undefined
   return items.map(item => {
     if (typeof item === 'string') return { type: 'item', props: { value: item, title: item } }
@@ -44,8 +44,8 @@ function parseItems(items?: (string | ListItemProps)[]): InternalListItemProps[]
 }
 
 export type ListSlots<T> = ListChildrenSlots<T> & MakeSlots<{
-  prepend: []
-  append: []
+  prepend: [],
+  append: [],
 }>
 
 export const List = genericComponent<new <T>() => {
@@ -83,7 +83,7 @@ export const List = genericComponent<new <T>() => {
     'update:active': (val: string[]) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const items = computed(() => parseItems(props.items))
     const { paperClasses, paperStyles } = usePaper(props)
     const { disabledClasses } = useDisabled(props)
@@ -122,7 +122,7 @@ export const List = genericComponent<new <T>() => {
     return {
       open,
       select,
-      activate,
+      activate
     }
   },
 })

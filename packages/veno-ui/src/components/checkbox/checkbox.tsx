@@ -1,5 +1,4 @@
 // Utils
-import { computed } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Components
@@ -7,7 +6,8 @@ import { SelectionControl } from '../selection-control'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
-import { filterSelectionControlProps, makeSelectionControlProps } from '../selection-control/selection-control'
+import { makeSelectionControlProps, filterSelectionControlProps } from '../selection-control/selection-control'
+import { computed } from 'vue'
 
 export const Checkbox = defineComponent({
   name: 'VeCheckbox',
@@ -39,7 +39,7 @@ export const Checkbox = defineComponent({
     'update:indeterminate': (val: boolean) => true,
   },
 
-  setup(props, { emit, slots }) {
+  setup (props, { emit, slots }) {
     const indeterminate = useProxiedModel(props, 'indeterminate')
     const falseIcon = computed(() => {
       return indeterminate.value
@@ -52,7 +52,7 @@ export const Checkbox = defineComponent({
         : props.trueIcon
     })
 
-    function onChange(val: any) {
+    function onChange (val: any) {
       if (indeterminate.value) {
         indeterminate.value = false
       } else {
@@ -76,5 +76,5 @@ export const Checkbox = defineComponent({
         </SelectionControl>
       )
     }
-  },
+  }
 })

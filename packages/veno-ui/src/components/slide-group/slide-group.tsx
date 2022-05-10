@@ -2,9 +2,9 @@
 import './styles/slide-group.scss'
 
 // Utils
+import { bias, calculateCenteredOffset, calculateUpdatedOffset } from './helpers'
+import { clamp, defineComponent, useRender, createSymbol } from '../../utils'
 import { computed, ref, watch, watchEffect } from 'vue'
-import type { InjectionKey } from 'vue'
-import { clamp, createSymbol, defineComponent, useRender } from '../../utils'
 
 // Components
 import { FadeTransition } from '../transition'
@@ -17,8 +17,8 @@ import { useDisplay } from '../../composables'
 import { useResizeObserver } from '../../composables/resize-observer'
 
 // Types
+import type { InjectionKey } from 'vue'
 import type { GroupInstance } from '../../composables/group'
-import { bias, calculateCenteredOffset, calculateUpdatedOffset } from './helpers'
 
 export const SlideGroupKey: InjectionKey<GroupInstance> = createSymbol('slide-group')
 
@@ -65,7 +65,7 @@ export const SlideGroup = defineComponent({
     'update:modelValue': (value: any) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     const isRtl = ref(false)
     const { mobile } = useDisplay()
     const group = useGroup(props, props.symbol)
@@ -124,21 +124,21 @@ export const SlideGroup = defineComponent({
     let startTouch = 0
     let startOffset = 0
 
-    function onTouchstart(e: TouchEvent) {
+    function onTouchstart (e: TouchEvent) {
       const sizeProperty = isHorizontal.value ? 'clientX' : 'clientY'
       startOffset = scrollOffset.value
       startTouch = e.touches[0][sizeProperty]
       disableTransition.value = true
     }
 
-    function onTouchmove(e: TouchEvent) {
+    function onTouchmove (e: TouchEvent) {
       if (!isOverflowing.value) return
 
       const sizeProperty = isHorizontal.value ? 'clientX' : 'clientY'
       scrollOffset.value = startOffset + startTouch - e.touches[0][sizeProperty]
     }
 
-    function onTouchend(e: TouchEvent) {
+    function onTouchend (e: TouchEvent) {
       const maxScrollOffset = contentSize.value - containerSize.value
 
       if (isRtl.value) {
@@ -158,13 +158,13 @@ export const SlideGroup = defineComponent({
       disableTransition.value = false
     }
 
-    function onScroll() {
+    function onScroll () {
       containerRef.value && (containerRef.value.scrollLeft = 0)
     }
 
     const isFocused = ref(false)
 
-    function onFocusin(e: FocusEvent) {
+    function onFocusin (e: FocusEvent) {
       isFocused.value = true
 
       if (!isOverflowing.value || !contentRef.value) return
@@ -188,18 +188,18 @@ export const SlideGroup = defineComponent({
       }
     }
 
-    function onFocusout(e: FocusEvent) {
+    function onFocusout (e: FocusEvent) {
       isFocused.value = false
     }
 
-    function onFocus(e: FocusEvent) {
+    function onFocus (e: FocusEvent) {
       if (
-        !isFocused.value
-        && !(e.relatedTarget && contentRef.value?.contains(e.relatedTarget as Node))
+        !isFocused.value &&
+        !(e.relatedTarget && contentRef.value?.contains(e.relatedTarget as Node))
       ) focus()
     }
 
-    function onKeydown(e: KeyboardEvent) {
+    function onKeydown (e: KeyboardEvent) {
       if (!contentRef.value) return
 
       if (e.key === (isHorizontal.value ? 'ArrowRight' : 'ArrowDown')) {
@@ -213,13 +213,13 @@ export const SlideGroup = defineComponent({
       }
     }
 
-    function focus(location?: 'next' | 'prev' | 'first' | 'last') {
+    function focus (location?: 'next' | 'prev' | 'first' | 'last') {
       if (!contentRef.value) return
 
       if (!location) {
         contentRef.value.querySelector('[tabindex]')
         const focusable = [...contentRef.value.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         )].filter(el => !el.hasAttribute('disabled')) as HTMLElement[]
         focusable[0]?.focus()
       } else if (location === 'next') {
@@ -237,10 +237,10 @@ export const SlideGroup = defineComponent({
       }
     }
 
-    function scrollTo(location: 'prev' | 'next') {
+    function scrollTo (location: 'prev' | 'next') {
       const sign = isRtl.value ? -1 : 1
-      const newAbosluteOffset = sign * scrollOffset.value
-        + (location === 'prev' ? -1 : 1) * containerSize.value
+      const newAbosluteOffset = sign * scrollOffset.value +
+        (location === 'prev' ? -1 : 1) * containerSize.value
 
       scrollOffset.value = sign * clamp(newAbosluteOffset, 0, contentSize.value - containerSize.value)
     }
@@ -284,8 +284,8 @@ export const SlideGroup = defineComponent({
         // Always show on mobile
         case 'mobile':
           return (
-            mobile.value
-            || (isOverflowing.value || Math.abs(scrollOffset.value) > 0)
+            mobile.value ||
+            (isOverflowing.value || Math.abs(scrollOffset.value) > 0)
           )
 
         // https://material.io/components/tabs#scrollable-tabs
@@ -293,8 +293,8 @@ export const SlideGroup = defineComponent({
         // overflowed on desktop
         default:
           return (
-            !mobile.value
-            && (isOverflowing.value || Math.abs(scrollOffset.value) > 0)
+            !mobile.value &&
+            (isOverflowing.value || Math.abs(scrollOffset.value) > 0)
           )
       }
     })
@@ -325,7 +325,7 @@ export const SlideGroup = defineComponent({
       >
         { hasAffixes.value && (
           <div
-            className={ [
+            class={ [
               've-slide-group__prev',
               { 've-slide-group__prev--disabled': !hasPrev.value },
             ] }
@@ -341,19 +341,19 @@ export const SlideGroup = defineComponent({
 
         <div
           ref={ containerRef }
-          className="ve-slide-group__container"
+          class="ve-slide-group__container"
           onScroll={ onScroll }
         >
           <div
             ref={ contentRef }
-            className="ve-slide-group__content"
+            class="ve-slide-group__content"
             style={ contentStyles.value }
             onTouchstart={ onTouchstart }
             onTouchmove={ onTouchmove }
             onTouchend={ onTouchend }
             onFocusin={ onFocusin }
             onFocusout={ onFocusout }
-            onKeyDown={ onKeydown }
+            onKeydown={ onKeydown }
           >
             { slots.default?.(slotProps.value) }
           </div>
@@ -361,7 +361,7 @@ export const SlideGroup = defineComponent({
 
         { hasAffixes.value && (
           <div
-            className={ [
+            class={ [
               've-slide-group__next',
               { 've-slide-group__next--disabled': !hasNext.value },
             ] }

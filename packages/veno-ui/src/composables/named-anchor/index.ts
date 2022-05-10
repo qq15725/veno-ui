@@ -1,14 +1,15 @@
 // Utils
-import { computed, inject, onBeforeUnmount, onMounted, provide, ref } from 'vue'
-import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
+import { ref, computed, onMounted, provide, inject, onBeforeUnmount } from 'vue'
 import { propsFactory, throttle } from '../../utils'
 
 // Composables
 import { useRoute, useRouterHistory } from '../router'
 
 // Types
+import type { ExtractPropTypes, Ref, PropType, InjectionKey } from 'vue'
 
-export interface NamedAnchorProvider {
+export interface NamedAnchorProvider
+{
   names: Ref<Set<string>>
   active: Ref<string | undefined>
   activate: (name: string) => void
@@ -24,11 +25,11 @@ export const makeNamedAnchor = propsFactory({
     default: 12,
   },
   scrollTarget: {
-    type: [String, Object] as PropType<string | HTMLElement>,
+    type: [String, Object] as PropType<string | HTMLElement>
   },
 }, 'named-anchor')
 
-export function useNamedAnchor(props: ExtractPropTypes<ReturnType<typeof makeNamedAnchor>>) {
+export function useNamedAnchor (props: ExtractPropTypes<ReturnType<typeof makeNamedAnchor>>) {
   const active = ref<string>()
   const names = ref(new Set<string>())
   const offset = computed(() => parseInt(props.offset, 10))
@@ -52,7 +53,7 @@ export function useNamedAnchor(props: ExtractPropTypes<ReturnType<typeof makeNam
       const offsetTop = scrollTarget.value?.scrollTop ?? window.scrollY
       container.scrollTo({
         top: target.getBoundingClientRect().top + offsetTop - offset.value,
-        behavior: 'smooth',
+        behavior: 'smooth'
       })
     }
     active.value = name
@@ -72,12 +73,12 @@ export function useNamedAnchor(props: ExtractPropTypes<ReturnType<typeof makeNam
           pos.push({
             name,
             top: box.top - offsetTop,
-            height: box.height,
+            height: box.height
           })
         }
 
         return pos
-      }, [] as { name: string; top: number; height: number }[])
+      }, [] as { name: string, top: number, height: number }[])
       .sort((a, b) => a.top - b.top)
       .reduce((prev, item) => {
         if (item.top + item.height < 0) {
@@ -99,7 +100,7 @@ export function useNamedAnchor(props: ExtractPropTypes<ReturnType<typeof makeNam
           }
         }
         return prev
-      }, null as { name: string; top: number; height: number } | null)
+      }, null as { name: string, top: number, height: number } | null)
       ?.name
   }
 
@@ -133,7 +134,7 @@ export function useNamedAnchor(props: ExtractPropTypes<ReturnType<typeof makeNam
       if (active.value === name) {
         active.value = undefined
       }
-    },
+    }
   }
 
   provide(NamedAnchorKey, namedAnchor)
@@ -145,11 +146,11 @@ export const makeNamedAnchorItem = propsFactory({
   value: {
     type: String,
     required: true,
-  },
+  }
 }, 'named-anchor-item')
 
-export function useNamedAnchorItem(
-  props: ExtractPropTypes<ReturnType<typeof makeNamedAnchorItem>>,
+export function useNamedAnchorItem (
+  props: ExtractPropTypes<ReturnType<typeof makeNamedAnchorItem>>
 ) {
   const parent = inject(NamedAnchorKey)
 
@@ -165,7 +166,7 @@ export function useNamedAnchorItem(
         ? { query: { anchor: props.value }, replace: true }
         : { hash: `#${ props.value }`, replace: true }
     )),
-    isActive: computed(() => parent.active.value === props.value),
+    isActive: computed(() => parent.active.value === props.value)
   }
 
   parent.register(props.value)

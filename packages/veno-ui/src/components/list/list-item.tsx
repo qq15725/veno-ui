@@ -6,36 +6,36 @@ import { computed, onMounted, watch } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { genOverlays, makePaperProps, usePaper } from '../../composables/paper'
+import { useList } from './composables/list'
+import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { useNestedItem } from '../../composables/nested'
 
 // Components
-import { Ripple } from '../../directives'
-import type { MakeSlots } from '../../utils'
 import { ListItemAvatar } from './list-item-avatar'
 import { ListItemHeader } from './list-item-header'
 import { ListItemTitle } from './list-item-title'
 import { ListItemSubtitle } from './list-item-subtitle'
 
 // Directives
+import { Ripple } from '../../directives'
 
 // Types
-import { useList } from './composables/list'
+import type { MakeSlots } from '../../utils'
 
-interface ListItemSlot {
+type ListItemSlot = {
   isActive: boolean
   activate: (value: boolean) => void
   isSelected: boolean
   select: (value: boolean) => void
 }
 
-export interface ListItemTitleSlot {
+export type ListItemTitleSlot = {
   title?: string
 }
 
-export interface ListItemSubtitleSlot {
+export type ListItemSubtitleSlot = {
   subtitle?: string
 }
 
@@ -131,7 +131,7 @@ export const ListItem = genericComponent<new () => {
     ...makeRouterProps(),
   },
 
-  setup(props, { slots, attrs }) {
+  setup (props, { slots, attrs }) {
     const link = useLink(props, attrs)
     const id = computed(() => props.value ?? link.href.value)
     const { activate, isActive: isNestedActive, select, isSelected, root, parent } = useNestedItem(id)

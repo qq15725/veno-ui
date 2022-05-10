@@ -1,15 +1,11 @@
 // Utils
-import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
-import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
+import { effectScope, nextTick, onScopeDispose, ref, watchEffect, ExtractPropTypes } from 'vue'
 import { IN_BROWSER, propsFactory } from '../../utils'
 
 // Strategies
-import type { Anchor } from '../../utils'
 import { staticPositionStrategy } from './static'
 import { connectedPositionStrategy } from './connected'
 import { pointerPositionStrategy } from './pointer'
-
-// Types
 
 export const POSITION_STRATEGIES = {
   static: staticPositionStrategy, // specific viewport position, usually centered
@@ -17,11 +13,17 @@ export const POSITION_STRATEGIES = {
   pointer: pointerPositionStrategy, // pointer position
 }
 
-export interface PositionStrategyData {
+// Types
+import type { EffectScope, PropType } from 'vue'
+import type { Ref } from 'vue'
+import type { Anchor } from '../../utils'
+
+export interface PositionStrategyData
+{
   contentEl: Ref<HTMLElement | undefined>
   activatorEl: Ref<HTMLElement | undefined>
   isActive: Ref<boolean>
-  activatedPosition?: Ref<{ left: number; top: number } | undefined>
+  activatedPosition?: Ref<{ left: number, top: number } | undefined>
 }
 
 export type PositionStrategy = keyof typeof POSITION_STRATEGIES | ((
@@ -72,9 +74,9 @@ export const makePositionStrategyProps = propsFactory({
   offset: [Number, String],
 }, 'position-strategy')
 
-export function usePositionStrategy(
+export function usePositionStrategy (
   props: PositionStrategyProps,
-  data: PositionStrategyData,
+  data: PositionStrategyData
 ) {
   const contentStyles = ref({})
   const anchorClasses = ref([])
@@ -97,7 +99,7 @@ export function usePositionStrategy(
         data,
         props,
         contentStyles,
-        anchorClasses,
+        anchorClasses
       )?.updatePosition
     })
   })
@@ -110,7 +112,7 @@ export function usePositionStrategy(
     scope?.stop()
   })
 
-  function onResize(e: Event) {
+  function onResize (e: Event) {
     updatePosition.value?.(e)
   }
 

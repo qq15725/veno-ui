@@ -1,6 +1,6 @@
 // Utils
 import { useLayout } from './layout'
 
-export function useLayoutMain() {
+export function useLayoutMain () {
   return useLayout()
 }

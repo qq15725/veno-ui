@@ -2,24 +2,24 @@
 import './styles/breadcrumb.scss'
 
 // Utils
-import { createSymbol, genericComponent } from '../../utils'
+import { genericComponent, createSymbol } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
 import { useGroup } from '../../composables/group'
 
-// Types
-import type { MakeSlots } from '../../utils'
-
 // Keys
 export const BreadcrumbKey = createSymbol('breadcrumb')
+
+// Types
+import type { MakeSlots } from '../../utils'
 
 export type Breadcrumb = InstanceType<typeof Breadcrumb>
 
 export const Breadcrumb = genericComponent<new () => {
   $slots: MakeSlots<{
-    default: []
-    separator: []
+    default: [],
+    separator: [],
   }>
 }>()({
   name: 'VeBreadcrumb',
@@ -34,7 +34,7 @@ export const Breadcrumb = genericComponent<new () => {
     'update:modelValue': (value: any) => true,
   },
 
-  setup(props, { slots }) {
+  setup (props, { slots }) {
     useGroup(props, BreadcrumbKey)
 
     return () => {
@@ -49,5 +49,5 @@ export const Breadcrumb = genericComponent<new () => {
         </props.tag>
       )
     }
-  },
+  }
 })

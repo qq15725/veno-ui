@@ -26,7 +26,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
+  setup () {
     return {
       anchors: ref([
         'top start', 'top', 'top end',

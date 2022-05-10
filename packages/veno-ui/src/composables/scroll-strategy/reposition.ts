@@ -5,11 +5,11 @@ import { bindScroll } from './util'
 // Type
 import type { ScrollStrategyData } from './index'
 
-export function repositionScrollStrategy(data: ScrollStrategyData, name: string) {
+export function repositionScrollStrategy (data: ScrollStrategyData, name: string) {
   let slow = false
   let raf = -1
 
-  function update(e: Event) {
+  function update (e: Event) {
     requestNewFrame(() => {
       const start = performance.now()
       data.updatePosition.value?.(e)

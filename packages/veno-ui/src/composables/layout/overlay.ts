@@ -1,16 +1,16 @@
 // Utils
-import { computed, watch } from 'vue'
-import type { Ref } from 'vue'
+import { watch, computed } from 'vue'
 import { getUid } from '../../utils'
 
 // Composables
-import { ROOT_ZINDEX, useLayout } from './layout'
+import { useLayout, ROOT_ZINDEX } from './layout'
 
 // Types
+import type { Ref } from 'vue'
 
 const OFFSET_ZINDEX = 400
 
-export function useOverlay(isActive: Ref<boolean | undefined>) {
+export function useOverlay (isActive: Ref<boolean | undefined>) {
   const layout = useLayout()
 
   const id = getUid()
@@ -29,6 +29,6 @@ export function useOverlay(isActive: Ref<boolean | undefined>) {
 
   return {
     overlayZIndex,
-    layoutRect: layout.layoutRect,
+    layoutRect: layout.layoutRect
   }
 }

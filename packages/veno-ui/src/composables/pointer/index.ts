@@ -1,11 +1,12 @@
 // Utils
-import { computed, onScopeDispose, readonly, ref } from 'vue'
-import type { ExtractPropTypes } from 'vue'
-import { SUPPORTS_TOUCH, propsFactory } from '../../utils'
+import { ref, onScopeDispose, computed, readonly } from 'vue'
+import { propsFactory, SUPPORTS_TOUCH } from '../../utils'
 
 // Types
+import type { ExtractPropTypes } from 'vue'
 
-export interface PointerPosition {
+export interface PointerPosition
+{
   top: number
   left: number
 }
@@ -28,7 +29,7 @@ export const makePointerProps = propsFactory({
 }, 'pointer')
 
 export const usePointer = (
-  props: Partial<ExtractPropTypes<ReturnType<typeof makePointerProps>>> = {},
+  props: Partial<ExtractPropTypes<ReturnType<typeof makePointerProps>>> = {}
 ) => {
   const isPointerDown = ref(false)
   const isPointerMoving = ref(false)
@@ -136,15 +137,15 @@ export const usePointer = (
       }
 
       return events
-    }),
+    })
   }
 }
 
-function distance(position1: PointerPosition, position2: PointerPosition) {
+function distance (position1: PointerPosition, position2: PointerPosition) {
   return Math.sqrt((position2.left - position1.left) ** 2 + (position2.top - position1.top) ** 2)
 }
 
-function getPointerPosition(e: MouseEvent | TouchEvent): PointerPosition {
+function getPointerPosition (e: MouseEvent | TouchEvent): PointerPosition {
   return e instanceof TouchEvent
     ? e.touches.length > 0
       ? { left: e.touches[0].clientX, top: e.touches[0].clientY }

@@ -1,15 +1,15 @@
 // Utils
-import { computed, inject, onBeforeUnmount, provide, ref } from 'vue'
-import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
 import { getUid, propsFactory } from '../../utils'
-import { useProxiedModel } from '../proxied-model'
+import { computed, inject, onBeforeUnmount, provide, ref } from 'vue'
 import { multipleOpenStrategy, singleOpenStrategy } from './open-strategies'
 import { classicSelectStrategy, independentSelectStrategy, leafSelectStrategy } from './select-strategies'
 import { classicActiveStrategy } from './active-strategies'
 
 // Composables
+import { useProxiedModel } from '../proxied-model'
 
 // Types
+import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
 import type { SelectStrategy as BaseSelectStrategy } from './select-strategies'
 import type { OpenStrategyFn } from './open-strategies'
 import type { ActiveStrategyFn } from './active-strategies'
@@ -18,7 +18,7 @@ export type SelectStrategy = 'single-leaf' | 'leaf' | 'independent' | 'classic' 
 export type OpenStrategy = 'single' | 'multiple' | OpenStrategyFn
 export type ActiveStrategy = 'single' | 'multiple' | ActiveStrategyFn
 
-interface NestedInstance {
+type NestedInstance = {
   id: Ref<string | null>
   root: {
     children: Ref<Map<string, string[]>>
@@ -102,7 +102,7 @@ export const useNested = (
     'onUpdate:selected': ((val: string[]) => void) | undefined
     'onUpdate:opened': ((val: string[]) => void) | undefined
     'onUpdate:active': ((val: string[]) => void) | undefined
-  },
+  }
 ) => {
   let isUnmounted = false
   const children = ref(new Map<string, string[]>())
@@ -113,12 +113,12 @@ export const useNested = (
     v => typeof v === 'boolean'
       ? new Set(v === true ? [...children.value.keys()] : [])
       : new Set(v),
-    v => [...v.values()],
+    v => [...v.values()]
   )
   const active = useProxiedModel(
     props, 'active', props.active,
     v => new Set(v),
-    v => [...v.values()],
+    v => [...v.values()]
   )
 
   // 激活时使用的策略

@@ -15,15 +15,15 @@ export default defineConfig(({ mode }) => {
         entry: 'src/entry.ts',
         name: 'VenoUi',
         formats: ['umd'],
-        fileName: () => `${ pkg.name }.min.js`,
+        fileName: () => `${ pkg.name }.min.js`
       },
       rollupOptions: {
         external: ['vue'],
         output: {
           assetFileNames: `${ pkg.name }.min.css`,
-          globals: { vue: 'Vue' },
-        },
-      },
+          globals: { vue: 'Vue' }
+        }
+      }
     },
     plugins: [
       vue(),
@@ -32,6 +32,6 @@ export default defineConfig(({ mode }) => {
     define: {
       __UI_NAME__: JSON.stringify(pkg.name),
       __UI_VERSION__: JSON.stringify(pkg.version),
-    },
+    }
   }
 })
