@@ -110,5 +110,6 @@ export function useVelocity() {
 }
 
 function oops(): never {
+  // eslint-disable-next-line unicorn/error-message
   throw new Error()
 }

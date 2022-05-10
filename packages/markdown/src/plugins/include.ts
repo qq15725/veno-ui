@@ -28,7 +28,7 @@ function parseRows(content: string) {
 }
 
 export const includePlugin: PluginSimple = md => {
-  const render: RenderRule = (tokens, index, _, env) => {
+  const render: RenderRule = (tokens, index, _, _env) => {
     const token = tokens[index]
 
     if (token.nesting === 1) {

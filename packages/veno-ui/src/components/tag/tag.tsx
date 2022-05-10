@@ -106,8 +106,8 @@ export const Tag = defineComponent({
   },
 
   emits: {
-    'click:close': (e: MouseEvent) => true,
-    'update:modelValue': (value: boolean) => true,
+    'click:close': (_event: MouseEvent) => true,
+    'update:modelValue': (_modelValue: boolean) => true,
   },
 
   setup(props, { attrs, emit, slots }) {

@@ -206,12 +206,12 @@ export const Pagination = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: number) => true,
-    'update:perPage': (value: number) => true,
-    'first': (value: number) => true,
-    'prev': (value: number) => true,
-    'next': (value: number) => true,
-    'last': (value: number) => true,
+    'update:modelValue': (_modelValue: number) => true,
+    'update:perPage': (_perPage: number) => true,
+    'first': (_value: number) => true,
+    'prev': (_value: number) => true,
+    'next': (_value: number) => true,
+    'last': (_value: number) => true,
   },
 
   setup(props, { slots, emit }) {

@@ -9,6 +9,7 @@ export function createCssTransition(
   origin = 'top center 0',
   mode?: string,
 ) {
+  // eslint-disable-next-line vue/one-component-per-file
   return defineComponent({
     name,
 

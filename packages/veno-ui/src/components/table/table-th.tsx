@@ -11,10 +11,6 @@ import { Icon } from '../icon'
 // Types
 import type { PropType } from 'vue'
 
-export function filterTableThProps(attrs: Record<string, unknown>) {
-  return pick(attrs, Object.keys(TableTh.props))
-}
-
 export const TableTh = defineComponent({
   name: 'VeTableTh',
 
@@ -120,5 +116,9 @@ export const TableTh = defineComponent({
     }
   },
 })
+
+export function filterTableThProps(attrs: Record<string, unknown>) {
+  return pick(attrs, Object.keys(TableTh.props))
+}
 
 export type TableTh = InstanceType<typeof TableTh>

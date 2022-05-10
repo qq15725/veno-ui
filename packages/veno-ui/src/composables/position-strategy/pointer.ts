@@ -10,7 +10,7 @@ export function pointerPositionStrategy(
   data: PositionStrategyData,
   props: PositionStrategyProps,
   contentStyles: Ref<Record<string, string>>,
-  anchorClasses: Ref<string[]>,
+  _anchorClasses: Ref<string[]>,
 ) {
   const updatePosition = (e: MouseEvent) => {
     const box = { left: e.clientX, top: e.clientY }

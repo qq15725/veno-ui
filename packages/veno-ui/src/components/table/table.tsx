@@ -32,9 +32,9 @@ import type { PaginationProps } from '../../composables/data-iterator'
 
 interface TableHeaderProps {
   $type?: 'selection'
-  value: string, // 字段
-  text?: string, // 字段文本
-  align?: 'start' | 'center' | 'end', // 对齐方式
+  value: string // 字段
+  text?: string // 字段文本
+  align?: 'start' | 'center' | 'end' // 对齐方式
   sortable?: boolean // 可排序
   fixed?: boolean | 'start' | 'end' // 可固定
   width?: string | number // 宽度

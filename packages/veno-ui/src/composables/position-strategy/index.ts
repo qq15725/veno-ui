@@ -8,8 +8,7 @@ import { connectedPositionStrategy } from './connected'
 import { pointerPositionStrategy } from './pointer'
 
 // Types
-import type { EffectScope, ExtractPropTypes, PropType } from 'vue'
-import type { Ref } from 'vue'
+import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
 import type { Anchor } from '../../utils'
 
 export const POSITION_STRATEGIES = {

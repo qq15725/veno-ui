@@ -15,6 +15,8 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
   touchless: Ref<boolean>
   position: Ref<'left' | 'right' | 'bottom'>
 }) {
+  const onTouchmove = throttle((e: TouchEvent) => handleTouchmove(e), 69)
+
   onMounted(() => {
     window.addEventListener('touchstart', onTouchstart, { passive: true })
     window.addEventListener('touchmove', onTouchmove, { passive: false })
@@ -106,8 +108,6 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
       addMovement(e)
     }
   }
-
-  const onTouchmove = throttle((e: TouchEvent) => handleTouchmove(e), 69)
 
   function handleTouchmove(e: TouchEvent) {
     const touchX = e.changedTouches[0].clientX
@@ -203,5 +203,6 @@ export function useTouch({ isActive, isTemporary, width, touchless, position }: 
 }
 
 function oops(): never {
+  // eslint-disable-next-line unicorn/error-message
   throw new Error()
 }

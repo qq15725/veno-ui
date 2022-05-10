@@ -73,8 +73,8 @@ export const DatePicker = genericComponent<new () => {
   },
 
   emits: {
-    'update:modelValue': (val: any) => true,
-    'change': (val: any) => true,
+    'update:modelValue': (_modelValue: any) => true,
+    'change': (_modelValue: any) => true,
   },
 
   setup(props, { slots, emit }) {

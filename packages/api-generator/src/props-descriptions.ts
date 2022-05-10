@@ -22,6 +22,7 @@ function getMethodExpression(tag: JSDocTag): [string, CallExpression] | undefine
       }
     }
   }
+  return undefined
 }
 
 // 找到这个注释的来源
@@ -33,11 +34,13 @@ function getPropSource(filePath: string, tag: JSDocTag): string | undefined {
       return callExpression!.getArguments()[1]?.getText()?.replace(/\'|\"/g, '')
     case 'genericComponent':
     case 'defineComponent':
+      // eslint-disable-next-line no-case-declarations
       const res = filePath.match(/([\w|-]*)\.ts/)
       if (res && res[1]) {
         return res[1]
       }
   }
+  return undefined
 }
 
 // 获取所有的属性描述

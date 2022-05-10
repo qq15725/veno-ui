@@ -35,6 +35,7 @@ export function expandTransitionGenerator(expandedParentClass = '', x = false) {
 
       el.style[sizeProperty] = '0'
 
+      // eslint-disable-next-line no-void
       void el.offsetHeight // force reflow
 
       el.style.transition = initialStyle.transition
@@ -60,6 +61,7 @@ export function expandTransitionGenerator(expandedParentClass = '', x = false) {
 
       el.style.overflow = 'hidden'
       el.style[sizeProperty] = `${ el[offsetProperty] }px`
+      // eslint-disable-next-line no-void
       void el.offsetHeight // force reflow
 
       requestAnimationFrame(() => (el.style[sizeProperty] = '0'))
@@ -92,6 +94,7 @@ export function fadeInExpandTransitionGenerator(x = false, reverse = false) {
       } else {
         el.style.maxHeight = `${ el.offsetHeight }px`
       }
+      // eslint-disable-next-line no-void
       void el.offsetWidth
     },
     onLeave: (el: HTMLElement) => {
@@ -100,6 +103,7 @@ export function fadeInExpandTransitionGenerator(x = false, reverse = false) {
       } else {
         el.style.maxHeight = '0'
       }
+      // eslint-disable-next-line no-void
       void el.offsetWidth
     },
     onAfterLeave: (el: HTMLElement) => {
@@ -114,23 +118,27 @@ export function fadeInExpandTransitionGenerator(x = false, reverse = false) {
       if (x) {
         const memorizedWidth = el.offsetWidth
         el.style.maxWidth = '0'
+        // eslint-disable-next-line no-void
         void el.offsetWidth
         el.style.transition = ''
         el.style.maxWidth = `${ memorizedWidth }px`
       } else {
         if (reverse) {
           el.style.maxHeight = `${ el.offsetHeight }px`
+          // eslint-disable-next-line no-void
           void el.offsetHeight
           el.style.transition = ''
           el.style.maxHeight = '0'
         } else {
           const memorizedHeight = el.offsetHeight
           el.style.maxHeight = '0'
+          // eslint-disable-next-line no-void
           void el.offsetWidth
           el.style.transition = ''
           el.style.maxHeight = `${ memorizedHeight }px`
         }
       }
+      // eslint-disable-next-line no-void
       void el.offsetWidth
     },
     onAfterEnter: (el: HTMLElement) => {

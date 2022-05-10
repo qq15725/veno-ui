@@ -2,6 +2,7 @@ const RE = /{([\d,-]+)}/
 
 export const highlight = (raw: string, rawLang: string) => {
   let lang = rawLang; let lineNumbers: number[][] = []
+  // eslint-disable-next-line no-lone-blocks
   {
     if (RE.test(rawLang)) {
       lang = rawLang.replace(RE, '').trim()
@@ -14,12 +15,12 @@ export const highlight = (raw: string, rawLang: string) => {
     }
   }
 
-  return `<ve-code 
+  return `<ve-code
   class="mb-4 py-3 px-6"
   theme="dark"
   shape="rounded-lg"
   code="${ encodeURIComponent(raw) }"
-  :highlighted-line-numbers="${ JSON.stringify(lineNumbers) }" 
+  :highlighted-line-numbers="${ JSON.stringify(lineNumbers) }"
   language="${ lang }"
   show-language
 />`

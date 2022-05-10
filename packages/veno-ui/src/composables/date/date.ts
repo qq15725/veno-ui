@@ -11,6 +11,7 @@ export const defaultDateFormat = 'YYYY-MM-DD HH:mm:ss'
 
 export function createDate(options?: DateOptions): DateInstance {
   let date: Date
+  // eslint-disable-next-line no-lone-blocks
   {
     if (!options) {
       date = new Date()

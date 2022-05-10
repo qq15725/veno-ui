@@ -78,7 +78,7 @@ export const usePointer = (
     }
   }
 
-  const pointerMove = (e: MouseEvent | TouchEvent) => {
+  function pointerMove(e: MouseEvent | TouchEvent) {
     if (isPointerMoving.value) {
       if (props.pointerMovePreventDefault && e.cancelable) e.preventDefault()
       pointerCurrentPosition.value = getPointerPosition(e)
@@ -94,7 +94,7 @@ export const usePointer = (
     }
   }
 
-  const pointerUp = (e: MouseEvent | TouchEvent) => {
+  function pointerUp(e: MouseEvent | TouchEvent) {
     pointerCurrentPosition.value = getPointerPosition(e)
     pointerDownEl.value = undefined
     isPointerDown.value = false

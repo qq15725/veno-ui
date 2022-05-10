@@ -24,6 +24,7 @@ function createMessage(message: string, vm?: any, parent?: any): string | void {
 
 export function consoleInfo(message: string, vm?: any, parent?: any): void {
   const newMessage = createMessage(message, vm, parent)
+  // eslint-disable-next-line no-console
   newMessage != null && console.info(newMessage)
 }
 

@@ -1,9 +1,6 @@
 // Utils
 import { inject, reactive, ref, toRefs, watchEffect } from 'vue'
-import { deepMerge } from '../../utils'
-
-// Globals
-import { IN_BROWSER, SUPPORTS_TOUCH } from '../../utils'
+import { IN_BROWSER, SUPPORTS_TOUCH, deepMerge } from '../../utils'
 
 // Types
 import type { InjectionKey, ToRefs } from 'vue'

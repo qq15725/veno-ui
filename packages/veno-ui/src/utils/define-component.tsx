@@ -25,7 +25,9 @@ import type {
 } from 'vue'
 
 export function propIsDefined(vnode: VNode, prop: string) {
+  // eslint-disable-next-line no-prototype-builtins
   return vnode.props?.hasOwnProperty(prop)
+    // eslint-disable-next-line no-prototype-builtins
     || vnode.props?.hasOwnProperty(toKebabCase(prop))
 }
 

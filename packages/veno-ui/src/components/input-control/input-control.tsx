@@ -95,23 +95,19 @@ export const makeInputControlProps = propsFactory({
   } as const),
 }, 'input-control')
 
-export function filterInputControlProps(attrs: Record<string, unknown>) {
-  return pick(attrs, Object.keys(InputControl.props))
-}
-
 export function filterInputControlSlots(slots: Record<string, unknown>) {
   return pick(slots, InputControlSlots)
 }
 
 export const InputControlEmits = {
-  'click:clear': (e: MouseEvent) => true,
-  'click:prepend-inner': (e: MouseEvent) => true,
-  'click:prefix': (e: MouseEvent) => true,
-  'click:suffix': (e: MouseEvent) => true,
-  'click:append-inner': (e: MouseEvent) => true,
-  'click:control': (e: MouseEvent) => true,
-  'update:active': (val: boolean) => true,
-  'update:modelValue': (val: any) => true,
+  'click:clear': (_event: MouseEvent) => true,
+  'click:prepend-inner': (_event: MouseEvent) => true,
+  'click:prefix': (_event: MouseEvent) => true,
+  'click:suffix': (_event: MouseEvent) => true,
+  'click:append-inner': (_event: MouseEvent) => true,
+  'click:control': (_event: MouseEvent) => true,
+  'update:active': (_active: boolean) => true,
+  'update:modelValue': (_modelValue: any) => true,
 }
 
 export const InputControlSlots = [
@@ -292,5 +288,9 @@ export const InputControl = genericComponent<new () => {
     }
   },
 })
+
+export function filterInputControlProps(attrs: Record<string, unknown>) {
+  return pick(attrs, Object.keys(InputControl.props))
+}
 
 export type InputControl = InstanceType<typeof InputControl>

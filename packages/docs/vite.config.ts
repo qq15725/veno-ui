@@ -15,7 +15,6 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from '@veno-ui/vite-plugin-markdown'
 import Icons from 'vite-plugin-iconify'
-// @ts-expect-error
 import { VitePWA } from 'vite-plugin-pwa'
 import pkg from 'veno-ui/package.json'
 import { VenoUiResolver } from 'veno-ui'

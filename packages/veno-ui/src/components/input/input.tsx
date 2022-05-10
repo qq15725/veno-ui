@@ -35,7 +35,7 @@ import {
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Directives
-import Intersect from '../../directives/intersect'
+import { Intersect } from '../../directives/intersect'
 
 // Types
 import type { PropType } from 'vue'

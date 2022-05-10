@@ -12,7 +12,7 @@ export function createRouterOptions() {
       ...setupLayouts(generatedRoutes),
       { path: '/', redirect: '/zh/start' },
     ],
-    // @ts-expect-error
+    // @ts-expect-error: scrollBehavior
     scrollBehavior(to, from, savedPosition) {
       if (to.path === from.path) return savedPosition
       return { top: 0 }

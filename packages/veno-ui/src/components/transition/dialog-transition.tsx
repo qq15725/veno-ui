@@ -1,6 +1,5 @@
 // Utils
-import { ref } from 'vue'
-import { Transition } from 'vue'
+import { Transition, ref } from 'vue'
 import {
   acceleratedEasing,
   deceleratedEasing,
@@ -10,8 +9,6 @@ import {
 
 // Composables
 import { useSharedClick } from '../../composables/shared-click'
-
-// Components
 
 // Types
 import type { PropType } from 'vue'

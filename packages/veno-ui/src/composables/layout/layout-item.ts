@@ -9,7 +9,7 @@ import type { PropType, Ref } from 'vue'
 
 export const makeLayoutItemProps = propsFactory({
   modelValue: {
-    type: Boolean as PropType<boolean | null>,
+    type: Boolean as PropType<boolean | undefined>,
     default: true,
   },
   name: String,

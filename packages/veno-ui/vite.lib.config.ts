@@ -3,8 +3,8 @@ import path from 'path'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import magicString from 'magic-string'
-// @ts-expect-error
+import MagicString from 'magic-string'
+// @ts-expect-error: mkdirp types
 import mkdirp from 'mkdirp'
 import dts from 'vite-plugin-dts'
 import pkg from './package.json'
@@ -64,12 +64,13 @@ export default defineConfig(async ({ mode }) => {
         renderChunk(code) {
           const RE = /\.\.\/\.\.\/veno-ui\/src\/.*\/styles/
           if (code.match(RE)) {
-            const s = new magicString(code).replace(RE, './styles')
+            const s = new MagicString(code).replace(RE, './styles')
             return {
               code: s.toString(),
               map: s.generateMap({ hires: true }),
             }
           }
+          return undefined
         },
         async buildEnd() {
           async function matchScss(dir: string, fn: (filename: string) => void) {

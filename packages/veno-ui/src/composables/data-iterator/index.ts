@@ -8,7 +8,7 @@ import { useProxiedModel } from '../proxied-model'
 // Types
 import type { PropType } from 'vue'
 
-export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
+export type DataIteratorSortFunction = <T, K extends keyof T>(
   items: T[],
   sortBy: string[],
   sortDesc: boolean[],

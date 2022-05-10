@@ -32,7 +32,7 @@ interface CELL {
   isOtherMonth?: boolean
   text?: string
   value?: number
-  props: Record<string, any>,
+  props: Record<string, any>
 }
 
 export const DatePickerPanel = defineComponent({
@@ -113,7 +113,7 @@ export const DatePickerPanel = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: string) => true,
+    'update:modelValue': (_modelValue: string) => true,
   },
 
   setup(props, { slots }) {
@@ -168,6 +168,7 @@ export const DatePickerPanel = defineComponent({
         const value = valueFormatter(current)
         const selectedIndex = selected.value.findIndex(v => v === value)
         const isActive = selectedIndex > -1
+        // eslint-disable-next-line eqeqeq
         const isToday = now == value
         const variant = isActive ? 'contained' : isToday ? 'outlined' : 'text'
         const color = isActive || isToday ? props.activeColor : undefined
@@ -275,7 +276,7 @@ export const DatePickerPanel = defineComponent({
 
     function onMousemove(text: string) {
       if (!range) return
-      if (range.selected.value.length == 1) {
+      if (range.selected.value.length === 1) {
         !range.isPreview.value && range.preview(true)
       }
       if (range.isPreview.value) {
@@ -305,7 +306,7 @@ export const DatePickerPanel = defineComponent({
             ),
             text: () => (
               <>
-                { rows.value.map((cols, i) => (
+                { rows.value.map((cols) => (
                   <div class="ve-date-picker-panel__row">
                     { cols.map(col => (
                       <div

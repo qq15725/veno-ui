@@ -208,7 +208,6 @@ export function useGroup(
     const unwrapped = item as unknown as UnwrapRef<GroupItem>
     const index = findChildren(groupVm?.vnode)
       .slice(1) // First one is group component itself
-      // @ts-expect-error
       .filter(cmp => !!cmp.provides[injectKey as any])
       .indexOf(vm)
     if (index > -1) items.value.splice(index, 0, unwrapped)

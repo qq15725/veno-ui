@@ -21,6 +21,7 @@ export type ParsedAnchor =
 
 /** Parse a raw anchor string into an object */
 export function parseAnchor(anchor: Anchor) {
+  // eslint-disable-next-line prefer-const
   let [side, align] = anchor.split(' ')
 
   if (!align) {

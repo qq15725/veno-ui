@@ -18,7 +18,7 @@ export const DraggableSortable = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: any[]) => true,
+    'update:modelValue': (_modelValue: any[]) => true,
   },
 
   setup(props, { slots }) {

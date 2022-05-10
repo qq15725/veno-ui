@@ -64,10 +64,10 @@ interface ItemGroup<T> {
   items: T[]
 }
 
-export function groupItems<T extends any = any>(
+export function groupItems<T>(
   items: T[],
   groupBy: string[],
-  groupDesc: boolean[],
+  _groupDesc: boolean[],
 ): ItemGroup<T>[] {
   const key = groupBy[0]
   const groups: ItemGroup<T>[] = []
@@ -89,7 +89,7 @@ export function groupItems<T extends any = any>(
 
 type DataTableCompareFunction<T = any> = (a: T, b: T) => number
 
-export function sortItems<T extends any, K extends keyof T>(
+export function sortItems<T, K extends keyof T>(
   items: T[],
   sortBy: string[],
   sortDesc: boolean[],
@@ -140,14 +140,14 @@ export function sortItems<T extends any, K extends keyof T>(
   })
 }
 
-export function defaultFilter(value: any, search: string | null, item: any) {
+export function defaultFilter(value: any, search: string | null, _item: any) {
   return value != null
     && search != null
     && typeof value !== 'boolean'
     && value.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
 }
 
-export function searchItems<T extends any = any>(items: T[], search: string): T[] {
+export function searchItems<T>(items: T[], search: string): T[] {
   if (!search) return items
   search = search.toString().toLowerCase()
   if (search.trim() === '') return items

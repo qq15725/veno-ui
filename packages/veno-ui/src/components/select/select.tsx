@@ -162,9 +162,9 @@ export const Select = genericComponent<new () => {
   },
 
   emits: {
-    'click:clear': (e: MouseEvent) => true,
-    'update:modelValue': (val: any) => true,
-    'update:query': (val: string) => true,
+    'click:clear': (_event: MouseEvent) => true,
+    'update:modelValue': (_modelValue: any) => true,
+    'update:query': (_query: string) => true,
   },
 
   setup(props, { emit, slots }) {

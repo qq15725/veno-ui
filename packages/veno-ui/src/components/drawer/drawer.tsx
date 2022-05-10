@@ -99,7 +99,7 @@ export const Drawer = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (val: boolean) => true,
+    'update:modelValue': (_modelValue: boolean) => true,
   },
 
   setup(props, { attrs, slots }) {
