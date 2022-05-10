@@ -9,7 +9,7 @@ export const useAppStore = defineStore('app', () => {
     repositoryBaseURL: 'https://github.com/qq15725/veno-ui/blob/master',
     pageLoading: ref(false),
     menuActive,
-    toggleMenuActive() {
+    toggleMenuActive () {
       menuActive.value = !menuActive.value
     },
   }
