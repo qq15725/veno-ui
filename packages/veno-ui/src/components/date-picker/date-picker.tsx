@@ -99,7 +99,7 @@ export const DatePicker = genericComponent<new () => {
       activator.value = val.$el.querySelector('.ve-input-control')
     })
 
-    function onClear(e: MouseEvent) {
+    function onClear(_e: MouseEvent) {
       model.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true

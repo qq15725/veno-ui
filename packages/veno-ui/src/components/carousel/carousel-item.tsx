@@ -2,8 +2,7 @@
 import './styles/carousel-item.scss'
 
 // Utils
-import { ref, watch } from 'vue'
-import { Transition } from 'vue'
+import { Transition, ref, watch } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables

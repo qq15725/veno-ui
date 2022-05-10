@@ -2,8 +2,7 @@
 import './styles/input.scss'
 
 // Utils
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { Teleport } from 'vue'
+import { Teleport, computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import {
   IN_BROWSER,
   convertToUnit,
@@ -19,17 +18,15 @@ import { FormControl } from '../form-control'
 import { InputControl } from '../input-control'
 import { Counter } from '../counter'
 
-// Emits
-import { FormControlEmits } from '../form-control/form-control'
-import { InputControlEmits } from '../input-control/input-control'
-
 // Composables
 import {
+  InputControlEmits,
   filterInputControlProps,
   filterInputControlSlots,
   makeInputControlProps,
 } from '../input-control/input-control'
 import {
+  FormControlEmits,
   filterFormControlSlots,
 } from '../form-control/form-control'
 import { useProxiedModel } from '../../composables/proxied-model'

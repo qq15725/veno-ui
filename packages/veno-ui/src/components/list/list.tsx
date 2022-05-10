@@ -78,9 +78,9 @@ export const List = genericComponent<new <T>() => {
   },
 
   emits: {
-    'update:selected': (val: string[]) => true,
-    'update:opened': (val: string[]) => true,
-    'update:active': (val: string[]) => true,
+    'update:selected': (_selected: string[]) => true,
+    'update:opened': (_opened: string[]) => true,
+    'update:active': (_active: string[]) => true,
   },
 
   setup(props, { slots }) {

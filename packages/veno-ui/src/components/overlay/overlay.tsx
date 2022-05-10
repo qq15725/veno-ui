@@ -2,8 +2,7 @@
 import './styles/overlay.scss'
 
 // Utils
-import { computed, mergeProps, ref, toHandlers, watch } from 'vue'
-import { Teleport } from 'vue'
+import { Teleport, computed, mergeProps, ref, toHandlers, watch } from 'vue'
 import {
   IN_BROWSER,
   convertToUnit,

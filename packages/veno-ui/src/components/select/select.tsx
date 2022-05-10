@@ -42,7 +42,7 @@ export type SelectSlots = InputSlots & ListChildrenSlots<InternalSelectItemProps
   'no-data': []
 }>
 
-function defaultFilter(value: string, query: string, item?: any) {
+function defaultFilter(value: string, query: string, _item?: any) {
   if (value == null || query == null) return -1
   return value.toString()
     .toLocaleLowerCase()
