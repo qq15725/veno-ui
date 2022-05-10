@@ -3,18 +3,19 @@ import './styles/counter.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, MakeSlots } from '../../utils'
+import { genericComponent } from '../../utils'
 
 // Composables
-import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
 
 // Components
 import { FadeTransition } from '../transition'
+import type { MakeSlots } from '../../utils'
 
 export type CounterSlot = {
-  counter: string,
-  max: number,
-  value: number,
+  counter: string
+  max: number
+  value: number
 }
 
 export type CounterSlots = MakeSlots<{
@@ -39,7 +40,7 @@ export const Counter = genericComponent<new () => {
     }),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const counter = computed(() => {
       return props.max ? `${ props.value } / ${ props.max }` : String(props.value)
     })

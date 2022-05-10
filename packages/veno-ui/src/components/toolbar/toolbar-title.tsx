@@ -18,7 +18,7 @@ export const ToolbarTitle = defineComponent({
     ...makeTagProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       const hasText = !!(slots.text || props.text)
 

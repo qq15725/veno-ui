@@ -1,11 +1,14 @@
 // Utils
 import { effectScope, nextTick, watchEffect } from 'vue'
-import { getCurrentInstanceName, IN_BROWSER, propsFactory } from '../../utils'
+import { IN_BROWSER, getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Strategies
 import { closeScrollStrategy } from './close'
 import { blockScrollStrategy } from './block'
 import { repositionScrollStrategy } from './reposition'
+
+// Types
+import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
 
 const scrollStrategies = {
   none: null,
@@ -14,11 +17,7 @@ const scrollStrategies = {
   reposition: repositionScrollStrategy,
 }
 
-// Types
-import type { EffectScope, PropType, Ref, ExtractPropTypes } from 'vue'
-
-export interface ScrollStrategyData
-{
+export interface ScrollStrategyData {
   root: Ref<HTMLElement | undefined>
   contentEl: Ref<HTMLElement | undefined>
   activatorEl: Ref<HTMLElement | undefined>
@@ -39,10 +38,10 @@ export const makeScrollStrategyProps = propsFactory({
   },
 })
 
-export function useScrollStrategy (
+export function useScrollStrategy(
   props: ExtractPropTypes<ReturnType<typeof makeScrollStrategyProps>>,
   data: ScrollStrategyData,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   if (!IN_BROWSER) return
 

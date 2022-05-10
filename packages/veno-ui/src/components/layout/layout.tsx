@@ -6,7 +6,7 @@ import { defineComponent, useRender } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
-import { provideLayout, makeLayoutProps } from '../../composables/layout'
+import { makeLayoutProps, provideLayout } from '../../composables/layout'
 
 // Types
 export type Layout = InstanceType<typeof Layout>
@@ -19,14 +19,14 @@ export const Layout = defineComponent({
     ...makeLayoutProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { layoutClasses, getLayoutItem, items } = provideLayout(props)
 
     useRender(() => (
       <props.tag
         class={ [
           've-layout',
-          layoutClasses.value
+          layoutClasses.value,
         ] }
       >
         { slots }
@@ -35,8 +35,8 @@ export const Layout = defineComponent({
 
     return {
       getLayoutItem,
-      items
+      items,
     }
-  }
+  },
 })
 

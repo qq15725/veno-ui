@@ -9,7 +9,7 @@ export const IconLigature = defineComponent({
 
   props: makeIconSetProps(),
 
-  setup (props) {
+  setup(props) {
     return () => {
       return <props.tag>{ props.icon as string }</props.tag>
     }

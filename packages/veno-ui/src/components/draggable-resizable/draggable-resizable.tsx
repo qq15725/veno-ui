@@ -2,8 +2,8 @@
 import './styles/draggable-resizable.scss'
 
 // Utils
-import { ref, watch, toHandlers, nextTick, mergeProps, computed } from 'vue'
-import { defineComponent, convertToUnit } from '../../utils'
+import { computed, mergeProps, nextTick, ref, toHandlers, watch } from 'vue'
+import { convertToUnit, defineComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -31,7 +31,7 @@ export const DraggableResizable = defineComponent({
         width?: string | number
         height?: string | number
       }>,
-      default: () => ({ left: 0, top: 0 })
+      default: () => ({ left: 0, top: 0 }),
     },
 
     /**
@@ -48,10 +48,10 @@ export const DraggableResizable = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: any) => true,
+    'update:modelValue': (_value: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const rootEl = ref<HTMLElement>()
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
@@ -59,11 +59,13 @@ export const DraggableResizable = defineComponent({
         left: v?.left ? parseFloat(v?.left) : 0,
         top: v?.top ? parseFloat(v?.top) : 0,
         ...(
-          props.resizable ? {
-            width: v?.width ? parseFloat(v?.width) : undefined,
-            height: v?.height ? parseFloat(v?.height) : undefined,
-          } : undefined
-        )
+          props.resizable
+            ? {
+                width: v?.width ? parseFloat(v?.width) : undefined,
+                height: v?.height ? parseFloat(v?.height) : undefined,
+              }
+            : undefined
+        ),
       }),
     )
 
@@ -107,6 +109,7 @@ export const DraggableResizable = defineComponent({
     })
 
     watch([isDragging, isResizing], ([isDragging, isResizing]) => {
+      // eslint-disable-next-line no-mixed-operators
       if (props.draggable && !isDragging || props.resizable && !isResizing) {
         previous.value = { ...model.value }
       }
@@ -179,11 +182,11 @@ export const DraggableResizable = defineComponent({
             { {
               activator: props.resizable
                 ? ({ on: anchorProps }) => genResizableAnchors(anchorProps, isDragging)
-                : undefined
+                : undefined,
             } }
           </Tooltip>
         </props.tag>
       )
     }
-  }
+  },
 })

@@ -19,7 +19,7 @@ export const App = defineComponent({
     }),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const theme = provideTheme(props)
     const { getLayoutItem, items, layoutClasses } = provideLayout(props)
     const { createRootProvider } = useProviders()
@@ -46,7 +46,7 @@ export const App = defineComponent({
     return {
       theme,
       getLayoutItem,
-      items
+      items,
     }
-  }
+  },
 })

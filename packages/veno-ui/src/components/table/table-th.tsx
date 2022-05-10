@@ -11,7 +11,7 @@ import { Icon } from '../icon'
 // Types
 import type { PropType } from 'vue'
 
-export function filterTableThProps (attrs: Record<string, unknown>) {
+export function filterTableThProps(attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(TableTh.props))
 }
 
@@ -71,11 +71,11 @@ export const TableTh = defineComponent({
      */
     align: {
       type: String as PropType<boolean | 'start' | 'center' | 'end'>,
-      default: 'start'
+      default: 'start',
     },
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       return (
         <th
@@ -87,7 +87,7 @@ export const TableTh = defineComponent({
               've-table-th--sorted': props.sortDesc !== undefined,
               've-table-th--fixed-start': props.fixed === 'start',
               've-table-th--fixed-end': props.fixed === 'end',
-            }
+            },
           ] }
         >
           <div class="ve-table-th__wrapper">
@@ -97,7 +97,7 @@ export const TableTh = defineComponent({
               <Icon
                 class={ {
                   've-table-th__sorter': true,
-                  've-table-th__sorter--desc': props.sortDesc === true
+                  've-table-th__sorter--desc': props.sortDesc === true,
                 } }
                 icon={ props.sortIcon }
                 color={ props.sortDesc !== undefined ? props.sortActiveColor : undefined }
@@ -118,7 +118,7 @@ export const TableTh = defineComponent({
         </th>
       )
     }
-  }
+  },
 })
 
 export type TableTh = InstanceType<typeof TableTh>

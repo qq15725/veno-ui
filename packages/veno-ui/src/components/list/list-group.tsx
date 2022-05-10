@@ -6,12 +6,12 @@ import { computed } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
-import { useList } from './composables/list'
 import { useNestedGroup } from '../../composables/nested'
 import { makeTagProps } from '../../composables/tag'
 
 // Components
 import { ExpandTransition } from '../transition'
+import { useList } from './composables/list'
 
 // Types
 import type { MakeSlots } from '../../utils'
@@ -58,7 +58,7 @@ export const ListGroup = genericComponent<new () => {
     ...makeTagProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { isOpen, open } = useNestedGroup(props)
     const list = useList()
 

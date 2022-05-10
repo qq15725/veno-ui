@@ -40,8 +40,8 @@ export const makeDimensionProps = propsFactory({
   width: [Number, String],
 }, 'dimension')
 
-export function useDimension (
-  props: MaybeRef<DimensionProps>
+export function useDimension(
+  props: MaybeRef<DimensionProps>,
 ) {
   return {
     dimensionStyles: computed(() => {
@@ -55,6 +55,6 @@ export function useDimension (
         minWidth: convertToUnit(minWidth),
         width: convertToUnit(width),
       }
-    })
+    }),
   }
 }

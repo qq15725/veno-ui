@@ -5,7 +5,6 @@ import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 import * as directives from 'veno-ui/directives'
 import * as providers from 'veno-ui/providers'
-import aliases from '~icons'
 
 // Highlighter
 import { getHighlighter, setCDN } from 'shiki'
@@ -24,6 +23,7 @@ import langVue from 'shiki/languages/vue.tmLanguage.json'
 
 // Types
 import type { InstallPlugin } from '@/types'
+import aliases from '~icons'
 
 export const install: InstallPlugin = ({ app }) => {
   setCDN('https://cdn.jsdelivr.net/npm/shiki@0.10.1/')
@@ -48,13 +48,13 @@ export const install: InstallPlugin = ({ app }) => {
             id: 'javascript',
             scopeName: langJS.scopeName,
             grammar: langJS as any,
-            aliases: ['js']
+            aliases: ['js'],
           },
           {
             id: 'typescript',
             scopeName: langTS.scopeName,
             grammar: langTS as any,
-            aliases: ['ts']
+            aliases: ['ts'],
           },
           {
             id: 'vue',

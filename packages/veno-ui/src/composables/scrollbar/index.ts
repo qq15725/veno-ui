@@ -15,7 +15,7 @@ export const makeScrollbar = propsFactory({
   },
 }, 'scrollbar')
 
-export function useScrollbar (props: ExtractPropTypes<ReturnType<typeof makeScrollbar>>) {
+export function useScrollbar(props: ExtractPropTypes<ReturnType<typeof makeScrollbar>>) {
   const scrollbarClasses = computed(() => (
     props.beautifyScrollbar ? 'beautify-scrollbar' : null
   ))

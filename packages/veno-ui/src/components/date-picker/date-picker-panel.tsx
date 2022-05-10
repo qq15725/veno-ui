@@ -27,11 +27,11 @@ const CELLS_COUNT = ROWS_COUNT * COLS_COUNT
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'] as const
 
 interface CELL {
-  isActive?: boolean,
-  selectedIndex?: number,
-  isOtherMonth?: boolean,
-  text?: string,
-  value?: number,
+  isActive?: boolean
+  selectedIndex?: number
+  isOtherMonth?: boolean
+  text?: string
+  value?: number
   props: Record<string, any>,
 }
 
@@ -53,7 +53,7 @@ export const DatePickerPanel = defineComponent({
     firstDayOfWeek: {
       type: [String, Number],
       default: 0,
-      validator: (val: string | number) => Number(val) in WEEKDAYS
+      validator: (val: string | number) => Number(val) in WEEKDAYS,
     },
 
     /**
@@ -116,14 +116,14 @@ export const DatePickerPanel = defineComponent({
     'update:modelValue': (value: string) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const firstDayOfWeek = computed(() => Number(props.firstDayOfWeek))
     const max = computed(() => props.max ? createDate(props.max) : undefined)
     const min = computed(() => props.min ? createDate(props.min) : undefined)
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
       v => createDate(v),
-      v => formatter(v)
+      v => formatter(v),
     )
     const range = inject(DateRangeKey, null)
     const selected = computed(() => {
@@ -139,13 +139,13 @@ export const DatePickerPanel = defineComponent({
       internalModel.value = val.startOf('month')
     })
 
-    function formatter (date: DateInstance): string {
+    function formatter(date: DateInstance): string {
       return typeof props.format === 'string'
         ? date.format(props.format)
         : props.format(date)
     }
 
-    function valueFormatter (date: DateInstance) {
+    function valueFormatter(date: DateInstance) {
       return createDate(formatter(date)).valueOf()
     }
 
@@ -172,7 +172,7 @@ export const DatePickerPanel = defineComponent({
         const variant = isActive ? 'contained' : isToday ? 'outlined' : 'text'
         const color = isActive || isToday ? props.activeColor : undefined
 
-        function onClick () {
+        function onClick() {
           if (range) {
             range.select(text)
             range.isPreview.value && range.preview(false)
@@ -257,23 +257,23 @@ export const DatePickerPanel = defineComponent({
       }
     })
 
-    function prevYear () {
+    function prevYear() {
       internalModel.value = internalModel.value.subtract(1, 'year')
     }
 
-    function nextYear () {
+    function nextYear() {
       internalModel.value = internalModel.value.add(1, 'year')
     }
 
-    function prevMonth () {
+    function prevMonth() {
       internalModel.value = internalModel.value.subtract(1, 'month')
     }
 
-    function nextMonth () {
+    function nextMonth() {
       internalModel.value = internalModel.value.add(1, 'month')
     }
 
-    function onMousemove (text: string) {
+    function onMousemove(text: string) {
       if (!range) return
       if (range.selected.value.length == 1) {
         !range.isPreview.value && range.preview(true)
@@ -333,5 +333,5 @@ export const DatePickerPanel = defineComponent({
         </Card>
       )
     }
-  }
+  },
 })

@@ -4,29 +4,28 @@ import { inject, onScopeDispose, ref } from 'vue'
 // Types
 import type { InjectionKey, Ref } from 'vue'
 
-export interface DraggableSortableGroupItem
-{
-  findContains: (el: HTMLElement | undefined) => { key: any, el: HTMLElement } | undefined
+export interface DraggableSortableGroupItem {
+  findContains: (el: HTMLElement | undefined) => { key: any; el: HTMLElement } | undefined
   put: Ref<boolean>
   group: Ref<string | undefined>
   clone: (key: any) => any
   enter: (key: any, value: any, from: {
-    id: string,
-    key: any,
-    box: DOMRect,
-    position: { left: number, top: number }
+    id: string
+    key: any
+    box: DOMRect
+    position: { left: number; top: number }
   }) => Promise<void>
   leave: (key: any) => Promise<void>
 }
 
 export const DraggableSortableGroupKey: InjectionKey<ReturnType<typeof createDraggableSortableGroup>> = Symbol.for('veno-ui:draggable-sortable-group')
 
-export function createDraggableSortableGroup () {
+export function createDraggableSortableGroup() {
   const items = new Map<string, DraggableSortableGroupItem>()
   const swapping = ref(false)
 
   const find = (targetId: string, targetEl: HTMLElement) => {
-    for (let [id, item] of items) {
+    for (const [id, item] of items) {
       if (id !== targetId) {
         const res = item.findContains(targetEl)
         if (res) {
@@ -41,8 +40,8 @@ export function createDraggableSortableGroup () {
     register: (id: string, item: DraggableSortableGroupItem) => items.set(id, item),
     unregister: (id: string) => items.delete(id),
     trySwap: async (
-      from: { id: string, key: any, box: DOMRect, position: { left: number, top: number } },
-      to: { el: HTMLElement }
+      from: { id: string; key: any; box: DOMRect; position: { left: number; top: number } },
+      to: { el: HTMLElement },
     ) => {
       if (swapping.value) return
 
@@ -70,7 +69,7 @@ export function createDraggableSortableGroup () {
   }
 }
 
-export function useDraggableSortableGroupItem (id: string, item: DraggableSortableGroupItem) {
+export function useDraggableSortableGroupItem(id: string, item: DraggableSortableGroupItem) {
   const group = inject(DraggableSortableGroupKey)
 
   group?.register(id, item)

@@ -1,6 +1,6 @@
 // Utils
 import { computed, isRef } from 'vue'
-import { propsFactory, isCssColor, colorToOnColorHex } from '../../utils'
+import { colorToOnColorHex, isCssColor, propsFactory } from '../../utils'
 
 // Types
 import type { CSSProperties, Ref } from 'vue'
@@ -12,7 +12,7 @@ export const makeColorProps = propsFactory({
   textColor: String,
 }, 'color')
 
-export function useColor (colors: Ref<{ background?: ColorValue, text?: ColorValue }>) {
+export function useColor(colors: Ref<{ background?: ColorValue; text?: ColorValue }>) {
   const backgroundIsCssColor = computed(() => isCssColor(colors.value.background))
   const textIsCssColor = computed(() => isCssColor(colors.value.text))
 
@@ -49,23 +49,21 @@ export function useColor (colors: Ref<{ background?: ColorValue, text?: ColorVal
   return { colorClasses, colorStyles }
 }
 
-export interface TextColorData
-{
+export interface TextColorData {
   textColorClasses: Ref<string[]>
   textColorStyles: Ref<CSSProperties>
 }
 
-export interface BackgroundColorData
-{
+export interface BackgroundColorData {
   backgroundColorClasses: Ref<string[]>
   backgroundColorStyles: Ref<CSSProperties>
 }
 
-export function useTextColor (color: Ref<ColorValue>): TextColorData
-export function useTextColor<T extends Record<K, ColorValue>, K extends string> (props: T, name: K): TextColorData
-export function useTextColor<T extends Record<K, ColorValue>, K extends string> (
+export function useTextColor(color: Ref<ColorValue>): TextColorData
+export function useTextColor<T extends Record<K, ColorValue>, K extends string>(props: T, name: K): TextColorData
+export function useTextColor<T extends Record<K, ColorValue>, K extends string>(
   props: T | Ref<ColorValue>,
-  name?: K
+  name?: K,
 ): TextColorData {
   const colors = computed(() => ({
     text: isRef(props) ? props.value : (name ? props[name] : null),
@@ -79,11 +77,11 @@ export function useTextColor<T extends Record<K, ColorValue>, K extends string> 
   return { textColorClasses, textColorStyles }
 }
 
-export function useBackgroundColor (color: Ref<ColorValue>): BackgroundColorData
-export function useBackgroundColor<T extends Record<K, ColorValue>, K extends string> (props: T, name: K): BackgroundColorData
-export function useBackgroundColor<T extends Record<K, ColorValue>, K extends string> (
+export function useBackgroundColor(color: Ref<ColorValue>): BackgroundColorData
+export function useBackgroundColor<T extends Record<K, ColorValue>, K extends string>(props: T, name: K): BackgroundColorData
+export function useBackgroundColor<T extends Record<K, ColorValue>, K extends string>(
   props: T | Ref<ColorValue>,
-  name?: K
+  name?: K,
 ): BackgroundColorData {
   const colors = computed(() => ({
     background: isRef(props) ? props.value : (name ? props[name] : null),

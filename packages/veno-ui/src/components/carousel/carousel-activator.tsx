@@ -15,7 +15,7 @@ export const CarouselActivator = genericComponent()({
     active: Boolean,
   },
 
-  setup (props) {
+  setup(props) {
     return () => (
       <div
         class={ [
@@ -26,5 +26,5 @@ export const CarouselActivator = genericComponent()({
         ] }
       />
     )
-  }
+  },
 })

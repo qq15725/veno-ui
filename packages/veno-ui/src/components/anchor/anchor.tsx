@@ -2,15 +2,18 @@
 import './styles/anchor.scss'
 
 // Utils
-import { PropType, toRef } from 'vue'
+import { toRef } from 'vue'
 import { defineComponent } from '../../utils'
-
-// Components
-import { AnchorItem } from './anchor-item'
 
 // Composables
 import { provideDefaults } from '../../composables/defaults'
 import { makeNamedAnchor, useNamedAnchor } from '../../composables/named-anchor'
+
+// Components
+import { AnchorItem } from './anchor-item'
+
+// Types
+import type { PropType } from 'vue'
 
 type AnchorItemProps = {
   [key: string]: any
@@ -35,10 +38,10 @@ export const Anchor = defineComponent({
      */
     items: Array as PropType<AnchorItemProps[]>,
 
-    ...makeNamedAnchor()
+    ...makeNamedAnchor(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     useNamedAnchor(props)
 
     provideDefaults({
@@ -59,7 +62,7 @@ export const Anchor = defineComponent({
         )) }
       </ul>
     )
-  }
+  },
 })
 
 export type Anchor = InstanceType<typeof Anchor>

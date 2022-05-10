@@ -3,14 +3,13 @@ import { CircularBuffer } from '../../utils'
 const HORIZON = 100 // ms
 const HISTORY = 20 // number of samples to keep
 
-export interface Sample
-{
+export interface Sample {
   t: number
   d: number
 }
 
 /** @see https://android.googlesource.com/platform/frameworks/native/+/master/libs/input/VelocityTracker.cpp */
-function kineticEnergyToVelocity (work: number) {
+function kineticEnergyToVelocity(work: number) {
   const sqrt2 = 1.41421356237
   return (work < 0 ? -1.0 : 1.0) * Math.sqrt(Math.abs(work)) * sqrt2
 }
@@ -18,7 +17,7 @@ function kineticEnergyToVelocity (work: number) {
 /**
  * Returns pointer velocity in px/s
  */
-export function calculateImpulseVelocity (samples: Sample[]) {
+export function calculateImpulseVelocity(samples: Sample[]) {
   // The input should be in reversed time order (most recent sample at index i=0)
   if (samples.length < 2) {
     // if 0 or 1 points, velocity is zero
@@ -54,23 +53,23 @@ export function calculateImpulseVelocity (samples: Sample[]) {
   return kineticEnergyToVelocity(work) * 1000
 }
 
-export function useVelocity () {
+export function useVelocity() {
   const touches: Record<number, CircularBuffer<[number, Touch]> | undefined> = {}
 
-  function addMovement (e: TouchEvent) {
+  function addMovement(e: TouchEvent) {
     Array.from(e.changedTouches).forEach(touch => {
       const samples = touches[touch.identifier] ?? (touches[touch.identifier] = new CircularBuffer(HISTORY))
       samples.push([e.timeStamp, touch])
     })
   }
 
-  function endTouch (e: TouchEvent) {
+  function endTouch(e: TouchEvent) {
     Array.from(e.changedTouches).forEach(touch => {
       delete touches[touch.identifier]
     })
   }
 
-  function getVelocity (id: number) {
+  function getVelocity(id: number) {
     const samples = touches[id]?.values().reverse()
 
     if (!samples) {
@@ -90,14 +89,18 @@ export function useVelocity () {
     return {
       x: calculateImpulseVelocity(x),
       y: calculateImpulseVelocity(y),
-      get direction () {
+      get direction() {
         const { x, y } = this
         const [absX, absY] = [Math.abs(x), Math.abs(y)]
 
-        return absX > absY && x >= 0 ? 'right'
-          : absX > absY && x <= 0 ? 'left'
-            : absY > absX && y >= 0 ? 'down'
-              : absY > absX && y <= 0 ? 'up'
+        return absX > absY && x >= 0
+          ? 'right'
+          : absX > absY && x <= 0
+            ? 'left'
+            : absY > absX && y >= 0
+              ? 'down'
+              : absY > absX && y <= 0
+                ? 'up'
                 : oops()
       },
     }
@@ -106,6 +109,6 @@ export function useVelocity () {
   return { addMovement, endTouch, getVelocity }
 }
 
-function oops (): never {
+function oops(): never {
   throw new Error()
 }

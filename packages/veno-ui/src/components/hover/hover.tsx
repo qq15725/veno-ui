@@ -22,10 +22,10 @@ export const Hover = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: boolean) => true,
+    'update:modelValue': (_modelValue: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const hover = useProxiedModel(props, 'modelValue')
     const { runOpenDelay, runCloseDelay } = useDelay(props, value => {
       !props.disabled && (hover.value = value)

@@ -3,7 +3,7 @@ import { inject } from 'vue'
 import { createSymbol, deepMerge } from '../../utils'
 
 // Iconsets
-import { mdi, aliases } from '../../iconsets/mdi'
+import { aliases, mdi } from '../../iconsets/mdi'
 
 // Components
 import { IconClass } from '../../components/icon/icon-class'
@@ -16,13 +16,13 @@ import type { IconsOptions } from './types'
 
 export const IconsKey: InjectionKey<Required<IconsOptions>> = createSymbol('icons')
 
-export function useIcons () {
+export function useIcons() {
   const icons = inject(IconsKey)
   if (!icons) throw new Error('[VenoUi] Could not find icons instance')
   return icons
 }
 
-export function createIcons (options?: IconsOptions) {
+export function createIcons(options?: IconsOptions) {
   return deepMerge({
     defaultSet: 'mdi',
     sets: {
@@ -31,6 +31,6 @@ export function createIcons (options?: IconsOptions) {
       class: IconClass,
       ligature: IconLigature,
     },
-    aliases
+    aliases,
   }, options || {})
 }

@@ -20,7 +20,7 @@ export const Label = defineComponent({
     ...makeThemeProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => (
       <label
         class={ [

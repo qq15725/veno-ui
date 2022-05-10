@@ -2,13 +2,16 @@
 import './styles/card.scss'
 
 // Utils
-import { defineComponent, propsFactory, pick } from '../../utils'
+import { defineComponent, pick, propsFactory } from '../../utils'
 
 // Composables
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
-import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
+import { genOverlays, makePaperProps, usePaper } from '../../composables/paper'
+
+// Directives
+import { Ripple } from '../../directives'
 
 // Components
 import { Avatar } from '../avatar'
@@ -22,13 +25,6 @@ import { CardTitle } from './card-title'
 import { CardSubtitle } from './card-subtitle'
 import { CardText } from './card-text'
 import { CardActions } from './card-actions'
-
-// Directives
-import { Ripple } from '../../directives'
-
-export function filterCardProps (props: Record<string, any>) {
-  return pick(props, Object.keys(Card.props) as any)
-}
 
 export const makeCardProps = propsFactory({
   link: Boolean,
@@ -62,7 +58,7 @@ export const Card = defineComponent({
 
   props: makeCardProps(),
 
-  setup (props, { attrs, slots }) {
+  setup(props, { attrs, slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
     const link = useLink(props, attrs)
     const { loadingClasses } = useLoading(props)
@@ -173,3 +169,7 @@ export const Card = defineComponent({
     }
   },
 })
+
+export function filterCardProps(props: Record<string, any>) {
+  return pick(props, Object.keys(Card.props) as any)
+}

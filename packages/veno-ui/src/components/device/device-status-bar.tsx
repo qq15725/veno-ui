@@ -2,8 +2,8 @@
 import './styles/device-status-bar.scss'
 
 // Utils
-import { ref, onBeforeUnmount, computed, unref } from 'vue'
-import { genericComponent, convertToUnit } from '../../utils'
+import { computed, onBeforeUnmount, ref, unref } from 'vue'
+import { convertToUnit, genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -32,8 +32,8 @@ export const DeviceStatusBar = genericComponent()({
     ...makeColorProps(),
   },
 
-  setup (props) {
-    function getClockValue () {
+  setup(props) {
+    function getClockValue() {
       const now = new Date()
       const hour = now.getHours()
       const minute = now.getMinutes()
@@ -93,5 +93,5 @@ export const DeviceStatusBar = genericComponent()({
         </props.tag>
       )
     }
-  }
+  },
 })

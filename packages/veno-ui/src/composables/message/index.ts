@@ -1,5 +1,5 @@
 // Utils
-import { ref, provide, inject } from 'vue'
+import { inject, provide, ref } from 'vue'
 import { getUid } from '../../utils'
 
 // Types
@@ -7,8 +7,7 @@ import type { InjectionKey, Ref } from 'vue'
 
 type closeMessage = () => void
 
-export interface MessageItem
-{
+export interface MessageItem {
   id: string
   modelValue: boolean
   text: string
@@ -18,8 +17,7 @@ export interface MessageItem
 
 type OpenMessage = (text: string, rest?: Record<string, any>) => Promise<MessageItem> | closeMessage
 
-export interface MessageInstance
-{
+export interface MessageInstance {
   items: Ref<MessageItem[]>
   open: (props?: Record<string, any>) => OpenMessage
   info: OpenMessage
@@ -38,10 +36,10 @@ export const NotificationKey: InjectionKey<MessageInstance> = Symbol.for('veno-u
 export const message = createMessage()
 export const notification = createMessage()
 
-export function createMessage () {
+export function createMessage() {
   const items = ref<MessageItem[]>([])
 
-  function open (props?: Record<string, any>) {
+  function open(props?: Record<string, any>) {
     return function (text: string, rest?: Record<string, any>) {
       const id = `ve-message-${ getUid() }`
       const item = {
@@ -68,14 +66,14 @@ export function createMessage () {
     }
   }
 
-  function close (id: string) {
+  function close(id: string) {
     const item = items.value.find(v => v.id === id)
     if (item) {
       item.modelValue = false
     }
   }
 
-  function remove (id: string) {
+  function remove(id: string) {
     items.value.splice(items.value.findIndex(v => v.id === id), 1)
   }
 
@@ -92,25 +90,25 @@ export function createMessage () {
   }
 }
 
-export function provideMessage () {
+export function provideMessage() {
   const message = createMessage()
   provide(MessageKey, message)
   return message
 }
 
-export function useMessage () {
+export function useMessage() {
   const message = inject(MessageKey)
   if (!message) throw new Error('[VenoUi] Could not find message instance')
   return message
 }
 
-export function provideNotification () {
+export function provideNotification() {
   const notification = createMessage()
   provide(NotificationKey, notification)
   return notification
 }
 
-export function useNotification () {
+export function useNotification() {
   const notification = inject(NotificationKey)
   if (!notification) throw new Error('[VenoUi] Could not find notification instance')
   return notification

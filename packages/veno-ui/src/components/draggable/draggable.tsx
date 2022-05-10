@@ -1,5 +1,5 @@
 // Utils
-import { toHandlers, mergeProps } from 'vue'
+import { mergeProps, toHandlers } from 'vue'
 import { defineComponent } from '../../utils'
 
 // Composables
@@ -20,23 +20,23 @@ export const Draggable = defineComponent({
         left: string | number
         top: string | number
       }>,
-      default: () => ({ left: 0, top: 0 })
+      default: () => ({ left: 0, top: 0 }),
     },
 
     ...makeDraggableProps(),
   },
 
   emits: {
-    'update:modelValue': (value: any) => true,
+    'update:modelValue': (_value: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
       v => ({
         left: parseFloat(v?.left || 0),
-        top: parseFloat(v?.top || 0)
-      })
+        top: parseFloat(v?.top || 0),
+      }),
     )
 
     const {
@@ -59,5 +59,5 @@ export const Draggable = defineComponent({
         }),
       })
     }
-  }
+  },
 })

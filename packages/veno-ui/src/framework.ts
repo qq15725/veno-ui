@@ -3,17 +3,17 @@ import { reactive } from 'vue'
 import { UI_NAME, UI_VERSION } from './utils'
 
 // Composables
-import { createTheme, ThemeKey } from './composables/theme'
-import { createHighlighter, HighlighterKey } from './composables/highlighter'
-import { createIcons, IconsKey } from './composables/icons'
-import { createDisplay, DisplayKey } from './composables/display'
-import { createDefaults, DefaultsKey } from './composables/defaults'
+import { ThemeKey, createTheme } from './composables/theme'
+import { HighlighterKey, createHighlighter } from './composables/highlighter'
+import { IconsKey, createIcons } from './composables/icons'
+import { DisplayKey, createDisplay } from './composables/display'
+import { DefaultsKey, createDefaults } from './composables/defaults'
 import { MessageKey, NotificationKey } from './composables/message'
-import { createDraggableSortableGroup, DraggableSortableGroupKey } from './composables/draggable-sortable-group'
-import { createProviders, ProvidersKey } from './composables/providers'
+import { DraggableSortableGroupKey, createDraggableSortableGroup } from './composables/draggable-sortable-group'
+import { ProvidersKey, createProviders } from './composables/providers'
 
 // Types
-import type { App, ComponentPublicInstance, InjectionKey, Component } from 'vue'
+import type { App, Component, ComponentPublicInstance, InjectionKey } from 'vue'
 import type { HighlighterOptions } from './composables/highlighter'
 import type { ThemeOptions } from './composables/theme'
 import type { IconsOptions } from './composables/icons'
@@ -23,9 +23,8 @@ import type { DefaultsOptions } from './composables/defaults'
 export * from './composables'
 export * from './resolver'
 
-export interface VenoOptions
-{
-  componentPrefix?: string,
+export interface VenoOptions {
+  componentPrefix?: string
   components?: Record<string, any>
   directives?: Record<string, any>
   providers?: Record<string, Component>
@@ -64,7 +63,7 @@ export const createVeno = (options: VenoOptions = {}) => {
     app.provide(ProvidersKey, createProviders(app, options.providers))
 
     // Vue's inject() can only be used in setup
-    function inject (this: ComponentPublicInstance, key: InjectionKey<any> | string) {
+    function inject(this: ComponentPublicInstance, key: InjectionKey<any> | string) {
       const vm = this.$
       const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
       if (provides && (key as any) in provides) {
@@ -74,7 +73,7 @@ export const createVeno = (options: VenoOptions = {}) => {
 
     app.mixin({
       computed: {
-        $veno () {
+        $veno() {
           return reactive({
             display: inject.call(this, DisplayKey),
             theme: inject.call(this, ThemeKey),
@@ -83,8 +82,8 @@ export const createVeno = (options: VenoOptions = {}) => {
             notification: inject.call(this, NotificationKey),
             version,
           })
-        }
-      }
+        },
+      },
     })
   }
 

@@ -3,10 +3,10 @@ import { wrapInArray } from '@veno-ui/utils'
 import { createMarkdown as createBaseMarkdown } from '@veno-ui/markdown'
 
 // Types
-import type { ResolvedOptions, MarkdownToVue } from './types'
+import type { MarkdownToVue, ResolvedOptions } from './types'
 import type { ResolvedConfig } from 'vite'
 
-export function createMarkdownToVue (config: ResolvedConfig, options: ResolvedOptions): MarkdownToVue {
+export function createMarkdownToVue(config: ResolvedConfig, options: ResolvedOptions): MarkdownToVue {
   const root = config.root
   const markdown = createBaseMarkdown(options.markdownOptions)
 
@@ -39,10 +39,10 @@ export function createMarkdownToVue (config: ResolvedConfig, options: ResolvedOp
   }
 }
 
-function extractCustomBlock (html: string, options: ResolvedOptions) {
+function extractCustomBlock(html: string, options: ResolvedOptions) {
   const blocks: string[] = []
   for (const tag of options.customSfcBlocks) {
-    html = html.replace(new RegExp(`<${tag}[^>]*\\b[^>]*>[^<>]*<\\/${tag}>`, 'mg'), (code) => {
+    html = html.replace(new RegExp(`<${ tag }[^>]*\\b[^>]*>[^<>]*<\\/${ tag }>`, 'mg'), (code) => {
       blocks.push(code)
       return ''
     })
@@ -58,7 +58,7 @@ const scriptClientRe = /<\s*script[^>]*\bclient\b[^>]*/
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
 const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
 
-function handleHoistedTags (tags: string[], injectCode: string) {
+function handleHoistedTags(tags: string[], injectCode: string) {
   const existingScriptIndex = tags.findIndex((tag) => {
     return (
       scriptRE.test(tag)
@@ -79,7 +79,7 @@ function handleHoistedTags (tags: string[], injectCode: string) {
       scriptRE,
       hasDefaultExport
         ? `${ injectCode }</script>`
-        : `${ injectCode }\nexport default {}\n</script>`
+        : `${ injectCode }\nexport default {}\n</script>`,
     )
   } else {
     tags.unshift(`<script>${ injectCode }\nexport default {}\n</script>`)

@@ -57,25 +57,26 @@ export const Tooltip = genericComponent<new () => {
   },
 
   emits: {
-    'update:modelValue': (value: boolean) => true,
+    'update:modelValue': (_modelValue: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.id || `ve-tooltip-${ getUid() }`)
     const anchor = computed(() => {
       return props.anchor.split(' ').length > 1
         ? props.anchor
-        : props.anchor + ' center' as Anchor
+        : `${ props.anchor } center` as Anchor
     })
     const origin = computed(() => {
       return (
-        props.origin === 'auto' ||
-        props.origin === 'overlap' ||
-        props.origin.split(' ').length > 1 ||
-        props.anchor.split(' ').length > 1
-      ) ? props.origin
-        : props.origin + ' center' as Origin
+        props.origin === 'auto'
+        || props.origin === 'overlap'
+        || props.origin.split(' ').length > 1
+        || props.anchor.split(' ').length > 1
+      )
+        ? props.origin
+        : `${ props.origin } center` as Origin
     })
 
     return () => {

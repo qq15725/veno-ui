@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
+import { genOverlays, makePaperProps, usePaper } from '../../composables/paper'
 import { makeRouterProps, useLink } from '../../composables/router'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeDisabledProps, useDisabled } from '../../composables/disabled'
@@ -77,7 +77,7 @@ export const makeButtonProps = propsFactory({
     tag: 'button',
     shape: 'rounded-sm',
     variant: 'contained',
-  } as const)
+  } as const),
 }, 'button')
 
 export const Button = defineComponent({
@@ -88,24 +88,24 @@ export const Button = defineComponent({
   props: makeButtonProps(),
 
   emits: {
-    click: (e: MouseEvent) => true
+    click: (_event: MouseEvent) => true,
   },
 
-  setup: function (props, { attrs, slots, emit }) {
+  setup(props, { attrs, slots, emit }) {
+    const group = useGroupItem(props, ButtonToggleKey, false)
     const { paperClasses, paperStyles } = usePaper(props)
     const isDisabled = computed(() => group?.disabled.value || props.disabled || props.loading)
     const { loadingClasses } = useLoading(props)
     const { disabledClasses } = useDisabled(computed(() => ({
-      disabled: group?.disabled.value || props.disabled
+      disabled: group?.disabled.value || props.disabled,
     })))
-    const group = useGroupItem(props, ButtonToggleKey, false)
     const link = useLink(props, attrs)
     const handleClick = (e: MouseEvent) => {
       if (isDisabled.value) {
         e.preventDefault()
         return
       }
-      link.navigate ? link.navigate() : group?.toggle
+      link.navigate ? link.navigate() : group?.toggle()
       emit('click', e)
     }
 
@@ -173,7 +173,7 @@ export const Button = defineComponent({
                       color="currentColor"
                       indeterminate
                     /> as any
-                  )
+                    )
                   : props.prependIcon
               }
               size={ props.size }
@@ -195,7 +195,7 @@ export const Button = defineComponent({
                       color="currentColor"
                       indeterminate
                     /> as any
-                  )
+                    )
                   : props.icon
               }
               size={ props.size }
@@ -213,7 +213,7 @@ export const Button = defineComponent({
         </Tag>
       )
     }
-  }
+  },
 })
 
 export type Button = InstanceType<typeof Button>

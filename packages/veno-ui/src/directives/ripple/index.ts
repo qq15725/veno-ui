@@ -16,13 +16,13 @@ type RippleEvent = (MouseEvent | TouchEvent | KeyboardEvent) & { [rippleStop]?: 
 
 const DELAY_RIPPLE = 80
 
-function transform (el: HTMLElement, value: string) {
+function transform(el: HTMLElement, value: string) {
   el.style.transform = value
   el.style.webkitTransform = value
 }
 
-function opacity (el: HTMLElement, value: number) {
-  el.style.opacity = `calc(${value} * var(--ve-theme-overlay-multiplier))`
+function opacity(el: HTMLElement, value: number) {
+  el.style.opacity = `calc(${ value } * var(--ve-theme-overlay-multiplier))`
 }
 
 interface RippleOptions {
@@ -39,18 +39,18 @@ export interface RippleDirectiveBinding extends Omit<DirectiveBinding, 'modifier
   }
 }
 
-function isTouchEvent (e: RippleEvent): e is TouchEvent {
+function isTouchEvent(e: RippleEvent): e is TouchEvent {
   return e.constructor.name === 'TouchEvent'
 }
 
-function isKeyboardEvent (e: RippleEvent): e is KeyboardEvent {
+function isKeyboardEvent(e: RippleEvent): e is KeyboardEvent {
   return e.constructor.name === 'KeyboardEvent'
 }
 
 const calculate = (
   e: RippleEvent,
   el: HTMLElement,
-  value: RippleOptions = {}
+  value: RippleOptions = {},
 ) => {
   let localX = 0
   let localY = 0
@@ -73,21 +73,21 @@ const calculate = (
     radius = Math.sqrt(el.clientWidth ** 2 + el.clientHeight ** 2) / 2
   }
 
-  const centerX = `${(el.clientWidth - (radius * 2)) / 2}px`
-  const centerY = `${(el.clientHeight - (radius * 2)) / 2}px`
+  const centerX = `${ (el.clientWidth - (radius * 2)) / 2 }px`
+  const centerY = `${ (el.clientHeight - (radius * 2)) / 2 }px`
 
-  const x = value.center ? centerX : `${localX - radius}px`
-  const y = value.center ? centerY : `${localY - radius}px`
+  const x = value.center ? centerX : `${ localX - radius }px`
+  const y = value.center ? centerY : `${ localY - radius }px`
 
   return { radius, scale, x, y, centerX, centerY }
 }
 
 const ripples = {
   /* eslint-disable max-statements */
-  show (
+  show(
     e: RippleEvent,
     el: HTMLElement,
-    value: RippleOptions = {}
+    value: RippleOptions = {},
   ) {
     if (!el?._ripple?.enabled) {
       return
@@ -100,12 +100,12 @@ const ripples = {
     container.className = 've-ripple__container'
 
     if (value.class) {
-      container.className += ` ${value.class}`
+      container.className += ` ${ value.class }`
     }
 
     const { radius, scale, x, y, centerX, centerY } = calculate(e, el, value)
 
-    const size = `${radius * 2}px`
+    const size = `${ radius * 2 }px`
     animation.className = 've-ripple__animation'
     animation.style.width = size
     animation.style.height = size
@@ -120,19 +120,19 @@ const ripples = {
 
     animation.classList.add('ve-ripple__animation--enter')
     animation.classList.add('ve-ripple__animation--visible')
-    transform(animation, `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`)
+    transform(animation, `translate(${ x }, ${ y }) scale3d(${ scale },${ scale },${ scale })`)
     opacity(animation, 0)
     animation.dataset.activated = String(performance.now())
 
     setTimeout(() => {
       animation.classList.remove('ve-ripple__animation--enter')
       animation.classList.add('ve-ripple__animation--in')
-      transform(animation, `translate(${centerX}, ${centerY}) scale3d(1,1,1)`)
+      transform(animation, `translate(${ centerX }, ${ centerY }) scale3d(1,1,1)`)
       opacity(animation, 0.08)
     }, 0)
   },
 
-  hide (el: HTMLElement | null) {
+  hide(el: HTMLElement | null) {
     if (!el?._ripple?.enabled) return
 
     const ripples = el.getElementsByClassName('ve-ripple__animation')
@@ -164,11 +164,11 @@ const ripples = {
   },
 }
 
-function isRippleEnabled (value: any): value is true {
+function isRippleEnabled(value: any): value is true {
   return typeof value === 'undefined' || !!value
 }
 
-function rippleShow (e: RippleEvent) {
+function rippleShow(e: RippleEvent) {
   const value: RippleOptions = {}
   const element = e.currentTarget as HTMLElement | undefined
 
@@ -211,7 +211,7 @@ function rippleShow (e: RippleEvent) {
   }
 }
 
-function rippleHide (e: Event) {
+function rippleHide(e: Event) {
   const element = e.currentTarget as HTMLElement | null
   if (!element || !element._ripple) return
 
@@ -238,7 +238,7 @@ function rippleHide (e: Event) {
   ripples.hide(element)
 }
 
-function rippleCancelShow (e: MouseEvent | TouchEvent) {
+function rippleCancelShow(e: MouseEvent | TouchEvent) {
   const element = e.currentTarget as HTMLElement | undefined
 
   if (!element || !element._ripple) return
@@ -252,26 +252,26 @@ function rippleCancelShow (e: MouseEvent | TouchEvent) {
 
 let keyboardRipple = false
 
-function keyboardRippleShow (e: KeyboardEvent) {
+function keyboardRippleShow(e: KeyboardEvent) {
   if (!keyboardRipple && (e.keyCode === keyCodes.enter || e.keyCode === keyCodes.space)) {
     keyboardRipple = true
     rippleShow(e)
   }
 }
 
-function keyboardRippleHide (e: KeyboardEvent) {
+function keyboardRippleHide(e: KeyboardEvent) {
   keyboardRipple = false
   rippleHide(e)
 }
 
-function focusRippleHide (e: FocusEvent) {
+function focusRippleHide(e: FocusEvent) {
   if (keyboardRipple) {
     keyboardRipple = false
     rippleHide(e)
   }
 }
 
-function updateRipple (el: HTMLElement, binding: RippleDirectiveBinding, wasEnabled: boolean) {
+function updateRipple(el: HTMLElement, binding: RippleDirectiveBinding, wasEnabled: boolean) {
   const { value, modifiers } = binding
   const enabled = isRippleEnabled(value)
   if (!enabled) {
@@ -308,7 +308,7 @@ function updateRipple (el: HTMLElement, binding: RippleDirectiveBinding, wasEnab
   }
 }
 
-function removeListeners (el: HTMLElement) {
+function removeListeners(el: HTMLElement) {
   el.removeEventListener('mousedown', rippleShow)
   el.removeEventListener('touchstart', rippleShow)
   el.removeEventListener('touchend', rippleHide)
@@ -322,16 +322,16 @@ function removeListeners (el: HTMLElement) {
   el.removeEventListener('blur', focusRippleHide)
 }
 
-function mounted (el: HTMLElement, binding: DirectiveBinding) {
+function mounted(el: HTMLElement, binding: DirectiveBinding) {
   updateRipple(el, binding, false)
 }
 
-function unmounted (el: HTMLElement) {
+function unmounted(el: HTMLElement) {
   delete el._ripple
   removeListeners(el)
 }
 
-function updated (el: HTMLElement, binding: DirectiveBinding) {
+function updated(el: HTMLElement, binding: DirectiveBinding) {
   if (binding.value === binding.oldValue) {
     return
   }

@@ -27,12 +27,12 @@ export const makeShapeProps = propsFactory({
   },
 }, 'shape')
 
-export function useShape (
+export function useShape(
   props: MaybeRef<ShapeProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const shapeClasses = computed(() => {
-    let { shape } = unref(props)
+    const { shape } = unref(props)
     if (!shape || !SHAPES.includes(shape)) return null
     return `${ name }--shape-${ shape }`
   })

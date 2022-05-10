@@ -7,5 +7,5 @@ import { fadeInExpandTransitionGenerator } from './utils/expand-transition-gener
 
 export const FadeInExpandTransition = createJavascriptTransition(
   've-fade-in-expand-transition',
-  fadeInExpandTransitionGenerator()
+  fadeInExpandTransitionGenerator(),
 )

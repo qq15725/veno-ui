@@ -30,10 +30,10 @@ export const Menu = genericComponent<new () => {
   },
 
   emits: {
-    'update:modelValue': (value: boolean) => true,
+    'update:modelValue': (_modelValue: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const overlayRef = ref()
     const id = computed(() => props.id || `ve-menu-${ getUid() }`)

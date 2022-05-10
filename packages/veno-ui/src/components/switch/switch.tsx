@@ -23,13 +23,13 @@ export const Switch = defineComponent({
   } as const),
 
   emits: {
-    'update:modelValue': (val: any) => true,
+    'update:modelValue': (_modelValue: any) => true,
   },
 
-  setup (props, { emit, slots }) {
+  setup(props, { emit, slots }) {
     const control = ref<SelectionControl>()
 
-    function onClick () {
+    function onClick() {
       control.value?.inputRef?.click()
     }
 
@@ -59,10 +59,10 @@ export const Switch = defineComponent({
               return (
                 <div class="ve-switch__thumb" />
               )
-            }
+            },
           } }
         </SelectionControl>
       )
     }
-  }
+  },
 })

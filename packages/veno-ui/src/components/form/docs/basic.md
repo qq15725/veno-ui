@@ -113,9 +113,9 @@ import { defineComponent, ref } from 'vue'
 import { message } from 'veno-ui'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const sending = ref(false)
-    
+
     return {
       form: ref({
         props: {

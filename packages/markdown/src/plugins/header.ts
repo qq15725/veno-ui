@@ -1,5 +1,5 @@
 // Utils
-import { slugify, deeplyParseHeader } from '../utils'
+import { deeplyParseHeader, slugify } from '../utils'
 
 // Types
 import type { RenderRule } from 'markdown-it/lib/renderer'
@@ -15,7 +15,7 @@ export const headerPlugin: PluginSimple = md => {
       md._context.headers.push({
         level: parseInt(token.tag.slice(1), 10),
         title: deeplyParseHeader(title),
-        slug: slug || slugify(title)
+        slug: slug || slugify(title),
       })
     }
     token.tag = `ve-${ token.tag }`

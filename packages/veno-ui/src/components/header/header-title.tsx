@@ -15,7 +15,7 @@ export const HeaderTitle = defineComponent({
     ...makeTagProps({ tag: 'header' }),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       const hasDefault = slots.default || props.text
 

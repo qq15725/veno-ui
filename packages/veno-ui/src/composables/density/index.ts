@@ -1,13 +1,13 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory, getCurrentInstanceName } from '../../utils'
-
-// Constants
-export const DENSITIES = ['ultra-low', 'low', 'medium', 'high', 'ultra-high'] as const
+import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
+
+// Constants
+export const DENSITIES = ['ultra-low', 'low', 'medium', 'high', 'ultra-high'] as const
 
 export type Density = typeof DENSITIES[number]
 
@@ -22,12 +22,12 @@ export const makeDensityProps = propsFactory({
   },
 }, 'density')
 
-export function useDensity (
+export function useDensity(
   props: MaybeRef<DensityProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const densityClasses = computed(() => {
-    let { density } = unref(props)
+    const { density } = unref(props)
     if (!name || !density || !DENSITIES.includes(density)) return null
     return `${ name }--density-${ density }`
   })

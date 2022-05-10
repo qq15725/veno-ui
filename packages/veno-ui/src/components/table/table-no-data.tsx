@@ -21,7 +21,7 @@ export const TableNoData = defineComponent({
     },
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       return (
         <div class="ve-table-no-data">
@@ -31,5 +31,5 @@ export const TableNoData = defineComponent({
         </div>
       )
     }
-  }
+  },
 })

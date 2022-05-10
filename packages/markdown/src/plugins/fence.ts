@@ -6,24 +6,24 @@ export const fencePlugin: PluginSimple = md => {
   const unescapeAll = md.utils.unescapeAll
 
   md.renderer.rules.fence = (tokens, idx, options) => {
-    let token = tokens[idx],
-      info = token.info ? unescapeAll(token.info).trim() : '',
-      langName = '',
-      langAttrs = '',
-      highlighted, arr
+    const token = tokens[idx]
+    const info = token.info ? unescapeAll(token.info).trim() : ''
+    let langName = ''
+    let langAttrs = ''
+    let highlighted; let arr
 
     if (info) {
-      arr = info.split(/(\s+)/g);
-      langName = arr[0];
-      langAttrs = arr.slice(2).join('');
+      arr = info.split(/(\s+)/g)
+      langName = arr[0]
+      langAttrs = arr.slice(2).join('')
     }
 
     if (options.highlight) {
-      highlighted = options.highlight(token.content, langName, langAttrs) || escapeHtml(token.content);
+      highlighted = options.highlight(token.content, langName, langAttrs) || escapeHtml(token.content)
     } else {
-      highlighted = escapeHtml(token.content);
+      highlighted = escapeHtml(token.content)
     }
 
-    return highlighted + '\n';
+    return `${ highlighted }\n`
   }
 }

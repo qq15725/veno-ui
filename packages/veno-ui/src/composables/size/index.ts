@@ -1,24 +1,24 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory, getCurrentInstanceName, convertToUnit } from '../../utils'
-
-// Constants
-const aliases = {
-  'xs': 'x-small',
-  'sm': 'small',
-  'md': 'medium',
-  'lg': 'large',
-  'xl': 'x-large',
-} as const
-
-export const SIZES = [
-  ...Object.keys(aliases),
-  ...new Set(Object.values(aliases))
-]
+import { convertToUnit, getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { MaybeRef } from '../../utils'
+
+// Constants
+const aliases = {
+  xs: 'x-small',
+  sm: 'small',
+  md: 'medium',
+  lg: 'large',
+  xl: 'x-large',
+} as const
+
+export const SIZES = [
+  ...Object.keys(aliases),
+  ...new Set(Object.values(aliases)),
+]
 
 export type Size = string | number | typeof SIZES[number]
 
@@ -34,9 +34,9 @@ export const makeSizeProps = propsFactory({
   },
 }, 'size')
 
-export function useSize (
+export function useSize(
   props: MaybeRef<SizeProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const sizeClasses = computed(() => {
     let { size } = unref(props)

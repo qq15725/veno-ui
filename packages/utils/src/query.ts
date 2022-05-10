@@ -1,11 +1,11 @@
 // Types
-import type { ComponentPublicInstance, ComponentInternalInstance } from 'vue'
+import type { ComponentInternalInstance, ComponentPublicInstance } from 'vue'
 
 export type Selector = 'parent' | string | Element | ComponentPublicInstance
 
-export function querySelector (
+export function querySelector(
   selector: Selector,
-  vm?: ComponentInternalInstance | null
+  vm?: ComponentInternalInstance | null,
 ): HTMLElement | undefined {
   let el
   if (selector === 'parent') {

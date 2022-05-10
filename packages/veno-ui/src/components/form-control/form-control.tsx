@@ -2,8 +2,8 @@
 import './styles/form-control.scss'
 
 // Utils
-import { computed, toRef, onBeforeMount, onBeforeUnmount } from 'vue'
-import { genericComponent, convertToUnit, useRender, pick, getUid } from '../../utils'
+import { computed, onBeforeMount, onBeforeUnmount, toRef } from 'vue'
+import { convertToUnit, genericComponent, getUid, pick, useRender } from '../../utils'
 
 // Components
 import { Label } from '../label'
@@ -34,22 +34,22 @@ export type FormControlSlot = {
 }
 
 export type FormControlSlots = MakeSlots<{
-  prepend: [FormControlSlot],
-  label: [FormControlSlot],
-  default: [FormControlSlot & { props: Record<string, unknown> }],
-  append: [FormControlSlot],
-  details: [FormControlSlot],
+  prepend: [FormControlSlot]
+  label: [FormControlSlot]
+  default: [FormControlSlot & { props: Record<string, unknown> }]
+  append: [FormControlSlot]
+  details: [FormControlSlot]
 }>
 
-export function filterFormControlSlots (slots: Record<string, unknown>) {
+export function filterFormControlSlots(slots: Record<string, unknown>) {
   return pick(slots, FormControlSlots)
 }
 
 export const FormControlEmits = {
-  'click:prepend': (e: MouseEvent) => true,
-  'click:label': (e: MouseEvent) => true,
-  'click:append': (e: MouseEvent) => true,
-  'update:modelValue': (val: any) => true,
+  'click:prepend': (_event: MouseEvent) => true,
+  'click:label': (_event: MouseEvent) => true,
+  'click:append': (_event: MouseEvent) => true,
+  'update:modelValue': (_modelValue: any) => true,
 }
 
 export const FormControlSlots = [
@@ -146,8 +146,8 @@ export const FormControl = genericComponent<new () => {
 
   emits: FormControlEmits,
 
-  setup (props, { slots, emit }) {
-    const { dimensionStyles: dimensionStyles } = useDimension(props)
+  setup(props, { slots, emit }) {
+    const { dimensionStyles } = useDimension(props)
     const { sizeClasses, sizeStyles } = useSize(props)
     const model = useProxiedModel(props, 'modelValue')
     const computedDimensionStyles = computed(() => ({
@@ -178,7 +178,7 @@ export const FormControl = genericComponent<new () => {
         modelValue: model,
         validate,
         reset,
-        resetValidation
+        resetValidation,
       })
     })
 
@@ -203,17 +203,17 @@ export const FormControl = genericComponent<new () => {
       const hasAppend = !!(slots.append || props.appendIcon)
       const hasHint = !!(slots.hint || props.hint)
       const hasMessages = !!(
-        slots.messages ||
-        props.messages?.length ||
-        errorMessages.value.length
+        slots.messages
+        || props.messages?.length
+        || errorMessages.value.length
       )
       const hasDetails = !props.hideDetails || (
-        props.hideDetails === 'auto' &&
-        (hasMessages || hasHint)
+        props.hideDetails === 'auto'
+        && (hasMessages || hasHint)
       )
       const showMessages = hasMessages || (
-        hasHint &&
-        (props.persistentHint || props.focused)
+        hasHint
+        && (props.persistentHint || props.focused)
       )
 
       return (
@@ -309,7 +309,7 @@ export const FormControl = genericComponent<new () => {
       resetValidation,
       validate,
     }
-  }
+  },
 })
 
 export type FormControl = InstanceType<typeof FormControl>

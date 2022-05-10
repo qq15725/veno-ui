@@ -31,15 +31,15 @@
 ```
 
 ```js
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 
-function stringify (queryString) {
+function stringify(queryString) {
   return Object.keys(queryString)
-        .map(k => k.replace(/[A-Z]/, v => `_${ v.toLowerCase() }`) + `=${ queryString[k] }`)
-        .join('&')
+    .map(k => `${ k.replace(/[A-Z]/, v => `_${ v.toLowerCase() }`) }=${ queryString[k] }`)
+    .join('&')
 }
 
-function api (params = {}) {
+function api(params = {}) {
   return new Promise(resolve => {
     const xhr = new XMLHttpRequest()
     xhr.open('GET', `https://cps.fdota.com/products?${ stringify(params) }`)
@@ -53,7 +53,7 @@ function api (params = {}) {
 }
 
 export default defineComponent({
-  setup () {
+  setup() {
     const pagination = ref({
       perPage: 10,
       perPageOptions: [10, 24, 50, 100],
@@ -63,7 +63,7 @@ export default defineComponent({
     const loading = ref(false)
     const items = ref([])
 
-    async function fetch (query = {}) {
+    async function fetch(query = {}) {
       loading.value = true
       const {
         data,

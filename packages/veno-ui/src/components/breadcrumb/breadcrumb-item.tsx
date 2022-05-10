@@ -20,8 +20,8 @@ export type BreadcrumbItem = InstanceType<typeof BreadcrumbItem>
 
 export const BreadcrumbItem = genericComponent<new () => {
   $slots: MakeSlots<{
-    default: [],
-    separator: [],
+    default: []
+    separator: []
   }>
 }>()({
   name: 'VeBreadcrumbItem',
@@ -33,7 +33,7 @@ export const BreadcrumbItem = genericComponent<new () => {
     ...makeGroupItemProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { id, group } = useGroupItem(props, BreadcrumbKey)
 
     const hasNext = computed(() => {
@@ -50,8 +50,8 @@ export const BreadcrumbItem = genericComponent<new () => {
             class={ [
               've-breadcrumb-item',
               {
-                've-breadcrumb-item--has-next': hasNext.value
-              }
+                've-breadcrumb-item--has-next': hasNext.value,
+              },
             ] }
           >
             <Button
@@ -75,5 +75,5 @@ export const BreadcrumbItem = genericComponent<new () => {
         </>
       )
     }
-  }
+  },
 })

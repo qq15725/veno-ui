@@ -17,8 +17,7 @@ import { DatePickerPanel } from './date-picker-panel'
 import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
 import type { DateInstance } from '../../composables/date'
 
-interface DateRangeInstance
-{
+interface DateRangeInstance {
   selected: ComputedRef<DateInstance[]>
   select: (value: string) => void
   inRange: (value: number) => boolean
@@ -50,11 +49,11 @@ export const DateRangePickerPanel = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (value: string[]) => true,
-    'preview': (value: boolean) => true,
+    'update:modelValue': (_value: string[]) => true,
+    'preview': (_value: boolean) => true,
   },
 
-  setup (props,{ emit }) {
+  setup(props, { emit }) {
     const model = useProxiedModel(props, 'modelValue')
     const selected = computed(() => {
       return model.value
@@ -63,18 +62,18 @@ export const DateRangePickerPanel = defineComponent({
     })
     const isPreview = ref(false)
 
-    function formatter (dates: DateInstance[]): string[] {
+    function formatter(dates: DateInstance[]): string[] {
       return typeof props.format === 'function'
         ? props.format(dates)
         : dates.map((date, i) => date.format((props.format as any)[i]))
     }
 
-    function preview (value: boolean) {
+    function preview(value: boolean) {
       isPreview.value = value
       emit('preview', isPreview.value)
     }
 
-    function select (value: string) {
+    function select(value: string) {
       const length = model.value.length
       if (length === 1 || (isPreview.value && length > 0)) {
         if (model.value[1] === value) return
@@ -85,7 +84,7 @@ export const DateRangePickerPanel = defineComponent({
       }
     }
 
-    function inRange (value: number) {
+    function inRange(value: number) {
       if (selected.value.length < 2) return false
       return selected.value[0].valueOf() <= value
         && selected.value[1].valueOf() >= value
@@ -116,5 +115,5 @@ export const DateRangePickerPanel = defineComponent({
         </Card>
       )
     }
-  }
+  },
 })

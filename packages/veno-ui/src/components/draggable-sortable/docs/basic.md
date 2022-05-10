@@ -15,10 +15,10 @@
 ```
 
 ```js
-import { defineComponent, ref, mergeProps } from 'vue'
+import { defineComponent, mergeProps, ref } from 'vue'
 
 export default defineComponent({
-  setup () {
+  setup() {
     return {
       mergeProps,
       items: ref([

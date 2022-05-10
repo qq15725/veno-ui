@@ -3,7 +3,7 @@ import './styles/badge.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { defineComponent, convertToUnit, pick } from '../../utils'
+import { convertToUnit, defineComponent, pick } from '../../utils'
 
 // Components
 import { Icon } from '../icon'
@@ -12,7 +12,7 @@ import { FadeTransition } from '../transition'
 // Composables
 import { makeShapeProps, useShape } from '../../composables/shape'
 import { makeTagProps } from '../../composables/tag'
-import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
 import { useBackgroundColor, useTextColor } from '../../composables/color'
 
 export type Badge = InstanceType<typeof Badge>
@@ -71,8 +71,8 @@ export const Badge = defineComponent({
         const [vertical, horizontal] = (value ?? '').split('-')
 
         return (
-          ['top', 'bottom'].includes(vertical) &&
-          ['left', 'right'].includes(horizontal)
+          ['top', 'bottom'].includes(vertical)
+          && ['left', 'right'].includes(horizontal)
         )
       },
     },
@@ -111,7 +111,7 @@ export const Badge = defineComponent({
     }),
   },
 
-  setup (props, { slots, attrs }) {
+  setup(props, { slots, attrs }) {
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(toRef(props, 'color'))
     const { shapeClasses } = useShape(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'textColor'))
@@ -122,7 +122,7 @@ export const Badge = defineComponent({
         : (props.dot ? 8 : 12)
     ))
 
-    function calculatePosition (offset?: number | string) {
+    function calculatePosition(offset?: number | string) {
       return `calc(100% - ${ convertToUnit(position.value + Number(offset ?? 0)) })`
     }
 
@@ -205,5 +205,5 @@ export const Badge = defineComponent({
         </props.tag>
       )
     }
-  }
+  },
 })

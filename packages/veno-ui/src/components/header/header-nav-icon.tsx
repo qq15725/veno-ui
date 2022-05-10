@@ -11,10 +11,10 @@ export const HeaderNavIcon = defineComponent({
     icon: {
       type: String,
       default: '$menu',
-    }
+    },
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => (
       <Button
         class="ve-header-nav-icon"

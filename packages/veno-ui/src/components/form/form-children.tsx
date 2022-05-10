@@ -21,7 +21,7 @@ export const FormChildren = defineComponent({
     items: Array as PropType<InternalFormItemProps[]>,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => slots.default?.() ?? props.items?.map(({ type, props: itemProps }) => {
       switch (type) {
         case 'textarea':
@@ -29,6 +29,7 @@ export const FormChildren = defineComponent({
         case 'select':
           return <Select { ...itemProps } />
         case 'switch':
+          // eslint-disable-next-line no-case-declarations
           const [controlProps, switchProps] = pick(itemProps || {}, [
             'label',
           ])
@@ -48,7 +49,7 @@ export const FormChildren = defineComponent({
           return <Input { ...itemProps } />
       }
     })
-  }
+  },
 })
 
 export type FormChildren = InstanceType<typeof FormChildren>

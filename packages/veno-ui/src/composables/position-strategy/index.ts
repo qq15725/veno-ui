@@ -1,5 +1,5 @@
 // Utils
-import { effectScope, nextTick, onScopeDispose, ref, watchEffect, ExtractPropTypes } from 'vue'
+import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
 import { IN_BROWSER, propsFactory } from '../../utils'
 
 // Strategies
@@ -7,23 +7,22 @@ import { staticPositionStrategy } from './static'
 import { connectedPositionStrategy } from './connected'
 import { pointerPositionStrategy } from './pointer'
 
+// Types
+import type { EffectScope, ExtractPropTypes, PropType } from 'vue'
+import type { Ref } from 'vue'
+import type { Anchor } from '../../utils'
+
 export const POSITION_STRATEGIES = {
   static: staticPositionStrategy, // specific viewport position, usually centered
   connected: connectedPositionStrategy, // connected to a certain element
   pointer: pointerPositionStrategy, // pointer position
 }
 
-// Types
-import type { EffectScope, PropType } from 'vue'
-import type { Ref } from 'vue'
-import type { Anchor } from '../../utils'
-
-export interface PositionStrategyData
-{
+export interface PositionStrategyData {
   contentEl: Ref<HTMLElement | undefined>
   activatorEl: Ref<HTMLElement | undefined>
   isActive: Ref<boolean>
-  activatedPosition?: Ref<{ left: number, top: number } | undefined>
+  activatedPosition?: Ref<{ left: number; top: number } | undefined>
 }
 
 export type PositionStrategy = keyof typeof POSITION_STRATEGIES | ((
@@ -74,9 +73,9 @@ export const makePositionStrategyProps = propsFactory({
   offset: [Number, String],
 }, 'position-strategy')
 
-export function usePositionStrategy (
+export function usePositionStrategy(
   props: PositionStrategyProps,
-  data: PositionStrategyData
+  data: PositionStrategyData,
 ) {
   const contentStyles = ref({})
   const anchorClasses = ref([])
@@ -99,7 +98,7 @@ export function usePositionStrategy (
         data,
         props,
         contentStyles,
-        anchorClasses
+        anchorClasses,
       )?.updatePosition
     })
   })
@@ -112,7 +111,7 @@ export function usePositionStrategy (
     scope?.stop()
   })
 
-  function onResize (e: Event) {
+  function onResize(e: Event) {
     updatePosition.value?.(e)
   }
 

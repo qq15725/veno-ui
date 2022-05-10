@@ -1,14 +1,13 @@
 // Utils
 import {
-  getCurrentInstance,
   computed,
+  getCurrentInstance,
   inject,
   onBeforeUnmount,
   onMounted,
   provide,
   ref,
   toRef,
-  ExtractPropTypes
 } from 'vue'
 import { consoleWarn, deepEqual, findChildren, getUid, propsFactory, wrapInArray } from '../../utils'
 
@@ -16,17 +15,18 @@ import { consoleWarn, deepEqual, findChildren, getUid, propsFactory, wrapInArray
 import { useProxiedModel } from '../proxied-model'
 
 // Types
-import type { ComponentInternalInstance, InjectionKey, PropType, Ref, UnwrapRef } from 'vue'
+import type {
+  ComponentInternalInstance, ExtractPropTypes, InjectionKey, PropType, Ref,
+  UnwrapRef,
+} from 'vue'
 
-interface GroupItem
-{
+interface GroupItem {
   id: string
   value: Ref<unknown>
   disabled: Ref<boolean | undefined>
 }
 
-interface GroupProps
-{
+interface GroupProps {
   disabled?: boolean
   modelValue?: unknown
   multiple?: boolean
@@ -36,8 +36,7 @@ interface GroupProps
   'onUpdate:modelValue': ((val: unknown) => void) | undefined
 }
 
-export interface GroupInstance
-{
+export interface GroupInstance {
   vm: ComponentInternalInstance | null
   register: (item: GroupItem, cmp: ComponentInternalInstance) => void
   unregister: (id: string) => void
@@ -55,8 +54,7 @@ export interface GroupInstance
   disabled: Ref<boolean | undefined>
 }
 
-export interface GroupItemInstance
-{
+export interface GroupItemInstance {
   id: string
   isSelected: Ref<boolean>
   toggle: () => void
@@ -122,26 +120,26 @@ export const makeGroupItemProps = propsFactory({
 type GroupItemProps = ExtractPropTypes<ReturnType<typeof makeGroupItemProps>>
 
 // Composables
-export function useGroupItem (
+export function useGroupItem(
   props: GroupItemProps,
   injectKey: InjectionKey<GroupInstance>,
   required?: true,
 ): GroupItemInstance
-export function useGroupItem (
+export function useGroupItem(
   props: GroupItemProps,
   injectKey: InjectionKey<GroupInstance>,
   required: false,
 ): GroupItemInstance | null
-export function useGroupItem (
+export function useGroupItem(
   props: GroupItemProps,
   injectKey: InjectionKey<GroupInstance>,
-  required = true
+  required = true,
 ): GroupItemInstance | null {
   const vm = getCurrentInstance()
 
   if (!vm) {
     throw new Error(
-      '[VenoUi] useGroupItem composable must be used inside a component setup function'
+      '[VenoUi] useGroupItem composable must be used inside a component setup function',
     )
   }
 
@@ -181,9 +179,9 @@ export function useGroupItem (
   }
 }
 
-export function useGroup (
+export function useGroup(
   props: GroupProps,
-  injectKey: InjectionKey<GroupInstance>
+  injectKey: InjectionKey<GroupInstance>,
 ) {
   let isUnmounted = false
   const items = ref<GroupItem[]>([])
@@ -200,24 +198,24 @@ export function useGroup (
       const arr = getValues(items.value, v)
 
       return props.multiple ? arr : arr[0]
-    }
+    },
   )
 
   const groupVm = getCurrentInstance()
 
-  function register (item: GroupItem, vm: ComponentInternalInstance) {
+  function register(item: GroupItem, vm: ComponentInternalInstance) {
     // Is there a better way to fix this typing?
     const unwrapped = item as unknown as UnwrapRef<GroupItem>
     const index = findChildren(groupVm?.vnode)
       .slice(1) // First one is group component itself
-      // @ts-ignore
+      // @ts-expect-error
       .filter(cmp => !!cmp.provides[injectKey as any])
       .indexOf(vm)
     if (index > -1) items.value.splice(index, 0, unwrapped)
     else items.value.push(unwrapped)
   }
 
-  function unregister (id: string) {
+  function unregister(id: string) {
     if (isUnmounted) return
 
     selected.value = selected.value.filter(v => v !== id)
@@ -229,7 +227,7 @@ export function useGroup (
   }
 
   // If mandatory and nothing is selected, then select first non-disabled item
-  function forceMandatoryValue () {
+  function forceMandatoryValue() {
     const item = items.value.find(item => !item.disabled)
     if (item && props.mandatory === 'force' && !selected.value.length) {
       selected.value = [item.id]
@@ -244,7 +242,7 @@ export function useGroup (
     isUnmounted = true
   })
 
-  function select (id: string, isSelected: boolean) {
+  function select(id: string, isSelected: boolean) {
     const item = items.value.find(item => item.id === id)
     if (isSelected && item?.disabled) return
 
@@ -256,17 +254,17 @@ export function useGroup (
       // mandatory, value already exists,
       // and it is the only value
       if (
-        props.mandatory &&
-        index > -1 &&
-        internalValue.length <= 1
+        props.mandatory
+        && index > -1
+        && internalValue.length <= 1
       ) return
 
       // We can't add value if it would
       // cause max limit to be exceeded
       if (
-        props.max != null &&
-        index < 0 &&
-        internalValue.length + 1 > props.max
+        props.max != null
+        && index < 0
+        && internalValue.length + 1 > props.max
       ) return
 
       if (index < 0 && isSelected) internalValue.push(id)
@@ -280,7 +278,7 @@ export function useGroup (
     }
   }
 
-  function step (offset: number) {
+  function step(offset: number) {
     // getting an offset from selected value obviously won't work with multiple values
     if (props.multiple) consoleWarn('This method is not supported when using "multiple" prop')
 
@@ -324,7 +322,7 @@ export function useGroup (
   return state
 }
 
-function getIds (items: UnwrapRef<GroupItem[]>, modelValue: any[]) {
+function getIds(items: UnwrapRef<GroupItem[]>, modelValue: any[]) {
   const ids = []
   for (const item of items) {
     if (item.value != null) {
@@ -339,7 +337,7 @@ function getIds (items: UnwrapRef<GroupItem[]>, modelValue: any[]) {
   return ids
 }
 
-function getValues (items: UnwrapRef<GroupItem[]>, ids: any[]) {
+function getValues(items: UnwrapRef<GroupItem[]>, ids: any[]) {
   const values = []
 
   for (const item of items) {

@@ -21,7 +21,7 @@ export const Main = defineComponent({
     ...makeColorProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { mainStyles } = useLayoutMain()
     const { colorClasses, colorStyles } = useColor(computed(() => {
       const { textColor, color } = unref(props)

@@ -2,15 +2,15 @@
 import './styles/input-control.scss'
 
 // Utils
-import { ref, computed, watchEffect } from 'vue'
-import { genericComponent, propsFactory, pick, useRender } from '../../utils'
+import { computed, ref, watchEffect } from 'vue'
+import { genericComponent, pick, propsFactory, useRender } from '../../utils'
 
 // Components
 import { Icon } from '../icon'
 import { Button } from '../button'
 
 // Composables
-import { makeVariantProps, useVariant, genOverlays } from '../../composables/variant'
+import { genOverlays, makeVariantProps, useVariant } from '../../composables/variant'
 import { makeShapeProps, useShape } from '../../composables/shape'
 import { useProxiedModel } from '../../composables/proxied-model'
 
@@ -18,8 +18,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import type { Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export interface InputControlSlot
-{
+export interface InputControlSlot {
   isActive: boolean
   isDirty: boolean
   isFocused: boolean
@@ -32,12 +31,12 @@ export interface InputControlSlot
 export type InputControlDefaultSlot = InputControlSlot & { props: Record<string, unknown> }
 
 export type InputControlSlots = MakeSlots<{
-  'prepend-inner': [InputControlSlot],
-  prefix: [InputControlSlot],
-  default: [InputControlDefaultSlot],
-  suffix: [InputControlSlot],
-  'append-inner': [InputControlSlot],
-  clear: [InputControlSlot],
+  'prepend-inner': [InputControlSlot]
+  prefix: [InputControlSlot]
+  default: [InputControlDefaultSlot]
+  suffix: [InputControlSlot]
+  'append-inner': [InputControlSlot]
+  clear: [InputControlSlot]
 }>
 
 export const makeInputControlProps = propsFactory({
@@ -96,11 +95,11 @@ export const makeInputControlProps = propsFactory({
   } as const),
 }, 'input-control')
 
-export function filterInputControlProps (attrs: Record<string, unknown>) {
+export function filterInputControlProps(attrs: Record<string, unknown>) {
   return pick(attrs, Object.keys(InputControl.props))
 }
 
-export function filterInputControlSlots (slots: Record<string, unknown>) {
+export function filterInputControlSlots(slots: Record<string, unknown>) {
   return pick(slots, InputControlSlots)
 }
 
@@ -121,7 +120,7 @@ export const InputControlSlots = [
   'default',
   'suffix',
   'append-inner',
-  'clear'
+  'clear',
 ]
 
 export const InputControl = genericComponent<new () => {
@@ -132,12 +131,12 @@ export const InputControl = genericComponent<new () => {
   props: {
     active: Boolean,
     dirty: Boolean,
-    ...makeInputControlProps()
+    ...makeInputControlProps(),
   },
 
   emits: InputControlEmits,
 
-  setup (props, { slots, emit }) {
+  setup(props, { slots, emit }) {
     const isActive = useProxiedModel(props, 'active')
     const isFocused = ref(false)
     const controlRef = ref<HTMLElement>()
@@ -147,11 +146,11 @@ export const InputControl = genericComponent<new () => {
 
     watchEffect(() => isActive.value = isFocused.value || props.dirty)
 
-    function focus () {
+    function focus() {
       isFocused.value = true
     }
 
-    function blur () {
+    function blur() {
       isFocused.value = false
     }
 
@@ -165,7 +164,7 @@ export const InputControl = genericComponent<new () => {
       blur,
     }))
 
-    function onClick (e: MouseEvent) {
+    function onClick(e: MouseEvent) {
       if (e.target !== document.activeElement) {
         e.preventDefault()
       }
@@ -234,7 +233,7 @@ export const InputControl = genericComponent<new () => {
               ...slotProps.value,
               props: {
                 class: 've-native-control',
-              }
+              },
             }) }
 
             { hasSuffix && (
@@ -291,7 +290,7 @@ export const InputControl = genericComponent<new () => {
       inputRef,
       controlRef,
     }
-  }
+  },
 })
 
 export type InputControl = InstanceType<typeof InputControl>

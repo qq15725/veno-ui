@@ -1,5 +1,4 @@
-export interface BaseColors
-{
+export interface BaseColors {
   background: string
   surface: string
   primary: string
@@ -10,8 +9,7 @@ export interface BaseColors
   info: string
 }
 
-export interface BaseOnColors
-{
+export interface BaseOnColors {
   'on-background': string
   'on-surface': string
   'on-primary': string
@@ -22,7 +20,6 @@ export interface BaseOnColors
   'on-info': string
 }
 
-export interface Colors extends BaseColors
-{
+export interface Colors extends BaseColors {
   [key: string]: string
 }

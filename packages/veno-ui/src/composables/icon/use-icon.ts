@@ -4,10 +4,10 @@ import { consoleError } from '../../utils'
 
 // Composables
 import { useIcons } from '../icons'
-import { makeIconProps } from './make-icon-props'
+import { IconComponent } from '../../components/icon/icon-component'
+import type { makeIconProps } from './make-icon-props'
 
 // Components
-import { IconComponent } from '../../components/icon/icon-component'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
@@ -26,12 +26,12 @@ import type { MaybeRef } from '../../utils'
  * @param props
  */
 export const useIcon = (
-  props: MaybeRef<ExtractPropTypes<ReturnType<typeof makeIconProps>>>
+  props: MaybeRef<ExtractPropTypes<ReturnType<typeof makeIconProps>>>,
 ) => {
   const icons = useIcons()
 
-  const iconData = computed<{ component: IconSetComponent, icon: IconValue } | undefined>(() => {
-    let { icon: value } = unref(props)
+  const iconData = computed<{ component: IconSetComponent; icon: IconValue } | undefined>(() => {
+    const { icon: value } = unref(props)
 
     if (!value) {
       consoleError('Icon value is undefined or null')

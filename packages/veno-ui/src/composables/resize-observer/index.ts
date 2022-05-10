@@ -5,15 +5,14 @@ import { SUPPORTS_RESIZE_OBSERVER } from '../../utils'
 // Types
 import type { DeepReadonly, Ref } from 'vue'
 
-interface ResizeState
-{
+interface ResizeState {
   resizeRef: Ref<Element | undefined>
   contentRect: DeepReadonly<Ref<DOMRectReadOnly | undefined>>
   borderBoxSize: DeepReadonly<Ref<ResizeObserverSize | undefined>>
   contentBoxSize: DeepReadonly<Ref<ResizeObserverSize | undefined>>
 }
 
-export function useResizeObserver (callback?: ResizeObserverCallback): ResizeState {
+export function useResizeObserver(callback?: ResizeObserverCallback): ResizeState {
   const resizeRef = ref<Element>()
   const contentRect = ref<DOMRectReadOnly>()
   const contentBoxSize = ref<ResizeObserverSize>()

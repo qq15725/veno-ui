@@ -1,10 +1,10 @@
-export function bias (val: number) {
+export function bias(val: number) {
   const c = 0.501
   const x = Math.abs(val)
   return Math.sign(val) * (x / ((1 / c - 2) * (1 - x) + 1))
 }
 
-export function calculateUpdatedOffset ({
+export function calculateUpdatedOffset({
   selectedElement,
   containerSize,
   contentSize,
@@ -40,7 +40,7 @@ export function calculateUpdatedOffset ({
   return isRtl ? -currentScrollOffset : currentScrollOffset
 }
 
-export function calculateCenteredOffset ({
+export function calculateCenteredOffset({
   selectedElement,
   containerSize,
   contentSize,

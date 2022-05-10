@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory, getCurrentInstanceName } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
@@ -12,9 +12,9 @@ export const makeBorderProps = propsFactory({
   border: [Boolean, Number, String],
 }, 'border')
 
-export function useBorder (
+export function useBorder(
   props: MaybeRef<BorderProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const borderClasses = computed(() => {
     const { border } = unref(props)

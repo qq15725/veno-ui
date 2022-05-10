@@ -1,6 +1,6 @@
 // Utils
-import { ref, computed, watch, toHandlers } from 'vue'
-import { getCurrentInstanceName, propsFactory, SUPPORTS_TOUCH } from '../../utils'
+import { computed, ref, toHandlers, watch } from 'vue'
+import { SUPPORTS_TOUCH, getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Composables
 import { usePointer } from '../pointer'
@@ -16,7 +16,7 @@ export const SUPPORTED_DIRECTIONS = [
   'bottom-left',
   'top-right',
   'right',
-  'bottom-right'
+  'bottom-right',
 ] as const
 
 export const makeDraggableResizableProps = propsFactory({
@@ -33,7 +33,7 @@ export const makeDraggableResizableProps = propsFactory({
    */
   resizableAnchors: {
     type: Array as PropType<typeof SUPPORTED_DIRECTIONS[number][]>,
-    default: SUPPORTED_DIRECTIONS
+    default: SUPPORTED_DIRECTIONS,
   },
 
   /**
@@ -42,9 +42,9 @@ export const makeDraggableResizableProps = propsFactory({
   showResizableAnchor: Boolean,
 }, 'draggable-resizable')
 
-export function useDraggableResizable (
+export function useDraggableResizable(
   props: ExtractPropTypes<ReturnType<typeof makeDraggableResizableProps>>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const active = ref<typeof props['resizableAnchors'][number]>()
   const isResizing = ref(false)
@@ -61,7 +61,7 @@ export function useDraggableResizable (
     isPointerDown,
     pointerDownEl,
     pointerEvents,
-    pointerMovement
+    pointerMovement,
   } = usePointer({
     pointerDownPreventDefault: SUPPORTS_TOUCH,
     pointerDownStopPropagation: true,
@@ -88,17 +88,17 @@ export function useDraggableResizable (
 
     const value = { ...current.value }
 
-    if (active.value.indexOf('left') > -1) {
+    if (active.value.includes('left')) {
       value.left = previous.value.left + val.left
       value.width = previous.value.width - val.left
-    } else if (active.value.indexOf('right') > -1) {
+    } else if (active.value.includes('right')) {
       value.width = previous.value.width + val.left
     }
 
-    if (active.value.indexOf('top') > -1) {
+    if (active.value.includes('top')) {
       value.top = previous.value.top + val.top
       value.height = previous.value.height - val.top
-    } else if (active.value.indexOf('bottom') > -1) {
+    } else if (active.value.includes('bottom')) {
       value.height = previous.value.height + val.top
     }
 
@@ -122,11 +122,11 @@ export function useDraggableResizable (
               {
                 [`${ name }__resizable-anchor--control`]: props.showResizableAnchor,
                 [`${ name }__resizable-anchor--hide`]: (isResizing.value || hide?.value) && anchor !== active.value,
-              }
+              },
             ] }
           />
         )
       })
-    }
+    },
   }
 }

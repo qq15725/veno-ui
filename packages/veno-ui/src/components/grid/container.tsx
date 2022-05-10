@@ -20,7 +20,7 @@ export const Container = defineComponent({
     ...makeTagProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => (
       <props.tag
         class={ [

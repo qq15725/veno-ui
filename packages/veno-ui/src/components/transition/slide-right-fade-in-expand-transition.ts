@@ -7,5 +7,5 @@ import { fadeInExpandTransitionGenerator } from './utils/expand-transition-gener
 
 export const SlideRightFadeInExpandTransition = createJavascriptTransition(
   've-slide-right-fade-in-expand-transition',
-  fadeInExpandTransitionGenerator()
+  fadeInExpandTransitionGenerator(),
 )

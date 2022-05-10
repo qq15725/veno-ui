@@ -1,8 +1,7 @@
 // Utils
 import { camelize } from 'vue'
 
-interface HTMLExpandElement extends HTMLElement
-{
+interface HTMLExpandElement extends HTMLElement {
   _parent?: (Node & ParentNode & HTMLElement) | null
   _initialStyle?: {
     transition: string
@@ -12,12 +11,12 @@ interface HTMLExpandElement extends HTMLElement
   }
 }
 
-export function expandTransitionGenerator (expandedParentClass = '', x = false) {
+export function expandTransitionGenerator(expandedParentClass = '', x = false) {
   const sizeProperty = x ? 'width' : 'height' as 'width' | 'height'
   const offsetProperty = camelize(`offset-${ sizeProperty }`) as 'offsetHeight' | 'offsetWidth'
 
   return {
-    onBeforeEnter (el: HTMLExpandElement) {
+    onBeforeEnter(el: HTMLExpandElement) {
       el._parent = el.parentNode as (Node & ParentNode & HTMLElement) | null
       el._initialStyle = {
         transition: el.style.transition,
@@ -26,7 +25,7 @@ export function expandTransitionGenerator (expandedParentClass = '', x = false) 
       }
     },
 
-    onEnter (el: HTMLExpandElement) {
+    onEnter(el: HTMLExpandElement) {
       const initialStyle = el._initialStyle!
 
       el.style.setProperty('transition', 'none', 'important')
@@ -52,7 +51,7 @@ export function expandTransitionGenerator (expandedParentClass = '', x = false) 
     onAfterEnter: resetStyles,
     onEnterCancelled: resetStyles,
 
-    onLeave (el: HTMLExpandElement) {
+    onLeave(el: HTMLExpandElement) {
       el._initialStyle = {
         transition: '',
         overflow: el.style.overflow,
@@ -70,14 +69,14 @@ export function expandTransitionGenerator (expandedParentClass = '', x = false) 
     onLeaveCancelled: onAfterLeave,
   }
 
-  function onAfterLeave (el: HTMLExpandElement) {
+  function onAfterLeave(el: HTMLExpandElement) {
     if (expandedParentClass && el._parent) {
       el._parent.classList.remove(expandedParentClass)
     }
     resetStyles(el)
   }
 
-  function resetStyles (el: HTMLExpandElement) {
+  function resetStyles(el: HTMLExpandElement) {
     const size = el._initialStyle![sizeProperty]
     el.style.overflow = el._initialStyle!.overflow
     if (size != null) el.style[sizeProperty] = size
@@ -85,7 +84,7 @@ export function expandTransitionGenerator (expandedParentClass = '', x = false) 
   }
 }
 
-export function fadeInExpandTransitionGenerator (x = false, reverse = false) {
+export function fadeInExpandTransitionGenerator(x = false, reverse = false) {
   return {
     onBeforeLeave: (el: HTMLElement) => {
       if (x) {
@@ -142,6 +141,6 @@ export function fadeInExpandTransitionGenerator (x = false, reverse = false) {
           el.style.maxHeight = ''
         }
       }
-    }
+    },
   }
 }

@@ -14,7 +14,7 @@ export const demoPlugin: PluginSimple = md => {
     if (tokens[index].nesting === 1) {
       const endType = tokens[index].type.replace('open', 'close')
       let state: null | string = null
-      const subTokens: { state: string, token: Token }[] = []
+      const subTokens: { state: string; token: Token }[] = []
       while (tokens[++index].type !== endType) {
         const token = tokens[index]
         if (token.type === 'heading_open' && token.level === 1) {
@@ -44,13 +44,13 @@ export const demoPlugin: PluginSimple = md => {
         template: subTokens.filter(v => v.state === 'template').map(v => {
           return `<template>\n${ v.token.content
             .split('\n')
-            .map((line) => (line.length ? '  ' + line : line))
+            .map((line) => (line.length ? `  ${ line }` : line))
             .join('\n') }</template>`
         }).join(''),
         script: subTokens.filter(v => v.state === 'script').map(v => {
           return `\n\n<script>\n${ v.token.content
             .split('\n')
-            .map((line) => (line.length ? '  ' + line : line))
+            .map((line) => (line.length ? `  ${ line }` : line))
             .join('\n') }</script>`
         }).join(''),
       }
@@ -63,7 +63,7 @@ export const demoPlugin: PluginSimple = md => {
         prepend: self.render(
           subTokens.filter(v => v.state === 'prepend').map(v => v.token),
           options,
-          env
+          env,
         ),
         default: self.render(
           subTokens.filter(v => v.state === 'template').map(v => {
@@ -72,41 +72,41 @@ export const demoPlugin: PluginSimple = md => {
             return htmlToken
           }),
           options,
-          env
+          env,
         ),
         append: self.render(
           subTokens.filter(v => v.state === 'append').map(v => v.token),
           options,
-          env
+          env,
         ),
       }
 
-      function genTitleProp () {
+      function genTitleProp() {
         return props.title ? `title="${ props.title }"` : ''
       }
 
-      function genSlugProp () {
+      function genSlugProp() {
         return props.title ? `slug="${ slugify(props.title) }"` : ''
       }
 
-      function genFileProp () {
+      function genFileProp() {
         if (!md._context.path) return ''
         return `file="${
           md._context.path.replace(/.*?veno-ui(.*)/, (_: any, v: any) => v)
         }"`
       }
 
-      function genCodeProp () {
+      function genCodeProp() {
         return `code="${
           encodeURIComponent(
             [props.template, props.script]
               .filter(Boolean)
-              .join('')
+              .join(''),
           )
         }"`
       }
 
-      function genSlot (name: keyof typeof slots) {
+      function genSlot(name: keyof typeof slots) {
         return slots[name]
           ? `  <template #${ name }>\n${ slots[name].replace(/\n$/, '') }\n  </template>`
           : `  <!--${ name }-->`
@@ -118,11 +118,11 @@ ${ genSlot('default') }
 ${ genSlot('append') }
 `
     } else {
-      return `</demo>\n`
+      return '</demo>\n'
     }
   }
 
   md.use(container, name, {
-    render
+    render,
   })
 }

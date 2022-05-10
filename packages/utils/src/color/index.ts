@@ -7,31 +7,31 @@ import * as CIELAB from './transform-cielab'
 export type ColorInt = number
 export type XYZ = [number, number, number]
 export type LAB = [number, number, number]
-export type HSV = { h: number, s: number, v: number }
+export type HSV = { h: number; s: number; v: number }
 export type HSVA = HSV & { a: number }
-export type RGB = { r: number, g: number, b: number }
+export type RGB = { r: number; g: number; b: number }
 export type RGBA = RGB & { a: number }
-export type HSL = { h: number, s: number, l: number }
+export type HSL = { h: number; s: number; l: number }
 export type HSLA = HSL & { a: number }
 export type Hex = string
 export type Hexa = string
 export type Color = string | number
 
-export function isDarkColor (int: ColorInt): boolean {
+export function isDarkColor(int: ColorInt): boolean {
   const blackContrast = Math.abs(APCAcontrast(0x000000, int))
-  const whiteContrast = Math.abs(APCAcontrast(0xffffff, int))
+  const whiteContrast = Math.abs(APCAcontrast(0xFFFFFF, int))
   return whiteContrast > Math.min(blackContrast, 50)
 }
 
-export function colorToOnColorHex (color: Color): Hex {
+export function colorToOnColorHex(color: Color): Hex {
   return isDarkColor(colorToInt(color)) ? '#FFF' : '#000'
 }
 
-export function isCssColor (color?: string | null | false): boolean {
+export function isCssColor(color?: string | null | false): boolean {
   return !!color && /^(#|inherit|var\(--|(rgb|hsl)a?\()/.test(color)
 }
 
-export function colorToInt (color: Color): ColorInt {
+export function colorToInt(color: Color): ColorInt {
   let rgb
 
   if (typeof color === 'number') {
@@ -52,23 +52,23 @@ export function colorToInt (color: Color): ColorInt {
   if (rgb < 0) {
     console.warn(`Colors cannot be negative: '${ color }'`)
     rgb = 0
-  } else if (rgb > 0xffffff || isNaN(rgb)) {
+  } else if (rgb > 0xFFFFFF || isNaN(rgb)) {
     console.warn(`'${ color }' is not a valid rgb color`)
-    rgb = 0xffffff
+    rgb = 0xFFFFFF
   }
 
   return rgb
 }
 
-export function intToHex (color: ColorInt): string {
+export function intToHex(color: ColorInt): string {
   let hexColor: string = color.toString(16)
 
   if (hexColor.length < 6) hexColor = '0'.repeat(6 - hexColor.length) + hexColor
 
-  return '#' + hexColor
+  return `#${ hexColor }`
 }
 
-export function colorToHex (color: Color): string {
+export function colorToHex(color: Color): string {
   return intToHex(colorToInt(color))
 }
 
@@ -77,7 +77,7 @@ export function colorToHex (color: Color): string {
  *
  * @param hsva HSVA color as an array [0-360, 0-1, 0-1, 0-1]
  */
-export function HSVAtoRGBA (hsva: HSVA): RGBA {
+export function HSVAtoRGBA(hsva: HSVA): RGBA {
   const { h, s, v, a } = hsva
   const f = (n: number) => {
     const k = (n + (h / 60)) % 6
@@ -94,7 +94,7 @@ export function HSVAtoRGBA (hsva: HSVA): RGBA {
  *
  * @param rgba RGBA color as an array [0-255, 0-255, 0-255, 0-1]
  */
-export function RGBAtoHSVA (rgba: RGBA): HSVA {
+export function RGBAtoHSVA(rgba: RGBA): HSVA {
   if (!rgba) return { h: 0, s: 1, v: 1, a: 1 }
 
   const r = rgba.r / 255
@@ -123,7 +123,7 @@ export function RGBAtoHSVA (rgba: RGBA): HSVA {
   return { h: hsv[0], s: hsv[1], v: hsv[2], a: rgba.a }
 }
 
-export function HSVAtoHSLA (hsva: HSVA): HSLA {
+export function HSVAtoHSLA(hsva: HSVA): HSLA {
   const { h, s, v, a } = hsva
 
   const l = v - (v * s / 2)
@@ -133,7 +133,7 @@ export function HSVAtoHSLA (hsva: HSVA): HSLA {
   return { h, s: sprime, l, a }
 }
 
-export function HSLAtoHSVA (hsl: HSLA): HSVA {
+export function HSLAtoHSVA(hsl: HSLA): HSVA {
   const { h, s, l, a } = hsl
 
   const v = l + s * Math.min(l, 1 - l)
@@ -143,15 +143,15 @@ export function HSLAtoHSVA (hsl: HSLA): HSVA {
   return { h, s: sprime, v, a }
 }
 
-export function RGBAtoCSS (rgba: RGBA): string {
+export function RGBAtoCSS(rgba: RGBA): string {
   return `rgba(${ rgba.r }, ${ rgba.g }, ${ rgba.b }, ${ rgba.a })`
 }
 
-export function RGBtoCSS (rgba: RGB): string {
+export function RGBtoCSS(rgba: RGB): string {
   return RGBAtoCSS({ ...rgba, a: 1 })
 }
 
-export function RGBAtoHex (rgba: RGBA): Hex {
+export function RGBAtoHex(rgba: RGBA): Hex {
   const toHex = (v: number) => {
     const h = Math.round(v).toString(16)
     return ('00'.substr(0, 2 - h.length) + h).toUpperCase()
@@ -165,7 +165,7 @@ export function RGBAtoHex (rgba: RGBA): Hex {
   ].join('') }`
 }
 
-export function RGBtoHex (rgba: RGBA): Hex {
+export function RGBtoHex(rgba: RGBA): Hex {
   const toHex = (v: number) => {
     const h = Math.round(v).toString(16)
     return ('00'.substr(0, 2 - h.length) + h).toUpperCase()
@@ -178,7 +178,7 @@ export function RGBtoHex (rgba: RGBA): Hex {
   ].join('') }`
 }
 
-export function HexToRGBA (hex: Hex): RGBA {
+export function HexToRGBA(hex: Hex): RGBA {
   const rgba = chunk(hex.slice(1), 2).map((c: string) => parseInt(c, 16))
 
   return {
@@ -189,16 +189,16 @@ export function HexToRGBA (hex: Hex): RGBA {
   }
 }
 
-export function HexToHSVA (hex: Hex): HSVA {
+export function HexToHSVA(hex: Hex): HSVA {
   const rgb = HexToRGBA(hex)
   return RGBAtoHSVA(rgb)
 }
 
-export function HSVAtoHex (hsva: HSVA): Hex {
+export function HSVAtoHex(hsva: HSVA): Hex {
   return RGBAtoHex(HSVAtoRGBA(hsva))
 }
 
-export function parseHex (hex: string): Hex {
+export function parseHex(hex: string): Hex {
   if (hex.startsWith('#')) {
     hex = hex.slice(1)
   }
@@ -218,7 +218,7 @@ export function parseHex (hex: string): Hex {
   return `#${ hex }`.toUpperCase().substr(0, 9)
 }
 
-export function RGBtoInt (rgba: RGBA): ColorInt {
+export function RGBtoInt(rgba: RGBA): ColorInt {
   return (rgba.r << 16) + (rgba.g << 8) + rgba.b
 }
 
@@ -228,7 +228,7 @@ export function colorIntToRGBString(int: ColorInt) {
   return `${ rgb.r },${ rgb.g },${ rgb.b }`
 }
 
-export function colorIntToRGB (int: ColorInt) {
+export function colorIntToRGB(int: ColorInt) {
   return {
     r: (int & 0xFF0000) >> 16,
     g: (int & 0xFF00) >> 8,
@@ -236,17 +236,17 @@ export function colorIntToRGB (int: ColorInt) {
   }
 }
 
-export function colorToRGB (color: string) {
+export function colorToRGB(color: string) {
   return colorIntToRGB(colorToInt(color))
 }
 
-export function lighten (value: ColorInt, amount: number): ColorInt {
+export function lighten(value: ColorInt, amount: number): ColorInt {
   const lab = CIELAB.fromXYZ(sRGB.toXYZ(value))
   lab[0] = lab[0] + amount * 10
   return sRGB.fromXYZ(CIELAB.toXYZ(lab))
 }
 
-export function darken (value: ColorInt, amount: number): ColorInt {
+export function darken(value: ColorInt, amount: number): ColorInt {
   return lighten(value, -amount)
 }
 
@@ -254,7 +254,7 @@ export function darken (value: ColorInt, amount: number): ColorInt {
  * Calculate the relative luminance of a given color
  * @see https://www.w3.org/TR/WCAG20/#relativeluminancedef
  */
-export function getLuma (color: Color) {
+export function getLuma(color: Color) {
   const rgb = colorToInt(color)
 
   return sRGB.toXYZ(rgb)[1]
@@ -264,7 +264,7 @@ export function getLuma (color: Color) {
  * Returns the contrast ratio (1-21) between two colors.
  * @see https://www.w3.org/TR/WCAG20/#contrast-ratiodef
  */
-export function getContrast (first: Color, second: Color) {
+export function getContrast(first: Color, second: Color) {
   const l1 = getLuma(first)
   const l2 = getLuma(second)
 

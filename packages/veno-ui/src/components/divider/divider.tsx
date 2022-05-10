@@ -8,11 +8,11 @@ import { convertToUnit, genericComponent } from '../../utils'
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
-// Constants
-const VeDividerTextAligns = ['left', 'center', 'right'] as const
-
 // Types
 import type { PropType } from 'vue'
+
+// Constants
+const VeDividerTextAligns = ['left', 'center', 'right'] as const
 
 type VeDividerStyles = Partial<Record<'maxHeight' | 'maxWidth', string>>
 type VeDividerTextAlign = typeof VeDividerTextAligns[number]
@@ -36,7 +36,7 @@ export const Divider = genericComponent()({
     } as const),
   },
 
-  setup (props, { attrs, slots }) {
+  setup(props, { attrs, slots }) {
     const dividerStyles = computed(() => {
       const styles: VeDividerStyles = {}
       if (props.length) {
@@ -74,18 +74,18 @@ export const Divider = genericComponent()({
           v-slots={ {
             default: hasDefaultSlot
               ? () => [
-                (
+                  (
                   <>
                     <div class="ve-divider__line" />
                     <div class="ve-divider__wrap">{ slots.default?.() }</div>
                     <div class="ve-divider__line" />
                   </>
-                )
-              ]
-              : undefined
+                  ),
+                ]
+              : undefined,
           } }
         />
       )
     }
-  }
+  },
 })

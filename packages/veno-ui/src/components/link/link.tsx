@@ -26,7 +26,7 @@ export const Link = defineComponent({
     appendIcon: [Boolean, String, Object],
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       return (
         <Button
@@ -35,7 +35,7 @@ export const Link = defineComponent({
             {
               've-link--underline': props.underline === true,
               've-link--underline-hover': props.underline === 'hover',
-            }
+            },
           ] }
           variant="text"
           ripple={ false }
@@ -44,26 +44,26 @@ export const Link = defineComponent({
             props.prependIcon === true
               ? props.linkIcon
               : (
-                typeof props.prependIcon === 'boolean'
-                  ? undefined
-                  : props.prependIcon
-              )
+                  typeof props.prependIcon === 'boolean'
+                    ? undefined
+                    : props.prependIcon
+                )
           }
           append-icon={
             props.appendIcon === true
               ? props.linkIcon
               : (
-                typeof props.appendIcon === 'boolean'
-                  ? undefined
-                  : props.appendIcon
-              )
+                  typeof props.appendIcon === 'boolean'
+                    ? undefined
+                    : props.appendIcon
+                )
           }
         >
           { slots }
         </Button>
       )
     }
-  }
+  },
 })
 
 export type Link = InstanceType<typeof Link>

@@ -18,7 +18,7 @@ export const DefaultsProvider = defineComponent({
     scoped: Boolean,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { defaults, reset, root, scoped } = toRefs(props)
 
     provideDefaults(defaults, {

@@ -2,13 +2,12 @@
 import './styles/device.scss'
 
 // Utils
-import { defineComponent } from '../../utils'
+import { convertToUnit, defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
 import { makeVariantProps, useVariant } from '../../composables/variant'
 import { makeDeviceProps, useDevice } from '../../composables/device'
-import { convertToUnit } from '../../utils'
 
 // Components
 import { DeviceStatusBar } from './device-status-bar'
@@ -31,7 +30,7 @@ export const Device = defineComponent({
     ...makeVariantProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { colorClasses, colorStyles, variantClasses } = useVariant(props)
     const { deviceModel, deviceStyles } = useDevice(props)
 
@@ -90,7 +89,7 @@ export const Device = defineComponent({
         </props.tag>
       )
     }
-  }
+  },
 })
 
 export type Device = InstanceType<typeof Device>

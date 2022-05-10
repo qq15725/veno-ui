@@ -3,7 +3,7 @@ import './styles/toolbar.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent, convertToUnit, propsFactory, pick } from '../../utils'
+import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -23,7 +23,7 @@ export const makeToolbarProps = propsFactory({
   } as const),
 }, 'toolbar')
 
-export function filterToolbarProps (attrs: Record<string, any>) {
+export function filterToolbarProps(attrs: Record<string, any>) {
   return pick(attrs, Object.keys(Toolbar.props) as any)
 }
 
@@ -32,10 +32,10 @@ export const Toolbar = defineComponent({
 
   props: makeToolbarProps(),
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(computed(() => ({
       ...props,
-      height: undefined
+      height: undefined,
     })))
 
     provideDefaults({

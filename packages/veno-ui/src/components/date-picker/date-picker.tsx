@@ -3,7 +3,7 @@ import './styles/date-picker.scss'
 
 // Utils
 import { computed, ref, watch } from 'vue'
-import { genericComponent, getUid, wrapInArray, keyValues } from '../../utils'
+import { genericComponent, getUid, keyValues, wrapInArray } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -77,7 +77,7 @@ export const DatePicker = genericComponent<new () => {
     'change': (val: any) => true,
   },
 
-  setup (props, { slots, emit }) {
+  setup(props, { slots, emit }) {
     const activator = ref()
     const inputRef = ref()
     const isActiveMenu = ref(false)
@@ -85,7 +85,7 @@ export const DatePicker = genericComponent<new () => {
     const model = useProxiedModel(
       props, 'modelValue', [],
       v => wrapInArray(v),
-      (v: any) => props.range ? v : v[0]
+      (v: any) => props.range ? v : v[0],
     )
     const panelProps = computed(() => {
       const panelProps = { ...props.panelProps }
@@ -99,14 +99,14 @@ export const DatePicker = genericComponent<new () => {
       activator.value = val.$el.querySelector('.ve-input-control')
     })
 
-    function onClear (e: MouseEvent) {
+    function onClear(e: MouseEvent) {
       model.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true
       }
     }
 
-    function onKeydown ({ key }: KeyboardEvent) {
+    function onKeydown({ key }: KeyboardEvent) {
       if ([keyValues.enter, keyValues.space].includes(key) && !isActiveMenu.value) {
         isActiveMenu.value = true
       }
@@ -116,11 +116,11 @@ export const DatePicker = genericComponent<new () => {
       }
     }
 
-    function blur () {
+    function blur() {
       inputRef.value?.blur()
     }
 
-    function onChange () {
+    function onChange() {
       emit('change', props.range ? model.value : model.value[0])
     }
 
@@ -132,7 +132,7 @@ export const DatePicker = genericComponent<new () => {
             've-date-picker',
             {
               've-date-picker--active-menu': isActiveMenu.value,
-            }
+            },
           ] }
           id={ id.value }
           modelValue={ model.value.join(' ~ ') || undefined }
@@ -190,12 +190,12 @@ export const DatePicker = genericComponent<new () => {
                   </Menu>
                 ) }
               </>
-            )
+            ),
           } }
         </Input>
       )
     }
-  }
+  },
 })
 
 export type DatePicker = InstanceType<typeof DatePicker>

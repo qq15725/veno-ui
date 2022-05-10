@@ -2,11 +2,11 @@
 import './styles/list-subheader.scss'
 
 // Composables
+import { toRef } from 'vue'
 import { makeTagProps } from '../../composables/tag'
 import { useTextColor } from '../../composables/color'
 
 // Utils
-import { toRef } from 'vue'
 import { defineComponent } from '../../utils'
 
 export const ListSubheader = defineComponent({
@@ -22,7 +22,7 @@ export const ListSubheader = defineComponent({
     ...makeTagProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
 
     return () => (

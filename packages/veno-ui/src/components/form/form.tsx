@@ -2,7 +2,7 @@
 import './styles/form.scss'
 
 // Utils
-import { toRef, computed } from 'vue'
+import { computed, toRef } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
@@ -68,14 +68,14 @@ export const Form = defineComponent({
   },
 
   emits: {
-    'update:valid': (_: boolean | null) => true,
-    'update:modelValue': (_: Record<string, any>) => true,
-    resetValidation: () => true,
-    reset: (_: Event) => true,
-    submit: (_: Record<string, any>, __: Event) => true,
+    'update:valid': (_valid: boolean | null) => true,
+    'update:modelValue': (_modelValue: Record<string, any>) => true,
+    'resetValidation': () => true,
+    'reset': (_event: Event) => true,
+    'submit': (_value: Record<string, any>, _event: Event) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const form = provideForm(props)
 
     const items = computed(() => {
@@ -122,7 +122,7 @@ export const Form = defineComponent({
             {
               [`ve-form--${ props.direction }`]: !!props.direction,
               've-form--inline': props.inline,
-            }
+            },
           ] }
           novalidate
           onReset={ form.reset }
@@ -136,7 +136,7 @@ export const Form = defineComponent({
     })
 
     return form
-  }
+  },
 })
 
 export type Form = InstanceType<typeof Form>

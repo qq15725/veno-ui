@@ -1,17 +1,17 @@
 // Utils
 import { ref } from 'vue'
+import { Transition } from 'vue'
 import {
   acceleratedEasing,
   deceleratedEasing,
   defineComponent,
-  nullifyTransforms
+  nullifyTransforms,
 } from '../../utils'
 
 // Composables
 import { useSharedClick } from '../../composables/shared-click'
 
 // Components
-import { Transition } from 'vue'
 
 // Types
 import type { PropType } from 'vue'
@@ -23,7 +23,7 @@ export const DialogTransition = defineComponent({
     target: Object as PropType<HTMLElement>,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { clickedEl } = useSharedClick()
     const targetEl = ref<HTMLElement>()
 
@@ -36,10 +36,10 @@ export const DialogTransition = defineComponent({
     }
 
     const functions = {
-      onBeforeEnter (el: Element) {
+      onBeforeEnter(el: Element) {
         (el as HTMLElement).style.pointerEvents = 'none'
       },
-      async onEnter (el: Element, done: () => void) {
+      async onEnter(el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve))
         targetEl.value = props.target ?? clickedEl.value;
         (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
@@ -52,14 +52,14 @@ export const DialogTransition = defineComponent({
           easing: deceleratedEasing,
         }).finished.then(() => done())
       },
-      onAfterEnter (el: Element) {
+      onAfterEnter(el: Element) {
         (el as HTMLElement).style.removeProperty('pointer-events');
         (el as HTMLElement).style.removeProperty('transform-origin')
       },
-      onBeforeLeave (el: Element) {
+      onBeforeLeave(el: Element) {
         (el as HTMLElement).style.pointerEvents = 'none'
       },
-      async onLeave (el: Element, done: () => void) {
+      async onLeave(el: Element, done: () => void) {
         await new Promise(resolve => requestAnimationFrame(resolve));
         (el as HTMLElement).style.transformOrigin = getTransformOrigin(el)
 
@@ -71,7 +71,7 @@ export const DialogTransition = defineComponent({
           easing: acceleratedEasing,
         }).finished.then(() => done())
       },
-      onAfterLeave (el: Element) {
+      onAfterLeave(el: Element) {
         (el as HTMLElement).style.removeProperty('pointer-events');
         (el as HTMLElement).style.removeProperty('transform-origin')
       },
@@ -90,7 +90,7 @@ export const DialogTransition = defineComponent({
   },
 })
 
-function getDimensions (target: HTMLElement, el: HTMLElement) {
+function getDimensions(target: HTMLElement, el: HTMLElement) {
   const targetBox = target.getBoundingClientRect()
   const elBox = nullifyTransforms(el)
   const [anchorSide, anchorOffset] = getComputedStyle(el)

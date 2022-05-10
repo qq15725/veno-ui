@@ -2,7 +2,6 @@
 import './styles/drawer.scss'
 
 // Types
-import type { Ref } from 'vue'
 // Utils
 import { computed, onBeforeMount, ref, toRef, watch } from 'vue'
 import { defineComponent } from '../../utils'
@@ -17,11 +16,12 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { useRouter } from '../../composables/router'
 import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps, provideTheme } from '../../composables/theme'
-import { useTouch } from './touch'
 
 // Components
 import { Button } from '../button'
 import { Scrim } from '../scrim'
+import { useTouch } from './touch'
+import type { Ref } from 'vue'
 
 export const Drawer = defineComponent({
   name: 'VeDrawer',
@@ -102,12 +102,12 @@ export const Drawer = defineComponent({
     'update:modelValue': (val: boolean) => true,
   },
 
-  setup (props, { attrs, slots }) {
+  setup(props, { attrs, slots }) {
     const { themeClasses } = provideTheme(props)
     const { borderClasses } = useBorder(props)
     const { scrollbarClasses } = useScrollbar(props)
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
-      toRef(props, 'color')
+      toRef(props, 'color'),
     )
     const { mobile, platform } = useDisplay()
     const router = useRouter()
@@ -150,8 +150,10 @@ export const Drawer = defineComponent({
     })
 
     const layoutSize = computed(() => {
-      const size = isTemporary.value ? 0
-        : props.rail && props.expandOnHover ? Number(props.railWidth)
+      const size = isTemporary.value
+        ? 0
+        : props.rail && props.expandOnHover
+          ? Number(props.railWidth)
           : width.value
 
       return isDragging.value ? size * dragProgress.value : size
@@ -165,7 +167,7 @@ export const Drawer = defineComponent({
 
     const {
       layoutItemStyles: _layoutItemStyles,
-      layoutItemScrimStyles
+      layoutItemScrimStyles,
     } = useLayoutItem(computed(() => ({
       name: props.name,
       position: props.position,
@@ -174,7 +176,7 @@ export const Drawer = defineComponent({
       layoutSize: layoutSize.value,
       priority: priority.value,
       active: isActive.value || isDragging.value,
-      disableTransition: isDragging.value
+      disableTransition: isDragging.value,
     })))
 
     const layoutItemStyles = computed(() => {
@@ -240,11 +242,13 @@ export const Drawer = defineComponent({
                 icon="$toggler"
                 top={
                   props.anchor === 'left' || props.anchor === 'right'
-                    ? 204 : undefined
+                    ? 204
+                    : undefined
                 }
                 left={
                   props.anchor === 'bottom' || props.anchor === 'top'
-                    ? 204 : props.anchor === 'right' ? 0 : undefined
+                    ? 204
+                    : props.anchor === 'right' ? 0 : undefined
                 }
                 right={ props.anchor === 'left' ? 0 : undefined }
                 bottom={ props.anchor === 'top' ? 0 : undefined }
@@ -263,17 +267,19 @@ export const Drawer = defineComponent({
             modelValue={ isTemporary.value && !!(isDragging.value || isActive.value) }
             style={ [
               layoutItemScrimStyles.value,
-              isDragging.value ? {
-                opacity: dragProgress.value * 0.2,
-                transition: 'none',
-              } : undefined
+              isDragging.value
+                ? {
+                    opacity: dragProgress.value * 0.2,
+                    transition: 'none',
+                  }
+                : undefined,
             ] }
             onClick={ () => isActive.value = false }
           />
         </>
       )
     }
-  }
+  },
 })
 
 export type Drawer = InstanceType<typeof Drawer>

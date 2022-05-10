@@ -1,6 +1,6 @@
 // Utils
 import { computed, reactive } from 'vue'
-import { propsFactory, wrapInArray, deepEqual, sortItems, getCurrentInstance } from '../../utils'
+import { deepEqual, getCurrentInstance, propsFactory, sortItems, wrapInArray } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'
@@ -16,8 +16,7 @@ export type DataIteratorSortFunction = <T extends any, K extends keyof T>(
   customSorters?: Record<K, (a: T[K], b: T[K]) => number>
 ) => T[]
 
-interface DataIteratorProps
-{
+interface DataIteratorProps {
   remote: boolean
   items: Record<string, any>[]
   mustSort: boolean
@@ -70,16 +69,15 @@ export const makeDataIteratorProps = propsFactory({
   },
   pagination: {
     type: Object as PropType<PaginationProps>,
-    defualt: () => ({ ...defaultPagination })
+    defualt: () => ({ ...defaultPagination }),
   },
 }, 'data-iterator')
 
-
-function toggle (
+function toggle(
   key: string,
   oldBy: string[], oldDesc: boolean[],
   page: number,
-  mustSort: boolean, multiSort: boolean
+  mustSort: boolean, multiSort: boolean,
 ) {
   let by = oldBy.slice()
   let desc = oldDesc.slice()
@@ -110,7 +108,7 @@ function toggle (
   return { by, desc, page }
 }
 
-export function useDataIterator (props: DataIteratorProps) {
+export function useDataIterator(props: DataIteratorProps) {
   const vm = getCurrentInstance('useDataIterator')
   const pagination = useProxiedModel(
     props, 'pagination', props.pagination,
@@ -124,32 +122,32 @@ export function useDataIterator (props: DataIteratorProps) {
           ? Number(pagination.total ?? props.items.length)
           : props.items.length,
       })
-    }
+    },
   )
   const sortBy = useProxiedModel(props, 'sortBy')
   const sortDesc = useProxiedModel(props, 'sortDesc')
 
-  function updateOptions () {
+  function updateOptions() {
     vm.emit('update:options', {
       pagination: pagination.value,
       sortBy: sortBy.value,
-      sortDesc: sortDesc.value
+      sortDesc: sortDesc.value,
     })
   }
 
-  function sortItems (items: any[]): any[] {
+  function sortItems(items: any[]): any[] {
     return props.customSort(
       items,
       wrapInArray(sortBy.value),
       wrapInArray(sortDesc.value),
-      props.locale
+      props.locale,
     )
   }
 
-  function paginateItems (items: any[]): any[] {
+  function paginateItems(items: any[]): any[] {
     return items.slice(
       (pagination.value.page - 1) * pagination.value.perPage,
-      Math.min(pagination.value.total, pagination.value.page * pagination.value.perPage)
+      Math.min(pagination.value.total, pagination.value.page * pagination.value.perPage),
     )
   }
 
@@ -161,7 +159,7 @@ export function useDataIterator (props: DataIteratorProps) {
     return items
   })
 
-  function sort (key: string | string[]) {
+  function sort(key: string | string[]) {
     if (Array.isArray(key)) {
       sortDesc.value = key.map(s => {
         const i = wrapInArray(sortBy.value).findIndex((k: string) => k === s)
@@ -176,7 +174,7 @@ export function useDataIterator (props: DataIteratorProps) {
         wrapInArray(sortDesc.value),
         pagination.value.page,
         props.mustSort,
-        props.multiSort
+        props.multiSort,
       )
       sortBy.value = res.by
       sortDesc.value = res.desc
@@ -191,6 +189,6 @@ export function useDataIterator (props: DataIteratorProps) {
     sortBy,
     sortDesc,
     sort,
-    updateOptions
+    updateOptions,
   }
 }

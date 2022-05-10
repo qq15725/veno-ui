@@ -10,9 +10,9 @@ export const makeDelayProps = propsFactory({
   openDelay: [Number, String],
 }, 'delay')
 
-export function useDelay (
+export function useDelay(
   props: ExtractPropTypes<ReturnType<typeof makeDelayProps>>,
-  cb?: (value: boolean) => void
+  cb?: (value: boolean) => void,
 ) {
   const delays: Partial<Record<keyof typeof props, number>> = {}
 

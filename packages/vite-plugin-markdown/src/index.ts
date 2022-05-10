@@ -1,31 +1,31 @@
 // Utils
+import { promises as fsp } from 'fs'
 import { createFilter } from '@veno-ui/utils'
 import { createMarkdownToVue } from './markdown'
 import { resolveOptions } from './options'
-import { promises as fsp } from 'fs'
 
 // Types
-import type { Options, MarkdownToVue } from './types'
+import type { MarkdownToVue, Options } from './types'
 import type { Plugin } from 'vite'
 
-export default function markdownPlugin (userOptions?: Options): Plugin {
+export default function markdownPlugin(userOptions?: Options): Plugin {
   const options = resolveOptions(userOptions)
-  const filter = createFilter(options.include, options.exclude,)
+  const filter = createFilter(options.include, options.exclude)
 
   let markdownToVue: MarkdownToVue
 
   return {
     name: '@veno-ui/vite-plugin-markdown',
-    async configResolved (config) {
+    async configResolved(config) {
       markdownToVue = createMarkdownToVue(config, options)
     },
-    async load (id) {
+    async load(id) {
       if (!filter(id)) return
       try {
         return markdownToVue(await fsp.readFile(id, 'utf8'), id)
       } catch (e: any) {
         this.error(e)
       }
-    }
+    },
   }
 }

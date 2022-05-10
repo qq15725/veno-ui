@@ -21,11 +21,11 @@ const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
   // custom elements with hyphens
   [/^<\w+\-/, />/, true],
   [
-    new RegExp('^</?(' + blockNames.join('|') + ')(?=(\\s|/?>|$))', 'i'),
+    new RegExp(`^</?(${ blockNames.join('|') })(?=(\\s|/?>|$))`, 'i'),
     /^$/,
-    true
+    true,
   ],
-  [new RegExp(HTML_OPEN_CLOSE_TAG_RE.source + '\\s*$'), /^$/, false]
+  [new RegExp(`${ HTML_OPEN_CLOSE_TAG_RE.source }\\s*$`), /^$/, false],
 ]
 
 export const componentPlugin: PluginSimple = md => {
@@ -46,7 +46,7 @@ const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
     return false
   }
 
-  if (state.src.charCodeAt(pos) !== 0x3c /* < */) {
+  if (state.src.charCodeAt(pos) !== 0x3C /* < */) {
     return false
   }
 

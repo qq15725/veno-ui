@@ -3,11 +3,10 @@ import { computed, inject, provide, ref, unref } from 'vue'
 import { deepMerge } from '../../utils'
 
 // Types
-import type { InjectionKey, Ref, ComputedRef } from 'vue'
+import type { ComputedRef, InjectionKey, Ref } from 'vue'
 import type { MaybeRef } from '../../utils'
 
-export interface DefaultsInstance
-{
+export interface DefaultsInstance {
   [key: string]: undefined | Record<string, unknown>
 
   global?: Record<string, unknown>
@@ -17,23 +16,23 @@ export type DefaultsOptions = Partial<DefaultsInstance>
 
 export const DefaultsKey: InjectionKey<Ref<DefaultsInstance>> = Symbol.for('veno-ui:defaults')
 
-export function createDefaults (options?: DefaultsInstance): Ref<DefaultsInstance> {
+export function createDefaults(options?: DefaultsInstance): Ref<DefaultsInstance> {
   return ref(options ?? {})
 }
 
-export function useDefaults () {
+export function useDefaults() {
   const defaults = inject(DefaultsKey)
   if (!defaults) throw new Error('[VenoUi] Could not find defaults instance')
   return defaults
 }
 
-export function provideDefaults (
+export function provideDefaults(
   defaults?: MaybeRef<DefaultsInstance | undefined>,
   options?: {
     reset?: MaybeRef<number | string | undefined>
     root?: MaybeRef<boolean | undefined>
     scoped?: MaybeRef<boolean | undefined>
-  }
+  },
 ) {
   const injectedDefaults = useDefaults()
   const providedDefaults = ref(defaults)
@@ -44,7 +43,7 @@ export function provideDefaults (
     const root = unref(options?.root)
 
     let properties = deepMerge(providedDefaults.value, {
-      prev: injectedDefaults.value
+      prev: injectedDefaults.value,
     })
 
     if (scoped) return properties

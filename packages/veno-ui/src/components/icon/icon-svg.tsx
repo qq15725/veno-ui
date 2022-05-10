@@ -15,13 +15,14 @@ export const IconSvg = defineComponent({
     ...makeIconSetProps(),
   },
 
-  setup (props) {
+  setup(props) {
     return () => {
       const isString = typeof props.icon === 'string'
 
       return (
         <props.tag>
-          { isString ? (
+          { isString
+            ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox={ props.viewBox }
@@ -30,12 +31,13 @@ export const IconSvg = defineComponent({
             >
               <path d={ props.icon as string } />
             </svg>
-          ) : (
+              )
+            : (
             <props.icon
               role="img"
               aria-hidden="true"
             />
-          ) }
+              ) }
         </props.tag>
       )
     }

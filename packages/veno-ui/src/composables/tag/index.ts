@@ -1,8 +1,8 @@
 // Utils
 import { propsFactory } from '../../utils'
+import type { ExtractPropTypes } from 'vue'
 
 // Types
-import { ExtractPropTypes } from 'vue'
 
 export type TagProps = ExtractPropTypes<ReturnType<typeof makeTagProps>>
 

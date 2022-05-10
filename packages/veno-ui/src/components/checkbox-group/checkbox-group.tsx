@@ -17,8 +17,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 // Types
 import type { PropType } from 'vue'
 
-export interface CheckboxGroupItemProps
-{
+export interface CheckboxGroupItemProps {
   value: any
 
   [key: string]: any
@@ -44,18 +43,18 @@ export const CheckboxGroup = defineComponent({
   },
 
   emits: {
-    'update:modelValue': (val: any) => true,
+    'update:modelValue': (_val: any) => true,
   },
 
-  setup (props, { emit, slots }) {
+  setup(props, { slots }) {
     const id = computed(() => props.id || `ve-checkbox-group-${ getUid() }`)
     const model = useProxiedModel(props, 'modelValue')
     const items = computed(() => {
-      return props.items?.map((
+      return props.items?.map(
         itemProps => typeof itemProps === 'string'
           ? { value: itemProps }
-          : itemProps
-      ))
+          : itemProps,
+      )
     })
 
     provideDefaults({
@@ -95,10 +94,10 @@ export const CheckboxGroup = defineComponent({
                   { slots.default?.() }
                 </SelectionGroupControl>
               )
-            }
+            },
           } }
         </FormControl>
       )
     }
-  }
+  },
 })

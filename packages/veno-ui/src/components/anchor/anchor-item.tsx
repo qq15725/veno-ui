@@ -30,7 +30,7 @@ export const AnchorItem = defineComponent({
     ...makeNamedAnchorItem(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { to, activate, isActive } = useNamedAnchorItem(props)
 
     return () => {
@@ -40,7 +40,7 @@ export const AnchorItem = defineComponent({
             've-anchor-item',
             {
               've-anchor-item--active': isActive.value,
-            }
+            },
           ] }
         >
           <Link
@@ -57,13 +57,13 @@ export const AnchorItem = defineComponent({
               ...slots,
               default: () => {
                 return slots.default?.() ?? props.text
-              }
+              },
             } }
           </Link>
         </li>
       )
     }
-  }
+  },
 })
 
 export type AnchorItem = InstanceType<typeof AnchorItem>
