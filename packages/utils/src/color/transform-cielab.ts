@@ -14,7 +14,7 @@ const cielabReverseTransform = (t: number): number => (
     : (3 * delta ** 2) * (t - 4 / 29)
 )
 
-export function fromXYZ (xyz: XYZ): LAB {
+export function fromXYZ(xyz: XYZ): LAB {
   const transform = cielabForwardTransform
   const transformedY = transform(xyz[1])
   return [
@@ -24,7 +24,7 @@ export function fromXYZ (xyz: XYZ): LAB {
   ]
 }
 
-export function toXYZ (lab: LAB): XYZ {
+export function toXYZ(lab: LAB): XYZ {
   const transform = cielabReverseTransform
   const Ln = (lab[0] + 16) / 116
   return [

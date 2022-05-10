@@ -1,4 +1,4 @@
-import Token from 'markdown-it/lib/token'
+import type Token from 'markdown-it/lib/token'
 import container from 'markdown-it-container'
 
 // Types
@@ -13,7 +13,7 @@ export const containerPlugin: PluginSimple = md => {
     // explicitly escape Vue syntax
     .use(container, 'v-pre', {
       render: (tokens: Token[], idx: number) =>
-        tokens[idx].nesting === 1 ? `<div v-pre>\n` : `</div>\n`
+        tokens[idx].nesting === 1 ? '<div v-pre>\n' : '</div>\n',
     })
 }
 
@@ -22,15 +22,15 @@ type ContainerArgs = [
   string,
   {
     render (tokens: Token[], idx: number): string
-  }
+  },
 ]
 
-function createAlert (type: string, defaultTitle: string): ContainerArgs {
+function createAlert(type: string, defaultTitle: string): ContainerArgs {
   return [
     container,
     type,
     {
-      render (tokens, idx) {
+      render(tokens, idx) {
         const token = tokens[idx]
         const info = token.info.trim().slice(type.length).trim()
         if (token.nesting === 1) {
@@ -39,9 +39,9 @@ function createAlert (type: string, defaultTitle: string): ContainerArgs {
           }
           return `<ve-alert type="${ type }" title="${ info || defaultTitle }" class="mb-3">\n`
         } else {
-          return `</ve-alert>\n`
+          return '</ve-alert>\n'
         }
-      }
-    }
+      },
+    },
   ]
 }

@@ -14,14 +14,14 @@ import emojiData from 'markdown-it-emoji/lib/data/full.json'
 const parseEmojis = (str: string) => {
   return String(str).replace(
     /:(.+?):/g,
-    (placeholder, key) => (emojiData as any)[key] || placeholder
+    (placeholder, key) => (emojiData as any)[key] || placeholder,
   )
 }
 
 const unescapeHtml = (html: string) =>
   String(html)
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
+    .replace(/&#39;/g, '\'')
     .replace(/&#x3A;/g, ':')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -56,7 +56,7 @@ export const parseHeader = compose(
   unescapeHtml,
   parseEmojis,
   removeMarkdownTokens,
-  trim
+  trim,
 )
 
 // Also clean the html that isn't wrapped by code.

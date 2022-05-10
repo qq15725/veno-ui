@@ -11,7 +11,7 @@ import type { EffectScope } from 'vue'
  *
  * @param composable 组合式函数
  */
-export function createSharedComposable<T> (composable: () => Exclude<T, undefined>) {
+export function createSharedComposable<T>(composable: () => Exclude<T, undefined>) {
   let subscribers = 0
   let scope: EffectScope | undefined
   let state: T | undefined

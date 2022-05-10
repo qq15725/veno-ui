@@ -2,8 +2,8 @@ import blockNames from 'markdown-it/lib/common/html_blocks'
 import { HTML_OPEN_CLOSE_TAG_RE } from 'markdown-it/lib/common/html_re'
 
 // Types
-import type { PluginSimple } from '../types'
 import type { RuleBlock } from 'markdown-it/lib/parser_block'
+import type { PluginSimple } from '../types'
 
 // Replacing the default htmlBlock rule to allow using custom components at
 // root level
@@ -21,11 +21,11 @@ const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
   // custom elements with hyphens
   [/^<\w+\-/, />/, true],
   [
-    new RegExp('^</?(' + blockNames.join('|') + ')(?=(\\s|/?>|$))', 'i'),
+    new RegExp(`^</?(${ blockNames.join('|') })(?=(\\s|/?>|$))`, 'i'),
     /^$/,
-    true
+    true,
   ],
-  [new RegExp(HTML_OPEN_CLOSE_TAG_RE.source + '\\s*$'), /^$/, false]
+  [new RegExp(`${ HTML_OPEN_CLOSE_TAG_RE.source }\\s*$`), /^$/, false],
 ]
 
 export const componentPlugin: PluginSimple = md => {
@@ -46,7 +46,7 @@ const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
     return false
   }
 
-  if (state.src.charCodeAt(pos) !== 0x3c /* < */) {
+  if (state.src.charCodeAt(pos) !== 0x3C /* < */) {
     return false
   }
 

@@ -40,15 +40,15 @@ const loConFactor = 12.82051282051282 // = 1/0.078,
 const loConOffset = 0.06 // The simple offset
 const loClip = 0.001 // Output clip (lint trap #2)
 
-export function APCAcontrast (text: number, background: number) {
+export function APCAcontrast(text: number, background: number) {
   // Linearize sRGB
-  const Rtxt = ((text >> 16 & 0xff) / 255) ** mainTRC
-  const Gtxt = ((text >> 8 & 0xff) / 255) ** mainTRC
-  const Btxt = ((text >> 0 & 0xff) / 255) ** mainTRC
+  const Rtxt = ((text >> 16 & 0xFF) / 255) ** mainTRC
+  const Gtxt = ((text >> 8 & 0xFF) / 255) ** mainTRC
+  const Btxt = ((text >> 0 & 0xFF) / 255) ** mainTRC
 
-  const Rbg = ((background >> 16 & 0xff) / 255) ** mainTRC
-  const Gbg = ((background >> 8 & 0xff) / 255) ** mainTRC
-  const Bbg = ((background >> 0 & 0xff) / 255) ** mainTRC
+  const Rbg = ((background >> 16 & 0xFF) / 255) ** mainTRC
+  const Gbg = ((background >> 8 & 0xFF) / 255) ** mainTRC
+  const Bbg = ((background >> 0 & 0xFF) / 255) ** mainTRC
 
   // Apply the standard coefficients and sum to Y
   let Ytxt = (Rtxt * Rco) + (Gtxt * Gco) + (Btxt * Bco)
@@ -76,20 +76,24 @@ export function APCAcontrast (text: number, background: number) {
     // and also a low clip for very low contrasts (lint trap #2)
     // much of this is for very low contrasts, less than 10
     // therefore for most reversing needs, only loConOffset is important
-    outputContrast =
-      (SAPC < loClip) ? 0.0
-      : (SAPC < loConThresh) ? SAPC - SAPC * loConFactor * loConOffset
-      : SAPC - loConOffset
+    outputContrast
+      = (SAPC < loClip)
+        ? 0.0
+        : (SAPC < loConThresh)
+            ? SAPC - SAPC * loConFactor * loConOffset
+            : SAPC - loConOffset
   } else {
     // For reverse polarity, light text on dark
     // WoB should always return negative value.
 
     const SAPC = ((Ybg ** revBG) - (Ytxt ** revTXT)) * scaleWoB
 
-    outputContrast =
-      (SAPC > -loClip) ? 0.0
-      : (SAPC > -loConThresh) ? SAPC - SAPC * loConFactor * loConOffset
-      : SAPC + loConOffset
+    outputContrast
+      = (SAPC > -loClip)
+        ? 0.0
+        : (SAPC > -loConThresh)
+            ? SAPC - SAPC * loConFactor * loConOffset
+            : SAPC + loConOffset
   }
 
   return outputContrast * 100

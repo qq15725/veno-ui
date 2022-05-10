@@ -3,7 +3,7 @@
  *  - 'null' if the node is not attached to the DOM
  *  - the root node (HTMLDocument | ShadowRoot) otherwise
  */
-export function attachedRoot (node: Node): null | HTMLDocument | ShadowRoot {
+export function attachedRoot(node: Node): null | HTMLDocument | ShadowRoot {
   /* istanbul ignore next */
   if (typeof node.getRootNode !== 'function') {
     // Shadow DOM not supported (IE11), lets find the root of this node

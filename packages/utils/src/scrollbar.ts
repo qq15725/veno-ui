@@ -3,7 +3,7 @@
  *
  * @param el
  */
-export function getScrollParent (el?: HTMLElement) {
+export function getScrollParent(el?: HTMLElement) {
   while (el) {
     if (hasScrollbar(el)) return el
     el = el.parentElement!
@@ -17,7 +17,7 @@ export function getScrollParent (el?: HTMLElement) {
  *
  * @param el
  */
-export function getScrollParents (el?: HTMLElement) {
+export function getScrollParents(el?: HTMLElement) {
   const elements: HTMLElement[] = []
 
   while (el) {
@@ -33,7 +33,7 @@ export function getScrollParents (el?: HTMLElement) {
  *
  * @param el
  */
-export function hasScrollbar (el?: Element | null) {
+export function hasScrollbar(el?: Element | null) {
   if (!el || el.nodeType !== Node.ELEMENT_NODE) return false
 
   const style = window.getComputedStyle(el)
@@ -50,7 +50,7 @@ export function hasScrollbar (el?: Element | null) {
  *
  * @param el
  */
-export function getScrollbarWidth (el?: HTMLElement | null) {
+export function getScrollbarWidth(el?: HTMLElement | null) {
   if (!el || el.nodeType !== Node.ELEMENT_NODE) return 0
 
   if (el.tagName === 'HTML') {

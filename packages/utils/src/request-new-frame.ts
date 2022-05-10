@@ -6,7 +6,7 @@ const frames = [] as any[]
  *
  * @param cb 回调函数
  */
-export function requestNewFrame (cb: () => void) {
+export function requestNewFrame(cb: () => void) {
   if (!clean || frames.length) {
     frames.push(cb)
     run()
@@ -19,7 +19,7 @@ export function requestNewFrame (cb: () => void) {
 
 let raf = -1
 
-function run () {
+function run() {
   cancelAnimationFrame(raf)
   raf = requestAnimationFrame(() => {
     const frame = frames.shift()

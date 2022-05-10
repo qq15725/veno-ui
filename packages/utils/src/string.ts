@@ -3,7 +3,7 @@
  *
  * @param str
  */
-export function toKebabCase (str: string) {
+export function toKebabCase(str: string) {
   return str
     .replace(/[^a-z0-9]/gi, '-')
     .replace(/\B([A-Z])/g, '-$1')
@@ -15,7 +15,7 @@ export function toKebabCase (str: string) {
  *
  * @param str
  */
-export function toSnakeCase (str: string) {
+export function toSnakeCase(str: string) {
   return toKebabCase(str).replace(/-/g, '_')
 }
 
@@ -24,7 +24,7 @@ export function toSnakeCase (str: string) {
  *
  * @param str
  */
-export function toCameCase (str: string): string {
+export function toCameCase(str: string): string {
   return str.replace(/-(\w)/g, (match: string, part: string) => part.toLocaleUpperCase())
 }
 
@@ -33,8 +33,8 @@ export function toCameCase (str: string): string {
  *
  * @param str
  */
-export function toPascalCase (str: string): string {
+export function toPascalCase(str: string): string {
   return toCameCase(
-    str.replace(/^[a-z]/, (match: string) => match.toLocaleUpperCase())
+    str.replace(/^[a-z]/, (match: string) => match.toLocaleUpperCase()),
   )
 }

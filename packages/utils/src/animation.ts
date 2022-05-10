@@ -7,7 +7,7 @@ import { Box } from './box'
  *
  * @param el
  */
-export function nullifyTransforms (el: HTMLElement): Box {
+export function nullifyTransforms(el: HTMLElement): Box {
   const rect = el.getBoundingClientRect()
   const style = getComputedStyle(el)
   const tx = style.transform
