@@ -27,7 +27,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const selected = ref([])
     const items = ref([])
     const loading = ref(false)

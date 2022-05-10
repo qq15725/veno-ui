@@ -3,7 +3,7 @@ import './styles/progress-linear.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent, propsFactory, pick, convertToUnit } from '../../utils'
+import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
 
 export const makeProgressLinearProps = propsFactory({
   /**
@@ -41,10 +41,10 @@ export const makeProgressLinearProps = propsFactory({
   underlay: {
     type: Boolean,
     default: true,
-  }
+  },
 }, 'progress-linear')
 
-export function filterProgressLinearProps (attrs: Record<string, any>) {
+export function filterProgressLinearProps(attrs: Record<string, any>) {
   return pick(attrs, Object.keys(ProgressLinear.props) as any)
 }
 
@@ -53,31 +53,31 @@ export const ProgressLinear = defineComponent({
 
   props: makeProgressLinearProps(),
 
-  setup (props) {
+  setup(props) {
     const model = computed(() => Math.max(0, Math.min(100, parseFloat(props.modelValue))))
     const height = computed(() => Number(props.strokeWidth))
     return () => (
       <div
-        class={ [
+        className={ [
           've-progress-linear',
           {
             've-progress-linear--active': props.active,
             've-progress-linear--indeterminate': props.indeterminate,
-          }
+          },
         ] }
         style={ {
           height: props.active ? convertToUnit(height.value) : 0,
         } }
       >
         { props.underlay && (
-          <div class="ve-progress-linear__underlay" />
+          <div className="ve-progress-linear__underlay" />
         ) }
 
         <div
-          class="ve-progress-linear__overlay"
+          className="ve-progress-linear__overlay"
           style={ { width: convertToUnit(model.value, '%') } }
         />
       </div>
     )
-  }
+  },
 })

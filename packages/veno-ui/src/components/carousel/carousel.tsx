@@ -3,7 +3,7 @@ import './styles/carousel.scss'
 
 // Utils
 import { toRef, watch } from 'vue'
-import { defineComponent, createSymbol } from '../../utils'
+import { createSymbol, defineComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'
@@ -46,7 +46,7 @@ export const Carousel = defineComponent({
     'update:modelValue': (value: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { paperStyles, paperClasses } = usePaper(props)
     const { isSelected, select, selected, next, items } = useGroup(props, CarouselKey)
 
@@ -59,7 +59,7 @@ export const Carousel = defineComponent({
         if (!props.autoplay) return
         slideTimeout = window.setTimeout(
           next,
-          +props.interval > 0 ? +props.interval : 6000
+          +props.interval > 0 ? +props.interval : 6000,
         )
       })
     }
@@ -67,7 +67,7 @@ export const Carousel = defineComponent({
     watch([
       selected,
       toRef(props, 'autoplay'),
-      toRef(props, 'interval')
+      toRef(props, 'interval'),
     ], restartTimeout)
 
     return () => (
@@ -80,7 +80,7 @@ export const Carousel = defineComponent({
       >
         { slots.default?.() }
 
-        <div class="ve-carousel__controls">
+        <div className="ve-carousel__controls">
           { items.value.map(v => (
             <CarouselActivator
               active={ isSelected(v.id) }
@@ -90,7 +90,7 @@ export const Carousel = defineComponent({
         </div>
       </props.tag>
     )
-  }
+  },
 })
 
 export type Carousel = InstanceType<typeof Carousel>

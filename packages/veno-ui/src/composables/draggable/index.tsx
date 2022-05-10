@@ -1,19 +1,19 @@
 // Utils
 import { computed, ref, watch } from 'vue'
+import type { ExtractPropTypes, PropType, Ref } from 'vue'
 import {
-  propsFactory,
-  isComponentInstance,
   SUPPORTS_TOUCH,
   convertToUnit,
-  querySelector,
   getCurrentInstance,
+  isComponentInstance,
+  propsFactory,
+  querySelector,
 } from '../../utils'
 
 // Composables
 import { usePointer } from '../../composables/pointer'
 
 // Types
-import type { ExtractPropTypes, PropType, Ref } from 'vue'
 import type { Selector } from '../../utils'
 import type { PointerPosition } from '../../composables/pointer'
 
@@ -50,13 +50,13 @@ export const makeDraggableProps = propsFactory({
   position: String as PropType<'absolute' | 'fixed'>,
 }, 'draggable')
 
-export function useDraggable (
+export function useDraggable(
   props: ExtractPropTypes<ReturnType<typeof makeDraggableProps>> = {
     draggable: true,
     disabled: false,
     cursor: true,
   },
-  data?: Ref<PointerPosition>
+  data?: Ref<PointerPosition>,
 ) {
   const previous = ref<PointerPosition>()
   const previousBox = ref<DOMRect>()

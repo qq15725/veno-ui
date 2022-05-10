@@ -9,9 +9,9 @@ export const IconClass = defineComponent({
 
   props: makeIconSetProps(),
 
-  setup (props) {
+  setup(props) {
     return () => {
       return <props.tag class={ props.icon as string | Object } />
     }
-  }
+  },
 })

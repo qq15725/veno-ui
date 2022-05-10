@@ -3,16 +3,16 @@ import './styles/divider.scss'
 
 // Utils
 import { computed } from 'vue'
+import type { PropType } from 'vue'
 import { convertToUnit, genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
 
+// Types
+
 // Constants
 const VeDividerTextAligns = ['left', 'center', 'right'] as const
-
-// Types
-import type { PropType } from 'vue'
 
 type VeDividerStyles = Partial<Record<'maxHeight' | 'maxWidth', string>>
 type VeDividerTextAlign = typeof VeDividerTextAligns[number]
@@ -36,7 +36,7 @@ export const Divider = genericComponent()({
     } as const),
   },
 
-  setup (props, { attrs, slots }) {
+  setup(props, { attrs, slots }) {
     const dividerStyles = computed(() => {
       const styles: VeDividerStyles = {}
       if (props.length) {
@@ -74,18 +74,18 @@ export const Divider = genericComponent()({
           v-slots={ {
             default: hasDefaultSlot
               ? () => [
-                (
+                  (
                   <>
-                    <div class="ve-divider__line" />
-                    <div class="ve-divider__wrap">{ slots.default?.() }</div>
-                    <div class="ve-divider__line" />
+                    <div className="ve-divider__line" />
+                    <div className="ve-divider__wrap">{ slots.default?.() }</div>
+                    <div className="ve-divider__line" />
                   </>
-                )
-              ]
-              : undefined
+                  ),
+                ]
+              : undefined,
           } }
         />
       )
     }
-  }
+  },
 })

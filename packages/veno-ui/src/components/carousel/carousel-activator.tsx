@@ -15,10 +15,10 @@ export const CarouselActivator = genericComponent()({
     active: Boolean,
   },
 
-  setup (props) {
+  setup(props) {
     return () => (
       <div
-        class={ [
+        className={ [
           've-carousel-activator',
           {
             've-carousel-activator--active': props.active,
@@ -26,5 +26,5 @@ export const CarouselActivator = genericComponent()({
         ] }
       />
     )
-  }
+  },
 })

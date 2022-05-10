@@ -7,10 +7,6 @@ import {
   watchEffect,
 } from 'vue'
 import { toKebabCase } from '@veno-ui/utils'
-import { consoleWarn } from './console'
-import { useDefaults } from '../composables/defaults'
-
-// Types
 import type {
   ComponentOptions,
   ComponentOptionsMixin,
@@ -23,13 +19,17 @@ import type {
   VNode,
   VNodeChild,
 } from 'vue'
+import { useDefaults } from '../composables/defaults'
+import { consoleWarn } from './console'
 
-export function propIsDefined (vnode: VNode, prop: string) {
+// Types
+
+export function propIsDefined(vnode: VNode, prop: string) {
   return vnode.props?.hasOwnProperty(prop)
     || vnode.props?.hasOwnProperty(toKebabCase(prop))
 }
 
-export const defineComponent = (function defineComponent (options: ComponentOptions) {
+export const defineComponent = (function defineComponent(options: ComponentOptions) {
   options._setup = options._setup ?? options.setup
 
   if (!options.name) {
@@ -39,7 +39,7 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
   }
 
   if (options._setup) {
-    options.setup = function setup (props: Record<string, any>, ctx) {
+    options.setup = function setup(props: Record<string, any>, ctx) {
       const vm = getCurrentInstance()!
       const defaults = useDefaults()
 
@@ -72,7 +72,7 @@ export const defineComponent = (function defineComponent (options: ComponentOpti
 }) as unknown as typeof _defineComponent
 
 type ToListeners<T extends string | number | symbol> = { [K in T]: K extends `on${ infer U }` ? Uncapitalize<U> : K }[T]
-type SlotsToProps<T extends Record<string, Slot>> = {
+interface SlotsToProps<T extends Record<string, Slot>> {
   $children: () => (T['default'] | VNodeChild | { [K in keyof T]?: T[K] | VNodeChild })
   'v-slots': new () => { [K in keyof T]?: T[K] | false }
 }/* & { // TODO: individual slots are never converted from the constructor type
@@ -86,7 +86,7 @@ export type MakeSlots<T extends Record<string, any[]>> = {
 
 export function genericComponent<T extends (new () => {
   $slots?: Record<string, Slot>
-})> (exposeDefaults = true): <
+})>(exposeDefaults = true): <
   PropsOptions extends Readonly<ComponentPropsOptions>,
   RawBindings,
   D,
@@ -99,9 +99,9 @@ export function genericComponent<T extends (new () => {
   I = InstanceType<T>,
   Base = DefineComponent<
     (I extends Record<'$props', any> ? Omit<PropsOptions, keyof I['$props']> : PropsOptions) & (
-    I extends Record<'$slots', any>
-      ? SlotsToProps<I['$slots']>
-      : {}
+      I extends Record<'$slots', any>
+        ? SlotsToProps<I['$slots']>
+        : {}
     ),
     RawBindings,
     D,
@@ -111,7 +111,7 @@ export function genericComponent<T extends (new () => {
     Extends,
     E extends any[] ? E : I extends Record<'$props', any> ? Omit<E, ToListeners<keyof I['$props']>> : E,
     EE
-  >
+  >,
 >(options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>) => Base & T {
   return options => (exposeDefaults ? defineComponent : _defineComponent)(options) as any
 }

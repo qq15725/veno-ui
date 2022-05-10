@@ -2,8 +2,9 @@
 import './styles/draggable-resizable.scss'
 
 // Utils
-import { ref, watch, toHandlers, nextTick, mergeProps, computed } from 'vue'
-import { defineComponent, convertToUnit } from '../../utils'
+import { computed, mergeProps, nextTick, ref, toHandlers, watch } from 'vue'
+import type { PropType } from 'vue'
+import { convertToUnit, defineComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -15,7 +16,6 @@ import { makeTagProps } from '../../composables/tag'
 import { Tooltip } from '../../components/tooltip'
 
 // Types
-import type { PropType } from 'vue'
 
 export const DraggableResizable = defineComponent({
   name: 'VeDraggableResizable',
@@ -31,7 +31,7 @@ export const DraggableResizable = defineComponent({
         width?: string | number
         height?: string | number
       }>,
-      default: () => ({ left: 0, top: 0 })
+      default: () => ({ left: 0, top: 0 }),
     },
 
     /**
@@ -51,7 +51,7 @@ export const DraggableResizable = defineComponent({
     'update:modelValue': (value: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const rootEl = ref<HTMLElement>()
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
@@ -59,11 +59,13 @@ export const DraggableResizable = defineComponent({
         left: v?.left ? parseFloat(v?.left) : 0,
         top: v?.top ? parseFloat(v?.top) : 0,
         ...(
-          props.resizable ? {
-            width: v?.width ? parseFloat(v?.width) : undefined,
-            height: v?.height ? parseFloat(v?.height) : undefined,
-          } : undefined
-        )
+          props.resizable
+            ? {
+                width: v?.width ? parseFloat(v?.width) : undefined,
+                height: v?.height ? parseFloat(v?.height) : undefined,
+              }
+            : undefined
+        ),
       }),
     )
 
@@ -158,7 +160,7 @@ export const DraggableResizable = defineComponent({
           { ...draggable }
         >
           { slots.default && (
-            <div class="ve-draggable-resizable__wrapper">
+            <div className="ve-draggable-resizable__wrapper">
               { slots.default?.({
                 value: model.value,
                 draggable,
@@ -179,11 +181,11 @@ export const DraggableResizable = defineComponent({
             { {
               activator: props.resizable
                 ? ({ on: anchorProps }) => genResizableAnchors(anchorProps, isDragging)
-                : undefined
+                : undefined,
             } }
           </Tooltip>
         </props.tag>
       )
     }
-  }
+  },
 })

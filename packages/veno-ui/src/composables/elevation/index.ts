@@ -1,9 +1,9 @@
 // Utils
 import { computed, unref } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
-import type { ExtractPropTypes } from 'vue'
 import type { MaybeRef } from '../../utils'
 
 export type ElevationProps = ExtractPropTypes<ReturnType<typeof makeElevationProps>>
@@ -12,7 +12,7 @@ export type ElevationProps = ExtractPropTypes<ReturnType<typeof makeElevationPro
 export const makeElevationProps = propsFactory({
   elevation: {
     type: [Number, String],
-    validator (v: any) {
+    validator(v: any) {
       const value = parseInt(v)
 
       return !isNaN(value) && value >= 0 && value <= 24
@@ -20,7 +20,7 @@ export const makeElevationProps = propsFactory({
   },
 }, 'elevation')
 
-export function useElevation (props: MaybeRef<ElevationProps>) {
+export function useElevation(props: MaybeRef<ElevationProps>) {
   const elevationClasses = computed(() => {
     const { elevation } = unref(props)
 

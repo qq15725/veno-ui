@@ -20,10 +20,10 @@ export const Label = defineComponent({
     ...makeThemeProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => (
       <label
-        class={ [
+        className={ [
           've-label',
           {
             've-label--disabled': props.disabled,

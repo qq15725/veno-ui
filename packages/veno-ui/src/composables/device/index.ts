@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory, convertToUnit } from '../../utils'
+import { convertToUnit, propsFactory } from '../../utils'
 
 export const deviceModels: Record<string, DeviceModel> = {
   iphonex: {
@@ -40,15 +40,13 @@ export const deviceModels: Record<string, DeviceModel> = {
   },
 }
 
-export interface DeviceModel
-{
-  width: number | string,
-  height: number | string,
-  statusBarHeight: number,
+export interface DeviceModel {
+  width: number | string
+  height: number | string
+  statusBarHeight: number
 }
 
-export interface DeviceProps
-{
+export interface DeviceProps {
   model?: string
   autoHeight: boolean
 }
@@ -58,15 +56,15 @@ export const makeDeviceProps = propsFactory({
   autoHeight: Boolean,
 }, 'device')
 
-export function useDevice (props: DeviceProps) {
+export function useDevice(props: DeviceProps) {
   const deviceModel = computed(() => {
     return props.model && props.model in deviceModels
       ? deviceModels[props.model]
       : {
-        width: '100%',
-        height: '100%',
-        statusBarHeight: 0,
-      }
+          width: '100%',
+          height: '100%',
+          statusBarHeight: 0,
+        }
   })
 
   const deviceStyles = computed(() => {

@@ -1,16 +1,16 @@
 // Utils
 import { computed, ref } from 'vue'
-import { getCurrentInstance, propIsDefined as _propIsDefined } from '../../utils'
+import type { Ref } from 'vue'
+import { propIsDefined as _propIsDefined, getCurrentInstance } from '../../utils'
 
 // Types
-import type { Ref } from 'vue'
 
 // Composables
 export function useProxiedModel<
-  Props extends object & { [key in Prop as `onUpdate:${Prop}`]: ((val: any) => void) | undefined },
+  Props extends object & { [key in Prop as `onUpdate:${ Prop }`]: ((val: any) => void) | undefined },
   Prop extends Extract<keyof Props, string>,
-  Inner = Props[Prop]
-> (
+  Inner = Props[Prop],
+>(
   props: Props,
   prop: Prop,
   defaultValue?: Props[Prop],
@@ -28,20 +28,20 @@ export function useProxiedModel<
   const internal = ref(
     typeof props[prop] === 'undefined'
       ? defaultValue
-      : props[prop]
+      : props[prop],
   ) as Ref<Props[Prop]>
 
   return computed<Inner>({
-    get () {
+    get() {
       if (propIsDefined.value) {
         return transformIn(props[prop])
       } else {
         return transformIn(internal.value)
       }
     },
-    set (newValue) {
+    set(newValue) {
       internal.value = transformOut(newValue)
       vm.emit(`update:${ prop }`, internal.value)
-    }
+    },
   })
 }

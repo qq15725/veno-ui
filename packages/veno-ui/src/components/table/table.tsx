@@ -2,15 +2,16 @@
 import './styles/table.scss'
 
 // Utils
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
+import type { PropType } from 'vue'
 import {
-  defineComponent,
   convertToUnit,
-  wrapInArray,
-  getObjectValueByPath,
-  useRender,
+  defineComponent,
   downloadCSV,
-  throttle
+  getObjectValueByPath,
+  throttle,
+  useRender,
+  wrapInArray,
 } from '../../utils'
 
 // Composables
@@ -19,20 +20,18 @@ import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 import { makeDataIteratorProps, useDataIterator } from '../../composables/data-iterator'
 
 // Components
-import { TableTh, filterTableThProps } from './table-th'
-import { TableNoData } from './table-no-data'
 import { Progress } from '../progress'
 import { Pagination } from '../pagination'
 import { Checkbox } from '../checkbox'
 
 // Types
-import type { PropType } from 'vue'
 import type { PaginationProps } from '../../composables/data-iterator'
 import { useProxiedModel } from '../../composables/proxied-model'
+import { TableNoData } from './table-no-data'
+import { TableTh, filterTableThProps } from './table-th'
 
-interface TableHeaderProps
-{
-  $type?: 'selection',
+interface TableHeaderProps {
+  $type?: 'selection'
   value: string, // 字段
   text?: string, // 字段文本
   align?: 'start' | 'center' | 'end', // 对齐方式
@@ -44,8 +43,7 @@ interface TableHeaderProps
   [key: string]: any
 }
 
-interface InternalTableHeaderProps extends TableHeaderProps
-{
+interface InternalTableHeaderProps extends TableHeaderProps {
   fixed?: false | 'start' | 'end'
 }
 
@@ -134,7 +132,7 @@ export const Table = defineComponent({
     'update:selected': (_: Record<string, any>[]) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const containerRef = ref<HTMLDivElement>()
     const scrollLeft = ref(0)
     const selected = useProxiedModel(props, 'selected')
@@ -151,7 +149,7 @@ export const Table = defineComponent({
       sortBy: rawSortBy,
       sortDesc: rawSortDesc,
       sort,
-      updateOptions
+      updateOptions,
     } = useDataIterator(props)
     const headers = computed<InternalTableHeaderProps[]>(() => {
       const length = props.headers.length
@@ -180,22 +178,22 @@ export const Table = defineComponent({
       }
     })
 
-    function handleScroll ({ target }: Event) {
+    function handleScroll({ target }: Event) {
       scrollLeft.value = (target as HTMLElement).scrollLeft
     }
 
-    function genColProps (header: InternalTableHeaderProps) {
+    function genColProps(header: InternalTableHeaderProps) {
       const styles = {
         width: convertToUnit(header.width),
         minWidth: convertToUnit(header.minWidth ?? header.width),
         maxWidth: convertToUnit(header.maxWidth ?? header.width),
       }
       return {
-        style: styles
+        style: styles,
       }
     }
 
-    function isSortDesc (header: InternalTableHeaderProps) {
+    function isSortDesc(header: InternalTableHeaderProps) {
       return sortDesc.value[sortBy.value.findIndex(v => v === header.value)]
     }
 
@@ -218,7 +216,7 @@ export const Table = defineComponent({
           <div
             ref={ containerRef }
             onScroll={ throttle(handleScroll, 128) }
-            class={ [
+            className={ [
               've-table__table',
               paperClasses.value,
               scrollbarClasses.value,
@@ -242,8 +240,8 @@ export const Table = defineComponent({
                 <thead>
 
                 { props.loading && (
-                  <tr class="ve-table__progress">
-                    <th colspan={ props.headers.length }>
+                  <tr className="ve-table__progress">
+                    <th colSpan={ props.headers.length }>
                       <Progress
                         color="primary"
                         indeterminate
@@ -263,7 +261,8 @@ export const Table = defineComponent({
                         sort-desc={ isSortDesc(header) }
                         onClick={ () => header.sortable && sort(header.value) }
                       >
-                        { header.$type === 'selection' ? (
+                        { header.$type === 'selection'
+                          ? (
                           <Checkbox
                             indeterminate={ selected.value.length > 0 && !isAllSelected.value }
                             onUpdate:indeterminate={ val => {
@@ -280,11 +279,12 @@ export const Table = defineComponent({
                               }
                             } }
                           />
-                        ) : (
-                          slots[`header.${ header.value }`]?.({ header, index })
+                            )
+                          : (
+                              slots[`header.${ header.value }`]?.({ header, index })
                           ?? header.text
                           ?? header.value
-                        ) }
+                            ) }
                       </TableTh>
                     )
                   }) }
@@ -301,16 +301,17 @@ export const Table = defineComponent({
                     { headers.value.map(header => {
                       return (
                         <td
-                          class={ [
+                          className={ [
                             've-table-td',
                             {
                               've-table-td--sorted': isSortDesc(header) !== undefined,
                               've-table-td--fixed-start': header.fixed === 'start',
                               've-table-td--fixed-end': header.fixed === 'end',
-                            }
+                            },
                           ] }
                         >
-                          { header.$type === 'selection' ? (
+                          { header.$type === 'selection'
+                            ? (
                             <Checkbox
                               modelValue={
                                 selected.value.findIndex((v: any) => v[props.itemKey] === item[props.itemKey]) > -1
@@ -323,10 +324,11 @@ export const Table = defineComponent({
                                 }
                               } }
                             />
-                          ) : (
-                            slots[`item.${ header.value }`]?.({ item, index })
+                              )
+                            : (
+                                slots[`item.${ header.value }`]?.({ item, index })
                             ?? getObjectValueByPath(item, header.value)
-                          ) }
+                              ) }
                         </td>
                       )
                     }) }
@@ -335,7 +337,7 @@ export const Table = defineComponent({
 
                 { !items.value.length && (
                   <tr>
-                    <td colspan={ props.headers.length }>
+                    <td colSpan={ props.headers.length }>
                       { slots.nodata?.() ?? <TableNoData /> }
                     </td>
                   </tr>
@@ -367,9 +369,9 @@ export const Table = defineComponent({
     })
 
     return {
-      exportCSV: function (name: string) {
+      exportCSV(name: string) {
         downloadCSV(name, props.headers, items.value)
-      }
+      },
     }
-  }
+  },
 })

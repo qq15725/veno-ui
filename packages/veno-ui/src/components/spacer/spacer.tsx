@@ -2,10 +2,10 @@
 import './styles/spacer.scss'
 
 // Utils
-import { defineComponent, pick, flattenFragments } from '../../utils'
+import { defineComponent, flattenFragments, pick } from '../../utils'
 
 // Components
-import { Row, Col } from '../grid'
+import { Col, Row } from '../grid'
 import { makeRowProps } from '../grid/row'
 import { makeColProps } from '../grid/col'
 
@@ -19,12 +19,12 @@ export const Spacer = defineComponent({
     }),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       const children = flattenFragments(slots.default?.() ?? [])
 
       if (!children.length) {
-        return <div class="ve-spacer" />
+        return <div className="ve-spacer" />
       }
 
       const [rowProps] = pick(props, Object.keys(Row.props) as any)
@@ -38,7 +38,7 @@ export const Spacer = defineComponent({
         </Row>
       )
     }
-  }
+  },
 })
 
 export type Spacer = InstanceType<typeof Spacer>

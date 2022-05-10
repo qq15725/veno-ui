@@ -11,17 +11,17 @@ import { makeButtonProps } from '../../components/button/button'
 import { makeGroupItemProps, useGroupItem } from '../../composables/group'
 
 // Symbols
+import type { MakeSlots } from '../../utils'
 import { BreadcrumbKey } from './breadcrumb'
 
 // Types
-import type { MakeSlots } from '../../utils'
 
 export type BreadcrumbItem = InstanceType<typeof BreadcrumbItem>
 
 export const BreadcrumbItem = genericComponent<new () => {
   $slots: MakeSlots<{
-    default: [],
-    separator: [],
+    default: []
+    separator: []
   }>
 }>()({
   name: 'VeBreadcrumbItem',
@@ -33,7 +33,7 @@ export const BreadcrumbItem = genericComponent<new () => {
     ...makeGroupItemProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { id, group } = useGroupItem(props, BreadcrumbKey)
 
     const hasNext = computed(() => {
@@ -47,11 +47,11 @@ export const BreadcrumbItem = genericComponent<new () => {
       return (
         <>
           <li
-            class={ [
+            className={ [
               've-breadcrumb-item',
               {
-                've-breadcrumb-item--has-next': hasNext.value
-              }
+                've-breadcrumb-item--has-next': hasNext.value,
+              },
             ] }
           >
             <Button
@@ -62,7 +62,7 @@ export const BreadcrumbItem = genericComponent<new () => {
 
           { hasNext.value && (
             <li
-              class="ve-breadcrumb-separator"
+              className="ve-breadcrumb-separator"
               aria-hidden="true"
             >
               {
@@ -75,5 +75,5 @@ export const BreadcrumbItem = genericComponent<new () => {
         </>
       )
     }
-  }
+  },
 })

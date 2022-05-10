@@ -18,14 +18,14 @@ export const ToolbarTitle = defineComponent({
     ...makeTagProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       const hasText = !!(slots.text || props.text)
 
       return (
         <props.tag class="ve-toolbar-title">
           { hasText && (
-            <div class="ve-toolbar-title__wrapper">
+            <div className="ve-toolbar-title__wrapper">
               { slots.text?.() ?? props.text }
             </div>
           ) }

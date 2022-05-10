@@ -2,12 +2,11 @@
 import './styles/progress.scss'
 
 // Utils
-import { computed, toRef, ref } from 'vue'
+import { computed, ref, toRef } from 'vue'
+import type { PropType } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Components
-import { ProgressLinear } from './progress-linear'
-import { ProgressCircular } from './progress-circular'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'
@@ -17,17 +16,16 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { useTextColor } from '../../composables/color'
 import { useVariant } from '../../composables/variant'
 import { useIntersectionObserver } from '../../composables/intersection-observer'
-import { makeProgressLinearProps, filterProgressLinearProps } from './progress-linear'
-import { makeProgressCircularProps, filterProgressCircularProps } from './progress-circular'
+import { ProgressCircular, filterProgressCircularProps, makeProgressCircularProps } from './progress-circular'
+import { ProgressLinear, filterProgressLinearProps, makeProgressLinearProps } from './progress-linear'
+
+// Types
 
 // Constants
 export const progressVariants = [
   'linear', // 线性
   'circular', // 圆形
 ] as const
-
-// Types
-import type { PropType } from 'vue'
 
 export type ProgressVariant = typeof progressVariants[number]
 
@@ -69,17 +67,17 @@ export const Progress = defineComponent({
     'update:modelValue': (value: number) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { themeClasses } = provideTheme(props)
     const { variantClasses } = useVariant(props as any)
     const { sizeClasses, sizeStyles } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(
-      toRef(props, 'color')
+      toRef(props, 'color'),
     )
     const { intersectionRef, isIntersecting } = useIntersectionObserver()
     const model = useProxiedModel(
       props, 'modelValue', props.modelValue,
-      val => Math.max(0, Math.min(100, parseFloat(val ?? 0)))
+      val => Math.max(0, Math.min(100, parseFloat(val ?? 0))),
     )
     const strokeWidth = computed(() => Number(props.strokeWidth))
 
@@ -138,7 +136,7 @@ export const Progress = defineComponent({
           ) }
 
           { slots.default && (
-            <div class="ve-progress__wrapper">
+            <div className="ve-progress__wrapper">
               { slots.default({ value: model.value }) }
             </div>
           ) }
@@ -177,7 +175,7 @@ export const Progress = defineComponent({
         })
       },
     }
-  }
+  },
 })
 
 export type Progress = InstanceType<typeof Progress>

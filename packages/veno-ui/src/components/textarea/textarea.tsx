@@ -5,10 +5,10 @@ import { genericComponent } from '../../utils'
 import { Input } from '../input'
 
 // Composables
-import { makeInputProps, InputEmits } from '../input/input'
+import { InputEmits, makeInputProps } from '../input/input'
 
 // Types
-import { InputSlots } from '../input/input'
+import type { InputSlots } from '../input/input'
 
 export const Textarea = genericComponent<new () => {
   $slots: InputSlots
@@ -27,5 +27,5 @@ export const Textarea = genericComponent<new () => {
         <Input { ...props } />
       )
     }
-  }
+  },
 })

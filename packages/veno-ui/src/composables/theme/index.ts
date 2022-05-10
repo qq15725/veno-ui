@@ -1,43 +1,39 @@
 // Utils
 import { computed, inject, provide, ref, unref, watch, watchEffect } from 'vue'
+import type { App, ExtractPropTypes, InjectionKey, Ref } from 'vue'
+import type { HeadClient } from '@vueuse/head'
 import {
   IN_BROWSER,
+  colorToOnColorHex,
   colorToRGB,
-  getLuma,
   deepMerge,
-  propsFactory,
   getCurrentInstance,
+  getLuma,
+  propsFactory,
 } from '../../utils'
-import { colorToOnColorHex } from '../../utils'
+import type { MaybeRef } from '../../utils'
 import defaultOptions from './default-options'
 
 // Types
-import type { App, ExtractPropTypes, InjectionKey, Ref } from 'vue'
-import type { MaybeRef } from '../../utils'
-import type { Colors, BaseColors, BaseOnColors } from './colors'
-import type { HeadClient } from '@vueuse/head'
+import type { BaseColors, BaseOnColors, Colors } from './colors'
 
-interface InternalThemeDefinition
-{
+interface InternalThemeDefinition {
   dark: boolean
   colors: Colors
   variables: Record<string, string | number>
 }
 
-interface ThemeDefinitionColors extends BaseColors, Partial<BaseOnColors>
-{
+interface ThemeDefinitionColors extends BaseColors, Partial<BaseOnColors> {
   [key: string]: string | undefined
 }
 
-export interface ThemeDefinition
-{
+export interface ThemeDefinition {
   dark: boolean
   colors: ThemeDefinitionColors
   variables: Record<string, string | number>
 }
 
-interface InternalThemeOptions
-{
+interface InternalThemeOptions {
   isDisabled: boolean
   defaultTheme: string
   themes: Record<string, ThemeDefinition>
@@ -48,8 +44,7 @@ export type ThemeOptions = false | {
   themes?: Record<string, ThemeDefinition>
 }
 
-export interface ThemeInstance
-{
+export interface ThemeInstance {
   isDisabled: boolean
   themes: Ref<Record<string, InternalThemeDefinition>>
   current: Ref<string>
@@ -77,7 +72,7 @@ const parseThemeOptions = (options: ThemeOptions = defaultOptions): InternalThem
   return deepMerge(defaultOptions, options) as InternalThemeOptions
 }
 
-function createCssClass (selector: string, content: string[]) {
+function createCssClass(selector: string, content: string[]) {
   return [
     `${ selector } {\n`,
     ...content.map(line => `  ${ line };\n`),
@@ -85,7 +80,7 @@ function createCssClass (selector: string, content: string[]) {
   ]
 }
 
-export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
+export function createTheme(app: App, options?: ThemeOptions): ThemeInstance {
   const head = app._context.provides.usehead as HeadClient | undefined
   const parsedOptions = parseThemeOptions(options)
   const styleEl = ref<HTMLStyleElement>()
@@ -123,7 +118,7 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
               : undefined
             return `--ve-${ key }: ${ rgb ?? value }`
           }),
-        ])
+        ]),
       )
 
       if (theme.dark) {
@@ -131,8 +126,8 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
           if (/on-[a-z]/.test(key)) {
             lines.push(
               ...createCssClass(`.${ key }`, [
-                `color: rgb(var(--ve-theme-${ key })) !important`
-              ])
+                `color: rgb(var(--ve-theme-${ key })) !important`,
+              ]),
             )
           } else {
             lines.push(
@@ -142,10 +137,10 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
                 `color: rgb(var(--ve-theme-on-${ key })) !important`,
               ]),
               ...createCssClass(`.text-${ key }`, [
-                `color: rgb(var(--ve-theme-${ key })) !important`
+                `color: rgb(var(--ve-theme-${ key })) !important`,
               ]),
               ...createCssClass(`.border-${ key }`, [
-                `--ve-border-color: var(--ve-theme-${ key })`
+                `--ve-border-color: var(--ve-theme-${ key })`,
               ]),
             )
           }
@@ -156,7 +151,7 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
     return lines.map((str, i) => i === 0 ? str : `    ${ str }`).join('')
   })
 
-  function genCssVariables (name: string) {
+  function genCssVariables(name: string) {
     const theme = computedThemes.value[name]
     if (!theme) throw new Error(`Could not find theme ${ name }`)
     const lightOverlay = theme.dark ? 2 : 1
@@ -187,13 +182,13 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
   } else {
     watch(themes, updateStyles, { deep: true, immediate: true })
 
-    function updateStyles () {
+    function updateStyles() {
       if (parsedOptions.isDisabled) return
       genStyleElement()
       if (styleEl.value) styleEl.value.innerHTML = styles.value
     }
 
-    function genStyleElement () {
+    function genStyleElement() {
       if (typeof document === 'undefined' || styleEl.value) return
       const el = document.createElement('style')
       el.type = 'text/css'
@@ -217,14 +212,14 @@ export function createTheme (app: App, options?: ThemeOptions): ThemeInstance {
   }
 }
 
-export function provideTheme (props: MaybeRef<ThemeProps>) {
+export function provideTheme(props: MaybeRef<ThemeProps>) {
   getCurrentInstance('provideTheme')
   const theme = inject(ThemeKey, null)
   if (!theme) throw new Error('Could not find theme injection')
   const current = computed<string>(() => {
     const { theme: propTheme } = unref(props)
 
-    if (propTheme && propTheme.indexOf(':') > -1) {
+    if (propTheme && propTheme.includes(':')) {
       const [theme1, theme2] = propTheme.split(':')
       return theme?.current.value === theme1 ? theme2 : theme1
     }
@@ -243,7 +238,7 @@ export function provideTheme (props: MaybeRef<ThemeProps>) {
   return newTheme
 }
 
-export function useTheme () {
+export function useTheme() {
   getCurrentInstance('useTheme')
   const provider = inject(ThemeKey, null)
   if (!provider) throw new Error('Could not find theme injection')

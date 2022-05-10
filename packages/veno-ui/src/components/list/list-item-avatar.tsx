@@ -16,7 +16,7 @@ export const ListItemAvatar = defineComponent({
 
   props: makeAvatarProps(),
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       return (
         <Avatar

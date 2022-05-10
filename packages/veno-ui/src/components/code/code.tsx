@@ -3,6 +3,7 @@ import './styles/code.scss'
 
 // Utils
 import { computed, onMounted, ref, watch } from 'vue'
+import type { PropType } from 'vue'
 import { defineComponent, flattenFragments } from '../../utils'
 
 // Composables
@@ -13,7 +14,6 @@ import { useBackgroundColor } from '../../composables/color'
 import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 
 // Types
-import type { PropType } from 'vue'
 
 export const Code = defineComponent({
   name: 'VeCode',
@@ -62,7 +62,7 @@ export const Code = defineComponent({
     ...makeScrollbar(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { themeClasses } = provideTheme(props)
     const { shapeClasses } = useShape(props)
     const highlighter = useHighlighter()
@@ -75,7 +75,7 @@ export const Code = defineComponent({
           : props.code ?? ''
       } else if (slots.default) {
         value = flattenFragments(slots.default()).filter(node =>
-          node.children && typeof node.children === 'string'
+          node.children && typeof node.children === 'string',
         )[0]?.children as string
       }
       return decodeURIComponent(value)
@@ -84,14 +84,14 @@ export const Code = defineComponent({
     })
     const highlightedCode = ref(code.value)
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
-      props, 'color'
+      props, 'color',
     )
     const language = computed(() => typeof props.code === 'object' ? 'json' : props.language)
     const lineNumbers = computed(() => code.value.split('\n').map((v, i) => i + 1))
     const highlightedLines = computed(() => {
       return lineNumbers.value.filter(lineNumber => {
         return props.highlightedLineNumbers?.some(v => {
-          let start = v, end
+          let start = v; let end
           {
             if (typeof v === 'object') {
               [start, end] = v
@@ -108,7 +108,7 @@ export const Code = defineComponent({
     const highlight = async () => {
       highlightedCode.value = await highlighter.value?.highlight(
         code.value,
-        language.value
+        language.value,
       )
     }
 
@@ -119,12 +119,12 @@ export const Code = defineComponent({
       if (props.inline) {
         return (
           <code
-            class={ [
+            className={ [
               've-code',
               've-code--inline',
               themeClasses.value,
               shapeClasses.value,
-              backgroundColorClasses.value
+              backgroundColorClasses.value,
             ] }
             style={ backgroundColorStyles.value }
             v-html={ highlightedCode.value }
@@ -137,7 +137,7 @@ export const Code = defineComponent({
 
       return (
         <div
-          class={ [
+          className={ [
             've-code',
             've-code--block',
             {
@@ -145,36 +145,36 @@ export const Code = defineComponent({
             },
             themeClasses.value,
             shapeClasses.value,
-            backgroundColorClasses.value
+            backgroundColorClasses.value,
           ] }
           style={ backgroundColorStyles.value }
         >
           { showLines && (
-            <div class="ve-code__lines">
+            <div className="ve-code__lines">
               { lineNumbers.value.map(number => (
-                <div class="ve-code__line">
+                <div className="ve-code__line">
                   { highlightedLines.value.includes(number) && (
-                    <div class="ve-code__line-overlay" v-html={ `&nbsp;` } />
+                    <div className="ve-code__line-overlay" v-html={ '&nbsp;' } />
                   ) }
 
                   { props.showLineNumbers
-                    ? <span class="ve-code__line-number">{ number }</span>
+                    ? <span className="ve-code__line-number">{ number }</span>
                     : <br /> }
                 </div>
               )) }
             </div>
           ) }
 
-          <pre class={ [
+          <pre className={ [
             've-code__preformatted',
             scrollbarClasses.value,
           ] }><code v-html={ highlightedCode.value } /></pre>
 
           { props.showLanguage && (
-            <span class="ve-code__language">{ language.value }</span>
+            <span className="ve-code__language">{ language.value }</span>
           ) }
         </div>
       )
     }
-  }
+  },
 })

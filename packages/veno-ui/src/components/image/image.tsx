@@ -12,10 +12,11 @@ import {
   watch,
   withDirectives,
 } from 'vue'
+import type { PropType } from 'vue'
 import {
-  convertToUnit,
-  SUPPORTS_INTERSECTION_OBSERVER,
   IN_BROWSER,
+  SUPPORTS_INTERSECTION_OBSERVER,
+  convertToUnit,
   useRender,
 } from '../../utils'
 
@@ -26,7 +27,6 @@ import { Responsive } from '../responsive'
 import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
 
 // Types
-import type { PropType } from 'vue'
 
 export const Image = defineComponent({
   name: 'VeImage',
@@ -105,11 +105,11 @@ export const Image = defineComponent({
     error: (src: string | undefined, image: HTMLImageElement | undefined) => true,
   },
 
-  setup (props, { emit, slots }) {
+  setup(props, { emit, slots }) {
     const currentSrc = ref('')
     const image = ref<HTMLImageElement>()
     const state = ref<'idle' | 'loading' | 'loaded' | 'error'>(
-      props.eager ? 'loading' : 'idle'
+      props.eager ? 'loading' : 'idle',
     )
     const naturalWidth = ref<number>()
     const naturalHeight = ref<number>()
@@ -124,7 +124,7 @@ export const Image = defineComponent({
 
     onBeforeMount(() => init())
 
-    function init (isIntersecting?: boolean) {
+    function init(isIntersecting?: boolean) {
       if (props.eager && isIntersecting) return
       if (
         SUPPORTS_INTERSECTION_OBSERVER
@@ -157,23 +157,23 @@ export const Image = defineComponent({
       })
     }
 
-    function onLoad () {
+    function onLoad() {
       getSrc()
       state.value = 'loaded'
       emit('load', image.value?.currentSrc || props.src, image.value)
     }
 
-    function onError () {
+    function onError() {
       state.value = 'error'
       emit('error', image.value?.currentSrc || props.src, image.value)
     }
 
-    function getSrc () {
+    function getSrc() {
       const img = image.value
       if (img) currentSrc.value = img.currentSrc || img.src
     }
 
-    function pollForSize (img: HTMLImageElement, timeout: number | null = 100) {
+    function pollForSize(img: HTMLImageElement, timeout: number | null = 100) {
       const poll = () => {
         const { naturalHeight: imgHeight, naturalWidth: imgWidth } = img
 
@@ -217,9 +217,9 @@ export const Image = defineComponent({
           {
             withDirectives(
               sources
-                ? <picture class="ve-image__picture">{ sources }{ img }</picture>
+                ? <picture className="ve-image__picture">{ sources }{ img }</picture>
                 : img,
-              [[vShow, state.value === 'loaded']]
+              [[vShow, state.value === 'loaded']],
             )
           }
         </MaybeTransition>
@@ -230,7 +230,7 @@ export const Image = defineComponent({
       <MaybeTransition transition={ props.transition }>
         { props.lazySrc && state.value !== 'loaded' && (
           <img
-            class={['ve-image__img', 've-image__img--preload', containClasses.value]}
+            className={['ve-image__img', 've-image__img--preload', containClasses.value]}
             src={ props.lazySrc }
             alt=""
           />
@@ -243,8 +243,8 @@ export const Image = defineComponent({
 
       return (
         <MaybeTransition transition={ props.transition } appear>
-          { (state.value === 'loading' || (state.value === 'error' && !slots.error)) &&
-            <div class="ve-image__placeholder">{ slots.placeholder() }</div>
+          { (state.value === 'loading' || (state.value === 'error' && !slots.error))
+            && <div className="ve-image__placeholder">{ slots.placeholder() }</div>
           }
         </MaybeTransition>
       )
@@ -255,8 +255,8 @@ export const Image = defineComponent({
 
       return (
         <MaybeTransition transition={ props.transition } appear>
-          { state.value === 'error' &&
-            <div class="ve-image__error">{ slots.error() }</div>
+          { state.value === 'error'
+            && <div className="ve-image__error">{ slots.error() }</div>
           }
         </MaybeTransition>
       )
@@ -265,7 +265,7 @@ export const Image = defineComponent({
     const __gradient = computed(() => {
       if (!props.gradient) return
 
-      return <div class="ve-image__gradient" style={{ backgroundImage: `linear-gradient(${props.gradient})` }} />
+      return <div className="ve-image__gradient" style={{ backgroundImage: `linear-gradient(${ props.gradient })` }} />
     })
 
     const isBooted = ref(false)
@@ -290,7 +290,7 @@ export const Image = defineComponent({
           { 've-image--booting': !isBooted.value },
         ]}
         style={{
-          width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width)
+          width: convertToUnit(props.width === 'auto' ? naturalWidth.value : props.width),
         }}
         aspectRatio={ aspectRatio.value }
         aria-label={ props.alt }

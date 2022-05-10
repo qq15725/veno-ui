@@ -1,9 +1,9 @@
 // Utils
 import { computed, ref } from 'vue'
-import { propsFactory, getCurrentInstance, getCurrentInstanceName } from '../../utils'
+import type { ExtractPropTypes, PropType } from 'vue'
+import { getCurrentInstance, getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Types
-import type { ExtractPropTypes, PropType } from 'vue'
 
 export type ValidationResult = string | true
 export type ValidationRule =
@@ -58,9 +58,9 @@ export const makeValidationProps = propsFactory({
   modelValue: null,
 })
 
-export function useValidation (
+export function useValidation(
   props: ExtractPropTypes<ReturnType<typeof makeValidationProps>>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const errorMessages = ref<string[]>([])
   const isPristine = ref(true)
@@ -68,9 +68,9 @@ export function useValidation (
   const isReadonly = computed(() => !!props.readonly)
   const isValid = computed(() => {
     if (
-      props.error ||
-      props.errorMessages?.length ||
-      errorMessages.value.length
+      props.error
+      || props.errorMessages?.length
+      || errorMessages.value.length
     ) return false
 
     return isPristine.value ? null : true
@@ -86,18 +86,18 @@ export function useValidation (
 
   const vm = getCurrentInstance('useValidation')
 
-  function reset () {
+  function reset() {
     resetValidation()
 
     vm?.emit('update:modelValue', null)
   }
 
-  function resetValidation () {
+  function resetValidation() {
     isPristine.value = true
     errorMessages.value = []
   }
 
-  async function validate () {
+  async function validate() {
     const results = []
     errorMessages.value = []
     isValidating.value = true

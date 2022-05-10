@@ -21,15 +21,15 @@ export const TableNoData = defineComponent({
     },
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => {
       return (
-        <div class="ve-table-no-data">
+        <div className="ve-table-no-data">
           <Icon icon={ props.icon } size={ 48 } class="mb-3" />
 
           <div>{ slots.default?.() ?? props.text }</div>
         </div>
       )
     }
-  }
+  },
 })

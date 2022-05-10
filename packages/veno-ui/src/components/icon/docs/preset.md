@@ -25,7 +25,7 @@ import { defineComponent } from 'vue'
 import { aliases } from 'veno-ui/lib/iconsets/mdi'
 
 export default defineComponent({
-  setup () {
+  setup() {
     return {
       aliases,
     }

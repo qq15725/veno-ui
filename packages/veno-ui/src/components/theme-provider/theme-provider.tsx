@@ -13,10 +13,10 @@ export const ThemeProvider = defineComponent({
 
   props: {
     ...makeTagProps(),
-    ...makeThemeProps()
+    ...makeThemeProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { themeClasses } = provideTheme(props)
 
     return () => {
@@ -24,12 +24,12 @@ export const ThemeProvider = defineComponent({
         <props.tag
           class={ [
             've-theme-provider',
-            themeClasses.value
+            themeClasses.value,
           ] }
         >
           { slots.default?.() }
         </props.tag>
       )
     }
-  }
+  },
 })

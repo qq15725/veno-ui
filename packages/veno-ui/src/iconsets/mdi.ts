@@ -5,7 +5,7 @@ import { h } from 'vue'
 import { IconClass } from '../components/icon/icon-class'
 
 // Types
-import type { IconsAliases, IconSetComponent } from '../composables/icons'
+import type { IconSetComponent, IconsAliases } from '../composables/icons'
 
 export const mdi: IconSetComponent = (props: any) => h(IconClass, { ...props, class: 'mdi' })
 

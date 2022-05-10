@@ -1,19 +1,18 @@
 // Utils
-import { ref, onScopeDispose, readonly } from 'vue'
+import { onScopeDispose, readonly, ref } from 'vue'
+import type { DeepReadonly, Ref } from 'vue'
 import { createSharedComposable } from '../../utils'
 
 // Types
-import type { DeepReadonly, Ref } from 'vue'
 
-interface SharedClickState
-{
+interface SharedClickState {
   clickedEl: Ref<HTMLElement | undefined>
-  clickedPosition: DeepReadonly<Ref<{ left: number, top: number } | undefined>>
+  clickedPosition: DeepReadonly<Ref<{ left: number; top: number } | undefined>>
 }
 
 export const useSharedClick = createSharedComposable<SharedClickState>(() => {
   const clickedEl = ref<HTMLElement>()
-  const clickedPosition = ref<{ left: number, top: number }>()
+  const clickedPosition = ref<{ left: number; top: number }>()
 
   const onClick = (e: MouseEvent) => {
     clickedEl.value = e.target as HTMLElement | undefined

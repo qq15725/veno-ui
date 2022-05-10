@@ -15,18 +15,18 @@ export const Paper = defineComponent({
 
   props: makePaperProps(),
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { paperClasses, paperStyles } = usePaper(props)
 
     return () => (
       <props.tag
         class={ [
           've-paper',
-          paperClasses.value
+          paperClasses.value,
         ] }
         style={ paperStyles.value }
         v-slots={ slots }
       />
     )
-  }
+  },
 })

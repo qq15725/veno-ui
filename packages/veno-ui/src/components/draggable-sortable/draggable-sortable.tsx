@@ -2,7 +2,7 @@
 import './styles/draggable-sortable.scss'
 
 // Utils
-import { cloneVNode, computed, watch, mergeProps, toHandlers } from 'vue'
+import { cloneVNode, computed, mergeProps, toHandlers, watch } from 'vue'
 import { defineComponent, isComponentInstance } from '../../utils'
 
 // Composables
@@ -21,7 +21,7 @@ export const DraggableSortable = defineComponent({
     'update:modelValue': (value: any[]) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const {
       model, modelEls, active, pointerEvents,
       keyToIndex, indexToKey,
@@ -46,7 +46,7 @@ export const DraggableSortable = defineComponent({
           item: value,
           draggable,
           droppable,
-          props: mergeProps(draggable, droppable)
+          props: mergeProps(draggable, droppable),
         })
 
         if (vnode && vnode[0]) {
@@ -54,7 +54,7 @@ export const DraggableSortable = defineComponent({
           vnode[0].props = mergeProps(vnode[0].props || {}, {
             class: {
               've-draggable-sortable--active': key === active.value,
-            }
+            },
           })
         }
 
@@ -78,5 +78,5 @@ export const DraggableSortable = defineComponent({
         { ghostVNode.value && genGhost() }
       </>
     }
-  }
+  },
 })

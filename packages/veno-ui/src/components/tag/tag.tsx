@@ -5,8 +5,8 @@ import './styles/tag.scss'
 import { defineComponent } from '../../utils'
 
 // Composables
-import { makePaperProps, usePaper, genOverlays } from '../../composables/paper'
-import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { genOverlays, makePaperProps, usePaper } from '../../composables/paper'
+import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'
 import { makeLoadingProps, useLoading } from '../../composables/loading'
 import { makeGroupItemProps, useGroupItem } from '../../composables/group'
@@ -110,14 +110,14 @@ export const Tag = defineComponent({
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { attrs, emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const isActive = useProxiedModel(props, 'modelValue')
     const { paperClasses, paperStyles } = usePaper(props)
     const { loadingClasses } = useLoading(props)
     const group = useGroupItem(props, TagGroupKey, false)
     const link = useLink(props, attrs)
 
-    function onCloseClick (e: MouseEvent) {
+    function onCloseClick(e: MouseEvent) {
       isActive.value = false
       emit('click:close', e)
     }
@@ -151,11 +151,11 @@ export const Tag = defineComponent({
               { genOverlays(isClickable, 've-tag') }
 
               { hasPrepend && (
-                <div class={ [
+                <div className={ [
                   've-tag__prepend',
                   {
                     've-tag__prepend--avatar': props.prependAvatar,
-                  }
+                  },
                 ] }>
                   { slots.prepend?.() ?? (
                     <Avatar
@@ -178,7 +178,7 @@ export const Tag = defineComponent({
               }) ?? props.text }
 
               { hasAppend && (
-                <div class="ve-tag__append">
+                <div className="ve-tag__append">
                   { slots.append?.() ?? (
                     <Avatar
                       color="inherit"
@@ -191,7 +191,7 @@ export const Tag = defineComponent({
               ) }
 
               { hasClose && (
-                <div class="ve-tag__close">
+                <div className="ve-tag__close">
                   { slots.close?.({ props: { onClick: onCloseClick } }) ?? (
                     <Button
                       variant="plain"
@@ -208,7 +208,7 @@ export const Tag = defineComponent({
         </MaybeTransition>
       )
     }
-  }
+  },
 })
 
 export type Tag = InstanceType<typeof Tag>

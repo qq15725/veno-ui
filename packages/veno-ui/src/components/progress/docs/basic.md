@@ -31,7 +31,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup () {
+  setup() {
     return {
       value: ref(30),
       strokeWidth: ref(3),

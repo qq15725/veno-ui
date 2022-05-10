@@ -1,9 +1,9 @@
 // Utils
+import type { PropType } from 'vue'
 import { propsFactory } from '../../utils'
 
 // Types
-import { PropType } from 'vue'
-import { IconValue } from '../icons/types'
+import type { IconValue } from '../icons/types'
 
 export const makeIconProps = propsFactory({
   /**
@@ -17,7 +17,7 @@ export const makeIconProps = propsFactory({
   tag: {
     type: String,
     default: 'i',
-  }
+  },
 }, 'icon')
 
 export const makeIconSetProps = propsFactory({
@@ -35,5 +35,5 @@ export const makeIconSetProps = propsFactory({
   tag: {
     type: String,
     required: true,
-  }
+  },
 }, 'icon-set')

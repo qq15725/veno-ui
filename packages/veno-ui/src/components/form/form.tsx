@@ -2,7 +2,8 @@
 import './styles/form.scss'
 
 // Utils
-import { toRef, computed } from 'vue'
+import { computed, toRef } from 'vue'
+import type { PropType } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
@@ -16,14 +17,13 @@ import { provideDefaults } from '../../composables/defaults'
 import { FormChildren } from './form-children'
 
 // Types
-import type { PropType } from 'vue'
 
-export type FormItemProps = {
+export interface FormItemProps {
   [key: string]: any
   $type?: 'input' | 'textarea' | 'select' | 'switch' | 'date-picker' | 'checkbox' | 'radio'
 }
 
-export type InternalFormItemProps = {
+export interface InternalFormItemProps {
   type?: FormItemProps['$type']
   props?: Record<string, any>
 }
@@ -70,12 +70,12 @@ export const Form = defineComponent({
   emits: {
     'update:valid': (_: boolean | null) => true,
     'update:modelValue': (_: Record<string, any>) => true,
-    resetValidation: () => true,
-    reset: (_: Event) => true,
-    submit: (_: Record<string, any>, __: Event) => true,
+    'resetValidation': () => true,
+    'reset': (_: Event) => true,
+    'submit': (_: Record<string, any>, __: Event) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const form = provideForm(props)
 
     const items = computed(() => {
@@ -117,14 +117,14 @@ export const Form = defineComponent({
     useRender(() => {
       return (
         <form
-          class={ [
+          className={ [
             've-form',
             {
               [`ve-form--${ props.direction }`]: !!props.direction,
               've-form--inline': props.inline,
-            }
+            },
           ] }
-          novalidate
+          noValidate
           onReset={ form.reset }
           onSubmit={ form.submit }
         >
@@ -136,7 +136,7 @@ export const Form = defineComponent({
     })
 
     return form
-  }
+  },
 })
 
 export type Form = InstanceType<typeof Form>

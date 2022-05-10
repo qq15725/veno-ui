@@ -16,18 +16,18 @@ export const Scrollbar = defineComponent({
     ...makeScrollbar(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { scrollbarClasses } = useScrollbar(props)
 
     return () => {
       return (
         <div
-          class={ [
+          className={ [
             've-scrollbar',
-            scrollbarClasses.value
+            scrollbarClasses.value,
           ] }
         >{ slots.default?.() }</div>
       )
     }
-  }
+  },
 })

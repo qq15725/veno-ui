@@ -1,10 +1,11 @@
 // Utils
+import type { PropType } from 'vue'
 import { genericComponent } from '../../utils'
 
 // Composables
 import { makeDimensionProps, useDimension } from '../../composables/dimension'
 import { makeTagProps } from '../../composables/tag'
-import { makeTransitionProps, MaybeTransition } from '../../composables/transition'
+import { MaybeTransition, makeTransitionProps } from '../../composables/transition'
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Components
@@ -14,7 +15,6 @@ import { FadeTransition } from '../transition'
 import Intersect from '../../directives/intersect'
 
 // Types
-import type { PropType } from 'vue'
 
 export type Lazy = InstanceType<typeof Lazy>
 
@@ -47,11 +47,11 @@ export const Lazy = genericComponent()({
     'update:modelValue': (value: boolean) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { dimensionStyles } = useDimension(props)
     const isActive = useProxiedModel(props, 'modelValue')
 
-    function onIntersect (isIntersecting: boolean) {
+    function onIntersect(isIntersecting: boolean) {
       if (isActive.value) return
 
       isActive.value = isIntersecting

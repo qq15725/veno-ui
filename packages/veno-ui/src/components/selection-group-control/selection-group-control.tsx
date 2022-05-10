@@ -2,17 +2,16 @@
 import './styles/selection-group-control.scss'
 
 // Utils
-import { computed, toRef, provide, inject } from 'vue'
-import { defineComponent, getUid, propsFactory, useRender, createSymbol } from '../../utils'
+import { computed, inject, provide, toRef } from 'vue'
+import type { InjectionKey, PropType, Ref } from 'vue'
+import { createSymbol, defineComponent, getUid, propsFactory, useRender } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import type { PropType, Ref, InjectionKey } from 'vue'
 
-export interface SelectionGroupInstance
-{
+export interface SelectionGroupInstance {
   disabled: Ref<boolean>
   inline: Ref<boolean>
   id: Ref<string | undefined>
@@ -52,7 +51,7 @@ export const SelectionGroupControl = defineComponent({
     'update:modelValue': (val: any) => true,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const modelValue = useProxiedModel(props, 'modelValue')
     const id = computed(() => props.name || props.id || `ve-selection-control-group-${ getUid() }`)
     const multiple = computed(() => {
@@ -78,7 +77,7 @@ export const SelectionGroupControl = defineComponent({
     useRender(() => {
       return (
         <div
-          class="ve-selection-group-control"
+          className="ve-selection-group-control"
           aria-labelled-by={ props.type === 'radio' ? group.id.value : undefined }
           role={ props.type === 'radio' ? 'radiogroup' : undefined }
         >
@@ -91,7 +90,7 @@ export const SelectionGroupControl = defineComponent({
   },
 })
 
-export function useSelectionGroupControl () {
+export function useSelectionGroupControl() {
   return inject(SelectionGroupControlKey, null)
 }
 

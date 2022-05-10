@@ -1,7 +1,6 @@
 import type { DirectiveBinding } from 'vue'
 
-interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'>
-{
+interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
   value: () => void
   modifiers?: {
     active?: boolean
@@ -9,7 +8,7 @@ interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'>
   }
 }
 
-function mounted (el: HTMLElement, binding: ResizeDirectiveBinding) {
+function mounted(el: HTMLElement, binding: ResizeDirectiveBinding) {
   const handler = binding.value
   const options: AddEventListenerOptions = {
     passive: !binding.modifiers?.active,
@@ -26,7 +25,7 @@ function mounted (el: HTMLElement, binding: ResizeDirectiveBinding) {
   }
 }
 
-function unmounted (el: HTMLElement) {
+function unmounted(el: HTMLElement) {
   if (!el._onResize) return
 
   const { handler, options } = el._onResize

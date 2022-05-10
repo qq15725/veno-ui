@@ -2,19 +2,20 @@
 import './styles/input.scss'
 
 // Utils
-import { ref, nextTick, onBeforeUnmount, onMounted, watch, computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { Teleport } from 'vue'
+import type { PropType } from 'vue'
 import {
-  genericComponent,
-  useRender,
-  getUid,
+  IN_BROWSER,
   convertToUnit,
   filterInputAttrs,
-  IN_BROWSER,
-  propsFactory
+  genericComponent,
+  getUid,
+  propsFactory,
+  useRender,
 } from '../../utils'
 
 // Components
-import { Teleport } from 'vue'
 import { FormControl } from '../form-control'
 import { InputControl } from '../input-control'
 import { Counter } from '../counter'
@@ -25,9 +26,9 @@ import { InputControlEmits } from '../input-control/input-control'
 
 // Composables
 import {
-  makeInputControlProps,
   filterInputControlProps,
   filterInputControlSlots,
+  makeInputControlProps,
 } from '../input-control/input-control'
 import {
   filterFormControlSlots,
@@ -38,9 +39,8 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import Intersect from '../../directives/intersect'
 
 // Types
-import type { PropType } from 'vue'
 import type { FormControlSlots } from '../form-control/form-control'
-import type { InputControlSlots, InputControlDefaultSlot } from '../input-control/input-control'
+import type { InputControlDefaultSlot, InputControlSlots } from '../input-control/input-control'
 import type { CounterSlot } from '../counter/counter'
 import type { MakeSlots } from '../../utils'
 
@@ -157,7 +157,7 @@ export const Input = genericComponent<new () => {
 
   emits: InputEmits,
 
-  setup (props, { attrs, slots, emit }) {
+  setup(props, { attrs, slots, emit }) {
     const inputControlRef = ref<InputControl>()
     const formControlRef = ref<FormControl>()
     const controlHeight = ref()
@@ -185,22 +185,22 @@ export const Input = genericComponent<new () => {
       return props.counter
     })
 
-    function focus () {
+    function focus() {
       inputControlRef.value?.inputRef?.focus()
     }
 
-    function blur () {
+    function blur() {
       inputControlRef.value?.inputRef?.blur()
     }
 
-    function onIntersect (isIntersecting: boolean, entries: IntersectionObserverEntry[]) {
+    function onIntersect(isIntersecting: boolean, entries: IntersectionObserverEntry[]) {
       if (!props.autofocus || !isIntersecting) return
       (entries[0].target as HTMLInputElement)?.focus?.()
     }
 
     const mirrorRef = ref<HTMLTextAreaElement | HTMLInputElement>()
 
-    function resize () {
+    function resize() {
       if (!props.autoResize) return
       nextTick(() => {
         if (!mirrorRef.value) return
@@ -215,7 +215,7 @@ export const Input = genericComponent<new () => {
         } else {
           controlWidth.value = Math.max(
             parseFloat(props.width ?? 100),
-            mirrorRef.value.scrollWidth
+            mirrorRef.value.scrollWidth,
           )
         }
       })
@@ -238,12 +238,12 @@ export const Input = genericComponent<new () => {
       observer?.disconnect()
     })
 
-    function onControlClick (e: MouseEvent) {
+    function onControlClick(e: MouseEvent) {
       focus()
       emit('click:control', e)
     }
 
-    function onClear (e: MouseEvent) {
+    function onClear(e: MouseEvent) {
       e.stopPropagation()
       focus()
       nextTick(() => {
@@ -326,14 +326,14 @@ export const Input = genericComponent<new () => {
                                  v-intersect={ [{
                                    handler: onIntersect,
                                  }, null, ['once']] }
-                                 autofocus={ props.autofocus }
+                                 autoFocus={ props.autofocus }
                                  disabled={ isDisabled.value }
                                  id={ id.value }
                                  name={ props.name }
                                  onFocus={ focus }
                                  onBlur={ blur }
                                  placeholder={ props.placeholder }
-                                 readonly={ isReadonly.value }
+                                 readOnly={ isReadonly.value }
                                  ref={ inputRef }
                                  rows={ props.rows }
                                  { ...nativeControlProps }
@@ -342,10 +342,10 @@ export const Input = genericComponent<new () => {
 
                                 { props.autoResize && (
                                   <textarea
-                                    class="ve-input__textarea-mirror"
+                                    className="ve-input__textarea-mirror"
                                     v-model={ model.value }
                                     ref={ mirrorRef }
-                                    readonly
+                                    readOnly
                                     aria-hidden="true"
                                     { ...nativeControlProps }
                                   />
@@ -375,14 +375,14 @@ export const Input = genericComponent<new () => {
                                       resize()
                                     }
                                   }) as any }
-                                  autofocus={ props.autofocus }
+                                  autoFocus={ props.autofocus }
                                   disabled={ isDisabled.value }
                                   id={ id.value }
                                   name={ props.name }
                                   onFocus={ focus }
                                   onBlur={ blur }
                                   placeholder={ props.placeholder }
-                                  readonly={ isReadonly.value }
+                                  readOnly={ isReadonly.value }
                                   ref={ inputRef }
                                   type={ props.type }
                                   { ...nativeControlProps }
@@ -391,7 +391,7 @@ export const Input = genericComponent<new () => {
 
                                 { props.autoResize && (
                                   <span
-                                    class="ve-input__input-mirror"
+                                    className="ve-input__input-mirror"
                                     ref={ mirrorRef }
                                     aria-hidden="true"
                                     { ...nativeControlProps }
@@ -402,14 +402,14 @@ export const Input = genericComponent<new () => {
                           </>
                         )
                       }
-                    }
+                    },
                   } }
                 </InputControl>
               )
             },
             details: hasCounter
               ? () => {
-                return (
+                  return (
                   <>
                     <span />
 
@@ -421,8 +421,8 @@ export const Input = genericComponent<new () => {
                       { { default: slots.counter } }
                     </Counter>
                   </>
-                )
-              }
+                  )
+                }
               : formControlSlots?.details as any,
           } }
         </FormControl>
@@ -435,7 +435,7 @@ export const Input = genericComponent<new () => {
       blur,
       focus,
     }
-  }
+  },
 })
 
 export type Input = InstanceType<typeof Input>

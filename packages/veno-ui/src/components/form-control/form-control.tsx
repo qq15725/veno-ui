@@ -2,8 +2,9 @@
 import './styles/form-control.scss'
 
 // Utils
-import { computed, toRef, onBeforeMount, onBeforeUnmount } from 'vue'
-import { genericComponent, convertToUnit, useRender, pick, getUid } from '../../utils'
+import { computed, onBeforeMount, onBeforeUnmount, toRef } from 'vue'
+import type { ComputedRef, PropType, Ref } from 'vue'
+import { convertToUnit, genericComponent, getUid, pick, useRender } from '../../utils'
 
 // Components
 import { Label } from '../label'
@@ -19,10 +20,9 @@ import { makeValidationProps, useValidation } from '../../composables/validation
 import { useProxiedModel } from '../../composables/proxied-model'
 
 // Types
-import type { ComputedRef, PropType, Ref } from 'vue'
 import type { MakeSlots } from '../../utils'
 
-export type FormControlSlot = {
+export interface FormControlSlot {
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
   isPristine: Ref<boolean | null>
@@ -34,14 +34,14 @@ export type FormControlSlot = {
 }
 
 export type FormControlSlots = MakeSlots<{
-  prepend: [FormControlSlot],
-  label: [FormControlSlot],
+  prepend: [FormControlSlot]
+  label: [FormControlSlot]
   default: [FormControlSlot & { props: Record<string, unknown> }],
-  append: [FormControlSlot],
-  details: [FormControlSlot],
+  append: [FormControlSlot]
+  details: [FormControlSlot]
 }>
 
-export function filterFormControlSlots (slots: Record<string, unknown>) {
+export function filterFormControlSlots(slots: Record<string, unknown>) {
   return pick(slots, FormControlSlots)
 }
 
@@ -146,8 +146,8 @@ export const FormControl = genericComponent<new () => {
 
   emits: FormControlEmits,
 
-  setup (props, { slots, emit }) {
-    const { dimensionStyles: dimensionStyles } = useDimension(props)
+  setup(props, { slots, emit }) {
+    const { dimensionStyles } = useDimension(props)
     const { sizeClasses, sizeStyles } = useSize(props)
     const model = useProxiedModel(props, 'modelValue')
     const computedDimensionStyles = computed(() => ({
@@ -178,7 +178,7 @@ export const FormControl = genericComponent<new () => {
         modelValue: model,
         validate,
         reset,
-        resetValidation
+        resetValidation,
       })
     })
 
@@ -203,22 +203,22 @@ export const FormControl = genericComponent<new () => {
       const hasAppend = !!(slots.append || props.appendIcon)
       const hasHint = !!(slots.hint || props.hint)
       const hasMessages = !!(
-        slots.messages ||
-        props.messages?.length ||
-        errorMessages.value.length
+        slots.messages
+        || props.messages?.length
+        || errorMessages.value.length
       )
       const hasDetails = !props.hideDetails || (
-        props.hideDetails === 'auto' &&
-        (hasMessages || hasHint)
+        props.hideDetails === 'auto'
+        && (hasMessages || hasHint)
       )
       const showMessages = hasMessages || (
-        hasHint &&
-        (props.persistentHint || props.focused)
+        hasHint
+        && (props.persistentHint || props.focused)
       )
 
       return (
         <div
-          class={ [
+          className={ [
             've-form-control',
             {
               [`ve-form-control--${ props.direction }`]: !!props.direction,
@@ -231,7 +231,7 @@ export const FormControl = genericComponent<new () => {
           ] }
         >
           { hasPrepend && (
-            <div class="ve-form-control__prepend">
+            <div className="ve-form-control__prepend">
               { slots.prepend?.(slotProps.value) }
 
               { props.prependIcon && (
@@ -245,7 +245,7 @@ export const FormControl = genericComponent<new () => {
 
           { hasLabel && (
             <div
-              class="ve-form-control__label"
+              className="ve-form-control__label"
               style={ { width: convertToUnit(props.labelWidth) } }
             >
               <Label
@@ -261,7 +261,7 @@ export const FormControl = genericComponent<new () => {
 
           { slots.default && (
             <div
-              class="ve-form-control__control"
+              className="ve-form-control__control"
               style={ [
                 sizeStyles.value,
                 computedDimensionStyles.value,
@@ -272,7 +272,7 @@ export const FormControl = genericComponent<new () => {
           ) }
 
           { hasAppend && (
-            <div class="ve-form-control__append">
+            <div className="ve-form-control__append">
               { props.appendIcon && (
                 <Icon
                   onClick={ (e: MouseEvent) => emit('click:append', e) }
@@ -285,7 +285,7 @@ export const FormControl = genericComponent<new () => {
           ) }
 
           { hasDetails && (
-            <div class="ve-form-control__details">
+            <div className="ve-form-control__details">
               <Messages
                 active={ showMessages }
                 value={ hasMessages ? props.messages : [props.hint] }
@@ -309,7 +309,7 @@ export const FormControl = genericComponent<new () => {
       resetValidation,
       validate,
     }
-  }
+  },
 })
 
 export type FormControl = InstanceType<typeof FormControl>

@@ -3,11 +3,11 @@ import './styles/tab.scss'
 
 // Utils
 import { computed, ref, toRef, watch } from 'vue'
+import type { PropType } from 'vue'
 import { defineComponent, pick, standardEasing, useRender } from '../../utils'
 
 // Components
 import { Button } from '../../components/button'
-import { TabsKey } from './tabs'
 
 // Composables
 import { makeGroupItemProps, useGroupItem } from '../../composables/group'
@@ -16,9 +16,9 @@ import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps } from '../../composables/theme'
 import { provideDefaults } from '../../composables/defaults'
 import { useTextColor } from '../../composables/color'
+import { TabsKey } from './tabs'
 
 // Types
-import type { PropType } from 'vue'
 
 export const Tab = defineComponent({
   name: 'VeTab',
@@ -53,11 +53,11 @@ export const Tab = defineComponent({
     ...makeThemeProps(),
   },
 
-  setup (props, { slots, attrs }) {
+  setup(props, { slots, attrs }) {
     const { isSelected, select, selectedClass } = useGroupItem(props, TabsKey)
     const {
       textColorClasses: sliderColorClasses,
-      textColorStyles: sliderColorStyles
+      textColorStyles: sliderColorStyles,
     } = useTextColor(props, 'sliderColor')
     const isHorizontal = computed(() => props.direction === 'horizontal')
 
@@ -95,9 +95,11 @@ export const Tab = defineComponent({
         const delta = prevPos > nextPos
           ? prevBox[rightBottom] - nextBox[rightBottom]
           : prevBox[xy] - nextBox[xy]
-        const origin =
-          Math.sign(delta) > 0 ? (isHorizontal.value ? 'right' : 'bottom')
-            : Math.sign(delta) < 0 ? (isHorizontal.value ? 'left' : 'top')
+        const origin
+          = Math.sign(delta) > 0
+            ? (isHorizontal.value ? 'right' : 'bottom')
+            : Math.sign(delta) < 0
+              ? (isHorizontal.value ? 'left' : 'top')
               : 'center'
         const size = Math.abs(delta) + (Math.sign(delta) < 0 ? prevBox[widthHeight] : nextBox[widthHeight])
         const scale = size / Math.max(prevBox[widthHeight], nextBox[widthHeight])
@@ -151,7 +153,7 @@ export const Tab = defineComponent({
           { !props.hideSlider && (
             <div
               ref={ sliderEl }
-              class={ [
+              className={ [
                 've-tab__slider',
                 sliderColorClasses.value,
               ] }

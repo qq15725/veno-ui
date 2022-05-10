@@ -3,8 +3,7 @@ import type { JSXComponent } from 'vue'
 
 export type IconValue = string | JSXComponent
 
-export interface IconsAliases
-{
+export interface IconsAliases {
   checkboxIndeterminate: IconValue
   checkboxOn: IconValue
   checkboxOff: IconValue
@@ -42,8 +41,7 @@ export type IconSetComponent = JSXComponent<{
   tag: string
 }>
 
-export interface IconsOptions
-{
+export interface IconsOptions {
   /**
    * @zh 所有图标的别名
    */

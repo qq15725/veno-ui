@@ -41,6 +41,6 @@ export default defineConfig(({ mode }) => {
     define: {
       __UI_NAME__: JSON.stringify(pkg.name),
       __UI_VERSION__: JSON.stringify(pkg.version),
-    }
+    },
   }
 })

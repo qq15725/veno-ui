@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory, getCurrentInstanceName } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../tag'
@@ -29,16 +29,15 @@ import type { MaybeRef } from '../../utils'
 
 export interface PaperProps
   extends TagProps,
-    ThemeProps,
-    VariantProps,
-    PositionProps,
-    DimensionProps,
-    SizeProps,
-    DensityProps,
-    BorderProps,
-    ShapeProps,
-    ElevationProps
-{
+  ThemeProps,
+  VariantProps,
+  PositionProps,
+  DimensionProps,
+  SizeProps,
+  DensityProps,
+  BorderProps,
+  ShapeProps,
+  ElevationProps {
   //
 }
 
@@ -57,9 +56,9 @@ export const makePaperProps = propsFactory({
   ...makeElevationProps(),
 }, 'paper')
 
-export function usePaper (
+export function usePaper(
   props: MaybeRef<PaperProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const { themeClasses } = provideTheme(props)
   const { colorClasses, variantClasses, colorStyles } = useVariant(props, name)

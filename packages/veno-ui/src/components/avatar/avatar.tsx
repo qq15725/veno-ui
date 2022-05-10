@@ -2,7 +2,7 @@
 import './styles/avatar.scss'
 
 // Utils
-import { ref, toRef, watch, nextTick } from 'vue'
+import { nextTick, ref, toRef, watch } from 'vue'
 import { defineComponent, propsFactory } from '../../utils'
 
 // Directives
@@ -62,19 +62,19 @@ export const Avatar = defineComponent({
 
   props: makeAvatarProps(),
 
-  setup (props, { slots, attrs }) {
+  setup(props, { slots, attrs }) {
     const { paperClasses, paperStyles } = usePaper(props)
 
     const rootRef = ref<HTMLElement | null>()
     const contentRef = ref<HTMLElement | null>()
 
-    function onResize () {
+    function onResize() {
       nextTick(() => {
         if (!rootRef.value || !contentRef.value) return
         const ratio = Math.min(
           (rootRef.value.offsetWidth / contentRef.value.offsetWidth) * RADIX,
           (rootRef.value.offsetHeight / contentRef.value.offsetHeight) * RADIX,
-          1
+          1,
         )
         contentRef.value.style.transform = `translateX(-50%) translateY(-50%) scale(${ ratio })`
       })
@@ -120,7 +120,7 @@ export const Avatar = defineComponent({
 
           { hasText && !hasIcon && !hasImage && (
             <span
-              class="ve-avatar__wrapper"
+              className="ve-avatar__wrapper"
               ref={ contentRef }
             >
               { props.text }
@@ -131,7 +131,7 @@ export const Avatar = defineComponent({
         </props.tag>
       )
     }
-  }
+  },
 })
 
 export type Avatar = InstanceType<typeof Avatar>

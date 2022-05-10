@@ -21,7 +21,7 @@ export const Main = defineComponent({
     ...makeColorProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const { mainStyles } = useLayoutMain()
     const { colorClasses, colorStyles } = useColor(computed(() => {
       const { textColor, color } = unref(props)
@@ -42,7 +42,7 @@ export const Main = defineComponent({
           colorStyles.value,
         ] }
       >
-        <div class="ve-main__wrap">
+        <div className="ve-main__wrap">
           { slots.default?.() }
         </div>
       </props.tag>

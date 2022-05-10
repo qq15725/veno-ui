@@ -14,11 +14,11 @@ export const ToolbarItems = defineComponent({
 
   props: {
     ...makeVariantProps({
-      variant: 'contained-text'
+      variant: 'contained-text',
     } as const),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     provideDefaults({
       VeButton: {
         color: toRef(props, 'color'),

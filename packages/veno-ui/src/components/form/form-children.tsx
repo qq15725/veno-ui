@@ -1,4 +1,5 @@
 // Utils
+import type { PropType } from 'vue'
 import { defineComponent, pick } from '../../utils'
 
 // Components
@@ -11,7 +12,6 @@ import { Select } from '../select'
 import { Switch } from '../switch'
 
 // Types
-import type { PropType } from 'vue'
 import type { InternalFormItemProps } from './form'
 
 export const FormChildren = defineComponent({
@@ -21,7 +21,7 @@ export const FormChildren = defineComponent({
     items: Array as PropType<InternalFormItemProps[]>,
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     return () => slots.default?.() ?? props.items?.map(({ type, props: itemProps }) => {
       switch (type) {
         case 'textarea':
@@ -48,7 +48,7 @@ export const FormChildren = defineComponent({
           return <Input { ...itemProps } />
       }
     })
-  }
+  },
 })
 
 export type FormChildren = InstanceType<typeof FormChildren>

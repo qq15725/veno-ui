@@ -3,16 +3,16 @@ import './styles/col.scss'
 
 // Utils
 import { capitalize, computed } from 'vue'
+import type { Prop } from 'vue'
 import { defineComponent, propsFactory } from '../../utils'
 
 // Composables
-import { makeTagProps } from '../../composables/tag'
-
-// Constants
-const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const // no xs
+import { makeTagProps } from '../../composables/tag' // no xs
 
 // Types
-import type { Prop } from 'vue'
+
+// Constants
+const breakpoints = ['sm', 'md', 'lg', 'xl', 'xxl'] as const
 
 const breakpointProps = (() => {
   return breakpoints.reduce((props, val) => {
@@ -26,7 +26,7 @@ const breakpointProps = (() => {
 
 const offsetProps = (() => {
   return breakpoints.reduce((props, val) => {
-    props['offset' + capitalize(val)] = {
+    props[`offset${ capitalize(val) }`] = {
       type: [String, Number],
       default: null,
     }
@@ -36,7 +36,7 @@ const offsetProps = (() => {
 
 const orderProps = (() => {
   return breakpoints.reduce((props, val) => {
-    props['order' + capitalize(val)] = {
+    props[`order${ capitalize(val) }`] = {
       type: [String, Number],
       default: null,
     }
@@ -50,7 +50,7 @@ const propMap = {
   order: Object.keys(orderProps),
 }
 
-function breakpointClass (type: keyof typeof propMap, prop: string, val: boolean | string | number) {
+function breakpointClass(type: keyof typeof propMap, prop: string, val: boolean | string | number) {
   let className: string = type
   if (val == null || val === false) {
     return undefined
@@ -60,7 +60,7 @@ function breakpointClass (type: keyof typeof propMap, prop: string, val: boolean
     className += `-${ breakpoint }`
   }
   if (type === 'col') {
-    className = 've-' + className
+    className = `ve-${ className }`
   }
   // Handling the boolean style prop when accepting [Boolean, String, Number]
   // means Vue will not convert <v-col sm></v-col> to sm: true for us.
@@ -107,7 +107,7 @@ export const Col = defineComponent({
     ...makeColProps(),
   },
 
-  setup (props, { slots }) {
+  setup(props, { slots }) {
     const classes = computed(() => {
       const classList: any[] = []
 

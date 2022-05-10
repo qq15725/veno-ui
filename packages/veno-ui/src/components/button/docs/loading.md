@@ -17,9 +17,9 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup () {
+  setup() {
     const loading = ref(false)
-    
+
     return {
       loading,
       toggle: () => {

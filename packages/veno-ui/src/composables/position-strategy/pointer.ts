@@ -1,16 +1,16 @@
 // Utils
 import { onScopeDispose } from 'vue'
+import type { Ref } from 'vue'
 import { convertToUnit } from '../../utils'
 
 // Types
 import type { PositionStrategyData, PositionStrategyProps } from './index'
-import type { Ref } from 'vue'
 
-export function pointerPositionStrategy (
+export function pointerPositionStrategy(
   data: PositionStrategyData,
   props: PositionStrategyProps,
   contentStyles: Ref<Record<string, string>>,
-  anchorClasses: Ref<string[]>
+  anchorClasses: Ref<string[]>,
 ) {
   const updatePosition = (e: MouseEvent) => {
     const box = { left: e.clientX, top: e.clientY }

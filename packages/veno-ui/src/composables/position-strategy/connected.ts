@@ -1,20 +1,20 @@
 // Utils
 import { computed, nextTick, onScopeDispose, watch } from 'vue'
+import type { Ref } from 'vue'
 import {
   Box,
+  anchorToPoint,
   convertToUnit,
+  getOffset,
   getScrollParent,
   isFixedPosition,
   nullifyTransforms,
   oppositeAnchor,
   parseAnchor,
   physicalAnchor,
-  anchorToPoint,
-  getOffset
 } from '../../utils'
 
 // Types
-import type { Ref } from 'vue'
 import type { PositionStrategyData, PositionStrategyProps } from './index'
 
 /**
@@ -25,11 +25,11 @@ import type { PositionStrategyData, PositionStrategyProps } from './index'
  * @param contentStyles
  * @param anchorClasses
  */
-export function connectedPositionStrategy (
+export function connectedPositionStrategy(
   data: PositionStrategyData,
   props: PositionStrategyProps,
   contentStyles: Ref<Record<string, string>>,
-  anchorClasses: Ref<string[]>
+  anchorClasses: Ref<string[]>,
 ) {
   if (!data.activatorEl.value) return
   const activatorFixed = isFixedPosition(data.activatorEl.value)
@@ -78,7 +78,7 @@ export function connectedPositionStrategy (
   watch(
     () => [preferredAnchor.value, preferredOrigin.value, props.offset],
     () => updatePosition(),
-    { immediate: !activatorFixed }
+    { immediate: !activatorFixed },
   )
 
   if (activatorFixed) nextTick(() => updatePosition())
@@ -90,7 +90,7 @@ export function connectedPositionStrategy (
   })
 
   // eslint-disable-next-line max-statements
-  function updatePosition () {
+  function updatePosition() {
     observe = false
     requestAnimationFrame(() => {
       requestAnimationFrame(() => observe = true)
@@ -176,7 +176,7 @@ export function connectedPositionStrategy (
       if (doesOverlap.value || ['center', 'top', 'bottom'].includes(anchor.side)) {
         maxWidth = Math.min(
           viewportWidth,
-          Math.max(targetBox.width, viewportWidth - viewportMargin * 2)
+          Math.max(targetBox.width, viewportWidth - viewportMargin * 2),
         )
       } else if (anchor.side === 'end') {
         maxWidth = freeSpace.right
@@ -203,12 +203,12 @@ export function connectedPositionStrategy (
 
     Object.assign(contentStyles.value, {
       '--ve-overlay-anchor-origin': physicalAnchor(anchor, data.activatorEl.value!),
-      transformOrigin: physicalAnchor(origin, data.activatorEl.value!),
-      top: convertToUnit(Math.round(y)),
-      left: convertToUnit(Math.round(x)),
-      minWidth: convertToUnit(minWidth),
-      maxWidth: convertToUnit(maxWidth),
-      maxHeight: convertToUnit(maxHeight),
+      'transformOrigin': physicalAnchor(origin, data.activatorEl.value!),
+      'top': convertToUnit(Math.round(y)),
+      'left': convertToUnit(Math.round(x)),
+      'minWidth': convertToUnit(minWidth),
+      'maxWidth': convertToUnit(maxWidth),
+      'maxHeight': convertToUnit(maxHeight),
     })
 
     anchorClasses.value = [

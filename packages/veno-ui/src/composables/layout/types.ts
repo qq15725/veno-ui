@@ -1,7 +1,6 @@
-import type { Ref, ComponentInternalInstance } from 'vue'
+import type { ComponentInternalInstance, Ref } from 'vue'
 
-export interface LayoutInstance
-{
+export interface LayoutInstance {
   register: (
     vm: ComponentInternalInstance,
     id: string,
@@ -19,8 +18,7 @@ export interface LayoutInstance
   overlays: Ref<number[]>
 }
 
-export interface LayoutItem extends Required<LayoutItemProps>, LayoutLayer
-{
+export interface LayoutItem extends Required<LayoutItemProps>, LayoutLayer {
   id: string
   size: number
   layoutSize: number
@@ -28,16 +26,14 @@ export interface LayoutItem extends Required<LayoutItemProps>, LayoutLayer
   active: boolean
 }
 
-export interface LayoutLayer
-{
+export interface LayoutLayer {
   top: number
   right: number
   bottom: number
   left: number
 }
 
-export interface LayoutItemProps
-{
+export interface LayoutItemProps {
   position?: 'absolute' | 'fixed'
   anchor?: LayoutAnchor
   active?: boolean

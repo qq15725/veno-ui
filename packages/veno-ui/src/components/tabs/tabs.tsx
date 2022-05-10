@@ -3,11 +3,11 @@ import './styles/tabs.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { defineComponent, createSymbol } from '../../utils'
+import type { InjectionKey, PropType } from 'vue'
+import { createSymbol, defineComponent } from '../../utils'
 
 // Components
 import { SlideGroup } from '../slide-group'
-import { Tab } from './tab'
 
 // Composables
 import { makeDensityProps, useDensity } from '../../composables/density'
@@ -16,11 +16,11 @@ import { provideDefaults } from '../../composables/defaults'
 
 // Types
 import type { GroupInstance } from '../../composables/group'
-import type { InjectionKey, PropType } from 'vue'
+import { Tab } from './tab'
 
 export type TabItem = string | Record<string, any>
 
-function parseItems (items: TabItem[] | undefined) {
+function parseItems(items: TabItem[] | undefined) {
   if (!items) return []
 
   return items.map(item => {
@@ -64,7 +64,7 @@ export const Tabs = defineComponent({
     ...makeTagProps(),
   },
 
-  setup (props, { slots, attrs }) {
+  setup(props, { slots, attrs }) {
     const parsedItems = computed(() => parseItems(props.items))
     const { densityClasses } = useDensity(props)
 
@@ -100,9 +100,11 @@ export const Tabs = defineComponent({
         direction={ props.direction }
         { ...attrs }
       >
-        { slots.default ? slots.default() : parsedItems.value.map(item => (
+        { slots.default
+          ? slots.default()
+          : parsedItems.value.map(item => (
           <Tab { ...item } key={ item.title } />
-        )) }
+          )) }
       </SlideGroup>
     )
   },

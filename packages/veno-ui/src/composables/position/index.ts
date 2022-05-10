@@ -1,13 +1,13 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory, convertToUnit, getCurrentInstanceName } from '../../utils'
+import type { ExtractPropTypes, PropType } from 'vue'
+import { convertToUnit, getCurrentInstanceName, propsFactory } from '../../utils'
+
+// Types
+import type { MaybeRef } from '../../utils'
 
 // Constants
 export const POSITIONS = ['static', 'relative', 'fixed', 'absolute', 'sticky'] as const
-
-// Types
-import type { ExtractPropTypes, PropType } from 'vue'
-import type { MaybeRef } from '../../utils'
 
 type Position = typeof POSITIONS[number]
 
@@ -53,9 +53,9 @@ export const makePositionProps = propsFactory({
   top: [Boolean, Number, String],
 }, 'position')
 
-export function usePosition (
+export function usePosition(
   props: MaybeRef<PositionProps>,
-  name = getCurrentInstanceName()
+  name = getCurrentInstanceName(),
 ) {
   const targets = ['top', 'right', 'bottom', 'left'] as const
 
@@ -65,7 +65,7 @@ export function usePosition (
       return `${ name }--fixed`
     } else if (absolute) {
       return `${ name }--absolute`
-    } else if (!!position) {
+    } else if (position) {
       return `position-${ position }`
     }
     return null
