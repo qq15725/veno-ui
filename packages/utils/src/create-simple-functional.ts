@@ -1,5 +1,5 @@
 // Utils
-import { defineComponent, h } from 'vue'
+import { h, defineComponent } from 'vue'
 import { toKebabCase } from './string'
 
 /**
@@ -9,7 +9,7 @@ import { toKebabCase } from './string'
  * @param tag 标签
  * @param name 组件名
  */
-export function createSimpleFunctional(klass: string, tag = 'div', name?: string) {
+export function createSimpleFunctional (klass: string, tag = 'div', name?: string) {
   return defineComponent({
     name: name ?? toKebabCase(klass.replace(/__/g, '-')),
 
@@ -20,7 +20,7 @@ export function createSimpleFunctional(klass: string, tag = 'div', name?: string
       },
     },
 
-    setup(props, { slots }) {
+    setup (props, { slots }) {
       return () => h(props.tag, { class: klass }, slots.default?.())
     },
   })

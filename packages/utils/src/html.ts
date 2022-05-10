@@ -4,6 +4,6 @@ const tagsToReplace: Record<string, string> = {
   '>': '&gt;',
 }
 
-export function escapeHTML(str: string): string {
+export function escapeHTML (str: string): string {
   return str.replace(/[&<>]/g, tag => tagsToReplace[tag] || tag)
 }

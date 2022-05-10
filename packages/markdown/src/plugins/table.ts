@@ -1,6 +1,6 @@
 // Types
-import type { RenderRule } from 'markdown-it/lib/renderer'
 import type { PluginSimple } from '../types'
+import type { RenderRule } from 'markdown-it/lib/renderer'
 
 export const tablePlugin: PluginSimple = function (md) {
   const render: RenderRule = (tokens, index) => {

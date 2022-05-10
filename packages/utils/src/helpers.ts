@@ -1,17 +1,17 @@
 // Utils
-import { Fragment, camelize } from 'vue'
-import type { ComponentPublicInstance, Slots, VNode } from 'vue'
+import { camelize, Fragment } from 'vue'
 import { getObjectValueByPath } from './object'
 
 // Types
+import type { ComponentPublicInstance, Slots, VNode } from 'vue'
 
-export function deepEqual(a: any, b: any): boolean {
+export function deepEqual (a: any, b: any): boolean {
   if (a === b) return true
 
   if (
-    a instanceof Date
-    && b instanceof Date
-    && a.getTime() !== b.getTime()
+    a instanceof Date &&
+    b instanceof Date &&
+    a.getTime() !== b.getTime()
   ) {
     // If the values are Date, compare them as timestamps
     return false
@@ -32,7 +32,7 @@ export function deepEqual(a: any, b: any): boolean {
   return props.every(p => deepEqual(a[p], b[p]))
 }
 
-export function getZIndex(el?: Element | null): number {
+export function getZIndex (el?: Element | null): number {
   if (!el || el.nodeType !== Node.ELEMENT_NODE) return 0
 
   const index = +window.getComputedStyle(el).getPropertyValue('z-index')
@@ -41,9 +41,9 @@ export function getZIndex(el?: Element | null): number {
   return index
 }
 
-export function convertToUnit(str: number, unit?: string): string
-export function convertToUnit(str: string | number | null | undefined, unit?: string): string | undefined
-export function convertToUnit(str: string | number | null | undefined, unit = 'px'): string | undefined {
+export function convertToUnit (str: number, unit?: string): string
+export function convertToUnit (str: string | number | null | undefined, unit?: string): string | undefined
+export function convertToUnit (str: string | number | null | undefined, unit = 'px'): string | undefined {
   if (str == null || str === '') {
     return undefined
   } else if (isNaN(+str!)) {
@@ -55,19 +55,20 @@ export function convertToUnit(str: string | number | null | undefined, unit = 'p
   }
 }
 
-export function isComponentInstance(obj: any): obj is ComponentPublicInstance {
+export function isComponentInstance (obj: any): obj is ComponentPublicInstance {
   return obj?.$el
 }
 
-interface ItemGroup<T> {
+interface ItemGroup<T>
+{
   name: string
   items: T[]
 }
 
-export function groupItems<T extends any = any>(
+export function groupItems<T extends any = any> (
   items: T[],
   groupBy: string[],
-  groupDesc: boolean[],
+  groupDesc: boolean[]
 ): ItemGroup<T>[] {
   const key = groupBy[0]
   const groups: ItemGroup<T>[] = []
@@ -89,12 +90,12 @@ export function groupItems<T extends any = any>(
 
 type DataTableCompareFunction<T = any> = (a: T, b: T) => number
 
-export function sortItems<T extends any, K extends keyof T>(
+export function sortItems<T extends any, K extends keyof T> (
   items: T[],
   sortBy: string[],
   sortDesc: boolean[],
   locale: string,
-  customSorters?: Record<K, DataTableCompareFunction<T[K]>>,
+  customSorters?: Record<K, DataTableCompareFunction<T[K]>>
 ): T[] {
   if (sortBy === null || !sortBy.length) return items
   const stringCollator = new Intl.Collator(locale, { sensitivity: 'accent', usage: 'sort' })
@@ -140,14 +141,14 @@ export function sortItems<T extends any, K extends keyof T>(
   })
 }
 
-export function defaultFilter(value: any, search: string | null, item: any) {
-  return value != null
-    && search != null
-    && typeof value !== 'boolean'
-    && value.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
+export function defaultFilter (value: any, search: string | null, item: any) {
+  return value != null &&
+    search != null &&
+    typeof value !== 'boolean' &&
+    value.toString().toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1
 }
 
-export function searchItems<T extends any = any>(items: T[], search: string): T[] {
+export function searchItems<T extends any = any> (items: T[], search: string): T[] {
   if (!search) return items
   search = search.toString().toLowerCase()
   if (search.trim() === '') return items
@@ -155,7 +156,7 @@ export function searchItems<T extends any = any>(items: T[], search: string): T[
   return items.filter((item: any) => Object.keys(item).some(key => defaultFilter(getObjectValueByPath(item, key), search, item)))
 }
 
-export function debounce(fn: Function, delay: number) {
+export function debounce (fn: Function, delay: number) {
   let timeoutId = 0 as any
   return (...args: any[]) => {
     clearTimeout(timeoutId)
@@ -163,7 +164,7 @@ export function debounce(fn: Function, delay: number) {
   }
 }
 
-export function throttle<T extends (...args: any[]) => any>(fn: T, limit: number) {
+export function throttle<T extends (...args: any[]) => any> (fn: T, limit: number) {
   let throttling = false
   return (...args: Parameters<T>): void | ReturnType<T> => {
     if (!throttling) {
@@ -181,7 +182,7 @@ type Writable<T> = {
 /**
  * Filters slots to only those starting with `prefix`, removing the prefix
  */
-export function getPrefixedSlots(prefix: string, slots: Slots): Slots {
+export function getPrefixedSlots (prefix: string, slots: Slots): Slots {
   return Object.keys(slots)
     .filter(k => k.startsWith(prefix))
     .reduce<Writable<Slots>>((obj, k) => {
@@ -190,15 +191,15 @@ export function getPrefixedSlots(prefix: string, slots: Slots): Slots {
     }, {})
 }
 
-export function clamp(value: number, min = 0, max = 1) {
+export function clamp (value: number, min = 0, max = 1) {
   return Math.max(min, Math.min(max, value))
 }
 
-export function padEnd(str: string, length: number, char = '0') {
+export function padEnd (str: string, length: number, char = '0') {
   return str + char.repeat(Math.max(0, length - str.length))
 }
 
-export function chunk(str: string, size = 1) {
+export function chunk (str: string, size = 1) {
   const chunked: string[] = []
   let index = 0
   while (index < str.length) {
@@ -208,7 +209,7 @@ export function chunk(str: string, size = 1) {
   return chunked
 }
 
-export function humanReadableFileSize(bytes: number, base: 1000 | 1024 = 1000): string {
+export function humanReadableFileSize (bytes: number, base: 1000 | 1024 = 1000): string {
   if (bytes < base) {
     return `${ bytes } B`
   }
@@ -222,7 +223,7 @@ export function humanReadableFileSize(bytes: number, base: 1000 | 1024 = 1000): 
   return `${ bytes.toFixed(1) } ${ prefix[unit] }B`
 }
 
-export function camelizeObjectKeys(obj: Record<string, any> | null | undefined) {
+export function camelizeObjectKeys (obj: Record<string, any> | null | undefined) {
   if (!obj) return {}
 
   return Object.keys(obj).reduce((o: any, key: string) => {
@@ -231,13 +232,13 @@ export function camelizeObjectKeys(obj: Record<string, any> | null | undefined) 
   }, {})
 }
 
-export function getUid() {
+export function getUid () {
   return getUid._uid++
 }
 
 getUid._uid = 0
 
-export function flattenFragments(nodes: VNode[]): VNode[] {
+export function flattenFragments (nodes: VNode[]): VNode[] {
   return nodes.map(node => {
     if (node.type === Fragment) {
       return flattenFragments(node.children as VNode[])
@@ -248,34 +249,35 @@ export function flattenFragments(nodes: VNode[]): VNode[] {
 }
 
 export const randomHexColor = () => {
-  const n = (Math.random() * 0xFFFFF * 1000000).toString(16)
-  return `#${ n.slice(0, 6) }`
+  const n = (Math.random() * 0xfffff * 1000000).toString(16)
+  return '#' + n.slice(0, 6)
 }
 
-export class CircularBuffer<T = never> {
+export class CircularBuffer<T = never>
+{
   readonly #arr: Array<T> = []
   #pointer = 0
 
-  constructor(public readonly size: number) {
+  constructor (public readonly size: number) {
   }
 
-  push(val: T) {
+  push (val: T) {
     this.#arr[this.#pointer] = val
     this.#pointer = (this.#pointer + 1) % this.size
   }
 
-  values(): T[] {
+  values (): T[] {
     return this.#arr.slice(this.#pointer).concat(this.#arr.slice(0, this.#pointer))
   }
 }
 
-export function padNumber(x: number, length: number): string {
+export function padNumber (x: number, length: number): string {
   let padded = String(x)
   if (padded.length > length) {
     padded.substring(padded.length - length)
   }
   while (padded.length < length) {
-    padded = `0${ padded }`
+    padded = '0' + padded
   }
   return padded
 }

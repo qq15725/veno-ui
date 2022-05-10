@@ -1,36 +1,36 @@
 // Utils
-import { relative } from 'path'
 import MarkdownIt from 'markdown-it'
 import matter from 'gray-matter'
-import anchor from 'markdown-it-anchor'
 import { highlight } from './highlight'
 import { slugify } from './utils'
+import { relative } from 'path'
 
 // Plugins
+import anchor from 'markdown-it-anchor'
 import {
-  codePlugin,
+  fencePlugin,
   componentPlugin,
   containerPlugin,
-  demoPlugin,
-  fencePlugin,
-  headerPlugin,
-  hoistPlugin,
-  hrPlugin,
-  includePlugin,
-  linkPlugin,
   paragraphPlugin,
+  headerPlugin,
+  codePlugin,
+  hoistPlugin,
+  includePlugin,
+  demoPlugin,
+  linkPlugin,
+  hrPlugin,
   tablePlugin,
 } from './plugins'
 
 // Types
-import type { Markdown, Options } from './types'
+import type { Options, Markdown } from './types'
 
-export function createMarkdown(options?: Options): Markdown {
+export function createMarkdown (options?: Options): Markdown {
   options = {
     html: true,
     linkify: true,
     highlight,
-    ...options,
+    ...options
   }
 
   const md = new MarkdownIt(options) as Markdown
@@ -73,7 +73,7 @@ export function createMarkdown(options?: Options): Markdown {
       // 第三方插件
       .use(anchor, {
         slugify,
-        ...options.anchor,
+        ...options.anchor
       })
   )
 }

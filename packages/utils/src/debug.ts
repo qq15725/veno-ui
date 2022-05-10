@@ -7,7 +7,7 @@ const classify = (str: string) => str
   .replace(classifyRE, c => c.toUpperCase())
   .replace(/[-_]/g, '')
 
-function formatComponentName(vm: any, includeFile?: boolean): string {
+function formatComponentName (vm: any, includeFile?: boolean): string {
   if (vm.$root === vm) {
     return '<Root>'
   }
@@ -24,12 +24,12 @@ function formatComponentName(vm: any, includeFile?: boolean): string {
   }
 
   return (
-    (name ? `<${ classify(name) }>` : '<Anonymous>')
-    + (file && includeFile !== false ? ` at ${ file }` : '')
+    (name ? `<${ classify(name) }>` : `<Anonymous>`) +
+    (file && includeFile !== false ? ` at ${ file }` : '')
   )
 }
 
-export function generateComponentTrace(vm: any): string {
+export function generateComponentTrace (vm: any): string {
   if (vm._isVue && vm.$parent) {
     const tree: any[] = []
     let currentRecursiveSequence = 0
@@ -48,7 +48,7 @@ export function generateComponentTrace(vm: any): string {
       tree.push(vm)
       vm = vm.$parent
     }
-    return `\n\nfound in\n\n${ tree
+    return '\n\nfound in\n\n' + tree
       .map((vm, i) => `${
         i === 0 ? '---> ' : ' '.repeat(5 + i * 2)
       }${
@@ -56,7 +56,7 @@ export function generateComponentTrace(vm: any): string {
           ? `${ formatComponentName(vm[0]) }... (${ vm[1] } recursive calls)`
           : formatComponentName(vm)
       }`)
-      .join('\n') }`
+      .join('\n')
   } else {
     return `\n\n(found in ${ formatComponentName(vm) })`
   }

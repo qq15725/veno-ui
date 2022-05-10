@@ -3,7 +3,7 @@
  *
  * @param objectable
  */
-export function isObject(objectable: any): objectable is object {
+export function isObject (objectable: any): objectable is object {
   return objectable !== null && typeof objectable === 'object' && !Array.isArray(objectable)
 }
 
@@ -12,7 +12,7 @@ export function isObject(objectable: any): objectable is object {
  *
  * @param obj
  */
-export function keys<T>(obj: T) {
+export function keys<T> (obj: T) {
   return Object.keys(obj) as (keyof T)[]
 }
 
@@ -23,7 +23,7 @@ export function keys<T>(obj: T) {
  * @param path
  * @param fallback
  */
-export function getNestedValue(obj: any, path: (string | number)[], fallback?: any): any {
+export function getNestedValue (obj: any, path: (string | number)[], fallback?: any): any {
   const last = path.length - 1
   if (last < 0) return obj === undefined ? fallback : obj
   for (let i = 0; i < last; i++) {
@@ -43,7 +43,7 @@ export function getNestedValue(obj: any, path: (string | number)[], fallback?: a
  * @param path
  * @param value
  */
-export function setNestedValue(obj: any, path: (string | number)[], value: any) {
+export function setNestedValue (obj: any, path: (string | number)[], value: any) {
   const last = path.length - 1
   for (let i = 0; i < last; i++) {
     if (typeof obj[path[i]] !== 'object') obj[path[i]] = {}
@@ -58,7 +58,7 @@ export function setNestedValue(obj: any, path: (string | number)[], value: any) 
  * @param obj
  * @param keys
  */
-export function filterObjectOnKeys<T, K extends keyof T>(obj: T, keys: K[]): { [N in K]: T[N] } {
+export function filterObjectOnKeys<T, K extends keyof T> (obj: T, keys: K[]): { [N in K]: T[N] } {
   const filtered = {} as { [N in K]: T[N] }
 
   for (let i = 0; i < keys.length; i++) {
@@ -78,7 +78,7 @@ export function filterObjectOnKeys<T, K extends keyof T>(obj: T, keys: K[]): { [
  * @param path
  * @param fallback
  */
-export function getObjectValueByPath(obj: any, path: string, fallback?: any): any {
+export function getObjectValueByPath (obj: any, path: string, fallback?: any): any {
   // credit: http://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key#comment55278413_6491621
   if (obj == null || !path || typeof path !== 'string') return fallback
   if (obj[path] !== undefined) return obj[path]
@@ -94,7 +94,7 @@ export function getObjectValueByPath(obj: any, path: string, fallback?: any): an
  * @param path
  * @param value
  */
-export function setObjectValueByPath(obj: any, path: string, value: any) {
+export function setObjectValueByPath (obj: any, path: string, value: any) {
   if (typeof obj !== 'object' || !path) return
   path = path.replace(/\[(\w+)\]/g, '.$1')
   path = path.replace(/^\./, '')
@@ -108,10 +108,10 @@ export function setObjectValueByPath(obj: any, path: string, value: any) {
  * @param property
  * @param fallback
  */
-export function getPropertyFromItem(
+export function getPropertyFromItem (
   item: object,
   property: string | (string | number)[] | ((item: Record<string, any>, fallback?: any) => any),
-  fallback?: any,
+  fallback?: any
 ): any {
   if (property == null) return item === undefined ? fallback : item
   if (item !== Object(item)) return fallback === undefined ? item : fallback
@@ -129,7 +129,7 @@ export function getPropertyFromItem(
  * @param target
  * @param out
  */
-export function deepMerge(
+export function deepMerge (
   source: Record<string, any> = {},
   target: Record<string, any> = {},
   out: Record<string, any> = {},
@@ -145,8 +145,8 @@ export function deepMerge(
     // Only continue deep merging if
     // both properties are objects
     if (
-      isObject(sourceProperty)
-      && isObject(targetProperty)
+      isObject(sourceProperty) &&
+      isObject(targetProperty)
     ) {
       out[key] = deepMerge(sourceProperty, targetProperty)
 

@@ -1,9 +1,10 @@
 import type { ParsedAnchor } from './anchor'
 import type { Box } from './box'
 
-interface Point { x: number; y: number }
+type Point = { x: number, y: number }
 
-declare class As<T extends string> {
+declare class As<T extends string>
+{
   private as: T
 }
 
@@ -12,7 +13,7 @@ type ViewportPoint = Point & As<'viewport'>
 type Offset = Point & As<'offset'>
 
 /** Convert a point in local space to viewport space */
-export function elementToViewport(point: ElementPoint, offset: Offset | Box) {
+export function elementToViewport (point: ElementPoint, offset: Offset | Box) {
   return {
     x: point.x + offset.x,
     y: point.y + offset.y,
@@ -20,7 +21,7 @@ export function elementToViewport(point: ElementPoint, offset: Offset | Box) {
 }
 
 /** Convert a point in viewport space to local space */
-export function viewportToElement(point: ViewportPoint, offset: Offset | Box) {
+export function viewportToElement (point: ViewportPoint, offset: Offset | Box) {
   return {
     x: point.x - offset.x,
     y: point.y - offset.y,
@@ -28,7 +29,7 @@ export function viewportToElement(point: ViewportPoint, offset: Offset | Box) {
 }
 
 /** Get the difference between two points */
-export function getOffset<T extends Point>(a: T, b: T) {
+export function getOffset<T extends Point> (a: T, b: T) {
   return {
     x: a.x - b.x,
     y: a.y - b.y,
@@ -36,9 +37,9 @@ export function getOffset<T extends Point>(a: T, b: T) {
 }
 
 /** Convert an anchor object to a point in local space */
-export function anchorToPoint(anchor: ParsedAnchor, box: Box): ViewportPoint {
+export function anchorToPoint (anchor: ParsedAnchor, box: Box): ViewportPoint {
   const { side, align } = anchor
-  let x; let y = 0
+  let x, y: number = 0
 
   if (side === 'top' || side === 'bottom') {
     switch (side) {

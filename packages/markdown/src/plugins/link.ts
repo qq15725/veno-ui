@@ -1,6 +1,6 @@
 // Types
-import type { RenderRule } from 'markdown-it/lib/renderer'
 import type { PluginSimple } from '../types'
+import type { RenderRule } from 'markdown-it/lib/renderer'
 
 export const linkPlugin: PluginSimple = function (md) {
   const render: RenderRule = (tokens, index) => {
@@ -12,7 +12,7 @@ export const linkPlugin: PluginSimple = function (md) {
       token.attrSet('color', 'primary')
       token.attrSet('target', '_blank')
       if (href && href.indexOf('http') !== 0) {
-        // @ts-expect-error
+        // @ts-ignore
         token.attrs[token.attrIndex('href')][0] = 'to'
       }
     }

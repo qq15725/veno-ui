@@ -26,12 +26,12 @@ import type { ComponentObjectPropsOptions, Prop, PropType } from 'vue'
  *   },
  * })
  */
-export function propsFactory<PropsOptions extends ComponentObjectPropsOptions>(
+export function propsFactory<PropsOptions extends ComponentObjectPropsOptions> (
   props: PropsOptions,
-  source?: string,
+  source?: string
 ) {
   return <Defaults extends PartialKeys<PropsOptions> = {}> (
-    defaults?: Defaults,
+    defaults?: Defaults
   ): AppendDefault<PropsOptions, Defaults> => {
     return Object.keys(props).reduce<any>((obj, prop) => {
       const isObjectDefinition = typeof props[prop] === 'object'
@@ -65,13 +65,13 @@ type AppendDefault<T extends ComponentObjectPropsOptions, D extends PartialKeys<
     ? T[P]
     : T[P] extends Record<string, unknown>
       ? Omit<T[P], 'type' | 'default'> & {
+      type: PropType<MergeDefault<T[P], D[P]>>
+      default: MergeDefault<T[P], D[P]>
+    }
+      : {
         type: PropType<MergeDefault<T[P], D[P]>>
         default: MergeDefault<T[P], D[P]>
       }
-      : {
-          type: PropType<MergeDefault<T[P], D[P]>>
-          default: MergeDefault<T[P], D[P]>
-        }
 }
 
 /**

@@ -1,10 +1,11 @@
-export class Box {
+export class Box
+{
   x: number
   y: number
   width: number
   height: number
 
-  constructor({ x, y, width, height }: {
+  constructor ({ x, y, width, height }: {
     x: number
     y: number
     width: number
@@ -16,19 +17,19 @@ export class Box {
     this.height = height
   }
 
-  get top() {
+  get top () {
     return this.y
   }
 
-  get bottom() {
+  get bottom () {
     return this.y + this.height
   }
 
-  get left() {
+  get left () {
     return this.x
   }
 
-  get right() {
+  get right () {
     return this.x + this.width
   }
 }

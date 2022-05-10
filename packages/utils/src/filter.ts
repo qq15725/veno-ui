@@ -9,9 +9,9 @@ export type FilterPattern = Array<string | RegExp> | string | RegExp | null
  * @param include
  * @param exclude
  */
-export function createFilter(
+export function createFilter (
   include?: FilterPattern,
-  exclude?: FilterPattern,
+  exclude?: FilterPattern
 ): (id: string | any) => boolean {
   const getMatcher = (id: string | RegExp) => id instanceof RegExp ? id : new RegExp(id)
 
@@ -32,11 +32,11 @@ type MaybePick<T extends object,
   U extends Extract<keyof T, string>> = Record<string, unknown> extends T ? Partial<Pick<T, U>> : Pick<T, U>
 
 export function pick<T extends object,
-  U extends Extract<keyof T, string>>(obj: T, paths: U[]): [yes: MaybePick<T, U>, no: Omit<T, U>]
+  U extends Extract<keyof T, string>> (obj: T, paths: U[]): [yes: MaybePick<T, U>, no: Omit<T, U>]
 export function pick<T extends object,
-  U extends Extract<keyof T, string>>(obj: T, paths: (U | RegExp)[]): [yes: Partial<T>, no: Partial<T>]
+  U extends Extract<keyof T, string>> (obj: T, paths: (U | RegExp)[]): [yes: Partial<T>, no: Partial<T>]
 export function pick<T extends object,
-  U extends Extract<keyof T, string>>(obj: T, paths: (U | RegExp)[]): [yes: Partial<T>, no: Partial<T>] {
+  U extends Extract<keyof T, string>> (obj: T, paths: (U | RegExp)[]): [yes: Partial<T>, no: Partial<T>] {
   const found = Object.create({})
   const rest = Object.create({})
 
@@ -44,7 +44,7 @@ export function pick<T extends object,
     if (
       paths.some(path => path instanceof RegExp
         ? path.test(key)
-        : path === key,
+        : path === key
       )
     ) {
       found[key] = obj[key]
@@ -61,6 +61,6 @@ export function pick<T extends object,
  * the root element of a an input component. Remaining
  * attributes should be passed to the <input> element inside.
  */
-export function filterInputAttrs(attrs: Record<string, unknown>) {
+export function filterInputAttrs (attrs: Record<string, unknown>) {
   return pick(attrs, ['class', 'style', 'id', /^data-/])
 }

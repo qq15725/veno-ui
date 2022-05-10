@@ -1,7 +1,8 @@
-import type { Markdown, Options as MarkdownOptions, PluginSimple, PluginWithOptions } from '@veno-ui/markdown'
+import type { Options as MarkdownOptions, Markdown, PluginSimple, PluginWithOptions } from '@veno-ui/markdown'
 import type { FilterPattern } from '@veno-ui/utils'
 
-export interface Options {
+export interface Options
+{
   /**
    * @en Remove custom SFC block
    *

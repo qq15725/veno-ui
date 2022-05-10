@@ -15,12 +15,12 @@ export type Anchor =
   | `${ Tinline } ${ Tblock | 'center' }`
 
 export type ParsedAnchor =
-  | { side: 'center'; align: 'center' }
-  | { side: Tblock; align: Tinline | 'center' }
-  | { side: Tinline; align: Tblock | 'center' }
+  | { side: 'center', align: 'center' }
+  | { side: Tblock, align: Tinline | 'center' }
+  | { side: Tinline, align: Tblock | 'center' }
 
 /** Parse a raw anchor string into an object */
-export function parseAnchor(anchor: Anchor) {
+export function parseAnchor (anchor: Anchor) {
   let [side, align] = anchor.split(' ')
 
   if (!align) {
@@ -38,7 +38,7 @@ export function parseAnchor(anchor: Anchor) {
 }
 
 /** Get an anchor directly opposite, with the same alignment */
-export function oppositeAnchor(anchor: ParsedAnchor) {
+export function oppositeAnchor (anchor: ParsedAnchor) {
   return {
     side: {
       center: 'center',
@@ -52,7 +52,7 @@ export function oppositeAnchor(anchor: ParsedAnchor) {
 }
 
 /** Convert start/end into left/right */
-export function physicalAnchor(anchor: ParsedAnchor, el: HTMLElement) {
+export function physicalAnchor (anchor: ParsedAnchor, el: HTMLElement) {
   const { side, align } = anchor
   const { direction } = window.getComputedStyle(el)
 
@@ -60,5 +60,5 @@ export function physicalAnchor(anchor: ParsedAnchor, el: HTMLElement) {
     ? { start: 'left', end: 'right' }
     : { start: 'right', end: 'left' }
 
-  return `${ map[side] ?? side } ${ map[align] ?? align }`
+  return (map[side] ?? side) + ' ' + (map[align] ?? align)
 }

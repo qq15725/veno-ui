@@ -1,7 +1,7 @@
 const RE = /{([\d,-]+)}/
 
 export const highlight = (raw: string, rawLang: string) => {
-  let lang = rawLang; let lineNumbers: number[][] = []
+  let lang = rawLang, lineNumbers: number[][] = []
   {
     if (RE.test(rawLang)) {
       lang = rawLang.replace(RE, '').trim()

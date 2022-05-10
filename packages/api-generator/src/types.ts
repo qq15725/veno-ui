@@ -1,8 +1,10 @@
-export interface Options {
+export interface Options
+{
   fileGlobs: string
 }
 
-export interface Component {
+export interface Component
+{
   name: string
   props: Prop[]
   slots: any[]
@@ -10,11 +12,13 @@ export interface Component {
   functions: any[]
 }
 
-export interface Event {
+export interface Event
+{
   name: string
 }
 
-export interface Prop {
+export interface Prop
+{
   name: string
   source: string
   type: string | string[]
@@ -22,7 +26,8 @@ export interface Prop {
   descriptions: PropDescription[]
 }
 
-export interface PropDescription {
+export interface PropDescription
+{
   language: 'zh'
   name: string
   description: string

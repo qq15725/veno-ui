@@ -2,11 +2,11 @@
 import { Project, SyntaxKind } from 'ts-morph'
 
 // Types
-import type { CallExpression, JSDocTag, PropertyAssignment } from 'ts-morph'
+import type { JSDocTag, PropertyAssignment, CallExpression } from 'ts-morph'
 import type { PropDescription } from './types'
 
 // 找到这个注释的上层函数名
-function getMethodExpression(tag: JSDocTag): [string, CallExpression] | undefined {
+function getMethodExpression (tag: JSDocTag): [string, CallExpression] | undefined {
   const ancestors = tag.getAncestors()
   for (let i = 0; i < ancestors.length; i++) {
     const ancestor = ancestors[i]
@@ -22,10 +22,11 @@ function getMethodExpression(tag: JSDocTag): [string, CallExpression] | undefine
       }
     }
   }
+  return
 }
 
 // 找到这个注释的来源
-function getPropSource(filePath: string, tag: JSDocTag): string | undefined {
+function getPropSource (filePath: string, tag: JSDocTag): string | undefined {
   const [name, callExpression] = getMethodExpression(tag) || []
 
   switch (name) {
@@ -38,10 +39,11 @@ function getPropSource(filePath: string, tag: JSDocTag): string | undefined {
         return res[1]
       }
   }
+  return
 }
 
 // 获取所有的属性描述
-export function getPropsDescriptions(paths: string) {
+export function getPropsDescriptions (paths: string) {
   const project = new Project()
   project.addSourceFilesAtPaths(paths)
   const descriptions: PropDescription[] = []
@@ -68,4 +70,6 @@ export function getPropsDescriptions(paths: string) {
   })
   return descriptions
 }
+
+
 

@@ -3,7 +3,7 @@
  *
  * @param val
  */
-export function wrapInArray<T>(val: T | T[] | null | undefined): T[] {
+export function wrapInArray<T> (val: T | T[] | null | undefined): T[] {
   return val == null ? [] : Array.isArray(val) ? val : [val]
 }
 
@@ -13,7 +13,7 @@ export function wrapInArray<T>(val: T | T[] | null | undefined): T[] {
  * @param a
  * @param b
  */
-export function arrayDiff(a: any[], b: any[]): any[] {
+export function arrayDiff (a: any[], b: any[]): any[] {
   const diff: any[] = []
   for (let i = 0; i < b.length; i++) {
     if (!a.includes(b[i])) diff.push(b[i])
@@ -27,7 +27,7 @@ export function arrayDiff(a: any[], b: any[]): any[] {
  * @param length 数组长度
  * @param fillable 可填充的
  */
-export function fillArray<T>(length: number, fillable: T) {
+export function fillArray<T> (length: number, fillable: T) {
   return Array(length).fill(fillable)
 }
 
@@ -37,6 +37,6 @@ export function fillArray<T>(length: number, fillable: T) {
  * @param length 数组长度
  * @param start 起始数字
  */
-export function createRange(length: number, start = 0): number[] {
+export function createRange (length: number, start = 0): number[] {
   return Array.from({ length }, (v, k) => start + k)
 }

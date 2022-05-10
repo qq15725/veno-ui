@@ -12,24 +12,24 @@
     "url": "https://github.com/qq15725/veno-ui/issues"
   },
   "license": "MIT",
-  "author": "wxm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "author": "wxm",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     }
   },
-  "files": [
-    "dist"
-  ],
-  "sideEffects": false,
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub"
