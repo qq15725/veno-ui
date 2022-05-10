@@ -7,7 +7,7 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     theme,
-    toggleTheme () {
+    toggleTheme() {
       theme.value = theme.value === 'dark' ? 'light' : 'dark'
     },
   }

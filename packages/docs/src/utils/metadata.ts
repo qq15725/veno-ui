@@ -5,7 +5,7 @@ interface Metadata {
   keywords: string
 }
 
-export function genAppMetaInfo (defaults: Metadata) {
+export function genAppMetaInfo(defaults: Metadata) {
   const metadata = genMetaInfo(defaults)
 
   metadata.link.push(...genLink())
@@ -14,12 +14,12 @@ export function genAppMetaInfo (defaults: Metadata) {
   return metadata
 }
 
-export function genMetaInfo (defaults: Metadata) {
+export function genMetaInfo(defaults: Metadata) {
   const length = defaults.description.length
 
   defaults.description = length <= 117
     ? defaults.description
-    : `${defaults.description.slice(0, 116)}...`
+    : `${ defaults.description.slice(0, 116) }...`
 
   return {
     link: [] as (Record<string, any>[]),
@@ -32,13 +32,13 @@ export function genMetaInfo (defaults: Metadata) {
   }
 }
 
-function genLink () {
+function genLink() {
   return [
     { rel: 'shortcut icon', href: '/favicon.ico' },
   ]
 }
 
-function genOpenGraphMetaInfo (args: Metadata) {
+function genOpenGraphMetaInfo(args: Metadata) {
   return parseMeta('og', {
     description: args.description,
     image: '/pwa-192x192.png',
@@ -48,7 +48,7 @@ function genOpenGraphMetaInfo (args: Metadata) {
   })
 }
 
-function parseMeta (
+function parseMeta(
   prefix: string,
   metadata: Record<string, string>,
 ) {
@@ -56,7 +56,7 @@ function parseMeta (
 
   for (const key in metadata) {
     const content = metadata[key]
-    const property = `${prefix}:${key}`
+    const property = `${ prefix }:${ key }`
 
     meta.push({
       key: property,
@@ -68,7 +68,7 @@ function parseMeta (
   return meta
 }
 
-function genMeta () {
+function genMeta() {
   return [
     { charset: 'utf-8' },
     { name: 'mobile-web-app-capable', content: 'yes' },

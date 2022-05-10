@@ -2,10 +2,10 @@
 import { ViteSSG } from 'vite-ssg'
 
 // Router
+import App from './App.vue'
 import { createRouterOptions } from '@/plugins/router'
 
 // Components
-import App from './App.vue'
 
 export const createApp = ViteSSG(
   App,
@@ -13,5 +13,5 @@ export const createApp = ViteSSG(
   ctx => {
     Object.values(import.meta.globEager('./plugins/*.ts'))
       .forEach(i => i.install?.(ctx))
-  }
+  },
 )
