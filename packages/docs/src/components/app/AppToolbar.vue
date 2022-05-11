@@ -2,9 +2,9 @@
   // Utils
   import { computed } from 'vue'
   // Stores
+  import { useRoute } from 'vue-router'
   import { useAppStore } from '@/stores/app'
   // Composables
-  import { useRoute } from 'vue-router'
 
   const route = useRoute()
   const appStore = useAppStore()
@@ -22,21 +22,21 @@
     <div class="m-auto d-flex flex-fill px-3 px-md-10" style="max-width: 900px;">
       <ve-breadcrumb v-if="$route.meta.category">
         <ve-breadcrumb-item
-            v-for="name in ['组件', $route.meta.category]"
-            :key="name"
-            :text="name"
-            :value="name"
+          v-for="name in ['组件', $route.meta.category]"
+          :key="name"
+          :text="name"
+          :value="name"
         />
       </ve-breadcrumb>
 
       <ve-spacer />
 
       <ve-link
-          class="text-caption"
-          target="_blank"
-          :href="url"
-          append-icon="mdi-pencil"
-          text="编辑此页面"
+        class="text-caption"
+        target="_blank"
+        :href="url"
+        append-icon="mdi-pencil"
+        text="编辑此页面"
       />
     </div>
   </ve-layout-item>

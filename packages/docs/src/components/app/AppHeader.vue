@@ -19,23 +19,27 @@
 
     <ve-spacer />
 
-    <ve-tooltip text="反转示例颜色" #activator="{ props }">
-      <ve-button
+    <ve-tooltip text="反转示例颜色">
+      <template #activator="{ props }">
+        <ve-button
           v-bind="props"
-          @click="toggleTheme"
           :icon="theme === 'dark' ? 'fontisto-night-clear' : 'fontisto-day-sunny'"
           class="ml-3"
-      />
+          @click="toggleTheme"
+        />
+      </template>
     </ve-tooltip>
 
-    <ve-tooltip text="在 Github 中查看" #activator="{ props }">
-      <ve-button
+    <ve-tooltip text="在 Github 中查看">
+      <template #activator="{ props }">
+        <ve-button
           v-bind="props"
           href="https://github.com/qq15725/veno-ui"
           target="_blank"
           icon="tabler-brand-github"
           class="ml-3"
-      />
+        />
+      </template>
     </ve-tooltip>
 
     <ve-button class="ml-3">{{ $veno.version }}</ve-button>

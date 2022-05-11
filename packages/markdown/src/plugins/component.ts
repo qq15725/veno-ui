@@ -28,10 +28,6 @@ const HTML_SEQUENCES: [RegExp, RegExp, boolean][] = [
   [new RegExp(`${ HTML_OPEN_CLOSE_TAG_RE.source }\\s*$`), /^$/, false],
 ]
 
-export const componentPlugin: PluginSimple = md => {
-  md.block.ruler.at('html_block', htmlBlock)
-}
-
 const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
   let i, nextLine, lineText
   let pos = state.bMarks[startLine] + state.tShift[startLine]
@@ -97,4 +93,8 @@ const htmlBlock: RuleBlock = (state, startLine, endLine, silent): boolean => {
   token.content = state.getLines(startLine, nextLine, state.blkIndent, true)
 
   return true
+}
+
+export const componentPlugin: PluginSimple = md => {
+  md.block.ruler.at('html_block', htmlBlock)
 }

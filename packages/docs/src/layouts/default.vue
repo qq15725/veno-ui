@@ -11,7 +11,7 @@
 
   <ve-main>
     <ve-container style="max-width: 900px;" class="px-md-10">
-      <router-view #default="{ Component }">
+      <router-view v-slot="{ Component }">
         <ve-fade-transition hide-on-leave>
           <component :is="Component" />
         </ve-fade-transition>

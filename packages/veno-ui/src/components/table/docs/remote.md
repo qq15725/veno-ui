@@ -44,7 +44,7 @@ function api(params = {}) {
     const xhr = new XMLHttpRequest()
     xhr.open('GET', `https://cps.fdota.com/products?${ stringify(params) }`)
     xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
+      if (xhr.readyState === 4) {
         resolve(JSON.parse(xhr.responseText))
       }
     }

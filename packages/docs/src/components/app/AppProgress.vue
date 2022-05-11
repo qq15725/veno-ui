@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   // Utils
-  import { watch, ref } from 'vue'
+  import { ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
   // Stores
   import { useAppStore } from '@/stores/app'
@@ -21,10 +21,10 @@
 
 <template>
   <ve-progress
-      ref="progress"
-      :active="active"
-      stroke-width="2"
-      :underlay="false"
-      style="border-radius: 0; position: fixed; top: 0; z-index: 2000;"
+    ref="progress"
+    :active="active"
+    stroke-width="2"
+    :underlay="false"
+    style="border-radius: 0; position: fixed; top: 0; z-index: 2000;"
   />
 </template>

@@ -12,7 +12,7 @@ export const linkPlugin: PluginSimple = function (md) {
       token.attrSet('color', 'primary')
       token.attrSet('target', '_blank')
       if (href && href.indexOf('http') !== 0) {
-        // @ts-expect-error
+        // @ts-expect-error: link href
         token.attrs[token.attrIndex('href')][0] = 'to'
       }
     }

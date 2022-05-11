@@ -13,7 +13,7 @@
       code: String,
     },
 
-    setup (props) {
+    setup(props) {
       const btn = ref()
       const { repositoryBaseURL } = useAppStore()
       const user = useUserStore()
@@ -31,9 +31,9 @@
         btn,
         focusBtn: () => {
           setTimeout(() => btn.value?.$el?.focus?.(), 0)
-        }
+        },
       }
-    }
+    },
   })
 </script>
 
@@ -45,15 +45,15 @@
 
     <ve-card border :theme="theme">
       <ve-button
-          ref="btn"
-          absolute
-          border="0"
-          icon
-          variant="text"
-          tabindex="-1"
-          aria-label="此容器仅用于测试组件键盘导航功能。"
-          color="transparent"
-          style="pointer-events: none;"
+        ref="btn"
+        absolute
+        border="0"
+        icon
+        variant="text"
+        tabindex="-1"
+        aria-label="此容器仅用于测试组件键盘导航功能。"
+        color="transparent"
+        style="pointer-events: none;"
       />
 
       <ve-card-text class="p-6">
@@ -66,81 +66,85 @@
     <div class="mt-2">
       <ve-spacer gutter="md" justify="end">
         <ve-tooltip
-            #activator="{ props }"
-            :text="isActive ? '隐藏源代码' : '查看源代码'"
-            :open-delay="300"
-            anchor="top"
+          :text="isActive ? '隐藏源代码' : '查看源代码'"
+          :open-delay="300"
+          anchor="top"
         >
-          <ve-button
+          <template #activator="{ props }">
+            <ve-button
               v-bind="props"
-              @click="isActive = !isActive"
               :color="isActive ? 'primary' : undefined"
               icon="mdi-code-tags"
               variant="text"
               size="small"
-          />
+              @click="isActive = !isActive"
+            />
+          </template>
         </ve-tooltip>
 
         <ve-tooltip
-            #activator="{ props }"
-            text="重置焦点以测试键盘导航"
-            :open-delay="300"
-            anchor="top"
+          text="重置焦点以测试键盘导航"
+          :open-delay="300"
+          anchor="top"
         >
-          <ve-button
+          <template #activator="{ props }">
+            <ve-button
               v-bind="props"
-              @click="focusBtn"
               icon="mdi-image-filter-center-focus-strong-outline"
               variant="text"
               tabindex="-1"
               size="small"
-          />
+              @click="focusBtn"
+            />
+          </template>
         </ve-tooltip>
 
         <ve-tooltip
-            #activator="{ props }"
-            text="反转示例颜色"
-            :open-delay="300"
-            anchor="top"
+          text="反转示例颜色"
+          :open-delay="300"
+          anchor="top"
         >
-          <ve-button
+          <template #activator="{ props }">
+            <ve-button
               v-bind="props"
-              @click="theme = theme === 'dark' ? 'light' : 'dark'"
               :icon="theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
               tabindex="-1"
               size="small"
-          />
+              @click="theme = theme === 'dark' ? 'light' : 'dark'"
+            />
+          </template>
         </ve-tooltip>
 
         <ve-tooltip
-            #activator="{ props: tooltipProps }"
-            text="在 GitHub 中查看源代码"
-            :open-delay="300"
-            anchor="top"
+          text="在 GitHub 中查看源代码"
+          :open-delay="300"
+          anchor="top"
         >
-          <ve-button
+          <template #activator="{ props: tooltipProps }">
+            <ve-button
               v-bind="tooltipProps"
-              :href="`${ repositoryBaseURL }${ file }`"
+              :href="`${repositoryBaseURL}${file}`"
               target="_blank"
               icon="mdi-github"
               variant="text"
               tabindex="-1"
               size="small"
-          />
+            />
+          </template>
         </ve-tooltip>
       </ve-spacer>
     </div>
 
     <ve-expand-transition>
       <ve-code
-          v-show="isActive"
-          theme="dark"
-          class="mt-2 py-3 px-6"
-          shape="rounded-sm"
-          :code="code"
-          language="vue"
-          show-language
+        v-show="isActive"
+        theme="dark"
+        class="mt-2 py-3 px-6"
+        shape="rounded-sm"
+        :code="code"
+        language="vue"
+        show-language
       />
     </ve-expand-transition>
   </div>

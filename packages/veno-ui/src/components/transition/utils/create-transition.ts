@@ -94,6 +94,7 @@ export function createJavascriptTransition(
   functions: Record<string, any>,
   mode = 'in-out',
 ) {
+  // eslint-disable-next-line vue/one-component-per-file
   return defineComponent({
     name,
 

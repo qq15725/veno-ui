@@ -5,7 +5,7 @@ import { bindScroll } from './util'
 // Type
 import type { ScrollStrategyData } from './index'
 
-export function repositionScrollStrategy(data: ScrollStrategyData, name: string) {
+export function repositionScrollStrategy(data: ScrollStrategyData, _name: string) {
   let slow = false
   let raf = -1
 

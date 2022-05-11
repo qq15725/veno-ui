@@ -169,9 +169,11 @@ export function connectedPositionStrategy(
 
     const targetPoint = anchorToPoint(anchor, targetBox)
     const contentPoint = anchorToPoint(origin, contentBox)
+    // eslint-disable-next-line prefer-const
     let { x, y } = getOffset(targetPoint, contentPoint)
 
     let maxWidth = null
+    // eslint-disable-next-line no-lone-blocks
     {
       if (doesOverlap.value || ['center', 'top', 'bottom'].includes(anchor.side)) {
         maxWidth = Math.min(
