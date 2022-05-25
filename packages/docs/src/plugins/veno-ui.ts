@@ -26,7 +26,7 @@ import type { InstallPlugin } from '@/types'
 import aliases from '~icons'
 
 export const install: InstallPlugin = ({ app }) => {
-  setCDN('https://cdn.jsdelivr.net/npm/shiki@0.10.1/')
+  setCDN('https://unpkg.com/shiki@0.10.1/')
 
   const veno = createVeno({
     directives,
