@@ -161,14 +161,21 @@ export function useDataIterator(props: DataIteratorProps) {
 
   function sort(key: string | string[]) {
     if (Array.isArray(key)) {
-      sortDesc.value = key.map(s => {
-        const i = wrapInArray(sortBy.value).findIndex((k: string) => k === s)
-        return i > -1 ? wrapInArray(sortDesc.value)[i] : false
-      })
-      sortBy.value = key
-      updateOptions()
+      const options = {
+        sortBy: key,
+        sortDesc: key.map(s => {
+          const i = wrapInArray(sortBy.value).findIndex((k: string) => k === s)
+          return i > -1 ? wrapInArray(sortDesc.value)[i] : false
+        }),
+        pagination: {
+          ...pagination.value,
+        },
+      }
+      sortBy.value = options.sortBy
+      sortDesc.value = options.sortDesc
+      vm.emit('update:options', options)
     } else {
-      const res = toggle(
+      const { by, desc, page } = toggle(
         key,
         wrapInArray(sortBy.value),
         wrapInArray(sortDesc.value),
@@ -176,10 +183,18 @@ export function useDataIterator(props: DataIteratorProps) {
         props.mustSort,
         props.multiSort,
       )
-      sortBy.value = res.by
-      sortDesc.value = res.desc
-      pagination.value.page = res.page
-      updateOptions()
+      const options = {
+        sortBy: props.multiSort ? by : by[0] ?? null,
+        sortDesc: props.multiSort ? desc : desc[0] ?? null,
+        pagination: {
+          ...pagination.value,
+          page,
+        },
+      }
+      sortBy.value = options.sortBy
+      sortDesc.value = options.sortDesc
+      pagination.value.page = options.pagination.page
+      vm.emit('update:options', options)
     }
   }
 

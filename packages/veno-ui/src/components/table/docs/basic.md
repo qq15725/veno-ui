@@ -8,15 +8,17 @@
     <ve-switch label="显示边框" name="border" />
     <ve-switch label="隐藏表头" name="hideHeader" />
     <ve-switch label="固定表头" name="fixedHeader" />
-    <ve-switch label="暂无数据" name="noData" />  
+    <ve-switch label="暂无数据" name="noData" />
   </ve-form>
 </ve-spacer>
 
 <ve-table
   v-bind="table"
   :height="table.fixedHeader ? 250 : undefined"
-  :headers="headers" 
+  :headers="headers"
   :items="table.noData ? [] : items"
+  v-model:sort-by="sortBy"
+  v-model:sort-desc="sortDesc"
 >
   <template #item.operation>
     <ve-dialog>
@@ -53,8 +55,10 @@ export default defineComponent({
         fixedHeader: false,
         noData: false,
       }),
+      sortBy: ref('salary'),
+      sortDesc: ref(true),
       headers: ref([
-        { text: 'Name', width: 200, value: 'name' },
+        { text: 'Name', width: 200, value: 'name', sortable: true },
         { text: 'Salary', width: 160, value: 'salary', sortable: true, filters: [23000] },
         { text: 'Address', width: 600, value: 'address' },
         { text: 'Email', width: 300, value: 'email' },
