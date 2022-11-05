@@ -43,7 +43,7 @@
   "dependencies": {
     "@veno-ui/markdown": "workspace:*",
     "@veno-ui/utils": "workspace:*",
-    "local-pkg": "^0.4.1"
+    "local-pkg": "^0.4.2"
   },
   "publishConfig": {
     "access": "public"
