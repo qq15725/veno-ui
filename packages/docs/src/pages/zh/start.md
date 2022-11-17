@@ -6,7 +6,7 @@ meta:
 
 # 快速上手
 
-注意，veno-ui 仅支持 Vue3。
+注意 veno-ui 仅支持 Vue 3
 
 ## 安装
 

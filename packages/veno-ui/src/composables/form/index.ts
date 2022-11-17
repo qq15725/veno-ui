@@ -40,6 +40,7 @@ export const makeFormProps = propsFactory({
     default: null,
   },
   modelValue: Object as PropType<Record<string, any>>,
+  defaultValue: Object as PropType<Record<string, any>>,
 })
 
 export function provideForm(
@@ -51,6 +52,12 @@ export function provideForm(
   const vm = getCurrentInstance('provideForm')
   const valid = useProxiedModel(props, 'valid')
   const model = useProxiedModel(props, 'modelValue')
+
+  const defaultValue = props.defaultValue ?? {}
+
+  if (!model.value && defaultValue) {
+    model.value = JSON.parse(JSON.stringify(defaultValue))
+  }
 
   const isDisabled = computed(() => props.disabled)
   const isReadonly = computed(() => props.readonly)

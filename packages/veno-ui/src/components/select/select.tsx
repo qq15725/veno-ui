@@ -180,20 +180,20 @@ export const Select = genericComponent<new () => {
     const tagInputWidth = ref()
     const items = computed(() => props.items?.map(normalizeItem) ?? [])
     const { scrollbarClasses } = useScrollbar(props)
-    const model = useProxiedModel(
-      props, 'modelValue', props.modelValue,
-      v => wrapInArray(v),
-      (v: any) => props.multiple ? v : v[0],
-    )
+    const model = useProxiedModel(props, 'modelValue')
+    const arrayModel = computed({
+      get: () => wrapInArray(model.value),
+      set: (v: any) => model.value = props.multiple ? v : v[0],
+    })
     const query = ref(props.query)
     const active = computed({
-      get: () => model.value.map(
+      get: () => arrayModel.value.map(
         (v: any) => v && typeof v === 'object'
           ? v![props.itemValue]
           : v,
       ),
       set: val => {
-        model.value = props.returnObject
+        arrayModel.value = props.returnObject
           ? val.map(getItem).filter(v => v !== undefined)
           : val
         if (!props.multiple) isActiveMenu.value = false
@@ -267,7 +267,7 @@ export const Select = genericComponent<new () => {
     }
 
     function onClear(e: MouseEvent) {
-      model.value = []
+      arrayModel.value = []
       if (props.openOnClear) {
         isActiveMenu.value = true
       } else {
@@ -407,6 +407,7 @@ export const Select = genericComponent<new () => {
           ] }
           id={ id.value }
           inputAttach={ tagInputRef.value }
+          controlValue={ model.value }
           v-model={ inputValue.value }
           onBlur={ onBlur }
           onClick:clear={ onClear }

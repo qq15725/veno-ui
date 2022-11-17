@@ -8,7 +8,9 @@ import {
   convertToUnit,
   filterInputAttrs,
   genericComponent,
+  getCurrentInstance,
   getUid,
+  propIsDefined,
   propsFactory,
   useRender,
 } from '../../utils'
@@ -88,6 +90,11 @@ export const makeInputProps = propsFactory({
   },
 
   /**
+   * @zh 控件的值
+   */
+  controlValue: null,
+
+  /**
    * @zh 输入框的值
    */
   modelValue: null,
@@ -141,6 +148,7 @@ export const InputEmits = {
   ...FormControlEmits,
   ...InputControlEmits,
   'update:modelValue': (_: string) => true,
+  'update:controlValue': (_: string) => true,
 }
 
 export const Input = genericComponent<new () => {
@@ -155,11 +163,17 @@ export const Input = genericComponent<new () => {
   emits: InputEmits,
 
   setup(props, { attrs, slots, emit }) {
+    const vm = getCurrentInstance('VeInput')
+
     const inputControlRef = ref<InputControl>()
     const formControlRef = ref<FormControl>()
     const controlHeight = ref()
     const controlWidth = ref(props.width)
     const model = useProxiedModel(props, 'modelValue')
+    const controlValue = vm.vnode
+      && propIsDefined(vm.vnode, 'controlValue')
+      ? useProxiedModel(props, 'controlValue')
+      : model
     const id = computed(() => props.id || `ve-input-${ getUid() }`)
     const internalDirty = ref(false)
     const isDirty = computed(() => {
@@ -171,7 +185,7 @@ export const Input = genericComponent<new () => {
         : (model.value || '').toString().length
     })
     const max = computed(() => {
-      if (attrs.maxlength) return attrs.maxlength as undefined
+      if ((attrs as any).maxlength) return attrs.maxlength as undefined
       if (
         !props.counter
         || (
@@ -278,7 +292,7 @@ export const Input = genericComponent<new () => {
           onClick:prepend={ (e: MouseEvent) => emit('click:prepend', e) }
           onClick:label={ (e: MouseEvent) => emit('click:label', e) }
           onClick:append={ (e: MouseEvent) => emit('click:append', e) }
-          v-model={ model.value }
+          v-model={ controlValue.value }
           width={ controlWidth.value }
         >
           { {
