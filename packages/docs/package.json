@@ -8,29 +8,29 @@
     "dev": "vite --port 3022"
   },
   "dependencies": {
-    "pinia": "^2.0.23",
+    "pinia": "^2.0.24",
     "prismjs": "^1.29.0",
     "veno-ui": "workspace:*",
-    "vue": "^3.2.41",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@iconify-json/fontisto": "^1.1.2",
     "@iconify-json/mdi": "^1.1.34",
-    "@iconify-json/tabler": "^1.1.44",
+    "@iconify-json/tabler": "^1.1.46",
     "@types/prismjs": "^1.26.0",
     "@veno-ui/api-generator": "workspace:*",
     "@veno-ui/markdown": "workspace:*",
     "@veno-ui/utils": "workspace:*",
     "@veno-ui/vite-plugin-markdown": "workspace:*",
-    "@vitejs/plugin-legacy": "^2.3.0",
-    "@vue/compiler-sfc": "^3.2.41",
-    "@vueuse/head": "^0.9.8",
+    "@vitejs/plugin-legacy": "^2.3.1",
+    "@vue/compiler-sfc": "^3.2.45",
+    "@vueuse/head": "^1.0.16",
     "shiki": "^0.11.1",
     "unplugin-vue-components": "^0.22.9",
     "vite-plugin-iconify": "^0.1.1",
     "vite-plugin-pages": "^0.27.1",
-    "vite-plugin-pwa": "^0.13.2",
+    "vite-plugin-pwa": "^0.13.3",
     "vite-plugin-vue-layouts": "^0.7.0",
     "vite-ssg": "^0.21.2"
   }

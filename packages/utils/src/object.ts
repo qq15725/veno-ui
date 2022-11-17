@@ -12,7 +12,7 @@ export function isObject(objectable: any): objectable is object {
  *
  * @param obj
  */
-export function keys<T>(obj: T) {
+export function keys<T extends {}>(obj: T) {
   return Object.keys(obj) as (keyof T)[]
 }
 
