@@ -107,7 +107,7 @@ export const DatePicker = genericComponent<new () => {
     }
 
     function onKeydown({ key }: KeyboardEvent) {
-      if ([keyValues.enter, keyValues.space].includes(key) && !isActiveMenu.value) {
+      if ([keyValues.enter, keyValues.space].includes(key as any) && !isActiveMenu.value) {
         isActiveMenu.value = true
       }
 

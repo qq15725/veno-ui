@@ -338,12 +338,12 @@ export const Select = genericComponent<new () => {
     function onKeydown(e: KeyboardEvent) {
       const { key } = e
 
-      if ([keyValues.up, keyValues.down].includes(key)) {
+      if ([keyValues.up, keyValues.down].includes(key as any)) {
         e.preventDefault()
         onKeydownMove(e)
       }
 
-      if ([keyValues.enter, keyValues.space, ' '].includes(key)) {
+      if ([keyValues.enter, keyValues.space, ' '].includes(key as any)) {
         e.preventDefault()
         onKeydownEnter()
       }

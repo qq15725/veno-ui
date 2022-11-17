@@ -15,7 +15,7 @@ import type { ComponentInternalInstance, EffectScope, Ref } from 'vue'
 const stack = ref<ComponentInternalInstance[]>([])
 
 export function useStack(isActive: Ref<boolean>) {
-  const vm = getCurrentInstance('stack')
+  const vm = getCurrentInstance('stack') as any
 
   let scope: EffectScope | undefined
 
