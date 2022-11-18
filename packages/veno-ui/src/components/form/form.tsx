@@ -2,7 +2,7 @@
 import './styles/form.scss'
 
 // Utils
-import { computed, toRef } from 'vue'
+import { toRef } from 'vue'
 import { defineComponent, useRender } from '../../utils'
 
 // Composables
@@ -17,16 +17,7 @@ import { FormChildren } from './form-children'
 
 // Types
 import type { PropType } from 'vue'
-
-export type FormItemProps = {
-  [key: string]: any
-  $type?: 'input' | 'textarea' | 'select' | 'switch' | 'date-picker' | 'checkbox' | 'radio'
-}
-
-export type InternalFormItemProps = {
-  type?: FormItemProps['$type']
-  props?: Record<string, any>
-}
+import type { FormItemProps } from './form-children'
 
 export const Form = defineComponent({
   name: 'VeForm',
@@ -78,13 +69,6 @@ export const Form = defineComponent({
   setup(props, { slots }) {
     const form = provideForm(props)
 
-    const items = computed(() => {
-      return props.items?.map(item => {
-        const { $type: type, ...props } = item
-        return { type, props }
-      }) as InternalFormItemProps[]
-    })
-
     const defaults = {
       variant: toRef(props, 'variant'),
       size: toRef(props, 'size'),
@@ -128,7 +112,7 @@ export const Form = defineComponent({
           onReset={ form.reset }
           onSubmit={ form.submit }
         >
-          <FormChildren items={ items.value } />
+          <FormChildren items={ props.items } />
 
           { slots.default?.(form) }
         </form>

@@ -1,4 +1,5 @@
 // Utils
+import { computed } from 'vue'
 import { defineComponent, pick } from '../../utils'
 
 // Components
@@ -12,17 +13,36 @@ import { Switch } from '../switch'
 
 // Types
 import type { PropType } from 'vue'
-import type { InternalFormItemProps } from './form'
+
+export type FormItemProps = {
+  [key: string]: any
+  $type?: 'input' | 'textarea' | 'select' | 'switch' | 'date-picker' | 'checkbox' | 'radio'
+}
+
+export type InternalFormItemProps = {
+  type?: FormItemProps['$type']
+  props?: Record<string, any>
+}
 
 export const FormChildren = defineComponent({
   name: 'VeFormChildren',
 
   props: {
-    items: Array as PropType<InternalFormItemProps[]>,
+    /**
+     * @zh 数据驱动的表单列表项
+     */
+    items: Array as PropType<FormItemProps[]>,
   },
 
   setup(props, { slots }) {
-    return () => slots.default?.() ?? props.items?.map(({ type, props: itemProps }) => {
+    const items = computed(() => {
+      return props.items?.map(item => {
+        const { $type: type, ...props } = item
+        return { type, props }
+      }) as InternalFormItemProps[]
+    })
+
+    return () => slots.default?.() ?? items.value?.map(({ type, props: itemProps }) => {
       switch (type) {
         case 'textarea':
           return <Input type="textarea" { ...itemProps } />
