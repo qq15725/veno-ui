@@ -1,10 +1,10 @@
 // Utils
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
+import { useAppStore } from '../stores/app'
 
 // Types
-import type { InstallPlugin } from '@/types'
-import { useAppStore } from '@/stores/app'
+import type { InstallPlugin } from '../types'
 
 export function createRouterOptions() {
   return {

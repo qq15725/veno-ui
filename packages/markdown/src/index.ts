@@ -1,5 +1,5 @@
 // Utils
-import { relative } from 'path'
+import { relative } from 'node:path'
 import MarkdownIt from 'markdown-it'
 import matter from 'gray-matter'
 import anchor from 'markdown-it-anchor'

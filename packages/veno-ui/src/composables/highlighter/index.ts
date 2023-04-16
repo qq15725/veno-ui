@@ -18,7 +18,7 @@ export interface HighlighterOptions {
 }
 
 export interface Highlighter {
-  highlight (code: string, language: string): Promise<string>
+  highlight(code: string, language: string): Promise<string>
 }
 
 export const HighlighterKey: InjectionKey<Ref<Highlighter>> = createSymbol('highlighter')

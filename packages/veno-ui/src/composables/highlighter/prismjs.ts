@@ -1,8 +1,3 @@
-/**
- * ^1.25.0
- * @see https://github.com/PrismJS/prism
- */
-
 export interface Prismjs {
   languages: Record<string, any>
 

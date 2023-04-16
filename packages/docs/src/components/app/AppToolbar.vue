@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   // Utils
   import { computed } from 'vue'
+
   // Stores
   import { useRoute } from 'vue-router'
   import { useAppStore } from '@/stores/app'
-  // Composables
 
   const route = useRoute()
   const appStore = useAppStore()
@@ -35,9 +35,12 @@
         class="text-caption"
         target="_blank"
         :href="url"
-        append-icon="mdi-pencil"
         text="编辑此页面"
-      />
+      >
+        <template #append-icon>
+          <i-mdi-pencil />
+        </template>
+      </ve-link>
     </div>
   </ve-layout-item>
 </template>

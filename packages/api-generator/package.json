@@ -32,7 +32,7 @@
   },
   "peerDependencies": {
     "ts-morph": "^14.0.0",
-    "vue": "^3.2.32"
+    "vue": "^3.2.47"
   },
   "dependencies": {
     "@veno-ui/utils": "workspace:*",

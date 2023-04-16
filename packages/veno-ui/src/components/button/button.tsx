@@ -46,6 +46,7 @@ export const makeButtonProps = propsFactory({
    * @zh 后置图标
    */
   appendIcon: [String, Object],
+
   stacked: Boolean,
 
   /**
@@ -111,11 +112,11 @@ export const Button = defineComponent({
 
     return () => {
       const Tag: any = link.isLink.value ? 'a' : props.tag
-      const hasPrependIcon = !props.icon && props.prependIcon
+      const hasPrependIcon = !props.icon && (props.prependIcon || slots['prepend-icon'])
       const hasPrependLoading = !hasPrependIcon && props.loading && (slots.default || props.text)
-      const hasIconOnly = props.icon && typeof props.icon !== 'boolean'
+      const hasIconOnly = (props.icon && typeof props.icon !== 'boolean') || Boolean(slots.icon)
       const hasDefault = !hasIconOnly && (slots.default || props.text)
-      const hasAppendIcon = !props.icon && props.appendIcon
+      const hasAppendIcon = !props.icon && (props.appendIcon || slots['append-icon'])
       return (
         <Tag
           role={ link.isLink.value ? undefined : 'button' }
@@ -174,7 +175,7 @@ export const Button = defineComponent({
                       indeterminate
                     /> as any
                     )
-                  : props.prependIcon
+                  : slots['prepend-icon'] ?? props.prependIcon
               }
               size={ props.size }
               start
@@ -196,7 +197,7 @@ export const Button = defineComponent({
                       indeterminate
                     /> as any
                     )
-                  : props.icon
+                  : (slots.icon ?? props.icon)
               }
               size={ props.size }
             />
@@ -205,7 +206,7 @@ export const Button = defineComponent({
           { hasAppendIcon && (
             <Icon
               class="ve-button__icon"
-              icon={ props.appendIcon }
+              icon={ slots['append-icon'] ?? props.appendIcon }
               size={ props.size }
               end
             />

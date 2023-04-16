@@ -74,11 +74,14 @@
             <ve-button
               v-bind="props"
               :color="isActive ? 'primary' : undefined"
-              icon="mdi-code-tags"
               variant="text"
               size="small"
               @click="isActive = !isActive"
-            />
+            >
+              <template #icon>
+                <i-mdi-code-tags />
+              </template>
+            </ve-button>
           </template>
         </ve-tooltip>
 
@@ -90,12 +93,15 @@
           <template #activator="{ props }">
             <ve-button
               v-bind="props"
-              icon="mdi-image-filter-center-focus-strong-outline"
               variant="text"
               tabindex="-1"
               size="small"
               @click="focusBtn"
-            />
+            >
+              <template #icon>
+                <i-mdi-image-filter-center-focus-strong-outline />
+              </template>
+            </ve-button>
           </template>
         </ve-tooltip>
 
@@ -107,12 +113,16 @@
           <template #activator="{ props }">
             <ve-button
               v-bind="props"
-              :icon="theme === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
               variant="text"
               tabindex="-1"
               size="small"
               @click="theme = theme === 'dark' ? 'light' : 'dark'"
-            />
+            >
+              <template #icon>
+                <i-mdi-weather-night v-if="theme === 'dark'" />
+                <i-mdi-weather-sunny v-else />
+              </template>
+            </ve-button>
           </template>
         </ve-tooltip>
 
@@ -126,11 +136,14 @@
               v-bind="tooltipProps"
               :href="`${repositoryBaseURL}${file}`"
               target="_blank"
-              icon="mdi-github"
               variant="text"
               tabindex="-1"
               size="small"
-            />
+            >
+              <template #icon>
+                <i-mdi-github />
+              </template>
+            </ve-button>
           </template>
         </ve-tooltip>
       </ve-spacer>

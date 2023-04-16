@@ -1,16 +1,6 @@
-/**
- * ^0.10.1
- *
- * @see https://github.com/shikijs/shiki
- */
+import type { Highlighter, Lang } from 'shiki'
 
-export type Shiki = any | Promise<any>
-
-export interface ShikiHighlighter {
-  codeToHtml (code: string, language: string): string
-
-  loadLanguage (language: string): Promise<void>
-}
+export type Shiki = Highlighter | Promise<Highlighter>
 
 const aliases = {
   template: 'vue-html',
@@ -23,11 +13,9 @@ export async function shikiHighlightCode(shiki: Shiki, code: string, language: s
     language = aliases[language as keyof typeof aliases]
   }
 
-  const highlighter = (await shiki) as ShikiHighlighter
-
   try {
-    await highlighter.loadLanguage(language)
-
+    const highlighter = await shiki
+    await highlighter.loadLanguage(language as Lang)
     return highlighter.codeToHtml(code, language)
       .replace(/[\s\S]*code>([\s\S]*)<\/code[\s\S]*/, '$1')
   } catch (e) {

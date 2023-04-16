@@ -14,7 +14,8 @@ import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from '@veno-ui/vite-plugin-markdown'
-import Icons from 'vite-plugin-iconify'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import { VitePWA } from 'vite-plugin-pwa'
 import pkg from 'veno-ui/package.json'
 import { VenoUiResolver } from 'veno-ui'
@@ -147,15 +148,9 @@ export default defineConfig(({ mode }) => {
         targets: ['defaults', 'not IE 11'],
       }),
 
-      // https://github.com/qq15725/vite-plugin-iconify
+      // https://github.com/antfu/unplugin-icons
       Icons({
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-        replaceableProps: [
-          'veno-ui',
-        ],
-        iconifyLoaderOptions: {
-          autoInstall: true,
-        },
+        compiler: 'vue3',
       }),
 
       // https://github.com/antfu/unplugin-vue-components
@@ -163,6 +158,7 @@ export default defineConfig(({ mode }) => {
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
         resolvers: [
           VenoUiResolver(),
+          IconsResolver(),
         ],
         dts: 'src/components.d.ts',
       }),
@@ -202,10 +198,6 @@ export default defineConfig(({ mode }) => {
       script: 'async',
       formatting: 'minify',
       crittersOptions: false,
-    },
-    server: {
-      host: '0.0.0.0',
-      port: +(process.env.PORT ?? 8080),
     },
     define: {
       __UI_NAME__: JSON.stringify(pkg.name),

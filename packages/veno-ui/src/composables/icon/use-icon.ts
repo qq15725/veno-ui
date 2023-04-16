@@ -4,12 +4,12 @@ import { consoleError } from '../../utils'
 
 // Composables
 import { useIcons } from '../icons'
-import { IconComponent } from '../../components/icon/icon-component'
-import type { makeIconProps } from './make-icon-props'
 
 // Components
+import { IconComponent } from '../../components/icon/icon-component'
 
 // Types
+import type { makeIconProps } from './make-icon-props'
 import type { ExtractPropTypes } from 'vue'
 import type { IconSetComponent, IconValue } from '../icons'
 import type { MaybeRef } from '../../utils'

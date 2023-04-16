@@ -34,22 +34,24 @@ export const Icon = defineComponent({
   },
 
   setup(props, { slots }) {
-    const { iconData } = useIcon(computed(() => {
-      if (!slots.default) return props
-      const slot = slots.default?.()
-      if (!slot) return props
-      const nodes = flattenFragments(slot)
-      if (typeof nodes?.[0]?.children === 'string') {
+    const { iconData } = useIcon(
+      computed(() => {
+        if (!slots.default) return props
+        const slot = slots.default?.()
+        if (!slot) return props
+        const nodes = flattenFragments(slot)
+        if (typeof nodes?.[0]?.children === 'string') {
+          return {
+            tag: props.tag,
+            icon: nodes[0].children as string,
+          }
+        }
         return {
           tag: props.tag,
-          icon: nodes[0].children as string,
+          icon: () => slot,
         }
-      }
-      return {
-        tag: props.tag,
-        icon: () => slot,
-      }
-    }))
+      }),
+    )
     const { sizeClasses } = useSize(props)
     const { textColorClasses, textColorStyles } = useTextColor(toRef(props, 'color'))
 

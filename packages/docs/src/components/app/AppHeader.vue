@@ -23,10 +23,14 @@
       <template #activator="{ props }">
         <ve-button
           v-bind="props"
-          :icon="theme === 'dark' ? 'fontisto-night-clear' : 'fontisto-day-sunny'"
           class="ml-3"
           @click="toggleTheme"
-        />
+        >
+          <template #icon>
+            <i-fontisto-night-clear v-if="theme === 'dark'" />
+            <i-fontisto-day-sunny v-else />
+          </template>
+        </ve-button>
       </template>
     </ve-tooltip>
 
@@ -36,9 +40,12 @@
           v-bind="props"
           href="https://github.com/qq15725/veno-ui"
           target="_blank"
-          icon="tabler-brand-github"
           class="ml-3"
-        />
+        >
+          <template #icon>
+            <i-tabler-brand-github />
+          </template>
+        </ve-button>
       </template>
     </ve-tooltip>
 
