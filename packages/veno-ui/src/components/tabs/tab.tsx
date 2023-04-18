@@ -3,7 +3,8 @@ import './styles/tab.scss'
 
 // Utils
 import { computed, ref, toRef, watch } from 'vue'
-import { defineComponent, pick, standardEasing, useRender } from '../../utils'
+import { pick, standardEasing, useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Button } from '../../components/button'
@@ -15,7 +16,7 @@ import { makeTagProps } from '../../composables/tag'
 import { makeThemeProps } from '../../composables/theme'
 import { provideDefaults } from '../../composables/defaults'
 import { useTextColor } from '../../composables/color'
-import { TabsKey } from './tabs'
+import { TabsKey } from './key'
 
 // Types
 import type { PropType } from 'vue'

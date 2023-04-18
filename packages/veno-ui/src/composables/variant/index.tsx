@@ -1,13 +1,13 @@
 // Utils
 import { computed, unref } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Composables
 import { useColor } from '../color'
 
 // Types
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export type VariantProps = ExtractPropTypes<ReturnType<typeof makeVariantProps>>
 

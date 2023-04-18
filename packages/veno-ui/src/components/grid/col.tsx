@@ -3,7 +3,8 @@ import './styles/col.scss'
 
 // Utils
 import { capitalize, computed } from 'vue'
-import { defineComponent, propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag' // no xs

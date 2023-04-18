@@ -3,7 +3,8 @@ import './styles/selection-group-control.scss'
 
 // Utils
 import { computed, inject, provide, toRef } from 'vue'
-import { createSymbol, defineComponent, getUid, propsFactory, useRender } from '../../utils'
+import { getUid, propsFactory, useRender } from '@veno-ui/utils'
+import { createSymbol, defineComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

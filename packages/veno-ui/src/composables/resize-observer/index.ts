@@ -1,6 +1,6 @@
 // Utils
 import { onBeforeUnmount, readonly, ref, watch } from 'vue'
-import { SUPPORTS_RESIZE_OBSERVER } from '../../utils'
+import { SUPPORTS_RESIZE_OBSERVER } from '@veno-ui/utils'
 
 // Types
 import type { DeepReadonly, Ref } from 'vue'

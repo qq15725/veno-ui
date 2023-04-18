@@ -1,6 +1,6 @@
 // Utils
 import { effectScope, nextTick, watchEffect } from 'vue'
-import { IN_BROWSER, getCurrentInstanceName, propsFactory } from '../../utils'
+import { IN_BROWSER, getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Strategies
 import { closeScrollStrategy } from './close'

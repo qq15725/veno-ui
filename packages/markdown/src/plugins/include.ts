@@ -1,6 +1,6 @@
 // Utils
-import { dirname, join } from 'path'
-import { readFileSync } from 'fs'
+import { dirname, join } from 'node:path'
+import { readFileSync } from 'node:fs'
 import container from 'markdown-it-container'
 import { getUid } from '@veno-ui/utils'
 import { slugify } from '../utils'

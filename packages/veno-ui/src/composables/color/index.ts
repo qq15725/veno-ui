@@ -1,6 +1,6 @@
 // Utils
 import { computed, isRef } from 'vue'
-import { colorToOnColorHex, isCssColor, propsFactory } from '../../utils'
+import { colorToOnColorHex, isCssColor, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { CSSProperties, Ref } from 'vue'

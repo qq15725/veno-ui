@@ -1,5 +1,6 @@
 // Utils
-import { defineComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeGroupProps, useGroup } from '../../composables/group'

@@ -7,7 +7,7 @@ import {
   toRaw,
   watch,
 } from 'vue'
-import { getCurrentInstance } from '../../utils'
+import { getCurrentInstance } from '@veno-ui/utils'
 
 // Types
 import type { ComponentInternalInstance, EffectScope, Ref } from 'vue'

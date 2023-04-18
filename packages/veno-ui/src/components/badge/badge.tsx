@@ -3,7 +3,8 @@ import './styles/badge.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { convertToUnit, defineComponent, pick } from '../../utils'
+import { convertToUnit, pick } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Icon } from '../icon'

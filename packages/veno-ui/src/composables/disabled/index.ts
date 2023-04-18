@@ -1,9 +1,9 @@
 // Utils
 import { computed, unref } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Types
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export interface DisabledProps {
   disabled?: boolean

@@ -1,4 +1,4 @@
-import { CircularBuffer } from '../../utils'
+import { CircularBuffer } from '@veno-ui/utils'
 
 const HORIZON = 100 // ms
 const HISTORY = 20 // number of samples to keep

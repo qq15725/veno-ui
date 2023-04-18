@@ -1,5 +1,5 @@
 // Utils
-import { toKebabCase, toPascalCase } from './utils'
+import { toKebabCase, toPascalCase } from '@veno-ui/utils'
 
 interface VenoUiResolverOptions {
   prefix?: string

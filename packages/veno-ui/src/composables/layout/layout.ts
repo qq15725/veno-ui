@@ -2,11 +2,11 @@
 import { computed, inject, provide, reactive, ref } from 'vue'
 import {
   convertToUnit,
-  findChildrenWithProvide,
   getCurrentInstance,
   getCurrentInstanceName,
   propsFactory,
-} from '../../utils'
+} from '@veno-ui/utils'
+import { findChildrenWithProvide } from '../../utils'
 
 // Composables
 import { useResizeObserver } from '../resize-observer'

@@ -3,7 +3,8 @@ import './styles/select.scss'
 
 // Utils
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import { convertToUnit, debounce, genericComponent, getUid, keyValues, pick, wrapInArray } from '../../utils'
+import { convertToUnit, debounce, getUid, keyValues, pick, wrapInArray } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'

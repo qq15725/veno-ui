@@ -2,7 +2,8 @@
 import './styles/card.scss'
 
 // Utils
-import { defineComponent, pick, propsFactory } from '../../utils'
+import { pick, propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeRouterProps, useLink } from '../../composables/router'

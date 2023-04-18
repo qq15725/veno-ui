@@ -1,11 +1,7 @@
 // Utils
 import { Transition, ref } from 'vue'
-import {
-  acceleratedEasing,
-  deceleratedEasing,
-  defineComponent,
-  nullifyTransforms,
-} from '../../utils'
+import { acceleratedEasing, deceleratedEasing, nullifyTransforms } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { useSharedClick } from '../../composables/shared-click'

@@ -1,6 +1,6 @@
 // Utils
 import { computed, watch } from 'vue'
-import { getUid } from '../../utils'
+import { getUid } from '@veno-ui/utils'
 
 // Composables
 import { ROOT_ZINDEX, useLayout } from './layout'

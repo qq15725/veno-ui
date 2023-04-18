@@ -3,7 +3,8 @@ import './styles/date-picker.scss'
 
 // Utils
 import { computed, ref, watch } from 'vue'
-import { genericComponent, getUid, keyValues, wrapInArray } from '../../utils'
+import { getUid, keyValues, wrapInArray } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

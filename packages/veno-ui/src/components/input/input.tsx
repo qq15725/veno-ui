@@ -7,13 +7,12 @@ import {
   IN_BROWSER,
   convertToUnit,
   filterInputAttrs,
-  genericComponent,
   getCurrentInstance,
   getUid,
-  propIsDefined,
   propsFactory,
   useRender,
-} from '../../utils'
+} from '@veno-ui/utils'
+import { genericComponent, propIsDefined } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'

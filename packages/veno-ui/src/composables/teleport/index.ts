@@ -1,9 +1,9 @@
 // Utils
 import { computed, unref, warn } from 'vue'
-import { IN_BROWSER } from '../../utils'
+import { IN_BROWSER } from '@veno-ui/utils'
 
 // Types
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export function useTeleport(target: MaybeRef<boolean | string | Element> = false) {
   const teleportTarget = computed(() => {

@@ -1,6 +1,6 @@
 // Utils
 import { computed, nextTick, ref, toRef, watch } from 'vue'
-import { convertToUnit, getCurrentInstanceName, getUid, propsFactory } from '../../utils'
+import { convertToUnit, getCurrentInstanceName, getUid, propsFactory } from '@veno-ui/utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

@@ -1,6 +1,6 @@
 // Utils
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { SUPPORTS_INTERSECTION_OBSERVER } from '../../utils'
+import { SUPPORTS_INTERSECTION_OBSERVER } from '@veno-ui/utils'
 
 export function useIntersectionObserver(callback?: IntersectionObserverCallback) {
   const intersectionRef = ref<HTMLElement>()

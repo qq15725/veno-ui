@@ -2,7 +2,8 @@
 import './styles/layout.scss'
 
 // Utils
-import { defineComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'

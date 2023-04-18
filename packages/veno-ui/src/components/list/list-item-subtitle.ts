@@ -2,6 +2,6 @@
 import './styles/list-item-subtitle.scss'
 
 // Utils
-import { createSimpleFunctional } from '../../utils'
+import { createSimpleFunctional } from '@veno-ui/utils'
 
 export const ListItemSubtitle = createSimpleFunctional('ve-list-item-subtitle')

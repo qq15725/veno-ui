@@ -11,7 +11,7 @@ import {
   oppositeAnchor,
   parseAnchor,
   physicalAnchor,
-} from '../../utils'
+} from '@veno-ui/utils'
 
 // Types
 import type { Ref } from 'vue'

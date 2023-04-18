@@ -3,7 +3,8 @@ import './styles/list.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { genericComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'

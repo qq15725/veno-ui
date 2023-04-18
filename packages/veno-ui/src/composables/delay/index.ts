@@ -1,5 +1,5 @@
 // Utils
-import { IN_BROWSER, propsFactory } from '../../utils'
+import { IN_BROWSER, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'

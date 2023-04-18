@@ -2,7 +2,8 @@
 import './styles/device.scss'
 
 // Utils
-import { convertToUnit, defineComponent } from '../../utils'
+import { convertToUnit } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'

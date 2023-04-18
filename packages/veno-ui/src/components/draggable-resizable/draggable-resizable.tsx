@@ -3,7 +3,8 @@ import './styles/draggable-resizable.scss'
 
 // Utils
 import { computed, mergeProps, nextTick, ref, toHandlers, watch } from 'vue'
-import { convertToUnit, defineComponent } from '../../utils'
+import { convertToUnit } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

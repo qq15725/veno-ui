@@ -2,7 +2,8 @@
 import './styles/notification-provider.scss'
 
 // Utils
-import { defineComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Overlay } from '../overlay'

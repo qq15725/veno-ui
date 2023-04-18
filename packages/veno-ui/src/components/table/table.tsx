@@ -5,13 +5,13 @@ import './styles/table.scss'
 import { computed, ref } from 'vue'
 import {
   convertToUnit,
-  defineComponent,
   downloadCSV,
   getObjectValueByPath,
   throttle,
   useRender,
   wrapInArray,
-} from '../../utils'
+} from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'

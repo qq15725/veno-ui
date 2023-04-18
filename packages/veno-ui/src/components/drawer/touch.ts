@@ -1,6 +1,6 @@
 // Utils
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { throttle } from '../../utils'
+import { throttle } from '@veno-ui/utils'
 
 // Composables
 import { useVelocity } from '../../composables/touch'

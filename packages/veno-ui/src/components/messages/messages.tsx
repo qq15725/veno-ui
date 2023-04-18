@@ -3,7 +3,8 @@ import './styles/messages.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent, wrapInArray } from '../../utils'
+import { wrapInArray } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { FadeTransition } from '../transition'

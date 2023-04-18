@@ -1,6 +1,6 @@
 // Utils
 import { computed, inject, onBeforeUnmount, provide, ref } from 'vue'
-import { getUid, propsFactory } from '../../utils'
+import { getUid, propsFactory } from '@veno-ui/utils'
 import { useProxiedModel } from '../proxied-model'
 import { multipleOpenStrategy, singleOpenStrategy } from './open-strategies'
 import { classicSelectStrategy, independentSelectStrategy, leafSelectStrategy } from './select-strategies'

@@ -8,14 +8,14 @@ import {
   isComponentInstance,
   propsFactory,
   querySelector,
-} from '../../utils'
+} from '@veno-ui/utils'
 
 // Composables
 import { makeDelayProps, useDelay } from '../delay'
 
 // Types
 import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
-import type { Selector } from '../../utils'
+import type { Selector } from '@veno-ui/utils'
 
 export const makeActivatorProps = propsFactory({
   /**

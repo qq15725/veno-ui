@@ -3,7 +3,7 @@ import './styles/tabs.scss'
 
 // Utils
 import { computed, toRef } from 'vue'
-import { createSymbol, defineComponent } from '../../utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { SlideGroup } from '../slide-group'
@@ -12,11 +12,11 @@ import { SlideGroup } from '../slide-group'
 import { makeDensityProps, useDensity } from '../../composables/density'
 import { makeTagProps } from '../../composables/tag'
 import { provideDefaults } from '../../composables/defaults'
+import { TabsKey } from './key'
 import { Tab } from './tab'
 
 // Types
-import type { GroupInstance } from '../../composables/group'
-import type { InjectionKey, PropType } from 'vue'
+import type { PropType } from 'vue'
 
 export type TabItem = string | Record<string, any>
 
@@ -29,8 +29,6 @@ function parseItems(items: TabItem[] | undefined) {
     return item
   })
 }
-
-export const TabsKey: InjectionKey<GroupInstance> = createSymbol('tabs')
 
 export const Tabs = defineComponent({
   name: 'VeTabs',

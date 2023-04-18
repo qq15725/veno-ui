@@ -6,13 +6,13 @@ import { Teleport, computed, mergeProps, ref, toHandlers, watch } from 'vue'
 import {
   IN_BROWSER,
   convertToUnit,
-  genericComponent,
   getScrollParent,
   keyValues,
   propsFactory,
   standardEasing,
   useRender,
-} from '../../utils'
+} from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Components
 import { FadeTransition } from '../transition'

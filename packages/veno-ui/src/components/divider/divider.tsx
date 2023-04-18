@@ -3,7 +3,8 @@ import './styles/divider.scss'
 
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, genericComponent } from '../../utils'
+import { convertToUnit } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'

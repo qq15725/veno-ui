@@ -7,14 +7,14 @@ import {
   isComponentInstance,
   propsFactory,
   querySelector,
-} from '../../utils'
+} from '@veno-ui/utils'
 
 // Composables
 import { usePointer } from '../../composables/pointer'
 
 // Types
 import type { ExtractPropTypes, PropType, Ref } from 'vue'
-import type { Selector } from '../../utils'
+import type { Selector } from '@veno-ui/utils'
 import type { PointerPosition } from '../../composables/pointer'
 
 export const makeDraggableProps = propsFactory({

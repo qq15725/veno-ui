@@ -1,6 +1,6 @@
 // Utils
 import { computed, reactive } from 'vue'
-import { deepEqual, getCurrentInstance, propsFactory, sortItems, wrapInArray } from '../../utils'
+import { deepEqual, getCurrentInstance, propsFactory, sortItems, wrapInArray } from '@veno-ui/utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'

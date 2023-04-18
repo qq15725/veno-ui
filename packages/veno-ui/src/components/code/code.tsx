@@ -3,7 +3,8 @@ import './styles/code.scss'
 
 // Utils
 import { computed, onMounted, ref, watch } from 'vue'
-import { defineComponent, flattenFragments } from '../../utils'
+import { flattenFragments } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeThemeProps, provideTheme } from '../../composables/theme'

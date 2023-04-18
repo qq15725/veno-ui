@@ -3,7 +3,8 @@ import './styles/toolbar.scss'
 
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
+import { convertToUnit, pick, propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makePaperProps, usePaper } from '../../composables/paper'

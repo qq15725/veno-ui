@@ -1,6 +1,7 @@
 // Utils
 import { computed, toRef } from 'vue'
-import { defineComponent, getUid } from '../../utils'
+import { getUid } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { FormControl } from '../form-control'

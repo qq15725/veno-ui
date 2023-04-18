@@ -3,7 +3,8 @@ import './styles/dialog.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, getUid } from '../../utils'
+import { getUid } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

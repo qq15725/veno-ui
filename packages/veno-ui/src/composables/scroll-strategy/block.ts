@@ -1,6 +1,6 @@
 // Utils
 import { onScopeDispose } from 'vue'
-import { convertToUnit, getScrollParents, getScrollbarWidth, hasScrollbar } from '../../utils'
+import { convertToUnit, getScrollParents, getScrollbarWidth, hasScrollbar } from '@veno-ui/utils'
 
 // Types
 import type { ScrollStrategyData } from './index'

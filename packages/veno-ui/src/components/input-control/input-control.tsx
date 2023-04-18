@@ -3,7 +3,8 @@ import './styles/input-control.scss'
 
 // Utils
 import { computed, ref, watchEffect } from 'vue'
-import { genericComponent, pick, propsFactory, useRender } from '../../utils'
+import { pick, propsFactory, useRender } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Components
 import { Icon } from '../icon'

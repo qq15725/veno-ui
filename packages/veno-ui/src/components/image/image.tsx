@@ -17,7 +17,7 @@ import {
   SUPPORTS_INTERSECTION_OBSERVER,
   convertToUnit,
   useRender,
-} from '../../utils'
+} from '@veno-ui/utils'
 
 // Components
 import { Responsive } from '../responsive'

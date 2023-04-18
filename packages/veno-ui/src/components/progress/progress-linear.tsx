@@ -3,7 +3,8 @@ import './styles/progress-linear.scss'
 
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
+import { convertToUnit, pick, propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 export const makeProgressLinearProps = propsFactory({
   /**

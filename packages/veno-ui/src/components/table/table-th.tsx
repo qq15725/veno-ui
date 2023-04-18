@@ -2,7 +2,8 @@
 import './styles/table-th.scss'
 
 // Utils
-import { defineComponent, pick } from '../../utils'
+import { pick } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Button } from '../button'

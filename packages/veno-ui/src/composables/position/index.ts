@@ -1,10 +1,10 @@
 // Utils
 import { computed, unref } from 'vue'
-import { convertToUnit, getCurrentInstanceName, propsFactory } from '../../utils'
+import { convertToUnit, getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 // Constants
 export const POSITIONS = ['static', 'relative', 'fixed', 'absolute', 'sticky'] as const

@@ -12,20 +12,11 @@ import { useProxiedModel } from '../../composables/proxied-model'
 // Components
 import { Card } from '../card'
 import { DatePickerPanel } from './date-picker-panel'
+import { DateRangeKey } from './key'
 
 // Types
-import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
+import type { PropType } from 'vue'
 import type { DateInstance } from '../../composables/date'
-
-interface DateRangeInstance {
-  selected: ComputedRef<DateInstance[]>
-  select: (value: string) => void
-  inRange: (value: number) => boolean
-  preview: (value: boolean) => void
-  isPreview: Ref<boolean>
-}
-
-export const DateRangeKey: InjectionKey<DateRangeInstance> = Symbol.for('veno-ui:date-range')
 
 export const DateRangePickerPanel = defineComponent({
   name: 'VeDateRangePickerPanel',

@@ -1,6 +1,7 @@
 // Utils
 import { computed, inject, provide, ref, watch } from 'vue'
-import { createSymbol, getCurrentInstance, getObjectValueByPath, propsFactory, setObjectValueByPath } from '../../utils'
+import { getCurrentInstance, getObjectValueByPath, propsFactory, setObjectValueByPath } from '@veno-ui/utils'
+import { createSymbol } from '../../utils'
 import { useProxiedModel } from '../proxied-model'
 
 // Types

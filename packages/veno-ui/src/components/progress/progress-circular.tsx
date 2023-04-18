@@ -3,7 +3,8 @@ import './styles/progress-circular.scss'
 
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, defineComponent, pick, propsFactory } from '../../utils'
+import { convertToUnit, pick, propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 import { makeProgressLinearProps } from './progress-linear'
 

@@ -1,6 +1,6 @@
 // Utils
 import { computed, ref } from 'vue'
-import { getCurrentInstance, getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstance, getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes, PropType } from 'vue'

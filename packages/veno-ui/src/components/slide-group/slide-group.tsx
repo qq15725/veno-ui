@@ -3,7 +3,8 @@ import './styles/slide-group.scss'
 
 // Utils
 import { computed, ref, watch, watchEffect } from 'vue'
-import { clamp, createSymbol, defineComponent, useRender } from '../../utils'
+import { clamp, useRender } from '@veno-ui/utils'
+import { createSymbol, defineComponent } from '../../utils'
 
 // Components
 import { FadeTransition } from '../transition'

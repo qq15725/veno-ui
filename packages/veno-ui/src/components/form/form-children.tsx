@@ -1,6 +1,7 @@
 // Utils
 import { computed } from 'vue'
-import { defineComponent, pick } from '../../utils'
+import { pick } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { CheckboxGroup } from '../checkbox-group'

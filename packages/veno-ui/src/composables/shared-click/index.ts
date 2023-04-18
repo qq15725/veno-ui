@@ -1,6 +1,6 @@
 // Utils
 import { onScopeDispose, readonly, ref } from 'vue'
-import { createSharedComposable } from '../../utils'
+import { createSharedComposable } from '@veno-ui/utils'
 
 // Types
 import type { DeepReadonly, Ref } from 'vue'

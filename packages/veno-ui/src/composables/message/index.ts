@@ -1,6 +1,6 @@
 // Utils
 import { inject, provide, ref } from 'vue'
-import { getUid } from '../../utils'
+import { getUid } from '@veno-ui/utils'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'

@@ -1,6 +1,6 @@
 // Utils
 import { computed, ref, watch } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes, Ref } from 'vue'

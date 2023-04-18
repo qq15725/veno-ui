@@ -3,7 +3,8 @@ import './styles/alert.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, pick, propsFactory } from '../../utils'
+import { pick, propsFactory } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

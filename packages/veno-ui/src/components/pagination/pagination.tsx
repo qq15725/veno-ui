@@ -3,7 +3,8 @@ import './styles/pagination.scss'
 
 // Utils
 import { computed, nextTick, ref } from 'vue'
-import { createRange, defineComponent, keyValues } from '../../utils'
+import { createRange, keyValues } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Button } from '../button'

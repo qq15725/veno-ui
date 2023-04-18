@@ -1,6 +1,6 @@
 // Utils
 import { onScopeDispose } from 'vue'
-import { getScrollParents } from '../../utils'
+import { getScrollParents } from '@veno-ui/utils'
 
 /** @private */
 export function bindScroll(el: HTMLElement | undefined, onScroll: (e: Event) => void) {

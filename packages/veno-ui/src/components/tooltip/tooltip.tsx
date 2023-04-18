@@ -3,7 +3,8 @@ import './styles/tooltip.scss'
 
 // Utils
 import { computed } from 'vue'
-import { genericComponent, getUid } from '../../utils'
+import { getUid } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'
@@ -16,7 +17,7 @@ import { ScaleTransition } from '../transition'
 // Types
 import type { OverlaySlots } from '../overlay/overlay'
 import type { Origin } from '../../composables/position-strategy'
-import type { Anchor } from '../../utils'
+import type { Anchor } from '@veno-ui/utils'
 
 export const Tooltip = genericComponent<new () => {
   $slots: OverlaySlots

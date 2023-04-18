@@ -1,5 +1,5 @@
 // Utils
-import { requestNewFrame } from '../../utils'
+import { requestNewFrame } from '@veno-ui/utils'
 import { bindScroll } from './util'
 
 // Type

@@ -1,5 +1,4 @@
 // Utils
-import { reactive } from 'vue'
 import { UI_NAME, UI_VERSION } from './utils'
 
 // Composables
@@ -8,12 +7,11 @@ import { HighlighterKey, createHighlighter } from './composables/highlighter'
 import { IconsKey, createIcons } from './composables/icons'
 import { DisplayKey, createDisplay } from './composables/display'
 import { DefaultsKey, createDefaults } from './composables/defaults'
-import { MessageKey, NotificationKey } from './composables/message'
 import { DraggableSortableGroupKey, createDraggableSortableGroup } from './composables/draggable-sortable-group'
 import { ProvidersKey, createProviders } from './composables/providers'
 
 // Types
-import type { App, Component, ComponentPublicInstance, InjectionKey } from 'vue'
+import type { App, Component } from 'vue'
 import type { HighlighterOptions } from './composables/highlighter'
 import type { ThemeOptions } from './composables/theme'
 import type { IconsOptions } from './composables/icons'
@@ -61,30 +59,6 @@ export const createVeno = (options: VenoOptions = {}) => {
     app.provide(HighlighterKey, createHighlighter(options.highlighter))
     app.provide(IconsKey, createIcons(options.icons))
     app.provide(ProvidersKey, createProviders(app, options.providers))
-
-    // Vue's inject() can only be used in setup
-    function inject(this: ComponentPublicInstance, key: InjectionKey<any> | string) {
-      const vm = this.$
-      const provides = vm.parent?.provides ?? vm.vnode.appContext?.provides
-      if (provides && (key as any) in provides) {
-        return provides[(key as string)]
-      }
-    }
-
-    app.mixin({
-      computed: {
-        $veno() {
-          return reactive({
-            display: inject.call(this, DisplayKey),
-            theme: inject.call(this, ThemeKey),
-            icons: inject.call(this, IconsKey),
-            message: inject.call(this, MessageKey),
-            notification: inject.call(this, NotificationKey),
-            version,
-          })
-        },
-      },
-    })
   }
 
   return { install, version }

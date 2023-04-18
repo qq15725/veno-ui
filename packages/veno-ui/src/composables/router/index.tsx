@@ -7,7 +7,7 @@ import {
   resolveDynamicComponent,
   toRef,
 } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ComputedRef, PropType, Ref, SetupContext } from 'vue'

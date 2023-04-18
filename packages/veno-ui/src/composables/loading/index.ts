@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 export interface LoadingProps {
   loading?: boolean

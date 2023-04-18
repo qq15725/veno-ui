@@ -2,41 +2,42 @@
   "name": "@veno-ui/utils",
   "version": "0.4.24",
   "description": "Utils for Veno UI",
+  "author": "wxm",
+  "license": "MIT",
   "keywords": [
     "utils",
     "vue utils",
     "veno-ui utils"
   ],
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/utils",
-  "bugs": {
-    "url": "https://github.com/qq15725/veno-ui/issues"
-  },
-  "license": "MIT",
-  "author": "wxm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf dist"
   },
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./*": "./*"
+  },
   "sideEffects": false,
-  "scripts": {
-    "build": "unbuild",
-    "stub": "unbuild --stub"
-  },
-  "engines": {
-    "node": ">=14"
-  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "unpkg": "./dist/index.iife.min.js",
+  "jsdelivr": "./dist/index.iife.min.js",
+  "types": "./dist/index.d.ts",
   "peerDependencies": {
     "vue": "^3.2.47"
   },

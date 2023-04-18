@@ -1,5 +1,5 @@
 // Utils
-import { SUPPORTS_INTERSECTION_OBSERVER } from '../../utils'
+import { SUPPORTS_INTERSECTION_OBSERVER } from '@veno-ui/utils'
 
 // Types
 import type { DirectiveBinding, ObjectDirective } from 'vue'

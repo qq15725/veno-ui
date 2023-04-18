@@ -2,28 +2,42 @@
   "name": "veno-ui",
   "version": "0.4.24",
   "description": "A Vue 3 UI Library. Uses Composable.",
+  "author": "wxm",
+  "license": "MIT",
   "keywords": [
     "veno-ui",
     "ui library",
     "vue"
   ],
   "homepage": "https://github.com/qq15725/veno-ui",
-  "bugs": {
-    "url": "https://github.com/qq15725/veno-ui/issues"
-  },
-  "license": "MIT",
-  "author": "wxm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
   },
-  "main": "lib/framework.mjs",
-  "module": "lib/framework.mjs",
-  "types": "lib/framework.d.ts",
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit --skipLibCheck --project ./tsconfig.json",
+    "build": "pnpm run build:dts && pnpm run build:dist && pnpm run build:lib",
+    "build:dts": "tsc --pretty --emitDeclarationOnly -p ./tsconfig.json",
+    "build:dist": "rollup -c rollup.dist.config.js",
+    "build:lib": "rollup -c rollup.lib.config.js",
+    "clean": "rimraf lib dist"
+  },
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "sideEffects": [
+    "*.sass",
+    "*.scss",
+    "*.css"
+  ],
   "exports": {
     ".": {
       "import": "./lib/framework.mjs",
-      "require": "./dist/veno-ui.js"
+      "require": "./dist/veno-ui.mjs"
     },
     "./components": "./lib/components/index.mjs",
     "./components/*": "./lib/components/*/*.mjs",
@@ -37,16 +51,6 @@
     "./utils": "./lib/utils/index.mjs",
     "./*": "./*"
   },
-  "files": [
-    "lib",
-    "dist"
-  ],
-  "sideEffects": [
-    "*.sass",
-    "*.scss",
-    "*.css",
-    "*.vue"
-  ],
   "typesVersions": {
     "*": {
       "lib/framework.mjs": [
@@ -64,11 +68,9 @@
       ]
     }
   },
-  "scripts": {
-    "build:dist": "vite build -c vite.dist.config.ts && vite build -c vite.dist-min.config.ts",
-    "build:lib": "vite build -c vite.lib.config.ts",
-    "build": "pnpm run build:lib && pnpm run build:dist"
-  },
+  "main": "lib/framework.mjs",
+  "module": "lib/framework.mjs",
+  "types": "lib/framework.d.ts",
   "peerDependencies": {
     "vue": "^3.2.4"
   },
@@ -78,7 +80,6 @@
   "devDependencies": {
     "@vueuse/head": "^1.1.23",
     "magic-string": "^0.30.0",
-    "vite-plugin-dts": "^2.2.0",
     "vue-router": "^4.1.6"
   },
   "publishConfig": {

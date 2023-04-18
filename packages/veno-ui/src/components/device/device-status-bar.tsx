@@ -3,7 +3,8 @@ import './styles/device-status-bar.scss'
 
 // Utils
 import { computed, onBeforeUnmount, ref, unref } from 'vue'
-import { convertToUnit, genericComponent } from '../../utils'
+import { convertToUnit } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'

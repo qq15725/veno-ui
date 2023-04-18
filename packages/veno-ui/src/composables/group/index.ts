@@ -9,7 +9,8 @@ import {
   ref,
   toRef,
 } from 'vue'
-import { consoleWarn, deepEqual, findChildren, getUid, propsFactory, wrapInArray } from '../../utils'
+import { deepEqual, getUid, propsFactory, wrapInArray } from '@veno-ui/utils'
+import { consoleWarn, findChildren } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../proxied-model'

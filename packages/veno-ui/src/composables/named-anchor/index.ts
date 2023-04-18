@@ -1,6 +1,6 @@
 // Utils
 import { computed, inject, onBeforeUnmount, onMounted, provide, ref } from 'vue'
-import { propsFactory, throttle } from '../../utils'
+import { propsFactory, throttle } from '@veno-ui/utils'
 
 // Composables
 import { useRoute, useRouterHistory } from '../router'

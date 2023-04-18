@@ -1,6 +1,6 @@
 // Utils
 import { computed, onScopeDispose, readonly, ref } from 'vue'
-import { SUPPORTS_TOUCH, propsFactory } from '../../utils'
+import { SUPPORTS_TOUCH, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'

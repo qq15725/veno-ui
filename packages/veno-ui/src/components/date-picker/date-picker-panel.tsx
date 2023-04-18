@@ -3,7 +3,8 @@ import './styles/date-picker-panel.scss'
 
 // Utils
 import { computed, inject, ref, watch } from 'vue'
-import { createRange, defineComponent, wrapInArray } from '../../utils'
+import { createRange, wrapInArray } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Card } from '../card'
@@ -14,7 +15,7 @@ import { useProxiedModel } from '../../composables/proxied-model'
 import { createDate } from '../../composables/date'
 
 // InjectionKeys
-import { DateRangeKey } from './date-range-picker-panel'
+import { DateRangeKey } from './key'
 
 // Types
 import type { PropType } from 'vue'

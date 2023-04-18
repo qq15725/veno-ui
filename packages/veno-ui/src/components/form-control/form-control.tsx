@@ -3,7 +3,8 @@ import './styles/form-control.scss'
 
 // Utils
 import { computed, onBeforeMount, onBeforeUnmount, toRef } from 'vue'
-import { convertToUnit, genericComponent, getUid, pick, useRender } from '../../utils'
+import { convertToUnit, getUid, pick, useRender } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Components
 import { Label } from '../label'

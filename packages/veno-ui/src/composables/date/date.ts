@@ -1,5 +1,5 @@
 // Utils
-import { padNumber } from '../../utils'
+import { padNumber } from '@veno-ui/utils'
 
 // Constants
 import { MAP } from './constants'

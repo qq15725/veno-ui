@@ -7,13 +7,13 @@ import {
   SUPPORTS_FOCUS_VISIBLE,
   deepEqual,
   filterInputAttrs,
-  genericComponent,
   getUid,
   pick,
   propsFactory,
   useRender,
   wrapInArray,
-} from '../../utils'
+} from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Components
 import { Icon } from '../icon'

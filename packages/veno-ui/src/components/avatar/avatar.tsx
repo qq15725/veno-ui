@@ -3,7 +3,8 @@ import './styles/avatar.scss'
 
 // Utils
 import { nextTick, ref, toRef, watch } from 'vue'
-import { defineComponent, propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Directives
 import { Resize } from '../../directives/resize'

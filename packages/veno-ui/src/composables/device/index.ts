@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { convertToUnit, propsFactory } from '../../utils'
+import { convertToUnit, propsFactory } from '@veno-ui/utils'
 
 export const deviceModels: Record<string, DeviceModel> = {
   iphonex: {

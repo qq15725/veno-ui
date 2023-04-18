@@ -3,7 +3,8 @@ import './styles/progress.scss'
 
 // Utils
 import { computed, ref, toRef } from 'vue'
-import { defineComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeTagProps } from '../../composables/tag'

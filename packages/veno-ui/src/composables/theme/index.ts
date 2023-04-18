@@ -8,12 +8,12 @@ import {
   getCurrentInstance,
   getLuma,
   propsFactory,
-} from '../../utils'
+} from '@veno-ui/utils'
 import defaultOptions from './default-options'
 
 // Types
 import type { App, ExtractPropTypes, InjectionKey, Ref } from 'vue'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 import type { BaseColors, BaseOnColors, Colors } from './colors'
 import type { HeadClient } from '@vueuse/head'
 

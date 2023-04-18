@@ -1,6 +1,6 @@
 // Utils
 import { effectScope, nextTick, onScopeDispose, ref, watchEffect } from 'vue'
-import { IN_BROWSER, propsFactory } from '../../utils'
+import { IN_BROWSER, propsFactory } from '@veno-ui/utils'
 
 // Strategies
 import { staticPositionStrategy } from './static'
@@ -9,7 +9,7 @@ import { pointerPositionStrategy } from './pointer'
 
 // Types
 import type { EffectScope, ExtractPropTypes, PropType, Ref } from 'vue'
-import type { Anchor } from '../../utils'
+import type { Anchor } from '@veno-ui/utils'
 
 export const POSITION_STRATEGIES = {
   static: staticPositionStrategy, // specific viewport position, usually centered

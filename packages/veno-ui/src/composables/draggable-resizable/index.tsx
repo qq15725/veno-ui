@@ -1,6 +1,6 @@
 // Utils
 import { computed, ref, toHandlers, watch } from 'vue'
-import { SUPPORTS_TOUCH, getCurrentInstanceName, propsFactory } from '../../utils'
+import { SUPPORTS_TOUCH, getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Composables
 import { usePointer } from '../pointer'

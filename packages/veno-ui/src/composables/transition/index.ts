@@ -1,6 +1,6 @@
 // Utils
 import { Transition, h, mergeProps } from 'vue'
-import { propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { Component, FunctionalComponent, PropType, TransitionProps } from 'vue'

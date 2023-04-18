@@ -1,6 +1,6 @@
 // Utils
 import { inject, reactive, ref, toRefs, watchEffect } from 'vue'
-import { IN_BROWSER, SUPPORTS_TOUCH, deepMerge } from '../../utils'
+import { IN_BROWSER, SUPPORTS_TOUCH, deepMerge } from '@veno-ui/utils'
 
 // Types
 import type { InjectionKey, ToRefs } from 'vue'

@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { getCurrentInstanceName, propsFactory } from '../../utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Composables
 import { makeTagProps } from '../tag'
@@ -25,7 +25,7 @@ import type { DensityProps } from '../density'
 import type { BorderProps } from '../border'
 import type { ShapeProps } from '../shape'
 import type { ElevationProps } from '../elevation'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export interface PaperProps
   extends TagProps,

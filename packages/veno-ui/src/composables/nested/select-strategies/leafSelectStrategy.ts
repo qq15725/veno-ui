@@ -1,8 +1,8 @@
 // Utils
-import { independentSelectStrategy } from '.'
+import { independentSelectStrategy } from './independentSelectStrategy'
 
 // Types
-import type { SelectStrategy } from '.'
+import type { SelectStrategy } from './selectStrategy'
 
 export const leafSelectStrategy = (single = false): SelectStrategy => {
   const strategy: SelectStrategy = {

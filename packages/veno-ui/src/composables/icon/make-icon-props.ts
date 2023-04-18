@@ -1,5 +1,5 @@
 // Utils
-import { propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
 import type { PropType } from 'vue'
 
 // Types

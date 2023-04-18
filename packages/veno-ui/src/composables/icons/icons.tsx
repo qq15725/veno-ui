@@ -1,6 +1,7 @@
 // Utils
 import { inject } from 'vue'
-import { createSymbol, deepMerge } from '../../utils'
+import { deepMerge } from '@veno-ui/utils'
+import { createSymbol } from '../../utils'
 
 // Iconsets
 import { aliases, mdi } from '../../iconsets/mdi'

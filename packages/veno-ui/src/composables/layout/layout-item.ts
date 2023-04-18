@@ -1,6 +1,6 @@
 // Utils
 import { computed, onActivated, onBeforeUnmount, onDeactivated, ref } from 'vue'
-import { getCurrentInstance, getUid, propsFactory } from '../../utils'
+import { getCurrentInstance, getUid, propsFactory } from '@veno-ui/utils'
 import { useLayout } from './layout'
 
 // Types

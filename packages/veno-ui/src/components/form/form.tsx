@@ -3,7 +3,8 @@ import './styles/form.scss'
 
 // Utils
 import { toRef } from 'vue'
-import { defineComponent, useRender } from '../../utils'
+import { useRender } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeSizeProps } from '../../composables/size'

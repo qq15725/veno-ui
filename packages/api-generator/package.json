@@ -2,34 +2,36 @@
   "name": "@veno-ui/api-generator",
   "version": "0.4.24",
   "description": "Api generator for Veno UI",
+  "author": "wxm",
+  "license": "MIT",
   "keywords": [],
   "homepage": "https://github.com/qq15725/veno-ui/blob/master/packages/api-generator",
-  "bugs": {
-    "url": "https://github.com/qq15725/veno-ui/issues"
-  },
-  "license": "MIT",
-  "author": "wxm",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
+  "bugs": {
+    "url": "https://github.com/qq15725/veno-ui/issues"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf dist"
   },
   "files": [
     "dist"
   ],
   "sideEffects": false,
-  "scripts": {
-    "build": "unbuild",
-    "stub": "unbuild --stub"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./*": "./*"
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "peerDependencies": {
     "ts-morph": "^14.0.0",
     "vue": "^3.2.47"

@@ -3,7 +3,8 @@ import './styles/button.scss'
 
 // Utils
 import { computed } from 'vue'
-import { defineComponent, propsFactory } from '../../utils'
+import { propsFactory } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { genOverlays, makePaperProps, usePaper } from '../../composables/paper'

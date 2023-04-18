@@ -1,10 +1,10 @@
 // Utils
 import { computed, inject, provide, ref, unref } from 'vue'
-import { deepMerge } from '../../utils'
+import { deepMerge } from '@veno-ui/utils'
 
 // Types
 import type { ComputedRef, InjectionKey, Ref } from 'vue'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export interface DefaultsInstance {
   [key: string]: undefined | Record<string, unknown>

@@ -1,2 +1,2 @@
-export const UI_NAME = __UI_NAME__
-export const UI_VERSION = __UI_VERSION__
+export const UI_NAME = __VENOUI_NAME__
+export const UI_VERSION = __VENOUI_VERSION__

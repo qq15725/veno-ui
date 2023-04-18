@@ -200,8 +200,8 @@ export default defineConfig(({ mode }) => {
       crittersOptions: false,
     },
     define: {
-      __UI_NAME__: JSON.stringify(pkg.name),
-      __UI_VERSION__: JSON.stringify(pkg.version),
+      __VENOUI_NAME__: JSON.stringify(pkg.name),
+      __VENOUI_VERSION__: JSON.stringify(pkg.version),
     },
   }
 })

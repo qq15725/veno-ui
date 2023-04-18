@@ -3,7 +3,8 @@ import './styles/menu.scss'
 
 // Utils
 import { computed, ref } from 'vue'
-import { genericComponent, getUid, useRender } from '../../utils'
+import { getUid, useRender } from '@veno-ui/utils'
+import { genericComponent } from '../../utils'
 
 // Composables
 import { useProxiedModel } from '../../composables/proxied-model'

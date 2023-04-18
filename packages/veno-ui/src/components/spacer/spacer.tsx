@@ -2,7 +2,8 @@
 import './styles/spacer.scss'
 
 // Utils
-import { defineComponent, flattenFragments, pick } from '../../utils'
+import { flattenFragments, pick } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Components
 import { Col, Row } from '../grid'

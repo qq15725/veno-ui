@@ -1,5 +1,5 @@
 // Utils
-import { attachedRoot } from '../../utils'
+import { attachedRoot } from '@veno-ui/utils'
 
 // Types
 import type { DirectiveBinding } from 'vue'

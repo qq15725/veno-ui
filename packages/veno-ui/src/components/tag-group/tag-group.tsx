@@ -8,7 +8,8 @@ import { makeGroupProps, useGroup } from '../../composables/group'
 import { provideDefaults } from '../../composables/defaults'
 
 // Utilities
-import { deepEqual, defineComponent } from '../../utils'
+import { deepEqual } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Types
 import type { PropType } from 'vue'

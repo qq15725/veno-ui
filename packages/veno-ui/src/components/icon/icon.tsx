@@ -3,7 +3,7 @@ import './styles/icon.scss'
 
 // Utils
 import { computed, defineComponent, toRef } from 'vue'
-import { convertToUnit, flattenFragments } from '../../utils'
+import { convertToUnit, flattenFragments } from '@veno-ui/utils'
 
 // Composables
 import { makeSizeProps, useSize } from '../../composables/size'

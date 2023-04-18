@@ -3,7 +3,8 @@ import './styles/draggable-sortable.scss'
 
 // Utils
 import { cloneVNode, computed, mergeProps, toHandlers, watch } from 'vue'
-import { defineComponent, isComponentInstance } from '../../utils'
+import { isComponentInstance } from '@veno-ui/utils'
+import { defineComponent } from '../../utils'
 
 // Composables
 import { makeDraggableSortableProps, useDraggableSortable } from '../../composables/draggable-sortable'

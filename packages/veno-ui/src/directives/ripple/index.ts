@@ -2,7 +2,7 @@
 import './styles/ripple.scss'
 
 // Utilities
-import { isObject, keyCodes } from '../../utils'
+import { isObject, keyCodes } from '@veno-ui/utils'
 
 // Types
 import type {

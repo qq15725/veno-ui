@@ -3,11 +3,9 @@
   "version": "0.4.24",
   "private": true,
   "packageManager": "pnpm@8.2.0",
-  "workspaces": [
-    "packages/**"
-  ],
   "scripts": {
-    "build": "pnpm -r build",
+    "clean": "pnpm -r run clean",
+    "build": "pnpm run clean && pnpm -r run build",
     "dev": "pnpm --filter @veno-ui/docs dev",
     "docs:build": "pnpm --filter @veno-ui/docs build-post",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
@@ -15,8 +13,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "publish": "pnpm -r publish",
-    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag",
-    "up": "taze major -I"
+    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag"
   },
   "engines": {
     "node": ">=14"
@@ -26,14 +23,24 @@
     "@types/node": "^18.15.11",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "autoprefixer": "^10.4.14",
     "bumpp": "^9.1.0",
+    "cssnano": "^6.0.0",
+    "esbuild-register": "^3.4.2",
     "eslint": "^8.38.0",
     "gh-pages": "^5.0.0",
+    "glob": "^10.1.0",
+    "mkdirp": "^3.0.0",
+    "postcss": "^8.4.22",
+    "rimraf": "^5.0.0",
+    "rollup": "^3.20.3",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "rollup-plugin-pure": "^0.0.2",
+    "rollup-plugin-sass": "^1.12.19",
     "sass": "^1.62.0",
-    "taze": "^0.9.1",
     "ts-morph": "^18.0.0",
     "typescript": "^4.9.5",
-    "unbuild": "^1.2.1",
     "vite": "^4.2.1",
     "vue": "^3.2.47"
   }

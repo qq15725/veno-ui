@@ -2,7 +2,7 @@
 import './styles/headers.scss'
 
 // Utils
-import { createSimpleFunctional } from '../../utils'
+import { createSimpleFunctional } from '@veno-ui/utils'
 
 export const H1 = createSimpleFunctional('ve-h text-h1 my-5', 'h1', 'VeH1')
 export const H2 = createSimpleFunctional('ve-h text-h2 my-4', 'h2', 'VeH2')

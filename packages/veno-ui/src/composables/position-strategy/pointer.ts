@@ -1,6 +1,6 @@
 // Utils
 import { onScopeDispose } from 'vue'
-import { convertToUnit } from '../../utils'
+import { convertToUnit } from '@veno-ui/utils'
 
 // Types
 import type { PositionStrategyData, PositionStrategyProps } from './index'
