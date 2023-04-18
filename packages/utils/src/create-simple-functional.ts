@@ -3,7 +3,7 @@ import { defineComponent, h } from 'vue'
 import { toKebabCase } from './string'
 
 // Types
-import type { Component } from 'vue'
+import type { DefineComponent } from 'vue'
 
 /**
  * 创建简单的函数式组件
@@ -12,7 +12,7 @@ import type { Component } from 'vue'
  * @param tag 标签
  * @param name 组件名
  */
-export function createSimpleFunctional(klass: string, tag = 'div', name?: string): Component {
+export function createSimpleFunctional(klass: string, tag = 'div', name?: string): DefineComponent {
   return defineComponent({
     name: name ?? toKebabCase(klass.replace(/__/g, '-')),
 
@@ -26,5 +26,5 @@ export function createSimpleFunctional(klass: string, tag = 'div', name?: string
     setup(props, { slots }) {
       return () => h(props.tag, { class: klass }, slots.default?.())
     },
-  })
+  }) as any
 }
