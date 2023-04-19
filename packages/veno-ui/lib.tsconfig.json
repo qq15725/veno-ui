@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "jsx": "react",
+    "jsxFactory": "_createVNode",
+    "jsxFragmentFactory": "_Fragment"
+  },
+  "include": ["src"],
+}

@@ -12,7 +12,7 @@ import { IconComponent } from '../../components/icon/icon-component'
 import type { makeIconProps } from './make-icon-props'
 import type { ExtractPropTypes } from 'vue'
 import type { IconSetComponent, IconValue } from '../icons'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 /**
  * @zh 使用图标

@@ -18,11 +18,12 @@
     "url": "https://github.com/qq15725/veno-ui/issues"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit --skipLibCheck --project ./tsconfig.json",
-    "build": "pnpm run build:dts && pnpm run build:dist && pnpm run build:lib",
-    "build:dts": "tsc --pretty --emitDeclarationOnly -p ./tsconfig.json",
-    "build:dist": "rollup -c rollup.dist.config.js",
-    "build:lib": "rollup -c rollup.lib.config.js",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "build": "pnpm run build:lib && pnpm run build:dist",
+    "build:dist": "rollup -c ./rollup.config.js",
+    "build:lib": "pnpm run build:lib-dts && pnpm run build:lib-mjs",
+    "build:lib-mjs": "node ./lib.build.js",
+    "build:lib-dts": "tsc --pretty --emitDeclarationOnly -p ./tsconfig.json",
     "clean": "rimraf lib dist"
   },
   "files": [
@@ -79,7 +80,6 @@
   },
   "devDependencies": {
     "@vueuse/head": "^1.1.23",
-    "magic-string": "^0.30.0",
     "vue-router": "^4.1.6"
   },
   "publishConfig": {

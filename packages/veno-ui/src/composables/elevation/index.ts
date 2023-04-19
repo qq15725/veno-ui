@@ -4,7 +4,7 @@ import { propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
-import type { MaybeRef } from '../../utils'
+import type { MaybeRef } from '@veno-ui/utils'
 
 export type ElevationProps = ExtractPropTypes<ReturnType<typeof makeElevationProps>>
 
