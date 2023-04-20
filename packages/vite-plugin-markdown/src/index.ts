@@ -1,5 +1,5 @@
 // Utils
-import { promises as fsp } from 'fs'
+import { promises as fsp } from 'node:fs'
 import { createFilter } from '@veno-ui/utils'
 import { createMarkdownToVue } from './markdown'
 import { resolveOptions } from './options'
