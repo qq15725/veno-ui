@@ -11,12 +11,5 @@
       "vue-router",
       "prismjs"
     ]
-  },
-  "include": [
-    "vite.config.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ]
+  }
 }

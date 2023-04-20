@@ -160,7 +160,7 @@ export default defineConfig(({ mode }) => {
           VenoUiResolver(),
           IconsResolver(),
         ],
-        dts: 'src/components.d.ts',
+        dts: 'components.d.ts',
       }),
 
       // https://github.com/antfu/vite-plugin-pwa

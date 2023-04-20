@@ -10,8 +10,8 @@
     "docs:build": "pnpm --filter @veno-ui/docs build-post",
     "docs:publish": "NODE_DEBUG=gh-pages gh-pages -d packages/docs/dist",
     "docs:update": "pnpm docs:build && pnpm docs:publish",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint \"packages/*/{src,scripts}/**/*.{ts,tsx,js}\"",
+    "lint:fix": "eslint \"packages/*/{src,scripts}/**/*.{ts,tsx,js}\" --fix",
     "publish": "pnpm -r publish",
     "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag"
   },

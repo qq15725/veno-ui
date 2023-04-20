@@ -26,7 +26,7 @@ jobs:
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    name: "Build&Test: node-16.x, ubuntu-latest"
+    name: "Build&Lint: node-16.x, ubuntu-latest"
     steps:
       - name: ⤵️ Checkout
         uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
         uses: tj-actions/changed-files@57d9664f8e2aa45f26bcb59095f99aa47ae8e90d # v35.4.4
         with:
           files: |
-            docs/**
+            packages/docs/**
             .github/**
             !.github/workflows/ci.yml
             **.md

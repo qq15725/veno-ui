@@ -3,12 +3,12 @@ import './styles/tag-group.scss'
 
 // Composables
 import { toRef } from 'vue'
+import { deepEqual } from '@veno-ui/utils'
 import { makePaperProps, usePaper } from '../../composables/paper'
 import { makeGroupProps, useGroup } from '../../composables/group'
 import { provideDefaults } from '../../composables/defaults'
 
 // Utilities
-import { deepEqual } from '@veno-ui/utils'
 import { defineComponent } from '../../utils'
 
 // Types
