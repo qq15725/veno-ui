@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@qq15725/eslint-config": "^1.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@types/node": "^18.15.11",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",

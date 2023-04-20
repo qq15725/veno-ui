@@ -18,7 +18,7 @@
   </a>
 </p>
 
-<p align="center">Veno UI - 一个 Vue 3 UI 组件库</p>
+<p align="center">一个 Vue 3 UI 组件库</p>
 
 ## 文档
 
@@ -78,23 +78,3 @@ createApp(App).use(veno).mount('#app')
 [veno-admin]: https://github.com/qq15725/veno-admin
 [@veno-ui/markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/markdown
 [@veno-ui/vite-plugin-markdown]: https://github.com/qq15725/veno-ui/blob/master/packages/vite-plugin-markdown
-
-## 参与开发
-
-安装依赖
-
-```sh
-pnpm i
-```
-
-编译所有插件和库
-
-```sh
-pnpm run build
-```
-
-运行开发环境（文档工程）
-
-```sh
-pnpm run dev
-```

@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { mkdirpSync } from 'mkdirp'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import pluginEsbuild from 'rollup-plugin-esbuild'
 import pluginDts from 'rollup-plugin-dts'
 import pluginVueJsx from '@vitejs/plugin-vue-jsx'
@@ -90,6 +91,7 @@ export function createConfig(
         },
       ].filter(Boolean) as OutputOptions[],
       plugins: [
+        nodeResolve(),
         pluginVueJsx(),
         pluginEsbuild({
           define,
@@ -138,6 +140,7 @@ export function createConfig(
         format: 'es',
       },
       plugins: [
+        nodeResolve(),
         sass && {
           name: 'rollup-plugin-skip-sass',
           transform(code: string, id: string) {
