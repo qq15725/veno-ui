@@ -1,11 +1,20 @@
 <h1 align="center">Veno UI</h1>
 
 <p align="center">
-  <a href="https://github.com/qq15725/veno-ui/blob/master/LICENSE" class="mr-3">
-    <img src="https://img.shields.io/npm/l/veno-ui.svg" alt="License">
+  <a href="https://unpkg.com/veno-ui">
+    <img src="https://img.shields.io/bundlephobia/minzip/veno-ui" alt="Minzip">
   </a>
   <a href="https://www.npmjs.com/package/veno-ui">
     <img src="https://img.shields.io/npm/v/veno-ui.svg" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/veno-ui">
+    <img src="https://img.shields.io/npm/dm/veno-ui" alt="Downloads">
+  </a>
+  <a href="https://github.com/qq15725/veno-ui/issues">
+    <img src="https://img.shields.io/github/issues/qq15725/veno-ui" alt="Issues">
+  </a>
+  <a href="https://github.com/qq15725/veno-ui/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/veno-ui.svg" alt="License">
   </a>
 </p>
 
@@ -13,7 +22,7 @@
 
 ## 文档
 
-- [www.venojs.com](https://www.venojs.com) 
+- [www.venojs.com](https://www.venojs.com)
 - [国内文档镜像](https://venoui.fdota.com)
 
 ## 特性
@@ -30,27 +39,13 @@
 
 所有组件 TypeScript 编写，类型安全。
 
-## 安装
-
-使用 npm
+## 📦 安装
 
 ```sh
 npm i veno-ui
 ```
 
-使用 yarn
-
-```sh
-yarn add veno-ui
-```
-
-使用 pnpm
-
-```sh
-pnpm add veno-ui
-```
-
-## 例子
+## 🦄 使用
 
 导入全部组件的例子，按需导入请查看文档了解更多。
 
@@ -103,7 +98,3 @@ pnpm run build
 ```sh
 pnpm run dev
 ```
-
-## 许可
-
-Veno UI 使用 [MIT](https://github.com/qq15725/veno-ui/blob/master/LICENSE) 许可，大量代码基于 [Vuetify 3](https://github.com/vuetifyjs/vuetify/tree/next) ，遵循 [MIT](https://github.com/vuetifyjs/vuetify/blob/next/LICENSE.md) 许可。
