@@ -1,15 +1,10 @@
-<script lang="ts">
-  import { defineComponent } from 'vue'
+<script lang="ts" setup>
+  import { computed } from 'vue'
+  import { useTheme } from 'veno-ui'
 
-  export default defineComponent({
-    name: 'PaletteJavascriptColors',
+  const theme = useTheme()
 
-    computed: {
-      colors() {
-        return this.$veno.theme.themes[this.$veno.theme.current].colors
-      },
-    },
-  })
+  const colors = computed(() => theme.themes.value[theme.current.value].colors)
 </script>
 
 <template>

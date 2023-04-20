@@ -19,7 +19,7 @@ function fixWindowsPath(path: string) {
 
 export function createConfig(
   options: {
-    cwd?: string
+    root?: string
     input?: string
     output?: string
     banner?: string
@@ -36,7 +36,7 @@ export function createConfig(
   } = {},
 ): RollupOptions[] {
   const {
-    cwd,
+    root,
     input = 'src/index.ts',
     output = 'index',
     banner,
@@ -98,12 +98,12 @@ export function createConfig(
           pure: ['defineComponent'],
         }),
         sass && pluginSass({
-          output: !cwd
+          output: !root
             ? false
             : (styles, styleNodes) => {
                 styles = styles.replaceAll('@charset "UTF-8";', '')
 
-                mkdirpSync(path.join(cwd, 'dist'))
+                mkdirpSync(path.join(root, 'dist'))
 
                 Promise.all([
                   postcss([autoprefixer]).process(styles, { from: 'src' }),
@@ -111,15 +111,15 @@ export function createConfig(
                     preset: 'default',
                   })]).process(styles, { from: 'src' }),
                 ]).then(result => {
-                  fs.writeFileSync(path.join(cwd, `dist/${ output }.css`), banner + result[0].css, 'utf8')
-                  fs.writeFileSync(path.join(cwd, `dist/${ output }.min.css`), banner + result[1].css, 'utf8')
+                  fs.writeFileSync(path.join(root, `dist/${ output }.css`), banner + result[0].css, 'utf8')
+                  fs.writeFileSync(path.join(root, `dist/${ output }.min.css`), banner + result[1].css, 'utf8')
                 })
 
                 for (const { id, content } of styleNodes) {
                   if (!id || !content) continue
                   const out = path.parse(fixWindowsPath(id).replace(
-                    path.join(cwd, 'src'),
-                    path.join(cwd, 'lib'),
+                    path.join(root, 'src'),
+                    path.join(root, 'lib'),
                   ))
                   mkdirpSync(out.dir)
                   fs.writeFileSync(

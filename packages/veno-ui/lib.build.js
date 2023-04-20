@@ -6,9 +6,6 @@ require('esbuild-register')
 esbuild.build(
   require('../../scripts/esbuild.config.ts').createConfig({
     tsconfig: './lib.tsconfig.json',
-    inject: [
-      './lib.shim.js',
-    ],
     define: {
       __VENOUI_VERSION__: JSON.stringify(packageJson.version),
       __VENOUI_NAME__: JSON.stringify(packageJson.name),

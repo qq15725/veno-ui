@@ -3,7 +3,8 @@ require('esbuild-register')
 const packageJson = require('./package.json')
 
 module.exports = require('../../scripts/rollup.config.ts').createConfig({
-  cwd: process.cwd(),
+  root: process.cwd(),
+  input: 'src/entry-bundler.ts',
   output: packageJson.name,
   banner: `/*!
 * ${ packageJson.name } • v${ packageJson.version }

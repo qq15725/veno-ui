@@ -1,11 +1,13 @@
 <script lang="ts" setup>
   // Utils
   import { storeToRefs } from 'pinia'
+  import { useDisplay, version } from 'veno-ui'
   // Stores
   import { useAppStore } from '@/stores/app'
   import { useUserStore } from '@/stores/user'
 
   const userStore = useUserStore()
+  const display = useDisplay()
   const { toggleMenuActive } = useAppStore()
   const { toggleTheme } = userStore
   const { theme } = storeToRefs(userStore)
@@ -13,7 +15,7 @@
 
 <template>
   <ve-header border>
-    <ve-header-nav-icon v-if="$veno.display.mobile" @click="toggleMenuActive" />
+    <ve-header-nav-icon v-if="display.mobile" @click="toggleMenuActive" />
 
     <ve-header-title v-else>Veno UI</ve-header-title>
 
@@ -49,6 +51,6 @@
       </template>
     </ve-tooltip>
 
-    <ve-button class="ml-3">{{ $veno.version }}</ve-button>
+    <ve-button class="ml-3">{{ version }}</ve-button>
   </ve-header>
 </template>

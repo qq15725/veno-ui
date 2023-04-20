@@ -21,9 +21,10 @@ export function createProviders(app: App, options?: Record<string, Component>): 
   })
 
   function createRootProvider() {
-    return Object.values(providers.value).reduce<Component>((Prev: any, Cur: any) => {
-      return (props, { slots }) => <Prev registered><Cur registered>{ slots.default?.() }</Cur></Prev>
-    }, (props, { slots }) => slots.default?.())
+    return Object.values(providers.value).reduce<Component>(
+      (Prev: any, Cur: any) => (props, { slots }) => <Prev registered><Cur registered>{ slots.default?.() }</Cur></Prev>,
+      (props, { slots }) => slots.default?.(),
+    )
   }
 
   function get(key: string) {

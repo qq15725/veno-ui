@@ -1,7 +1,9 @@
 <script lang="ts" setup>
   import { computed } from 'vue'
+  import { useDisplay } from 'veno-ui'
   import { useRoute } from 'vue-router'
 
+  const display = useDisplay()
   const route = useRoute()
   const toc = computed(() => {
     const headers = (route.meta?.headers || []) as any[]
@@ -13,7 +15,7 @@
 
 <template>
   <ve-drawer
-    :model-value="!$veno.display.platform.ssr && !$veno.display.mobile && toc.length > 0"
+    :model-value="!display.platform.ssr && !display.mobile && toc.length > 0"
     width="180"
     anchor="right"
     border="0"
