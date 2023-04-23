@@ -76,8 +76,7 @@ export const RadioGroup = defineComponent({
           name={ props.name }
           size={ size }
           v-model={ model.value }
-        >
-          { {
+          v-slots={ {
             ...slots,
             default: ({ isDisabled, isReadonly, props: controlProps }) => (
               <SelectionGroupControl
@@ -94,7 +93,7 @@ export const RadioGroup = defineComponent({
               </SelectionGroupControl>
             ),
           } }
-        </FormControl>
+        />
       )
     }
   },

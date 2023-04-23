@@ -1,5 +1,7 @@
 // Types
-import type { JSXComponent } from 'vue'
+import type { ComponentPublicInstance, FunctionalComponent } from 'vue'
+
+type JSXComponent<Props = any> = { new (): ComponentPublicInstance<Props> } | FunctionalComponent<Props>
 
 export type IconValue = string | JSXComponent
 

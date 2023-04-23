@@ -31,17 +31,21 @@
     "dist"
   ],
   "sideEffects": [
-    "*.sass",
     "*.scss",
     "*.css"
   ],
   "exports": {
     ".": {
+      "sass": "./lib/styles/main.sass",
       "style": "./lib/styles/main.css",
       "import": "./lib/framework.mjs",
       "require": "./dist/veno-ui.cjs"
     },
-    "./styles": "./lib/styles/main.css",
+    "./styles": {
+      "sass": "./lib/styles/main.sass",
+      "default": "./lib/styles/main.css"
+    },
+    "./styles/*": "./lib/styles/*",
     "./components": "./lib/components/index.mjs",
     "./components/*": "./lib/components/*/*.mjs",
     "./directives": "./lib/directives/index.mjs",
@@ -49,7 +53,6 @@
     "./framework": "./lib/framework.mjs",
     "./iconsets/*": "./lib/iconsets/*.mjs",
     "./providers": "./lib/providers/index.mjs",
-    "./styles/*": "./lib/styles/*",
     "./utils": "./lib/utils/index.mjs",
     "./*": "./*"
   },

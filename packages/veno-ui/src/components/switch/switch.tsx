@@ -40,8 +40,7 @@ export const Switch = defineComponent({
           class="ve-switch"
           { ...props }
           onUpdate:modelValue={ val => emit('update:modelValue', val) }
-        >
-          { {
+          v-slots={ {
             ...slots,
             default: ({ textColorClasses, textColorStyles }) => (
               <div
@@ -61,7 +60,7 @@ export const Switch = defineComponent({
               )
             },
           } }
-        </SelectionControl>
+        />
       )
     }
   },

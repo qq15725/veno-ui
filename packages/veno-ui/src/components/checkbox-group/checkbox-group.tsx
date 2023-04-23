@@ -77,8 +77,7 @@ export const CheckboxGroup = defineComponent({
           name={ props.name }
           size={ size }
           v-model={ model.value }
-        >
-          { {
+          v-slots={ {
             ...slots,
             default: ({ isDisabled, isReadonly, props: controlProps }) => {
               return (
@@ -97,7 +96,7 @@ export const CheckboxGroup = defineComponent({
               )
             },
           } }
-        </FormControl>
+        />
       )
     }
   },

@@ -49,17 +49,18 @@ export const ListChildren = genericComponent<new <T extends InternalListItemProp
         default:
           return children
             ? (
-            <ListGroup value={ itemProps?.value }>
-              { {
-                default: () => (
-                  <ListChildren items={ children } v-slots={ slots } />
-                ),
-                activator: ({ props: activatorProps }) => (
-                  slots.header?.({ item: itemProps, index, props: activatorProps })
-                  ?? <ListItem { ...itemProps } { ...activatorProps } />
-                ),
-              } }
-            </ListGroup>
+              <ListGroup
+                value={ itemProps?.value }
+                v-slots={ {
+                  default: () => (
+                    <ListChildren items={ children } v-slots={ slots } />
+                  ),
+                  activator: ({ props: activatorProps }) => (
+                    slots.header?.({ item: itemProps, index, props: activatorProps })
+                    ?? <ListItem { ...itemProps } { ...activatorProps } />
+                  ),
+                } }
+              />
               )
             : (
                 slots.item?.({ item: itemProps, index })

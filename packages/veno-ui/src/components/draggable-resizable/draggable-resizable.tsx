@@ -179,13 +179,12 @@ export const DraggableResizable = defineComponent({
             positionStrategy="pointer"
             scrollStrategy="none"
             text={ `${ parseInt(model.value.width ?? 0) } x ${ parseInt(model.value.height ?? 0) }` }
-          >
-            { {
+            v-slots={ {
               activator: props.resizable
                 ? ({ on: anchorProps }) => genResizableAnchors(anchorProps, isDragging)
                 : undefined,
             } }
-          </Tooltip>
+          />
         </props.tag>
       )
     }
