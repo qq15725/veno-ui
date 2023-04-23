@@ -55,6 +55,15 @@ export default defineConfig(({ mode }) => {
             ],
       ),
     },
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/js/[name]-[hash].mjs',
+          chunkFileNames: 'assets/js/[name]-[hash].mjs',
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+        },
+      },
+    },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown

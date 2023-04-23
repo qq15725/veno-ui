@@ -22,9 +22,9 @@ export const install: InstallPlugin = ({ app }) => {
         theme: 'material-theme-palenight',
         langs: ['html', 'typescript', 'javascript'],
         paths: {
-          wasm: '/wasms',
-          themes: '/themes',
-          languages: '/languages',
+          wasm: './wasms',
+          themes: './themes',
+          languages: './languages',
         },
       }),
     },
