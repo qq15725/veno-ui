@@ -7,12 +7,14 @@ import * as directives from 'veno-ui/directives'
 import * as providers from 'veno-ui/providers'
 
 // Highlighter
-import { getHighlighter } from 'shiki'
+import { getHighlighter, setCDN } from 'shiki'
 
 // Types
 import type { InstallPlugin } from '@/types'
 
 export const install: InstallPlugin = ({ app }) => {
+  setCDN('https://unpkg.com/shiki/')
+
   const veno = createVeno({
     directives,
     providers,
@@ -21,11 +23,6 @@ export const install: InstallPlugin = ({ app }) => {
       shiki: getHighlighter({
         theme: 'material-theme-palenight',
         langs: ['html', 'typescript', 'javascript'],
-        paths: {
-          wasm: './wasms',
-          themes: './themes',
-          languages: './languages',
-        },
       }),
     },
   })

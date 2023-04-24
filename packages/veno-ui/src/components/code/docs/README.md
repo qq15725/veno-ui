@@ -5,7 +5,7 @@ meta:
 
 # 代码 Code
 
-:::warning 
+:::warning
 
 由于尺寸原因，Veno UI 并不把语法高亮插件内置。请在创建实例时配置 highlighter 选项。
 
@@ -19,8 +19,8 @@ meta:
 import { createVeno } from 'veno-ui'
 import { getHighlighter, setCDN } from 'shiki'
 
-setCDN('https://cdn.jsdelivr.net/npm/shiki@0.10.1/')
-// setCDN('https://unpkg.com/shiki@0.10.1/')
+setCDN('https://cdn.jsdelivr.net/npm/shiki')
+// setCDN('https://unpkg.com/shiki')
 
 export default createVeno({
   highlighter: {
@@ -33,7 +33,7 @@ export default createVeno({
 })
 ```
 
-### 使用 prismjs 的示例 
+### 使用 prismjs 的示例
 
 ```typescript
 import { createVeno } from 'veno-ui'
@@ -59,7 +59,7 @@ inline.md
 
 color.md
 
-show-language.md 
+show-language.md
 
 show-line-numbers.md
 
