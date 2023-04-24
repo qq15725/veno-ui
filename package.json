@@ -12,7 +12,7 @@
     "lint:fix": "eslint \"packages/*/{src,scripts}/**/*.{ts,tsx,js}\" --fix",
     "publish": "pnpm -r publish --no-git-checks",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag"
+    "release": "bumpp package.json packages/*/package.json --commit \"release: v%s\" --push --all --tag"
   },
   "engines": {
     "node": ">=14"
