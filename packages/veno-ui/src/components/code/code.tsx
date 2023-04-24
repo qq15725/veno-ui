@@ -16,6 +16,26 @@ import { makeScrollbar, useScrollbar } from '../../composables/scrollbar'
 // Types
 import type { PropType } from 'vue'
 
+const HTML_ESCAPE_TEST_RE = /[&<>"]/
+const HTML_ESCAPE_REPLACE_RE = /[&<>"]/g
+const HTML_REPLACEMENTS = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+}
+
+function replaceUnsafeChar(ch: string) {
+  return HTML_REPLACEMENTS[ch as unknown as keyof typeof HTML_REPLACEMENTS]
+}
+
+function escapeHtml(str: string) {
+  if (HTML_ESCAPE_TEST_RE.test(str)) {
+    return str.replace(HTML_ESCAPE_REPLACE_RE, replaceUnsafeChar)
+  }
+  return str
+}
+
 export const Code = defineComponent({
   name: 'VeCode',
 
@@ -83,7 +103,7 @@ export const Code = defineComponent({
         .replace(/\n$/, '')
         .replace(/^\n/, '')
     })
-    const highlightedCode = ref(code.value)
+    const highlightedCode = ref(escapeHtml(code.value))
     const { backgroundColorClasses, backgroundColorStyles } = useBackgroundColor(
       props, 'color',
     )
@@ -104,7 +124,7 @@ export const Code = defineComponent({
       })
     })
 
-    const highlight = async () => {
+    async function highlight() {
       highlightedCode.value = await highlighter.value?.highlight(
         code.value,
         language.value,
@@ -126,7 +146,7 @@ export const Code = defineComponent({
               backgroundColorClasses.value,
             ] }
             style={ backgroundColorStyles.value }
-            v-html={ highlightedCode.value }
+            v-html={ escapeHtml(highlightedCode.value) }
           />
         )
       }

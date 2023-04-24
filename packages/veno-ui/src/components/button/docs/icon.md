@@ -14,21 +14,21 @@
 
 <ve-spacer cols="12">
   <ve-spacer>
-    <ve-button :variant="variant" icon="mdi-star-outline" shape="circle" />
-    <ve-button :variant="variant" icon="mdi-star-outline" shape="circle" color="primary" />
-    <ve-button :variant="variant" icon="mdi-star-outline" shape="circle" disabled />
+    <ve-button :variant="variant" icon="$warning" shape="circle" />
+    <ve-button :variant="variant" icon="$warning" shape="circle" color="primary" />
+    <ve-button :variant="variant" icon="$warning" shape="circle" disabled />
   </ve-spacer>
 
   <ve-spacer>
-    <ve-button :variant="variant" icon="mdi-star-outline" />
-    <ve-button :variant="variant" icon="mdi-star-outline" color="primary" />
-    <ve-button :variant="variant" icon="mdi-star-outline" disabled />
+    <ve-button :variant="variant" icon="$warning" />
+    <ve-button :variant="variant" icon="$warning" color="primary" />
+    <ve-button :variant="variant" icon="$warning" disabled />
   </ve-spacer>
 
   <ve-spacer>
-    <ve-button :variant="variant" prepend-icon="mdi-star-outline">Star</ve-button>
-    <ve-button :variant="variant" prepend-icon="mdi-star-outline" color="primary">Star</ve-button>
-    <ve-button :variant="variant" prepend-icon="mdi-star-outline" disabled>Star</ve-button>
+    <ve-button :variant="variant" prepend-icon="$warning">Star</ve-button>
+    <ve-button :variant="variant" prepend-icon="$warning" color="primary">Star</ve-button>
+    <ve-button :variant="variant" prepend-icon="$warning" disabled>Star</ve-button>
   </ve-spacer>
 
   <ve-spacer>
