@@ -1,11 +1,10 @@
 {
-  "name": "@veno-ui/docs",
+  "name": "docs",
   "version": "0.4.24",
   "private": true,
   "scripts": {
-    "serve": "vite preview",
-    "build-post": "vite-ssg build",
-    "dev": "vite --open"
+    "dev": "vite --open",
+    "build": "vite-ssg build"
   },
   "dependencies": {
     "pinia": "^2.0.34",

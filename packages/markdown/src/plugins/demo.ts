@@ -90,10 +90,8 @@ export const demoPlugin: PluginSimple = md => {
       }
 
       function genFileProp() {
-        if (!md._context.path) return ''
-        return `file="${
-          md._context.path.replace(/.*?veno-ui(.*)/, (_: any, v: any) => v)
-        }"`
+        if (!md._context.relativePath) return ''
+        return `file="${ md._context.relativePath }"`
       }
 
       function genCodeProp() {

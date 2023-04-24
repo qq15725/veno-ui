@@ -7,7 +7,7 @@ import type { MarkdownToVue, ResolvedOptions } from './types'
 import type { ResolvedConfig } from 'vite'
 
 export function createMarkdownToVue(config: ResolvedConfig, options: ResolvedOptions): MarkdownToVue {
-  const root = config.root
+  const root = options.root ?? config.root
   const markdown = createBaseMarkdown(options.markdownOptions)
 
   options.markdownUses.forEach(e => {

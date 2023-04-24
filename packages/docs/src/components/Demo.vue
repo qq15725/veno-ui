@@ -1,40 +1,28 @@
-<script lang="ts">
-  import { defineComponent, ref, toRef, watch } from 'vue'
-  import { useAppStore } from '@/stores/app'
+<script lang="ts" setup>
+  import { ref, toRef, watch } from 'vue'
   import { useUserStore } from '@/stores/user'
 
-  export default defineComponent({
-    name: 'Demo',
-
-    props: {
-      title: String,
-      slug: String,
-      file: String,
-      code: String,
-    },
-
-    setup(props) {
-      const btn = ref()
-      const { repositoryBaseURL } = useAppStore()
-      const user = useUserStore()
-      const theme = ref(user.theme)
-
-      watch(toRef(user, 'theme'), userTheme => {
-        theme.value = userTheme
-      })
-
-      return {
-        ...props,
-        repositoryBaseURL,
-        theme,
-        isActive: ref(false),
-        btn,
-        focusBtn: () => {
-          setTimeout(() => btn.value?.$el?.focus?.(), 0)
-        },
-      }
-    },
+  const props = defineProps({
+    title: String,
+    slug: String,
+    file: String,
+    code: String,
   })
+
+  const isActive = ref(false)
+  const btn = ref()
+  const user = useUserStore()
+  const theme = ref(user.theme)
+
+  watch(toRef(user, 'theme'), userTheme => {
+    theme.value = userTheme
+  })
+
+  function focusBtn() {
+    setTimeout(() => btn.value?.$el?.focus?.(), 0)
+  }
+
+  const url = `${ import.meta.env.VITE_GITHUB_REPOSITORY }/${ props.file }`
 </script>
 
 <template>
@@ -134,7 +122,7 @@
           <template #activator="{ props: tooltipProps }">
             <ve-button
               v-bind="tooltipProps"
-              :href="`${repositoryBaseURL}${file}`"
+              :href="url"
               target="_blank"
               variant="text"
               tabindex="-1"

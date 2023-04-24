@@ -4,17 +4,9 @@
 
   // Stores
   import { useRoute } from 'vue-router'
-  import { useAppStore } from '@/stores/app'
 
   const route = useRoute()
-  const appStore = useAppStore()
-  const url = computed(() => {
-    const path = route.meta.relativePath as string
-    if (path.includes('../')) {
-      return `${ appStore.repositoryBaseURL }/${ path.replace('../', 'packages/') }`
-    }
-    return `${ appStore.repositoryBaseURL }/packages/docs/${ path }`
-  })
+  const url = computed(() => `${ import.meta.env.VITE_GITHUB_REPOSITORY }/${ route.meta.relativePath as string }`)
 </script>
 
 <template>

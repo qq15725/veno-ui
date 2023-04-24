@@ -2,6 +2,7 @@
 import type { Options, ResolvedOptions } from './types'
 
 const DEFAULT_OPTIONS = {
+  root: null,
   include: /\.md$/,
   customSfcBlocks: ['route', 'i18n'],
   markdownOptions: {},

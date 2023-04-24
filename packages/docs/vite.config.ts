@@ -69,6 +69,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
       Markdown({
+        root: resolve('../../'),
         transforms: {
           before: (code) => {
             return code
@@ -124,7 +125,10 @@ export default defineConfig(({ mode }) => {
         extendRoute(route) {
           let file = route.component
           if (file.indexOf('/src/pages') === 0) file = path.join(root, file)
-          md.render(fs.readFileSync(file, { encoding: 'utf-8' }), { root, file })
+          md.render(fs.readFileSync(file, { encoding: 'utf-8' }), {
+            root: resolve('../../'),
+            file,
+          })
           const { frontmatter, ...restData } = md._context
           const { meta, ...restFrontmatter } = frontmatter || {}
           let routePath = route.path

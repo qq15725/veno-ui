@@ -3,36 +3,41 @@ import type { FilterPattern } from '@veno-ui/utils'
 
 export interface Options {
   /**
-   * @en Remove custom SFC block
+   * Root for markdown env
+   */
+  root?: string | null
+
+  /**
+   * Remove custom SFC block
    *
    * @default ['route', 'i18n']
    */
   customSfcBlocks?: string[]
 
   /**
-   * @en Options passed to Markdown It
+   * Options passed to Markdown It
    */
   markdownOptions?: MarkdownOptions
 
   /**
-   * @en Plugins for Markdown It
+   * Plugins for Markdown It
    */
   markdownUses?: (PluginSimple | [PluginSimple | PluginWithOptions, any] | any)[]
 
   /**
-   * @en A function providing the Markdown It instance gets the ability to apply custom settings/plugins
+   * A function providing the Markdown It instance gets the ability to apply custom settings/plugins
    */
   markdownSetup?: (markdown: Markdown) => void
 
   /**
-   * @en Component name to wrapper with
+   * Component name to wrapper with
    *
    * @default 'div'
    */
   wrapper?: string | boolean
 
   /**
-   * @en Custom tranformations apply before and after the markdown transformation
+   * Custom tranformations apply before and after the markdown transformation
    */
   transforms?: {
     before?: (code: string, id: string) => string
