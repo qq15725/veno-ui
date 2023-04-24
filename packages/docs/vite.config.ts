@@ -210,7 +210,7 @@ export default defineConfig(({ mode }) => {
     // https://github.com/antfu/vite-ssg
     ssgOptions: {
       script: 'async',
-      formatting: 'minify',
+      formatting: 'none',
       crittersOptions: false,
       onFinished() {
         generateSitemap({
