@@ -1,5 +1,5 @@
 .DS_Store
-.env
+.env.local
 .vite-ssg-temp
 node_modules/
 lib/
