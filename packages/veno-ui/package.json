@@ -1,6 +1,6 @@
 {
   "name": "veno-ui",
-  "version": "0.4.24",
+  "version": "0.5.0",
   "description": "A Vue 3 UI Library. Uses Composable.",
   "author": "wxm",
   "license": "MIT",
