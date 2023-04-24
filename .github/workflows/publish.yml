@@ -30,6 +30,6 @@ jobs:
         run: pnpm run build
 
       - name: 🔀 Publish package
-        run: pnpm --filter veno-ui publish --access public
+        run: pnpm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
