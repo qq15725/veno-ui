@@ -5,6 +5,8 @@ import { defineConfig, loadEnv } from 'vite'
 import { getCompleteApi } from '@veno-ui/api-generator'
 import { createMarkdown } from '@veno-ui/markdown'
 import { toPascalCase } from '@veno-ui/utils'
+import { VenoUiResolver } from 'veno-ui'
+import pkg from 'veno-ui/package.json'
 
 // Plugins
 import Vue from '@vitejs/plugin-vue'
@@ -17,14 +19,14 @@ import Markdown from '@veno-ui/vite-plugin-markdown'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { VitePWA } from 'vite-plugin-pwa'
-import pkg from 'veno-ui/package.json'
-import { VenoUiResolver } from 'veno-ui'
+import generateSitemap from 'vite-ssg-sitemap'
 
-const resolve = (...args: string[]) => path.resolve(__dirname, ...args)
+const root = __dirname
+const resolve = (...args: string[]) => path.resolve(root, ...args)
 
 export default defineConfig(({ mode }) => {
-  const root = process.cwd()
   Object.assign(process.env, loadEnv(mode, root))
+
   const md = createMarkdown()
   const completedApi = getCompleteApi({
     fileGlobs: resolve('../veno-ui/src/**/*{.ts,.tsx}'),
@@ -33,7 +35,6 @@ export default defineConfig(({ mode }) => {
   return {
     resolve: {
       alias: [
-        { find: '@root', replacement: resolve('../..') },
         { find: '@', replacement: resolve('./src') },
       ].concat(
         mode === 'development'
@@ -207,6 +208,11 @@ export default defineConfig(({ mode }) => {
       script: 'async',
       formatting: 'minify',
       crittersOptions: false,
+      onFinished() {
+        generateSitemap({
+          hostname: pkg.homepage,
+        })
+      },
     },
     define: {
       __VENOUI_NAME__: JSON.stringify(pkg.name),

@@ -7,9 +7,13 @@
   "keywords": [
     "veno-ui",
     "ui library",
-    "vue"
+    "ui framework",
+    "component framework",
+    "ui library",
+    "component library",
+    "vue framework"
   ],
-  "homepage": "https://github.com/qq15725/veno-ui",
+  "homepage": "https://venojs.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qq15725/veno-ui.git"
