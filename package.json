@@ -11,6 +11,7 @@
     "lint": "eslint \"packages/*/{src,scripts}/**/*.{ts,tsx,js}\"",
     "lint:fix": "eslint \"packages/*/{src,scripts}/**/*.{ts,tsx,js}\" --fix",
     "publish": "pnpm -r publish",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "release": "bumpp package.json packages/*/package.json --commit \"chore(release): publish v%s\" --push --tag"
   },
   "engines": {
@@ -28,6 +29,7 @@
     "@vue/babel-plugin-jsx": "^1.1.1",
     "autoprefixer": "^10.4.14",
     "bumpp": "^9.1.0",
+    "conventional-changelog-cli": "^2.2.2",
     "convert-source-map": "^2.0.0",
     "cssnano": "^6.0.0",
     "esbuild": "^0.17.17",
