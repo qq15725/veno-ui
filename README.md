@@ -20,11 +20,6 @@
 
 <p align="center">一个 Vue 3 UI 组件库</p>
 
-## 文档
-
-- [www.venojs.com](https://www.venojs.com)
-- [国内文档镜像](https://venoui.fdota.com)
-
 ## 特性
 
 ### 自定义主题

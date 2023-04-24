@@ -6,7 +6,7 @@ export const useAppStore = defineStore('app', () => {
   const menuActive = ref()
 
   return {
-    repositoryBaseURL: 'https://github.com/qq15725/veno-ui/blob/master',
+    repositoryBaseURL: 'https://github.com/qq15725/veno-ui/blob/main',
     pageLoading: ref(false),
     menuActive,
     toggleMenuActive() {
