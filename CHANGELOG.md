@@ -1,3 +1,12 @@
+## [0.5.4](https://github.com/qq15725/veno-ui/compare/v0.5.3...v0.5.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* unpkg / jsdelivr dist js ([86c620f](https://github.com/qq15725/veno-ui/commit/86c620ff4b6c66d4af73e495c5b1f80857c2f5c3))
+
+
+
 ## [0.5.3](https://github.com/qq15725/veno-ui/compare/v0.5.2...v0.5.3) (2023-04-25)
 
 
