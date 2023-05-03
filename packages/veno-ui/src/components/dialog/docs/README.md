@@ -30,8 +30,6 @@ dimension.md
 
 fullscreen.md
 
-draggable.md
-
 :::
 
 ## API
