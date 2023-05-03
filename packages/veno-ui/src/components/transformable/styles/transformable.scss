@@ -1,0 +1,26 @@
+@use '../../../styles/settings';
+
+.ve-transformable {
+  overflow: visible;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+
+  &__anchor {
+    stroke: currentColor;
+    stroke-width: 2px;
+
+    &--pointer-none {
+      pointer-events: none;
+    }
+
+    &--transparent {
+      fill: transparent;
+      stroke: transparent;
+    }
+
+    &--hide {
+      opacity: 0;
+    }
+  }
+}
