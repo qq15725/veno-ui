@@ -7,7 +7,9 @@ import { convertToUnit } from '@veno-ui/utils'
 import { defineComponent } from '../../utils'
 import { useTextColor } from '../../composables/color'
 
+// Composables
 import { useProxiedModel } from '../../composables/proxied-model'
+import { makeTagProps } from '../../composables/tag'
 import type { PropType } from 'vue'
 
 interface Anchor {
@@ -165,6 +167,10 @@ export const Transformable = defineComponent({
       type: Boolean,
       default: false,
     },
+
+    ...makeTagProps({
+      tag: 'svg',
+    }),
   },
 
   emits: {
@@ -175,6 +181,7 @@ export const Transformable = defineComponent({
     const { textColorClasses, textColorStyles } = useTextColor(props, 'color')
     const model = useProxiedModel(props, 'modelValue', props.modelValue)
     const isTransforming = ref(false)
+    const active = ref<Anchor['type']>()
     const anchors = computed<Anchor[]>(() => {
       const { width, height } = model.value
       const size = 8
@@ -199,6 +206,24 @@ export const Transformable = defineComponent({
         { type: 'resize-bottom-right', x: width - size1 / 2, y: height - size1 / 2, width: size1, height: size1 },
       ] as Anchor[]
     })
+    const styles = computed(() => {
+      const { left, top, width, height, rotation } = model.value
+      const radian = rotation * Math.PI / 180
+      const cos = Math.cos(radian)
+      const sin = Math.sin(radian)
+
+      return {
+        width: convertToUnit(width),
+        height: convertToUnit(height),
+        transform: `matrix(${ cos }, ${ sin }, ${ -sin }, ${ cos }, ${ left }, ${ top })`,
+      }
+    })
+
+    function getCursor(type: Anchor['type'] | 'move') {
+      if (type === 'move') return 'move'
+      const { rotation = 0 } = model.value
+      return `url("data:image/svg+xml,${ cursors[type](rotation) }") 16 16, pointer`
+    }
 
     function start(event: MouseEvent, index?: number) {
       event.preventDefault()
@@ -209,6 +234,9 @@ export const Transformable = defineComponent({
       const anchor = index === undefined
         ? { type: 'move', x: 0, y: 0, width: 0, height: 0 }
         : anchors.value[index]
+
+      active.value = anchor.type as any
+
       const isMove = anchor.type === 'move'
       const isRotation = anchor.type.startsWith('rotate')
       const isHorizontal = anchor.type === 'resize-left' || anchor.type === 'resize-right'
@@ -344,16 +372,9 @@ export const Transformable = defineComponent({
     }
 
     return () => {
-      const { left, top, width, height, rotation } = model.value
-      const radian = rotation * Math.PI / 180
-      const cos = Math.cos(radian)
-      const sin = Math.sin(radian)
-
       const moveable = props.moveable
         ? { onPointerdown: start }
         : {}
-
-      const transform = `matrix(${ cos }, ${ sin }, ${ -sin }, ${ cos }, ${ left }, ${ top })`
 
       return (
         <>
@@ -361,15 +382,11 @@ export const Transformable = defineComponent({
             value: model.value,
             moveable,
             props: mergeProps(moveable, {
-              style: {
-                width: convertToUnit(width),
-                height: convertToUnit(height),
-                transform,
-              },
+              style: styles.value,
             }),
           }) }
 
-          <svg
+          <props.tag
             class={ [
               've-transformable',
               ...textColorClasses.value,
@@ -377,10 +394,8 @@ export const Transformable = defineComponent({
             style={ {
               position: props.position,
               ...textColorStyles.value,
+              ...styles.value,
             } }
-            width={ width }
-            height={ height }
-            transform={ transform }
           >
             <rect
               width="100%"
@@ -420,16 +435,22 @@ export const Transformable = defineComponent({
                           : 've-transformable__anchor--pointer-none',
                         (isTransforming.value || props.hideAnchors) && 've-transformable__anchor--hide',
                       ] }
-                      cursor={
-                        isTransforming.value
-                          ? 'auto'
-                          : `url("data:image/svg+xml,${ cursors[type](rotation) }") 16 16, pointer`
-                      }
+                      cursor={ isTransforming.value ? 'auto' : getCursor(type) }
                     />
                   )
                 }) }
             </g>
-          </svg>
+          </props.tag>
+
+          { isTransforming.value && active.value && (
+            <props.tag
+              class="ve-transformable__mask"
+              style={ {
+                position: props.position,
+                cursor: getCursor(active.value),
+              } }
+            />
+          ) }
         </>
       )
     }
