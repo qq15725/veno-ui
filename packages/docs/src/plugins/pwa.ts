@@ -1,9 +1,7 @@
 // Types
 import type { InstallPlugin } from '../types'
 
-export const install: InstallPlugin = ({ isClient, router }) => {
-  if (!isClient) return
-
+export const install: InstallPlugin = ({ router }) => {
   router.isReady()
     .then(async () => {
       const { registerSW } = await import('virtual:pwa-register')
