@@ -1,7 +1,7 @@
 // Utils
 import path from 'node:path'
 import fs from 'node:fs'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite'
 import { getCompleteApi } from '@veno-ui/api-generator'
 import { createMarkdown } from '@veno-ui/markdown'
 import { toPascalCase } from '@veno-ui/utils'
@@ -67,6 +67,8 @@ export default defineConfig(({ mode }) => {
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
+      splitVendorChunkPlugin(),
+
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
       Markdown({
         root: resolve('../../'),
