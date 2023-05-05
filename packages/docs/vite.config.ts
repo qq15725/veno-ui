@@ -6,7 +6,6 @@ import { getCompleteApi } from '@veno-ui/api-generator'
 import { createMarkdown } from '@veno-ui/markdown'
 import { toPascalCase } from '@veno-ui/utils'
 import { VenoUiResolver } from 'veno-ui'
-import pkg from 'veno-ui/package.json'
 
 // Plugins
 import Vue from '@vitejs/plugin-vue'
@@ -23,6 +22,7 @@ import generateSitemap from 'vite-ssg-sitemap'
 
 const root = __dirname
 const resolve = (...args: string[]) => path.resolve(root, ...args)
+const pkg = JSON.parse(fs.readFileSync(resolve('../veno-ui/package.json'), 'utf-8'))
 
 export default defineConfig(({ mode }) => {
   Object.assign(process.env, loadEnv(mode, root))
@@ -55,15 +55,6 @@ export default defineConfig(({ mode }) => {
               { find: 'veno-ui', replacement: resolve('../veno-ui/lib/framework.mjs') },
             ],
       ),
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          entryFileNames: 'assets/js/[name]-[hash].js',
-          chunkFileNames: 'assets/js/[name]-[hash].js',
-          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-        },
-      },
     },
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
@@ -212,7 +203,7 @@ export default defineConfig(({ mode }) => {
     // https://github.com/antfu/vite-ssg
     ssgOptions: {
       script: 'async',
-      formatting: 'none',
+      formatting: 'minify',
       crittersOptions: false,
       onFinished() {
         generateSitemap({
