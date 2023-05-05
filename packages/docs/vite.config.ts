@@ -18,7 +18,6 @@ import Markdown from '@veno-ui/vite-plugin-markdown'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { VitePWA } from 'vite-plugin-pwa'
-import generateSitemap from 'vite-ssg-sitemap'
 
 const root = __dirname
 const resolve = (...args: string[]) => path.resolve(root, ...args)
@@ -200,17 +199,6 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
-    // https://github.com/antfu/vite-ssg
-    ssgOptions: {
-      script: 'async',
-      formatting: 'minify',
-      crittersOptions: false,
-      onFinished() {
-        generateSitemap({
-          hostname: pkg.homepage,
-        })
-      },
-    },
     define: {
       __VENOUI_NAME__: JSON.stringify(pkg.name),
       __VENOUI_VERSION__: JSON.stringify(pkg.version),

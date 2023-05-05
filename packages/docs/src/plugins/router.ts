@@ -1,13 +1,16 @@
 // Utils
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
+import { createWebHistory } from 'vue-router'
 import { useAppStore } from '../stores/app'
 
 // Types
+import type { RouterOptions } from 'vue-router'
 import type { InstallPlugin } from '../types'
 
-export function createRouterOptions() {
+export function createRouterOptions(): RouterOptions {
   return {
+    history: createWebHistory(),
     routes: [
       ...setupLayouts(generatedRoutes),
       { path: '/', redirect: '/zh/start' },
