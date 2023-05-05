@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --open",
-    "build": "vite-ssg build"
+    "build": "vite build"
   },
   "dependencies": {
     "pinia": "^2.0.34",
