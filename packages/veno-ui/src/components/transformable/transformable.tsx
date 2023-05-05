@@ -361,13 +361,13 @@ export const Transformable = defineComponent({
       }
 
       function end() {
-        document.removeEventListener('pointermove', move)
-        document.removeEventListener('pointerup', end, true)
+        window.removeEventListener('pointermove', move)
+        window.removeEventListener('pointerup', end, true)
         isTransforming.value = false
       }
 
-      document.addEventListener('pointermove', move)
-      document.addEventListener('pointerup', end, true)
+      window.addEventListener('pointermove', move)
+      window.addEventListener('pointerup', end, true)
       isTransforming.value = true
     }
 

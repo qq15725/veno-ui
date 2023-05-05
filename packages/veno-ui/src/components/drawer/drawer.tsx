@@ -1,7 +1,6 @@
 // Styles
 import './styles/drawer.scss'
 
-// Types
 // Utils
 import { computed, onBeforeMount, ref, toRef, watch } from 'vue'
 import { defineComponent } from '../../utils'
@@ -21,6 +20,8 @@ import { makeThemeProps, provideTheme } from '../../composables/theme'
 import { Button } from '../button'
 import { Scrim } from '../scrim'
 import { useTouch } from './touch'
+
+// Types
 import type { Ref } from 'vue'
 
 export const Drawer = defineComponent({
