@@ -13,15 +13,15 @@
 ```
 
 ```js
-  import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
-  export default defineComponent({
-    setup() {
-      return {
-        value: ref({ left: 0, top: 0, width: 200, height: 100, rotation: 0 }),
-      }
+export default defineComponent({
+  setup() {
+    return {
+      value: ref({ left: 0, top: 0, width: 200, height: 100, rotation: 0 }),
     }
-  })
+  }
+})
 ```
 
 :::

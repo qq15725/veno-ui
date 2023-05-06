@@ -2,7 +2,7 @@ export { createDate, defaultDateFormat } from './date'
 export { useDisplay } from './display'
 export { useTheme } from './theme'
 export { useLayout } from './layout'
-export { useMessage, message } from './message'
+export { useMessage, message, useNotification, notification } from './message'
 
 export type { DefaultsInstance } from './defaults'
 export type { DateInstance, DateOptions, InternalDateInstance, DateManipulateType } from './date'

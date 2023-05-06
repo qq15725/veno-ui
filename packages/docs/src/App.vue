@@ -8,13 +8,12 @@
   import metadata from '@/data/metadata.json'
   // Stores
   import { useUserStore } from '@/stores/user'
-  // Composables
 
   const route = useRoute()
   const user = useUserStore()
   const meta = computed(() => genAppMetaInfo({
     site: metadata.site,
-    title: `${ route.meta.title } - ${ metadata.site }`,
+    title: `${ route.meta.title ? `${ route.meta.title } - ` : '' }${ metadata.site }`,
     description: String(route.meta.description || metadata.description),
     keywords: String(route.meta.keywords || metadata.keywords),
   }))
