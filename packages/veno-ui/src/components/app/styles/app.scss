@@ -3,7 +3,7 @@
 @use '../../../styles/tools';
 
 .ve-app {
-  background: rgb(var(--ve-theme-background));
+  background-color: rgb(var(--ve-theme-background));
   color: rgb(var(--ve-theme-on-background));
   @include tools.use-layout();
 

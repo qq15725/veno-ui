@@ -76,7 +76,7 @@
     }
 
     &#{$root}--variant-contained {
-      background: rgb(var(--ve-theme-surface));
+      background-color: rgb(var(--ve-theme-surface));
 
       #{$root}__overlay {
         opacity: math.div($button-disabled-overlay, $button-disabled-opacity);

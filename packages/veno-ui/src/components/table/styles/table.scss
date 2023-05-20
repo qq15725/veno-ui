@@ -6,6 +6,7 @@
   $root: &;
   display: flex;
   flex-direction: column;
+  @include tools.use-scrollbar();
 
   // Elements
   &__table {
@@ -15,13 +16,11 @@
     width: 100%;
     min-height: 40px;
     overflow-x: auto;
-    overflow-x: overlay;
     overflow-y: hidden;
     @include tools.use-paper();
 
     #{$root}--fixed-header & {
       overflow-y: auto;
-      overflow-y: overlay;
     }
 
     // Modifiers
@@ -95,7 +94,6 @@
   &__pagination {
     margin-top: 12px;
     overflow-x: auto;
-    overflow-x: overlay;
     width: 100%;
 
     &:before {

@@ -1,0 +1,9 @@
+@use '../../../styles/tools/functions';
+
+$scrollbar-props: () !default;
+$scrollbar-props: functions.map-deep-merge(
+    (
+      'use-scrollbar': true,
+    ),
+    $scrollbar-props
+);

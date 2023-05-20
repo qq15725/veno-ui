@@ -1,8 +1,10 @@
+@use '../../../styles/tools';
+
 // Blocks
 .ve-scrollbar {
   height: 100%;
   overflow: auto;
-  overflow: overlay;
   position: relative;
   width: 100%;
+  @include tools.use-scrollbar();
 }

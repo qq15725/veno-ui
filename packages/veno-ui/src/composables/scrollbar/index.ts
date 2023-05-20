@@ -1,6 +1,6 @@
 // Utils
 import { computed } from 'vue'
-import { propsFactory } from '@veno-ui/utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
@@ -15,9 +15,12 @@ export const makeScrollbar = propsFactory({
   },
 }, 'scrollbar')
 
-export function useScrollbar(props: ExtractPropTypes<ReturnType<typeof makeScrollbar>>) {
+export function useScrollbar(
+  props: ExtractPropTypes<ReturnType<typeof makeScrollbar>>,
+  name = getCurrentInstanceName(),
+) {
   const scrollbarClasses = computed(() => (
-    props.beautifyScrollbar ? 'beautify-scrollbar' : null
+    props.beautifyScrollbar ? `${ name }--beautify-scrollbar` : null
   ))
 
   return {

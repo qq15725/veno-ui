@@ -3,7 +3,7 @@
 
 // Blocks
 .ve-select {
-  $root: &;
+  @include tools.use-scrollbar();
 
   // Elements
   &__item--pendding.ve-list-item {

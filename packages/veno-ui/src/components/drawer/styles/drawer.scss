@@ -18,6 +18,7 @@
   transition-timing-function: settings.$standard-easing;
   will-change: $drawer-will-change;
   @include tools.use-border(('borders': $drawer-borders));
+  @include tools.use-scrollbar();
 
   &--start {
     top: 0;
@@ -44,7 +45,6 @@
     max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    overflow-y: overlay;
     position: relative;
   }
 

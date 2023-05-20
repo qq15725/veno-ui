@@ -9,9 +9,10 @@
   position: relative;
   font-size: $code-font-size;
   font-weight: $code-font-weight;
-  background: rgb(var(--ve-theme-surface));
+  background-color: rgb(var(--ve-theme-surface));
   color: rgb(var(--ve-theme-on-surface));
   @include tools.use-shape();
+  @include tools.use-scrollbar();
 
   // Modifiers
   &--block {
@@ -70,7 +71,6 @@
     position: relative;
     flex: 1 1 auto;
     overflow: auto;
-    overflow: overlay;
   }
 
   /**

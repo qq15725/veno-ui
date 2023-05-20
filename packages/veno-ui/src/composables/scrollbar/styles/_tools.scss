@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use 'variables';
+@use '../../../styles/tools/functions';
+@use '../../../styles/tools/scrollbar' as tools;
+
+@mixin use-scrollbar($props: ()) {
+  $props: functions.map-deep-merge(variables.$scrollbar-props, $props);
+
+  @if map.get($props, 'use-scrollbar') {
+    &--beautify-scrollbar {
+      @include tools.scrollbar();
+    }
+  }
+}
