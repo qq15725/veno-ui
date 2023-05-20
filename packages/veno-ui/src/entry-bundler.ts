@@ -1,4 +1,3 @@
-import './styles/main.scss'
 import * as components from './components'
 import * as directives from './directives'
 import * as providers from './providers'
