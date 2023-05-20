@@ -1,6 +1,56 @@
 @use '../../../styles/settings';
 @use '../../../styles/tools';
 
-.ve-h {
+.ve-h1 {
+  font-size: tools.map-deep-get(settings.$typography, 'h1', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h1', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h1', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h1', 'letter-spacing');
   opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 5) 0;
+}
+
+.ve-h2 {
+  font-size: tools.map-deep-get(settings.$typography, 'h2', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h2', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h2', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h2', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 4) 0;
+}
+
+.ve-h3 {
+  font-size: tools.map-deep-get(settings.$typography, 'h3', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h3', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h3', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h3', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 3) 0;
+}
+
+.ve-h4 {
+  font-size: tools.map-deep-get(settings.$typography, 'h4', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h4', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h4', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h4', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 2) 0;
+}
+
+.ve-h5 {
+  font-size: tools.map-deep-get(settings.$typography, 'h5', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h5', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h5', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h5', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 1) 0;
+}
+
+.ve-h6 {
+  font-size: tools.map-deep-get(settings.$typography, 'h6', 'size');
+  font-weight: tools.map-deep-get(settings.$typography, 'h6', 'weight');
+  line-height: tools.map-deep-get(settings.$typography, 'h6', 'line-height');
+  letter-spacing: tools.map-deep-get(settings.$typography, 'h6', 'letter-spacing');
+  opacity: var(--ve-high-emphasis-opacity);
+  margin: tools.map-deep-get(settings.$spacers, 1) 0;
 }

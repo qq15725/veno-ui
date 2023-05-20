@@ -41,9 +41,7 @@ export const Header = defineComponent({
       return (
         <Toolbar
           { ...toolbarProps }
-          class={ [
-            've-header',
-          ] }
+          class="ve-header"
           style={ layoutItemStyles.value }
         >
           { slots }

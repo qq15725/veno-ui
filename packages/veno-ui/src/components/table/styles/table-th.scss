@@ -11,7 +11,7 @@
 
     &:hover:before {
       visibility: visible;
-      opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier));
+      opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier, 1));
     }
   }
 

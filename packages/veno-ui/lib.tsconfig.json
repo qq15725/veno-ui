@@ -7,5 +7,5 @@
     "jsxFactory": "_createVNode",
     "jsxFragmentFactory": "_Fragment"
   },
-  "include": ["src"],
+  "include": ["src"]
 }

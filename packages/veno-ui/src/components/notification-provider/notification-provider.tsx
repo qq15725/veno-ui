@@ -44,9 +44,7 @@ export const NotificationProvider = defineComponent({
             modelValue={ items.value.length > 0 }
             scrim={ false }
             scrollStrategy="none"
-            class={ [
-              've-notification-provider',
-            ] }
+            class="ve-notification-provider"
           >
             { {
               ...slots,

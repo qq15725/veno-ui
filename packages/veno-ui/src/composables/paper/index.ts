@@ -68,7 +68,7 @@ export function usePaper(
   const { densityClasses } = useDensity(props, name)
   const { borderClasses } = useBorder(props, name)
   const { shapeClasses } = useShape(props, name)
-  const { elevationClasses } = useElevation(props)
+  const { elevationClasses } = useElevation(props, name)
 
   const paperClasses = computed(() => [
     themeClasses.value,

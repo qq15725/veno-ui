@@ -19,8 +19,6 @@ import { ListItemHeader } from './list-item-header'
 import { ListItemTitle } from './list-item-title'
 import { ListItemSubtitle } from './list-item-subtitle'
 
-// Directives
-
 // Types
 import type { MakeSlots } from '../../utils'
 

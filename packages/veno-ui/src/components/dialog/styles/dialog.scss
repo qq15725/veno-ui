@@ -20,8 +20,27 @@
 
         > .ve-card-text {
           overflow-y: auto;
-          overflow-y: overlay;
-          @extend .beautify-scrollbar;
+
+          &:hover::-webkit-scrollbar {
+            display: block;
+          }
+
+          &::-webkit-scrollbar {
+            display: none;
+            height: 10px;
+            width: 10px;
+            background: transparent;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: rgba(var(--ve-theme-on-background), 0.26) content-box;
+            border: 2px solid transparent;
+            border-radius: #{map.get(settings.$rounded, 'lg')};
+
+            &:hover {
+              background: rgba(var(--ve-theme-on-background), 0.38) content-box;
+            }
+          }
         }
       }
     }

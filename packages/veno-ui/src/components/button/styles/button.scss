@@ -16,6 +16,7 @@
   --ve-min-width: calc(var(--ve-height) * #{$button-width-ratio});
   --ve-padding-x: calc(var(--ve-height) / #{$button-padding-ratio});
   align-items: center;
+  cursor: pointer;
   display: inline-flex;
   font-size: var(--ve-font-size);
   font-weight: $button-font-weight;

@@ -147,9 +147,9 @@ export const Row = defineComponent({
       }
 
       classList.push({
-        [`align-${ props.align }`]: props.align,
-        [`justify-${ props.justify }`]: props.justify,
-        [`align-content-${ props.alignContent }`]: props.alignContent,
+        [`ve-row--align-${ props.align }`]: props.align,
+        [`ve-row--justify-${ props.justify }`]: props.justify,
+        [`ve-row--align-content-${ props.alignContent }`]: props.alignContent,
       })
 
       return classList

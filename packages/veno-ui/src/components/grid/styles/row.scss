@@ -27,4 +27,16 @@
   > [class*="ve-col-"] {
     padding: calc(var(--ve-row-gutter) * .5);
   }
+
+  // Utilities
+  @each $breakpoint in map-keys(settings.$grid-breakpoints) {
+    @include tools.media-breakpoint-up($breakpoint) {
+      $infix: tools.breakpoint-infix($breakpoint, settings.$grid-breakpoints);
+      @each $key, $utility in $row-utilities {
+        @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
+          @include tools.generate-utility($utility, $infix, 'bidi');
+        }
+      }
+    }
+  }
 }

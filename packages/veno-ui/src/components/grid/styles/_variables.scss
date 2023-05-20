@@ -20,3 +20,81 @@ $container-max-widths: tools.map-deep-merge(
     ),
     $container-max-widths
 );
+
+$row-utilities: (
+  "align-items": (
+    responsive: true,
+    property: align-items,
+    class: ve-row--align,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      baseline: baseline,
+      stretch: stretch,
+    )
+  ),
+  "justify-content": (
+    responsive: true,
+    property: justify-content,
+    class: ve-row--justify,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      space-between: space-between,
+      space-around: space-around,
+    )
+  ),
+  "align-content": (
+    responsive: true,
+    property: align-content,
+    class: ve-row--align-content,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      space-between: space-between,
+      space-around: space-around,
+      stretch: stretch,
+    )
+  ),
+);
+
+$col-utilities: (
+  "order": (
+    responsive: true,
+    property: order,
+    class: ve-col--order,
+    values: (
+      first: -1,
+      0: 0,
+      1: 1,
+      2: 2,
+      3: 3,
+      4: 4,
+      5: 5,
+      6: 6,
+      7: 7,
+      8: 8,
+      9: 9,
+      10: 10,
+      11: 11,
+      12: 12,
+      last: 13,
+    ),
+  ),
+  "align-self": (
+    responsive: true,
+    property: align-self,
+    class: ve-col--align-self,
+    values: (
+      auto: auto,
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      baseline: baseline,
+      stretch: stretch,
+    )
+  ),
+);

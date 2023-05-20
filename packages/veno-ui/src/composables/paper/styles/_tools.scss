@@ -6,6 +6,7 @@
 @use '../../density/styles/tools' as *;
 @use '../../border/styles/tools' as *;
 @use '../../shape/styles/tools' as *;
+@use '../../elevation/styles/tools' as *;
 
 @mixin use-paper($props: ()) {
   @include use-variant($props);
@@ -14,4 +15,5 @@
   @include use-density($props);
   @include use-border($props);
   @include use-shape($props);
+  @include use-elevation($props);
 }

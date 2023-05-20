@@ -12,14 +12,15 @@
   --ve-offset: calc(var(--ve-size-offset, 0px) + var(--ve-density-offset, 0px));
   --ve-avatar-offset: calc(var(--ve-list-item-avatar---height, 28px) + var(--ve-offset));
   --ve-padding-x: var(--ve-list-item---padding-x, 12px);
-  position: relative;
-  display: flex;
   align-items: center;
+  box-sizing: border-box;
+  display: flex;
   outline: none;
+  padding: calc(var(--ve-list-item---padding-y, 8px) + var(--ve-offset)) var(--ve-padding-x);
+  position: relative;
   text-decoration: none;
   transition: .2s settings.$standard-easing;
   min-height: calc(var(--ve-list-item---min-height, 40px) + var(--ve-offset));
-  padding: calc(var(--ve-list-item---padding-y, 8px) + var(--ve-offset)) var(--ve-padding-x);
   @include tools.use-paper($list-item-paper);
   @include tools.overlay('#{$root}__overlay');
   @include tools.states('#{&}__overlay');

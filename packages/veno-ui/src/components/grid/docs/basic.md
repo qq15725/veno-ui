@@ -15,7 +15,7 @@ flexbox 构建的 12 等分网格系统。
     :key="index"
     :cols="cols"
   >
-    <ve-paper width="100%" height="30" color="grey-300" />
+    <ve-paper width="100%" height="30" color="#EEE" />
   </ve-col>
 </ve-row>
 ```

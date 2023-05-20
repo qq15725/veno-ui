@@ -32,7 +32,7 @@ export const Spacer = defineComponent({
       const [colProps] = pick(props, Object.keys(Col.props) as any)
 
       return (
-        <Row { ...rowProps } class="ve-spacer">
+        <Row class="ve-spacer" { ...rowProps }>
           { children.map((child, index) => (
             <Col { ...colProps } key={ index }>{ child }</Col>
           )) }

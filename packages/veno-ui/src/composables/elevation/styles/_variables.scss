@@ -1,0 +1,9 @@
+@use '../../../styles/tools/functions';
+
+$elevation-props: () !default;
+$elevation-props: functions.map-deep-merge(
+    (
+      'use-elevation': true,
+    ),
+    $elevation-props
+);

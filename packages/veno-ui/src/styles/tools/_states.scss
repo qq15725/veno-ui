@@ -4,17 +4,17 @@
 @mixin states($selector: '&::before', $active: true) {
   &:hover #{$selector} {
     visibility: visible;
-    opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-hover-opacity) * var(--ve-theme-overlay-multiplier, 1));
   }
 
   &:focus-visible #{$selector} {
     visibility: visible;
-    opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier, 1));
   }
 
   // @supports not selector(:focus-visible) {
   //   &:focus #{$selector} {
-  //     opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier));
+  //     opacity: calc(var(--ve-focus-opacity) * var(--ve-theme-overlay-multiplier, 1));
   //   }
   // }
 
@@ -29,11 +29,11 @@
   &:hover #{$selector},
   #{$selector} {
     visibility: visible;
-    opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-activated-opacity) * var(--ve-theme-overlay-multiplier, 1));
   }
 
   &:focus #{$selector} {
     visibility: visible;
-    opacity: calc(var(--ve-pressed-opacity) * var(--ve-theme-overlay-multiplier));
+    opacity: calc(var(--ve-pressed-opacity) * var(--ve-theme-overlay-multiplier, 1));
   }
 }

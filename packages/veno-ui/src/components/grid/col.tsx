@@ -60,19 +60,11 @@ function breakpointClass(type: keyof typeof propMap, prop: string, val: boolean 
     const breakpoint = prop.replace(type, '')
     className += `-${ breakpoint }`
   }
-  if (type === 'col') {
-    className = `ve-${ className }`
-  }
-  // Handling the boolean style prop when accepting [Boolean, String, Number]
-  // means Vue will not convert <v-col sm></v-col> to sm: true for us.
-  // Since the default is false, an empty string indicates the prop's presence.
   if (type === 'col' && (val === '' || val === true)) {
-    // .v-col-md
-    return className.toLowerCase()
+    return `ve-${ className }`.toLowerCase()
   }
-  // .order-md-6
   className += `-${ val }`
-  return className.toLowerCase()
+  return `ve-col--${ className }`.toLowerCase()
 }
 
 export const makeColProps = propsFactory({
@@ -122,15 +114,14 @@ export const Col = defineComponent({
         })
       }
 
-      const hasColClasses = classList.some(className => className.startsWith('ve-col-'))
+      const hasColClasses = classList.some(className => className.startsWith('ve-col-') && !className.startsWith('ve-col--'))
 
       classList.push({
-        // Default to .v-col if no other col-{bp}-* classes generated nor `cols` specified.
         've-col': !hasColClasses || !props.cols,
         [`ve-col-${ props.cols }`]: props.cols,
-        [`offset-${ props.offset }`]: props.offset,
-        [`order-${ props.order }`]: props.order,
-        [`align-self-${ props.alignSelf }`]: props.alignSelf,
+        [`ve-col--offset-${ props.offset }`]: props.offset,
+        [`ve-col--order-${ props.order }`]: props.order,
+        [`ve-col--align-self-${ props.alignSelf }`]: props.alignSelf,
       })
 
       return classList

@@ -84,11 +84,11 @@
     }
 
     &:hover::before {
-      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
+      opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier, 1));
     }
 
     .ve-selection-control--focus-visible &::before {
-      opacity: calc(#{map.get(settings.$states, 'focus')} * var(--ve-theme-overlay-multiplier));
+      opacity: calc(#{map.get(settings.$states, 'focus')} * var(--ve-theme-overlay-multiplier, 1));
     }
   }
 }

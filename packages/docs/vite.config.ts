@@ -18,6 +18,7 @@ import Markdown from '@veno-ui/vite-plugin-markdown'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { VitePWA } from 'vite-plugin-pwa'
+import Unocss from 'unocss/vite'
 
 const root = __dirname
 const resolve = (...args: string[]) => path.resolve(root, ...args)
@@ -58,6 +59,9 @@ export default defineConfig(({ mode }) => {
     css: { preprocessorOptions: { scss: { charset: false } } },
     plugins: [
       splitVendorChunkPlugin(),
+
+      // https://github.com/antfu/unocss
+      Unocss(),
 
       // https://github.com/qq15725/veno-ui/tree/master/packages/vite-plugin-markdown
       Markdown({

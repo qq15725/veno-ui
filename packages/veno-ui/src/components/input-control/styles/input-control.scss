@@ -113,6 +113,8 @@
     padding-block-end: var(--ve-native-control---padding-bottom, 4px);
     opacity: var(--ve-high-emphasis-opacity);
     cursor: inherit;
+    background-color: transparent;
+    border-style: none;
 
     &:focus,
     &:active {
@@ -161,6 +163,6 @@
   }
 
   &:not(&--active):hover::before {
-    opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier));
+    opacity: calc(#{map.get(settings.$states, 'hover')} * var(--ve-theme-overlay-multiplier, 1));
   }
 }

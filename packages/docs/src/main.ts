@@ -3,6 +3,9 @@ import { createApp } from 'vue'
 import { createRouter } from 'vue-router'
 import { createHead } from '@vueuse/head'
 
+import '@unocss/reset/tailwind.css'
+import 'uno.css'
+
 // Components
 import App from './App.vue'
 

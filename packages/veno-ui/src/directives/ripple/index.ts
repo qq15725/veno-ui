@@ -22,7 +22,7 @@ function transform(el: HTMLElement, value: string) {
 }
 
 function opacity(el: HTMLElement, value: number) {
-  el.style.opacity = `calc(${ value } * var(--ve-theme-overlay-multiplier))`
+  el.style.opacity = `calc(${ value } * var(--ve-theme-overlay-multiplier, 1))`
 }
 
 interface RippleOptions {

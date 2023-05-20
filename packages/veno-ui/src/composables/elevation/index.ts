@@ -1,6 +1,6 @@
 // Utils
 import { computed, unref } from 'vue'
-import { propsFactory } from '@veno-ui/utils'
+import { getCurrentInstanceName, propsFactory } from '@veno-ui/utils'
 
 // Types
 import type { ExtractPropTypes } from 'vue'
@@ -20,7 +20,10 @@ export const makeElevationProps = propsFactory({
   },
 }, 'elevation')
 
-export function useElevation(props: MaybeRef<ElevationProps>) {
+export function useElevation(
+  props: MaybeRef<ElevationProps>,
+  name = getCurrentInstanceName(),
+) {
   const elevationClasses = computed(() => {
     const { elevation } = unref(props)
 
@@ -28,7 +31,7 @@ export function useElevation(props: MaybeRef<ElevationProps>) {
 
     if (elevation == null) return classes
 
-    classes.push(`elevation-${ elevation }`)
+    classes.push(`${ name }--elevation-${ elevation }`)
 
     return classes
   })

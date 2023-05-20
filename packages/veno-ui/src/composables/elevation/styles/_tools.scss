@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use 'sass:string';
+@use 'variables';
+@use '../../../styles/tools/functions';
+@use '../../../styles/tools/elevation' as tools;
+
+@mixin use-elevation($props: ()) {
+  $props: functions.map-deep-merge(variables.$elevation-props, $props);
+
+  @if map.get($props, 'use-elevation') {
+    $z: 24;
+    @while $z >= 0 {
+      &--elevation-#{$z} {
+        @include tools.elevation($z, $important: true);
+      }
+      $z: $z - 1;
+    }
+  }
+}
