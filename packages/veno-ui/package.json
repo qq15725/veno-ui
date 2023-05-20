@@ -41,14 +41,8 @@
   ],
   "exports": {
     ".": {
-      "sass": "./lib/styles/main.sass",
-      "style": "./lib/styles/main.css",
       "import": "./lib/framework.mjs",
       "require": "./dist/veno-ui.cjs"
-    },
-    "./styles": {
-      "sass": "./lib/styles/main.sass",
-      "default": "./lib/styles/main.css"
     },
     "./styles/*": "./lib/styles/*",
     "./components": "./lib/components/index.mjs",
@@ -83,8 +77,6 @@
   "jsdelivr": "dist/veno-ui.iife.min.js",
   "unpkg": "dist/veno-ui.iife.min.js",
   "types": "lib/framework.d.ts",
-  "sass": "lib/styles/main.sass",
-  "styles": "lib/styles/main.css",
   "peerDependencies": {
     "vue": "^3.2.0"
   },

@@ -1,6 +1,3 @@
-// Styles
-import 'veno-ui/styles'
-
 // Utils
 import { createVeno } from 'veno-ui'
 import * as directives from 'veno-ui/directives'
