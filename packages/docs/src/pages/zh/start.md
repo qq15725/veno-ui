@@ -41,7 +41,6 @@ createApp(App).use(veno).mount('#app')
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 const veno = createVeno()
 

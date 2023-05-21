@@ -5,7 +5,7 @@
 ```html
 <ve-paper min-height="200" style="position: relative;">
   <ve-transformable v-model="value" #default="{ props: transformable }">
-    <ve-paper color="grey" v-bind="transformable" />
+    <ve-paper color="#CCC" v-bind="transformable" />
   </ve-transformable>
 </ve-paper>
 

@@ -5,8 +5,8 @@
 ```html
 <ve-hover #default="{ props, hover }">
   <ve-badge v-bind="props" :model-value="!!hover" content="9999">
-    <ve-avatar color="grey-300" />
-  </ve-badge>  
+    <ve-avatar color="#CCC" />
+  </ve-badge>
 </ve-hover>
 ```
 

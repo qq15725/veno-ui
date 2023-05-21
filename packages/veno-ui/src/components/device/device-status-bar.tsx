@@ -38,10 +38,7 @@ export const DeviceStatusBar = genericComponent()({
       const now = new Date()
       const hour = now.getHours()
       const minute = now.getMinutes()
-      let text = hour >= 12 ? '下午' : '上午'
-      text += `${ Math.abs(hour - 12) }:`
-      text += minute > 10 ? minute : `0${ minute }`
-      return text
+      return `${ hour >= 12 ? '下午' : '上午' }${ Math.abs(hour - 12) }:${ String(minute).padStart(2, '0') }`
     }
 
     const clock = ref(getClockValue())

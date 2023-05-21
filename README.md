@@ -48,7 +48,6 @@ npm i veno-ui
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import 'veno-ui/styles'
 import { createVeno } from 'veno-ui'
 import * as components from 'veno-ui/components'
 import * as directives from 'veno-ui/directives'

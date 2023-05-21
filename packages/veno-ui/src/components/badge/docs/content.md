@@ -5,11 +5,11 @@
 ```html
 <ve-spacer gutter="xxl">
   <ve-badge content="NEW">
-    <ve-avatar color="grey-300" />
+    <ve-avatar color="#CCC" />
   </ve-badge>
-  
+
   <ve-badge content="HOT">
-    <ve-avatar color="grey-300" />
+    <ve-avatar color="#CCC" />
   </ve-badge>
 </ve-spacer>
 ```

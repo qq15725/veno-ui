@@ -12,7 +12,7 @@
     $variants: map.get($props, 'variants');
 
     // Elements
-    &__border {
+    #{$name}__border {
       bottom: 0;
       border-color: currentColor;
       border-radius: inherit;
@@ -26,7 +26,7 @@
       left: 0;
     }
 
-    &__underlay {
+    #{$name}__underlay {
       background-color: currentColor;
       border-radius: inherit;
       bottom: 0;
@@ -39,16 +39,16 @@
     }
 
     // Modifiers
-    &--variant-plain,
-    &--variant-outlined,
-    &--variant-text,
-    &--variant-contained-text,
-    &--variant-contained-outlined {
+    &#{$name}--variant-plain,
+    &#{$name}--variant-outlined,
+    &#{$name}--variant-text,
+    &#{$name}--variant-contained-text,
+    &#{$name}--variant-contained-outlined {
       background-color: transparent;
       color: inherit;
     }
 
-    &--variant-contained {
+    &#{$name}--variant-contained {
       background-color: tools.map-deep-get($variants, 'contained', 'background');
       color: tools.map-deep-get($variants, 'contained', 'color');
       $elevation: tools.map-deep-get($variants, 'contained', 'elevation');
@@ -57,7 +57,7 @@
       }
     }
 
-    &--variant-plain {
+    &#{$name}--variant-plain {
       opacity: tools.map-deep-get($variants, 'plain', 'opacity');
 
       #{$name}__overlay {
@@ -70,21 +70,21 @@
       }
     }
 
-    &--variant-text {
+    &#{$name}--variant-text {
       #{$name}__overlay {
         background-color: currentColor;
       }
     }
 
-    &--variant-contained-text,
-    &--variant-contained-outlined {
+    &#{$name}--variant-contained-text,
+    &#{$name}--variant-contained-outlined {
       #{$name}__underlay {
         opacity: var(--ve-activated-opacity);
       }
     }
 
-    &--variant-outlined:not(#{$name}--border),
-    &--variant-contained-outlined:not(#{$name}--border) {
+    &#{$name}--variant-outlined:not(#{$name}--border),
+    &#{$name}--variant-contained-outlined:not(#{$name}--border) {
       #{$name}__border {
         opacity: .26;
       }
