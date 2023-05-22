@@ -35,9 +35,6 @@ export function createConfig(
     ),
     target: 'esnext',
     outdir: 'lib',
-    outExtension: {
-      '.js': '.mjs',
-    },
     format: 'esm',
     treeShaking: false,
     sourcemap: true,
