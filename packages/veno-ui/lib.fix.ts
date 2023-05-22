@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import { globSync } from 'glob'
 import { mkdirpSync } from 'mkdirp'
 
-globSync(['lib/**/*.mjs', 'lib/**/*.d.ts']).forEach(file => {
+globSync(['lib/**/*.js', 'lib/**/*.d.ts']).forEach(file => {
   const code = fs.readFileSync(file, 'utf-8')
 
   fs.writeFileSync(
