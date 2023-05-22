@@ -97,7 +97,7 @@ function calculateHypotenuse(point1: Point, point2: Point) {
 }
 
 export const Transformable = defineComponent({
-  name: 'Transformable',
+  name: 'VeTransformable',
 
   props: {
     /**
