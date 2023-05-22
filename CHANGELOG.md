@@ -1,3 +1,7 @@
+## [0.6.1](https://github.com/qq15725/veno-ui/compare/v0.6.0...v0.6.1) (2023-05-22)
+
+
+
 # [0.6.0](https://github.com/qq15725/veno-ui/compare/v0.5.4...v0.6.0) (2023-05-21)
 
 
