@@ -3,9 +3,9 @@
 # 基本用法
 
 ```html
-<ve-input label="单位宽度" style="margin-bottom: 16px;" type="number" hide-details v-model="unitWidth" />
+<ve-input label="单位值每像素" style="margin-bottom: 16px;" type="number" hide-details v-model="scale" />
 
-<ve-timescale :unitWidth="unitWidth" />
+<ve-timescale :scale="scale" />
 ```
 
 ```js
@@ -14,7 +14,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     return {
-      unitWidth: ref(1),
+      scale: ref(1),
     }
   }
 })

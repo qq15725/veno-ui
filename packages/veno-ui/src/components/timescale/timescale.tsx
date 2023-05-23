@@ -2,7 +2,7 @@
 import './styles/timescale.scss'
 
 // Utils
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, toRef, watch } from 'vue'
 import { defineComponent } from '../../utils'
 import { useProxiedModel } from '../../composables/proxied-model'
 
@@ -10,33 +10,64 @@ export const Timescale = defineComponent({
   name: 'VeTimescale',
 
   props: {
+    /**
+     * @zh 宽度
+     */
     width: {
       type: Number,
       default: 0,
     },
+
+    /**
+     * @zh 高度
+     */
     height: {
       type: Number,
       default: 18,
     },
+
+    /**
+     * @zh 设备像素比
+     */
+    devicePixelRatio: {
+      type: Number,
+      default: 2,
+    },
+
+    /**
+     * @zh 颜色
+     */
     color: {
       type: String,
       default: '#AAA',
     },
-    unitWidth: {
+
+    /**
+     * @zh 单位值多少像素
+     */
+    scale: {
       type: Number,
       default: 1,
     },
-    unitStepSize: {
+
+    /**
+     * @zh 步长
+     */
+    step: {
       type: Number,
       default: 30,
     },
-    largeScaleWidth: {
-      type: Number,
-      default: 400,
-    },
-    devicePixelRatio: {
-      type: Number,
-      default: 2,
+
+    /**
+     * @zh 文本函数
+     */
+    text: {
+      type: Function,
+      default: (num: number, { step }: { step: number }) => {
+        if (num < step || num % step !== 0) return `${ num }f`
+        num /= step
+        return `${ String(~~(num / 60)).padStart(2, '0') }:${ String(~~(num % 60)).padStart(2, '0') }`
+      },
     },
   },
 
@@ -48,11 +79,16 @@ export const Timescale = defineComponent({
     const canvas = ref<HTMLCanvasElement>()
     const context = ref<CanvasRenderingContext2D>()
     const width = useProxiedModel(props, 'width')
-    const canvasWidth = computed(() => width.value * props.devicePixelRatio)
-    const canvasHeight = computed(() => props.height * props.devicePixelRatio)
+    const height = toRef(props, 'height')
+    const dpr = toRef(props, 'devicePixelRatio')
+    const step = toRef(props, 'step')
+    const canvasWidth = computed(() => width.value * dpr.value)
+    const canvasHeight = computed(() => height.value * dpr.value)
+    const targetWidth = computed(() => canvasWidth.value / 6)
+    const valuePerPx = computed(() => Math.max(props.scale * dpr.value, targetWidth.value / (600 * step.value)))
 
     watch(canvas, init)
-    watch(() => props.unitWidth, render)
+    watch(valuePerPx, render)
 
     function init() {
       if (!canvas.value) return
@@ -83,36 +119,47 @@ export const Timescale = defineComponent({
         context2d.fillText(text, x, canvasHeight.value)
       }
 
-      function convertTo(num: number) {
-        return `${ String(~~(num / 60)).padStart(2, '0') }:${ String(~~(num % 60)).padStart(2, '0') }`
+      function round(num: number, target: number) {
+        return Math.ceil(num / target) * target
       }
 
-      function calcUint(unitWidth: number) {
-        let smallScale = unitWidth
-        let largeScale = smallScale * props.unitStepSize
-        if (largeScale > props.largeScaleWidth) {
-          return { unit: 'f', smallScale, largeScale, rate: 1 }
+      function calc(valuePerPx: number) {
+        let largeScaleValue = targetWidth.value / valuePerPx
+        if (largeScaleValue / step.value > 2) {
+          largeScaleValue = round(largeScaleValue, step.value * 5)
+        } else if (largeScaleValue > step.value) {
+          largeScaleValue = round(largeScaleValue, step.value)
+        } else if (largeScaleValue > 2) {
+          largeScaleValue = round(largeScaleValue, 5)
+        } else {
+          largeScaleValue = round(largeScaleValue, 1)
         }
-        const value = props.largeScaleWidth / largeScale
-        let rate = ~~value
-        if (rate > 2) rate = Math.ceil(value / 5) * 5
-        largeScale = largeScale * rate
-        smallScale = largeScale / 10
-        return { unit: 's', smallScale, largeScale, rate }
+        const largeScale = largeScaleValue * valuePerPx
+        const count = Math.min(largeScaleValue, 10)
+        const smallScale = largeScale / count
+        const smallScaleValue = largeScaleValue / count
+        return { smallScale, smallScaleValue, largeScale }
       }
 
-      const { unit, largeScale, smallScale, rate } = calcUint(
-        Math.max(props.unitWidth, 0.01),
-      )
+      const { smallScale, smallScaleValue, largeScale } = calc(valuePerPx.value)
 
-      for (let x = 0; x < canvasWidth.value; x += largeScale) {
-        if (x > 0) {
-          drawLine(x + 1, canvasHeight.value)
-          drawText(x + canvasHeight.value / 4, unit === 'f' ? `${ String(x / largeScale) }f` : convertTo(x / largeScale * rate))
-        }
-        for (let x1 = x; x1 < x + largeScale; x1 += smallScale) {
-          if (x1 === x || x1 >= x + largeScale) continue
-          drawLine(x1 + 1, canvasHeight.value / 4)
+      for (
+        let count = ~~(largeScale / smallScale),
+          h1 = canvasHeight.value,
+          h2 = canvasHeight.value / 4,
+          len = canvasWidth.value / smallScale,
+          i = 0;
+        i < len;
+        i++
+      ) {
+        if (i > 0 && i % count === 0) {
+          const x = i / count * largeScale + 1
+          drawLine(x, h1)
+          const text = props.text?.(i * smallScaleValue, { step: step.value })
+          text !== undefined && drawText(x + h2, text)
+        } else {
+          const x = i * smallScale + 1
+          drawLine(x, h2)
         }
       }
     }
